@@ -1,15 +1,19 @@
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { ZodiacSignName, CompatibilityData } from '@/types';
-import { ZODIAC_SIGNS, getCompatibility, ALL_SIGN_NAMES } from '@/lib/constants';
+import type { Dictionary } from '@/lib/dictionaries';
+import { ZODIAC_SIGNS, getCompatibility } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Users, Heart } from 'lucide-react';
 
-const CompatibilitySection = () => {
+interface CompatibilitySectionProps {
+  dictionary: Dictionary;
+}
+
+const CompatibilitySection = ({ dictionary }: CompatibilitySectionProps) => {
   const [sign1, setSign1] = useState<ZodiacSignName>(ZODIAC_SIGNS[0].name);
   const [sign2, setSign2] = useState<ZodiacSignName>(ZODIAC_SIGNS[1].name);
   const [compatibility, setCompatibility] = useState<CompatibilityData | null>(null);
@@ -18,7 +22,6 @@ const CompatibilitySection = () => {
   const handleFetchCompatibility = () => {
     if (!sign1 || !sign2) return;
     setIsLoading(true);
-    // Simulate API call
     setTimeout(() => {
       setCompatibility(getCompatibility(sign1, sign2));
       setIsLoading(false);
@@ -26,7 +29,6 @@ const CompatibilitySection = () => {
   };
   
   useEffect(() => {
-    // Initial load
     handleFetchCompatibility();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sign1, sign2]);
@@ -42,16 +44,16 @@ const CompatibilitySection = () => {
     <Card className="w-full shadow-xl">
       <CardHeader className="text-center">
         <CardTitle className="font-headline text-3xl flex items-center justify-center gap-2">
-          <Users className="w-8 h-8 text-primary" /> Compatibility Check
+          <Users className="w-8 h-8 text-primary" /> {dictionary['CompatibilitySection.title'] || "Compatibility Check"}
         </CardTitle>
         <CardDescription className="font-body">
-          Discover how well different zodiac signs match.
+          {dictionary['CompatibilitySection.description'] || "Discover how well different zodiac signs match."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label htmlFor="sign1-select" className="block text-sm font-medium text-muted-foreground mb-1 font-body">Select First Sign</label>
+            <label htmlFor="sign1-select" className="block text-sm font-medium text-muted-foreground mb-1 font-body">{dictionary['CompatibilitySection.selectFirstSign'] || "Select First Sign"}</label>
             <Select value={sign1} onValueChange={(val) => setSign1(val as ZodiacSignName)}>
               <SelectTrigger id="sign1-select">
                 <SelectValue placeholder="Sign 1" />
@@ -61,7 +63,7 @@ const CompatibilitySection = () => {
                   <SelectItem key={sign.name} value={sign.name}>
                     <div className="flex items-center">
                       <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2" />
-                      {sign.name}
+                      {dictionary[sign.name] || sign.name}
                     </div>
                   </SelectItem>
                 ))}
@@ -69,7 +71,7 @@ const CompatibilitySection = () => {
             </Select>
           </div>
           <div>
-            <label htmlFor="sign2-select" className="block text-sm font-medium text-muted-foreground mb-1 font-body">Select Second Sign</label>
+            <label htmlFor="sign2-select" className="block text-sm font-medium text-muted-foreground mb-1 font-body">{dictionary['CompatibilitySection.selectSecondSign'] || "Select Second Sign"}</label>
             <Select value={sign2} onValueChange={(val) => setSign2(val as ZodiacSignName)}>
               <SelectTrigger id="sign2-select">
                 <SelectValue placeholder="Sign 2" />
@@ -79,7 +81,7 @@ const CompatibilitySection = () => {
                   <SelectItem key={sign.name} value={sign.name} disabled={sign.name === sign1}>
                      <div className="flex items-center">
                       <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2" />
-                      {sign.name}
+                      {dictionary[sign.name] || sign.name}
                     </div>
                   </SelectItem>
                 ))}
@@ -91,7 +93,7 @@ const CompatibilitySection = () => {
         {isLoading && (
             <div className="text-center p-8">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-4 font-body text-muted-foreground">Checking cosmic connection...</p>
+                <p className="mt-4 font-body text-muted-foreground">{dictionary['CompatibilitySection.checkingCosmicConnection'] || "Checking cosmic connection..."}</p>
             </div>
         )}
 
@@ -103,7 +105,9 @@ const CompatibilitySection = () => {
               <ZodiacSignIcon signName={compatibility.sign2} className="w-10 h-10 text-primary" />
             </div>
             <h3 className="text-xl font-headline font-semibold text-primary">
-              {compatibility.sign1} & {compatibility.sign2}
+              {(dictionary['CompatibilitySection.reportTitle'] || "{sign1} & {sign2}")
+                .replace('{sign1}', dictionary[compatibility.sign1] || compatibility.sign1)
+                .replace('{sign2}', dictionary[compatibility.sign2] || compatibility.sign2)}
             </h3>
             <div className="flex justify-center my-3">
               {renderStars(compatibility.score)}
@@ -112,7 +116,7 @@ const CompatibilitySection = () => {
           </div>
         )}
         {!isLoading && !compatibility && sign1 && sign2 && (
-          <p className="text-center font-body text-muted-foreground mt-6">Click "Check Compatibility" to see the report.</p>
+          <p className="text-center font-body text-muted-foreground mt-6">Click the button to see the report.</p>
         )}
       </CardContent>
     </Card>
@@ -120,3 +124,4 @@ const CompatibilitySection = () => {
 };
 
 export default CompatibilitySection;
+
