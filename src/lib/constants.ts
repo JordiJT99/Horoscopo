@@ -19,42 +19,45 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
 
 export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name);
 
-const genericHoroscopeText = "Today is a day of new beginnings. Embrace change and look for opportunities. Your energy levels are high, make the most of it! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+// This genericHoroscopeText is not actively used by the main horoscope section which now uses Genkit.
+// However, if any other part were to call getHoroscope directly, this would be used.
+const genericHoroscopeText = "Hoy es un día de nuevos comienzos. Abraza el cambio y busca oportunidades. Tus niveles de energía son altos, ¡aprovéchalos al máximo! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
 export const getHoroscope = (sign: ZodiacSignName): HoroscopeData => ({
   sign,
-  daily: `Daily Horoscope for ${sign}: ${genericHoroscopeText} Focus on personal projects.`,
-  weekly: `Weekly Horoscope for ${sign}: This week brings a mix of challenges and rewards. ${genericHoroscopeText} Plan your finances carefully.`,
-  monthly: `Monthly Horoscope for ${sign}: The month ahead is pivotal for your career growth. ${genericHoroscopeText} Relationships will require attention.`,
+  daily: `Horóscopo Diario para ${sign}: ${genericHoroscopeText} Concéntrate en proyectos personales.`,
+  weekly: `Horóscopo Semanal para ${sign}: Esta semana trae una mezcla de desafíos y recompensas. ${genericHoroscopeText} Planifica tus finanzas cuidadosamente.`,
+  monthly: `Horóscopo Mensual para ${sign}: El mes que viene es crucial para tu crecimiento profesional. ${genericHoroscopeText} Las relaciones requerirán atención.`,
 });
 
 export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): CompatibilityData => ({
   sign1,
   sign2,
-  report: `${sign1} and ${sign2} have a complex but potentially rewarding dynamic. Communication is key. ${sign1} brings passion, while ${sign2} offers stability. Together, they can achieve great things if they learn to appreciate their differences. Lorem ipsum dolor sit amet.`,
+  report: `${sign1} y ${sign2} tienen una dinámica compleja pero potencialmente gratificante. La comunicación es clave. ${sign1} aporta pasión, mientras que ${sign2} ofrece estabilidad. Juntos pueden lograr grandes cosas si aprenden a apreciar sus diferencias. Este es un texto de ejemplo.`,
   score: Math.floor(Math.random() * 5) + 1,
 });
 
 export const getLuckyNumbers = (sign: ZodiacSignName): LuckyNumbersData => ({
   sign,
   numbers: [Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1],
-  luckyColor: ["Red", "Green", "Blue", "Yellow", "Purple", "Orange"][Math.floor(Math.random() * 6)],
-  luckyGemstone: ["Diamond", "Emerald", "Sapphire", "Ruby", "Amethyst", "Topaz"][Math.floor(Math.random() * 6)],
+  luckyColor: ["Rojo", "Verde", "Azul", "Amarillo", "Púrpura", "Naranja"][Math.floor(Math.random() * 6)],
+  luckyGemstone: ["Diamante", "Esmeralda", "Zafiro", "Rubí", "Amatista", "Topacio"][Math.floor(Math.random() * 6)],
 });
 
 export const getCurrentLunarData = (): LunarData => ({
-  phase: ["Full Moon", "New Moon", "Waxing Crescent", "Waning Gibbous"][Math.floor(Math.random() * 4)],
+  phase: ["Luna Llena", "Luna Nueva", "Cuarto Creciente", "Menguante Gibosa"][Math.floor(Math.random() * 4)],
   illumination: Math.floor(Math.random() * 100),
-  nextFullMoon: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toDateString(),
-  nextNewMoon: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toDateString(),
+  nextFullMoon: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'}),
+  nextNewMoon: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'}),
 });
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData => {
   const month = birthDate.getMonth();
-  const ascendantSign = ZODIAC_SIGNS[month % 12].name;
+  // Simplified logic for example, real ascendant calculation is complex
+  const ascendantSign = ZODIAC_SIGNS[month % 12].name; 
   return {
     sign: ascendantSign,
-    briefExplanation: `Your ascendant sign, ${ascendantSign}, influences your outer personality and how others perceive you. It plays a significant role in your first impressions and spontaneous reactions.`,
+    briefExplanation: `Tu signo ascendente, ${ascendantSign}, influye en tu personalidad externa y cómo te perciben los demás. Juega un papel importante en tus primeras impresiones y reacciones espontáneas. (Explicación de ejemplo).`,
   };
 };
 
@@ -68,46 +71,45 @@ const DefaultMayanIcon = TypeIcon; // Using 'TypeIcon' as a generic placeholder
 
 // --- Full data for Chinese Astrology ---
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
-  { name: "Rat", icon: Squirrel, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936], element: "Water", description: "Resourceful, quick-witted, charming, and persuasive." },
-  { name: "Ox", icon: VenetianMask, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937], element: "Earth", description: "Diligent, dependable, strong, and determined." },
-  { name: "Tiger", icon: PawPrint, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938], element: "Wood", description: "Brave, confident, competitive, and unpredictable." },
-  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939], element: "Wood", description: "Gentle, quiet, elegant, and alert; quick and skillful." },
-  { name: "Dragon", icon: Crown, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940], element: "Earth", description: "Confident, intelligent, enthusiastic, and a natural leader." },
-  { name: "Snake", icon: Shell, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941], element: "Fire", description: "Enigmatic, intelligent, wise, and intuitive." },
-  { name: "Horse", icon: Zap, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942], element: "Fire", description: "Animated, active, energetic, and loves to be in a crowd." },
-  { name: "Goat", icon: Leaf, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943], element: "Earth", description: "Gentle, mild-mannered, shy, stable, sympathetic, and amicable." },
-  { name: "Monkey", icon: Bird, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944], element: "Metal", description: "Sharp, smart, curious, and mischievous." },
-  { name: "Rooster", icon: VenetianMask, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945], element: "Metal", description: "Observant, hardworking, resourceful, courageous, and talented." },
-  { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946], element: "Earth", description: "Loyal, honest, amiable, kind, cautious, and prudent." },
-  { name: "Pig", icon: Bone, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947], element: "Water", description: "Diligent, compassionate, generous, and easy-going." },
+  { name: "Rat", icon: Squirrel, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936], element: "Agua", description: "Ingenioso, de mente rápida, encantador y persuasivo." },
+  { name: "Ox", icon: VenetianMask, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937], element: "Tierra", description: "Diligente, confiable, fuerte y determinado." },
+  { name: "Tiger", icon: PawPrint, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938], element: "Madera", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
+  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939], element: "Madera", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
+  { name: "Dragon", icon: Crown, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940], element: "Tierra", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
+  { name: "Snake", icon: Shell, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941], element: "Fuego", description: "Enigmático, inteligente, sabio e intuitivo." },
+  { name: "Horse", icon: Zap, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942], element: "Fuego", description: "Animado, activo, enérgico y le encanta estar entre la multitud." },
+  { name: "Goat", icon: Leaf, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943], element: "Tierra", description: "Amable, de buenos modales, tímido, estable, comprensivo y amigable." },
+  { name: "Monkey", icon: Bird, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
+  { name: "Rooster", icon: VenetianMask, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
+  { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946], element: "Tierra", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
+  { name: "Pig", icon: Bone, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947], element: "Agua", description: "Diligente, compasivo, generoso y de trato fácil." },
 ];
 export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name);
 
 // --- Full data for Mayan Astrology ---
 export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
-  { name: "Imix", icon: DefaultMayanIcon, description: "Dragon/Crocodile - Represents the primal sea, the source of all life, abundance, and new beginnings." },
-  { name: "Ik", icon: DefaultMayanIcon, description: "Wind - Symbolizes wind, breath, spirit, life force, communication, and inspiration." },
-  { name: "Akbal", icon: DefaultMayanIcon, description: "Night/House - Means night, darkness, and the underworld; a place of mystery, dreams, and intuition." },
-  { name: "Kan", icon: DefaultMayanIcon, description: "Seed/Lizard - Represents seed, ripening, manifestation, and the potential for growth." },
-  { name: "Chicchan", icon: DefaultMayanIcon, description: "Serpent - Symbolizes vitality, passion, instinct, and transformation." },
-  { name: "Cimi", icon: DefaultMayanIcon, description: "Death/Transformer - Represents death, transformation, surrender, and the connection to ancestors." },
-  { name: "Manik", icon: DefaultMayanIcon, description: "Deer/Hand - Symbolizes completion, accomplishment, spiritual tools, and guidance." },
-  { name: "Lamat", icon: DefaultMayanIcon, description: "Star/Rabbit - Represents star, harmony, abundance, and the ability to see beauty." },
-  { name: "Muluc", icon: DefaultMayanIcon, description: "Water/Moon - Symbolizes water, emotions, purification, and the flow of life." },
-  { name: "Oc", icon: DefaultMayanIcon, description: "Dog - Represents loyalty, companionship, guidance, and breaking through barriers." },
-  { name: "Chuen", icon: DefaultMayanIcon, description: "Monkey - Symbolizes playfulness, creativity, artistry, and the weaver of time." },
-  { name: "Eb", icon: DefaultMayanIcon, description: "Road/Grass - Represents the path, journey, free will, and the connection to nature." },
-  { name: "Ben", icon: DefaultMayanIcon, description: "Reed/Skywalker - Symbolizes pillars of light, connecting heaven and earth, courage, and exploration." },
-  { name: "Ix", icon: DefaultMayanIcon, description: "Jaguar/Wizard - Represents shamanism, magic, intuition, and the mysteries of the night." },
-  { name: "Men", icon: DefaultMayanIcon, description: "Eagle - Symbolizes vision, ambition, higher consciousness, and the pursuit of goals." },
-  { name: "Cib", icon: DefaultMayanIcon, description: "Vulture/Owl/Warrior - Represents wisdom, introspection, ancestral knowledge, and confronting challenges." },
-  { name: "Caban", icon: DefaultMayanIcon, description: "Earth/Earthquake - Symbolizes earth, synchronicity, navigation, and the forces of nature." },
-  { name: "Etznab", icon: DefaultMayanIcon, description: "Flint/Knife - Represents truth, clarity, discernment, and the ability to cut through illusion." },
-  { name: "Cauac", icon: DefaultMayanIcon, description: "Storm/Rain - Symbolizes storm, purification, transformation, and renewal." },
-  { name: "Ahau", icon: DefaultMayanIcon, description: "Sun/Flower/Lord - Represents enlightenment, unconditional love, wholeness, and connection to the divine." },
+  { name: "Imix", icon: DefaultMayanIcon, description: "Dragón/Cocodrilo - Representa el mar primordial, la fuente de toda vida, abundancia y nuevos comienzos." },
+  { name: "Ik", icon: DefaultMayanIcon, description: "Viento - Simboliza el viento, el aliento, el espíritu, la fuerza vital, la comunicación y la inspiración." },
+  { name: "Akbal", icon: DefaultMayanIcon, description: "Noche/Casa - Significa noche, oscuridad y el inframundo; un lugar de misterio, sueños e intuición." },
+  { name: "Kan", icon: DefaultMayanIcon, description: "Semilla/Lagarto - Representa la semilla, la maduración, la manifestación y el potencial de crecimiento." },
+  { name: "Chicchan", icon: DefaultMayanIcon, description: "Serpiente - Simboliza la vitalidad, la pasión, el instinto y la transformación." },
+  { name: "Cimi", icon: DefaultMayanIcon, description: "Muerte/Transformador - Representa la muerte, la transformación, la rendición y la conexión con los antepasados." },
+  { name: "Manik", icon: DefaultMayanIcon, description: "Venado/Mano - Simboliza la finalización, el logro, las herramientas espirituales y la guía." },
+  { name: "Lamat", icon: DefaultMayanIcon, description: "Estrella/Conejo - Representa la estrella, la armonía, la abundancia y la capacidad de ver la belleza." },
+  { name: "Muluc", icon: DefaultMayanIcon, description: "Agua/Luna - Simboliza el agua, las emociones, la purificación y el flujo de la vida." },
+  { name: "Oc", icon: DefaultMayanIcon, description: "Perro - Representa la lealtad, la compañía, la guía y la superación de barreras." },
+  { name: "Chuen", icon: DefaultMayanIcon, description: "Mono - Simboliza la alegría, la creatividad, el arte y el tejedor del tiempo." },
+  { name: "Eb", icon: DefaultMayanIcon, description: "Camino/Hierba - Representa el sendero, el viaje, el libre albedrío y la conexión con la naturaleza." },
+  { name: "Ben", icon: DefaultMayanIcon, description: "Caña/Caminante del Cielo - Simboliza los pilares de luz, conectando el cielo y la tierra, el coraje y la exploración." },
+  { name: "Ix", icon: DefaultMayanIcon, description: "Jaguar/Mago - Representa el chamanismo, la magia, la intuición y los misterios de la noche." },
+  { name: "Men", icon: DefaultMayanIcon, description: "Águila - Simboliza la visión, la ambición, la conciencia superior y la búsqueda de metas." },
+  { name: "Cib", icon: DefaultMayanIcon, description: "Buitre/Lechuza/Guerrero - Representa la sabiduría, la introspección, el conocimiento ancestral y el enfrentamiento de desafíos." },
+  { name: "Caban", icon: DefaultMayanIcon, description: "Tierra/Terremoto - Simboliza la tierra, la sincronicidad, la navegación y las fuerzas de la naturaleza." },
+  { name: "Etznab", icon: DefaultMayanIcon, description: "Pedernal/Cuchillo - Representa la verdad, la claridad, el discernimiento y la capacidad de cortar la ilusión." },
+  { name: "Cauac", icon: DefaultMayanIcon, description: "Tormenta/Lluvia - Simboliza la tormenta, la purificación, la transformación y la renovación." },
+  { name: "Ahau", icon: DefaultMayanIcon, description: "Sol/Flor/Señor - Representa la iluminación, el amor incondicional, la totalidad y la conexión con lo divino." },
 ];
 export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name);
 
 // Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.
 export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon };
-
