@@ -9,6 +9,7 @@ import {
   GALACTIC_TONES,
   GalacticTonesIcon,
   KinCalculatorIcon,
+  MayanAstrologyIcon, // Asegúrate que este ícono está correctamente definido y exportado en constants.ts
   calculateMayanKin
 } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -16,10 +17,10 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarIcon } from "lucide-react"; // Renamed to avoid conflict with ShadCN Calendar
-import { Calendar } from "@/components/ui/calendar"; // ShadCN Calendar
+import { Calendar as CalendarIconLucide } from "lucide-react"; // Renombrado para evitar conflicto con el componente Calendar
+import { Calendar } from "@/components/ui/calendar"; // Componente Calendar de ShadCN
 import { format } from "date-fns";
-import { es, enUS, de, fr } from 'date-fns/locale'; // Import locales for date-fns
+import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 
 interface MayanHoroscopeInteractiveProps {
@@ -34,13 +35,21 @@ const dateLocales: Record<Locale, typeof enUS> = {
   fr,
 };
 
+// Cambiado a una declaración de función estándar
+function CustomLabel({ htmlFor, children, className }: { htmlFor: string, children: React.ReactNode, className?: string }) {
+  return (
+    <label htmlFor={htmlFor} className={cn("block text-sm font-medium text-foreground mb-1", className)}>
+      {children}
+    </label>
+  );
+}
+
 export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanHoroscopeInteractiveProps) {
   const [selectedBirthDate, setSelectedBirthDate] = useState<Date | undefined>(undefined);
   const [mayanKin, setMayanKin] = useState<MayanKinInfo | null>(null);
   const [isLoadingKin, setIsLoadingKin] = useState(false);
   const [errorKin, setErrorKin] = useState<string | null>(null);
 
-  // Set initial date on client to avoid hydration mismatch for default Popover date
   useEffect(() => {
     setSelectedBirthDate(new Date());
   }, []);
@@ -54,7 +63,6 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
     setErrorKin(null);
     setMayanKin(null);
 
-    // Simulate calculation delay for UX
     setTimeout(() => {
       const result = calculateMayanKin(selectedBirthDate);
       if (result) {
@@ -66,11 +74,10 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
     }, 500);
   };
   
-  const currentD<x_bin_299>Locale = dateLocales[locale] || enUS;
+  const currentDfnlocale = dateLocales[locale] || enUS;
 
   return (
     <>
-      {/* Kin Calculator Section */}
       <Card className="mb-12 shadow-lg">
         <CardHeader>
           <SectionTitle
@@ -82,9 +89,9 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
         <CardContent className="space-y-6">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="w-full sm:w-auto">
-              <Label htmlFor="birth-date-mayan" className="block text-sm font-medium text-muted-foreground mb-1">
+              <CustomLabel htmlFor="birth-date-mayan">
                 {dictionary['MayanHoroscopePage.birthDateLabel']}
-              </Label>
+              </CustomLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -95,7 +102,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                       !selectedBirthDate && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIconLucide className="mr-2 h-4 w-4" />
                     {selectedBirthDate ? format(selectedBirthDate, "PPP", { locale: currentDfnlocale }) : <span>{dictionary['MayanHoroscopePage.pickDate']}</span>}
                   </Button>
                 </PopoverTrigger>
@@ -165,7 +172,6 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
 
       <Separator className="my-12" />
 
-      {/* Mayan Zodiac Signs (Nahuales) Section */}
       <SectionTitle
         title={dictionary['MayanHoroscopePage.signsTitle'] || "The 20 Solar Seals (Nahuales)"}
         icon={MayanAstrologyIcon}
@@ -198,7 +204,6 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
 
       <Separator className="my-12" />
 
-      {/* Galactic Tones Section */}
       <SectionTitle
         title={dictionary['MayanHoroscopePage.galacticTonesTitle']}
         icon={GalacticTonesIcon}
@@ -245,11 +250,3 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
     </>
   );
 }
-
-// Dummy Label component if not using shadcn/ui Label within this specific component for some reason
-// Typically, you'd import Label from "@/components/ui/label"
-const Label = ({ htmlFor, children, className }: { htmlFor: string, children: React.ReactNode, className?: string }) => (
-  <label htmlFor={htmlFor} className={cn("block text-sm font-medium text-foreground", className)}>
-    {children}
-  </label>
-);
