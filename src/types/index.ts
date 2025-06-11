@@ -101,6 +101,13 @@ export interface MayanZodiacSign {
   associatedColor?: string;
 }
 
+export interface GalacticTone {
+  id: number;
+  nameKey: string; // For translation, e.g., "Magnetic", "Lunar"
+  keywordKey: string; // For translation, e.g., "Unity", "Challenge"
+  questionKey: string; // For translation, e.g., "WhatIsMyGoal", "WhatAreTheObstacles"
+}
+
 export interface ChineseHoroscopeData {
   sign: ChineseAnimalSignName;
   general: string;
@@ -114,3 +121,4 @@ export interface MayanHoroscopeData {
   dailyEnergy: string;
   advice?: string;
 }
+

@@ -1,6 +1,6 @@
 
-import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName } from '@/types';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart } from 'lucide-react';
+import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone } from '@/types';
+import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers } from 'lucide-react';
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Aries", icon: Activity, dateRange: "Mar 21 - Abr 19" },
@@ -62,6 +62,7 @@ export const AstroAppLogo = SparklesIcon;
 export const WesternAstrologyIcon = StarIcon;
 export const ChineseAstrologyIcon = RabbitIcon;
 export const MayanAstrologyIcon = FeatherIcon;
+export const GalacticTonesIcon = Layers;
 export const CompatibilityIcon = Heart;
 
 
@@ -154,7 +155,6 @@ export const getChineseCompatibility = (animal1: ChineseAnimalSignName, animal2:
 };
 
 // Placeholder generic icon for Mayan signs if specific ones aren't available in Lucide
-// Moved declaration before usage
 const DefaultMayanIcon = TypeIcon; // Using 'TypeIcon' as a generic placeholder
 
 // --- Full data for Mayan Astrology ---
@@ -181,6 +181,22 @@ export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
   { name: "Ahau", icon: DefaultMayanIcon, description: "Sol/Flor/Señor/Iluminación - Representa la iluminación, el amor incondicional, la totalidad, la ascensión y la conexión con lo divino. Energía de unión y maestría.", associatedColor: "Amarillo" },
 ];
 export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name as string) as [string, ...string[]];
+
+export const GALACTIC_TONES: GalacticTone[] = [
+  { id: 1, nameKey: "Magnetic", keywordKey: "Unity", questionKey: "WhatIsMyGoal" },
+  { id: 2, nameKey: "Lunar", keywordKey: "Challenge", questionKey: "WhatAreTheObstacles" },
+  { id: 3, nameKey: "Electric", keywordKey: "Service", questionKey: "HowCanIBestServe" },
+  { id: 4, nameKey: "SelfExisting", keywordKey: "Form", questionKey: "WhatIsTheFormOfAction" },
+  { id: 5, nameKey: "Overtone", keywordKey: "Radiance", questionKey: "HowCanIEmpowerMyself" },
+  { id: 6, nameKey: "Rhythmic", keywordKey: "Equality", questionKey: "HowCanIOrganizeForEquality" },
+  { id: 7, nameKey: "Resonant", keywordKey: "Attunement", questionKey: "HowCanIAlignMyService" },
+  { id: 8, nameKey: "Galactic", keywordKey: "Integrity", questionKey: "DoILiveWhatIBelieve" },
+  { id: 9, nameKey: "Solar", keywordKey: "Intention", questionKey: "HowDoIAchieveMyPurpose" },
+  { id: 10, nameKey: "Planetary", keywordKey: "Manifestation", questionKey: "HowDoIPerfectWhatIDo" },
+  { id: 11, nameKey: "Spectral", keywordKey: "Liberation", questionKey: "HowDoIReleaseAndLetGo" },
+  { id: 12, nameKey: "Crystal", keywordKey: "Cooperation", questionKey: "HowCanIDedicateToCooperation" },
+  { id: 13, nameKey: "Cosmic", keywordKey: "Presence", questionKey: "HowCanIExpandMyJoyAndLove" },
+];
 
 
 // Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.
