@@ -74,7 +74,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href} passHref legacyBehavior>
+              <Link href={item.href}>
                 <SidebarMenuButton
                   asChild
                   isActive={isActive(item.href)}
