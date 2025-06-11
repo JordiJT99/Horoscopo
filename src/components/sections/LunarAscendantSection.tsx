@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -22,24 +23,27 @@ interface LunarAscendantSectionProps {
 const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date());
+  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined); // Initialize as undefined
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
 
   useEffect(() => {
+    // Set initial birthDate only on the client after hydration
+    setBirthDate(new Date());
+
     setIsLoadingLunar(true);
     const lunarTimer = setTimeout(() => {
       setLunarData(getCurrentLunarData());
       setIsLoadingLunar(false);
     }, 400);
     return () => clearTimeout(lunarTimer);
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount
 
   const handleCalculateAscendant = () => {
     if (!birthDate || !birthTime || !birthCity) {
-      alert("Please fill in all birth details."); // This should be localized too in a full solution
+      alert(dictionary['LunarAscendantSection.fillAllDetails'] || "Please fill in all birth details.");
       return;
     }
     setIsLoadingAscendant(true);
@@ -47,7 +51,8 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
       setAscendantData(getAscendantSign(birthDate, birthTime, birthCity));
       setIsLoadingAscendant(false);
     }, 700);
-    return () => clearTimeout(ascendantTimer);
+    // Removed return clearTimeout(ascendantTimer); as it was incorrectly placed.
+    // clearTimeout should be in a return from useEffect if this was an effect.
   };
 
   return (
@@ -94,7 +99,7 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {birthDate ? format(birthDate, "PPP") : <span>{dictionary['LunarAscendantSection.pickDate'] || "Pick a date"}</span>}
+                    {birthDate ? format(birthDate, "PPP", { locale: dictionary.dateLocale }) : <span>{dictionary['LunarAscendantSection.pickDate'] || "Pick a date"}</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -102,6 +107,7 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
                     mode="single"
                     selected={birthDate}
                     onSelect={setBirthDate}
+                    disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
                     initialFocus
                   />
                 </PopoverContent>
@@ -118,7 +124,7 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
               <Label htmlFor="birth-city" className="font-body">{dictionary['LunarAscendantSection.birthCityLabel'] || "Birth City"}</Label>
               <Input id="birth-city" type="text" placeholder={dictionary['LunarAscendantSection.birthCityPlaceholder'] || "e.g., New York"} value={birthCity} onChange={(e) => setBirthCity(e.target.value)} className="font-body" />
             </div>
-            <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant} className="w-full font-body">
+            <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant || !birthDate || !birthTime || !birthCity} className="w-full font-body">
               {isLoadingAscendant ? (
                 <><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2"></div> {dictionary['LunarAscendantSection.calculatingButton'] || "Calculating..."}</>
               ) : (dictionary['LunarAscendantSection.calculateButton'] || "Calculate Ascendant")}
@@ -142,3 +148,4 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
 };
 
 export default LunarAscendantSection;
+    

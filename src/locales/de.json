@@ -42,6 +42,7 @@
   "LuckyNumbersSection.description": "Finden Sie Ihre Glückszahlen, -farbe und -edelstein heraus.",
   "LunarAscendantSection.title": "Mond & Aszendent",
   "LunarAscendantSection.description": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen.",
+  "LunarAscendantSection.fillAllDetails": "Bitte füllen Sie alle Geburtsdetails aus.",
   "Sidebar.westernAstrology": "Westliche Astrologie",
   "Sidebar.westernAstrologyTooltip": "Entdecken Sie westliche Tierkreishoroskope",
   "Sidebar.chineseHoroscope": "Chinesisches Horoskop",
@@ -155,4 +156,4 @@
   "GalacticTone.Cosmic.keyword": "Gegenwart",
   "GalacticTone.Cosmic.question": "Wie erweitere ich meine Freude und Liebe?"
 }
-
+    

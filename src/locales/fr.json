@@ -42,6 +42,7 @@
   "LuckyNumbersSection.description": "Découvrez vos numéros porte-bonheur, votre couleur et votre pierre précieuse.",
   "LunarAscendantSection.title": "Lunaire et Ascendant",
   "LunarAscendantSection.description": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant.",
+  "LunarAscendantSection.fillAllDetails": "Veuillez remplir toutes les informations de naissance.",
   "Sidebar.westernAstrology": "Astrologie Occidentale",
   "Sidebar.westernAstrologyTooltip": "Explorez les horoscopes du zodiaque occidental",
   "Sidebar.chineseHoroscope": "Horoscope Chinois",
@@ -155,4 +156,4 @@
   "GalacticTone.Cosmic.keyword": "Présence",
   "GalacticTone.Cosmic.question": "Comment puis-je étendre ma joie et mon amour ?"
 }
-
+    

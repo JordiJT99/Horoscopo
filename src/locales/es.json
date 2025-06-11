@@ -61,6 +61,7 @@
   "LunarAscendantSection.calculatingButton": "Calculando...",
   "LunarAscendantSection.calculateButton": "Calcular Ascendente",
   "LunarAscendantSection.ascendantSignTitle": "Tu Signo Ascendente:",
+  "LunarAscendantSection.fillAllDetails": "Por favor, completa todos los detalles de nacimiento.",
   "Sidebar.westernAstrology": "Astrología Occidental",
   "Sidebar.westernAstrologyTooltip": "Explora horóscopos del zodiaco occidental",
   "Sidebar.chineseHoroscope": "Horóscopo Chino",
@@ -174,4 +175,4 @@
   "GalacticTone.Cosmic.keyword": "Presencia",
   "GalacticTone.Cosmic.question": "¿Cómo expando mi alegría y amor?"
 }
-
+    
