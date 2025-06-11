@@ -1,9 +1,11 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
 import type { ZodiacSignName, HoroscopeData } from '@/types';
-import type { Dictionary } from '@/lib/dictionaries';
-import { ZODIAC_SIGNS, getHoroscope } from '@/lib/constants';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
+import { ZODIAC_SIGNS } from '@/lib/constants';
+import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,21 +14,40 @@ import { CalendarDays } from 'lucide-react';
 
 interface HoroscopeSectionProps {
   dictionary: Dictionary;
+  locale: Locale;
 }
 
-const HoroscopeSection = ({ dictionary }: HoroscopeSectionProps) => {
+const HoroscopeSection = ({ dictionary, locale }: HoroscopeSectionProps) => {
   const [selectedSign, setSelectedSign] = useState<ZodiacSignName>(ZODIAC_SIGNS[0].name);
-  const [horoscope, setHoroscope] = useState<HoroscopeData | null>(null);
+  const [horoscope, setHoroscope] = useState<HoroscopeFlowOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setHoroscope(getHoroscope(selectedSign)); // getHoroscope is mock, doesn't need dictionary for its content yet
-      setIsLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [selectedSign]);
+    const fetchHoroscope = async () => {
+      if (!selectedSign || !locale) return;
+
+      setIsLoading(true);
+      setError(null);
+      setHoroscope(null); 
+
+      try {
+        const input: HoroscopeFlowInput = {
+          sign: selectedSign,
+          locale: locale,
+        };
+        const result = await getHoroscopeFlow(input);
+        setHoroscope(result);
+      } catch (err) {
+        console.error("Error fetching horoscope from Genkit flow:", err);
+        setError(dictionary['HoroscopeSection.error'] || "Could not load horoscope data.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchHoroscope();
+  }, [selectedSign, locale, dictionary]);
 
   const handleSignChange = (value: string) => {
     setSelectedSign(value as ZodiacSignName);
@@ -70,6 +91,8 @@ const HoroscopeSection = ({ dictionary }: HoroscopeSectionProps) => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 font-body text-muted-foreground">{dictionary['HoroscopeSection.loading'] || "Loading your cosmic insights..."}</p>
           </div>
+        ) : error ? (
+           <p className="text-center font-body text-destructive p-4">{error}</p>
         ) : horoscope ? (
           <Tabs defaultValue="daily" className="w-full">
             <TabsList className="grid w-full grid-cols-3 mb-4">
@@ -91,7 +114,7 @@ const HoroscopeSection = ({ dictionary }: HoroscopeSectionProps) => {
             </TabsContent>
           </Tabs>
         ) : (
-          <p className="text-center font-body text-destructive">{dictionary['HoroscopeSection.error'] || "Could not load horoscope data."}</p>
+          <p className="text-center font-body text-muted-foreground p-4">{dictionary['HoroscopeSection.noData'] || "No horoscope data available. Please select a sign."}</p>
         )}
       </CardContent>
     </Card>

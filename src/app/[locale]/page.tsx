@@ -1,3 +1,4 @@
+
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
@@ -29,7 +30,7 @@ export default async function AstroVibesPage({ params }: AstroVibesPageProps) {
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
         <div className="lg:col-span-2">
-          <HoroscopeSection dictionary={dictionary} />
+          <HoroscopeSection dictionary={dictionary} locale={params.locale} />
         </div>
         <CompatibilitySection dictionary={dictionary} />
         <LuckyNumbersSection dictionary={dictionary} />
