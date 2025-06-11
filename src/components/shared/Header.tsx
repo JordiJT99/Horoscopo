@@ -59,7 +59,7 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {availableLocales.map((locale) => (
-              <DropdownMenuItem key={locale.code} asChild current={currentLocale === locale.code}>
+              <DropdownMenuItem key={locale.code} asChild>
                 <Link href={getLocalizedPath(locale.code)} locale={locale.code} className={currentLocale === locale.code ? 'font-bold' : ''}>
                   {locale.name}
                 </Link>
