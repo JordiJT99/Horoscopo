@@ -1,6 +1,6 @@
 
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, MayanSignName } from '@/types';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon } from 'lucide-react'; // Added RabbitIcon, FeatherIcon, StarIcon
+import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, HorseIcon, Sheep, Bone, DogIcon, TypeIcon } from 'lucide-react';
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Aries", icon: Activity, dateRange: "Mar 21 - Apr 19" },
@@ -19,10 +19,8 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
 
 export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name);
 
-// Placeholder Data
 const genericHoroscopeText = "Today is a day of new beginnings. Embrace change and look for opportunities. Your energy levels are high, make the most of it! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-// This function is now largely superseded by the Genkit flow for horoscopes
 export const getHoroscope = (sign: ZodiacSignName): HoroscopeData => ({
   sign,
   daily: `Daily Horoscope for ${sign}: ${genericHoroscopeText} Focus on personal projects.`,
@@ -34,7 +32,7 @@ export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): 
   sign1,
   sign2,
   report: `${sign1} and ${sign2} have a complex but potentially rewarding dynamic. Communication is key. ${sign1} brings passion, while ${sign2} offers stability. Together, they can achieve great things if they learn to appreciate their differences. Lorem ipsum dolor sit amet.`,
-  score: Math.floor(Math.random() * 5) + 1, // Random score 1-5
+  score: Math.floor(Math.random() * 5) + 1,
 });
 
 export const getLuckyNumbers = (sign: ZodiacSignName): LuckyNumbersData => ({
@@ -52,8 +50,6 @@ export const getCurrentLunarData = (): LunarData => ({
 });
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData => {
-  // Placeholder: In a real app, this would involve complex calculations or an API call.
-  // For now, just return a random sign based on the month of birthDate as a mock.
   const month = birthDate.getMonth();
   const ascendantSign = ZODIAC_SIGNS[month % 12].name;
   return {
@@ -62,29 +58,52 @@ export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: 
   };
 };
 
-export const AstroAppLogo = SparklesIcon; // Main app logo
-export const WesternAstrologyIcon = StarIcon; // Icon for Western Astrology section
-export const ChineseAstrologyIcon = RabbitIcon; // Icon for Chinese Astrology section
-export const MayanAstrologyIcon = FeatherIcon; // Icon for Mayan Astrology section
+export const AstroAppLogo = SparklesIcon;
+export const WesternAstrologyIcon = StarIcon;
+export const ChineseAstrologyIcon = RabbitIcon; 
+export const MayanAstrologyIcon = FeatherIcon;
 
+// Placeholder generic icon for Mayan signs if specific ones aren't available in Lucide
+const DefaultMayanIcon = TypeIcon; // Using 'TypeIcon' as a generic placeholder
 
-// --- Placeholder data for Chinese Astrology ---
+// --- Full data for Chinese Astrology ---
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
-  { name: "Rat", icon: RabbitIcon, years: [2020, 2008, 1996, 1984, 1972, 1960], element: "Water" },
-  { name: "Ox", icon: RabbitIcon, years: [2021, 2009, 1997, 1985, 1973, 1961], element: "Earth" },
-  { name: "Tiger", icon: RabbitIcon, years: [2022, 2010, 1998, 1986, 1974, 1962], element: "Wood" },
-  // ... Add all 12 signs
+  { name: "Rat", icon: Squirrel, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936], element: "Water", description: "Resourceful, quick-witted, charming, and persuasive." },
+  { name: "Ox", icon: VenetianMask, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937], element: "Earth", description: "Diligent, dependable, strong, and determined." },
+  { name: "Tiger", icon: PawPrint, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938], element: "Wood", description: "Brave, confident, competitive, and unpredictable." },
+  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939], element: "Wood", description: "Gentle, quiet, elegant, and alert; quick and skillful." },
+  { name: "Dragon", icon: Crown, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940], element: "Earth", description: "Confident, intelligent, enthusiastic, and a natural leader." },
+  { name: "Snake", icon: Shell, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941], element: "Fire", description: "Enigmatic, intelligent, wise, and intuitive." },
+  { name: "Horse", icon: HorseIcon, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942], element: "Fire", description: "Animated, active, energetic, and loves to be in a crowd." },
+  { name: "Goat", icon: Sheep, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943], element: "Earth", description: "Gentle, mild-mannered, shy, stable, sympathetic, and amicable." },
+  { name: "Monkey", icon: Bird, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944], element: "Metal", description: "Sharp, smart, curious, and mischievous." },
+  { name: "Rooster", icon: VenetianMask, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945], element: "Metal", description: "Observant, hardworking, resourceful, courageous, and talented." },
+  { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946], element: "Earth", description: "Loyal, honest, amiable, kind, cautious, and prudent." },
+  { name: "Pig", icon: Bone, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947], element: "Water", description: "Diligent, compassionate, generous, and easy-going." },
 ];
-export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as ChineseAnimalSignName);
+export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name);
 
-
-// --- Placeholder data for Mayan Astrology ---
+// --- Full data for Mayan Astrology ---
 export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
-  { name: "Imix", icon: FeatherIcon, description: "Represents the primal sea, the source of all life." },
-  { name: "Ik", icon: FeatherIcon, description: "Symbolizes wind, breath, spirit, and life force." },
-  { name: "Akbal", icon: FeatherIcon, description: "Means night, darkness, and the underworld; a place of mystery and dreams." },
-  // ... Add all 20 signs
+  { name: "Imix", icon: DefaultMayanIcon, description: "Dragon/Crocodile - Represents the primal sea, the source of all life, abundance, and new beginnings." },
+  { name: "Ik", icon: DefaultMayanIcon, description: "Wind - Symbolizes wind, breath, spirit, life force, communication, and inspiration." },
+  { name: "Akbal", icon: DefaultMayanIcon, description: "Night/House - Means night, darkness, and the underworld; a place of mystery, dreams, and intuition." },
+  { name: "Kan", icon: DefaultMayanIcon, description: "Seed/Lizard - Represents seed, ripening, manifestation, and the potential for growth." },
+  { name: "Chicchan", icon: DefaultMayanIcon, description: "Serpent - Symbolizes vitality, passion, instinct, and transformation." },
+  { name: "Cimi", icon: DefaultMayanIcon, description: "Death/Transformer - Represents death, transformation, surrender, and the connection to ancestors." },
+  { name: "Manik", icon: DefaultMayanIcon, description: "Deer/Hand - Symbolizes completion, accomplishment, spiritual tools, and guidance." },
+  { name: "Lamat", icon: DefaultMayanIcon, description: "Star/Rabbit - Represents star, harmony, abundance, and the ability to see beauty." },
+  { name: "Muluc", icon: DefaultMayanIcon, description: "Water/Moon - Symbolizes water, emotions, purification, and the flow of life." },
+  { name: "Oc", icon: DefaultMayanIcon, description: "Dog - Represents loyalty, companionship, guidance, and breaking through barriers." },
+  { name: "Chuen", icon: DefaultMayanIcon, description: "Monkey - Symbolizes playfulness, creativity, artistry, and the weaver of time." },
+  { name: "Eb", icon: DefaultMayanIcon, description: "Road/Grass - Represents the path, journey, free will, and the connection to nature." },
+  { name: "Ben", icon: DefaultMayanIcon, description: "Reed/Skywalker - Symbolizes pillars of light, connecting heaven and earth, courage, and exploration." },
+  { name: "Ix", icon: DefaultMayanIcon, description: "Jaguar/Wizard - Represents shamanism, magic, intuition, and the mysteries of the night." },
+  { name: "Men", icon: DefaultMayanIcon, description: "Eagle - Symbolizes vision, ambition, higher consciousness, and the pursuit of goals." },
+  { name: "Cib", icon: DefaultMayanIcon, description: "Vulture/Owl/Warrior - Represents wisdom, introspection, ancestral knowledge, and confronting challenges." },
+  { name: "Caban", icon: DefaultMayanIcon, description: "Earth/Earthquake - Symbolizes earth, synchronicity, navigation, and the forces of nature." },
+  { name: "Etznab", icon: DefaultMayanIcon, description: "Flint/Knife - Represents truth, clarity, discernment, and the ability to cut through illusion." },
+  { name: "Cauac", icon: DefaultMayanIcon, description: "Storm/Rain - Symbolizes storm, purification, transformation, and renewal." },
+  { name: "Ahau", icon: DefaultMayanIcon, description: "Sun/Flower/Lord - Represents enlightenment, unconditional love, wholeness, and connection to the divine." },
 ];
-export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name as MayanSignName);
-
-    
+export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name);

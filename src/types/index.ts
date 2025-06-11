@@ -67,9 +67,10 @@ export type ChineseAnimalSignName =
 
 export interface ChineseZodiacSign {
   name: ChineseAnimalSignName;
-  icon?: React.ElementType;
-  years: number[]; // Example: [1948, 1960, 1972, 1984, 1996, 2008, 2020] for Rat
-  element?: string; // e.g., Wood, Fire, Earth, Metal, Water
+  icon: React.ElementType; // Changed to non-optional as we'll provide a placeholder
+  years: number[];
+  element: string; 
+  description?: string; // Added for more detail
 }
 
 // Mayan Astrology
@@ -80,12 +81,11 @@ export type MayanSignName =
 
 export interface MayanZodiacSign {
   name: MayanSignName;
-  icon?: React.ElementType;
-  description?: string;
+  icon: React.ElementType; // Changed to non-optional
+  description: string;
   associatedColor?: string;
 }
 
-// You might want more detailed types for horoscopes, elements, compatibility later
 export interface ChineseHoroscopeData {
   sign: ChineseAnimalSignName;
   general: string;
@@ -99,5 +99,3 @@ export interface MayanHoroscopeData {
   dailyEnergy: string;
   advice?: string;
 }
-
-    
