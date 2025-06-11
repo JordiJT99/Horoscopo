@@ -98,6 +98,7 @@ export interface MayanZodiacSign {
   name: MayanSignName;
   icon: React.ElementType;
   description: string;
+  detailedInterpretation: string; // Added for more detailed info
   associatedColor?: string;
 }
 
@@ -106,6 +107,7 @@ export interface GalacticTone {
   nameKey: string; // For translation, e.g., "Magnetic", "Lunar"
   keywordKey: string; // For translation, e.g., "Unity", "Challenge"
   questionKey: string; // For translation, e.g., "WhatIsMyGoal", "WhatAreTheObstacles"
+  detailedInterpretation: string; // Added for more detailed info
 }
 
 export interface ChineseHoroscopeData {
@@ -122,3 +124,8 @@ export interface MayanHoroscopeData {
   advice?: string;
 }
 
+export interface MayanKinInfo {
+  daySign: MayanZodiacSign;
+  tone: GalacticTone;
+  kinNumber: number;
+}
