@@ -4,18 +4,19 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { AstroAppLogo } from '@/lib/constants';
+import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon, WesternAstrologyIcon } from '@/lib/constants';
 import {
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
+  // SidebarTrigger, // No longer used here, it's in Header
   useSidebar,
 } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
-import { Stars, /* Replace with actual Chinese icon */ Rabbit, /* Replace with actual Mayan icon */ Feather } from 'lucide-react';
+// Removed Button as it's not directly used
+// Icons are now more specific from constants.ts
+// import { Stars, Rabbit, Feather } from 'lucide-react'; 
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -28,8 +29,11 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
 
   const isActive = (path: string) => {
     // For the root path, ensure it's an exact match or starts with /<locale> only
-    if (path === `/${currentLocale}`) {
-      return pathname === `/${currentLocale}` || pathname === `/${currentLocale}/`;
+    if (path === `/${currentLocale}` || path === `/${currentLocale}/`) {
+      // Handle potential trailing slash in pathname
+      const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
+      const normalizedLocalePath = `/${currentLocale}/`;
+      return normalizedPathname === normalizedLocalePath;
     }
     return pathname.startsWith(path);
   };
@@ -38,19 +42,19 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/`,
       label: dictionary['Sidebar.westernAstrology'] || "Western Astrology",
-      icon: Stars,
+      icon: WesternAstrologyIcon,
       tooltip: dictionary['Sidebar.westernAstrologyTooltip'] || "Western Astrology",
     },
     {
       href: `/${currentLocale}/chinese-horoscope`,
       label: dictionary['Sidebar.chineseHoroscope'] || "Chinese Horoscope",
-      icon: Rabbit, // Using Rabbit as a placeholder
+      icon: ChineseAstrologyIcon, // Using actual icon
       tooltip: dictionary['Sidebar.chineseHoroscopeTooltip'] || "Chinese Horoscope",
     },
     {
       href: `/${currentLocale}/mayan-horoscope`,
       label: dictionary['Sidebar.mayanHoroscope'] || "Mayan Horoscope",
-      icon: Feather, // Using Feather as a placeholder
+      icon: MayanAstrologyIcon, // Using actual icon
       tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Horoscope",
     },
   ];
@@ -66,26 +70,22 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
             </h2>
           )}
         </Link>
-        <div className="md:hidden"> {/* Only show trigger on small screens if sidebar is part of header */}
-           {/* SidebarTrigger is now in the main Header component */}
-        </div>
+        {/* SidebarTrigger is now in the main Header component, so it's removed from here */}
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={isActive(item.href)}
-                  tooltip={{ children: item.tooltip, side: 'right', className: 'bg-sidebar-accent text-sidebar-accent-foreground' }}
-                >
-                  <a>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </a>
-                </SidebarMenuButton>
-              </Link>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive(item.href)}
+                tooltip={{ children: item.tooltip, side: 'right', className: 'bg-sidebar-accent text-sidebar-accent-foreground' }}
+              >
+                <Link href={item.href}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
@@ -95,5 +95,3 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
 };
 
 export default AppSidebar;
-
-    
