@@ -1,4 +1,7 @@
+"use client";
+
 import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { AstroAppLogo } from '@/lib/constants';
 import { Globe } from 'lucide-react';
@@ -15,14 +18,29 @@ interface HeaderProps {
   currentLocale: Locale;
 }
 
-const locales = [
-  { code: 'es', name: 'Español' },
-  { code: 'en', name: 'English' },
-  { code: 'de', name: 'Deutsch' },
-  { code: 'fr', name: 'Français' },
+const availableLocales = [
+  { code: 'es' as Locale, name: 'Español' },
+  { code: 'en' as Locale, name: 'English' },
+  { code: 'de' as Locale, name: 'Deutsch' },
+  { code: 'fr' as Locale, name: 'Français' },
 ];
 
 const Header = ({ dictionary, currentLocale }: HeaderProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const getLocalizedPath = (locale: Locale) => {
+    if (!pathname) return `/${locale}`;
+    const segments = pathname.split('/');
+    segments[1] = locale; // Pathname is /<locale>/...
+    let newPath = segments.join('/');
+    const queryString = searchParams.toString();
+    if (queryString) {
+      newPath += `?${queryString}`;
+    }
+    return newPath;
+  };
+
   return (
     <header className="py-4 bg-primary shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -34,15 +52,15 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
         </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80">
+            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
               <Globe className="h-6 w-6" />
-              <span className="sr-only">Change language</span>
+              <span className="sr-only">{dictionary['Header.changeLanguage'] || "Change language"}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {locales.map((locale) => (
-              <DropdownMenuItem key={locale.code} asChild>
-                <Link href={`/${locale.code}`} locale={locale.code} className={currentLocale === locale.code ? 'font-bold' : ''}>
+            {availableLocales.map((locale) => (
+              <DropdownMenuItem key={locale.code} asChild current={currentLocale === locale.code}>
+                <Link href={getLocalizedPath(locale.code)} locale={locale.code} className={currentLocale === locale.code ? 'font-bold' : ''}>
                   {locale.name}
                 </Link>
               </DropdownMenuItem>

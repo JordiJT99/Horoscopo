@@ -1,7 +1,9 @@
+
 {
   "App.title": "AstroVibes",
   "App.description": "Ihre tägliche Quelle für Horoskope und astrologische Einblicke.",
   "Header.title": "AstroVibes",
+  "Header.changeLanguage": "Sprache ändern",
   "Footer.copyright": "© {year} AstroVibes. Alle Rechte vorbehalten.",
   "Footer.poweredBy": "Angetrieben von Kosmischer Energie & Next.js",
   "Page.welcomeTitle": "Willkommen bei AstroVibes",
@@ -19,7 +21,24 @@
   "Aquarius": "Wassermann",
   "Pisces": "Fische",
   "HoroscopeSection.title": "{signName} Horoskop",
+  "HoroscopeSection.description": "Wählen Sie Ihr Zeichen, um Ihre astrologische Prognose anzuzeigen.",
+  "HoroscopeSection.selectSignPlaceholder": "Zeichen auswählen",
+  "HoroscopeSection.loading": "Lade deine kosmischen Einsichten...",
+  "HoroscopeSection.dailyTab": "Täglich",
+  "HoroscopeSection.weeklyTab": "Wöchentlich",
+  "HoroscopeSection.monthlyTab": "Monatlich",
+  "HoroscopeSection.dailyForecastTitle": "Tagesprognose",
+  "HoroscopeSection.weeklyOutlookTitle": "Wochenausblick",
+  "HoroscopeSection.monthlyOverviewTitle": "Monatsübersicht",
+  "HoroscopeSection.error": "Horoskopdaten konnten nicht geladen werden.",
   "CompatibilitySection.title": "Kompatibilitätsprüfung",
+  "CompatibilitySection.description": "Entdecken Sie, wie gut verschiedene Sternzeichen zusammenpassen.",
+  "CompatibilitySection.selectFirstSign": "Erstes Zeichen auswählen",
+  "CompatibilitySection.selectSecondSign": "Zweites Zeichen auswählen",
+  "CompatibilitySection.checkingCosmicConnection": "Überprüfe kosmische Verbindung...",
+  "CompatibilitySection.reportTitle": "{sign1} & {sign2}",
   "LuckyNumbersSection.title": "Glücksbringer",
-  "LunarAscendantSection.title": "Mond & Aszendent"
+  "LuckyNumbersSection.description": "Finden Sie Ihre Glückszahlen, -farbe und -edelstein heraus.",
+  "LunarAscendantSection.title": "Mond & Aszendent",
+  "LunarAscendantSection.description": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen."
 }
