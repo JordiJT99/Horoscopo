@@ -67,11 +67,26 @@ export type ChineseAnimalSignName =
 
 export interface ChineseZodiacSign {
   name: ChineseAnimalSignName;
-  icon: React.ElementType; // Changed to non-optional as we'll provide a placeholder
+  icon: React.ElementType;
   years: number[];
-  element: string; 
-  description?: string; // Added for more detail
+  element: string;
+  description?: string;
 }
+
+export interface ChineseZodiacResult {
+  animal: ChineseAnimalSignName;
+  element: string;
+  year: number;
+  icon: React.ElementType;
+}
+
+export interface ChineseCompatibilityData {
+  animal1: ChineseAnimalSignName;
+  animal2: ChineseAnimalSignName;
+  report: string;
+  score: number; // e.g., 1-5
+}
+
 
 // Mayan Astrology
 export type MayanSignName =
@@ -81,7 +96,7 @@ export type MayanSignName =
 
 export interface MayanZodiacSign {
   name: MayanSignName;
-  icon: React.ElementType; // Changed to non-optional
+  icon: React.ElementType;
   description: string;
   associatedColor?: string;
 }
