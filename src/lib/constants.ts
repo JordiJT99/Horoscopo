@@ -1,6 +1,6 @@
 
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, MayanSignName } from '@/types';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, HorseIcon, Sheep, Bone, DogIcon, TypeIcon } from 'lucide-react';
+import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon } from 'lucide-react';
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Aries", icon: Activity, dateRange: "Mar 21 - Apr 19" },
@@ -74,8 +74,8 @@ export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
   { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939], element: "Wood", description: "Gentle, quiet, elegant, and alert; quick and skillful." },
   { name: "Dragon", icon: Crown, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940], element: "Earth", description: "Confident, intelligent, enthusiastic, and a natural leader." },
   { name: "Snake", icon: Shell, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941], element: "Fire", description: "Enigmatic, intelligent, wise, and intuitive." },
-  { name: "Horse", icon: HorseIcon, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942], element: "Fire", description: "Animated, active, energetic, and loves to be in a crowd." },
-  { name: "Goat", icon: Sheep, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943], element: "Earth", description: "Gentle, mild-mannered, shy, stable, sympathetic, and amicable." },
+  { name: "Horse", icon: Zap, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942], element: "Fire", description: "Animated, active, energetic, and loves to be in a crowd." },
+  { name: "Goat", icon: Leaf, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943], element: "Earth", description: "Gentle, mild-mannered, shy, stable, sympathetic, and amicable." },
   { name: "Monkey", icon: Bird, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944], element: "Metal", description: "Sharp, smart, curious, and mischievous." },
   { name: "Rooster", icon: VenetianMask, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945], element: "Metal", description: "Observant, hardworking, resourceful, courageous, and talented." },
   { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946], element: "Earth", description: "Loyal, honest, amiable, kind, cautious, and prudent." },
@@ -107,3 +107,7 @@ export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
   { name: "Ahau", icon: DefaultMayanIcon, description: "Sun/Flower/Lord - Represents enlightenment, unconditional love, wholeness, and connection to the divine." },
 ];
 export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name);
+
+// Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.
+export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon };
+
