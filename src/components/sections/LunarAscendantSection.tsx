@@ -3,43 +3,54 @@
 
 import { useState, useEffect } from 'react';
 import type { LunarData, AscendantData } from '@/types';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getCurrentLunarData, getAscendantSign } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Moon, Sunrise, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { Moon, Sunrise, Calendar as CalendarIconLucide, Clock } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 
 interface LunarAscendantSectionProps {
   dictionary: Dictionary;
+  locale: Locale;
 }
 
-const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
+const dateFnsLocalesMap: Record<Locale, typeof enUS> = {
+  es,
+  en: enUS,
+  de,
+  fr,
+};
+
+const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProps) => {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined); // Initialize as undefined
+  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
 
+  const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
+
   useEffect(() => {
-    // Set initial birthDate only on the client after hydration
-    setBirthDate(new Date());
+    setBirthDate(new Date()); // Initialize birthDate for ascendant calendar on client
 
     setIsLoadingLunar(true);
+    // Fetch lunar data on client side
     const lunarTimer = setTimeout(() => {
-      setLunarData(getCurrentLunarData());
+      setLunarData(getCurrentLunarData(locale)); // Pass current app locale
       setIsLoadingLunar(false);
     }, 400);
     return () => clearTimeout(lunarTimer);
-  }, []); // Empty dependency array ensures this runs once on mount
+  }, [locale]); // Re-run if locale changes
 
   const handleCalculateAscendant = () => {
     if (!birthDate || !birthTime || !birthCity) {
@@ -51,8 +62,6 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
       setAscendantData(getAscendantSign(birthDate, birthTime, birthCity));
       setIsLoadingAscendant(false);
     }, 700);
-    // Removed return clearTimeout(ascendantTimer); as it was incorrectly placed.
-    // clearTimeout should be in a return from useEffect if this was an effect.
   };
 
   return (
@@ -98,8 +107,8 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
                       !birthDate && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {birthDate ? format(birthDate, "PPP", { locale: dictionary.dateLocale }) : <span>{dictionary['LunarAscendantSection.pickDate'] || "Pick a date"}</span>}
+                    <CalendarIconLucide className="mr-2 h-4 w-4" />
+                    {birthDate ? format(birthDate, "PPP", { locale: currentDfnLocale }) : <span>{dictionary['LunarAscendantSection.pickDate'] || "Pick a date"}</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -109,6 +118,10 @@ const LunarAscendantSection = ({ dictionary }: LunarAscendantSectionProps) => {
                     onSelect={setBirthDate}
                     disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
                     initialFocus
+                    locale={currentDfnLocale} // Use the correct date-fns locale object
+                    captionLayout="dropdown-buttons"
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
                   />
                 </PopoverContent>
               </Popover>

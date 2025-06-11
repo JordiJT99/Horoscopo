@@ -35,7 +35,7 @@ export default async function AstroVibesPage({ params }: AstroVibesPageProps) {
         <CompatibilitySection dictionary={dictionary} />
         <LuckyNumbersSection dictionary={dictionary} />
         <div className="lg:col-span-2">
-          <LunarAscendantSection dictionary={dictionary} />
+          <LunarAscendantSection dictionary={dictionary} locale={params.locale} />
         </div>
       </div>
     </main>

@@ -1,5 +1,6 @@
 
-import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone } from '@/types';
+import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo } from '@/types';
+import type { Locale } from '@/lib/dictionaries';
 import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon } from 'lucide-react';
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -32,7 +33,7 @@ export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): 
   sign1,
   sign2,
   report: `${sign1} y ${sign2} tienen una dinámica compleja pero potencialmente gratificante. La comunicación es clave. ${sign1} aporta pasión, mientras que ${sign2} ofrece estabilidad. Juntos pueden lograr grandes cosas si aprenden a apreciar sus diferencias. Este es un texto de ejemplo en español.`,
-  score: Math.floor(Math.random() * 5) + 1,
+  score: Math.floor(Math.random() * 5) + 1, // Placeholder score
 });
 
 export const getLuckyNumbers = (sign: ZodiacSignName): LuckyNumbersData => ({
@@ -42,19 +43,62 @@ export const getLuckyNumbers = (sign: ZodiacSignName): LuckyNumbersData => ({
   luckyGemstone: ["Diamante", "Esmeralda", "Zafiro", "Rubí", "Amatista", "Topacio"][Math.floor(Math.random() * 6)],
 });
 
-export const getCurrentLunarData = (): LunarData => ({
-  phase: ["Luna Llena", "Luna Nueva", "Cuarto Creciente", "Menguante Gibosa"][Math.floor(Math.random() * 4)],
-  illumination: Math.floor(Math.random() * 100),
-  nextFullMoon: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'}),
-  nextNewMoon: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'}),
-});
+export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
+  const today = new Date(); // This will be client's 'today' when called in useEffect
+  const dayOfMonth = today.getDate(); // 1-31
+
+  let phase: string;
+  let illumination: number;
+
+  // Simplified deterministic logic based on the day of the month
+  // These phase names are in Spanish; ideally, they'd be keys for localization.
+  if (dayOfMonth <= 4) { 
+    phase = "Luna Nueva";
+    illumination = Math.round((dayOfMonth / 4) * 15);
+  } else if (dayOfMonth <= 11) { 
+    phase = "Cuarto Creciente";
+    illumination = 15 + Math.round(((dayOfMonth - 4) / 7) * 35);
+  } else if (dayOfMonth <= 18) { 
+    phase = "Luna Llena"; 
+    illumination = 50 + Math.round(((dayOfMonth - 11) / 7) * 50);
+  } else if (dayOfMonth <= 25) { 
+    phase = "Cuarto Menguante";
+    illumination = 100 - Math.round(((dayOfMonth - 18) / 7) * 50);
+  } else { 
+    phase = "Menguante Gibosa"; 
+    illumination = 50 - Math.round(((dayOfMonth - 25) / (6)) * 50); // Approx 6 days left
+  }
+  
+  illumination = Math.max(0, Math.min(100, illumination)); // Ensure illumination is within 0-100
+
+  const nextFullMoonDate = new Date(today);
+  if (today.getDate() > 15 && phase !== "Luna Llena") {
+    nextFullMoonDate.setMonth(today.getMonth() + 1);
+  }
+  nextFullMoonDate.setDate(15);
+
+  const nextNewMoonDate = new Date(today);
+  if (today.getDate() > 1 && phase !== "Luna Nueva") {
+    nextNewMoonDate.setMonth(today.getMonth() + 1);
+  }
+  nextNewMoonDate.setDate(1);
+  
+  return {
+    phase: phase,
+    illumination: illumination,
+    nextFullMoon: nextFullMoonDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric'}),
+    nextNewMoon: nextNewMoonDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric'}),
+  };
+};
+
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData => {
-  const month = birthDate.getMonth();
-  const ascendantSign = ZODIAC_SIGNS[month % 12].name;
+  const month = birthDate.getMonth(); // 0-11
+  // Simplistic placeholder logic
+  const ascendantSign = ZODIAC_SIGNS[month % 12].name; 
   return {
     sign: ascendantSign,
-    briefExplanation: `Tu signo ascendente, ${ascendantSign}, influye en tu personalidad externa y cómo te perciben los demás. Juega un papel importante en tus primeras impresiones y reacciones espontáneas. (Explicación de ejemplo en español).`,
+    briefExplanation: `Tu signo ascendente, ${ascendantSign}, influye en tu personalidad externa y cómo te perciben los demás. Juega un papel importante en tus primeras impresiones y reacciones espontáneas. (Explicación de ejemplo en español, para ${birthCity} a las ${birthTime} del ${birthDate.toLocaleDateString()}).`,
   };
 };
 
@@ -199,11 +243,7 @@ function getDaysDifference(date1: Date, date2: Date): number {
   return Math.floor(diffTime / (1000 * 60 * 60 * 24));
 }
 
-export function calculateMayanKin(birthDate: Date): {
-  daySign: MayanZodiacSign;
-  tone: GalacticTone;
-  kinNumber: number;
-} | null {
+export function calculateMayanKin(birthDate: Date): MayanKinInfo | null {
   if (!(birthDate instanceof Date) || isNaN(birthDate.getTime())) {
     return null; 
   }
@@ -235,3 +275,4 @@ export function calculateMayanKin(birthDate: Date): {
 
 // Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.
 export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon };
+
