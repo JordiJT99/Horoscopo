@@ -11,12 +11,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  // SidebarTrigger, // No longer used here, it's in Header
   useSidebar,
 } from '@/components/ui/sidebar';
-// Removed Button as it's not directly used
-// Icons are now more specific from constants.ts
-// import { Stars, Rabbit, Feather } from 'lucide-react'; 
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -25,17 +21,21 @@ interface AppSidebarProps {
 
 const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   const pathname = usePathname();
-  const { state: sidebarState } = useSidebar();
+  const { state: sidebarState, setOpenMobile, isMobile } = useSidebar();
 
   const isActive = (path: string) => {
-    // For the root path, ensure it's an exact match or starts with /<locale> only
     if (path === `/${currentLocale}` || path === `/${currentLocale}/`) {
-      // Handle potential trailing slash in pathname
       const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
       const normalizedLocalePath = `/${currentLocale}/`;
       return normalizedPathname === normalizedLocalePath;
     }
     return pathname.startsWith(path);
+  };
+
+  const handleMenuItemClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
   };
 
   const menuItems = [
@@ -48,13 +48,13 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/chinese-horoscope`,
       label: dictionary['Sidebar.chineseHoroscope'] || "Chinese Horoscope",
-      icon: ChineseAstrologyIcon, // Using actual icon
+      icon: ChineseAstrologyIcon,
       tooltip: dictionary['Sidebar.chineseHoroscopeTooltip'] || "Chinese Horoscope",
     },
     {
       href: `/${currentLocale}/mayan-horoscope`,
       label: dictionary['Sidebar.mayanHoroscope'] || "Mayan Horoscope",
-      icon: MayanAstrologyIcon, // Using actual icon
+      icon: MayanAstrologyIcon,
       tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Horoscope",
     },
   ];
@@ -62,7 +62,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   return (
     <>
       <SidebarHeader className="p-4 flex items-center justify-between">
-        <Link href={`/${currentLocale}/`} className="flex items-center gap-2">
+        <Link href={`/${currentLocale}/`} onClick={handleMenuItemClick} className="flex items-center gap-2">
           <AstroAppLogo className="h-8 w-8 text-sidebar-primary" />
           {sidebarState === 'expanded' && (
             <h2 className="text-xl font-headline font-semibold text-sidebar-foreground">
@@ -70,7 +70,6 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
             </h2>
           )}
         </Link>
-        {/* SidebarTrigger is now in the main Header component, so it's removed from here */}
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
@@ -81,7 +80,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
                 isActive={isActive(item.href)}
                 tooltip={{ children: item.tooltip, side: 'right', className: 'bg-sidebar-accent text-sidebar-accent-foreground' }}
               >
-                <Link href={item.href}>
+                <Link href={item.href} onClick={handleMenuItemClick}>
                   <item.icon />
                   <span>{item.label}</span>
                 </Link>
