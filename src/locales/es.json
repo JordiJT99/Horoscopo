@@ -60,5 +60,19 @@
   "LunarAscendantSection.birthCityPlaceholder": "ej., Ciudad de México",
   "LunarAscendantSection.calculatingButton": "Calculando...",
   "LunarAscendantSection.calculateButton": "Calcular Ascendente",
-  "LunarAscendantSection.ascendantSignTitle": "Tu Signo Ascendente:"
+  "LunarAscendantSection.ascendantSignTitle": "Tu Signo Ascendente:",
+  "Sidebar.westernAstrology": "Astrología Occidental",
+  "Sidebar.westernAstrologyTooltip": "Explora horóscopos del zodiaco occidental",
+  "Sidebar.chineseHoroscope": "Horóscopo Chino",
+  "Sidebar.chineseHoroscopeTooltip": "Descubre perspectivas del zodiaco chino",
+  "Sidebar.mayanHoroscope": "Horóscopo Maya",
+  "Sidebar.mayanHoroscopeTooltip": "Descubre la sabiduría astrológica maya",
+  "ChineseHoroscopePage.title": "Horóscopo Chino",
+  "ChineseHoroscopePage.subtitle": "Explora la sabiduría del zodiaco chino.",
+  "ChineseHoroscopePage.comingSoon": "¡El contenido para la sección de Horóscopo Chino llegará pronto!",
+  "MayanHoroscopePage.title": "Horóscopo Maya",
+  "MayanHoroscopePage.subtitle": "Descubre las antiguas perspectivas de la astrología maya.",
+  "MayanHoroscopePage.comingSoon": "¡El contenido para la sección de Horóscopo Maya llegará pronto!"
 }
+
+    

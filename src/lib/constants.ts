@@ -1,5 +1,6 @@
-import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData } from '@/types';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon } from 'lucide-react';
+
+import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, MayanSignName } from '@/types';
+import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon } from 'lucide-react'; // Added RabbitIcon, FeatherIcon, StarIcon
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Aries", icon: Activity, dateRange: "Mar 21 - Apr 19" },
@@ -21,6 +22,7 @@ export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name);
 // Placeholder Data
 const genericHoroscopeText = "Today is a day of new beginnings. Embrace change and look for opportunities. Your energy levels are high, make the most of it! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
+// This function is now largely superseded by the Genkit flow for horoscopes
 export const getHoroscope = (sign: ZodiacSignName): HoroscopeData => ({
   sign,
   daily: `Daily Horoscope for ${sign}: ${genericHoroscopeText} Focus on personal projects.`,
@@ -60,4 +62,29 @@ export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: 
   };
 };
 
-export const AstroAppLogo = SparklesIcon;
+export const AstroAppLogo = SparklesIcon; // Main app logo
+export const WesternAstrologyIcon = StarIcon; // Icon for Western Astrology section
+export const ChineseAstrologyIcon = RabbitIcon; // Icon for Chinese Astrology section
+export const MayanAstrologyIcon = FeatherIcon; // Icon for Mayan Astrology section
+
+
+// --- Placeholder data for Chinese Astrology ---
+export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
+  { name: "Rat", icon: RabbitIcon, years: [2020, 2008, 1996, 1984, 1972, 1960], element: "Water" },
+  { name: "Ox", icon: RabbitIcon, years: [2021, 2009, 1997, 1985, 1973, 1961], element: "Earth" },
+  { name: "Tiger", icon: RabbitIcon, years: [2022, 2010, 1998, 1986, 1974, 1962], element: "Wood" },
+  // ... Add all 12 signs
+];
+export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as ChineseAnimalSignName);
+
+
+// --- Placeholder data for Mayan Astrology ---
+export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
+  { name: "Imix", icon: FeatherIcon, description: "Represents the primal sea, the source of all life." },
+  { name: "Ik", icon: FeatherIcon, description: "Symbolizes wind, breath, spirit, and life force." },
+  { name: "Akbal", icon: FeatherIcon, description: "Means night, darkness, and the underworld; a place of mystery and dreams." },
+  // ... Add all 20 signs
+];
+export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name as MayanSignName);
+
+    

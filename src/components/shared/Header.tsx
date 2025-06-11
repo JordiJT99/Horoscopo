@@ -1,10 +1,11 @@
+
 "use client";
 
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { AstroAppLogo } from '@/lib/constants';
-import { Globe } from 'lucide-react';
+import { Globe, PanelLeft } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { SidebarTrigger } from '@/components/ui/sidebar'; // Import SidebarTrigger
 
 interface HeaderProps {
   dictionary: Dictionary;
@@ -44,12 +46,17 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
   return (
     <header className="py-4 bg-primary shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link href={`/${currentLocale}/`} className="flex items-center gap-3 text-primary-foreground hover:opacity-90 transition-opacity">
-          <AstroAppLogo className="h-10 w-10" />
-          <h1 className="text-3xl md:text-4xl font-headline font-bold">
-            {dictionary['Header.title']}
-          </h1>
-        </Link>
+        <div className="flex items-center gap-3">
+          <div className="md:hidden"> {/* Show SidebarTrigger only on mobile */}
+            <SidebarTrigger className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground" />
+          </div>
+          <Link href={`/${currentLocale}/`} className="flex items-center gap-3 text-primary-foreground hover:opacity-90 transition-opacity">
+            <AstroAppLogo className="h-10 w-10" />
+            <h1 className="text-3xl md:text-4xl font-headline font-bold">
+              {dictionary['Header.title']}
+            </h1>
+          </Link>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
@@ -73,3 +80,5 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
 };
 
 export default Header;
+
+    

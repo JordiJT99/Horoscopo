@@ -41,5 +41,19 @@
   "LuckyNumbersSection.title": "Porte-Bonheurs",
   "LuckyNumbersSection.description": "Découvrez vos numéros porte-bonheur, votre couleur et votre pierre précieuse.",
   "LunarAscendantSection.title": "Lunaire et Ascendant",
-  "LunarAscendantSection.description": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant."
+  "LunarAscendantSection.description": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant.",
+  "Sidebar.westernAstrology": "Astrologie Occidentale",
+  "Sidebar.westernAstrologyTooltip": "Explorez les horoscopes du zodiaque occidental",
+  "Sidebar.chineseHoroscope": "Horoscope Chinois",
+  "Sidebar.chineseHoroscopeTooltip": "Découvrez les perspectives du zodiaque chinois",
+  "Sidebar.mayanHoroscope": "Horoscope Maya",
+  "Sidebar.mayanHoroscopeTooltip": "Découvrez la sagesse astrologique maya",
+  "ChineseHoroscopePage.title": "Horoscope Chinois",
+  "ChineseHoroscopePage.subtitle": "Explorez la sagesse du zodiaque chinois.",
+  "ChineseHoroscopePage.comingSoon": "Le contenu de la section Horoscope Chinois arrive bientôt !",
+  "MayanHoroscopePage.title": "Horoscope Maya",
+  "MayanHoroscopePage.subtitle": "Découvrez les anciennes connaissances de l'astrologie maya.",
+  "MayanHoroscopePage.comingSoon": "Le contenu de la section Horoscope Maya arrive bientôt !"
 }
+
+    

@@ -57,3 +57,47 @@ export interface UserBirthData {
   time: string; // HH:mm
   city: string;
 }
+
+// --- New Types for Chinese and Mayan Horoscopes ---
+
+// Chinese Astrology
+export type ChineseAnimalSignName =
+  | "Rat" | "Ox" | "Tiger" | "Rabbit" | "Dragon" | "Snake"
+  | "Horse" | "Goat" | "Monkey" | "Rooster" | "Dog" | "Pig";
+
+export interface ChineseZodiacSign {
+  name: ChineseAnimalSignName;
+  icon?: React.ElementType;
+  years: number[]; // Example: [1948, 1960, 1972, 1984, 1996, 2008, 2020] for Rat
+  element?: string; // e.g., Wood, Fire, Earth, Metal, Water
+}
+
+// Mayan Astrology
+export type MayanSignName =
+  | "Imix" | "Ik" | "Akbal" | "Kan" | "Chicchan" | "Cimi"
+  | "Manik" | "Lamat" | "Muluc" | "Oc" | "Chuen" | "Eb"
+  | "Ben" | "Ix" | "Men" | "Cib" | "Caban" | "Etznab" | "Cauac" | "Ahau";
+
+export interface MayanZodiacSign {
+  name: MayanSignName;
+  icon?: React.ElementType;
+  description?: string;
+  associatedColor?: string;
+}
+
+// You might want more detailed types for horoscopes, elements, compatibility later
+export interface ChineseHoroscopeData {
+  sign: ChineseAnimalSignName;
+  general: string;
+  love?: string;
+  career?: string;
+  health?: string;
+}
+
+export interface MayanHoroscopeData {
+  sign: MayanSignName;
+  dailyEnergy: string;
+  advice?: string;
+}
+
+    

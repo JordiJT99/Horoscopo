@@ -41,5 +41,19 @@
   "LuckyNumbersSection.title": "Glücksbringer",
   "LuckyNumbersSection.description": "Finden Sie Ihre Glückszahlen, -farbe und -edelstein heraus.",
   "LunarAscendantSection.title": "Mond & Aszendent",
-  "LunarAscendantSection.description": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen."
+  "LunarAscendantSection.description": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen.",
+  "Sidebar.westernAstrology": "Westliche Astrologie",
+  "Sidebar.westernAstrologyTooltip": "Entdecken Sie westliche Tierkreishoroskope",
+  "Sidebar.chineseHoroscope": "Chinesisches Horoskop",
+  "Sidebar.chineseHoroscopeTooltip": "Entdecken Sie chinesische Tierkreiseinblicke",
+  "Sidebar.mayanHoroscope": "Maya-Horoskop",
+  "Sidebar.mayanHoroscopeTooltip": "Entdecken Sie die Weisheit der Maya-Astrologie",
+  "ChineseHoroscopePage.title": "Chinesisches Horoskop",
+  "ChineseHoroscopePage.subtitle": "Erkunden Sie die Weisheit des chinesischen Tierkreises.",
+  "ChineseHoroscopePage.comingSoon": "Inhalte für den Abschnitt Chinesisches Horoskop folgen in Kürze!",
+  "MayanHoroscopePage.title": "Maya-Horoskop",
+  "MayanHoroscopePage.subtitle": "Entdecken Sie die alten Erkenntnisse der Maya-Astrologie.",
+  "MayanHoroscopePage.comingSoon": "Inhalte für den Abschnitt Maya-Horoskop folgen in Kürze!"
 }
+
+    

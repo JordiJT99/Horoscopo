@@ -1,13 +1,14 @@
+
 import type { Metadata } from 'next';
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarInset } from "@/components/ui/sidebar";
+import AppSidebar from '@/components/shared/AppSidebar';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
-import '../globals.css'; // Adjusted path for globals.css
+import '../globals.css';
 
-// Define a type for the params
 interface LocaleLayoutParams {
   locale: Locale;
 }
@@ -37,15 +38,22 @@ export default async function LocaleLayout({
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col bg-background text-foreground">
-        <SidebarProvider defaultOpen={false}>
-          <Header dictionary={dictionary} currentLocale={params.locale} />
-          <div className="flex-grow"> {/* This div ensures main content takes up available space */}
-            {children}
-          </div>
-          <Footer dictionary={dictionary} />
+        <SidebarProvider defaultOpen={true}>
+          <Sidebar>
+            <AppSidebar dictionary={dictionary} currentLocale={params.locale} />
+          </Sidebar>
+          <SidebarInset>
+            <Header dictionary={dictionary} currentLocale={params.locale} />
+            <div className="flex-grow">
+              {children}
+            </div>
+            <Footer dictionary={dictionary} />
+          </SidebarInset>
         </SidebarProvider>
         <Toaster />
       </body>
     </html>
   );
 }
+
+    
