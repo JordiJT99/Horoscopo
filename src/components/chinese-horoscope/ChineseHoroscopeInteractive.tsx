@@ -7,11 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon } from '@/lib/constants';
+import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants'; // Added ChineseAstrologyIcon
 import type { ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import SectionTitle from '@/components/shared/SectionTitle'; // Import if needed for sub-sections
+import SectionTitle from '@/components/shared/SectionTitle'; 
 
 interface ChineseHoroscopeInteractiveProps {
   dictionary: Dictionary;
@@ -227,3 +227,4 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
     </>
   );
 }
+
