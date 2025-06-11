@@ -9,7 +9,7 @@ import {
   GALACTIC_TONES,
   GalacticTonesIcon,
   KinCalculatorIcon,
-  MayanAstrologyIcon, // Asegúrate que este ícono está correctamente definido y exportado en constants.ts
+  MayanAstrologyIcon,
   calculateMayanKin
 } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -17,8 +17,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarIconLucide } from "lucide-react"; // Renombrado para evitar conflicto con el componente Calendar
-import { Calendar } from "@/components/ui/calendar"; // Componente Calendar de ShadCN
+import { Calendar as CalendarIconLucide, HelpCircle } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
@@ -35,7 +35,6 @@ const dateLocales: Record<Locale, typeof enUS> = {
   fr,
 };
 
-// Cambiado a una declaración de función estándar
 function CustomLabel({ htmlFor, children, className }: { htmlFor: string, children: React.ReactNode, className?: string }) {
   return (
     <label htmlFor={htmlFor} className={cn("block text-sm font-medium text-foreground mb-1", className)}>
@@ -49,9 +48,11 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
   const [mayanKin, setMayanKin] = useState<MayanKinInfo | null>(null);
   const [isLoadingKin, setIsLoadingKin] = useState(false);
   const [errorKin, setErrorKin] = useState<string | null>(null);
+  const [showCalculationExplanation, setShowCalculationExplanation] = useState(false);
 
   useEffect(() => {
-    setSelectedBirthDate(new Date());
+    // Initialize with a default date, e.g., today or a fixed past date, for client-side only
+    setSelectedBirthDate(new Date(1990, 0, 1)); // Example: Jan 1, 1990
   }, []);
 
   const handleCalculateKin = () => {
@@ -75,6 +76,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
   };
   
   const currentDfnlocale = dateLocales[locale] || enUS;
+  const currentYear = new Date().getFullYear();
 
   return (
     <>
@@ -87,8 +89,8 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
           />
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <div className="w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-end gap-4">
+            <div className="w-full sm:w-auto flex-grow">
               <CustomLabel htmlFor="birth-date-mayan">
                 {dictionary['MayanHoroscopePage.birthDateLabel']}
               </CustomLabel>
@@ -113,11 +115,14 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                     onSelect={setSelectedBirthDate}
                     disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
                     initialFocus
+                    captionLayout="dropdown-buttons"
+                    fromYear={1900}
+                    toYear={currentYear}
                   />
                 </PopoverContent>
               </Popover>
             </div>
-            <Button onClick={handleCalculateKin} disabled={isLoadingKin || !selectedBirthDate} className="w-full sm:w-auto mt-4 sm:mt-0 self-end">
+            <Button onClick={handleCalculateKin} disabled={isLoadingKin || !selectedBirthDate} className="w-full sm:w-auto">
               {isLoadingKin ? (dictionary['MayanHoroscopePage.calculatingKin'] || "Calculating...") : (dictionary['MayanHoroscopePage.calculateKinButton'])}
             </Button>
           </div>
@@ -161,6 +166,27 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                   </p>
                   <p className="text-sm mt-2">{mayanKin.tone.detailedInterpretation}</p>
                 </div>
+                <div className="mt-4 text-center">
+                  <Button variant="link" onClick={() => setShowCalculationExplanation(!showCalculationExplanation)} className="text-sm text-primary hover:underline">
+                    <HelpCircle size={16} className="mr-1" />
+                    {showCalculationExplanation 
+                      ? (dictionary['MayanHoroscopePage.hideCalculationExplanation'] || "Ocultar explicación") 
+                      : (dictionary['MayanHoroscopePage.showCalculationExplanation'] || "Ver cómo se calcula tu Kin")}
+                  </Button>
+                </div>
+                {showCalculationExplanation && (
+                  <Card className="mt-4 p-4 bg-card text-card-foreground">
+                    <CardTitle className="text-md font-semibold mb-2">{dictionary['MayanHoroscopePage.calculationExplanationTitle']}</CardTitle>
+                    <ol className="list-decimal list-inside space-y-2 text-xs">
+                      <li>{dictionary['MayanHoroscopePage.calcExplainStep1']}</li>
+                      <li>{dictionary['MayanHoroscopePage.calcExplainStep2']}</li>
+                      <li>{dictionary['MayanHoroscopePage.calcExplainStep3']}</li>
+                      <li>{dictionary['MayanHoroscopePage.calcExplainStep4']}</li>
+                      <li>{dictionary['MayanHoroscopePage.calcExplainStep5']}</li>
+                    </ol>
+                    <p className="text-xs mt-3 italic">{dictionary['MayanHoroscopePage.calcExplainNote']}</p>
+                  </Card>
+                )}
               </CardContent>
             </Card>
           )}
