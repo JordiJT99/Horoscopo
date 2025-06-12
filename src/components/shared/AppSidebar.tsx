@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon, WesternAstrologyIcon } from '@/lib/constants';
+import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon } from '@/lib/constants';
 import {
   SidebarContent,
   SidebarHeader,
@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2 } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -24,12 +25,14 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   const { state: sidebarState, setOpenMobile, isMobile } = useSidebar();
 
   const isActive = (path: string) => {
-    if (path === `/${currentLocale}` || path === `/${currentLocale}/`) {
-      const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
-      const normalizedLocalePath = `/${currentLocale}/`;
-      return normalizedPathname === normalizedLocalePath;
+    const normalizedPath = path.endsWith('/') ? path : `${path}/`;
+    const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
+    
+    // Special case for home: exact match or just the locale
+    if (path === `/${currentLocale}/`) {
+      return normalizedPathname === `/${currentLocale}/`;
     }
-    return pathname.startsWith(path);
+    return normalizedPathname.startsWith(normalizedPath);
   };
 
   const handleMenuItemClick = () => {
@@ -41,21 +44,51 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   const menuItems = [
     {
       href: `/${currentLocale}/`,
-      label: dictionary['Sidebar.westernAstrology'] || "Western Astrology",
-      icon: WesternAstrologyIcon,
-      tooltip: dictionary['Sidebar.westernAstrologyTooltip'] || "Western Astrology",
+      label: dictionary['Sidebar.home'] || "Home (Daily)",
+      icon: LayoutDashboard,
+      tooltip: dictionary['Sidebar.homeTooltip'] || "Daily Horoscope & Home",
+    },
+    {
+      href: `/${currentLocale}/weekly-horoscope`,
+      label: dictionary['Sidebar.weeklyHoroscope'] || "Weekly Horoscope",
+      icon: CalendarRange,
+      tooltip: dictionary['Sidebar.weeklyHoroscopeTooltip'] || "View Weekly Horoscope",
+    },
+    {
+      href: `/${currentLocale}/monthly-horoscope`,
+      label: dictionary['Sidebar.monthlyHoroscope'] || "Monthly Horoscope",
+      icon: Calendar,
+      tooltip: dictionary['Sidebar.monthlyHoroscopeTooltip'] || "View Monthly Horoscope",
+    },
+    {
+      href: `/${currentLocale}/compatibility`,
+      label: dictionary['Sidebar.compatibility'] || "Compatibility",
+      icon: Users,
+      tooltip: dictionary['Sidebar.compatibilityTooltip'] || "Check Zodiac Compatibility",
+    },
+    {
+      href: `/${currentLocale}/lucky-numbers`,
+      label: dictionary['Sidebar.luckyNumbers'] || "Lucky Numbers",
+      icon: Clover,
+      tooltip: dictionary['Sidebar.luckyNumbersTooltip'] || "Discover Lucky Numbers",
+    },
+    {
+      href: `/${currentLocale}/lunar-ascendant`,
+      label: dictionary['Sidebar.lunarAscendant'] || "Lunar & Ascendant",
+      icon: Wand2, // Using Wand2 as a generic "tools" or "info" icon
+      tooltip: dictionary['Sidebar.lunarAscendantTooltip'] || "Lunar Phase & Ascendant Calculator",
     },
     {
       href: `/${currentLocale}/chinese-horoscope`,
       label: dictionary['Sidebar.chineseHoroscope'] || "Chinese Horoscope",
       icon: ChineseAstrologyIcon,
-      tooltip: dictionary['Sidebar.chineseHoroscopeTooltip'] || "Chinese Horoscope",
+      tooltip: dictionary['Sidebar.chineseHoroscopeTooltip'] || "Chinese Zodiac Insights",
     },
     {
       href: `/${currentLocale}/mayan-horoscope`,
       label: dictionary['Sidebar.mayanHoroscope'] || "Mayan Horoscope",
       icon: MayanAstrologyIcon,
-      tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Horoscope",
+      tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Astrological Wisdom",
     },
   ];
 
