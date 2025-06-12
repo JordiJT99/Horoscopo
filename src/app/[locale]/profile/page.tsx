@@ -5,17 +5,17 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { UserCircle, Mail, CalendarDays, Edit3 } from 'lucide-react';
+import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star } from 'lucide-react';
 import Image from 'next/image';
 
 interface ProfilePageProps {
-  params: Promise<{ // Updated type
+  params: Promise<{
     locale: Locale;
   }>;
 }
 
-export default async function ProfilePage({ params: paramsPromise }: ProfilePageProps) { // Renamed and will await
-  const params = await paramsPromise; // Await params
+export default async function ProfilePage({ params: paramsPromise }: ProfilePageProps) {
+  const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
   // Placeholder user data
@@ -98,6 +98,30 @@ export default async function ProfilePage({ params: paramsPromise }: ProfilePage
                 <input type="email" id="email-profile" defaultValue={userData.email} className="mt-1 block w-full p-2 border border-input rounded-md shadow-sm bg-background font-body" readOnly />
               </div>
               <Button className="font-body">{dictionary['ProfilePage.updateSettingsButton'] || "Update Settings"}</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-xl mt-8 bg-gradient-to-br from-primary/20 to-accent/20 border-primary">
+            <CardHeader>
+              <CardTitle className="font-headline text-xl text-primary flex items-center gap-2">
+                <Gem className="h-5 w-5" />
+                {dictionary['ProfilePage.premiumTitle'] || "Unlock Premium Features"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="font-body text-muted-foreground mb-4">
+                {dictionary['ProfilePage.premiumDescription'] || "Elevate your cosmic journey with our exclusive premium benefits."}
+              </p>
+              <ul className="list-disc list-inside space-y-2 font-body text-card-foreground mb-6">
+                <li>{dictionary['ProfilePage.premiumBenefitAdFree'] || "Ad-free experience"}</li>
+                <li>{dictionary['ProfilePage.premiumBenefitExclusive'] || "Exclusive astrological content & readings"}</li>
+                <li>{dictionary['ProfilePage.premiumBenefitEarlyAccess'] || "Early access to new features"}</li>
+                <li>{dictionary['ProfilePage.premiumBenefitSupport'] || "Priority customer support"}</li>
+              </ul>
+              <Button className="w-full font-body bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Star className="mr-2 h-4 w-4" />
+                {dictionary['ProfilePage.premiumButton'] || "Go Premium"}
+              </Button>
             </CardContent>
           </Card>
         </div>

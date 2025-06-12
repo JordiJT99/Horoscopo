@@ -10,6 +10,7 @@
   "Page.welcomeSubtitle": "Votre portail vers le cosmos. Explorez votre chemin astrologique et découvrez les secrets célestes.",
   "HomePage.dailyHoroscopeTitle": "Horoscope du Jour",
   "HomePage.dailyHoroscopeSubtitle": "Vos aperçus astrologiques quotidiens. Sélectionnez votre signe ci-dessous.",
+  "HomePage.adPlaceholderText": "Espace Publicitaire - Votre publicité pourrait être ici !",
   "Aries": "Bélier",
   "Taurus": "Taureau",
   "Gemini": "Gémeaux",
@@ -231,6 +232,13 @@
   "ProfilePage.usernameLabel": "Nom d'utilisateur",
   "ProfilePage.emailLabel": "Adresse e-mail",
   "ProfilePage.updateSettingsButton": "Mettre à jour les paramètres",
+  "ProfilePage.premiumTitle": "Débloquer les Fonctionnalités Premium",
+  "ProfilePage.premiumDescription": "Élevez votre voyage cosmique avec nos avantages premium exclusifs.",
+  "ProfilePage.premiumBenefitAdFree": "Expérience sans publicité",
+  "ProfilePage.premiumBenefitExclusive": "Contenu astrologique et lectures exclusifs",
+  "ProfilePage.premiumBenefitEarlyAccess": "Accès anticipé aux nouvelles fonctionnalités",
+  "ProfilePage.premiumBenefitSupport": "Support client prioritaire",
+  "ProfilePage.premiumButton": "Devenir Premium",
   "CrystalBallPage.title": "Boule de Cristal",
   "CrystalBallPage.subtitle": "Scrutez les brumes et posez votre question à la Boule de Cristal.",
   "CrystalBallPage.askTitle": "Demandez à la Boule de Cristal",
@@ -285,5 +293,3 @@
   "Share.urlTooLong": "La révélation/interprétation est trop longue pour être partagée en tant que lien direct avec tout le contenu. Essayez de partager le texte directement.",
   "Error.genericTitle": "Erreur"
 }
-
-    

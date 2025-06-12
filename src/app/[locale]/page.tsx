@@ -6,13 +6,13 @@ import HoroscopeSection from '@/components/sections/HoroscopeSection';
 import { Sparkles } from 'lucide-react'; // Changed from LayoutDashboard
 
 interface AstroVibesPageProps {
-  params: Promise<{ // Updated type
+  params: Promise<{
     locale: Locale;
   }>;
 }
 
-export default async function AstroVibesHomePage({ params: paramsPromise }: AstroVibesPageProps) { // Renamed and will await
-  const params = await paramsPromise; // Await params
+export default async function AstroVibesHomePage({ params: paramsPromise }: AstroVibesPageProps) {
+  const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
   return (
@@ -28,6 +28,11 @@ export default async function AstroVibesHomePage({ params: paramsPromise }: Astr
         <div> {/* Removed lg:col-span-2 to make it single column */}
           <HoroscopeSection dictionary={dictionary} locale={params.locale} period="daily" />
         </div>
+      </div>
+
+      {/* Ad Placeholder */}
+      <div className="mt-12 p-6 bg-muted/20 border-2 border-dashed border-muted-foreground/30 rounded-lg text-center text-muted-foreground font-body">
+        <p className="text-sm">{dictionary['HomePage.adPlaceholderText'] || "Advertisement Placeholder - Your ad could be here!"}</p>
       </div>
     </main>
   );

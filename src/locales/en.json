@@ -10,6 +10,7 @@
   "Page.welcomeSubtitle": "Your portal to the cosmos. Explore your astrological path and uncover celestial secrets.",
   "HomePage.dailyHoroscopeTitle": "Today's Horoscope",
   "HomePage.dailyHoroscopeSubtitle": "Your daily astrological insights. Select your sign below.",
+  "HomePage.adPlaceholderText": "Advertisement Placeholder - Your ad could be here!",
   "Aries": "Aries",
   "Taurus": "Taurus",
   "Gemini": "Gemini",
@@ -250,6 +251,13 @@
   "ProfilePage.usernameLabel": "Username",
   "ProfilePage.emailLabel": "Email Address",
   "ProfilePage.updateSettingsButton": "Update Settings",
+  "ProfilePage.premiumTitle": "Unlock Premium Features",
+  "ProfilePage.premiumDescription": "Elevate your cosmic journey with our exclusive premium benefits.",
+  "ProfilePage.premiumBenefitAdFree": "Ad-free experience",
+  "ProfilePage.premiumBenefitExclusive": "Exclusive astrological content & readings",
+  "ProfilePage.premiumBenefitEarlyAccess": "Early access to new features",
+  "ProfilePage.premiumBenefitSupport": "Priority customer support",
+  "ProfilePage.premiumButton": "Go Premium",
   "CrystalBallPage.title": "Crystal Ball",
   "CrystalBallPage.subtitle": "Peer into the mists and ask your question to the Crystal Ball.",
   "CrystalBallPage.askTitle": "Ask the Crystal Ball",
@@ -304,5 +312,3 @@
   "Share.urlTooLong": "The revelation/interpretation is too long to be shared as a link. Try sharing the text directly.",
   "Error.genericTitle": "Error"
 }
-
-    

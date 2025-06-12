@@ -10,6 +10,7 @@
   "Page.welcomeSubtitle": "Ihr Portal zum Kosmos. Entdecken Sie Ihren astrologischen Pfad und lüften Sie himmlische Geheimnisse.",
   "HomePage.dailyHoroscopeTitle": "Horoskop von Heute",
   "HomePage.dailyHoroscopeSubtitle": "Ihre täglichen astrologischen Einblicke. Wählen Sie unten Ihr Zeichen.",
+  "HomePage.adPlaceholderText": "Werbeplatzhalter - Ihre Werbung könnte hier stehen!",
   "Aries": "Widder",
   "Taurus": "Stier",
   "Gemini": "Zwillinge",
@@ -231,6 +232,13 @@
   "ProfilePage.usernameLabel": "Benutzername",
   "ProfilePage.emailLabel": "E-Mail-Adresse",
   "ProfilePage.updateSettingsButton": "Einstellungen aktualisieren",
+  "ProfilePage.premiumTitle": "Premium-Funktionen freischalten",
+  "ProfilePage.premiumDescription": "Erweitern Sie Ihre kosmische Reise mit unseren exklusiven Premium-Vorteilen.",
+  "ProfilePage.premiumBenefitAdFree": "Werbefreies Erlebnis",
+  "ProfilePage.premiumBenefitExclusive": "Exklusiver astrologischer Inhalt & Deutungen",
+  "ProfilePage.premiumBenefitEarlyAccess": "Frühzeitiger Zugang zu neuen Funktionen",
+  "ProfilePage.premiumBenefitSupport": "Bevorzugter Kundensupport",
+  "ProfilePage.premiumButton": "Premium werden",
   "CrystalBallPage.title": "Kristallkugel",
   "CrystalBallPage.subtitle": "Blicken Sie in die Nebel und stellen Sie Ihre Frage an die Kristallkugel.",
   "CrystalBallPage.askTitle": "Fragen Sie die Kristallkugel",
@@ -285,5 +293,3 @@
   "Share.urlTooLong": "Die Offenbarung/Deutung ist zu lang, um als direkter Link mit dem gesamten Inhalt geteilt zu werden. Versuchen Sie, den Text direkt zu teilen.",
   "Error.genericTitle": "Fehler"
 }
-
-    
