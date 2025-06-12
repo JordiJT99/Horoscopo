@@ -1,10 +1,10 @@
 
 'use server';
 /**
- * @fileOverview A Genkit flow to generate horoscopes with caching.
+ * @fileOverview A Genkit flow to generate horoscopes with caching and mock fallbacks.
  *
  * - getHoroscopeFlow - A function that calls the horoscope generation flow.
- *   It now uses caching for daily, weekly, and monthly horoscopes.
+ *   It now uses caching for daily, weekly, and monthly horoscopes, and fallbacks to mocks on API error.
  * - HoroscopeFlowInput - The input type for the getHoroscopeFlow function.
  * - HoroscopeFlowOutput - The return type for the getHoroscopeFlow function.
  */
@@ -14,6 +14,7 @@ import {z} from 'genkit';
 import type { ZodiacSignName } from '@/types';
 import { ALL_SIGN_NAMES } from '@/lib/constants';
 import { format, getISOWeekYear, getMonth, getYear } from 'date-fns';
+import { getRandomMockHoroscope } from '@/lib/mock-horoscopes'; // Import mock data function
 
 // Helper to create a Zod enum from the ZodiacSignName type values
 const zodSignEnum = z.enum(ALL_SIGN_NAMES as [string, ...string[]]);
@@ -62,7 +63,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   output: { schema: HoroscopeDetailSchema },
   prompt: `You are a skilled astrologer. Generate ONLY the DAILY horoscope for TODAY for the zodiac sign {{sign}} in the {{locale}} language.
 Provide a detailed and insightful horoscope.
-For the 'main' section, delve into the general characteristics of the sign and how current energies might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad, no en vano son un signo de fuego, dominado por Marte, y su naturaleza es fogosa y dinámica. No suele esperar los acontecimientos, se precipita sobre ellos y claro, es impaciente, lo que muchas veces le lleva a tomar decisiones demasiado rápidas. Es optimista y sincero y valoras la amistad como un bien sagrado."
+For the 'main' section, delve into the general characteristics of the sign and how current energies might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad, no en vano son un signo de fuego, dominado por Marte, y tu naturaleza es fogosa y dinámica. No suele esperar los acontecimientos, se precipita sobre ellos y claro, es impaciente, lo que muchas veces le lleva a tomar decisiones demasiado rápidas. Es optimista y sincero y valoras la amistad como un bien sagrado."
 For 'love', 'money', and 'health', provide specific, elaborate insights and advice for the day.
 The output must be a JSON object with the following keys: "main", "love", "money", "health".
 
@@ -134,19 +135,22 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInput, currentDate: 
   try {
     const {output} = await dailyHoroscopePrompt(input);
     if (!output?.main || !output?.love || !output?.money || !output?.health) {
+      // This error will be caught below and might trigger mock data if it's due to partial AI response.
+      // However, the more likely scenario is a complete API failure (503, etc.) before this check.
       throw new Error('AI did not return complete daily horoscope data.');
     }
     dailyCache.set(cacheKey, output);
     return output;
   } catch (err: any) {
     console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
-    if (err.message && (err.message.includes('503') || err.message.toLowerCase().includes('overloaded') || err.message.toLowerCase().includes('service unavailable'))) {
-      throw new Error(`The astrology spirits are resting (model overloaded). Please try again in a moment.`);
+    const errorMessage = err.message || '';
+    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error')) {
+      console.warn(`Genkit API error for daily horoscope (${input.sign}, ${input.locale}). Using mock data as fallback.`);
+      return getRandomMockHoroscope('daily', input.sign, input.locale);
     }
-    if (err.message && err.message.includes('GoogleGenerativeAI Error')) {
-       throw new Error(`An issue occurred with the celestial connection (AI service error). Please try again later.`);
-    }
-    throw new Error(`Failed to generate daily horoscope: ${err.message || 'Unknown error'}`);
+    // For other types of errors (e.g., schema validation, unexpected issues), rethrow a generic error
+    // or handle them as appropriate. Here, we'll make it clear it's a generation failure.
+    throw new Error(`Failed to generate daily horoscope for ${input.sign}: ${errorMessage || 'Unknown error'}`);
   }
 }
 
@@ -166,13 +170,12 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInput, currentDate:
     return output;
   } catch (err: any) {
     console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
-    if (err.message && (err.message.includes('503') || err.message.toLowerCase().includes('overloaded') || err.message.toLowerCase().includes('service unavailable'))) {
-      throw new Error(`The astrology spirits are resting (model overloaded). Please try again in a moment.`);
+    const errorMessage = err.message || '';
+    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error')) {
+      console.warn(`Genkit API error for weekly horoscope (${input.sign}, ${input.locale}). Using mock data as fallback.`);
+      return getRandomMockHoroscope('weekly', input.sign, input.locale);
     }
-    if (err.message && err.message.includes('GoogleGenerativeAI Error')) {
-       throw new Error(`An issue occurred with the celestial connection (AI service error). Please try again later.`);
-    }
-    throw new Error(`Failed to generate weekly horoscope: ${err.message || 'Unknown error'}`);
+    throw new Error(`Failed to generate weekly horoscope for ${input.sign}: ${errorMessage || 'Unknown error'}`);
   }
 }
 
@@ -192,13 +195,12 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInput, currentDate
     return output;
   } catch (err: any) {
     console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
-    if (err.message && (err.message.includes('503') || err.message.toLowerCase().includes('overloaded') || err.message.toLowerCase().includes('service unavailable'))) {
-      throw new Error(`The astrology spirits are resting (model overloaded). Please try again in a moment.`);
+    const errorMessage = err.message || '';
+    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error')) {
+      console.warn(`Genkit API error for monthly horoscope (${input.sign}, ${input.locale}). Using mock data as fallback.`);
+      return getRandomMockHoroscope('monthly', input.sign, input.locale);
     }
-    if (err.message && err.message.includes('GoogleGenerativeAI Error')) {
-       throw new Error(`An issue occurred with the celestial connection (AI service error). Please try again later.`);
-    }
-    throw new Error(`Failed to generate monthly horoscope: ${err.message || 'Unknown error'}`);
+    throw new Error(`Failed to generate monthly horoscope for ${input.sign}: ${errorMessage || 'Unknown error'}`);
   }
 }
 
@@ -211,6 +213,8 @@ const horoscopeFlow = ai.defineFlow(
   async (input) => {
     const currentDate = new Date(); // Use current date for determining cache periods
 
+    // Note: If any of these fail and return mock data, the overall result will contain that mock data.
+    // The UI will not distinguish between real and mock data unless we add specific flags.
     const [dailyDetails, weeklyDetails, monthlyDetails] = await Promise.all([
       getDailyHoroscopeDetails(input, currentDate),
       getWeeklyHoroscopeDetails(input, currentDate),
@@ -230,3 +234,4 @@ export async function getHoroscopeFlow(input: HoroscopeFlowInput): Promise<Horos
   return horoscopeFlow(input);
 }
 
+    
