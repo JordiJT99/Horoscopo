@@ -26,10 +26,10 @@ export type HoroscopeFlowInput = z.infer<typeof HoroscopeFlowInputSchema>;
 
 // Schema for detailed horoscope predictions for a period
 const HoroscopeDetailSchema = z.object({
-  main: z.string().describe('The general horoscope text for the period.'),
-  love: z.string().describe('Specific insights for love and relationships for the period.'),
-  money: z.string().describe('Specific insights for finances and career for the period.'),
-  health: z.string().describe('Specific insights for health and well-being for the period.'),
+  main: z.string().describe('A detailed general horoscope for the period, touching upon the sign\'s core traits and how current energies affect them. This should be an elaborate text, like: "If something stands out about these natives, it is their impulsiveness, not in vain are they a fire sign, dominated by Mars, and their nature is fiery and dynamic. They do not usually wait for events, they rush into them and of course, they are impatient, which often leads them to make decisions too quickly. They are optimistic and sincere and value friendship as a sacred good."'),
+  love: z.string().describe('Elaborate insights and advice for love and relationships for the period. Provide specific scenarios or feelings.'),
+  money: z.string().describe('Comprehensive insights and advice for finances and career for the period. Discuss potential opportunities or challenges.'),
+  health: z.string().describe('Detailed insights and advice for health and well-being for the period. Suggest activities or precautions.'),
 });
 export type HoroscopeDetail = z.infer<typeof HoroscopeDetailSchema>;
 
@@ -61,19 +61,17 @@ const dailyHoroscopePrompt = ai.definePrompt({
   input: { schema: HoroscopeFlowInputSchema },
   output: { schema: HoroscopeDetailSchema },
   prompt: `You are a skilled astrologer. Generate ONLY the DAILY horoscope for TODAY for the zodiac sign {{sign}} in the {{locale}} language.
-Focus on current energies and opportunities for the day.
-The output must be a JSON object with the following keys:
-- "main": The general daily horoscope.
-- "love": Specific insights for love and relationships today.
-- "money": Specific insights for finances and career today.
-- "health": Specific insights for health and well-being today.
+Provide a detailed and insightful horoscope.
+For the 'main' section, delve into the general characteristics of the sign and how current energies might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad, no en balde son un signo de fuego, dominado por Marte, y su naturaleza es fogosa y dinámica. No suele esperar los acontecimientos, se precipita sobre ellos y claro, es impaciente, lo que muchas veces le lleva a tomar decisiones demasiado rápidas. Es optimista y sincero y valora la amistad como un bien sagrado."
+For 'love', 'money', and 'health', provide specific, elaborate insights and advice for the day.
+The output must be a JSON object with the following keys: "main", "love", "money", "health".
 
-Example for {{sign}} (Aries) in {{locale}} (en):
+Example for {{sign}} (Aries) in {{locale}} (es):
 {
-  "main": "Aries, today your energy is boundless! Tackle that project you've been postponing. Opportunities for quick wins are high.",
-  "love": "In love, a direct approach could clear up misunderstandings. Be bold.",
-  "money": "Financially, an unexpected expense might arise, but a new income stream looks promising.",
-  "health": "Your physical energy is high, perfect for starting a new fitness routine."
+  "main": "Aries, si algo resalta de ti es tu impulsividad, no en vano eres un signo de fuego, dominado por Marte, y tu naturaleza es fogosa y dinámica. No sueles esperar los acontecimientos, te precipitas sobre ellos y claro, eres impaciente, lo que muchas veces te lleva a tomar decisiones demasiado rápidas. Eres optimista y sincero y valoras la amistad como un bien sagrado. Hoy, esta energía se ve amplificada, empujándote a tomar la iniciativa, pero recuerda moderar tu prisa con un momento de reflexión.",
+  "love": "En los asuntos del corazón, tu franqueza puede ser un arma de doble filo. Hoy, podría llevarte a un encuentro apasionado o a una conversación sincera que aclare las cosas. Si estás en una relación, sorprende a tu pareja con un gesto espontáneo. Los solteros podrían sentir un fuerte impulso de conquistar a alguien cautivador.",
+  "money": "Financieramente, tu naturaleza audaz podría llevarte a explorar una nueva y emocionante empresa o a realizar una inversión rápida. Aunque se presentan oportunidades de ganancias rápidas, también podría surgir un gasto inesperado relacionado con una decisión impulsiva del pasado. Es un buen día para generar ideas sobre fuentes de ingresos innovadoras en lugar de asumir compromisos importantes.",
+  "health": "Tu energía física es excepcionalmente alta, Aries. Es un día excelente para canalizarla en un entrenamiento vigoroso o un deporte competitivo. Sin embargo, ten cuidado con el sobreesfuerzo o las lesiones menores debido a la prisa. Escucha las señales de tu cuerpo y asegúrate de descansar lo suficiente para mantener este ritmo dinámico."
 }
 Now generate the daily horoscope for {{sign}} in {{locale}} for today:
 `,
@@ -85,19 +83,17 @@ const weeklyHoroscopePrompt = ai.definePrompt({
   input: { schema: HoroscopeFlowInputSchema },
   output: { schema: HoroscopeDetailSchema },
   prompt: `You are a skilled astrologer. Generate ONLY the WEEKLY horoscope for THIS CURRENT WEEK for the zodiac sign {{sign}} in the {{locale}} language.
-Focus on the broader themes and challenges for the entire week.
-The output must be a JSON object with the following keys:
-- "main": The general weekly horoscope.
-- "love": Specific insights for love and relationships this week.
-- "money": Specific insights for finances and career this week.
-- "health": Specific insights for health and well-being this week.
+Provide a detailed and insightful horoscope.
+For the 'main' section, delve into the general characteristics of the sign and how the energies of the week might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad...".
+For 'love', 'money', and 'health', provide specific, elaborate insights and advice for the week.
+The output must be a JSON object with the following keys: "main", "love", "money", "health".
 
-Example for {{sign}} (Aries) in {{locale}} (en):
+Example for {{sign}} (Taurus) in {{locale}} (es):
 {
-  "main": "This week, Aries, communication is key. Express your ideas clearly to avoid misunderstandings. A new connection could prove beneficial.",
-  "love": "Romantic opportunities may arise mid-week. Be open to new encounters.",
-  "money": "Focus on long-term financial planning. Avoid impulsive spending.",
-  "health": "Prioritize rest and mental well-being this week to avoid burnout."
+  "main": "Tauro, esta semana te invita a conectar con tu naturaleza paciente y tu amor por la estabilidad. Eres conocido por tu perseverancia y tu aprecio por las cosas buenas de la vida. Las energías de la semana favorecen la consolidación de proyectos y la búsqueda de confort. Sin embargo, podrías sentir una tensión entre tu deseo de seguridad y una llamada interna a explorar nuevos placeres o inversiones. Es un buen momento para disfrutar de los frutos de tu trabajo, pero también para considerar cómo puedes expandir tus horizontes de forma mesurada.",
+  "love": "En el amor, la semana se presenta ideal para profundizar la conexión con tu pareja a través de gestos de cariño y momentos de calidad. Si estás soltero, tu natural sensualidad atraerá, pero evita precipitarte; busca conexiones genuinas y estables. La comunicación honesta sobre tus necesidades emocionales será clave.",
+  "money": "En cuanto a finanzas y carrera, es una semana para la planificación a largo plazo más que para movimientos arriesgados. Tu enfoque práctico te servirá bien. Podrías recibir reconocimiento por tu esfuerzo constante o encontrar una oportunidad para invertir en algo tangible y seguro. Evita gastos impulsivos en lujos innecesarios.",
+  "health": "Para tu bienestar, esta semana enfócate en rutinas que nutran tanto tu cuerpo como tu espíritu. Actividades como la jardinería, cocinar comidas elaboradas o disfrutar de la naturaleza te recargarán. Presta atención a tu cuello y garganta, áreas sensibles para ti, y considera masajes o ejercicios de relajación."
 }
 Now generate the weekly horoscope for {{sign}} in {{locale}} for this week:
 `,
@@ -109,19 +105,17 @@ const monthlyHoroscopePrompt = ai.definePrompt({
   input: { schema: HoroscopeFlowInputSchema },
   output: { schema: HoroscopeDetailSchema },
   prompt: `You are a skilled astrologer. Generate ONLY the MONTHLY horoscope for THIS CURRENT MONTH for the zodiac sign {{sign}} in the {{locale}} language.
-Focus on long-term trends, career, and personal development for the month.
-The output must be a JSON object with the following keys:
-- "main": The general monthly horoscope.
-- "love": Specific insights for love and relationships this month.
-- "money": Specific insights for finances and career this month.
-- "health": Specific insights for health and well-being this month.
+Provide a detailed and insightful horoscope.
+For the 'main' section, delve into the general characteristics of the sign and how the energies of the month might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad...".
+For 'love', 'money', and 'health', provide specific, elaborate insights and advice for the month.
+The output must be a JSON object with the following keys: "main", "love", "money", "health".
 
-Example for {{sign}} (Aries) in {{locale}} (en):
+Example for {{sign}} (Gemini) in {{locale}} (es):
 {
-  "main": "Aries, the upcoming month focuses on career advancements. Stay diligent and proactive. Financial stability looks promising towards the end of the month.",
-  "love": "Deepen existing bonds or, if single, you might meet someone significant. Emotional honesty is crucial.",
-  "money": "This is a good month for investments and exploring new financial ventures. Review your budget.",
-  "health": "Maintain a balanced lifestyle. Pay attention to your diet and incorporate stress-relief activities."
+  "main": "Géminis, este mes tu curiosidad innata y tu versatilidad estarán en su apogeo. Regido por Mercurio, tu mente ágil busca constantemente nueva información y conexiones. El mes favorece el aprendizaje, la comunicación y la expansión de tus redes sociales. Sin embargo, tu tendencia a dispersarte podría ser un desafío; enfócate en canalizar tu energía mental hacia proyectos concretos. Las oportunidades para viajes cortos o para iniciar nuevos estudios podrían presentarse.",
+  "love": "En el ámbito amoroso, tu encanto y habilidad para conversar te abrirán muchas puertas. Si tienes pareja, es un mes excelente para planificar actividades novedosas juntos y reavivar la chispa intelectual. Los Géminis solteros disfrutarán de una vida social activa, con múltiples oportunidades para conocer gente interesante. Busca a alguien que estimule tu mente tanto como tu corazón.",
+  "money": "Profesionalmente, este mes es ideal para el networking, las presentaciones y cualquier actividad que requiera tus habilidades comunicativas. Podrías destacar en proyectos colaborativos o encontrar nuevas vías de ingreso a través de tus contactos. Financieramente, mantén un ojo en tus gastos, ya que tu entusiasmo podría llevarte a compras impulsivas. Considera diversificar tus fuentes de conocimiento financiero.",
+  "health": "Tu salud este mes se beneficia de actividades que mantengan tu mente activa y tu cuerpo en movimiento ligero. Prueba nuevas clases de ejercicio, dedica tiempo a la lectura o aprende una nueva habilidad. Es importante que encuentres formas de calmar tu mente inquieta, como la meditación o paseos por la naturaleza, para evitar el estrés mental. Cuida tus manos y sistema respiratorio."
 }
 Now generate the monthly horoscope for {{sign}} in {{locale}} for this month:
 `,
