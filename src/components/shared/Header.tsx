@@ -44,13 +44,13 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
   };
 
   return (
-    <header className="py-4 bg-primary shadow-md sticky top-0 z-50">
+    <header className="py-4 bg-sidebar shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="md:hidden"> {/* Show SidebarTrigger only on mobile */}
-            <SidebarTrigger className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground" />
+            <SidebarTrigger className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" />
           </div>
-          <Link href={`/${currentLocale}/`} className="flex items-center gap-3 text-primary-foreground hover:opacity-90 transition-opacity">
+          <Link href={`/${currentLocale}/`} className="flex items-center gap-3 text-sidebar-foreground hover:opacity-90 transition-opacity">
             <AstroAppLogo className="h-10 w-10" />
             <h1 className="text-3xl md:text-4xl font-headline font-bold">
               {dictionary['Header.title']}
@@ -59,7 +59,7 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground">
+            <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
               <Globe className="h-6 w-6" />
               <span className="sr-only">{dictionary['Header.changeLanguage'] || "Change language"}</span>
             </Button>
