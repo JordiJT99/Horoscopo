@@ -52,13 +52,15 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
     if (!interpretation) return;
 
     const shareTitle = dictionary['Share.dreamInterpretationTitle'] || "A Dream Interpretation from AstroVibes";
-    const textToShare = interpretation;
+    const interpretationText = interpretation;
+    const pageUrl = window.location.href;
 
     if (navigator.share) {
       try {
         await navigator.share({
           title: shareTitle,
-          text: textToShare,
+          text: interpretationText,
+          url: pageUrl,
         });
         toast({
           title: dictionary['Share.successTitle'] || "Success!",
@@ -66,26 +68,30 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
         });
       } catch (err) {
         console.error('Error sharing:', err);
-        toast({
-          title: dictionary['Share.errorTitle'] || "Sharing Error",
-          description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
-          variant: "destructive",
-        });
+         if ((err as Error).name !== 'AbortError') {
+          toast({
+            title: dictionary['Share.errorTitle'] || "Sharing Error",
+            description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
+            variant: "destructive",
+          });
+        }
       }
     } else {
-      toast({
-        title: dictionary['Share.notSupportedTitle'] || "Sharing Not Supported",
-        description: dictionary['Share.notSupportedMessage'] || "Your browser doesn't support direct sharing. Try copying the text.",
-        variant: "destructive",
-      });
-       try {
-        await navigator.clipboard.writeText(textToShare);
+      // Fallback: copy to clipboard with URL
+      const textToCopy = `${interpretationText}\n\n${dictionary['Share.sharedFromAstroVibes'] || 'Shared from AstroVibes:'} ${pageUrl}`;
+      try {
+        await navigator.clipboard.writeText(textToCopy);
         toast({
           title: dictionary['Share.copiedTitle'] || "Copied!",
-          description: dictionary['Share.copiedMessage'] || "The text has been copied to your clipboard.",
+          description: dictionary['Share.copiedMessageContentAndLink'] || "The interpretation and a link to the page have been copied to your clipboard.",
         });
       } catch (copyError) {
         console.error('Error copying to clipboard:', copyError);
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessageClipboard'] || "Could not copy. Please try sharing manually.",
+          variant: "destructive",
+        });
       }
     }
   };
@@ -142,7 +148,7 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                 </div>
                 <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
                   <Share2 className="mr-2 h-4 w-4" />
-                  {dictionary['Share.buttonLabel'] || "Share Interpretation"}
+                  {dictionary['Share.buttonLabelInterpretation'] || "Share Interpretation"}
                 </Button>
               </CardContent>
             </Card>

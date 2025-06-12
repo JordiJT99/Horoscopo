@@ -52,13 +52,15 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     if (!answer) return;
 
     const shareTitle = dictionary['Share.crystalBallTitle'] || "A Crystal Ball Revelation from AstroVibes";
-    const textToShare = answer;
+    const predictionText = answer;
+    const pageUrl = window.location.href;
 
     if (navigator.share) {
       try {
         await navigator.share({
           title: shareTitle,
-          text: textToShare,
+          text: predictionText,
+          url: pageUrl,
         });
         toast({
           title: dictionary['Share.successTitle'] || "Success!",
@@ -66,28 +68,31 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         });
       } catch (err) {
         console.error('Error sharing:', err);
-        toast({
-          title: dictionary['Share.errorTitle'] || "Sharing Error",
-          description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
-          variant: "destructive",
-        });
+        // Don't show error toast if user cancelled share dialog
+        if ((err as Error).name !== 'AbortError') {
+          toast({
+            title: dictionary['Share.errorTitle'] || "Sharing Error",
+            description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
+            variant: "destructive",
+          });
+        }
       }
     } else {
-      toast({
-        title: dictionary['Share.notSupportedTitle'] || "Sharing Not Supported",
-        description: dictionary['Share.notSupportedMessage'] || "Your browser doesn't support direct sharing. Try copying the text.",
-        variant: "destructive",
-      });
-      // As a fallback, copy to clipboard
+      // Fallback: copy to clipboard with URL
+      const textToCopy = `${predictionText}\n\n${dictionary['Share.sharedFromAstroVibes'] || 'Shared from AstroVibes:'} ${pageUrl}`;
       try {
-        await navigator.clipboard.writeText(textToShare);
+        await navigator.clipboard.writeText(textToCopy);
         toast({
           title: dictionary['Share.copiedTitle'] || "Copied!",
-          description: dictionary['Share.copiedMessage'] || "The text has been copied to your clipboard.",
+          description: dictionary['Share.copiedMessageContentAndLink'] || "The revelation and a link to the page have been copied to your clipboard.",
         });
       } catch (copyError) {
         console.error('Error copying to clipboard:', copyError);
-        // Silent fail for copy if share also failed to notify.
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessageClipboard'] || "Could not copy. Please try sharing manually.",
+          variant: "destructive",
+        });
       }
     }
   };
@@ -140,7 +145,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                 <p className="font-body text-center italic leading-relaxed text-card-foreground">{answer}</p>
                 <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
                   <Share2 className="mr-2 h-4 w-4" />
-                  {dictionary['Share.buttonLabel'] || "Share Revelation"}
+                  {dictionary['Share.buttonLabelRevelation'] || "Share Revelation"}
                 </Button>
               </CardContent>
             </Card>

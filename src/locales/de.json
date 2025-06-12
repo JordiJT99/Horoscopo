@@ -250,7 +250,8 @@
   "DreamReadingPage.interpretationTitle": "Traumdeutung",
   "DreamReadingPage.errorFetching": "Die Traumlandschaft ist verschwommen... Konnte keine Deutung erhalten. Bitte versuchen Sie es erneut.",
   "DreamReadingPage.enterDreamPrompt": "Bitte beschreiben Sie Ihren Traum zur Deutung.",
-  "Share.buttonLabel": "Teilen",
+  "Share.buttonLabelRevelation": "Offenbarung teilen",
+  "Share.buttonLabelInterpretation": "Deutung teilen",
   "Share.successTitle": "Erfolg!",
   "Share.successMessage": "Inhalt erfolgreich geteilt.",
   "Share.errorTitle": "Fehler beim Teilen",
@@ -259,7 +260,10 @@
   "Share.notSupportedMessage": "Ihr Browser unterstützt das direkte Teilen nicht. Versuchen Sie, den Text zu kopieren.",
   "Share.copiedTitle": "Kopiert!",
   "Share.copiedMessage": "Der Text wurde in Ihre Zwischenablage kopiert.",
+  "Share.copiedMessageContentAndLink": "Die Offenbarung/Deutung und ein Link zur Seite wurden in Ihre Zwischenablage kopiert.",
+  "Share.errorMessageClipboard": "Konnte nicht kopieren. Bitte versuchen Sie, manuell zu teilen.",
   "Share.crystalBallTitle": "Eine Offenbarung der Kristallkugel von AstroVibes",
   "Share.dreamInterpretationTitle": "Traumdeutung von AstroVibes",
+  "Share.sharedFromAstroVibes": "Geteilt von AstroVibes:",
   "Error.genericTitle": "Fehler"
 }

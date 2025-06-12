@@ -269,7 +269,8 @@
   "DreamReadingPage.interpretationTitle": "Dream Interpretation",
   "DreamReadingPage.errorFetching": "The dreamscape is hazy... Could not get an interpretation. Please try again.",
   "DreamReadingPage.enterDreamPrompt": "Please describe your dream for interpretation.",
-  "Share.buttonLabel": "Share",
+  "Share.buttonLabelRevelation": "Share Revelation",
+  "Share.buttonLabelInterpretation": "Share Interpretation",
   "Share.successTitle": "Success!",
   "Share.successMessage": "Content shared successfully.",
   "Share.errorTitle": "Sharing Error",
@@ -278,7 +279,10 @@
   "Share.notSupportedMessage": "Your browser doesn't support direct sharing. Try copying the text.",
   "Share.copiedTitle": "Copied!",
   "Share.copiedMessage": "The text has been copied to your clipboard.",
+  "Share.copiedMessageContentAndLink": "The content and a link to the page have been copied to your clipboard.",
+  "Share.errorMessageClipboard": "Could not copy. Please try sharing manually.",
   "Share.crystalBallTitle": "A Crystal Ball Revelation from AstroVibes",
   "Share.dreamInterpretationTitle": "Dream Interpretation from AstroVibes",
+  "Share.sharedFromAstroVibes": "Shared from AstroVibes:",
   "Error.genericTitle": "Error"
 }
