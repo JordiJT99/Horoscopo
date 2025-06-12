@@ -5,22 +5,22 @@
 
 @layer base {
   :root {
-    --background: 240 6% 10%; /* Gris azulado oscuro */
+    --background: 240 6% 15%; /* Gris azulado oscuro - Ligeramente más claro */
     --foreground: 240 5% 95%; /* Blanco casi puro */
 
-    --card: 240 6% 13%; /* Ligeramente más claro que el fondo */
+    --card: 240 6% 18%; /* Ligeramente más claro que el fondo - Ajustado */
     --card-foreground: 240 5% 95%;
 
-    --popover: 240 6% 11%; /* Similar a las tarjetas */
+    --popover: 240 6% 16%; /* Similar a las tarjetas - Ajustado */
     --popover-foreground: 240 5% 95%;
 
     --primary: 45 70% 55%; /* Dorado brillante */
     --primary-foreground: 45 50% 10%; /* Texto muy oscuro sobre dorado */
 
-    --secondary: 240 5% 20%; /* Azul oscuro apagado para fondos de sección */
+    --secondary: 240 5% 25%; /* Azul oscuro apagado para fondos de sección - Ajustado */
     --secondary-foreground: 240 5% 88%; /* Texto claro sobre secundario */
 
-    --muted: 240 5% 25%; /* Gris azulado para elementos silenciados */
+    --muted: 240 5% 30%; /* Gris azulado para elementos silenciados - Ajustado */
     --muted-foreground: 240 5% 65%; /* Texto medio sobre silenciado */
 
     --accent: 260 60% 65%; /* Violeta/Azul místico brillante */
@@ -29,8 +29,8 @@
     --destructive: 0 65% 60%; /* Rojo (se mantiene) */
     --destructive-foreground: 0 0% 100%; /* Blanco sobre rojo */
 
-    --border: 240 5% 18%; /* Borde oscuro */
-    --input: 240 5% 16%; /* Fondo de input oscuro */
+    --border: 240 5% 23%; /* Borde oscuro - Ajustado */
+    --input: 240 5% 21%; /* Fondo de input oscuro - Ajustado */
     --ring: 45 70% 60%; /* Dorado para anillos de enfoque */
 
     --radius: 0.5rem;
@@ -54,24 +54,24 @@
 
   .dark {
     /* Replicar :root para tema oscuro único */
-    --background: 240 6% 10%;
+    --background: 240 6% 15%;
     --foreground: 240 5% 95%;
-    --card: 240 6% 13%;
+    --card: 240 6% 18%;
     --card-foreground: 240 5% 95%;
-    --popover: 240 6% 11%;
+    --popover: 240 6% 16%;
     --popover-foreground: 240 5% 95%;
     --primary: 45 70% 55%;
     --primary-foreground: 45 50% 10%;
-    --secondary: 240 5% 20%;
+    --secondary: 240 5% 25%;
     --secondary-foreground: 240 5% 88%;
-    --muted: 240 5% 25%;
+    --muted: 240 5% 30%;
     --muted-foreground: 240 5% 65%;
     --accent: 260 60% 65%;
     --accent-foreground: 260 30% 15%;
     --destructive: 0 65% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 5% 18%;
-    --input: 240 5% 16%;
+    --border: 240 5% 23%;
+    --input: 240 5% 21%;
     --ring: 45 70% 60%;
     
     --sidebar-background: 240 7% 7%;
