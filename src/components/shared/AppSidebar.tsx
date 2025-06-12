@@ -17,10 +17,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   useSidebar,
-  sidebarMenuButtonVariants, // Import variants
+  sidebarMenuButtonVariants,
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils'; // Import cn
-import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, CalendarDays } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, Orbit } from 'lucide-react'; // Replaced CalendarDays with Orbit
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -144,23 +144,17 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
         <SidebarMenu>
           <Accordion type="single" collapsible className="w-full" defaultValue={isHoroscopeSectionActive() ? "horoscopes" : undefined}>
             <AccordionItem value="horoscopes" className="border-none">
-              <AccordionTrigger
+               <AccordionTrigger
                 className={cn(
-                  sidebarMenuButtonVariants({ size: 'default', variant: 'default' }),
-                  "w-full justify-between px-2 py-2 text-sm", // Ensure AccordionTrigger specific styles don't conflict too much
-                  "hover:bg-sidebar-primary hover:text-sidebar-foreground",
-                  "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground",
-                  "data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground",
-                  "active:bg-sidebar-primary active:text-sidebar-primary-foreground",
-                  isHoroscopeSectionActive() && !isMobile && sidebarState === "expanded" && "bg-sidebar-primary font-medium text-sidebar-primary-foreground",
-                  isHoroscopeSectionActive() && (isMobile || sidebarState === "collapsed") && "data-[state=closed]:bg-sidebar-primary data-[state=closed]:text-sidebar-primary-foreground"
+                  sidebarMenuButtonVariants({ size: 'default' }), 
+                  "w-full justify-between hover:bg-sidebar-primary hover:text-sidebar-foreground data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground active:bg-sidebar-primary active:text-sidebar-primary-foreground",
+                  isHoroscopeSectionActive() && "bg-sidebar-primary font-medium text-sidebar-primary-foreground"
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <CalendarDays />
+                  <Orbit /> {/* Changed icon here */}
                   <span>{dictionary['Sidebar.horoscopesGroup'] || "Horoscopes"}</span>
                 </div>
-                {/* Chevron is added by AccordionTrigger automatically */}
               </AccordionTrigger>
               <AccordionContent className="pt-1 pb-0">
                 <div className="pl-4 space-y-1">
