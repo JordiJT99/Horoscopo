@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import type { ZodiacSignName, HoroscopeData } from '@/types';
+import type { ZodiacSignName } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { ZODIAC_SIGNS } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
@@ -10,7 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
-import { CalendarDays } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { CalendarDays, Heart, CircleDollarSign, Activity } from 'lucide-react';
 
 interface HoroscopeSectionProps {
   dictionary: Dictionary;
@@ -100,17 +101,89 @@ const HoroscopeSection = ({ dictionary, locale }: HoroscopeSectionProps) => {
               <TabsTrigger value="weekly" className="font-body flex items-center gap-2"><CalendarDays size={16}/>{dictionary['HoroscopeSection.weeklyTab'] || "Weekly"}</TabsTrigger>
               <TabsTrigger value="monthly" className="font-body flex items-center gap-2"><CalendarDays size={16}/>{dictionary['HoroscopeSection.monthlyTab'] || "Monthly"}</TabsTrigger>
             </TabsList>
-            <TabsContent value="daily" className="p-4 bg-secondary/30 rounded-md shadow">
-              <h3 className="text-xl font-headline font-semibold mb-2 text-primary">{dictionary['HoroscopeSection.dailyForecastTitle'] || "Daily Forecast"}</h3>
-              <p className="font-body text-card-foreground leading-relaxed">{horoscope.daily}</p>
+            
+            <TabsContent value="daily" className="space-y-4 p-4 bg-secondary/30 rounded-md shadow">
+              <div>
+                <h3 className="text-xl font-headline font-semibold mb-2 text-primary">{dictionary['HoroscopeSection.dailyForecastTitle'] || "Daily Forecast"}</h3>
+                <p className="font-body text-card-foreground leading-relaxed">{horoscope.daily.main}</p>
+              </div>
+              <Separator />
+              <div className="space-y-3">
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <Heart size={20} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.daily.love}</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <CircleDollarSign size={20} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.daily.money}</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <Activity size={20} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.daily.health}</p>
+                </div>
+              </div>
             </TabsContent>
-            <TabsContent value="weekly" className="p-4 bg-secondary/30 rounded-md shadow">
-              <h3 className="text-xl font-headline font-semibold mb-2 text-primary">{dictionary['HoroscopeSection.weeklyOutlookTitle'] || "Weekly Outlook"}</h3>
-              <p className="font-body text-card-foreground leading-relaxed">{horoscope.weekly}</p>
+
+            <TabsContent value="weekly" className="space-y-4 p-4 bg-secondary/30 rounded-md shadow">
+              <div>
+                <h3 className="text-xl font-headline font-semibold mb-2 text-primary">{dictionary['HoroscopeSection.weeklyOutlookTitle'] || "Weekly Outlook"}</h3>
+                <p className="font-body text-card-foreground leading-relaxed">{horoscope.weekly.main}</p>
+              </div>
+              <Separator />
+              <div className="space-y-3">
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <Heart size={20} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.weekly.love}</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <CircleDollarSign size={20} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.weekly.money}</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <Activity size={20} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.weekly.health}</p>
+                </div>
+              </div>
             </TabsContent>
-            <TabsContent value="monthly" className="p-4 bg-secondary/30 rounded-md shadow">
-              <h3 className="text-xl font-headline font-semibold mb-2 text-primary">{dictionary['HoroscopeSection.monthlyOverviewTitle'] || "Monthly Overview"}</h3>
-              <p className="font-body text-card-foreground leading-relaxed">{horoscope.monthly}</p>
+
+            <TabsContent value="monthly" className="space-y-4 p-4 bg-secondary/30 rounded-md shadow">
+              <div>
+                <h3 className="text-xl font-headline font-semibold mb-2 text-primary">{dictionary['HoroscopeSection.monthlyOverviewTitle'] || "Monthly Overview"}</h3>
+                <p className="font-body text-card-foreground leading-relaxed">{horoscope.monthly.main}</p>
+              </div>
+              <Separator />
+              <div className="space-y-3">
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <Heart size={20} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.monthly.love}</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <CircleDollarSign size={20} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.monthly.money}</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                    <Activity size={20} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-sm">{horoscope.monthly.health}</p>
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         ) : (
