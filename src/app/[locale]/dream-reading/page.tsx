@@ -52,14 +52,14 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
     if (!interpretation) return;
 
     const shareTitle = dictionary['Share.dreamInterpretationTitle'] || "A Dream Interpretation from AstroVibes";
-    const interpretationText = interpretation;
+    const inviteMessage = dictionary['Share.dreamInterpretationInviteText'] || "I had my dream interpreted on AstroVibes! See what it means:";
     const pageUrl = window.location.href;
 
     if (navigator.share) {
       try {
         await navigator.share({
           title: shareTitle,
-          text: interpretationText,
+          text: inviteMessage, // Generic invite text
           url: pageUrl,
         });
         toast({
@@ -77,13 +77,13 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
         }
       }
     } else {
-      // Fallback: copy to clipboard with URL
-      const textToCopy = `${interpretationText}\n\n${dictionary['Share.sharedFromAstroVibes'] || 'Shared from AstroVibes:'} ${pageUrl}`;
+      // Fallback: copy invite message and URL to clipboard
+      const textToCopy = `${inviteMessage}\n${pageUrl}`;
       try {
         await navigator.clipboard.writeText(textToCopy);
         toast({
           title: dictionary['Share.copiedTitle'] || "Copied!",
-          description: dictionary['Share.copiedMessageContentAndLink'] || "The interpretation and a link to the page have been copied to your clipboard.",
+          description: dictionary['Share.copiedLinkMessage'] || "An invitation link has been copied to your clipboard.",
         });
       } catch (copyError) {
         console.error('Error copying to clipboard:', copyError);
@@ -148,7 +148,7 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                 </div>
                 <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
                   <Share2 className="mr-2 h-4 w-4" />
-                  {dictionary['Share.buttonLabelInterpretation'] || "Share Interpretation"}
+                  {dictionary['Share.buttonLabelInterpretationLink'] || "Share Link to Interpretation"}
                 </Button>
               </CardContent>
             </Card>
