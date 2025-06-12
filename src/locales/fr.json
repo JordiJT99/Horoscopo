@@ -29,9 +29,9 @@
   "HoroscopeSection.description": "Sélectionnez votre signe pour voir vos prévisions astrologiques.",
   "HoroscopeSection.selectSignPlaceholder": "Sélectionner le Signe",
   "HoroscopeSection.loading": "Chargement de vos perspectives cosmiques...",
-  "HoroscopeSection.dailyForecastTitle": "Prévisions Quotidiennes",
-  "HoroscopeSection.weeklyOutlookTitle": "Perspectives Hebdomadaires",
-  "HoroscopeSection.monthlyOverviewTitle": "Aperçu Mensuel",
+  "HoroscopeSection.dailyForecastTitle": "Votre Guidance pour Aujourd'hui",
+  "HoroscopeSection.weeklyOutlookTitle": "Votre Semaine à Venir",
+  "HoroscopeSection.monthlyOverviewTitle": "Votre Mois à Venir",
   "HoroscopeSection.error": "Impossible de charger les données de l'horoscope. Veuillez réessayer plus tard.",
   "HoroscopeSection.noData": "Aucune donnée d'horoscope disponible. Veuillez sélectionner un signe.",
   "HoroscopeSection.loveTitle": "Amour",
@@ -208,3 +208,5 @@
   "GalacticTone.Cosmic.keyword": "Présence",
   "GalacticTone.Cosmic.question": "Comment puis-je étendre ma joie et mon amour ?"
 }
+
+    

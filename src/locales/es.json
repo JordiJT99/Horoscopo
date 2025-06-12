@@ -29,9 +29,9 @@
   "HoroscopeSection.description": "Selecciona tu signo para ver tu predicción astrológica.",
   "HoroscopeSection.selectSignPlaceholder": "Seleccionar Signo",
   "HoroscopeSection.loading": "Cargando tus perspectivas cósmicas...",
-  "HoroscopeSection.dailyForecastTitle": "Predicción Diaria",
-  "HoroscopeSection.weeklyOutlookTitle": "Perspectiva Semanal",
-  "HoroscopeSection.monthlyOverviewTitle": "Resumen Mensual",
+  "HoroscopeSection.dailyForecastTitle": "Tu Guía para Hoy",
+  "HoroscopeSection.weeklyOutlookTitle": "Tu Semana por Delante",
+  "HoroscopeSection.monthlyOverviewTitle": "Tu Mes por Delante",
   "HoroscopeSection.error": "No se pudieron cargar los datos del horóscopo. Por favor, inténtalo de nuevo más tarde.",
   "HoroscopeSection.noData": "No hay datos de horóscopo disponibles. Por favor, selecciona un signo.",
   "HoroscopeSection.loveTitle": "Amor",
@@ -227,3 +227,5 @@
   "GalacticTone.Cosmic.keyword": "Presencia",
   "GalacticTone.Cosmic.question": "¿Cómo expando mi alegría y amor?"
 }
+
+    

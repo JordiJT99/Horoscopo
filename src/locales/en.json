@@ -29,9 +29,9 @@
   "HoroscopeSection.description": "Select your sign to view your astrological forecast.",
   "HoroscopeSection.selectSignPlaceholder": "Select Sign",
   "HoroscopeSection.loading": "Loading your cosmic insights...",
-  "HoroscopeSection.dailyForecastTitle": "Daily Forecast",
-  "HoroscopeSection.weeklyOutlookTitle": "Weekly Outlook",
-  "HoroscopeSection.monthlyOverviewTitle": "Monthly Overview",
+  "HoroscopeSection.dailyForecastTitle": "Your Guidance for Today",
+  "HoroscopeSection.weeklyOutlookTitle": "Your Week Ahead",
+  "HoroscopeSection.monthlyOverviewTitle": "Your Month Ahead",
   "HoroscopeSection.error": "Could not load horoscope data. Please try again later.",
   "HoroscopeSection.noData": "No horoscope data available. Please select a sign.",
   "HoroscopeSection.loveTitle": "Love",
@@ -227,3 +227,5 @@
   "GalacticTone.Cosmic.keyword": "Presence",
   "GalacticTone.Cosmic.question": "How do I expand my joy and love?"
 }
+
+    

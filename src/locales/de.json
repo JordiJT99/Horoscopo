@@ -29,9 +29,9 @@
   "HoroscopeSection.description": "Wählen Sie Ihr Zeichen, um Ihre astrologische Prognose anzuzeigen.",
   "HoroscopeSection.selectSignPlaceholder": "Zeichen auswählen",
   "HoroscopeSection.loading": "Lade deine kosmischen Einsichten...",
-  "HoroscopeSection.dailyForecastTitle": "Tagesprognose",
-  "HoroscopeSection.weeklyOutlookTitle": "Wochenausblick",
-  "HoroscopeSection.monthlyOverviewTitle": "Monatsübersicht",
+  "HoroscopeSection.dailyForecastTitle": "Deine Führung für Heute",
+  "HoroscopeSection.weeklyOutlookTitle": "Deine Woche im Voraus",
+  "HoroscopeSection.monthlyOverviewTitle": "Dein Monat im Voraus",
   "HoroscopeSection.error": "Horoskopdaten konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
   "HoroscopeSection.noData": "Keine Horoskopdaten verfügbar. Bitte wählen Sie ein Zeichen.",
   "HoroscopeSection.loveTitle": "Liebe",
@@ -208,3 +208,5 @@
   "GalacticTone.Cosmic.keyword": "Gegenwart",
   "GalacticTone.Cosmic.question": "Wie erweitere ich meine Freude und Liebe?"
 }
+
+    
