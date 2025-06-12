@@ -1,7 +1,7 @@
 
 "use client"; // This page uses client-side hooks
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useMemo } from 'react';
 import type { ZodiacSignName, LuckyNumbersData } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries'; // For client-side dictionary
@@ -110,7 +110,8 @@ function LuckyNumbersContent({ dictionary, locale }: { dictionary: Dictionary, l
 
 export default function LuckyNumbersPage({ params: paramsPromise }: LuckyNumbersPageProps) {
   const params = use(paramsPromise);
-  const dictionary = use(getDictionary(params.locale));
+  const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
+  const dictionary = use(dictionaryPromise);
 
   if (Object.keys(dictionary).length === 0) {
     return (

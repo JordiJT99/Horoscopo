@@ -1,7 +1,7 @@
 
 "use client"; // This page uses client-side hooks
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useMemo } from 'react';
 import type { LunarData, AscendantData } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries'; // For client-side dictionary
@@ -193,7 +193,8 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
 
 export default function LunarAscendantPage({ params: paramsPromise }: LunarAscendantPageProps) {
   const params = use(paramsPromise);
-  const dictionary = use(getDictionary(params.locale));
+  const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
+  const dictionary = use(dictionaryPromise);
 
   if (Object.keys(dictionary).length === 0) {
     return (
