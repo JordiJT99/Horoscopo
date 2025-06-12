@@ -4,90 +4,91 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%; /* Light Gray - kept neutral */
-    --foreground: 0 0% 20%; /* Dark Gray for text - kept neutral */
+    --background: 222.2 84% 4.9%; /* Original Dark Blue */
+    --foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --card: 0 0% 100%; /* White - kept neutral */
-    --card-foreground: 0 0% 20%; /* Dark Gray for text on card - kept neutral */
+    --card: 222.2 84% 4.9%; /* Original Dark Blue */
+    --card-foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --popover: 0 0% 100%; /* Kept neutral */
-    --popover-foreground: 0 0% 20%; /* Kept neutral */
+    --popover: 222.2 84% 4.9%; /* Original Dark Blue */
+    --popover-foreground: 210 40% 98%; /* Original Light Blue/White */
 
     --primary: 45 85% 55%; /* Gold */
-    --primary-foreground: 0 0% 100%; /* White (good contrast with gold) */
+    --primary-foreground: 45 85% 10%; /* Dark Brown/Gold text for contrast on Gold */
 
-    --secondary: 50 20% 92%; /* Very light warm gray/beige (was Lighter lavender) */
-    --secondary-foreground: 50 30% 30%; /* Dark warm gray/brownish (was Darker violet) */
+    --secondary: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --secondary-foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --muted: 50 20% 95%; /* Even lighter warm beige (was Very light lavender) */
-    --muted-foreground: 50 15% 40%; /* Warm gray for muted text (was Default Muted Foreground) */
+    --muted: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --muted-foreground: 217.2 15.8% 38.5%; /* Original Muted Blue/Gray text */
 
-    --accent: 40 70% 88%; /* Pale, soft gold (was Soft Lavender) */
-    --accent-foreground: 40 70% 25%; /* Darker gold/brown for text on accent (was Darker violet) */
+    --accent: 45 70% 65%; /* Lighter/Softer Gold */
+    --accent-foreground: 45 70% 12%; /* Dark text for Lighter Gold */
 
-    --destructive: 0 84.2% 60.2%; /* Kept as is */
-    --destructive-foreground: 0 0% 98%; /* Kept as is */
+    --destructive: 0 62.8% 30.6%; /* Original Destructive Red */
+    --destructive-foreground: 210 40% 98%; /* Original Light Text for Destructive */
 
-    --border: 40 15% 85%; /* Light warm golden-ish gray (was Light Gray) */
-    --input: 40 15% 96%; /* Very light warm golden-ish gray for input (was Very light gray) */
-    --ring: 45 85% 55%; /* Gold (matches primary) */
+    --border: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --input: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --ring: 45 85% 58%; /* Gold for focus rings */
+
+    --radius: 0.5rem;
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
 
-    /* Sidebar colors - elegant dark theme with gold accents */
-    --sidebar-background: 20 10% 18%; /* Very dark gray, almost black */
-    --sidebar-foreground: 45 50% 85%; /* Pale gold/cream text */
+    /* Sidebar colors - dark theme with gold accents */
+    --sidebar-background: 222.2 80% 5.5%; /* Slightly darker/more saturated than main dark bg for depth */
+    --sidebar-foreground: 210 40% 90%; /* Slightly toned down light text */
     --sidebar-primary: 45 85% 55%; /* Gold (same as main primary) */
-    --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 20 10% 25%; /* Slightly lighter dark gray for hover */
-    --sidebar-accent-foreground: 45 50% 90%; /* Pale gold/cream text */
-    --sidebar-border: 20 10% 28%; /* Dark gray border */
-    --sidebar-ring: 45 85% 55%; /* Gold */
+    --sidebar-primary-foreground: 45 85% 10%; /* Dark Brown/Gold text */
+    --sidebar-accent: 45 60% 25%; /* Dark, muted gold for hover on dark sidebar */
+    --sidebar-accent-foreground: 45 60% 80%; /* Light gold/cream text for the dark gold accent */
+    --sidebar-border: 222.2 80% 10%; /* Darker border for sidebar */
+    --sidebar-ring: 45 85% 58%; /* Gold (same as main ring) */
   }
 
   .dark {
-    --background: 30 5% 12%; /* Dark, slightly warm gray */
-    --foreground: 45 30% 90%; /* Pale Gold/Cream Text */
+    --background: 222.2 84% 4.9%; /* Original Dark Blue */
+    --foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --card: 30 5% 18%; /* Slightly lighter dark warm gray */
-    --card-foreground: 45 30% 90%;
+    --card: 222.2 84% 4.9%; /* Original Dark Blue */
+    --card-foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --popover: 30 5% 18%;
-    --popover-foreground: 45 30% 90%;
+    --popover: 222.2 84% 4.9%; /* Original Dark Blue */
+    --popover-foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --primary: 45 85% 65%; /* Brighter Gold for dark mode */
-    --primary-foreground: 30 10% 10%; /* Very Dark Brown/Gray text on primary */
+    --primary: 45 85% 55%; /* Gold */
+    --primary-foreground: 45 85% 10%; /* Dark Brown/Gold text for contrast on Gold */
 
-    --secondary: 30 10% 30%; /* Darker, less saturated warm gray */
-    --secondary-foreground: 45 30% 90%;
+    --secondary: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --secondary-foreground: 210 40% 98%; /* Original Light Blue/White */
 
-    --muted: 30 10% 25%;
-    --muted-foreground: 45 20% 65%; /* Lighter muted gold text */
+    --muted: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --muted-foreground: 217.2 15.8% 38.5%; /* Original Muted Blue/Gray text */
 
-    --accent: 40 70% 50%; /* Muted Gold for dark accent */
-    --accent-foreground: 45 50% 90%; /* Light Gold/Cream text on accent */
+    --accent: 45 70% 65%; /* Lighter/Softer Gold */
+    --accent-foreground: 45 70% 12%; /* Dark text for Lighter Gold */
 
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%; /* Original Destructive Red */
+    --destructive-foreground: 210 40% 98%; /* Original Light Text for Destructive */
 
-    --border: 30 10% 30%;
-    --input: 30 10% 25%;
-    --ring: 40 70% 50%; /* Muted Gold, matches dark accent for rings */
-
-    /* Sidebar colors for dark mode - elegant dark theme with gold accents */
-    --sidebar-background: 20 5% 8%; /* Near black */
-    --sidebar-foreground: 45 40% 80%; /* Light gold/cream text */
-    --sidebar-primary: 45 85% 65%; /* Brighter gold (same as dark main primary) */
-    --sidebar-primary-foreground: 20 5% 10%; /* Very dark text on bright gold */
-    --sidebar-accent: 20 5% 15%; /* Slightly lighter near black for hover */
-    --sidebar-accent-foreground: 45 40% 85%; /* Light gold/cream text */
-    --sidebar-border: 20 5% 20%; /* Dark border */
-    --sidebar-ring: 45 85% 65%; /* Brighter gold */
+    --border: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --input: 217.2 32.6% 17.5%; /* Original Darker Blue/Gray */
+    --ring: 45 85% 58%; /* Gold for focus rings */
+    
+    /* Sidebar colors - dark theme with gold accents */
+    --sidebar-background: 222.2 80% 5.5%; 
+    --sidebar-foreground: 210 40% 90%; 
+    --sidebar-primary: 45 85% 55%; 
+    --sidebar-primary-foreground: 45 85% 10%; 
+    --sidebar-accent: 45 60% 25%; 
+    --sidebar-accent-foreground: 45 60% 80%; 
+    --sidebar-border: 222.2 80% 10%; 
+    --sidebar-ring: 45 85% 58%; 
   }
 }
 
