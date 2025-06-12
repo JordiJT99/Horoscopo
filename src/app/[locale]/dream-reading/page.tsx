@@ -9,7 +9,8 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { BedDouble, Brain, Share2, RotateCcw } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { BedDouble, Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,11 +18,20 @@ interface DreamReadingPageProps {
   params: { locale: Locale };
 }
 
+interface DreamElements {
+  symbols: string[];
+  emotions: string[];
+  characters: string[];
+  locations: string[];
+  themes: string[];
+}
+
 function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [dreamDescription, setDreamDescription] = useState('');
   const [interpretation, setInterpretation] = useState<string | null>(null);
+  const [dreamElements, setDreamElements] = useState<DreamElements | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
@@ -33,8 +43,9 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
       try {
         const decodedInterpretation = decodeURIComponent(sharedInterpretation);
         setInterpretation(decodedInterpretation);
+        setDreamElements(null); // Shared links currently don't carry dream elements
         setIsShowingSharedContent(true);
-        setDreamDescription(''); // Clear description if showing shared content
+        setDreamDescription(''); 
       } catch (e) {
         console.error("Error decoding shared interpretation:", e);
         setError(dictionary['DreamReadingPage.errorDecoding'] || "Could not display the shared interpretation. It might be corrupted.");
@@ -50,11 +61,13 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
     setIsLoading(true);
     setError(null);
     setInterpretation(null);
+    setDreamElements(null);
     setIsShowingSharedContent(false);
     try {
       const input: DreamInterpretationInput = { dreamDescription, locale };
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
       setInterpretation(result.interpretation);
+      setDreamElements(result.dreamElements);
     } catch (err) {
       console.error("Error interpreting dream:", err);
       setError(dictionary['DreamReadingPage.errorFetching'] || "The dreamscape is hazy... Could not get an interpretation. Please try again.");
@@ -72,22 +85,22 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
     if (!interpretation) return;
 
     const shareTitle = dictionary['Share.dreamInterpretationTitle'] || "A Dream Interpretation from AstroVibes";
-    const inviteMessage = dictionary['Share.dreamInterpretationInviteTextContent'] || "I had my dream interpreted on AstroVibes! See what it means:";
+    const inviteMessage = dictionary['Share.dreamInterpretationInviteTextLink'] || "I had my dream interpreted on AstroVibes! See the interpretation here:";
     
     const pageUrl = new URL(window.location.href);
+    pageUrl.searchParams.delete('dreamElements'); // Ensure dreamElements are not part of the shared URL for now
     pageUrl.searchParams.set('interpretation', encodeURIComponent(interpretation));
     const shareableUrl = pageUrl.toString();
 
-    if (shareableUrl.length > 2000) { // Basic check for URL length
+    if (shareableUrl.length > 2000) { 
         toast({
             title: dictionary['Share.errorTitle'] || "Sharing Error",
             description: dictionary['Share.urlTooLong'] || "The interpretation is too long to be shared as a link. Try sharing the text directly.",
             variant: "destructive",
         });
-        // Fallback to sharing just the text if URL is too long
         if (navigator.share) {
             try {
-                await navigator.share({ title: shareTitle, text: `${inviteMessage}\n\n"${interpretation}"`, url: window.location.pathname });
+                await navigator.share({ title: shareTitle, text: `${inviteMessage}\n\n"${interpretation}"`, url: window.location.pathname.split('?')[0] });
             } catch (err) { /* handled below */ }
         }
         return;
@@ -134,13 +147,57 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
   };
   
   const handleNewInterpretation = () => {
-    router.push(`/${locale}/dream-reading`, { scroll: false }); // Navigates without search params
+    const newPath = `/${locale}/dream-reading`;
+     if (typeof router.push === 'function') {
+       router.push(newPath); 
+    } else {
+       window.location.href = newPath;
+    }
     setInterpretation(null);
+    setDreamElements(null);
     setDreamDescription('');
     setError(null);
     setIsShowingSharedContent(false);
   };
 
+  const renderDreamElements = (elements: DreamElements) => {
+    const elementCategories = [
+      { titleKey: 'DreamReadingPage.mapSymbols', items: elements.symbols, icon: Sparkles },
+      { titleKey: 'DreamReadingPage.mapEmotions', items: elements.emotions, icon: Smile },
+      { titleKey: 'DreamReadingPage.mapCharacters', items: elements.characters, icon: User },
+      { titleKey: 'DreamReadingPage.mapLocations', items: elements.locations, icon: MapPin },
+      { titleKey: 'DreamReadingPage.mapThemes', items: elements.themes, icon: Hash },
+    ];
+
+    const hasAnyElements = elementCategories.some(cat => cat.items && cat.items.length > 0);
+    if (!hasAnyElements) return null;
+
+    return (
+      <Card className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
+        <CardHeader className="p-0 pb-4 text-center">
+          <CardTitle className="font-headline text-xl text-primary flex items-center justify-center gap-2">
+            <PackageSearch className="w-6 h-6" /> {dictionary['DreamReadingPage.dreamMapTitle'] || "Dream Map"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0 space-y-4">
+          {elementCategories.map((category, index) => (
+            category.items && category.items.length > 0 && (
+              <div key={index}>
+                <h4 className="font-headline text-md font-semibold text-accent-foreground mb-2 flex items-center gap-2">
+                  <category.icon className="w-5 h-5" /> {dictionary[category.titleKey] || category.titleKey.split('.').pop()}
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {category.items.map((item, itemIndex) => (
+                    <Badge key={itemIndex} variant="secondary" className="text-sm font-body">{item}</Badge>
+                  ))}
+                </div>
+              </div>
+            )
+          ))}
+        </CardContent>
+      </Card>
+    );
+  };
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -213,6 +270,8 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
               </CardContent>
             </Card>
           )}
+          {dreamElements && !isLoading && !isShowingSharedContent && renderDreamElements(dreamElements)}
+
            {isShowingSharedContent && (
             <Button onClick={handleNewInterpretation} variant="ghost" className="w-full font-body mt-4">
               <RotateCcw className="mr-2 h-4 w-4" />
@@ -230,7 +289,6 @@ export default function DreamReadingPage({ params: paramsPromise }: DreamReading
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
 
-  // Ensure the component is client-side only for searchParams to be available
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
@@ -247,6 +305,3 @@ export default function DreamReadingPage({ params: paramsPromise }: DreamReading
 
   return <DreamReadingContent dictionary={dictionary} locale={params.locale} />;
 }
-
-
-    
