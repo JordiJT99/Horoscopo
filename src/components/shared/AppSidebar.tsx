@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles } from 'lucide-react';
+import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -45,7 +45,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/`,
       label: dictionary['Sidebar.home'] || "Home (Daily)",
-      icon: Sparkles, // Changed from LayoutDashboard for a more mystical feel
+      icon: Sparkles, 
       tooltip: dictionary['Sidebar.homeTooltip'] || "Daily Horoscope & Home",
     },
     {
@@ -63,7 +63,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/compatibility`,
       label: dictionary['Sidebar.compatibility'] || "Compatibility",
-      icon: HeartHandshake, // Changed from Users
+      icon: HeartHandshake, 
       tooltip: dictionary['Sidebar.compatibilityTooltip'] || "Check Zodiac Compatibility",
     },
     {
@@ -89,6 +89,12 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       label: dictionary['Sidebar.mayanHoroscope'] || "Mayan Horoscope",
       icon: MayanAstrologyIcon,
       tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Astrological Wisdom",
+    },
+    {
+      href: `/${currentLocale}/profile`,
+      label: dictionary['Sidebar.profile'] || "User Profile",
+      icon: UserCircle,
+      tooltip: dictionary['Sidebar.profileTooltip'] || "View Your Profile",
     },
   ];
 

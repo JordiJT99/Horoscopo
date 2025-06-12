@@ -87,6 +87,8 @@
   "Sidebar.chineseHoroscopeTooltip": "Discover Chinese zodiac insights",
   "Sidebar.mayanHoroscope": "Mayan Horoscope",
   "Sidebar.mayanHoroscopeTooltip": "Uncover Mayan astrological wisdom",
+  "Sidebar.profile": "User Profile",
+  "Sidebar.profileTooltip": "View Your Profile",
   "WeeklyHoroscopePage.title": "Weekly Horoscope",
   "WeeklyHoroscopePage.subtitle": "Your astrological forecast for the week ahead. Select your sign.",
   "MonthlyHoroscopePage.title": "Monthly Horoscope",
@@ -225,7 +227,20 @@
   "GalacticTone.Crystal.question": "How can I dedicate to cooperation?",
   "GalacticTone.Cosmic.name": "Cosmic",
   "GalacticTone.Cosmic.keyword": "Presence",
-  "GalacticTone.Cosmic.question": "How do I expand my joy and love?"
+  "GalacticTone.Cosmic.question": "How do I expand my joy and love?",
+  "ProfilePage.title": "User Profile",
+  "ProfilePage.subtitle": "Manage your celestial identity.",
+  "ProfilePage.avatarAlt": "User Avatar",
+  "ProfilePage.editProfileButton": "Edit Profile",
+  "ProfilePage.memberSince": "Member since: {date}",
+  "ProfilePage.aboutMeTitle": "About Me",
+  "ProfilePage.placeholderBio": "Lover of stars, seeker of cosmic wisdom. Exploring the universe one horoscope at a time.",
+  "ProfilePage.preferencesTitle": "Astrological Preferences",
+  "ProfilePage.favoriteSignLabel": "Favorite Sign:",
+  "ProfilePage.communicationPrefsLabel": "Communication Preferences:",
+  "ProfilePage.communicationEmailWeekly": "Email (Weekly Digest)",
+  "ProfilePage.accountSettingsTitle": "Account Settings",
+  "ProfilePage.usernameLabel": "Username",
+  "ProfilePage.emailLabel": "Email Address",
+  "ProfilePage.updateSettingsButton": "Update Settings"
 }
-
-    

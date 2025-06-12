@@ -87,6 +87,8 @@
   "Sidebar.chineseHoroscopeTooltip": "Descubre perspectivas del zodiaco chino",
   "Sidebar.mayanHoroscope": "Horóscopo Maya",
   "Sidebar.mayanHoroscopeTooltip": "Descubre la sabiduría astrológica maya",
+  "Sidebar.profile": "Perfil de Usuario",
+  "Sidebar.profileTooltip": "Ver Tu Perfil",
   "WeeklyHoroscopePage.title": "Horóscopo Semanal",
   "WeeklyHoroscopePage.subtitle": "Tu predicción astrológica para la semana. Selecciona tu signo.",
   "MonthlyHoroscopePage.title": "Horóscopo Mensual",
@@ -225,7 +227,20 @@
   "GalacticTone.Crystal.question": "¿Cómo me dedico a la cooperación?",
   "GalacticTone.Cosmic.name": "Cósmico",
   "GalacticTone.Cosmic.keyword": "Presencia",
-  "GalacticTone.Cosmic.question": "¿Cómo expando mi alegría y amor?"
+  "GalacticTone.Cosmic.question": "¿Cómo expando mi alegría y amor?",
+  "ProfilePage.title": "Perfil de Usuario",
+  "ProfilePage.subtitle": "Gestiona tu identidad celestial.",
+  "ProfilePage.avatarAlt": "Avatar del Usuario",
+  "ProfilePage.editProfileButton": "Editar Perfil",
+  "ProfilePage.memberSince": "Miembro desde: {date}",
+  "ProfilePage.aboutMeTitle": "Sobre Mí",
+  "ProfilePage.placeholderBio": "Amante de las estrellas, buscador de sabiduría cósmica. Explorando el universo un horóscopo a la vez.",
+  "ProfilePage.preferencesTitle": "Preferencias Astrológicas",
+  "ProfilePage.favoriteSignLabel": "Signo Favorito:",
+  "ProfilePage.communicationPrefsLabel": "Preferencias de Comunicación:",
+  "ProfilePage.communicationEmailWeekly": "Correo Electrónico (Resumen Semanal)",
+  "ProfilePage.accountSettingsTitle": "Configuración de la Cuenta",
+  "ProfilePage.usernameLabel": "Nombre de Usuario",
+  "ProfilePage.emailLabel": "Dirección de Correo Electrónico",
+  "ProfilePage.updateSettingsButton": "Actualizar Configuración"
 }
-
-    
