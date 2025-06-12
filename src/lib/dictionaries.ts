@@ -1,10 +1,10 @@
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
-export type Dictionary = Record<string, any>; // Consider defining a more specific type based on your JSON structure
+export type Dictionary = Record<string, any>; // Consider defining a more specific type
 
-// Cache for the promises for React.use()
+// Cache for the promises themselves. The promise should resolve to the Dictionary.
 const dictionaryPromisesCache: Partial<Record<Locale, Promise<Dictionary>>> = {};
-// Cache for the loaded dictionaries themselves
+// Cache for the loaded dictionaries to avoid re-fetching if already resolved.
 const loadedDictionariesCache: Partial<Record<Locale, Dictionary>> = {};
 
 const loadFunctions: Record<Locale, () => Promise<Dictionary>> = {
@@ -15,42 +15,48 @@ const loadFunctions: Record<Locale, () => Promise<Dictionary>> = {
 };
 
 export const getDictionary = (locale: Locale): Promise<Dictionary> => {
-  const targetLocale = loadFunctions[locale] ? locale : 'es'; // Fallback to Spanish if locale is invalid
+  const targetLocale = loadFunctions[locale] ? locale : 'es';
 
-  // If dictionary is already loaded and cached, return an immediately resolved promise with it
+  // If dictionary is already loaded, return an immediately resolved promise
   if (loadedDictionariesCache[targetLocale]) {
     return Promise.resolve(loadedDictionariesCache[targetLocale]!);
   }
 
-  // If a promise for this locale already exists in cache, return it
+  // If a promise for this locale is already in flight, return it
   if (dictionaryPromisesCache[targetLocale]) {
     return dictionaryPromisesCache[targetLocale]!;
   }
 
-  // Otherwise, create a new promise, cache it, load the dictionary, and cache the result
-  const promise = loadFunctions[targetLocale]()
+  // Create the promise, cache it, and then process it.
+  // The cached promise is the one that handles loading and potential fallbacks.
+  const newPromise = loadFunctions[targetLocale]()
     .then((dict) => {
-      loadedDictionariesCache[targetLocale] = dict; // Cache the loaded dictionary object
+      loadedDictionariesCache[targetLocale] = dict; // Cache the successfully loaded dictionary
+      delete dictionaryPromisesCache[targetLocale]; // Clean up the promise from cache once resolved
       return dict;
     })
-    .catch(async (error) => {
-      console.error(`Could not load dictionary for locale: ${targetLocale}. Error: ${error}`);
-      // Attempt to load fallback 'es' dictionary if the requested one failed (and isn't 'es' itself)
-      delete dictionaryPromisesCache[targetLocale]; // Remove failed promise from cache
+    .catch((error) => {
+      console.error(`Failed to load dictionary for ${targetLocale}:`, error);
+      // Do NOT delete dictionaryPromisesCache[targetLocale] here if we are about to return a fallback promise for IT.
+      // Instead, the original promise for targetLocale will resolve to the outcome of the fallback.
+
       if (targetLocale !== 'es') {
-        console.warn(`Falling back to 'es' dictionary for locale '${targetLocale}'.`);
-        // Ensure the recursive call correctly uses the caching mechanism
-        return getDictionary('es');
+        console.warn(`Attempting to fall back to 'es' dictionary for ${targetLocale}.`);
+        // This recursive call gets or creates the promise for 'es'.
+        // The promise for 'targetLocale' will resolve to whatever 'es' resolves to.
+        return getDictionary('es'); 
       }
-      // If 'es' also fails, cache an empty dictionary to prevent repeated failed loads for this session
-      console.error('Fallback dictionary "es" also failed to load.');
+      
+      // If 'es' itself failed or was the target.
+      console.error(`Fallback 'es' dictionary also failed for ${targetLocale} or was the primary target. Returning empty dictionary.`);
       const emptyDict = {};
-      loadedDictionariesCache[targetLocale] = emptyDict; // Cache empty object
-      return Promise.resolve<Dictionary>(emptyDict); // Return resolved empty dictionary
+      loadedDictionariesCache[targetLocale] = emptyDict; // Cache empty to prevent re-fetch loops
+      delete dictionaryPromisesCache[targetLocale]; // Clean up the promise from cache as it's now "resolved" (to empty)
+      return emptyDict;
     });
 
-  dictionaryPromisesCache[targetLocale] = promise;
-  return promise;
+  dictionaryPromisesCache[targetLocale] = newPromise;
+  return newPromise;
 };
 
 export const getSupportedLocales = (): Locale[] => ['en', 'es', 'de', 'fr'];
