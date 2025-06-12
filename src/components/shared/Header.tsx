@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { AstroAppLogo } from '@/lib/constants';
-import { Globe, UserCircle, PanelLeft } from 'lucide-react'; // Added UserCircle
+import { Globe, UserCircle } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,14 +60,14 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
             <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
-              <UserCircle className="h-6 w-6" />
+              <UserCircle className="h-7 w-7" />
               <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
             </Link>
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-                <Globe className="h-6 w-6" />
+                <Globe className="h-7 w-7" />
                 <span className="sr-only">{dictionary['Header.changeLanguage'] || "Change language"}</span>
               </Button>
             </DropdownMenuTrigger>
@@ -88,4 +88,3 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
 };
 
 export default Header;
-
