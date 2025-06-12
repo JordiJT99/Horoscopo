@@ -58,6 +58,12 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
           </Link>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+            <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
+              <UserCircle className="h-6 w-6" />
+              <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
+            </Link>
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
@@ -75,12 +81,6 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-            <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
-              <UserCircle className="h-6 w-6" />
-              <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
-            </Link>
-          </Button>
         </div>
       </div>
     </header>
@@ -88,3 +88,4 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
 };
 
 export default Header;
+
