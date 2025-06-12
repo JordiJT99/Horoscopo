@@ -1,94 +1,95 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 275 60% 92%; /* Light Lilac */
-    --foreground: 275 10% 15%; /* Dark Purple/Grey for text */
+    --background: 260 25% 10%; /* Very dark, desaturated violet */
+    --foreground: 260 20% 88%; /* Light, slightly desaturated lavender */
 
-    --card: 275 65% 90%; /* Slightly more saturated/darker Light Lilac */
-    --card-foreground: 275 10% 15%; /* Dark Purple/Grey for text */
+    --card: 260 25% 15%; /* Slightly lighter dark violet for cards */
+    --card-foreground: 260 20% 88%;
 
-    --popover: 275 65% 90%; /* Light Lilac */
-    --popover-foreground: 275 10% 15%; /* Dark Purple/Grey for text */
+    --popover: 260 25% 12%; /* Dark popover */
+    --popover-foreground: 260 20% 88%;
 
-    --primary: 45 70% 55%; /* Less saturated Gold */
-    --primary-foreground: 45 40% 10%; /* Dark Brown/Gold text for contrast */
+    --primary: 261 55% 50%; /* Deep Violet (PRD: #673AB7) */
+    --primary-foreground: 261 20% 95%; /* Almost white for high contrast */
 
-    --secondary: 275 40% 85%; /* Desaturated Lilac */
-    --secondary-foreground: 275 10% 25%; /* Darker text for secondary */
+    --secondary: 260 30% 30%; /* Muted violet */
+    --secondary-foreground: 260 20% 85%;
 
-    --muted: 275 30% 78%; /* Lighter desaturated Lilac */
-    --muted-foreground: 275 10% 45%; /* Muted Purple/Grey text */
+    --muted: 260 20% 22%; /* Darker muted violet */
+    --muted-foreground: 260 15% 65%; /* More subdued text */
 
-    --accent: 45 60% 65%; /* Softer, less saturated Gold */
-    --accent-foreground: 45 35% 12%; /* Dark text for Lighter Gold */
+    --accent: 255 50% 75%; /* Brighter Soft Lavender (adapted from PRD: #D1C4E9) */
+    --accent-foreground: 255 30% 15%; /* Dark text for lavender accent */
 
-    --destructive: 0 72% 51%; /* Original Destructive Red (adjusted for light theme contrast) */
-    --destructive-foreground: 0 0% 100%; /* Light Text for Destructive */
+    --destructive: 0 65% 55%; /* Clear red */
+    --destructive-foreground: 0 0% 100%; /* White text on red */
 
-    --border: 275 50% 80%; /* Lilac border */
-    --input: 275 50% 85%; /* Lilac input background */
-    --ring: 45 70% 58%; /* Less saturated Gold for focus rings */
+    --border: 260 20% 25%; /* Subtle dark violet border */
+    --input: 260 20% 18%; /* Dark violet input background */
+    --ring: 261 55% 65%; /* Brighter violet for focus rings */
 
     --radius: 0.5rem;
 
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 261 50% 60%;
+    --chart-2: 280 50% 65%;
+    --chart-3: 250 45% 55%;
+    --chart-4: 270 55% 70%;
+    --chart-5: 290 40% 50%;
 
-    /* Sidebar colors - dark lilac theme with gold accents */
-    --sidebar-background: 275 20% 22%; /* Dark Desaturated Lilac */
-    --sidebar-foreground: 275 25% 88%; /* Light Lilac/Grey text */
-    --sidebar-primary: 45 70% 60%;    /* Gold (same as main primary, maybe slightly brighter for dark bg) */
-    --sidebar-primary-foreground: 45 40% 12%; /* Dark Brown/Gold text */
-    --sidebar-accent: 45 60% 35%;     /* Muted gold for hover on dark sidebar */
-    --sidebar-accent-foreground: 45 50% 80%;  /* Light gold/cream text for the dark gold accent */
-    --sidebar-border: 275 20% 18%;    /* Darker border for sidebar */
-    --sidebar-ring: 45 70% 60%;      /* Gold (same as sidebar primary) */
+    /* Sidebar colors - mystical dark theme */
+    --sidebar-background: 260 20% 8%; /* Even darker violet */
+    --sidebar-foreground: 260 20% 80%; /* Light lavender text */
+    --sidebar-primary: 261 55% 55%;    /* Primary violet, slightly brighter for sidebar */
+    --sidebar-primary-foreground: 261 20% 96%;
+    --sidebar-accent: 255 50% 70%;     /* Lavender accent on sidebar */
+    --sidebar-accent-foreground: 255 30% 12%;
+    --sidebar-border: 260 20% 12%;
+    --sidebar-ring: 261 55% 65%;
   }
 
   .dark {
-    --background: 275 60% 92%; /* Light Lilac */
-    --foreground: 275 10% 15%; /* Dark Purple/Grey for text */
+    --background: 260 25% 10%;
+    --foreground: 260 20% 88%;
 
-    --card: 275 65% 90%; /* Slightly more saturated/darker Light Lilac */
-    --card-foreground: 275 10% 15%; /* Dark Purple/Grey for text */
+    --card: 260 25% 15%;
+    --card-foreground: 260 20% 88%;
 
-    --popover: 275 65% 90%; /* Light Lilac */
-    --popover-foreground: 275 10% 15%; /* Dark Purple/Grey for text */
+    --popover: 260 25% 12%;
+    --popover-foreground: 260 20% 88%;
 
-    --primary: 45 70% 55%; /* Less saturated Gold */
-    --primary-foreground: 45 40% 10%; /* Dark Brown/Gold text for contrast */
+    --primary: 261 55% 50%;
+    --primary-foreground: 261 20% 95%;
 
-    --secondary: 275 40% 85%; /* Desaturated Lilac */
-    --secondary-foreground: 275 10% 25%; /* Darker text for secondary */
+    --secondary: 260 30% 30%;
+    --secondary-foreground: 260 20% 85%;
 
-    --muted: 275 30% 78%; /* Lighter desaturated Lilac */
-    --muted-foreground: 275 10% 45%; /* Muted Purple/Grey text */
+    --muted: 260 20% 22%;
+    --muted-foreground: 260 15% 65%;
 
-    --accent: 45 60% 65%; /* Softer, less saturated Gold */
-    --accent-foreground: 45 35% 12%; /* Dark text for Lighter Gold */
+    --accent: 255 50% 75%;
+    --accent-foreground: 255 30% 15%;
 
-    --destructive: 0 72% 51%; /* Original Destructive Red (adjusted for light theme contrast) */
-    --destructive-foreground: 0 0% 100%; /* Light Text for Destructive */
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 275 50% 80%; /* Lilac border */
-    --input: 275 50% 85%; /* Lilac input background */
-    --ring: 45 70% 58%; /* Less saturated Gold for focus rings */
+    --border: 260 20% 25%;
+    --input: 260 20% 18%;
+    --ring: 261 55% 65%;
     
-    /* Sidebar colors - dark lilac theme with gold accents */
-    --sidebar-background: 275 20% 22%; 
-    --sidebar-foreground: 275 25% 88%; 
-    --sidebar-primary: 45 70% 60%; 
-    --sidebar-primary-foreground: 45 40% 12%; 
-    --sidebar-accent: 45 60% 35%; 
-    --sidebar-accent-foreground: 45 50% 80%; 
-    --sidebar-border: 275 20% 18%; 
-    --sidebar-ring: 45 70% 60%; 
+    /* Sidebar colors - mystical dark theme */
+    --sidebar-background: 260 20% 8%; 
+    --sidebar-foreground: 260 20% 80%; 
+    --sidebar-primary: 261 55% 55%; 
+    --sidebar-primary-foreground: 261 20% 96%; 
+    --sidebar-accent: 255 50% 70%; 
+    --sidebar-accent-foreground: 255 30% 12%; 
+    --sidebar-border: 260 20% 12%; 
+    --sidebar-ring: 261 55% 65%; 
   }
 }
 
