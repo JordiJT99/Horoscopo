@@ -5,32 +5,32 @@
 
 @layer base {
   :root {
-    --background: 270 20% 20%; /* Violeta oscuro, pero más claro que antes */
-    --foreground: 270 25% 85%; /* Texto principal brillante */
+    --background: 270 35% 48%; /* Violeta de tono medio, más claro */
+    --foreground: 270 25% 92%; /* Texto principal muy claro */
 
-    --card: 270 20% 25%; /* Tarjetas, más claras que el fondo */
-    --card-foreground: 270 25% 85%;
+    --card: 270 35% 55%; /* Tarjetas, más claras que el fondo */
+    --card-foreground: 270 25% 92%;
 
-    --popover: 270 20% 22%; /* Popovers, intermedio */
-    --popover-foreground: 270 25% 85%;
+    --popover: 270 35% 52%; /* Popovers, similares a las tarjetas */
+    --popover-foreground: 270 25% 92%;
 
-    --primary: 45 65% 60%; /* Dorado suave */
+    --primary: 45 65% 60%; /* Dorado suave (se mantiene) */
     --primary-foreground: 45 30% 15%; /* Texto oscuro sobre dorado */
 
-    --secondary: 265 25% 40%; /* Lila para fondos de sección, más claro */
-    --secondary-foreground: 265 20% 90%; /* Texto claro sobre secundario */
+    --secondary: 265 30% 65%; /* Lila más claro para fondos de sección */
+    --secondary-foreground: 265 20% 95%; /* Texto muy claro sobre secundario */
 
-    --muted: 270 15% 35%; /* Grisáceo lila, más claro */
-    --muted-foreground: 270 15% 70%; /* Texto sobre muted, más claro */
+    --muted: 270 20% 75%; /* Lavanda muy pálido para elementos silenciados */
+    --muted-foreground: 270 15% 35%; /* Texto oscuro sobre silenciado */
 
-    --accent: 270 50% 70%; /* Lavanda brillante para acentos */
+    --accent: 270 50% 75%; /* Lavanda brillante y claro para acentos */
     --accent-foreground: 270 25% 15%; /* Texto oscuro sobre acento */
 
-    --destructive: 0 65% 55%; /* Rojo claro */
+    --destructive: 0 65% 60%; /* Rojo claro (se mantiene) */
     --destructive-foreground: 0 0% 100%; /* Blanco sobre rojo */
 
-    --border: 270 20% 35%; /* Borde, más claro */
-    --input: 270 20% 30%; /* Fondo de input, más claro */
+    --border: 270 30% 65%; /* Borde, más claro */
+    --input: 270 30% 60%; /* Fondo de input, más claro */
     --ring: 45 70% 65%; /* Dorado más brillante para anillos de enfoque */
 
     --radius: 0.5rem;
@@ -41,7 +41,7 @@
     --chart-4: 30 60% 70%;
     --chart-5: 280 40% 55%;
 
-    /* Sidebar se mantiene oscura para contraste */
+    /* Sidebar se mantiene oscura para contraste con el contenido ahora más claro */
     --sidebar-background: 270 20% 12%; /* Violeta muy oscuro/Carbón */
     --sidebar-foreground: 270 25% 80%; /* Texto lavanda claro */
     --sidebar-primary: 45 65% 60%;    /* Dorado suave */
@@ -53,25 +53,25 @@
   }
 
   .dark {
-    /* Para este tema oscuro, .dark puede replicar :root */
-    --background: 270 20% 20%;
-    --foreground: 270 25% 85%;
-    --card: 270 20% 25%;
-    --card-foreground: 270 25% 85%;
-    --popover: 270 20% 22%;
-    --popover-foreground: 270 25% 85%;
+    /* Para este tema, .dark replicará :root, haciéndolo efectivamente un solo tema claro con sidebar oscura */
+    --background: 270 35% 48%;
+    --foreground: 270 25% 92%;
+    --card: 270 35% 55%;
+    --card-foreground: 270 25% 92%;
+    --popover: 270 35% 52%;
+    --popover-foreground: 270 25% 92%;
     --primary: 45 65% 60%;
     --primary-foreground: 45 30% 15%;
-    --secondary: 265 25% 40%;
-    --secondary-foreground: 265 20% 90%;
-    --muted: 270 15% 35%;
-    --muted-foreground: 270 15% 70%;
-    --accent: 270 50% 70%;
+    --secondary: 265 30% 65%;
+    --secondary-foreground: 265 20% 95%;
+    --muted: 270 20% 75%;
+    --muted-foreground: 270 15% 35%;
+    --accent: 270 50% 75%;
     --accent-foreground: 270 25% 15%;
-    --destructive: 0 65% 55%;
+    --destructive: 0 65% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 270 20% 35%;
-    --input: 270 20% 30%;
+    --border: 270 30% 65%;
+    --input: 270 30% 60%;
     --ring: 45 70% 65%;
     
     --sidebar-background: 270 20% 12%;
@@ -96,30 +96,30 @@
     /* Base background color using the CSS variable */
     background-color: hsl(var(--background));
 
-    /* Starry background layers - estrellas más brillantes y opacas */
+    /* Starry background layers - ESTRELLAS MÁS GRANDES, BRILLANTES Y OPACAS */
     background-image: 
       /* Pequeñas, densas */
-      radial-gradient(0.5px 0.5px at 20px 30px, hsla(270, 30%, 80%, 0.5), transparent),
-      radial-gradient(0.5px 0.5px at 40px 70px, hsla(270, 30%, 80%, 0.5), transparent),
-      radial-gradient(0.5px 0.5px at 50px 160px, hsla(270, 30%, 80%, 0.5), transparent),
-      radial-gradient(0.5px 0.5px at 90px 40px, hsla(270, 30%, 80%, 0.5), transparent),
-      radial-gradient(0.5px 0.5px at 130px 80px, hsla(270, 30%, 80%, 0.5), transparent),
-      radial-gradient(0.5px 0.5px at 160px 120px, hsla(270, 30%, 80%, 0.5), transparent),
+      radial-gradient(1px 1px at 20px 30px, hsla(270, 60%, 95%, 0.8), transparent), /* Más grande, brillante, opaco */
+      radial-gradient(1px 1px at 40px 70px, hsla(270, 60%, 95%, 0.8), transparent),
+      radial-gradient(0.9px 0.9px at 50px 160px, hsla(270, 60%, 95%, 0.75), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsla(270, 60%, 95%, 0.8), transparent),
+      radial-gradient(0.9px 0.9px at 130px 80px, hsla(270, 60%, 95%, 0.75), transparent),
+      radial-gradient(1px 1px at 160px 120px, hsla(270, 60%, 95%, 0.8), transparent),
       /* Medianas */
-      radial-gradient(0.7px 0.7px at 180px 50px, hsla(270, 40%, 85%, 0.6), transparent),
-      radial-gradient(0.7px 0.7px at 10px 90px, hsla(270, 40%, 85%, 0.6), transparent),
-      radial-gradient(0.7px 0.7px at 120px 190px, hsla(270, 40%, 85%, 0.6), transparent),
+      radial-gradient(1.5px 1.5px at 180px 50px, hsla(270, 70%, 96%, 0.85), transparent), /* Más grande, brillante, opaco */
+      radial-gradient(1.5px 1.5px at 10px 90px, hsla(270, 70%, 96%, 0.85), transparent),
+      radial-gradient(1.2px 1.2px at 120px 190px, hsla(270, 70%, 96%, 0.8), transparent),
 
       /* Grandes, dispersas */
-      radial-gradient(1px 1px at 70px 20px, hsla(270, 50%, 90%, 0.7), transparent),
-      radial-gradient(1px 1px at 100px 100px, hsla(270, 50%, 90%, 0.7), transparent),
-      radial-gradient(1px 1px at 30px 130px, hsla(270, 50%, 90%, 0.7), transparent),
+      radial-gradient(2px 2px at 70px 20px, hsla(270, 80%, 97%, 0.9), transparent), /* Más grande, brillante, opaco */
+      radial-gradient(2px 2px at 100px 100px, hsla(270, 80%, 97%, 0.9), transparent),
+      radial-gradient(1.5px 1.5px at 30px 130px, hsla(270, 80%, 97%, 0.85), transparent),
       /* Muy grandes, muy dispersas */
-      radial-gradient(1.2px 1.2px at 190px 100px, hsla(270, 60%, 95%, 0.8), transparent),
-      radial-gradient(1.2px 1.2px at 60px 10px, hsla(270, 60%, 95%, 0.8), transparent);
+      radial-gradient(2.5px 2.5px at 190px 100px, hsla(270, 90%, 98%, 0.95), transparent), /* Más grande, brillante, opaco */
+      radial-gradient(2.5px 2.5px at 60px 10px, hsla(270, 90%, 98%, 0.95), transparent);
 
     background-repeat: repeat;
-    background-size: 250px 250px; /* Ajustar tamaño para densidad de estrellas */
+    background-size: 220px 220px; /* Ajustar tamaño para densidad de estrellas */
     background-attachment: fixed; /* Estrellas fijas al hacer scroll */
   }
 }
