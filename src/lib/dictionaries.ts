@@ -1,4 +1,3 @@
-import 'server-only';
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
 export type Dictionary = Record<string, any>; // Consider defining a more specific type based on your JSON structure
