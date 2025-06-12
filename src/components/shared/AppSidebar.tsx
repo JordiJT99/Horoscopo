@@ -17,10 +17,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   useSidebar,
-  sidebarMenuButtonVariants,
+  sidebarMenuButtonVariants, // Import variants
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
-import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, Orbit } from 'lucide-react'; // Replaced CalendarDays with Orbit
+import { cn } from '@/lib/utils'; // Import cn
+import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, Orbit, Wand } from 'lucide-react'; // Added Wand
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -100,6 +100,12 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       tooltip: dictionary['Sidebar.dreamReadingTooltip'] || "Interpret Your Dreams",
     },
     {
+      href: `/${currentLocale}/tarot-reading`,
+      label: dictionary['Sidebar.tarotReading'] || "Tarot Reading",
+      icon: Wand, // New icon
+      tooltip: dictionary['Sidebar.tarotReadingTooltip'] || "Get a Tarot Card Reading",
+    },
+    {
       href: `/${currentLocale}/profile`,
       label: dictionary['Sidebar.profile'] || "User Profile",
       icon: UserCircle,
@@ -152,7 +158,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <Orbit /> {/* Changed icon here */}
+                  <Orbit /> 
                   <span>{dictionary['Sidebar.horoscopesGroup'] || "Horoscopes"}</span>
                 </div>
               </AccordionTrigger>

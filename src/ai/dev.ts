@@ -3,3 +3,4 @@
 import './flows/horoscope-flow';
 import './flows/crystal-ball-flow';
 import './flows/dream-interpretation-flow';
+import './flows/tarot-reading-flow';
