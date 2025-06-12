@@ -49,10 +49,16 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
   const [isLoadingKin, setIsLoadingKin] = useState(false);
   const [errorKin, setErrorKin] = useState<string | null>(null);
   const [showCalculationExplanation, setShowCalculationExplanation] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [currentYearForCalendar, setCurrentYearForCalendar] = useState<number | undefined>(undefined);
+  
+  const currentDfnlocale = dateLocales[locale] || enUS;
 
   useEffect(() => {
-    // Initialize with a default date, e.g., today or a fixed past date, for client-side only
-    setSelectedBirthDate(new Date(1990, 0, 1)); // Example: Jan 1, 1990
+    setHasMounted(true);
+    const now = new Date();
+    setSelectedBirthDate(new Date(1990, 0, 1)); 
+    setCurrentYearForCalendar(now.getFullYear());
   }, []);
 
   const handleCalculateKin = () => {
@@ -75,9 +81,6 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
     }, 500);
   };
   
-  const currentDfnlocale = dateLocales[locale] || enUS;
-  const currentYear = new Date().getFullYear();
-
   return (
     <>
       <Card className="mb-12 shadow-lg">
@@ -105,20 +108,24 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                     )}
                   >
                     <CalendarIconLucide className="mr-2 h-4 w-4" />
-                    {selectedBirthDate ? format(selectedBirthDate, "PPP", { locale: currentDfnlocale }) : <span>{dictionary['MayanHoroscopePage.pickDate']}</span>}
+                    {selectedBirthDate && hasMounted ? format(selectedBirthDate, "PPP", { locale: currentDfnlocale }) : <span>{dictionary['MayanHoroscopePage.pickDate']}</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={selectedBirthDate}
-                    onSelect={setSelectedBirthDate}
-                    disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                    initialFocus
-                    captionLayout="dropdown-buttons"
-                    fromYear={1900}
-                    toYear={currentYear}
-                  />
+                    <Calendar
+                      mode="single"
+                      selected={selectedBirthDate}
+                      onSelect={setSelectedBirthDate}
+                      disabled={
+                        hasMounted
+                          ? (date: Date) => date > new Date() || date < new Date("1900-01-01")
+                          : (date: Date) => date < new Date("1900-01-01") // Simpler SSR disable
+                      }
+                      initialFocus
+                      captionLayout="dropdown-buttons"
+                      fromYear={1900}
+                      toYear={hasMounted ? currentYearForCalendar : undefined}
+                    />
                 </PopoverContent>
               </Popover>
             </div>
@@ -134,7 +141,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
           )}
           {errorKin && <p className="text-destructive text-center">{errorKin}</p>}
           
-          {mayanKin && !isLoadingKin && (
+          {mayanKin && !isLoadingKin && hasMounted && (
             <Card className="bg-secondary/30 p-6 rounded-lg shadow">
               <CardHeader className="p-0 pb-4 text-center">
                 <CardTitle className="font-headline text-2xl text-primary">{dictionary['MayanHoroscopePage.yourMayanKinTitle']}</CardTitle>
@@ -190,7 +197,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
               </CardContent>
             </Card>
           )}
-          {!mayanKin && !isLoadingKin && !errorKin && (
+          {!mayanKin && !isLoadingKin && !errorKin && hasMounted && (
              <p className="text-center text-muted-foreground">{dictionary['MayanHoroscopePage.selectDatePrompt']}</p>
           )}
         </CardContent>
@@ -276,3 +283,6 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
     </>
   );
 }
+
+
+    

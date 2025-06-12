@@ -37,20 +37,27 @@ const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProp
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [currentYearForCalendar, setCurrentYearForCalendar] = useState<number | undefined>(undefined);
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
 
   useEffect(() => {
-    setBirthDate(new Date()); // Initialize birthDate for ascendant calendar on client
+    setHasMounted(true);
+    const now = new Date();
+    setBirthDate(now); 
+    setCurrentYearForCalendar(now.getFullYear());
+  }, []); 
 
+  useEffect(() => {
+    if (!hasMounted) return; // Don't run lunar data fetch until client has mounted
     setIsLoadingLunar(true);
-    // Fetch lunar data on client side
     const lunarTimer = setTimeout(() => {
-      setLunarData(getCurrentLunarData(locale)); // Pass current app locale
+      setLunarData(getCurrentLunarData(locale)); 
       setIsLoadingLunar(false);
     }, 400);
     return () => clearTimeout(lunarTimer);
-  }, [locale]); // Re-run if locale changes
+  }, [locale, hasMounted]); 
 
   const handleCalculateAscendant = () => {
     if (!birthDate || !birthTime || !birthCity) {
@@ -77,19 +84,21 @@ const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProp
       <CardContent className="space-y-8">
         <div className="p-4 bg-secondary/30 rounded-md shadow">
           <h3 className="text-2xl font-headline font-semibold mb-3 text-primary text-center">{dictionary['LunarAscendantSection.currentLunarPhaseTitle'] || "Current Lunar Phase"}</h3>
-          {isLoadingLunar ? (
+          {isLoadingLunar && hasMounted ? ( // Show loading only if mounted and loading
             <div className="text-center py-4">
               <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
               <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
             </div>
-          ) : lunarData ? (
+          ) : lunarData && hasMounted ? (
             <div className="text-center space-y-2">
               <p className="text-xl font-body"><strong className="font-semibold">{lunarData.phase}</strong> ({lunarData.illumination}%)</p>
               <p className="text-sm font-body text-muted-foreground">{(dictionary['LunarAscendantSection.nextFullMoon'] || "Next Full Moon: {date}").replace('{date}', lunarData.nextFullMoon)}</p>
               <p className="text-sm font-body text-muted-foreground">{(dictionary['LunarAscendantSection.nextNewMoon'] || "Next New Moon: {date}").replace('{date}', lunarData.nextNewMoon)}</p>
             </div>
-          ) : (
+          ) : hasMounted ? ( // Only show error if mounted and no data
             <p className="text-center font-body text-destructive">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
+          ) : (
+             <div className="text-center py-4 h-[108px]">{/* Placeholder for SSR to match height */}</div>
           )}
         </div>
 
@@ -97,10 +106,11 @@ const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProp
           <h3 className="text-2xl font-headline font-semibold mb-4 text-primary text-center">{dictionary['LunarAscendantSection.calculateAscendantTitle'] || "Calculate Your Ascendant Sign"}</h3>
           <div className="space-y-4 max-w-md mx-auto">
             <div>
-              <Label htmlFor="birth-date" className="font-body">{dictionary['LunarAscendantSection.birthDateLabel'] || "Birth Date"}</Label>
+              <Label htmlFor="birth-date-lunar" className="font-body">{dictionary['LunarAscendantSection.birthDateLabel'] || "Birth Date"}</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
+                    id="birth-date-lunar"
                     variant={"outline"}
                     className={cn(
                       "w-full justify-start text-left font-normal font-body",
@@ -108,34 +118,38 @@ const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProp
                     )}
                   >
                     <CalendarIconLucide className="mr-2 h-4 w-4" />
-                    {birthDate ? format(birthDate, "PPP", { locale: currentDfnLocale }) : <span>{dictionary['LunarAscendantSection.pickDate'] || "Pick a date"}</span>}
+                    {birthDate && hasMounted ? format(birthDate, "PPP", { locale: currentDfnLocale }) : <span>{dictionary['LunarAscendantSection.pickDate'] || "Pick a date"}</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={birthDate}
-                    onSelect={setBirthDate}
-                    disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                    initialFocus
-                    locale={currentDfnLocale} // Use the correct date-fns locale object
-                    captionLayout="dropdown-buttons"
-                    fromYear={1900}
-                    toYear={new Date().getFullYear()}
-                  />
+                    <Calendar
+                      mode="single"
+                      selected={birthDate}
+                      onSelect={setBirthDate}
+                      disabled={
+                        hasMounted
+                          ? (date: Date) => date > new Date() || date < new Date("1900-01-01")
+                          : (date: Date) => date < new Date("1900-01-01") // Simpler SSR disable
+                      }
+                      initialFocus
+                      locale={currentDfnLocale} 
+                      captionLayout="dropdown-buttons"
+                      fromYear={1900}
+                      toYear={hasMounted ? currentYearForCalendar : undefined}
+                    />
                 </PopoverContent>
               </Popover>
             </div>
             <div>
-              <Label htmlFor="birth-time" className="font-body">{dictionary['LunarAscendantSection.birthTimeLabel'] || "Birth Time (approx.)"}</Label>
+              <Label htmlFor="birth-time-lunar" className="font-body">{dictionary['LunarAscendantSection.birthTimeLabel'] || "Birth Time (approx.)"}</Label>
               <div className="flex items-center gap-2">
                 <Clock className="text-muted-foreground" />
-                <Input id="birth-time" type="time" value={birthTime} onChange={(e) => setBirthTime(e.target.value)} className="font-body" />
+                <Input id="birth-time-lunar" type="time" value={birthTime} onChange={(e) => setBirthTime(e.target.value)} className="font-body" />
               </div>
             </div>
             <div>
-              <Label htmlFor="birth-city" className="font-body">{dictionary['LunarAscendantSection.birthCityLabel'] || "Birth City"}</Label>
-              <Input id="birth-city" type="text" placeholder={dictionary['LunarAscendantSection.birthCityPlaceholder'] || "e.g., New York"} value={birthCity} onChange={(e) => setBirthCity(e.target.value)} className="font-body" />
+              <Label htmlFor="birth-city-lunar" className="font-body">{dictionary['LunarAscendantSection.birthCityLabel'] || "Birth City"}</Label>
+              <Input id="birth-city-lunar" type="text" placeholder={dictionary['LunarAscendantSection.birthCityPlaceholder'] || "e.g., New York"} value={birthCity} onChange={(e) => setBirthCity(e.target.value)} className="font-body" />
             </div>
             <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant || !birthDate || !birthTime || !birthCity} className="w-full font-body">
               {isLoadingAscendant ? (
@@ -144,7 +158,7 @@ const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProp
             </Button>
           </div>
 
-          {ascendantData && !isLoadingAscendant && (
+          {ascendantData && !isLoadingAscendant && hasMounted && (
             <div className="mt-6 text-center p-4 bg-card rounded-md shadow-sm">
               <h4 className="text-xl font-headline font-semibold text-accent-foreground">{dictionary['LunarAscendantSection.ascendantSignTitle'] || "Your Ascendant Sign:"}</h4>
               <div className="flex items-center justify-center my-2">
@@ -161,4 +175,6 @@ const LunarAscendantSection = ({ dictionary, locale }: LunarAscendantSectionProp
 };
 
 export default LunarAscendantSection;
+    
+
     
