@@ -14,8 +14,8 @@
     --popover: 260 25% 12%; /* Dark popover */
     --popover-foreground: 260 20% 88%;
 
-    --primary: 261 55% 50%; /* Deep Violet (PRD: #673AB7) */
-    --primary-foreground: 261 20% 95%; /* Almost white for high contrast */
+    --primary: 50 70% 50%; /* Gold */
+    --primary-foreground: 50 20% 15%; /* Dark text for gold */
 
     --secondary: 260 30% 30%; /* Muted violet */
     --secondary-foreground: 260 20% 85%;
@@ -23,7 +23,7 @@
     --muted: 260 20% 22%; /* Darker muted violet */
     --muted-foreground: 260 15% 65%; /* More subdued text */
 
-    --accent: 255 50% 75%; /* Brighter Soft Lavender (adapted from PRD: #D1C4E9) */
+    --accent: 255 50% 75%; /* Brighter Soft Lavender */
     --accent-foreground: 255 30% 15%; /* Dark text for lavender accent */
 
     --destructive: 0 65% 55%; /* Clear red */
@@ -31,25 +31,25 @@
 
     --border: 260 20% 25%; /* Subtle dark violet border */
     --input: 260 20% 18%; /* Dark violet input background */
-    --ring: 261 55% 65%; /* Brighter violet for focus rings */
+    --ring: 50 70% 60%; /* Brighter gold for focus rings */
 
     --radius: 0.5rem;
 
-    --chart-1: 261 50% 60%;
-    --chart-2: 280 50% 65%;
-    --chart-3: 250 45% 55%;
-    --chart-4: 270 55% 70%;
-    --chart-5: 290 40% 50%;
+    --chart-1: 50 65% 55%; /* Gold-toned chart color */
+    --chart-2: 280 50% 65%; /* Violet chart color */
+    --chart-3: 250 45% 55%; /* Indigo chart color */
+    --chart-4: 40 60% 60%;  /* Lighter Gold/Orange chart color */
+    --chart-5: 290 40% 50%; /* Magenta chart color */
 
-    /* Sidebar colors - mystical dark theme */
+    /* Sidebar colors - mystical dark theme with golden primary */
     --sidebar-background: 260 20% 8%; /* Even darker violet */
     --sidebar-foreground: 260 20% 80%; /* Light lavender text */
-    --sidebar-primary: 261 55% 55%;    /* Primary violet, slightly brighter for sidebar */
-    --sidebar-primary-foreground: 261 20% 96%;
+    --sidebar-primary: 50 70% 55%;    /* Gold for sidebar primary, slightly brighter */
+    --sidebar-primary-foreground: 50 20% 12%; /* Dark text for gold */
     --sidebar-accent: 255 50% 70%;     /* Lavender accent on sidebar */
     --sidebar-accent-foreground: 255 30% 12%;
     --sidebar-border: 260 20% 12%;
-    --sidebar-ring: 261 55% 65%;
+    --sidebar-ring: 50 70% 65%; /* Gold for sidebar focus rings */
   }
 
   .dark {
@@ -62,8 +62,8 @@
     --popover: 260 25% 12%;
     --popover-foreground: 260 20% 88%;
 
-    --primary: 261 55% 50%;
-    --primary-foreground: 261 20% 95%;
+    --primary: 50 70% 50%; /* Gold */
+    --primary-foreground: 50 20% 15%; /* Dark text for gold */
 
     --secondary: 260 30% 30%;
     --secondary-foreground: 260 20% 85%;
@@ -71,7 +71,7 @@
     --muted: 260 20% 22%;
     --muted-foreground: 260 15% 65%;
 
-    --accent: 255 50% 75%;
+    --accent: 255 50% 75%; /* Brighter Soft Lavender */
     --accent-foreground: 255 30% 15%;
 
     --destructive: 0 65% 55%;
@@ -79,17 +79,17 @@
 
     --border: 260 20% 25%;
     --input: 260 20% 18%;
-    --ring: 261 55% 65%;
+    --ring: 50 70% 60%; /* Brighter gold for focus rings */
     
-    /* Sidebar colors - mystical dark theme */
+    /* Sidebar colors - mystical dark theme with golden primary */
     --sidebar-background: 260 20% 8%; 
     --sidebar-foreground: 260 20% 80%; 
-    --sidebar-primary: 261 55% 55%; 
-    --sidebar-primary-foreground: 261 20% 96%; 
+    --sidebar-primary: 50 70% 55%;    
+    --sidebar-primary-foreground: 50 20% 12%; 
     --sidebar-accent: 255 50% 70%; 
     --sidebar-accent-foreground: 255 30% 12%; 
     --sidebar-border: 260 20% 12%; 
-    --sidebar-ring: 261 55% 65%; 
+    --sidebar-ring: 50 70% 65%; 
   }
 }
 
