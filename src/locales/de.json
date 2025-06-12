@@ -99,6 +99,7 @@
   "MayanHoroscopePage.question": "Wesentliche Frage:",
   "MayanHoroscopePage.signsTitle": "Die 20 Sonnensiegel (Nahuales)",
   "MayanHoroscopePage.kinCalculatorTitle": "Berechnen Sie Ihr Maya-Kin",
+  "MayanHoroscopePage.kinCalculatorDescription": "Der Maya-Kin ist eine Einheit von Zeit und Energie im Tzolkin (heiliger Maya-Kalender). Er repräsentiert Ihre persönliche galaktische Signatur, die die Energie eines Sonnensiegels und eines Galaktischen Tons kombiniert und Einblicke in Ihren Zweck und Lebensweg bietet.",
   "MayanHoroscopePage.birthDateLabel": "Ihr Geburtsdatum:",
   "MayanHoroscopePage.calculateKinButton": "Kin berechnen",
   "MayanHoroscopePage.calculatingKin": "Kin wird berechnet...",
@@ -178,4 +179,3 @@
   "GalacticTone.Cosmic.keyword": "Gegenwart",
   "GalacticTone.Cosmic.question": "Wie erweitere ich meine Freude und Liebe?"
 }
-    

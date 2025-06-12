@@ -118,6 +118,7 @@
   "MayanHoroscopePage.question": "Pregunta Esencial:",
   "MayanHoroscopePage.signsTitle": "Los 20 Sellos Solares (Nahuales)",
   "MayanHoroscopePage.kinCalculatorTitle": "Calcula tu Kin Maya",
+  "MayanHoroscopePage.kinCalculatorDescription": "El Kin Maya es una unidad de tiempo y energía en el Tzolkin (calendario sagrado maya). Representa tu firma galáctica personal, combinando la energía de un Sello Solar y un Tono Galáctico, ofreciendo perspectivas sobre tu propósito y camino de vida.",
   "MayanHoroscopePage.birthDateLabel": "Tu Fecha de Nacimiento:",
   "MayanHoroscopePage.calculateKinButton": "Calcular Kin",
   "MayanHoroscopePage.calculatingKin": "Calculando Kin...",
@@ -197,4 +198,3 @@
   "GalacticTone.Cosmic.keyword": "Presencia",
   "GalacticTone.Cosmic.question": "¿Cómo expando mi alegría y amor?"
 }
-    

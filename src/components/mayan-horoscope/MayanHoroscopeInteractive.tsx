@@ -88,8 +88,11 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
           <SectionTitle
             title={dictionary['MayanHoroscopePage.kinCalculatorTitle']}
             icon={KinCalculatorIcon}
-            className="mb-0"
+            className="mb-2" // Adjusted margin
           />
+          <CardDescription className="text-center font-body text-muted-foreground mb-4">
+            {dictionary['MayanHoroscopePage.kinCalculatorDescription'] || "El Kin Maya es tu firma galáctica personal basada en el calendario Tzolkin."}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col sm:flex-row items-end gap-4">
@@ -119,7 +122,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                       disabled={
                         hasMounted
                           ? (date: Date) => date > new Date() || date < new Date("1900-01-01")
-                          : (date: Date) => date < new Date("1900-01-01") // Simpler SSR disable
+                          : (date: Date) => date < new Date("1900-01-01") 
                       }
                       initialFocus
                       captionLayout="dropdown-buttons"
@@ -283,6 +286,3 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
     </>
   );
 }
-
-
-    
