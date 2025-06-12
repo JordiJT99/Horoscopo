@@ -62,7 +62,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   output: { schema: HoroscopeDetailSchema },
   prompt: `You are a skilled astrologer. Generate ONLY the DAILY horoscope for TODAY for the zodiac sign {{sign}} in the {{locale}} language.
 Provide a detailed and insightful horoscope.
-For the 'main' section, delve into the general characteristics of the sign and how current energies might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad, no en vano son un signo de fuego, dominado por Marte, y su naturaleza es fogosa y dinámica. No suele esperar los acontecimientos, se precipita sobre ellos y claro, es impaciente, lo que muchas veces le lleva a tomar decisiones demasiado rápidas. Es optimista y sincero y valora la amistad como un bien sagrado."
+For the 'main' section, delve into the general characteristics of the sign and how current energies might influence them, similar to the style: "Si algo resalta de estos nativos es su impulsividad, no en vano son un signo de fuego, dominado por Marte, y su naturaleza es fogosa y dinámica. No suele esperar los acontecimientos, se precipita sobre ellos y claro, es impaciente, lo que muchas veces le lleva a tomar decisiones demasiado rápidas. Es optimista y sincero y valoras la amistad como un bien sagrado."
 For 'love', 'money', and 'health', provide specific, elaborate insights and advice for the day.
 The output must be a JSON object with the following keys: "main", "love", "money", "health".
 
@@ -131,12 +131,23 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInput, currentDate: 
   if (dailyCache.has(cacheKey)) {
     return dailyCache.get(cacheKey)!;
   }
-  const {output} = await dailyHoroscopePrompt(input);
-  if (!output?.main || !output?.love || !output?.money || !output?.health) {
-    throw new Error('Failed to generate complete daily horoscope details from AI.');
+  try {
+    const {output} = await dailyHoroscopePrompt(input);
+    if (!output?.main || !output?.love || !output?.money || !output?.health) {
+      throw new Error('AI did not return complete daily horoscope data.');
+    }
+    dailyCache.set(cacheKey, output);
+    return output;
+  } catch (err: any) {
+    console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
+    if (err.message && (err.message.includes('503') || err.message.toLowerCase().includes('overloaded') || err.message.toLowerCase().includes('service unavailable'))) {
+      throw new Error(`The astrology spirits are resting (model overloaded). Please try again in a moment.`);
+    }
+    if (err.message && err.message.includes('GoogleGenerativeAI Error')) {
+       throw new Error(`An issue occurred with the celestial connection (AI service error). Please try again later.`);
+    }
+    throw new Error(`Failed to generate daily horoscope: ${err.message || 'Unknown error'}`);
   }
-  dailyCache.set(cacheKey, output);
-  return output;
 }
 
 async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInput, currentDate: Date): Promise<HoroscopeDetail> {
@@ -146,12 +157,23 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInput, currentDate:
   if (weeklyCache.has(cacheKey)) {
     return weeklyCache.get(cacheKey)!;
   }
-  const {output} = await weeklyHoroscopePrompt(input);
-   if (!output?.main || !output?.love || !output?.money || !output?.health) {
-    throw new Error('Failed to generate complete weekly horoscope details from AI.');
+  try {
+    const {output} = await weeklyHoroscopePrompt(input);
+    if (!output?.main || !output?.love || !output?.money || !output?.health) {
+      throw new Error('AI did not return complete weekly horoscope data.');
+    }
+    weeklyCache.set(cacheKey, output);
+    return output;
+  } catch (err: any) {
+    console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
+    if (err.message && (err.message.includes('503') || err.message.toLowerCase().includes('overloaded') || err.message.toLowerCase().includes('service unavailable'))) {
+      throw new Error(`The astrology spirits are resting (model overloaded). Please try again in a moment.`);
+    }
+    if (err.message && err.message.includes('GoogleGenerativeAI Error')) {
+       throw new Error(`An issue occurred with the celestial connection (AI service error). Please try again later.`);
+    }
+    throw new Error(`Failed to generate weekly horoscope: ${err.message || 'Unknown error'}`);
   }
-  weeklyCache.set(cacheKey, output);
-  return output;
 }
 
 async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInput, currentDate: Date): Promise<HoroscopeDetail> {
@@ -161,12 +183,23 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInput, currentDate
   if (monthlyCache.has(cacheKey)) {
     return monthlyCache.get(cacheKey)!;
   }
-  const {output} = await monthlyHoroscopePrompt(input);
-  if (!output?.main || !output?.love || !output?.money || !output?.health) {
-    throw new Error('Failed to generate complete monthly horoscope details from AI.');
+  try {
+    const {output} = await monthlyHoroscopePrompt(input);
+    if (!output?.main || !output?.love || !output?.money || !output?.health) {
+      throw new Error('AI did not return complete monthly horoscope data.');
+    }
+    monthlyCache.set(cacheKey, output);
+    return output;
+  } catch (err: any) {
+    console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
+    if (err.message && (err.message.includes('503') || err.message.toLowerCase().includes('overloaded') || err.message.toLowerCase().includes('service unavailable'))) {
+      throw new Error(`The astrology spirits are resting (model overloaded). Please try again in a moment.`);
+    }
+    if (err.message && err.message.includes('GoogleGenerativeAI Error')) {
+       throw new Error(`An issue occurred with the celestial connection (AI service error). Please try again later.`);
+    }
+    throw new Error(`Failed to generate monthly horoscope: ${err.message || 'Unknown error'}`);
   }
-  monthlyCache.set(cacheKey, output);
-  return output;
 }
 
 const horoscopeFlow = ai.defineFlow(
