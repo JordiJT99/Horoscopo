@@ -48,6 +48,7 @@
   "LunarAscendantSection.title": "Mond & Aszendent",
   "LunarAscendantSection.description": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen.",
   "LunarAscendantSection.fillAllDetails": "Bitte füllen Sie alle Geburtsdetails aus.",
+  "LunarAscendantSection.lunarPhaseGlobalNote": "Die Mondphase ist global. Die genauen Zeiten für Neumond/Vollmond können je nach Ihrer Zeitzone variieren. Informationen basieren auf der aktuellen Zeit Ihres Geräts.",
   "Sidebar.home": "Startseite (Täglich)",
   "Sidebar.homeTooltip": "Tageshoroskop & Startseite",
   "Sidebar.dailyHoroscope": "Tageshoroskop",

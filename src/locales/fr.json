@@ -48,6 +48,7 @@
   "LunarAscendantSection.title": "Lunaire et Ascendant",
   "LunarAscendantSection.description": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant.",
   "LunarAscendantSection.fillAllDetails": "Veuillez remplir toutes les informations de naissance.",
+  "LunarAscendantSection.lunarPhaseGlobalNote": "La phase lunaire est globale. Les heures exactes de nouvelle/pleine lune peuvent varier selon votre fuseau horaire. Informations basées sur l'heure actuelle de votre appareil.",
   "Sidebar.home": "Accueil (Quotidien)",
   "Sidebar.homeTooltip": "Horoscope Quotidien & Accueil",
   "Sidebar.dailyHoroscope": "Horoscope Quotidien",

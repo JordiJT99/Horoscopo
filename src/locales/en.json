@@ -67,6 +67,7 @@
   "LunarAscendantSection.calculateButton": "Calculate Ascendant",
   "LunarAscendantSection.ascendantSignTitle": "Your Ascendant Sign:",
   "LunarAscendantSection.fillAllDetails": "Please fill in all birth details.",
+  "LunarAscendantSection.lunarPhaseGlobalNote": "Lunar phase is global. Exact new/full moon times may vary by your time zone. Info based on your device's current time.",
   "Sidebar.home": "Home (Daily)",
   "Sidebar.homeTooltip": "Daily Horoscope & Home",
   "Sidebar.dailyHoroscope": "Daily Horoscope",

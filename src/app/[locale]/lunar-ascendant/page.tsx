@@ -101,11 +101,14 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                   <p className="text-xl font-body"><strong className="font-semibold">{lunarData.phase}</strong> ({lunarData.illumination}%)</p>
                   <p className="text-sm font-body text-muted-foreground">{(dictionary['LunarAscendantSection.nextFullMoon'] || "Next Full Moon: {date}").replace('{date}', lunarData.nextFullMoon)}</p>
                   <p className="text-sm font-body text-muted-foreground">{(dictionary['LunarAscendantSection.nextNewMoon'] || "Next New Moon: {date}").replace('{date}', lunarData.nextNewMoon)}</p>
+                  <p className="text-xs font-body text-muted-foreground/80 mt-2 px-2">
+                    {dictionary['LunarAscendantSection.lunarPhaseGlobalNote'] || "Lunar phase is global. Exact new/full moon times may vary by your time zone. Info based on your device's current time."}
+                  </p>
                 </div>
               ) : hasMounted ? (
                 <p className="text-center font-body text-destructive">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
               ) : (
-                 <div className="text-center py-4 h-[108px]"></div>
+                 <div className="text-center py-4 h-[108px]"></div> // Placeholder for height consistency
               )}
             </div>
           </CardContent>
@@ -207,3 +210,4 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
   
   return <LunarAscendantContent dictionary={dictionary} locale={params.locale} />;
 }
+
