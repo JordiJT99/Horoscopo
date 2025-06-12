@@ -2,7 +2,7 @@
 "use client"; // This layout now needs to be a client component to use hooks
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
 import { SidebarProvider, Sidebar, SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import AppSidebar from '@/components/shared/AppSidebar';
@@ -16,10 +16,8 @@ interface LocaleLayoutParams {
   locale: Locale;
 }
 
-// This component will fetch dictionary for its direct children.
-// AppSidebar, Header, Footer will get it passed down.
-function LayoutContent({ locale, children }: { locale: Locale, children: React.ReactNode }) {
-  const dictionary = use(getDictionary(locale)); // Using `use` hook for promises in Client Components
+// This component now receives the resolved dictionary directly.
+function LayoutContent({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { isMobile, openMobile, setOpenMobile } = useSidebar();
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -38,7 +36,7 @@ function LayoutContent({ locale, children }: { locale: Locale, children: React.R
         <Sheet open={openMobile} onOpenChange={setOpenMobile}>
           <SheetContent
             side="left" // Assuming sidebar is on the left
-            className="w-[16rem] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden" // Using fixed width for mobile sheet
+            className="w-[var(--sidebar-width-mobile)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden" // Using var for mobile sheet width
           >
             <SheetTitle className="sr-only">{dictionary['Header.title'] || "Navigation Menu"}</SheetTitle> {/* Accessibility */}
             {/* AppSidebar needs dictionary and locale */}
@@ -67,9 +65,14 @@ export default function LocaleLayout({
   params: Promise<LocaleLayoutParams>; // Updated type to Promise
 }>) {
   const resolvedParams = use(paramsPromise); // Unwrap the params Promise
+  const currentLocale = resolvedParams.locale;
+
+  // Fetch dictionary here using React.use
+  // This will suspend LocaleLayout (and its children) until the dictionary is loaded.
+  const dictionary = use(getDictionary(currentLocale));
 
   return (
-    <html lang={resolvedParams.locale} suppressHydrationWarning>
+    <html lang={currentLocale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -77,7 +80,8 @@ export default function LocaleLayout({
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col bg-background text-foreground">
         <SidebarProvider defaultOpen={true}> {/* SidebarProvider wraps everything */}
-          <LayoutContent locale={resolvedParams.locale}> {/* Pass the resolved locale */}
+          {/* Pass the resolved locale and dictionary to LayoutContent */}
+          <LayoutContent locale={currentLocale} dictionary={dictionary}>
             {children}
           </LayoutContent>
         </SidebarProvider>

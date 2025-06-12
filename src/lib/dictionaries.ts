@@ -4,7 +4,7 @@ export type Dictionary = Record<string, any>; // Consider defining a more specif
 
 // Cache for the promises for React.use()
 const dictionaryPromisesCache: Partial<Record<Locale, Promise<Dictionary>>> = {};
-// Cache for the loaded dictionaries themselves (optional optimization, but good practice)
+// Cache for the loaded dictionaries themselves
 const loadedDictionariesCache: Partial<Record<Locale, Dictionary>> = {};
 
 const loadFunctions: Record<Locale, () => Promise<Dictionary>> = {
@@ -39,13 +39,14 @@ export const getDictionary = (locale: Locale): Promise<Dictionary> => {
       delete dictionaryPromisesCache[targetLocale]; // Remove failed promise from cache
       if (targetLocale !== 'es') {
         console.warn(`Falling back to 'es' dictionary for locale '${targetLocale}'.`);
-        return getDictionary('es'); // Recursively call to get 'es', which will also be cached
+        // Ensure the recursive call correctly uses the caching mechanism
+        return getDictionary('es');
       }
-      // If 'es' also fails (should be rare if file exists), throw or return empty
+      // If 'es' also fails, cache an empty dictionary to prevent repeated failed loads for this session
       console.error('Fallback dictionary "es" also failed to load.');
-      // Depending on requirements, you might throw an error or return a default empty object
-      // throw new Error('Critical: Fallback dictionary "es" also failed to load.');
-      return {}; // Return an empty dictionary as a last resort
+      const emptyDict = {};
+      loadedDictionariesCache[targetLocale] = emptyDict; // Cache empty object
+      return Promise.resolve<Dictionary>(emptyDict); // Return resolved empty dictionary
     });
 
   dictionaryPromisesCache[targetLocale] = promise;
