@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2 } from 'lucide-react';
+import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -45,7 +45,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/`,
       label: dictionary['Sidebar.home'] || "Home (Daily)",
-      icon: LayoutDashboard,
+      icon: Sparkles, // Changed from LayoutDashboard for a more mystical feel
       tooltip: dictionary['Sidebar.homeTooltip'] || "Daily Horoscope & Home",
     },
     {
@@ -63,7 +63,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/compatibility`,
       label: dictionary['Sidebar.compatibility'] || "Compatibility",
-      icon: Users,
+      icon: HeartHandshake, // Changed from Users
       tooltip: dictionary['Sidebar.compatibilityTooltip'] || "Check Zodiac Compatibility",
     },
     {
@@ -75,7 +75,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/lunar-ascendant`,
       label: dictionary['Sidebar.lunarAscendant'] || "Lunar & Ascendant",
-      icon: Wand2, // Using Wand2 as a generic "tools" or "info" icon
+      icon: Wand2, 
       tooltip: dictionary['Sidebar.lunarAscendantTooltip'] || "Lunar Phase & Ascendant Calculator",
     },
     {

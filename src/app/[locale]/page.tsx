@@ -3,7 +3,7 @@ import type { Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import HoroscopeSection from '@/components/sections/HoroscopeSection';
-import { LayoutDashboard } from 'lucide-react'; // Changed from Sparkles
+import { Sparkles } from 'lucide-react'; // Changed from LayoutDashboard
 
 interface AstroVibesPageProps {
   params: {
@@ -19,7 +19,7 @@ export default async function AstroVibesHomePage({ params }: AstroVibesPageProps
       <SectionTitle 
         title={dictionary['HomePage.dailyHoroscopeTitle'] || "Today's Horoscope"}
         subtitle={dictionary['HomePage.dailyHoroscopeSubtitle'] || "Your daily astrological insights."}
-        icon={LayoutDashboard} // Changed icon
+        icon={Sparkles} // Changed icon
         className="mb-12"
       />
       

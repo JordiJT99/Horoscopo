@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Users, Heart } from 'lucide-react';
+import { Users, Heart } from 'lucide-react'; // Heart will be used for SectionTitle
 
 interface CompatibilityPageProps {
   params: { // params is a promise in client components
@@ -51,7 +51,7 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
       <SectionTitle 
         title={dictionary['CompatibilityPage.title'] || "Zodiac Compatibility"}
         subtitle={dictionary['CompatibilityPage.subtitle'] || "Discover how well different zodiac signs match."}
-        icon={Users}
+        icon={Heart} // Changed icon from Users to Heart
         className="mb-12"
       />
       <Card className="w-full shadow-xl max-w-2xl mx-auto">
