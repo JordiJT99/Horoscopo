@@ -9,7 +9,7 @@ import AppSidebar from '@/components/shared/AppSidebar';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
-import { useEffect, useState, use } from 'react'; // `use` for promise in client component
+import { useEffect, useState, use, useMemo } from 'react'; // `use` for promise in client component, ADDED useMemo
 import '../globals.css';
 
 interface LocaleLayoutParams {
@@ -69,7 +69,11 @@ export default function LocaleLayout({
 
   // Fetch dictionary here using React.use
   // This will suspend LocaleLayout (and its children) until the dictionary is loaded.
-  const dictionary = use(getDictionary(currentLocale));
+  // Wrap the call to getDictionary in useMemo to stabilize the promise for React.use
+  const dictionaryPromise = useMemo(() => {
+    return getDictionary(currentLocale);
+  }, [currentLocale]);
+  const dictionary = use(dictionaryPromise);
 
   return (
     <html lang={currentLocale} suppressHydrationWarning>
@@ -90,3 +94,4 @@ export default function LocaleLayout({
     </html>
   );
 }
+
