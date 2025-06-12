@@ -8,8 +8,9 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Eye, Sparkles } from 'lucide-react'; // Using Eye for Crystal Ball
+import { Eye, Sparkles, Share2 } from 'lucide-react';
 import { crystalBallFlow, type CrystalBallInput, type CrystalBallOutput } from '@/ai/flows/crystal-ball-flow';
+import { useToast } from "@/hooks/use-toast";
 
 interface CrystalBallPageProps {
   params: { locale: Locale };
@@ -20,6 +21,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
   const [answer, setAnswer] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleConsultCrystalBall = async () => {
     if (!question.trim()) {
@@ -36,8 +38,57 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     } catch (err) {
       console.error("Error consulting crystal ball:", err);
       setError(dictionary['CrystalBallPage.errorFetching'] || "The mists are unclear... Could not get an answer. Please try again.");
+      toast({
+        title: dictionary['Error.genericTitle'] || "Error",
+        description: dictionary['CrystalBallPage.errorFetching'] || "The mists are unclear... Could not get an answer. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!answer) return;
+
+    const shareTitle = dictionary['Share.crystalBallTitle'] || "A Crystal Ball Revelation from AstroVibes";
+    const textToShare = answer;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: textToShare,
+        });
+        toast({
+          title: dictionary['Share.successTitle'] || "Success!",
+          description: dictionary['Share.successMessage'] || "Content shared successfully.",
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } else {
+      toast({
+        title: dictionary['Share.notSupportedTitle'] || "Sharing Not Supported",
+        description: dictionary['Share.notSupportedMessage'] || "Your browser doesn't support direct sharing. Try copying the text.",
+        variant: "destructive",
+      });
+      // As a fallback, copy to clipboard
+      try {
+        await navigator.clipboard.writeText(textToShare);
+        toast({
+          title: dictionary['Share.copiedTitle'] || "Copied!",
+          description: dictionary['Share.copiedMessage'] || "The text has been copied to your clipboard.",
+        });
+      } catch (copyError) {
+        console.error('Error copying to clipboard:', copyError);
+        // Silent fail for copy if share also failed to notify.
+      }
     }
   };
 
@@ -87,6 +138,10 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
               </CardHeader>
               <CardContent className="p-0">
                 <p className="font-body text-center italic leading-relaxed text-card-foreground">{answer}</p>
+                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
+                  <Share2 className="mr-2 h-4 w-4" />
+                  {dictionary['Share.buttonLabel'] || "Share Revelation"}
+                </Button>
               </CardContent>
             </Card>
           )}

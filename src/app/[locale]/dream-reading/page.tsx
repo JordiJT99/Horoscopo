@@ -8,8 +8,9 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { BedDouble, Brain } from 'lucide-react'; // Using BedDouble for Dream Reading
+import { BedDouble, Brain, Share2 } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
+import { useToast } from "@/hooks/use-toast";
 
 interface DreamReadingPageProps {
   params: { locale: Locale };
@@ -20,6 +21,7 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
   const [interpretation, setInterpretation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleInterpretDream = async () => {
     if (!dreamDescription.trim()) {
@@ -36,8 +38,55 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
     } catch (err) {
       console.error("Error interpreting dream:", err);
       setError(dictionary['DreamReadingPage.errorFetching'] || "The dreamscape is hazy... Could not get an interpretation. Please try again.");
+      toast({
+        title: dictionary['Error.genericTitle'] || "Error",
+        description: dictionary['DreamReadingPage.errorFetching'] || "The dreamscape is hazy... Could not get an interpretation. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!interpretation) return;
+
+    const shareTitle = dictionary['Share.dreamInterpretationTitle'] || "A Dream Interpretation from AstroVibes";
+    const textToShare = interpretation;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: textToShare,
+        });
+        toast({
+          title: dictionary['Share.successTitle'] || "Success!",
+          description: dictionary['Share.successMessage'] || "Content shared successfully.",
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } else {
+      toast({
+        title: dictionary['Share.notSupportedTitle'] || "Sharing Not Supported",
+        description: dictionary['Share.notSupportedMessage'] || "Your browser doesn't support direct sharing. Try copying the text.",
+        variant: "destructive",
+      });
+       try {
+        await navigator.clipboard.writeText(textToShare);
+        toast({
+          title: dictionary['Share.copiedTitle'] || "Copied!",
+          description: dictionary['Share.copiedMessage'] || "The text has been copied to your clipboard.",
+        });
+      } catch (copyError) {
+        console.error('Error copying to clipboard:', copyError);
+      }
     }
   };
 
@@ -91,6 +140,10 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                     <p key={index}>{paragraph}</p>
                   ))}
                 </div>
+                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
+                  <Share2 className="mr-2 h-4 w-4" />
+                  {dictionary['Share.buttonLabel'] || "Share Interpretation"}
+                </Button>
               </CardContent>
             </Card>
           )}

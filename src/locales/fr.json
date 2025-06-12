@@ -249,5 +249,17 @@
   "DreamReadingPage.interpretingButton": "Interprétation du Paysage Onirique...",
   "DreamReadingPage.interpretationTitle": "Interprétation du Rêve",
   "DreamReadingPage.errorFetching": "Le paysage onirique est flou... Impossible d'obtenir une interprétation. Veuillez réessayer.",
-  "DreamReadingPage.enterDreamPrompt": "Veuillez décrire votre rêve pour interprétation."
+  "DreamReadingPage.enterDreamPrompt": "Veuillez décrire votre rêve pour interprétation.",
+  "Share.buttonLabel": "Partager",
+  "Share.successTitle": "Succès !",
+  "Share.successMessage": "Contenu partagé avec succès.",
+  "Share.errorTitle": "Erreur de Partage",
+  "Share.errorMessage": "Impossible de partager le contenu. Veuillez réessayer.",
+  "Share.notSupportedTitle": "Partage Non Pris en Charge",
+  "Share.notSupportedMessage": "Votre navigateur ne prend pas en charge le partage direct. Essayez de copier le texte.",
+  "Share.copiedTitle": "Copié !",
+  "Share.copiedMessage": "Le texte a été copié dans votre presse-papiers.",
+  "Share.crystalBallTitle": "Une Révélation de la Boule de Cristal par AstroVibes",
+  "Share.dreamInterpretationTitle": "Interprétation des Rêves par AstroVibes",
+  "Error.genericTitle": "Erreur"
 }
