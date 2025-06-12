@@ -277,3 +277,4 @@ export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPa
 
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
+

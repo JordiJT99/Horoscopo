@@ -46,8 +46,27 @@
   "CompatibilitySection.reportTitle": "{sign1} & {sign2}",
   "LuckyNumbersSection.title": "Porte-Bonheurs",
   "LuckyNumbersSection.description": "Sélectionnez votre signe pour découvrir ses attributs porte-bonheur.",
+  "LuckyNumbersSection.loading": "Dévoilement de vos fortunes...",
+  "LuckyNumbersSection.luckyNumbersLabel": "Numéros Chanceux :",
+  "LuckyNumbersSection.luckyColorLabel": "Couleur Chanceuse :",
+  "LuckyNumbersSection.luckyGemstoneLabel": "Pierre Précieuse Chanceuse :",
+  "LuckyNumbersSection.error": "Impossible de charger les informations porte-bonheur.",
   "LunarAscendantSection.title": "Lunaire et Ascendant",
   "LunarAscendantSection.description": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant.",
+  "LunarAscendantSection.currentLunarPhaseTitle": "Phase Lunaire Actuelle",
+  "LunarAscendantSection.loadingLunar": "Suivi de la lune...",
+  "LunarAscendantSection.nextFullMoon": "Prochaine Pleine Lune : {date}",
+  "LunarAscendantSection.nextNewMoon": "Prochaine Nouvelle Lune : {date}",
+  "LunarAscendantSection.errorLunar": "Impossible de charger les données lunaires.",
+  "LunarAscendantSection.calculateAscendantTitle": "Calculez Votre Signe Ascendant",
+  "LunarAscendantSection.birthDateLabel": "Date de Naissance",
+  "LunarAscendantSection.pickDate": "Choisir une date",
+  "LunarAscendantSection.birthTimeLabel": "Heure de Naissance (approx.)",
+  "LunarAscendantSection.birthCityLabel": "Ville de Naissance",
+  "LunarAscendantSection.birthCityPlaceholder": "ex., Paris",
+  "LunarAscendantSection.calculatingButton": "Calcul en cours...",
+  "LunarAscendantSection.calculateButton": "Calculer l'Ascendant",
+  "LunarAscendantSection.ascendantSignTitle": "Votre Signe Ascendant :",
   "LunarAscendantSection.fillAllDetails": "Veuillez remplir toutes les informations de naissance.",
   "LunarAscendantSection.lunarPhaseGlobalNote": "La phase lunaire est globale. Les heures exactes de nouvelle/pleine lune peuvent varier selon votre fuseau horaire. Informations basées sur l'heure actuelle de votre appareil.",
   "Sidebar.home": "Accueil (Quotidien)",
@@ -315,5 +334,3 @@
   "Share.urlTooLongContent": "La lecture est trop longue pour être partagée en tant que lien avec tout le contenu. Essayez de partager le texte directement.",
   "Error.genericTitle": "Erreur"
 }
-
-    

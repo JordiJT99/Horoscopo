@@ -17,10 +17,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   useSidebar,
-  sidebarMenuButtonVariants, // Import variants
+  sidebarMenuButtonVariants,
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils'; // Import cn
-import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, Orbit, Wand } from 'lucide-react'; // Added Wand
+import { cn } from '@/lib/utils';
+import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, Eye, BedDouble, Orbit, Wand } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -102,20 +102,15 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/tarot-reading`,
       label: dictionary['Sidebar.tarotReading'] || "Tarot Reading",
-      icon: Wand, // New icon
+      icon: Wand,
       tooltip: dictionary['Sidebar.tarotReadingTooltip'] || "Get a Tarot Card Reading",
     },
-    {
-      href: `/${currentLocale}/profile`,
-      label: dictionary['Sidebar.profile'] || "User Profile",
-      icon: UserCircle,
-      tooltip: dictionary['Sidebar.profileTooltip'] || "View Your Profile",
-    },
+    // Profile link removed from here
   ];
 
   const horoscopeItems = [
      {
-      href: `/${currentLocale}/`, // Home is Daily Horoscope
+      href: `/${currentLocale}/`, 
       label: dictionary['Sidebar.dailyHoroscope'] || "Daily Horoscope",
       icon: Sparkles, 
       tooltip: dictionary['Sidebar.dailyHoroscopeTooltip'] || "View Daily Horoscope",

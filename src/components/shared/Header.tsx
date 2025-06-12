@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { AstroAppLogo } from '@/lib/constants';
-import { Globe, PanelLeft } from 'lucide-react';
+import { Globe, UserCircle, PanelLeft } from 'lucide-react'; // Added UserCircle
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { SidebarTrigger } from '@/components/ui/sidebar'; // Import SidebarTrigger
+import { SidebarTrigger } from '@/components/ui/sidebar'; 
 
 interface HeaderProps {
   dictionary: Dictionary;
@@ -34,7 +34,7 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
   const getLocalizedPath = (locale: Locale) => {
     if (!pathname) return `/${locale}`;
     const segments = pathname.split('/');
-    segments[1] = locale; // Pathname is /<locale>/...
+    segments[1] = locale; 
     let newPath = segments.join('/');
     const queryString = searchParams.toString();
     if (queryString) {
@@ -47,7 +47,7 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
     <header className="py-4 bg-sidebar shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="md:hidden"> {/* Show SidebarTrigger only on mobile */}
+          <div className="md:hidden"> 
             <SidebarTrigger className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" />
           </div>
           <Link href={`/${currentLocale}/`} className="flex items-center gap-3 text-sidebar-foreground hover:opacity-90 transition-opacity">
@@ -57,28 +57,34 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
             </h1>
           </Link>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-              <Globe className="h-6 w-6" />
-              <span className="sr-only">{dictionary['Header.changeLanguage'] || "Change language"}</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {availableLocales.map((locale) => (
-              <DropdownMenuItem key={locale.code} asChild>
-                <Link href={getLocalizedPath(locale.code)} locale={locale.code} className={currentLocale === locale.code ? 'font-bold' : ''}>
-                  {locale.name}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                <Globe className="h-6 w-6" />
+                <span className="sr-only">{dictionary['Header.changeLanguage'] || "Change language"}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {availableLocales.map((locale) => (
+                <DropdownMenuItem key={locale.code} asChild>
+                  <Link href={getLocalizedPath(locale.code)} locale={locale.code} className={currentLocale === locale.code ? 'font-bold' : ''}>
+                    {locale.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+            <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
+              <UserCircle className="h-6 w-6" />
+              <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
+            </Link>
+          </Button>
+        </div>
       </div>
     </header>
   );
 };
 
 export default Header;
-
-    

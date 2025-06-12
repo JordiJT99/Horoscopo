@@ -46,8 +46,27 @@
   "CompatibilitySection.reportTitle": "{sign1} & {sign2}",
   "LuckyNumbersSection.title": "Glücksbringer",
   "LuckyNumbersSection.description": "Wählen Sie Ihr Zeichen, um seine Glücksattribute zu entdecken.",
+  "LuckyNumbersSection.loading": "Enthülle deine Glücksattribute...",
+  "LuckyNumbersSection.luckyNumbersLabel": "Glückszahlen:",
+  "LuckyNumbersSection.luckyColorLabel": "Glücksfarbe:",
+  "LuckyNumbersSection.luckyGemstoneLabel": "Glücksstein:",
+  "LuckyNumbersSection.error": "Glücksinformationen konnten nicht geladen werden.",
   "LunarAscendantSection.title": "Mond & Aszendent",
   "LunarAscendantSection.description": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen.",
+  "LunarAscendantSection.currentLunarPhaseTitle": "Aktuelle Mondphase",
+  "LunarAscendantSection.loadingLunar": "Verfolge den Mond...",
+  "LunarAscendantSection.nextFullMoon": "Nächster Vollmond: {date}",
+  "LunarAscendantSection.nextNewMoon": "Nächster Neumond: {date}",
+  "LunarAscendantSection.errorLunar": "Monddaten konnten nicht geladen werden.",
+  "LunarAscendantSection.calculateAscendantTitle": "Berechne dein Aszendentenzeichen",
+  "LunarAscendantSection.birthDateLabel": "Geburtsdatum",
+  "LunarAscendantSection.pickDate": "Datum auswählen",
+  "LunarAscendantSection.birthTimeLabel": "Geburtszeit (ca.)",
+  "LunarAscendantSection.birthCityLabel": "Geburtsort",
+  "LunarAscendantSection.birthCityPlaceholder": "z.B. Berlin",
+  "LunarAscendantSection.calculatingButton": "Berechne...",
+  "LunarAscendantSection.calculateButton": "Aszendent berechnen",
+  "LunarAscendantSection.ascendantSignTitle": "Dein Aszendentenzeichen:",
   "LunarAscendantSection.fillAllDetails": "Bitte füllen Sie alle Geburtsdetails aus.",
   "LunarAscendantSection.lunarPhaseGlobalNote": "Die Mondphase ist global. Die genauen Zeiten für Neumond/Vollmond können je nach Ihrer Zeitzone variieren. Informationen basieren auf der aktuellen Zeit Ihres Geräts.",
   "Sidebar.home": "Startseite (Täglich)",
@@ -315,5 +334,3 @@
   "Share.urlTooLongContent": "Die Legung ist zu lang, um als Link mit dem gesamten Inhalt geteilt zu werden. Versuchen Sie, den Text direkt zu teilen.",
   "Error.genericTitle": "Fehler"
 }
-
-    
