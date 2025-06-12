@@ -242,6 +242,10 @@
   "CrystalBallPage.sharedRevelationTitle": "Eine geteilte Offenbarung",
   "CrystalBallPage.newQueryButton": "Neue Frage stellen",
   "CrystalBallPage.errorDecoding": "Die geteilte Offenbarung konnte nicht angezeigt werden. Sie könnte beschädigt sein.",
+  "CrystalBallPage.precisionLevelLabel": "Präzisionsstufe auswählen:",
+  "CrystalBallPage.precisionBasic": "Basis",
+  "CrystalBallPage.precisionDeep": "Tief",
+  "CrystalBallPage.precisionMystic": "Mystisch",
   "DreamReadingPage.title": "Traumdeutung",
   "DreamReadingPage.subtitle": "Entdecken Sie die verborgenen Bedeutungen und Symbole in Ihren Träumen.",
   "DreamReadingPage.describeTitle": "Beschreiben Sie Ihren Traum",
@@ -260,6 +264,8 @@
   "Share.buttonLabelInterpretationLinkContent": "Diese Deutung teilen",
   "Share.crystalBallInviteText": "Ich habe eine Offenbarung von der Kristallkugel auf AstroVibes erhalten! Schau es dir an:",
   "Share.dreamInterpretationInviteText": "Ich habe meinen Traum auf AstroVibes deuten lassen! Sieh, was er bedeutet:",
+  "Share.crystalBallInviteTextLink": "Ich habe eine Offenbarung von der Kristallkugel auf AstroVibes erhalten! Sieh sie hier:",
+  "Share.dreamInterpretationInviteTextLink": "Ich habe meinen Traum auf AstroVibes deuten lassen! Sieh die Deutung hier:",
   "Share.crystalBallInviteTextContent": "Ich habe eine Offenbarung von der Kristallkugel auf AstroVibes erhalten! Sieh meine Offenbarung:",
   "Share.dreamInterpretationInviteTextContent": "Mein Traum wurde auf AstroVibes gedeutet! Sieh meine Deutung:",
   "Share.successTitle": "Erfolg!",
@@ -275,6 +281,3 @@
   "Share.urlTooLong": "Der Inhalt ist zu lang, um als Link geteilt zu werden. Versuchen Sie, den Text direkt oder eine Zusammenfassung zu teilen.",
   "Error.genericTitle": "Fehler"
 }
-
-
-    

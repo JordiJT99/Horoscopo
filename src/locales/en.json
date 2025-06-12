@@ -261,6 +261,10 @@
   "CrystalBallPage.sharedRevelationTitle": "A Shared Revelation",
   "CrystalBallPage.newQueryButton": "Ask a New Question",
   "CrystalBallPage.errorDecoding": "Could not display the shared revelation. It might be corrupted.",
+  "CrystalBallPage.precisionLevelLabel": "Select Precision Level:",
+  "CrystalBallPage.precisionBasic": "Basic",
+  "CrystalBallPage.precisionDeep": "Deep",
+  "CrystalBallPage.precisionMystic": "Mystic",
   "DreamReadingPage.title": "Dream Reading",
   "DreamReadingPage.subtitle": "Uncover the hidden meanings and symbols within your dreams.",
   "DreamReadingPage.describeTitle": "Describe Your Dream",
@@ -279,6 +283,8 @@
   "Share.buttonLabelInterpretationLinkContent": "Share This Interpretation",
   "Share.crystalBallInviteText": "I received a revelation from the Crystal Ball on AstroVibes! Check it out:",
   "Share.dreamInterpretationInviteText": "I had my dream interpreted on AstroVibes! See what it means:",
+  "Share.crystalBallInviteTextLink": "I received a revelation from the Crystal Ball on AstroVibes! See it here:",
+  "Share.dreamInterpretationInviteTextLink": "I had my dream interpreted on AstroVibes! See the interpretation here:",
   "Share.crystalBallInviteTextContent": "I received a revelation from the Crystal Ball on AstroVibes! See my revelation:",
   "Share.dreamInterpretationInviteTextContent": "I had my dream interpreted on AstroVibes! See my interpretation:",
   "Share.successTitle": "Success!",
@@ -294,6 +300,3 @@
   "Share.urlTooLong": "The content is too long to be shared as a link. Try sharing the text directly or a summary.",
   "Error.genericTitle": "Error"
 }
-
-
-    

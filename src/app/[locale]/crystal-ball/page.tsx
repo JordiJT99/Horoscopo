@@ -9,9 +9,13 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { Eye, Sparkles, Share2, RotateCcw } from 'lucide-react';
 import { crystalBallFlow, type CrystalBallInput, type CrystalBallOutput } from '@/ai/flows/crystal-ball-flow';
 import { useToast } from "@/hooks/use-toast";
+
+type PrecisionLevel = 'basic' | 'deep' | 'mystic';
 
 interface CrystalBallPageProps {
   params: { locale: Locale };
@@ -21,6 +25,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
   const router = useRouter();
   const searchParams = useSearchParams();
   const [question, setQuestion] = useState('');
+  const [precisionLevel, setPrecisionLevel] = useState<PrecisionLevel>('basic');
   const [answer, setAnswer] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +39,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         const decodedAnswer = decodeURIComponent(sharedAnswer);
         setAnswer(decodedAnswer);
         setIsShowingSharedContent(true);
-        setQuestion(''); // Clear question if showing shared content
+        setQuestion(''); 
       } catch (e) {
         console.error("Error decoding shared answer:", e);
         setError(dictionary['CrystalBallPage.errorDecoding'] || "Could not display the shared revelation. It might be corrupted.");
@@ -52,7 +57,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     setAnswer(null);
     setIsShowingSharedContent(false);
     try {
-      const input: CrystalBallInput = { question, locale };
+      const input: CrystalBallInput = { question, locale, precisionLevel };
       const result: CrystalBallOutput = await crystalBallFlow(input);
       setAnswer(result.answer);
     } catch (err) {
@@ -72,10 +77,11 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     if (!answer) return;
 
     const shareTitle = dictionary['Share.crystalBallTitle'] || "A Crystal Ball Revelation from AstroVibes";
-    const inviteMessage = dictionary['Share.crystalBallInviteText'] || "I received a revelation from the Crystal Ball on AstroVibes! Check it out:";
+    const inviteMessage = dictionary['Share.crystalBallInviteTextLink'] || "I received a revelation from the Crystal Ball on AstroVibes! See it here:";
     
     const pageUrl = new URL(window.location.href);
     pageUrl.searchParams.set('answer', encodeURIComponent(answer));
+    // pageUrl.searchParams.set('level', precisionLevel); // Optionally share precision level
     const shareableUrl = pageUrl.toString();
 
     if (shareableUrl.length > 2000) {
@@ -84,15 +90,13 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         description: dictionary['Share.urlTooLong'] || "The revelation is too long to be shared as a link. Try sharing the text directly.",
         variant: "destructive",
       });
-       // Fallback to sharing just the text if URL is too long
         if (navigator.share) {
             try {
-                await navigator.share({ title: shareTitle, text: `${inviteMessage}\n\n"${answer}"`, url: window.location.pathname });
+                await navigator.share({ title: shareTitle, text: `${inviteMessage}\n\n"${answer}"`, url: window.location.pathname.split('?')[0] });
             } catch (err) { /* handled below */ }
         }
         return;
     }
-
 
     if (navigator.share) {
       try {
@@ -135,11 +139,19 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
   };
 
   const handleNewQuery = () => {
-    router.push(`/${locale}/crystal-ball`, { scroll: false }); // Navigates without search params
+    const newPath = `/${locale}/crystal-ball`;
+    // Check if router.push can accept an URL object or if it needs a string
+    if (typeof router.push === 'function') {
+       router.push(newPath); // Keep it simple if it works
+    } else {
+       // Fallback or ensure you're using a version of Next.js router that supports this
+       window.location.href = newPath;
+    }
     setAnswer(null);
     setQuestion('');
     setError(null);
     setIsShowingSharedContent(false);
+    setPrecisionLevel('basic');
   };
 
   return (
@@ -176,6 +188,29 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                   aria-label={dictionary['CrystalBallPage.questionLabel'] || "Your question for the crystal ball"}
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label className="font-body text-muted-foreground">{dictionary['CrystalBallPage.precisionLevelLabel'] || "Select Precision Level:"}</Label>
+                <RadioGroup
+                  value={precisionLevel}
+                  onValueChange={(value) => setPrecisionLevel(value as PrecisionLevel)}
+                  className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="basic" id="rb-basic" />
+                    <Label htmlFor="rb-basic" className="font-body">{dictionary['CrystalBallPage.precisionBasic'] || "Basic"}</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="deep" id="rb-deep" />
+                    <Label htmlFor="rb-deep" className="font-body">{dictionary['CrystalBallPage.precisionDeep'] || "Deep"}</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="mystic" id="rb-mystic" />
+                    <Label htmlFor="rb-mystic" className="font-body">{dictionary['CrystalBallPage.precisionMystic'] || "Mystic"}</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
               <Button onClick={handleConsultCrystalBall} disabled={isLoading} className="w-full font-body">
                 {isLoading ? (
                   <>
@@ -226,7 +261,6 @@ export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPa
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
 
-  // Ensure the component is client-side only for searchParams to be available
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
@@ -243,6 +277,3 @@ export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPa
 
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
-
-
-    
