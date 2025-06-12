@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet" 
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
@@ -22,8 +22,8 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "16rem" // Increased from 12rem
-const SIDEBAR_WIDTH_MOBILE = "16rem" 
+const SIDEBAR_WIDTH = "14rem" // Ajustado de 16rem a 14rem para escritorio
+const SIDEBAR_WIDTH_MOBILE = "16rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
@@ -159,7 +159,7 @@ const Sidebar = React.forwardRef<
   React.ComponentProps<"div"> & {
     side?: "left" | "right"
     variant?: "sidebar" | "floating" | "inset"
-    collapsible?: "icon" | "none" 
+    collapsible?: "icon" | "none"
   }
 >(
   (
@@ -192,7 +192,7 @@ const Sidebar = React.forwardRef<
         </div>
       )
     }
-    
+
     // Desktop collapsible sidebar structure
     return (
       <div
@@ -260,7 +260,7 @@ const SidebarTrigger = React.forwardRef<
   // Only render the trigger if on mobile, or make it visually distinct for desktop
   // The parent div in Header.tsx already handles md:hidden
   // if (!isMobile && someDesktopCondition) { // Example for desktop-specific trigger
-  //   return null; 
+  //   return null;
   // }
 
   return (
@@ -288,7 +288,7 @@ const SidebarRail = React.forwardRef<
   React.ComponentProps<"button">
 >(({ className, ...props }, ref) => {
   const { toggleSidebar, isMobile } = useSidebar()
-  
+
   if (isMobile) return null; // Rail is for desktop
 
   return (
@@ -755,6 +755,7 @@ export {
   SidebarMenuAction,
   SidebarMenuBadge,
   SidebarMenuButton,
+  sidebarMenuButtonVariants, // Added export
   SidebarMenuItem,
   SidebarMenuSkeleton,
   SidebarMenuSub,
@@ -766,3 +767,5 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+
+    

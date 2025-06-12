@@ -6,14 +6,21 @@ import { usePathname } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon } from '@/lib/constants';
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
   useSidebar,
+  sidebarMenuButtonVariants, // Import variants
 } from '@/components/ui/sidebar';
-import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, Brain } from 'lucide-react';
+import { cn } from '@/lib/utils'; // Import cn
+import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, CalendarDays } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -28,8 +35,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     const normalizedPath = path.endsWith('/') ? path : `${path}/`;
     const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
     
-    // Special case for home: exact match or just the locale
-    if (path === `/${currentLocale}/`) {
+    if (path === `/${currentLocale}/`) { // Home/Daily Horoscope
       return normalizedPathname === `/${currentLocale}/`;
     }
     return normalizedPathname.startsWith(normalizedPath);
@@ -41,25 +47,16 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     }
   };
 
-  const menuItems = [
-    {
-      href: `/${currentLocale}/`,
-      label: dictionary['Sidebar.home'] || "Home (Daily)",
-      icon: Sparkles, 
-      tooltip: dictionary['Sidebar.homeTooltip'] || "Daily Horoscope & Home",
-    },
-    {
-      href: `/${currentLocale}/weekly-horoscope`,
-      label: dictionary['Sidebar.weeklyHoroscope'] || "Weekly Horoscope",
-      icon: CalendarRange,
-      tooltip: dictionary['Sidebar.weeklyHoroscopeTooltip'] || "View Weekly Horoscope",
-    },
-    {
-      href: `/${currentLocale}/monthly-horoscope`,
-      label: dictionary['Sidebar.monthlyHoroscope'] || "Monthly Horoscope",
-      icon: Calendar,
-      tooltip: dictionary['Sidebar.monthlyHoroscopeTooltip'] || "View Monthly Horoscope",
-    },
+  const isHoroscopeSectionActive = () => {
+    const horoscopePaths = [
+      `/${currentLocale}/`,
+      `/${currentLocale}/weekly-horoscope`,
+      `/${currentLocale}/monthly-horoscope`,
+    ];
+    return horoscopePaths.some(p => isActive(p));
+  };
+
+  const mainMenuItems = [
     {
       href: `/${currentLocale}/compatibility`,
       label: dictionary['Sidebar.compatibility'] || "Compatibility",
@@ -90,7 +87,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       icon: MayanAstrologyIcon,
       tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Astrological Wisdom",
     },
-    {
+     {
       href: `/${currentLocale}/crystal-ball`,
       label: dictionary['Sidebar.crystalBall'] || "Crystal Ball",
       icon: Eye,
@@ -110,6 +107,27 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     },
   ];
 
+  const horoscopeItems = [
+     {
+      href: `/${currentLocale}/`, // Home is Daily Horoscope
+      label: dictionary['Sidebar.dailyHoroscope'] || "Daily Horoscope",
+      icon: Sparkles, 
+      tooltip: dictionary['Sidebar.dailyHoroscopeTooltip'] || "View Daily Horoscope",
+    },
+    {
+      href: `/${currentLocale}/weekly-horoscope`,
+      label: dictionary['Sidebar.weeklyHoroscope'] || "Weekly Horoscope",
+      icon: CalendarRange,
+      tooltip: dictionary['Sidebar.weeklyHoroscopeTooltip'] || "View Weekly Horoscope",
+    },
+    {
+      href: `/${currentLocale}/monthly-horoscope`,
+      label: dictionary['Sidebar.monthlyHoroscope'] || "Monthly Horoscope",
+      icon: Calendar,
+      tooltip: dictionary['Sidebar.monthlyHoroscopeTooltip'] || "View Monthly Horoscope",
+    },
+  ];
+
   return (
     <>
       <SidebarHeader className="p-4 flex items-center justify-between">
@@ -124,21 +142,60 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
+          <Accordion type="single" collapsible className="w-full" defaultValue={isHoroscopeSectionActive() ? "horoscopes" : undefined}>
+            <AccordionItem value="horoscopes" className="border-none">
+              <AccordionTrigger
+                className={cn(
+                  sidebarMenuButtonVariants({ size: 'default', variant: 'default' }),
+                  "w-full justify-between px-2 py-2 text-sm", // Ensure AccordionTrigger specific styles don't conflict too much
+                  "hover:bg-sidebar-primary hover:text-sidebar-foreground",
+                  "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground",
+                  "data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground",
+                  "active:bg-sidebar-primary active:text-sidebar-primary-foreground",
+                  isHoroscopeSectionActive() && !isMobile && sidebarState === "expanded" && "bg-sidebar-primary font-medium text-sidebar-primary-foreground",
+                  isHoroscopeSectionActive() && (isMobile || sidebarState === "collapsed") && "data-[state=closed]:bg-sidebar-primary data-[state=closed]:text-sidebar-primary-foreground"
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <CalendarDays />
+                  <span>{dictionary['Sidebar.horoscopesGroup'] || "Horoscopes"}</span>
+                </div>
+                {/* Chevron is added by AccordionTrigger automatically */}
+              </AccordionTrigger>
+              <AccordionContent className="pt-1 pb-0">
+                <div className="pl-4 space-y-1">
+                  {horoscopeItems.map((item) => (
+                     <SidebarMenuButton
+                        key={item.href}
+                        asChild
+                        isActive={isActive(item.href)}
+                        tooltip={{ children: item.tooltip, side: 'right', className: 'bg-sidebar-accent text-sidebar-accent-foreground' }}
+                        className="w-full justify-start hover:bg-sidebar-primary hover:text-sidebar-foreground active:bg-sidebar-primary active:text-sidebar-primary-foreground"
+                      >
+                        <Link href={item.href} onClick={handleMenuItemClick}>
+                          <item.icon />
+                          <span>{item.label}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
+          {mainMenuItems.map((item) => (
+             <SidebarMenuButton
+                key={item.href}
                 asChild
                 isActive={isActive(item.href)}
                 tooltip={{ children: item.tooltip, side: 'right', className: 'bg-sidebar-accent text-sidebar-accent-foreground' }}
-                className="hover:bg-sidebar-primary hover:text-sidebar-foreground data-[state=open]:hover:bg-sidebar-primary data-[state=open]:hover:text-sidebar-foreground active:bg-sidebar-primary active:text-sidebar-primary-foreground"
-
+                 className="hover:bg-sidebar-primary hover:text-sidebar-foreground data-[state=open]:hover:bg-sidebar-primary data-[state=open]:hover:text-sidebar-foreground active:bg-sidebar-primary active:text-sidebar-primary-foreground"
               >
-                <Link href={item.href} onClick={handleMenuItemClick}>
-                  <item.icon />
-                  <span>{item.label}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+              <Link href={item.href} onClick={handleMenuItemClick}>
+                <item.icon />
+                <span>{item.label}</span>
+              </Link>
+            </SidebarMenuButton>
           ))}
         </SidebarMenu>
       </SidebarContent>
