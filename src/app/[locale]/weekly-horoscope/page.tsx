@@ -6,12 +6,13 @@ import HoroscopeSection from '@/components/sections/HoroscopeSection';
 import { CalendarRange } from 'lucide-react';
 
 interface WeeklyHoroscopePageProps {
-  params: {
+  params: Promise<{ // Updated type
     locale: Locale;
-  };
+  }>;
 }
 
-export default async function WeeklyHoroscopePage({ params }: WeeklyHoroscopePageProps) {
+export default async function WeeklyHoroscopePage({ params: paramsPromise }: WeeklyHoroscopePageProps) { // Renamed and will await
+  const params = await paramsPromise; // Await params
   const dictionary = await getDictionary(params.locale);
 
   return (

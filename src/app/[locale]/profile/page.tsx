@@ -9,12 +9,13 @@ import { UserCircle, Mail, CalendarDays, Edit3 } from 'lucide-react';
 import Image from 'next/image';
 
 interface ProfilePageProps {
-  params: {
+  params: Promise<{ // Updated type
     locale: Locale;
-  };
+  }>;
 }
 
-export default async function ProfilePage({ params }: ProfilePageProps) {
+export default async function ProfilePage({ params: paramsPromise }: ProfilePageProps) { // Renamed and will await
+  const params = await paramsPromise; // Await params
   const dictionary = await getDictionary(params.locale);
 
   // Placeholder user data

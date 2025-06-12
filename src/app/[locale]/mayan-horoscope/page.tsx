@@ -6,12 +6,13 @@ import { MayanAstrologyIcon } from '@/lib/constants';
 import MayanHoroscopeInteractive from '@/components/mayan-horoscope/MayanHoroscopeInteractive';
 
 interface MayanHoroscopePageProps {
-  params: {
+  params: Promise<{ // Updated type
     locale: Locale;
-  };
+  }>;
 }
 
-export default async function MayanHoroscopePage({ params }: MayanHoroscopePageProps) {
+export default async function MayanHoroscopePage({ params: paramsPromise }: MayanHoroscopePageProps) { // Renamed and will await
+  const params = await paramsPromise; // Await params
   const dictionary = await getDictionary(params.locale);
 
   return (

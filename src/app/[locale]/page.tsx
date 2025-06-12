@@ -6,12 +6,13 @@ import HoroscopeSection from '@/components/sections/HoroscopeSection';
 import { Sparkles } from 'lucide-react'; // Changed from LayoutDashboard
 
 interface AstroVibesPageProps {
-  params: {
+  params: Promise<{ // Updated type
     locale: Locale;
-  };
+  }>;
 }
 
-export default async function AstroVibesHomePage({ params }: AstroVibesPageProps) {
+export default async function AstroVibesHomePage({ params: paramsPromise }: AstroVibesPageProps) { // Renamed and will await
+  const params = await paramsPromise; // Await params
   const dictionary = await getDictionary(params.locale);
 
   return (

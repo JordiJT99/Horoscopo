@@ -6,12 +6,13 @@ import { ChineseAstrologyIcon } from '@/lib/constants';
 import ChineseHoroscopeInteractive from '@/components/chinese-horoscope/ChineseHoroscopeInteractive';
 
 interface ChineseHoroscopePageProps {
-  params: {
+  params: Promise<{ // Updated type
     locale: Locale;
-  };
+  }>;
 }
 
-export default async function ChineseHoroscopePage({ params }: ChineseHoroscopePageProps) {
+export default async function ChineseHoroscopePage({ params: paramsPromise }: ChineseHoroscopePageProps) { // Renamed and will await
+  const params = await paramsPromise; // Await params
   const dictionary = await getDictionary(params.locale);
 
   return (
@@ -26,4 +27,3 @@ export default async function ChineseHoroscopePage({ params }: ChineseHoroscopeP
     </main>
   );
 }
-
