@@ -13,8 +13,8 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import type { ZodiacSignName } from '@/types';
 import { ALL_SIGN_NAMES } from '@/lib/constants';
-import { format, getISOWeekYear, getMonth, getYear } from 'date-fns';
-import { getRandomMockHoroscope } from '@/lib/mock-horoscopes'; // Import mock data function
+import { format, getISOWeekYear, getMonth, getYear } from 'date-fns'; // Updated imports
+import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 
 // Helper to create a Zod enum from the ZodiacSignName type values
 const zodSignEnum = z.enum(ALL_SIGN_NAMES as [string, ...string[]]);
@@ -135,22 +135,28 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInput, currentDate: 
   try {
     const {output} = await dailyHoroscopePrompt(input);
     if (!output?.main || !output?.love || !output?.money || !output?.health) {
-      // This error will be caught below and might trigger mock data if it's due to partial AI response.
-      // However, the more likely scenario is a complete API failure (503, etc.) before this check.
-      throw new Error('AI did not return complete daily horoscope data.');
+      console.warn(`Incomplete AI response for daily horoscope (${input.sign}, ${input.locale}). Using mock data.`);
+      const mockData = getRandomMockHoroscope('daily', input.sign, input.locale);
+      dailyCache.set(cacheKey, mockData); // Cache mock data to avoid repeated failed calls for the same day
+      return mockData;
     }
     dailyCache.set(cacheKey, output);
     return output;
   } catch (err: any) {
     console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
-    const errorMessage = err.message || '';
-    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error')) {
-      console.warn(`Genkit API error for daily horoscope (${input.sign}, ${input.locale}). Using mock data as fallback.`);
-      return getRandomMockHoroscope('daily', input.sign, input.locale);
+    const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
+    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
+      console.warn(`Genkit API error for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}). Using mock data as fallback. Error: ${errorMessage}`);
+      const mockData = getRandomMockHoroscope('daily', input.sign, input.locale);
+      dailyCache.set(cacheKey, mockData); // Cache mock data to avoid repeated failed calls for the same day
+      return mockData;
     }
-    // For other types of errors (e.g., schema validation, unexpected issues), rethrow a generic error
-    // or handle them as appropriate. Here, we'll make it clear it's a generation failure.
-    throw new Error(`Failed to generate daily horoscope for ${input.sign}: ${errorMessage || 'Unknown error'}`);
+    // For other types of errors that are not overload/API unavailable, we might want to propagate them or handle differently
+    // For now, we'll also return mock data for robustness, but log it as a more severe error.
+    console.error(`Unexpected error fetching daily horoscope (${input.sign}, ${input.locale}, ${dateStr}). Using mock data. Error: ${errorMessage}`);
+    const mockData = getRandomMockHoroscope('daily', input.sign, input.locale);
+    dailyCache.set(cacheKey, mockData);
+    return mockData;
   }
 }
 
@@ -163,19 +169,27 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInput, currentDate:
   }
   try {
     const {output} = await weeklyHoroscopePrompt(input);
-    if (!output?.main || !output?.love || !output?.money || !output?.health) {
-      throw new Error('AI did not return complete weekly horoscope data.');
+     if (!output?.main || !output?.love || !output?.money || !output?.health) {
+      console.warn(`Incomplete AI response for weekly horoscope (${input.sign}, ${input.locale}). Using mock data.`);
+      const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale);
+      weeklyCache.set(cacheKey, mockData);
+      return mockData;
     }
     weeklyCache.set(cacheKey, output);
     return output;
   } catch (err: any) {
     console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
-    const errorMessage = err.message || '';
-    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error')) {
-      console.warn(`Genkit API error for weekly horoscope (${input.sign}, ${input.locale}). Using mock data as fallback.`);
-      return getRandomMockHoroscope('weekly', input.sign, input.locale);
+    const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
+     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
+      console.warn(`Genkit API error for weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data as fallback. Error: ${errorMessage}`);
+      const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale);
+      weeklyCache.set(cacheKey, mockData);
+      return mockData;
     }
-    throw new Error(`Failed to generate weekly horoscope for ${input.sign}: ${errorMessage || 'Unknown error'}`);
+    console.error(`Unexpected error fetching weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data. Error: ${errorMessage}`);
+    const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale);
+    weeklyCache.set(cacheKey, mockData);
+    return mockData;
   }
 }
 
@@ -189,18 +203,26 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInput, currentDate
   try {
     const {output} = await monthlyHoroscopePrompt(input);
     if (!output?.main || !output?.love || !output?.money || !output?.health) {
-      throw new Error('AI did not return complete monthly horoscope data.');
+      console.warn(`Incomplete AI response for monthly horoscope (${input.sign}, ${input.locale}). Using mock data.`);
+      const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale);
+      monthlyCache.set(cacheKey, mockData);
+      return mockData;
     }
     monthlyCache.set(cacheKey, output);
     return output;
   } catch (err: any) {
     console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
-    const errorMessage = err.message || '';
-    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error')) {
-      console.warn(`Genkit API error for monthly horoscope (${input.sign}, ${input.locale}). Using mock data as fallback.`);
-      return getRandomMockHoroscope('monthly', input.sign, input.locale);
+    const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
+    if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
+      console.warn(`Genkit API error for monthly horoscope (${input.sign}, ${input.locale}, ${monthStr}). Using mock data as fallback. Error: ${errorMessage}`);
+      const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale);
+      monthlyCache.set(cacheKey, mockData);
+      return mockData;
     }
-    throw new Error(`Failed to generate monthly horoscope for ${input.sign}: ${errorMessage || 'Unknown error'}`);
+    console.error(`Unexpected error fetching monthly horoscope (${input.sign}, ${input.locale}, ${monthStr}). Using mock data. Error: ${errorMessage}`);
+    const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale);
+    monthlyCache.set(cacheKey, mockData);
+    return mockData;
   }
 }
 
