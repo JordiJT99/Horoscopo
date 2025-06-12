@@ -1,3 +1,5 @@
 
 // Flows will be imported for their side effects in this file.
 import './flows/horoscope-flow';
+import './flows/crystal-ball-flow';
+import './flows/dream-interpretation-flow';

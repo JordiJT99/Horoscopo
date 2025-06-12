@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle } from 'lucide-react';
+import { LayoutDashboard, CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, UserCircle, Eye, BedDouble, Brain } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -91,6 +91,18 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Astrological Wisdom",
     },
     {
+      href: `/${currentLocale}/crystal-ball`,
+      label: dictionary['Sidebar.crystalBall'] || "Crystal Ball",
+      icon: Eye,
+      tooltip: dictionary['Sidebar.crystalBallTooltip'] || "Consult the Crystal Ball",
+    },
+    {
+      href: `/${currentLocale}/dream-reading`,
+      label: dictionary['Sidebar.dreamReading'] || "Dream Reading",
+      icon: BedDouble,
+      tooltip: dictionary['Sidebar.dreamReadingTooltip'] || "Interpret Your Dreams",
+    },
+    {
       href: `/${currentLocale}/profile`,
       label: dictionary['Sidebar.profile'] || "User Profile",
       icon: UserCircle,
@@ -118,6 +130,8 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
                 asChild
                 isActive={isActive(item.href)}
                 tooltip={{ children: item.tooltip, side: 'right', className: 'bg-sidebar-accent text-sidebar-accent-foreground' }}
+                className="hover:bg-sidebar-primary hover:text-sidebar-foreground data-[state=open]:hover:bg-sidebar-primary data-[state=open]:hover:text-sidebar-foreground active:bg-sidebar-primary active:text-sidebar-primary-foreground"
+
               >
                 <Link href={item.href} onClick={handleMenuItemClick}>
                   <item.icon />
