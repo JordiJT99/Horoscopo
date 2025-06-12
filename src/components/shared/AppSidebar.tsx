@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon } from '@/lib/constants';
+import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon, TarotPersonalityTestIcon } from '@/lib/constants';
 import {
   Accordion,
   AccordionContent,
@@ -20,7 +20,7 @@ import {
   sidebarMenuButtonVariants,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, Eye, BedDouble, Orbit, Wand } from 'lucide-react';
+import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, Eye, BedDouble, Orbit, Wand, HelpCircle } from 'lucide-react'; // Added HelpCircle
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -34,7 +34,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   const isActive = (path: string) => {
     const normalizedPath = path.endsWith('/') ? path : `${path}/`;
     const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
-    
+
     if (path === `/${currentLocale}/`) { // Home/Daily Horoscope
       return normalizedPathname === `/${currentLocale}/`;
     }
@@ -60,7 +60,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/compatibility`,
       label: dictionary['Sidebar.compatibility'] || "Compatibility",
-      icon: HeartHandshake, 
+      icon: HeartHandshake,
       tooltip: dictionary['Sidebar.compatibilityTooltip'] || "Check Zodiac Compatibility",
     },
     {
@@ -72,7 +72,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/lunar-ascendant`,
       label: dictionary['Sidebar.lunarAscendant'] || "Lunar & Ascendant",
-      icon: Wand2, 
+      icon: Wand2,
       tooltip: dictionary['Sidebar.lunarAscendantTooltip'] || "Lunar Phase & Ascendant Calculator",
     },
     {
@@ -105,14 +105,19 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       icon: Wand,
       tooltip: dictionary['Sidebar.tarotReadingTooltip'] || "Get a Tarot Card Reading",
     },
-    // Profile link removed from here
+    {
+      href: `/${currentLocale}/tarot-personality-test`,
+      label: dictionary['Sidebar.tarotPersonalityTest'] || "Your Tarot Card",
+      icon: TarotPersonalityTestIcon, // Using HelpCircle via constants
+      tooltip: dictionary['Sidebar.tarotPersonalityTestTooltip'] || "Discover Your Tarot Personality Card",
+    },
   ];
 
   const horoscopeItems = [
      {
-      href: `/${currentLocale}/`, 
+      href: `/${currentLocale}/`,
       label: dictionary['Sidebar.dailyHoroscope'] || "Daily Horoscope",
-      icon: Sparkles, 
+      icon: Sparkles,
       tooltip: dictionary['Sidebar.dailyHoroscopeTooltip'] || "View Daily Horoscope",
     },
     {
@@ -147,13 +152,13 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
             <AccordionItem value="horoscopes" className="border-none">
                <AccordionTrigger
                 className={cn(
-                  sidebarMenuButtonVariants({ size: 'default' }), 
+                  sidebarMenuButtonVariants({ size: 'default' }),
                   "w-full justify-between hover:bg-sidebar-primary hover:text-sidebar-foreground data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground active:bg-sidebar-primary active:text-sidebar-primary-foreground",
                   isHoroscopeSectionActive() && "bg-sidebar-primary font-medium text-sidebar-primary-foreground"
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <Orbit /> 
+                  <Orbit />
                   <span>{dictionary['Sidebar.horoscopesGroup'] || "Horoscopes"}</span>
                 </div>
               </AccordionTrigger>

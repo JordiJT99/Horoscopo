@@ -1,7 +1,7 @@
 
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon } from 'lucide-react';
+import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle } from 'lucide-react';
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Aries", icon: Activity, dateRange: "Mar 21 - Abr 19" },
@@ -36,12 +36,48 @@ export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): 
   score: Math.floor(Math.random() * 5) + 1, // Placeholder score
 });
 
-export const getLuckyNumbers = (sign: ZodiacSignName): LuckyNumbersData => ({
-  sign,
-  numbers: [Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1],
-  luckyColor: ["Rojo", "Verde", "Azul", "Amarillo", "Púrpura", "Naranja"][Math.floor(Math.random() * 6)],
-  luckyGemstone: ["Diamante", "Esmeralda", "Zafiro", "Rubí", "Amatista", "Topacio"][Math.floor(Math.random() * 6)],
-});
+const motivationalPhrases: Record<Locale, string[]> = {
+  es: [
+    "La fortuna favorece a los audaces.",
+    "Cada día es una nueva oportunidad para brillar.",
+    "Confía en tu intuición, te guiará sabiamente.",
+    "La perseverancia es la clave del éxito.",
+    "Siembra pensamientos positivos y cosecharás alegría."
+  ],
+  en: [
+    "Fortune favors the bold.",
+    "Every day is a new opportunity to shine.",
+    "Trust your intuition, it will guide you wisely.",
+    "Perseverance is the key to success.",
+    "Sow positive thoughts and you will reap joy."
+  ],
+  de: [
+    "Das Glück bevorzugt die Mutigen.",
+    "Jeder Tag ist eine neue Gelegenheit zu glänzen.",
+    "Vertraue deiner Intuition, sie wird dich weise führen.",
+    "Ausdauer ist der Schlüssel zum Erfolg.",
+    "Säe positive Gedanken und du wirst Freude ernten."
+  ],
+  fr: [
+    "La fortune sourit aux audacieux.",
+    "Chaque jour est une nouvelle opportunité de briller.",
+    "Faites confiance à votre intuition, elle vous guidera sagement.",
+    "La persévérance est la clé du succès.",
+    "Semez des pensées positives et vous récolterez la joie."
+  ]
+};
+
+export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): LuckyNumbersData => {
+  const phrases = motivationalPhrases[locale] || motivationalPhrases.es;
+  return {
+    sign,
+    numbers: [Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1],
+    luckyColor: ["Rojo", "Verde", "Azul", "Amarillo", "Púrpura", "Naranja"][Math.floor(Math.random() * 6)],
+    luckyGemstone: ["Diamante", "Esmeralda", "Zafiro", "Rubí", "Amatista", "Topacio"][Math.floor(Math.random() * 6)],
+    motivationalPhrase: phrases[Math.floor(Math.random() * phrases.length)],
+  };
+};
+
 
 export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
   const today = new Date(); // This will be client's 'today' when called in useEffect
@@ -52,23 +88,23 @@ export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
 
   // Simplified deterministic logic based on the day of the month
   // These phase names are in Spanish; ideally, they'd be keys for localization.
-  if (dayOfMonth <= 4) { 
+  if (dayOfMonth <= 4) {
     phase = "Luna Nueva";
     illumination = Math.round((dayOfMonth / 4) * 15);
-  } else if (dayOfMonth <= 11) { 
+  } else if (dayOfMonth <= 11) {
     phase = "Cuarto Creciente";
     illumination = 15 + Math.round(((dayOfMonth - 4) / 7) * 35);
-  } else if (dayOfMonth <= 18) { 
-    phase = "Luna Llena"; 
+  } else if (dayOfMonth <= 18) {
+    phase = "Luna Llena";
     illumination = 50 + Math.round(((dayOfMonth - 11) / 7) * 50);
-  } else if (dayOfMonth <= 25) { 
+  } else if (dayOfMonth <= 25) {
     phase = "Cuarto Menguante";
     illumination = 100 - Math.round(((dayOfMonth - 18) / 7) * 50);
-  } else { 
-    phase = "Menguante Gibosa"; 
+  } else {
+    phase = "Menguante Gibosa";
     illumination = 50 - Math.round(((dayOfMonth - 25) / (6)) * 50); // Approx 6 days left
   }
-  
+
   illumination = Math.max(0, Math.min(100, illumination)); // Ensure illumination is within 0-100
 
   const nextFullMoonDate = new Date(today);
@@ -82,7 +118,7 @@ export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
     nextNewMoonDate.setMonth(today.getMonth() + 1);
   }
   nextNewMoonDate.setDate(1);
-  
+
   return {
     phase: phase,
     illumination: illumination,
@@ -95,7 +131,7 @@ export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData => {
   const month = birthDate.getMonth(); // 0-11
   // Simplistic placeholder logic
-  const ascendantSign = ZODIAC_SIGNS[month % 12].name; 
+  const ascendantSign = ZODIAC_SIGNS[month % 12].name;
   return {
     sign: ascendantSign,
     briefExplanation: `Tu signo ascendente, ${ascendantSign}, influye en tu personalidad externa y cómo te perciben los demás. Juega un papel importante en tus primeras impresiones y reacciones espontáneas. (Explicación de ejemplo en español, para ${birthCity} a las ${birthTime} del ${birthDate.toLocaleDateString()}).`,
@@ -109,6 +145,7 @@ export const MayanAstrologyIcon = FeatherIcon;
 export const GalacticTonesIcon = Layers;
 export const CompatibilityIcon = Heart;
 export const KinCalculatorIcon = CalculatorIcon;
+export const TarotPersonalityTestIcon = HelpCircle; // Icon for the new test
 
 
 // --- Full data for Chinese Astrology ---
@@ -245,14 +282,14 @@ function getDaysDifference(date1: Date, date2: Date): number {
 
 export function calculateMayanKin(birthDate: Date): MayanKinInfo | null {
   if (!(birthDate instanceof Date) || isNaN(birthDate.getTime())) {
-    return null; 
+    return null;
   }
 
   const daysDiff = getDaysDifference(DREAMSPELL_BASE_DATE_GREGORIAN, birthDate);
 
   // Kin index (0-259)
   const kinIndexToday = ( (DREAMSPELL_BASE_KIN_NUMBER - 1 + daysDiff) % 260 + 260) % 260;
-  
+
   // Kin number (1-260) for display
   const kinNumber = kinIndexToday + 1;
 
@@ -271,6 +308,13 @@ export function calculateMayanKin(birthDate: Date): MayanKinInfo | null {
 
   return { daySign, tone, kinNumber };
 }
+
+export const MAJOR_ARCANA_TAROT_CARDS = [
+  "The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor",
+  "The Hierophant", "The Lovers", "The Chariot", "Strength", "The Hermit",
+  "Wheel of Fortune", "Justice", "The Hanged Man", "Death", "Temperance",
+  "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"
+];
 
 
 // Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.

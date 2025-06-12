@@ -10,7 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Clover, Palette, Gem } from 'lucide-react';
+import { Clover, Palette, Gem, MessageCircleHeart, RefreshCw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface LuckyNumbersPageProps {
   params: { // params is a promise in client components
@@ -23,22 +24,31 @@ function LuckyNumbersContent({ dictionary, locale }: { dictionary: Dictionary, l
   const [luckyInfo, setLuckyInfo] = useState<LuckyNumbersData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchLuckyInfo = (sign: ZodiacSignName) => {
     setIsLoading(true);
     const timer = setTimeout(() => {
-      setLuckyInfo(getLuckyNumbers(selectedSign));
+      setLuckyInfo(getLuckyNumbers(sign, locale));
       setIsLoading(false);
     }, 300);
     return () => clearTimeout(timer);
-  }, [selectedSign]);
+  };
+  
+  useEffect(() => {
+    fetchLuckyInfo(selectedSign);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSign, locale]);
 
   const handleSignChange = (value: string) => {
     setSelectedSign(value as ZodiacSignName);
   };
 
+  const handleGenerateNew = () => {
+    fetchLuckyInfo(selectedSign);
+  };
+
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
-      <SectionTitle 
+      <SectionTitle
         title={dictionary['LuckyNumbersPage.title'] || "Lucky Charms"}
         subtitle={dictionary['LuckyNumbersPage.subtitle'] || "Find out your lucky numbers, color, and gemstone for your sign."}
         icon={Clover}
@@ -77,7 +87,7 @@ function LuckyNumbersContent({ dictionary, locale }: { dictionary: Dictionary, l
               <p className="mt-4 font-body text-muted-foreground">{dictionary['LuckyNumbersSection.loading'] || "Unveiling your fortunes..."}</p>
             </div>
           ) : luckyInfo ? (
-            <div className="space-y-4 p-4 bg-secondary/30 rounded-md shadow">
+            <div className="space-y-6 p-4 bg-secondary/30 rounded-md shadow">
               <div className="flex items-center justify-center mb-2">
                 <ZodiacSignIcon signName={luckyInfo.sign} className="w-10 h-10 text-primary mr-2" />
                 <h3 className="text-2xl font-headline font-semibold text-primary">{dictionary[luckyInfo.sign] || luckyInfo.sign}</h3>
@@ -98,6 +108,17 @@ function LuckyNumbersContent({ dictionary, locale }: { dictionary: Dictionary, l
                   <p className="text-xl font-semibold font-body text-primary">{luckyInfo.luckyGemstone}</p>
                 </div>
               </div>
+              <div className="mt-4 p-3 bg-card rounded-md shadow-sm">
+                <h4 className="text-lg font-headline font-medium text-accent-foreground flex items-center justify-center gap-1">
+                    <MessageCircleHeart size={20} />
+                    {dictionary['LuckyNumbersSection.motivationalPhraseLabel'] || "Motivational Phrase:"}
+                </h4>
+                <p className="text-md font-body italic text-card-foreground/90 mt-1">{luckyInfo.motivationalPhrase}</p>
+              </div>
+              <Button onClick={handleGenerateNew} variant="outline" className="mt-4 w-full sm:w-auto">
+                <RefreshCw className="mr-2 h-4 w-4" />
+                {dictionary['LuckyNumbersSection.generateNewButton'] || "Generate New Numbers"}
+              </Button>
             </div>
           ) : (
             <p className="font-body text-destructive">{dictionary['LuckyNumbersSection.error'] || "Could not load lucky information."}</p>
@@ -121,6 +142,6 @@ export default function LuckyNumbersPage({ params: paramsPromise }: LuckyNumbers
       </div>
     );
   }
-  
+
   return <LuckyNumbersContent dictionary={dictionary} locale={params.locale} />;
 }

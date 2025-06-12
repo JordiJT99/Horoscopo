@@ -26,6 +26,13 @@ export interface HoroscopeData {
   monthly: string;
 }
 
+export interface HoroscopeDetail { // This was missing but used by horoscope-flow.ts
+  main: string;
+  love: string;
+  money: string;
+  health: string;
+}
+
 export interface CompatibilityData {
   sign1: ZodiacSignName;
   sign2: ZodiacSignName;
@@ -38,6 +45,7 @@ export interface LuckyNumbersData {
   numbers: number[];
   luckyColor: string;
   luckyGemstone: string;
+  motivationalPhrase: string; // Added motivational phrase
 }
 
 export interface LunarData {
@@ -128,4 +136,21 @@ export interface MayanKinInfo {
   daySign: MayanZodiacSign;
   tone: GalacticTone;
   kinNumber: number;
+}
+
+// Type for Tarot Personality Test
+export interface TarotPersonalityAnswer {
+  question: string; // The question text (can be a key for dictionary)
+  answer: string;   // User's free-form answer
+}
+
+export interface TarotPersonalityInputType {
+  answers: TarotPersonalityAnswer[];
+  locale: string;
+}
+
+export interface TarotPersonalityOutputType {
+  cardName: string;
+  cardDescription: string; // Why this card fits them
+  cardImagePlaceholderUrl: string;
 }
