@@ -3,12 +3,11 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker, useNavigation } from "react-day-picker"
+import { DayPicker, useNavigation, useDayPicker } from "react-day-picker" // Importado useDayPicker
 import { format } from "date-fns"
 import { es, enUS, de, fr } from 'date-fns/locale';
 
 import { cn } from "@/lib/utils"
-// Removed buttonVariants import as it's no longer directly used for SelectTriggers here
 import {
   Select,
   SelectContent,
@@ -19,10 +18,10 @@ import {
 import type { Locale as AppLocale } from "@/lib/dictionaries";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  locale?: AppLocale; // Changed from globalThis.Locale to AppLocale
+  locale?: AppLocale;
 };
 
-const dateFnsLocalesMap: Record<string, globalThis.Locale> = { // Keep globalThis.Locale here for date-fns
+const dateFnsLocalesMap: Record<string, globalThis.Locale> = {
   es,
   en: enUS,
   de,
@@ -34,10 +33,10 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  locale: propsLocale, // Use propsLocale for clarity
+  locale: propsLocale,
   ...props
 }: CalendarProps) {
-  const currentLocale = dateFnsLocalesMap[(propsLocale?.toString()) || 'es'] || enUS;
+  const currentUiLocale = dateFnsLocalesMap[(propsLocale?.toString()) || 'es'] || enUS;
 
 
   return (
@@ -48,11 +47,10 @@ function Calendar({
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium hidden", // Hidden as dropdowns show value
-        caption_dropdowns: "flex gap-2 items-center justify-center", // Ensure this class is used
+        caption_label: "text-sm font-medium hidden",
+        caption_dropdowns: "flex gap-2 items-center justify-center",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
-          // Using base button styles from globals or minimal styling if buttonVariants caused issues
           "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
           "h-7 w-7 p-0 opacity-50 hover:opacity-100"
         ),
@@ -65,7 +63,6 @@ function Calendar({
         row: "flex w-full mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
-          // Base button styles
           "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground",
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
@@ -85,25 +82,30 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" {...props} />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" {...props} />,
         Dropdown: (dropdownProps) => {
-          const { goToMonth, displayMonth: navDisplayMonth, fromYear: navFromYear, toYear: navToYear, fromMonth: navFromMonth, toMonth: navToMonth } = useNavigation();
+          const { currentMonth: dpContextCurrentMonth } = useDayPicker(); // Mes actual del contexto DayPicker
+          const { goToMonth, displayMonth: navDisplayMonth, fromYear, toYear, fromMonth, toMonth } = useNavigation();
           
-          let displayDate = dropdownProps.displayMonth; // Primary source from DayPicker's caption context
-          if (!displayDate && navDisplayMonth) {
-            // console.warn("Calendar Dropdown: dropdownProps.displayMonth is undefined. Falling back to navDisplayMonth from useNavigation().");
-            displayDate = navDisplayMonth; // Fallback to useNavigation's displayMonth
-          }
+          let displayDate = dpContextCurrentMonth; // Usar el mes actual del contexto de DayPicker como fuente principal
 
+          if (!displayDate && dropdownProps.displayMonth) { // Fallback a lo que DayPicker pasa a su caption
+            displayDate = dropdownProps.displayMonth;
+          }
+          if (!displayDate && navDisplayMonth) { // Fallback al mes de navegación general
+             displayDate = navDisplayMonth;
+          }
+          
           if (!displayDate) {
-            console.warn("Calendar Dropdown: Both dropdownProps.displayMonth and navDisplayMonth (from useNavigation) are undefined. Rendering disabled selects. DropdownProps:", dropdownProps, "NavContext:", { navDisplayMonth, navFromYear, navToYear, navFromMonth, navToMonth });
+            // Esto solo debería ocurrir si DayPicker no tiene un mes que mostrar (ej. sin defaultMonth y sin selected)
+            console.warn("Calendar Dropdown: Could not determine displayDate. Rendering disabled selects. DropdownProps:", dropdownProps, "NavContext:", { navDisplayMonth, fromYear, toYear, fromMonth, toMonth }, "DPContextCurrentMonth:", dpContextCurrentMonth);
             return (
               <div className="flex gap-2 items-center justify-center" aria-live="polite">
                 <Select disabled>
-                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50 cursor-not-allowed" aria-label="Select month (disabled)">
+                  <SelectTrigger className="h-7 w-auto min-w-[6rem] px-2 text-xs font-medium text-foreground opacity-50 cursor-not-allowed" aria-label="Select month (disabled)">
                     <SelectValue placeholder={"---"} />
                   </SelectTrigger>
                 </Select>
                 <Select disabled>
-                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50 cursor-not-allowed" aria-label="Select year (disabled)">
+                  <SelectTrigger className="h-7 w-auto min-w-[4.5rem] px-2 text-xs font-medium text-foreground opacity-50 cursor-not-allowed" aria-label="Select year (disabled)">
                     <SelectValue placeholder={"----"} />
                   </SelectTrigger>
                 </Select>
@@ -114,60 +116,56 @@ function Calendar({
           const currentDisplayYear = displayDate.getFullYear();
           const currentDisplayMonth = displayDate.getMonth();
 
-          // Determine overall range from useNavigation, falling back to dropdownProps if nav context is incomplete
-          const fromYearValue = navFromYear?.getFullYear() ?? dropdownProps.fromYear?.getFullYear() ?? 1900;
-          const toYearValue = navToYear?.getFullYear() ?? dropdownProps.toYear?.getFullYear() ?? new Date().getFullYear() + 10;
-          
+          // MONTH OPTIONS
           const monthOptions: { value: string; label: string }[] = [];
-          let startMonthIndex = 0;
-          let endMonthIndex = 11;
+          const navContextFromMonth = fromMonth; // de useNavigation
+          const navContextToMonth = toMonth;   // de useNavigation
 
-          const effectiveFromMonth = navFromMonth ?? dropdownProps.fromMonth;
-          const effectiveToMonth = navToMonth ?? dropdownProps.toMonth;
+          let startMonthIdx = 0;
+          let endMonthIdx = 11;
 
-          if (effectiveFromMonth && effectiveFromMonth.getFullYear() === currentDisplayYear) {
-            startMonthIndex = effectiveFromMonth.getMonth();
-          } else if (effectiveFromMonth && currentDisplayYear < effectiveFromMonth.getFullYear()) {
-            startMonthIndex = 12; // Effectively no months this year before fromMonth
+          if (navContextFromMonth && navContextFromMonth.getFullYear() === currentDisplayYear) {
+            startMonthIdx = Math.max(startMonthIdx, navContextFromMonth.getMonth());
+          } else if (navContextFromMonth && currentDisplayYear < navContextFromMonth.getFullYear()) {
+            startMonthIdx = 12; 
           }
 
-          if (effectiveToMonth && effectiveToMonth.getFullYear() === currentDisplayYear) {
-            endMonthIndex = effectiveToMonth.getMonth();
-          } else if (effectiveToMonth && currentDisplayYear > effectiveToMonth.getFullYear()) {
-            endMonthIndex = -1; // Effectively no months this year after toMonth
+          if (navContextToMonth && navContextToMonth.getFullYear() === currentDisplayYear) {
+            endMonthIdx = Math.min(endMonthIdx, navContextToMonth.getMonth());
+          } else if (navContextToMonth && currentDisplayYear > navContextToMonth.getFullYear()) {
+            endMonthIdx = -1; 
           }
           
-          for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
-            if (monthIdx >= startMonthIndex && monthIdx <= endMonthIndex) {
+          for (let monthIdx = 0; monthIdx <= 11; monthIdx++) {
+            if (monthIdx >= startMonthIdx && monthIdx <= endMonthIdx) {
                monthOptions.push({
                 value: monthIdx.toString(),
-                label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
+                label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentUiLocale }),
               });
             }
           }
-          
-          if (monthOptions.length === 0 && (startMonthIndex <= endMonthIndex)) {
-            // Fallback if filtering somehow results in no options for a seemingly valid range.
-            // This could happen if DayPicker's internal state for displayMonth is temporarily misaligned with fromMonth/toMonth.
-            // console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${effectiveFromMonth}, toMonth: ${effectiveToMonth}. Using fallback to all months.`);
+          if (monthOptions.length === 0 && (startMonthIdx <= endMonthIdx)) {
+            console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${navContextFromMonth}, toMonth: ${navContextToMonth}. Using fallback to all months for this year.`);
             for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
                  monthOptions.push({
                     value: monthIdx.toString(),
-                    label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
+                    label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentUiLocale }),
                 });
             }
           }
 
-
+          // YEAR OPTIONS
           const yearOptions: { value: string; label: string }[] = [];
+          const fromYearValue = fromYear?.getFullYear() ?? (dropdownProps.fromYear?.getFullYear() ?? (currentDisplayYear - 100));
+          const toYearValue = toYear?.getFullYear() ?? (dropdownProps.toYear?.getFullYear() ?? (currentDisplayYear + 10));
+          
           for (let i = fromYearValue; i <= toYearValue; i++) {
             yearOptions.push({ value: i.toString(), label: i.toString() });
           }
           if (yearOptions.length === 0 && fromYearValue <= toYearValue) {
-            // console.warn(`Calendar Dropdown (Years): No options generated between ${fromYearValue} and ${toYearValue}. Using current year as fallback.`);
+            console.warn(`Calendar Dropdown (Years): No options generated between ${fromYearValue} and ${toYearValue}. Using current year as fallback.`);
             yearOptions.push({value: currentDisplayYear.toString(), label: currentDisplayYear.toString() });
           }
-
 
           const handleMonthChange = (value: string) => {
             const newSelectedMonth = parseInt(value);
@@ -176,14 +174,13 @@ function Calendar({
 
           const handleYearChange = (value: string) => {
             const newSelectedYear = parseInt(value);
-            let newMonth = currentDisplayMonth; // Keep current month if possible
+            let newMonth = currentDisplayMonth;
             
-            // Adjust month if it falls outside the new year's valid range
-            if (effectiveFromMonth && newSelectedYear === effectiveFromMonth.getFullYear() && newMonth < effectiveFromMonth.getMonth()) {
-              newMonth = effectiveFromMonth.getMonth();
+            if (navContextFromMonth && newSelectedYear === navContextFromMonth.getFullYear() && newMonth < navContextFromMonth.getMonth()) {
+              newMonth = navContextFromMonth.getMonth();
             }
-            if (effectiveToMonth && newSelectedYear === effectiveToMonth.getFullYear() && newMonth > effectiveToMonth.getMonth()) {
-              newMonth = effectiveToMonth.getMonth();
+            if (navContextToMonth && newSelectedYear === navContextToMonth.getFullYear() && newMonth > navContextToMonth.getMonth()) {
+              newMonth = navContextToMonth.getMonth();
             }
             goToMonth(new Date(newSelectedYear, newMonth, 1));
           };
@@ -200,12 +197,12 @@ function Calendar({
                   aria-label="Select month"
                 >
                   <SelectValue>
-                     {format(displayDate, "MMMM", { locale: currentLocale })}
+                     {format(displayDate, "MMMM", { locale: currentUiLocale })}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent className="max-h-[200px] text-xs">
                   {monthOptions.map((option) => (
-                    <SelectItem key={`month-${option.value}`} value={option.value}>
+                    <SelectItem key={`month-opt-${option.value}`} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
@@ -222,12 +219,12 @@ function Calendar({
                   aria-label="Select year"
                 >
                   <SelectValue>
-                    {format(displayDate, "yyyy", { locale: currentLocale })}
+                    {format(displayDate, "yyyy", { locale: currentUiLocale })}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent className="max-h-[200px] text-xs">
                   {yearOptions.map((option) => (
-                    <SelectItem key={`year-${option.value}`} value={option.value}>
+                    <SelectItem key={`year-opt-${option.value}`} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))}
@@ -237,7 +234,7 @@ function Calendar({
           );
         },
       }}
-      locale={currentLocale} // Pass the date-fns locale to DayPicker
+      locale={currentUiLocale}
       {...props}
     />
   )
@@ -245,3 +242,4 @@ function Calendar({
 Calendar.displayName = "Calendar"
 
 export { Calendar }
+
