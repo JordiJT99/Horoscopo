@@ -1,5 +1,4 @@
 
-
 export type ZodiacSignName =
   | "Aries"
   | "Taurus"
@@ -161,5 +160,20 @@ export interface AuthUser {
   uid: string;
   email: string | null;
   displayName: string | null;
-  // You can add more fields here if you retrieve them from Firestore
+}
+
+// Onboarding Flow Types
+export type Gender = "male" | "female" | "non-binary" | "prefer-not-to-say" | "other";
+export type RelationshipStatus = "single" | "in-relationship" | "engaged" | "married" | "divorced" | "widowed" | "complicated";
+export type EmploymentStatus = "employed-full-time" | "employed-part-time" | "self-employed" | "unemployed" | "student" | "retired" | "homemaker";
+
+export interface OnboardingFormData {
+  name: string;
+  gender: Gender | '';
+  dateOfBirth: Date | undefined;
+  timeOfBirth?: string; // HH:mm, optional
+  cityOfBirth?: string; // optional
+  relationshipStatus: RelationshipStatus | '';
+  employmentStatus: EmploymentStatus | '';
+  personalizedAdsConsent: boolean;
 }
