@@ -45,7 +45,7 @@ export interface LuckyNumbersData {
   numbers: number[];
   luckyColor: string;
   luckyGemstone: string;
-  motivationalPhrase: string; // Added motivational phrase
+  motivationalPhrase: string;
 }
 
 export interface LunarData {
@@ -153,4 +153,11 @@ export interface TarotPersonalityOutputType {
   cardName: string;
   cardDescription: string; // Why this card fits them
   cardImagePlaceholderUrl: string;
+}
+
+// Simulated Auth User
+export interface AuthUser {
+  username: string;
+  // email?: string; // Optional, can be added later
+  // avatarUrl?: string; // Optional
 }

@@ -8,6 +8,7 @@ import { SidebarProvider, Sidebar, SidebarInset, useSidebar } from "@/components
 import AppSidebar from '@/components/shared/AppSidebar';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
+import { AuthProvider } from '@/context/AuthContext'; // Import AuthProvider
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useEffect, useState, use, useMemo } from 'react';
 import '../globals.css';
@@ -18,8 +19,6 @@ interface LocaleLayoutParams {
 
 // LayoutContent is now responsible for fetching its own dictionary
 function LayoutContent({ locale, children }: { locale: Locale, children: React.ReactNode }) {
-  // Fetch dictionary here using React.use
-  // This will suspend LayoutContent until the dictionary is loaded.
   const dictionaryPromise = useMemo(() => {
     return getDictionary(locale);
   }, [locale]);
@@ -34,11 +33,10 @@ function LayoutContent({ locale, children }: { locale: Locale, children: React.R
 
   return (
     <>
-      <Sidebar> {/* This is the DESKTOP sidebar, styled with hidden md:block */}
+      <Sidebar>
         <AppSidebar dictionary={dictionary} currentLocale={locale} />
       </Sidebar>
 
-      {/* Mobile Sheet - Rendered conditionally based on client-side state */}
       {hasMounted && isMobile && (
         <Sheet open={openMobile} onOpenChange={setOpenMobile}>
           <SheetContent
@@ -64,17 +62,15 @@ function LayoutContent({ locale, children }: { locale: Locale, children: React.R
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
-  params: Promise<LocaleLayoutParams>; // Ensure params is typed as a Promise
+  params: Promise<LocaleLayoutParams>;
 }
 
 export default function LocaleLayout({
   children,
-  params, // 'params' here IS the Promise from Next.js
+  params: paramsPromise,
 }: Readonly<LocaleLayoutProps>) {
-  const resolvedParams = use(params); // Resolve the promise using React.use()
-  const currentLocale = resolvedParams.locale; // Access .locale from the resolved object
-
-  // Dictionary is now fetched within LayoutContent
+  const resolvedParams = use(paramsPromise); 
+  const currentLocale = resolvedParams.locale;
 
   return (
     <html lang={currentLocale} suppressHydrationWarning>
@@ -83,13 +79,14 @@ export default function LocaleLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased min-h-screen flex flex-col text-foreground"> {/* Removed bg-background */}
-        <SidebarProvider defaultOpen={true}> 
-          {/* Pass only locale to LayoutContent; it will fetch its own dictionary */}
-          <LayoutContent locale={currentLocale}>
-            {children}
-          </LayoutContent>
-        </SidebarProvider>
+      <body className="font-body antialiased min-h-screen flex flex-col text-foreground">
+        <AuthProvider> {/* Wrap with AuthProvider */}
+          <SidebarProvider defaultOpen={true}> 
+            <LayoutContent locale={currentLocale}>
+              {children}
+            </LayoutContent>
+          </SidebarProvider>
+        </AuthProvider>
         <Toaster />
       </body>
     </html>

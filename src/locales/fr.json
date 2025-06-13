@@ -264,6 +264,7 @@
   "ProfilePage.premiumBenefitEarlyAccess": "Accès anticipé aux nouvelles fonctionnalités",
   "ProfilePage.premiumBenefitSupport": "Support client prioritaire",
   "ProfilePage.premiumButton": "Devenir Premium",
+  "ProfilePage.welcomeUserSubtitle": "Bon retour, {username} !",
   "CrystalBallPage.title": "Boule de Cristal",
   "CrystalBallPage.subtitle": "Scrutez les brumes et posez votre question à la Boule de Cristal.",
   "CrystalBallPage.askTitle": "Demandez à la Boule de Cristal",
@@ -352,5 +353,19 @@
   "TarotPersonalityPage.cardDescriptionTitle": "Ce que cela signifie pour vous :",
   "TarotPersonalityPage.tryAgainButton": "Réessayer",
   "TarotPersonalityPage.errorAllAnswers": "Veuillez fournir une réponse réfléchie (au moins 10 caractères) à toutes les questions.",
-  "TarotPersonalityPage.errorFetching": "Les esprits réfléchissent... Impossible de déterminer votre carte. Veuillez réessayer."
+  "TarotPersonalityPage.errorFetching": "Les esprits réfléchissent... Impossible de déterminer votre carte. Veuillez réessayer.",
+  "Auth.loginTitle": "Connexion",
+  "Auth.loginSubtitle": "Accédez à votre compte AstroVibes.",
+  "Auth.loginFormTitle": "Entrez Votre Nom d'Utilisateur",
+  "Auth.loginFormDescription": "Ceci est une connexion simulée à des fins de démonstration.",
+  "Auth.usernameLabel": "Nom d'utilisateur",
+  "Auth.usernamePlaceholder": "Entrez votre nom d'utilisateur",
+  "Auth.loginButton": "Connexion",
+  "Auth.loginButtonShort": "Login",
+  "Auth.loginRegisterButton": "Connexion / S'inscrire",
+  "Auth.logoutButton": "Déconnexion",
+  "Auth.notLoggedInTitle": "Non Connecté(e)",
+  "Auth.notLoggedInSubtitle": "Veuillez vous connecter pour voir votre profil.",
+  "Auth.pleaseLoginToProfile": "Vous devez être connecté(e) pour accéder à votre profil et à vos paramètres.",
+  "Auth.goToLoginButton": "Aller à la Page de Connexion"
 }

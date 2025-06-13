@@ -264,6 +264,7 @@
   "ProfilePage.premiumBenefitEarlyAccess": "Frühzeitiger Zugang zu neuen Funktionen",
   "ProfilePage.premiumBenefitSupport": "Bevorzugter Kundensupport",
   "ProfilePage.premiumButton": "Premium werden",
+  "ProfilePage.welcomeUserSubtitle": "Willkommen zurück, {username}!",
   "CrystalBallPage.title": "Kristallkugel",
   "CrystalBallPage.subtitle": "Blicken Sie in die Nebel und stellen Sie Ihre Frage an die Kristallkugel.",
   "CrystalBallPage.askTitle": "Fragen Sie die Kristallkugel",
@@ -352,5 +353,19 @@
   "TarotPersonalityPage.cardDescriptionTitle": "Was das für Sie bedeutet:",
   "TarotPersonalityPage.tryAgainButton": "Erneut versuchen",
   "TarotPersonalityPage.errorAllAnswers": "Bitte geben Sie für alle Fragen eine durchdachte Antwort (mindestens 10 Zeichen).",
-  "TarotPersonalityPage.errorFetching": "Die Geister grübeln... Ihre Karte konnte nicht ermittelt werden. Bitte versuchen Sie es erneut."
+  "TarotPersonalityPage.errorFetching": "Die Geister grübeln... Ihre Karte konnte nicht ermittelt werden. Bitte versuchen Sie es erneut.",
+  "Auth.loginTitle": "Anmelden",
+  "Auth.loginSubtitle": "Greifen Sie auf Ihr AstroVibes-Konto zu.",
+  "Auth.loginFormTitle": "Geben Sie Ihren Benutzernamen ein",
+  "Auth.loginFormDescription": "Dies ist eine simulierte Anmeldung zu Demozwecken.",
+  "Auth.usernameLabel": "Benutzername",
+  "Auth.usernamePlaceholder": "Geben Sie Ihren Benutzernamen ein",
+  "Auth.loginButton": "Anmelden",
+  "Auth.loginButtonShort": "Login",
+  "Auth.loginRegisterButton": "Anmelden / Registrieren",
+  "Auth.logoutButton": "Abmelden",
+  "Auth.notLoggedInTitle": "Nicht angemeldet",
+  "Auth.notLoggedInSubtitle": "Bitte melden Sie sich an, um Ihr Profil anzuzeigen.",
+  "Auth.pleaseLoginToProfile": "Sie müssen angemeldet sein, um auf Ihr Profil und Ihre Einstellungen zugreifen zu können.",
+  "Auth.goToLoginButton": "Zur Anmeldeseite gehen"
 }

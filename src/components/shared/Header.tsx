@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { AstroAppLogo } from '@/lib/constants';
-import { Globe, UserCircle } from 'lucide-react';
+import { Globe, UserCircle, LogIn } from 'lucide-react'; // Added LogIn
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from '@/components/ui/sidebar'; 
+import { useAuth } from '@/context/AuthContext'; // Import useAuth
+import { Skeleton } from '@/components/ui/skeleton'; // For loading state
 
 interface HeaderProps {
   dictionary: Dictionary;
@@ -30,6 +32,7 @@ const availableLocales = [
 const Header = ({ dictionary, currentLocale }: HeaderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { user, isLoading } = useAuth(); // Get user and isLoading from context
 
   const getLocalizedPath = (locale: Locale) => {
     if (!pathname) return `/${locale}`;
@@ -58,12 +61,25 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-            <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
-              <UserCircle className="h-7 w-7" />
-              <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
-            </Link>
-          </Button>
+          {isLoading ? (
+            <Skeleton className="h-10 w-10 rounded-full" />
+          ) : user ? (
+            <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+              <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
+                <UserCircle className="h-7 w-7" />
+                <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="ghost" size="default" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground px-3">
+              <Link href={`/${currentLocale}/login`}>
+                <LogIn className="h-5 w-5 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">{dictionary['Auth.loginRegisterButton'] || "Login / Register"}</span>
+                <span className="sm:hidden">{dictionary['Auth.loginButtonShort'] || "Login"}</span>
+              </Link>
+            </Button>
+          )}
+          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">

@@ -264,6 +264,7 @@
   "ProfilePage.premiumBenefitEarlyAccess": "Acceso anticipado a nuevas funciones",
   "ProfilePage.premiumBenefitSupport": "Soporte al cliente prioritario",
   "ProfilePage.premiumButton": "Hazte Premium",
+  "ProfilePage.welcomeUserSubtitle": "¡Bienvenido de nuevo, {username}!",
   "CrystalBallPage.title": "Bola de Cristal",
   "CrystalBallPage.subtitle": "Observa las nieblas y haz tu pregunta a la Bola de Cristal.",
   "CrystalBallPage.askTitle": "Pregunta a la Bola de Cristal",
@@ -352,5 +353,19 @@
   "TarotPersonalityPage.cardDescriptionTitle": "Lo que esto significa para ti:",
   "TarotPersonalityPage.tryAgainButton": "Intentar de Nuevo",
   "TarotPersonalityPage.errorAllAnswers": "Por favor, proporciona una respuesta reflexiva (mínimo 10 caracteres) para todas las preguntas.",
-  "TarotPersonalityPage.errorFetching": "Los espíritus están reflexionando... No se pudo determinar tu carta. Por favor, inténtalo de nuevo."
+  "TarotPersonalityPage.errorFetching": "Los espíritus están reflexionando... No se pudo determinar tu carta. Por favor, inténtalo de nuevo.",
+  "Auth.loginTitle": "Iniciar Sesión",
+  "Auth.loginSubtitle": "Accede a tu cuenta de AstroVibes.",
+  "Auth.loginFormTitle": "Ingresa tu Nombre de Usuario",
+  "Auth.loginFormDescription": "Este es un inicio de sesión simulado para fines de demostración.",
+  "Auth.usernameLabel": "Nombre de Usuario",
+  "Auth.usernamePlaceholder": "Escribe tu nombre de usuario",
+  "Auth.loginButton": "Iniciar Sesión",
+  "Auth.loginButtonShort": "Login",
+  "Auth.loginRegisterButton": "Iniciar Sesión / Registrarse",
+  "Auth.logoutButton": "Cerrar Sesión",
+  "Auth.notLoggedInTitle": "No Has Iniciado Sesión",
+  "Auth.notLoggedInSubtitle": "Por favor, inicia sesión para ver tu perfil.",
+  "Auth.pleaseLoginToProfile": "Necesitas iniciar sesión para acceder a tu perfil y configuraciones.",
+  "Auth.goToLoginButton": "Ir a la Página de Inicio de Sesión"
 }

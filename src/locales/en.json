@@ -264,6 +264,7 @@
   "ProfilePage.premiumBenefitEarlyAccess": "Early access to new features",
   "ProfilePage.premiumBenefitSupport": "Priority customer support",
   "ProfilePage.premiumButton": "Go Premium",
+  "ProfilePage.welcomeUserSubtitle": "Welcome back, {username}!",
   "CrystalBallPage.title": "Crystal Ball",
   "CrystalBallPage.subtitle": "Peer into the mists and ask your question to the Crystal Ball.",
   "CrystalBallPage.askTitle": "Ask the Crystal Ball",
@@ -352,5 +353,19 @@
   "TarotPersonalityPage.cardDescriptionTitle": "What this means for you:",
   "TarotPersonalityPage.tryAgainButton": "Try Again",
   "TarotPersonalityPage.errorAllAnswers": "Please provide a thoughtful answer (at least 10 characters) for all questions.",
-  "TarotPersonalityPage.errorFetching": "The spirits are pondering... Could not determine your card. Please try again."
+  "TarotPersonalityPage.errorFetching": "The spirits are pondering... Could not determine your card. Please try again.",
+  "Auth.loginTitle": "Login",
+  "Auth.loginSubtitle": "Access your AstroVibes account.",
+  "Auth.loginFormTitle": "Enter Your Username",
+  "Auth.loginFormDescription": "This is a simulated login for demo purposes.",
+  "Auth.usernameLabel": "Username",
+  "Auth.usernamePlaceholder": "Enter your username",
+  "Auth.loginButton": "Login",
+  "Auth.loginButtonShort": "Login",
+  "Auth.loginRegisterButton": "Login / Register",
+  "Auth.logoutButton": "Logout",
+  "Auth.notLoggedInTitle": "Not Logged In",
+  "Auth.notLoggedInSubtitle": "Please log in to view your profile.",
+  "Auth.pleaseLoginToProfile": "You need to be logged in to access your profile and settings.",
+  "Auth.goToLoginButton": "Go to Login Page"
 }
