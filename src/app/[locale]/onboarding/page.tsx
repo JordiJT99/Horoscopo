@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, use, useMemo, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import type { OnboardingFormData, Gender, RelationshipStatus, EmploymentStatus } from '@/types';
@@ -32,10 +32,15 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 const TOTAL_STEPS = 8;
 
 interface OnboardingPageProps {
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>; // Changed for use()
 }
 
-function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
+interface OnboardingContentProps {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   const router = useRouter();
   const { user, isLoading: authLoading, markOnboardingAsComplete } = useAuth();
   const { toast } = useToast();
@@ -44,7 +49,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: new Date(1995, 5, 15), // Initialize with a default valid date
+    dateOfBirth: new Date(1995, 5, 15),
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -268,12 +273,11 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                       mode="single"
                       selected={formData.dateOfBirth}
                       onSelect={(date) => handleChange('dateOfBirth', date)}
-                      defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)} // Default to 30 years ago
-                      disabled={(date: Date) => date > new Date() || date < new Date("1900-01-01")}
+                      defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)}
                       locale={currentDfnLocale}
                       fromYear={1900}
                       toYear={currentYearForCalendar}
-                      captionLayout="dropdowns" // Ensure this is set if you want dropdowns
+                      captionLayout="dropdowns"
                     />
                 </PopoverContent>
               </Popover>
@@ -406,9 +410,9 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
 
 
 export default function OnboardingPage({ params: paramsPromise }: OnboardingPageProps) {
-  const params = use(paramsPromise);
+  const params = use(paramsPromise); // Resolve the params promise
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
-  const dictionary = use(dictionaryPromise);
+  const dictionary = use(dictionaryPromise); // Resolve the dictionary promise
 
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
