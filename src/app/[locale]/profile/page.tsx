@@ -5,14 +5,14 @@ import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'; // AvatarImage removed as we don't have custom avatars yet
 import { Button } from '@/components/ui/button';
-import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn } from 'lucide-react'; // Added LogOut, LogIn
-import Image from 'next/image';
-import { useAuth } from '@/context/AuthContext'; // Import useAuth
+import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn } from 'lucide-react';
+// import Image from 'next/image'; // Not used as Firebase user.photoURL might not be set
+import { useAuth } from '@/context/AuthContext';
 import { useEffect, use, useMemo, useState } from 'react';
-import Link from 'next/link'; // For linking to login page
-import { Skeleton } from '@/components/ui/skeleton'; // For loading state
+import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ProfilePageProps {
   params: { locale: Locale };
@@ -21,26 +21,16 @@ interface ProfilePageProps {
 function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading, logout } = useAuth();
 
-  const handleLogout = () => {
-    logout(locale);
+  const handleLogout = async () => {
+    await logout(locale);
   };
 
-  // Placeholder data - will be overridden by auth user if logged in
-  const placeholderUserData = {
-    username: "AstroFan123",
-    email: "user@example.com", // Default placeholder email
-    joinDate: new Date(2023, 0, 15).toLocaleDateString(locale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }),
-    avatarUrl: "https://placehold.co/128x128.png",
-    bio: dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom. Exploring the universe one horoscope at a time.",
-  };
-
-  const displayUser = user 
-    ? { ...placeholderUserData, username: user.username, email: user.email } 
-    : placeholderUserData;
+  // Placeholder data for join date, as Firebase Auth doesn't directly provide it without Firestore
+  const placeholderJoinDate = new Date(2023, 0, 15).toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   if (isLoading) {
     return (
@@ -95,11 +85,14 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
     );
   }
 
+  const displayName = user.displayName || (dictionary['ProfilePage.defaultUsername'] || "Astro User");
+  const displayEmail = user.email || (dictionary['ProfilePage.defaultEmail'] || "No email provided");
+
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
       <SectionTitle
         title={dictionary['ProfilePage.title']}
-        subtitle={(dictionary['ProfilePage.welcomeUserSubtitle'] || "Welcome back, {username}!").replace('{username}', displayUser.username)}
+        subtitle={(dictionary['ProfilePage.welcomeUserSubtitle'] || "Welcome back, {username}!").replace('{username}', displayName)}
         icon={UserCircle}
         className="mb-12"
       />
@@ -108,21 +101,17 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
           <Card className="shadow-xl">
             <CardHeader className="items-center text-center">
               <Avatar className="w-32 h-32 mb-4 border-4 border-primary shadow-md">
-                <Image 
-                  src={displayUser.avatarUrl} 
-                  alt={dictionary['ProfilePage.avatarAlt'] || 'User Avatar'} 
-                  width={128} 
-                  height={128} 
-                  className="rounded-full"
-                  data-ai-hint="avatar person" 
-                />
-                <AvatarFallback>{displayUser.username.substring(0, 2).toUpperCase()}</AvatarFallback>
+                {/* Firebase user.photoURL could be used here if available with Image component */}
+                <AvatarFallback className="text-4xl">
+                  {displayName.substring(0, 1).toUpperCase()}
+                  {displayName.split(' ')[1] ? displayName.split(' ')[1].substring(0,1).toUpperCase() : (displayName.length > 1 ? displayName.substring(1,2) : '')}
+                </AvatarFallback>
               </Avatar>
-              <CardTitle className="text-2xl font-headline">{displayUser.username}</CardTitle>
-              <CardDescription className="font-body text-muted-foreground">{displayUser.email}</CardDescription>
+              <CardTitle className="text-2xl font-headline">{displayName}</CardTitle>
+              <CardDescription className="font-body text-muted-foreground">{displayEmail}</CardDescription>
             </CardHeader>
             <CardContent className="text-center space-y-3">
-              <Button variant="outline" className="w-full font-body">
+              <Button variant="outline" className="w-full font-body" disabled> {/* Edit profile not implemented yet */}
                 <Edit3 className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.editProfileButton'] || "Edit Profile"}
               </Button>
                <Button onClick={handleLogout} variant="destructive" className="w-full font-body">
@@ -130,7 +119,8 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
                 {dictionary['Auth.logoutButton'] || "Logout"}
               </Button>
               <p className="text-xs text-muted-foreground mt-2 font-body">
-                {(dictionary['ProfilePage.memberSince'] || "Member since: {date}").replace('{date}', displayUser.joinDate)}
+                <CalendarDays className="inline h-3 w-3 mr-1" />
+                {(dictionary['ProfilePage.memberSince'] || "Member since: {date}").replace('{date}', placeholderJoinDate)}
               </p>
             </CardContent>
           </Card>
@@ -142,7 +132,7 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
               <CardTitle className="font-headline text-xl">{dictionary['ProfilePage.aboutMeTitle'] || "About Me"}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-body text-card-foreground leading-relaxed mb-6">{displayUser.bio}</p>
+              <p className="font-body text-card-foreground leading-relaxed mb-6">{dictionary['ProfilePage.placeholderBio']}</p>
               
               <h3 className="font-headline text-lg text-primary mb-3">{dictionary['ProfilePage.preferencesTitle'] || "Astrological Preferences"}</h3>
               <div className="space-y-2 font-body text-sm">
@@ -158,14 +148,14 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
             </CardHeader>
             <CardContent className="space-y-4">
                <div>
-                <label htmlFor="username-profile" className="block text-sm font-medium text-muted-foreground">{dictionary['ProfilePage.usernameLabel'] || "Username"}</label>
-                <input type="text" id="username-profile" defaultValue={displayUser.username} className="mt-1 block w-full p-2 border border-input rounded-md shadow-sm bg-background font-body" readOnly />
+                <Label htmlFor="username-profile" className="block text-sm font-medium text-muted-foreground">{dictionary['ProfilePage.usernameLabel'] || "Username"}</Label>
+                <Input type="text" id="username-profile" value={displayName} className="mt-1 block w-full p-2 border border-input rounded-md shadow-sm bg-background font-body" readOnly />
               </div>
               <div>
-                <label htmlFor="email-profile" className="block text-sm font-medium text-muted-foreground">{dictionary['ProfilePage.emailLabel'] || "Email Address"}</label>
-                <input type="email" id="email-profile" defaultValue={displayUser.email} className="mt-1 block w-full p-2 border border-input rounded-md shadow-sm bg-background font-body" readOnly />
+                <Label htmlFor="email-profile" className="block text-sm font-medium text-muted-foreground">{dictionary['ProfilePage.emailLabel'] || "Email Address"}</Label>
+                <Input type="email" id="email-profile" value={displayEmail} className="mt-1 block w-full p-2 border border-input rounded-md shadow-sm bg-background font-body" readOnly />
               </div>
-              <Button className="font-body">{dictionary['ProfilePage.updateSettingsButton'] || "Update Settings"}</Button>
+              <Button className="font-body" disabled>{dictionary['ProfilePage.updateSettingsButton'] || "Update Settings"}</Button>
             </CardContent>
           </Card>
 
@@ -186,7 +176,7 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
                 <li>{dictionary['ProfilePage.premiumBenefitEarlyAccess'] || "Early access to new features"}</li>
                 <li>{dictionary['ProfilePage.premiumBenefitSupport'] || "Priority customer support"}</li>
               </ul>
-              <Button className="w-full font-body bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Button className="w-full font-body bg-primary hover:bg-primary/90 text-primary-foreground" disabled>
                 <Star className="mr-2 h-4 w-4" />
                 {dictionary['ProfilePage.premiumButton'] || "Go Premium"}
               </Button>
@@ -220,4 +210,3 @@ export default function ProfilePage({ params: paramsPromise }: ProfilePageProps)
 
   return <ProfileContent dictionary={dictionary} locale={params.locale} />;
 }
-

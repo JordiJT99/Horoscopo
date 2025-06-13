@@ -1,4 +1,5 @@
 
+
 export type ZodiacSignName =
   | "Aries"
   | "Taurus"
@@ -155,9 +156,10 @@ export interface TarotPersonalityOutputType {
   cardImagePlaceholderUrl: string;
 }
 
-// Simulated Auth User
+// User type for Firebase Authentication
 export interface AuthUser {
-  username: string;
-  email: string; 
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  // You can add more fields here if you retrieve them from Firestore
 }
-
