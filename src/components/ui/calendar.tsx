@@ -83,26 +83,37 @@ function Calendar({
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" {...props} />,
         Dropdown: (dropdownProps) => {
           const { fromYear, toYear, fromMonth, toMonth, goToMonth } = useNavigation();
+          const displayDate = dropdownProps.displayMonth; 
+
+          if (!displayDate) {
+            console.warn("Calendar Dropdown: displayDate is undefined from dropdownProps. Props:", dropdownProps);
+            // Fallback to a disabled select if displayDate is not available
+            return (
+              <Select disabled>
+                <SelectTrigger className={cn(buttonVariants({ variant: "ghost" }), "h-7 w-auto px-2 text-xs font-medium text-foreground")}>
+                  <SelectValue placeholder={dropdownProps.name === "months" ? format(new Date(), "MMMM", {locale: currentLocale}) : new Date().getFullYear().toString() } />
+                </SelectTrigger>
+              </Select>
+            );
+          }
+
           const options: { value: string; label: string }[] = [];
 
-          const displayDate = dropdownProps.displayMonth; // The month currently displayed by the dropdown
-
           if (dropdownProps.name === "months") {
-            const availableMonths = fromMonth 
-                ? Array.from({length: 12}, (_, i) => new Date(displayDate.getFullYear(), i, 1))
-                    .filter(m => m >= fromMonth && (toMonth ? m <= toMonth : true) )
-                : Array.from({length: 12}, (_, i) => new Date(displayDate.getFullYear(), i, 1));
-
-            availableMonths.forEach(monthDate => {
+            const yearForMonthOptions = displayDate.getFullYear();
+            const startMonth = fromMonth && fromMonth.getFullYear() === yearForMonthOptions ? fromMonth.getMonth() : 0;
+            const endMonth = toMonth && toMonth.getFullYear() === yearForMonthOptions ? toMonth.getMonth() : 11;
+            
+            for (let i = startMonth; i <= endMonth; i++) {
                  options.push({
-                    value: monthDate.getMonth().toString(),
-                    label: format(monthDate, "MMMM", { locale: currentLocale }),
+                    value: i.toString(),
+                    label: format(new Date(yearForMonthOptions, i, 1), "MMMM", { locale: currentLocale }),
                 });
-            });
+            }
 
           } else if (dropdownProps.name === "years") {
-            const firstYear = fromYear?.getFullYear() || new Date().getFullYear() - 100;
-            const lastYear = toYear?.getFullYear() || new Date().getFullYear() + 0;
+            const firstYear = fromYear?.getFullYear() ?? new Date().getFullYear() - 100;
+            const lastYear = toYear?.getFullYear() ?? new Date().getFullYear(); // Default to current year if toYear not set
             for (let i = firstYear; i <= lastYear; i++) {
               options.push({ value: i.toString(), label: i.toString() });
             }
@@ -158,3 +169,4 @@ function Calendar({
 Calendar.displayName = "Calendar"
 
 export { Calendar }
+

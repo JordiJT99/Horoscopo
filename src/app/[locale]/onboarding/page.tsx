@@ -55,7 +55,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
-  const currentYearForCalendar = new Date().getFullYear();
+  const [currentYearForCalendar] = useState<number>(() => new Date().getFullYear()); // Initialize directly
 
   useEffect(() => {
     if (!authLoading && !user) {
