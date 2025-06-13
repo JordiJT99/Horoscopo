@@ -8,7 +8,7 @@ import { SidebarProvider, Sidebar, SidebarInset, useSidebar } from "@/components
 import AppSidebar from '@/components/shared/AppSidebar';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
-import { AuthProvider } from '@/context/AuthContext'; // Import AuthProvider
+import { AuthProvider } from '@/context/AuthContext';
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useEffect, useState, use, useMemo } from 'react';
 import '../globals.css';
@@ -17,19 +17,20 @@ interface LocaleLayoutParams {
   locale: Locale;
 }
 
-// LayoutContent is now responsible for fetching its own dictionary
-function LayoutContent({ locale, children }: { locale: Locale, children: React.ReactNode }) {
-  const dictionaryPromise = useMemo(() => {
-    return getDictionary(locale);
-  }, [locale]);
-  const dictionary = use(dictionaryPromise);
-
+// LayoutContent now receives dictionary as a prop
+function LayoutContent({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { isMobile, openMobile, setOpenMobile } = useSidebar();
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  // Dictionary is now passed as a prop, no need to fetch it here
+  // const dictionaryPromise = useMemo(() => {
+  //   return getDictionary(locale);
+  // }, [locale]);
+  // const dictionary = use(dictionaryPromise); // THIS WAS THE ERROR SOURCE
 
   return (
     <>
@@ -72,6 +73,10 @@ export default function LocaleLayout({
   const resolvedParams = use(paramsPromise); 
   const currentLocale = resolvedParams.locale;
 
+  // Fetch dictionary here and pass it down
+  const dictionaryPromise = useMemo(() => getDictionary(currentLocale), [currentLocale]);
+  const dictionary = use(dictionaryPromise);
+
   return (
     <html lang={currentLocale} suppressHydrationWarning>
       <head>
@@ -80,9 +85,10 @@ export default function LocaleLayout({
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col text-foreground">
-        <AuthProvider> {/* Wrap with AuthProvider */}
+        <AuthProvider>
           <SidebarProvider defaultOpen={true}> 
-            <LayoutContent locale={currentLocale}>
+            {/* Pass resolved dictionary to LayoutContent */}
+            <LayoutContent locale={currentLocale} dictionary={dictionary}>
               {children}
             </LayoutContent>
           </SidebarProvider>
