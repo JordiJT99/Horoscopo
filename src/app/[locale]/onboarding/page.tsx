@@ -32,7 +32,7 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 const TOTAL_STEPS = 8;
 
 interface OnboardingPageProps {
-  params: Promise<{ locale: Locale }>;
+  params: { locale: Locale }; // Removed Promise for direct access after `use`
 }
 
 interface OnboardingContentProps {
@@ -46,10 +46,11 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   const { toast } = useToast();
 
   const [currentStep, setCurrentStep] = useState(1);
+  const initialDateOfBirth = new Date(1995, 5, 15); // June 15, 1995
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: new Date(1995, 5, 15), // Initial valid date
+    dateOfBirth: initialDateOfBirth,
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -277,7 +278,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
                       locale={currentDfnLocale}
                       fromDate={new Date(1900, 0, 1)}
                       toDate={new Date()}
-                      captionLayout="dropdown" // This is important for DayPicker to use our custom caption
+                      captionLayout="dropdown" 
                       className="rounded-md border shadow"
                     />
                 </PopoverContent>
@@ -410,10 +411,10 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 }
 
 
-export default function OnboardingPage({ params: paramsPromise }: OnboardingPageProps) {
-  const params = use(paramsPromise); 
+export default function OnboardingPage({ params: paramsPromise }: { params: Promise<OnboardingPageProps["params"]> }) {
+  const params = use(paramsPromise);
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
-  const dictionary = use(dictionaryPromise); 
+  const dictionary = use(dictionaryPromise);
 
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
@@ -431,3 +432,5 @@ export default function OnboardingPage({ params: paramsPromise }: OnboardingPage
 
   return <OnboardingContent dictionary={dictionary} locale={params.locale} />;
 }
+
+    
