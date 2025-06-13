@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { HelpCircle, Sparkles, Loader2, User, Brain } from 'lucide-react'; // Changed UserFocus to User, Added Brain for thinking
+import { HelpCircle, Sparkles, Loader2, User, Brain } from 'lucide-react';
 import { tarotPersonalityFlow, type TarotPersonalityInputType, type TarotPersonalityOutputType } from '@/ai/flows/tarot-personality-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
@@ -24,7 +24,12 @@ const initialQuestions = (dict: Dictionary) => [
   { id: 'q3', text: dict['TarotPersonalityPage.question3'] || "What kind of energy or guidance are you seeking in your life right now?", answer: '' },
 ];
 
-function TarotPersonalityTestContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
+interface TarotPersonalityTestContentProps {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+function TarotPersonalityTestContent({ dictionary, locale }: TarotPersonalityTestContentProps) {
   const [questions, setQuestions] = useState(() => initialQuestions(dictionary));
   const [result, setResult] = useState<TarotPersonalityOutputType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +87,7 @@ function TarotPersonalityTestContent({ dictionary, locale }: { dictionary: Dicti
       <SectionTitle
         title={dictionary['TarotPersonalityPage.title'] || "What Tarot Card Are You?"}
         subtitle={dictionary['TarotPersonalityPage.subtitle'] || "Answer a few questions to discover your tarot card."}
-        icon={User} // Changed UserFocus to User
+        icon={User}
         className="mb-12"
       />
       <Card className="w-full max-w-xl mx-auto shadow-xl">
@@ -139,7 +144,7 @@ function TarotPersonalityTestContent({ dictionary, locale }: { dictionary: Dicti
                   <Image
                     src={result.cardImagePlaceholderUrl}
                     alt={result.cardName}
-                    width={134} // Smaller for personality card display
+                    width={134} 
                     height={235}
                     className="rounded-md shadow-lg border-2 border-primary/50"
                     data-ai-hint="tarot card"
@@ -166,7 +171,9 @@ function TarotPersonalityTestContent({ dictionary, locale }: { dictionary: Dicti
 }
 
 export default function TarotPersonalityTestPage({ params: paramsPromise }: TarotPersonalityTestPageProps) {
+  // It's usually safe to `use` paramsPromise directly, Next.js handles this.
   const params = use(paramsPromise);
+  // The dictionaryPromise should also be resolved here.
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
 
@@ -176,6 +183,7 @@ export default function TarotPersonalityTestPage({ params: paramsPromise }: Taro
   }, []);
 
   if (!isClient || Object.keys(dictionary).length === 0) {
+    // This loading state is good for when the dictionary is still being fetched.
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -184,6 +192,7 @@ export default function TarotPersonalityTestPage({ params: paramsPromise }: Taro
     );
   }
 
+  // Pass the resolved dictionary and locale to the content component.
   return <TarotPersonalityTestContent dictionary={dictionary} locale={params.locale} />;
 }
 
