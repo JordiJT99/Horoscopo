@@ -1,8 +1,8 @@
 
-"use client";
+// REMOVED "use client"; from the top of the file to make DreamReadingPage a Server Component
 
-import { useState, use, useMemo, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect, useMemo } from 'react'; // Keep for DreamReadingContent
+// `use` hook from react is not needed here if we await promises
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
@@ -13,9 +13,12 @@ import { Badge } from '@/components/ui/badge';
 import { BedDouble, Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
 import { useToast } from "@/hooks/use-toast";
+import { useRouter, useSearchParams } from 'next/navigation'; // These are client hooks, will be used in DreamReadingContent
 
 interface DreamReadingPageProps {
-  params: { locale: Locale };
+  params: Promise<{ // Assuming params is a promise passed to the page
+    locale: Locale;
+  }>;
 }
 
 interface DreamElements {
@@ -27,6 +30,8 @@ interface DreamElements {
 }
 
 function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
+  "use client"; // This component is definitely client-side
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const [dreamDescription, setDreamDescription] = useState('');
@@ -37,7 +42,14 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   const { toast } = useToast();
 
+  const [isClient, setIsClient] = useState(false);
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return; // Only run on client after mount
+
     const sharedInterpretation = searchParams.get('interpretation');
     if (sharedInterpretation) {
       try {
@@ -45,13 +57,13 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
         setInterpretation(decodedInterpretation);
         setDreamElements(null); // Shared links currently don't carry dream elements
         setIsShowingSharedContent(true);
-        setDreamDescription(''); 
+        setDreamDescription('');
       } catch (e) {
         console.error("Error decoding shared interpretation:", e);
         setError(dictionary['DreamReadingPage.errorDecoding'] || "Could not display the shared interpretation. It might be corrupted.");
       }
     }
-  }, [searchParams, dictionary]);
+  }, [searchParams, dictionary, isClient]); // Added isClient dependency
 
   const handleInterpretDream = async () => {
     if (!dreamDescription.trim()) {
@@ -86,13 +98,13 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
 
     const shareTitle = dictionary['Share.dreamInterpretationTitle'] || "A Dream Interpretation from AstroVibes";
     const inviteMessage = dictionary['Share.dreamInterpretationInviteTextLink'] || "I had my dream interpreted on AstroVibes! See the interpretation here:";
-    
+
     const pageUrl = new URL(window.location.href);
-    pageUrl.searchParams.delete('dreamElements'); // Ensure dreamElements are not part of the shared URL for now
+    pageUrl.searchParams.delete('dreamElements');
     pageUrl.searchParams.set('interpretation', encodeURIComponent(interpretation));
     const shareableUrl = pageUrl.toString();
 
-    if (shareableUrl.length > 2000) { 
+    if (shareableUrl.length > 2000) {
         toast({
             title: dictionary['Share.errorTitle'] || "Sharing Error",
             description: dictionary['Share.urlTooLong'] || "The interpretation is too long to be shared as a link. Try sharing the text directly.",
@@ -110,7 +122,7 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
       try {
         await navigator.share({
           title: shareTitle,
-          text: inviteMessage, 
+          text: inviteMessage,
           url: shareableUrl,
         });
         toast({
@@ -145,11 +157,11 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
       }
     }
   };
-  
+
   const handleNewInterpretation = () => {
     const newPath = `/${locale}/dream-reading`;
      if (typeof router.push === 'function') {
-       router.push(newPath); 
+       router.push(newPath);
     } else {
        window.location.href = newPath;
     }
@@ -198,6 +210,15 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
       </Card>
     );
   };
+
+  if (!isClient || Object.keys(dictionary).length === 0) {
+    return (
+      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+        <p className="mt-4">Loading dictionary...</p>
+      </div>
+    );
+  }
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -284,25 +305,11 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
   );
 }
 
-export default function DreamReadingPage({ params: paramsPromise }: DreamReadingPageProps) {
-  const params = use(paramsPromise);
-  const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
-  const dictionary = use(dictionaryPromise);
+// Page component (default export) - now an async Server Component
+export default async function DreamReadingPage({ params: paramsPromise }: DreamReadingPageProps) {
+  const params = await paramsPromise; // Resolve the params promise
+  const dictionary = await getDictionary(params.locale); // Resolve the dictionary promise
 
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient || Object.keys(dictionary).length === 0) {
-    return (
-      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-        <p className="mt-4">Loading dictionary...</p>
-      </div>
-    );
-  }
-
+  // Pass resolved data to the client component
   return <DreamReadingContent dictionary={dictionary} locale={params.locale} />;
 }
-
