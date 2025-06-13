@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, use, useMemo, useEffect } from 'react';
+import { useState, use, useMemo, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
@@ -14,11 +14,11 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar"; // Renamed to avoid conflict
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
-import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Sparkles, Clock, Building, Users2, Briefcase, ShieldCheck } from 'lucide-react';
+import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Sparkles, Clock, Building, Users2, Briefcase, ShieldCheck, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,6 +30,14 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 };
 
 const TOTAL_STEPS = 8;
+
+const mysticalPhrasesKeys = [
+  "OnboardingPage.mysticalPhrase1",
+  "OnboardingPage.mysticalPhrase2",
+  "OnboardingPage.mysticalPhrase3",
+  "OnboardingPage.mysticalPhrase4",
+  "OnboardingPage.mysticalPhrase5"
+];
 
 interface OnboardingPageProps {
   params: { locale: Locale };
@@ -46,12 +54,11 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   const { toast } = useToast();
 
   const [currentStep, setCurrentStep] = useState(1);
-  // Ensure initialDateOfBirth is a valid Date object
-  const initialDateOfBirth = new Date(1995, 5, 15); // June 15, 1995
+  const initialDateOfBirth = new Date(1995, 5, 15);
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: initialDateOfBirth, // Initialize with a Date object
+    dateOfBirth: initialDateOfBirth,
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -59,10 +66,10 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
     personalizedAdsConsent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentMysticalPhrase, setCurrentMysticalPhrase] = useState('');
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
   const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
-
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -70,44 +77,67 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
     }
   }, [user, authLoading, router, locale]);
 
-  const validateStep = (): boolean => {
+  useEffect(() => {
+    let phraseInterval: NodeJS.Timeout;
+    if (isSubmitting) {
+      let phraseIndex = 0;
+      setCurrentMysticalPhrase(dictionary[mysticalPhrasesKeys[phraseIndex]] || "Analizando...");
+      phraseInterval = setInterval(() => {
+        phraseIndex = (phraseIndex + 1) % mysticalPhrasesKeys.length;
+        setCurrentMysticalPhrase(dictionary[mysticalPhrasesKeys[phraseIndex]] || "Consultando...");
+      }, 2500); // Change phrase every 2.5 seconds
+    }
+    return () => clearInterval(phraseInterval);
+  }, [isSubmitting, dictionary]);
+
+  const validateStep = useCallback((): boolean => {
+    let isValid = true;
+    let errorKey = '';
+
     switch (currentStep) {
       case 1:
         if (!formData.name.trim()) {
-          toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorNameRequired'], variant: 'destructive' });
-          return false;
+          isValid = false;
+          errorKey = 'OnboardingPage.errorNameRequired';
         }
         break;
       case 2:
         if (!formData.gender) {
-          toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorGenderRequired'], variant: 'destructive' });
-          return false;
+          isValid = false;
+          errorKey = 'OnboardingPage.errorGenderRequired';
         }
         break;
       case 3:
         if (!formData.dateOfBirth) {
-          toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorDobRequired'], variant: 'destructive' });
-          return false;
+          isValid = false;
+          errorKey = 'OnboardingPage.errorDobRequired';
         }
         break;
+      // Steps 4 (Time of Birth) and 5 (City of Birth) are optional, no validation needed.
       case 6:
         if (!formData.relationshipStatus) {
-           toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorRelationshipStatusRequired'], variant: 'destructive' });
-           return false;
+           isValid = false;
+           errorKey = 'OnboardingPage.errorRelationshipStatusRequired';
         }
         break;
       case 7:
         if (!formData.employmentStatus) {
-           toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorEmploymentStatusRequired'], variant: 'destructive' });
-           return false;
+           isValid = false;
+           errorKey = 'OnboardingPage.errorEmploymentStatusRequired';
         }
         break;
-      default:
-        return true;
+      // Step 8 (Ads Consent) is a checkbox, always valid in terms of "completeness" for this step.
     }
-    return true;
-  };
 
+    if (!isValid && errorKey) {
+      toast({ 
+        title: dictionary['Error.genericTitle'] || "Error", 
+        description: dictionary[errorKey] || "Please complete the required field.", 
+        variant: 'destructive' 
+      });
+    }
+    return isValid;
+  }, [currentStep, formData, toast, dictionary]);
 
   const handleNext = () => {
     if (!validateStep()) {
@@ -131,20 +161,27 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   };
 
   const handleSubmitOnboarding = async () => {
-    if (!validateStep()) {
+    if (!validateStep()) { // Final validation for the current step (ads consent)
       return;
     }
     setIsSubmitting(true);
-    console.log("Onboarding data submitted:", formData);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Simulate data saving and "mystical analysis"
+    console.log("Onboarding data to be 'analyzed' and saved:", formData);
+    // In a real app, you would save formData to Firebase Firestore or your backend here.
+    // This data can then be retrieved by Genkit flows for personalization.
+
+    await new Promise(resolve => setTimeout(resolve, mysticalPhrasesKeys.length * 2500 + 1000)); // Wait for all phrases + a bit more
 
     if (user) {
-      markOnboardingAsComplete();
+      markOnboardingAsComplete(); // Marks in localStorage
+      // Store detailed formData in localStorage for this demo
+      localStorage.setItem(`onboardingData_${user.uid}`, JSON.stringify(formData));
     }
 
     toast({
       title: dictionary['OnboardingPage.submissionSuccessTitle'] || "Onboarding Complete!",
-      description: dictionary['OnboardingPage.submissionSuccessMessage'] || "Your information has been (simulated) saved. Welcome!",
+      description: dictionary['OnboardingPage.submissionSuccessMessagePersonalized'] || "Your cosmic profile is set! Prepare for personalized insights.",
     });
     setIsSubmitting(false);
     router.push(`/${locale}/profile`);
@@ -181,25 +218,25 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   if (authLoading || (!user && !authLoading)) {
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </main>
     );
   }
 
-  const stepTitles: Record<number, { titleKey: string, icon: React.ElementType }> = {
-    1: { titleKey: 'OnboardingPage.step1Title', icon: User },
-    2: { titleKey: 'OnboardingPage.step2Title', icon: VenetianMask },
-    3: { titleKey: 'OnboardingPage.step3Title', icon: CalendarIcon },
-    4: { titleKey: 'OnboardingPage.step4Title', icon: Clock },
-    5: { titleKey: 'OnboardingPage.step5Title', icon: Building },
-    6: { titleKey: 'OnboardingPage.step6Title', icon: Users2 },
-    7: { titleKey: 'OnboardingPage.step7Title', icon: Briefcase },
-    8: { titleKey: 'OnboardingPage.step8Title', icon: ShieldCheck },
+  const stepDetails: Record<number, { titleKey: string, icon: React.ElementType, descriptionKey?: string }> = {
+    1: { titleKey: 'OnboardingPage.step1Title', icon: User, descriptionKey: 'OnboardingPage.step1Description' },
+    2: { titleKey: 'OnboardingPage.step2Title', icon: VenetianMask, descriptionKey: 'OnboardingPage.step2Description' },
+    3: { titleKey: 'OnboardingPage.step3Title', icon: CalendarIcon, descriptionKey: 'OnboardingPage.step3Description' },
+    4: { titleKey: 'OnboardingPage.step4Title', icon: Clock, descriptionKey: 'OnboardingPage.step4Description' },
+    5: { titleKey: 'OnboardingPage.step5Title', icon: Building, descriptionKey: 'OnboardingPage.step5Description' },
+    6: { titleKey: 'OnboardingPage.step6Title', icon: Users2, descriptionKey: 'OnboardingPage.step6Description' },
+    7: { titleKey: 'OnboardingPage.step7Title', icon: Briefcase, descriptionKey: 'OnboardingPage.step7Description' },
+    8: { titleKey: 'OnboardingPage.step8Title', icon: ShieldCheck, descriptionKey: 'OnboardingPage.step8Description' },
   };
 
-  const CurrentStepIcon = stepTitles[currentStep]?.icon || Edit;
-  const currentStepTitleKey = stepTitles[currentStep]?.titleKey || 'OnboardingPage.stepComingSoonTitle';
-
+  const CurrentStepIcon = stepDetails[currentStep]?.icon || Edit;
+  const currentStepTitleKey = stepDetails[currentStep]?.titleKey || 'OnboardingPage.stepComingSoonTitle';
+  const currentStepDescriptionKey = stepDetails[currentStep]?.descriptionKey;
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -215,206 +252,212 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
             <CurrentStepIcon className="w-6 h-6" />
             {dictionary[currentStepTitleKey] || `Step ${currentStep}`}
           </CardTitle>
+          {currentStepDescriptionKey && (
+            <CardDescription className="text-center font-body mt-1">
+              {dictionary[currentStepDescriptionKey]}
+            </CardDescription>
+          )}
           <div className="w-full bg-muted rounded-full h-2.5 mt-2">
-            <div className="bg-primary h-2.5 rounded-full" style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}></div>
+            <div className="bg-primary h-2.5 rounded-full transition-all duration-300 ease-out" style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}></div>
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-6 min-h-[250px]">
-          {currentStep === 1 && (
-            <div className="space-y-2">
-              <Label htmlFor="name" className="font-body">{dictionary['OnboardingPage.nameLabel'] || "What's your name?"}</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => handleChange('name', e.target.value)}
-                placeholder={dictionary['OnboardingPage.namePlaceholder'] || "Enter your full name"}
-                className="font-body"
-                maxLength={100}
-              />
-              <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.nameHelper'] || "This will be your display name in the app."}</p>
+        <CardContent className="space-y-6 min-h-[280px] flex flex-col justify-center">
+          {isSubmitting ? (
+            <div className="text-center space-y-4 py-8">
+              <Sparkles className="h-16 w-16 text-primary mx-auto animate-pulse" />
+              <p className="font-headline text-xl text-accent-foreground">{currentMysticalPhrase}</p>
+              <p className="font-body text-muted-foreground">{dictionary['OnboardingPage.finalizingProfile']}</p>
             </div>
-          )}
-
-          {currentStep === 2 && (
-            <div className="space-y-2">
-              <Label className="font-body">{dictionary['OnboardingPage.genderLabel'] || "How do you identify?"}</Label>
-              <RadioGroup
-                value={formData.gender}
-                onValueChange={(value) => handleChange('gender', value as Gender)}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
-              >
-                {genderOptions.map(opt => (
-                  <div key={opt.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={opt.value} id={`gender-${opt.value}`} />
-                    <Label htmlFor={`gender-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.labelKey.split('.').pop()}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-          )}
-
-          {currentStep === 3 && (
-             <div className="space-y-2">
-              <Label htmlFor="dateOfBirth" className="font-body">{dictionary['OnboardingPage.dobLabel'] || "When were you born?"}</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="dateOfBirth"
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal font-body",
-                      !formData.dateOfBirth && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.dateOfBirth ? format(formData.dateOfBirth, "PPP", { locale: currentDfnLocale }) : <span>{dictionary['OnboardingPage.pickDatePlaceholder'] || "Select a date"}</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={formData.dateOfBirth}
-                      onSelect={(date) => handleChange('dateOfBirth', date)}
-                      defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)} // Ensure a valid default month
-                      locale={currentDfnLocale} // Pass date-fns locale object
-                      fromDate={new Date(1900, 0, 1)}
-                      toDate={new Date()}
-                      captionLayout="dropdown" // Use react-day-picker's dropdowns
-                      fromYear={1900}
-                      toYear={currentYearForCalendar}
-                      classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
-                      className="rounded-md border shadow"
-                    />
-                </PopoverContent>
-              </Popover>
-            </div>
-          )}
-
-          {currentStep === 4 && (
-            <div className="space-y-2">
-              <Label htmlFor="timeOfBirth" className="font-body">{dictionary['OnboardingPage.timeOfBirthLabel'] || "Time of Birth (Optional)"}</Label>
-              <Input
-                id="timeOfBirth"
-                type="time"
-                value={formData.timeOfBirth}
-                onChange={(e) => handleChange('timeOfBirth', e.target.value)}
-                className="font-body"
-              />
-              <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.timeOfBirthHelper'] || "Knowing your birth time helps in more accurate astrological calculations like your ascendant sign."}</p>
-            </div>
-          )}
-
-          {currentStep === 5 && (
-            <div className="space-y-2">
-              <Label htmlFor="cityOfBirth" className="font-body">{dictionary['OnboardingPage.cityOfBirthLabel'] || "City of Birth (Optional)"}</Label>
-              <Input
-                id="cityOfBirth"
-                value={formData.cityOfBirth}
-                onChange={(e) => handleChange('cityOfBirth', e.target.value)}
-                placeholder={dictionary['OnboardingPage.cityOfBirthPlaceholder'] || "e.g., London, New York"}
-                className="font-body"
-                maxLength={100}
-              />
-               <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.cityOfBirthHelper'] || "Your birth city can also refine astrological details."}</p>
-            </div>
-          )}
-
-          {currentStep === 6 && (
-            <div className="space-y-2">
-              <Label className="font-body">{dictionary['OnboardingPage.relationshipStatusLabel'] || "Relationship Status"}</Label>
-              <RadioGroup
-                value={formData.relationshipStatus}
-                onValueChange={(value) => handleChange('relationshipStatus', value as RelationshipStatus)}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
-              >
-                {relationshipStatusOptions.map(opt => (
-                  <div key={opt.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={opt.value} id={`rel-${opt.value}`} />
-                    <Label htmlFor={`rel-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-          )}
-
-          {currentStep === 7 && (
-            <div className="space-y-2">
-              <Label className="font-body">{dictionary['OnboardingPage.employmentStatusLabel'] || "Employment Status"}</Label>
-               <RadioGroup
-                value={formData.employmentStatus}
-                onValueChange={(value) => handleChange('employmentStatus', value as EmploymentStatus)}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
-              >
-                {employmentStatusOptions.map(opt => (
-                  <div key={opt.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={opt.value} id={`emp-${opt.value}`} />
-                    <Label htmlFor={`emp-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-          )}
-
-          {currentStep === 8 && (
-            <div className="space-y-4">
-                <div className="items-top flex space-x-2">
-                  <Checkbox
-                    id="personalizedAdsConsent"
-                    checked={formData.personalizedAdsConsent}
-                    onCheckedChange={(checked) => handleChange('personalizedAdsConsent', Boolean(checked))}
+          ) : (
+            <>
+              {currentStep === 1 && (
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="font-body">{dictionary['OnboardingPage.nameLabel'] || "What's your name?"}</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    placeholder={dictionary['OnboardingPage.namePlaceholder'] || "Enter your full name"}
+                    className="font-body"
+                    maxLength={100}
                   />
-                  <div className="grid gap-1.5 leading-none">
-                    <Label htmlFor="personalizedAdsConsent" className="font-body">
-                      {dictionary['OnboardingPage.adsConsentLabel'] || "Allow Personalized Ads"}
-                    </Label>
-                    <p className="text-xs text-muted-foreground">
-                      {dictionary['OnboardingPage.adsConsentDescription'] || "Allow us to use your information to show you more relevant ads and content. You can change this in settings later."}
-                    </p>
-                  </div>
+                  <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.nameHelper'] || "This will be your display name in the app."}</p>
                 </div>
+              )}
 
-                {isSubmitting && (
-                  <div className="pt-4 text-center">
-                      <Sparkles className="h-10 w-10 text-primary mx-auto mb-2 animate-spin" />
-                      <p className="font-body text-muted-foreground">{dictionary['OnboardingPage.finalizingProfile'] || "Finalizing your cosmic profile..."}</p>
-                  </div>
-                )}
-                {!isSubmitting && (
+              {currentStep === 2 && (
+                <div className="space-y-2">
+                  <Label className="font-body">{dictionary['OnboardingPage.genderLabel'] || "How do you identify?"}</Label>
+                  <RadioGroup
+                    value={formData.gender}
+                    onValueChange={(value) => handleChange('gender', value as Gender)}
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
+                  >
+                    {genderOptions.map(opt => (
+                      <div key={opt.value} className="flex items-center space-x-2">
+                        <RadioGroupItem value={opt.value} id={`gender-${opt.value}`} />
+                        <Label htmlFor={`gender-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                 <div className="space-y-2">
+                  <Label htmlFor="dateOfBirth" className="font-body">{dictionary['OnboardingPage.dobLabel'] || "When were you born?"}</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="dateOfBirth"
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal font-body",
+                          !formData.dateOfBirth && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {formData.dateOfBirth ? format(formData.dateOfBirth, "PPP", { locale: currentDfnLocale }) : <span>{dictionary['OnboardingPage.pickDatePlaceholder'] || "Select a date"}</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                        <CalendarComponent
+                          mode="single"
+                          selected={formData.dateOfBirth}
+                          onSelect={(date) => handleChange('dateOfBirth', date)}
+                          defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 25, 0, 1)}
+                          locale={currentDfnLocale}
+                          fromDate={new Date(1900, 0, 1)}
+                          toDate={new Date(currentYearForCalendar, 11, 31)}
+                          captionLayout="dropdown-buttons"
+                          fromYear={1900}
+                          toYear={currentYearForCalendar}
+                          classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
+                          className="rounded-md border shadow"
+                        />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                <div className="space-y-2">
+                  <Label htmlFor="timeOfBirth" className="font-body">{dictionary['OnboardingPage.timeOfBirthLabel'] || "Time of Birth (Optional)"}</Label>
+                  <Input
+                    id="timeOfBirth"
+                    type="time"
+                    value={formData.timeOfBirth}
+                    onChange={(e) => handleChange('timeOfBirth', e.target.value)}
+                    className="font-body"
+                  />
+                  <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.timeOfBirthHelper'] || "Knowing your birth time helps in more accurate astrological calculations like your ascendant sign."}</p>
+                </div>
+              )}
+
+              {currentStep === 5 && (
+                <div className="space-y-2">
+                  <Label htmlFor="cityOfBirth" className="font-body">{dictionary['OnboardingPage.cityOfBirthLabel'] || "City of Birth (Optional)"}</Label>
+                  <Input
+                    id="cityOfBirth"
+                    value={formData.cityOfBirth}
+                    onChange={(e) => handleChange('cityOfBirth', e.target.value)}
+                    placeholder={dictionary['OnboardingPage.cityOfBirthPlaceholder'] || "e.g., London, New York"}
+                    className="font-body"
+                    maxLength={100}
+                  />
+                   <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.cityOfBirthHelper'] || "Your birth city can also refine astrological details."}</p>
+                </div>
+              )}
+
+              {currentStep === 6 && (
+                <div className="space-y-2">
+                  <Label className="font-body">{dictionary['OnboardingPage.relationshipStatusLabel'] || "Relationship Status"}</Label>
+                  <RadioGroup
+                    value={formData.relationshipStatus}
+                    onValueChange={(value) => handleChange('relationshipStatus', value as RelationshipStatus)}
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
+                  >
+                    {relationshipStatusOptions.map(opt => (
+                      <div key={opt.value} className="flex items-center space-x-2">
+                        <RadioGroupItem value={opt.value} id={`rel-${opt.value}`} />
+                        <Label htmlFor={`rel-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+              )}
+
+              {currentStep === 7 && (
+                <div className="space-y-2">
+                  <Label className="font-body">{dictionary['OnboardingPage.employmentStatusLabel'] || "Employment Status"}</Label>
+                   <RadioGroup
+                    value={formData.employmentStatus}
+                    onValueChange={(value) => handleChange('employmentStatus', value as EmploymentStatus)}
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
+                  >
+                    {employmentStatusOptions.map(opt => (
+                      <div key={opt.value} className="flex items-center space-x-2">
+                        <RadioGroupItem value={opt.value} id={`emp-${opt.value}`} />
+                        <Label htmlFor={`emp-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+              )}
+
+              {currentStep === 8 && (
+                <div className="space-y-4">
+                    <div className="items-top flex space-x-2">
+                      <Checkbox
+                        id="personalizedAdsConsent"
+                        checked={formData.personalizedAdsConsent}
+                        onCheckedChange={(checked) => handleChange('personalizedAdsConsent', Boolean(checked))}
+                        aria-labelledby="ads-consent-label"
+                      />
+                      <div className="grid gap-1.5 leading-none">
+                        <Label htmlFor="personalizedAdsConsent" id="ads-consent-label" className="font-body">
+                          {dictionary['OnboardingPage.adsConsentLabel'] || "Allow Personalized Ads"}
+                        </Label>
+                        <p className="text-xs text-muted-foreground">
+                          {dictionary['OnboardingPage.adsConsentDescription'] || "Allow us to use your information to show you more relevant ads and content. You can change this in settings later."}
+                        </p>
+                      </div>
+                    </div>
                    <div className="pt-4 text-center">
                     <p className="font-body text-muted-foreground">
                       {dictionary['OnboardingPage.reviewAndFinishPrompt'] || "Please review your choices and click 'Finish' to complete your profile."}
                     </p>
                   </div>
-                )}
-            </div>
+                </div>
+              )}
+            </>
           )}
         </CardContent>
 
-        <CardFooter className="flex justify-between pt-6">
-          <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1 || isSubmitting} className="font-body">
-            <ChevronLeft className="mr-2 h-4 w-4" />
-            {dictionary['OnboardingPage.previousButton'] || "Previous"}
-          </Button>
-          <Button onClick={handleNext} disabled={isSubmitting} className="font-body">
-            {isSubmitting ? (
-              <>
-                <Sparkles className="mr-2 h-4 w-4 animate-spin" />
-                {dictionary['OnboardingPage.submittingButton'] || "Processing..."}
-              </>
-            ) : currentStep === TOTAL_STEPS ? (
-              dictionary['OnboardingPage.finishButton'] || "Finish"
-            ) : (
-              dictionary['OnboardingPage.nextButton'] || "Next"
-            )}
-             {currentStep < TOTAL_STEPS && !isSubmitting && <ChevronRight className="ml-2 h-4 w-4" />}
-          </Button>
-        </CardFooter>
+        {!isSubmitting && (
+          <CardFooter className="flex justify-between pt-6">
+            <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1 || isSubmitting} className="font-body">
+              <ChevronLeft className="mr-2 h-4 w-4" />
+              {dictionary['OnboardingPage.previousButton'] || "Previous"}
+            </Button>
+            <Button onClick={handleNext} disabled={isSubmitting} className="font-body">
+              {currentStep === TOTAL_STEPS ? (
+                dictionary['OnboardingPage.finishButton'] || "Finish"
+              ) : (
+                dictionary['OnboardingPage.nextButton'] || "Next"
+              )}
+               {currentStep < TOTAL_STEPS && <ChevronRight className="ml-2 h-4 w-4" />}
+            </Button>
+          </CardFooter>
+        )}
       </Card>
+      <p className="text-center text-xs text-muted-foreground mt-8 font-body">
+        {dictionary['OnboardingPage.dataUsageNote'] || "Your information helps us tailor your astrological experience. We respect your privacy."}
+      </p>
     </main>
   );
 }
-
 
 export default function OnboardingPage({ params: paramsPromise }: { params: Promise<OnboardingPageProps["params"]> }) {
   const params = use(paramsPromise);
@@ -429,11 +472,13 @@ export default function OnboardingPage({ params: paramsPromise }: { params: Prom
   if (!isClient || Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-        <p className="mt-4">Loading onboarding...</p>
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="mt-4 font-body">{dictionary['OnboardingPage.loadingOnboarding'] || "Loading onboarding..."}</p>
       </div>
     );
   }
 
   return <OnboardingContent dictionary={dictionary} locale={params.locale} />;
 }
+
+    
