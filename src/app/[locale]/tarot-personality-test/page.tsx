@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { HelpCircle, Sparkles, Loader2, UserFocus, Brain } from 'lucide-react'; // Added Brain for thinking
+import { HelpCircle, Sparkles, Loader2, User, Brain } from 'lucide-react'; // Changed UserFocus to User, Added Brain for thinking
 import { tarotPersonalityFlow, type TarotPersonalityInputType, type TarotPersonalityOutputType } from '@/ai/flows/tarot-personality-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
@@ -82,7 +82,7 @@ function TarotPersonalityTestContent({ dictionary, locale }: { dictionary: Dicti
       <SectionTitle
         title={dictionary['TarotPersonalityPage.title'] || "What Tarot Card Are You?"}
         subtitle={dictionary['TarotPersonalityPage.subtitle'] || "Answer a few questions to discover your tarot card."}
-        icon={UserFocus}
+        icon={User} // Changed UserFocus to User
         className="mb-12"
       />
       <Card className="w-full max-w-xl mx-auto shadow-xl">
@@ -186,3 +186,4 @@ export default function TarotPersonalityTestPage({ params: paramsPromise }: Taro
 
   return <TarotPersonalityTestContent dictionary={dictionary} locale={params.locale} />;
 }
+
