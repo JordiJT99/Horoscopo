@@ -229,7 +229,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
           {answer && !isLoading && (
             <Card className="mt-6 bg-secondary/30 p-6 rounded-lg shadow">
               <CardHeader className="p-0 pb-2 text-center">
-                <CardTitle className="font-headline text-xl text-accent-foreground">
+                <CardTitle className="font-headline text-xl text-primary"> {/* Changed to text-primary */}
                   {isShowingSharedContent 
                     ? (dictionary['CrystalBallPage.sharedRevelationTitle'] || "A Shared Revelation")
                     : (dictionary['CrystalBallPage.answerTitle'] || "The Crystal Ball Reveals...")}
