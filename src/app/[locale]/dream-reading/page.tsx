@@ -251,7 +251,7 @@ function DreamReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
           {interpretation && !isLoading && (
             <Card className="mt-6 bg-secondary/30 p-6 rounded-lg shadow">
               <CardHeader className="p-0 pb-2 text-center">
-                <CardTitle className="font-headline text-xl text-accent-foreground">
+                <CardTitle className="font-headline text-xl text-primary">
                 {isShowingSharedContent
                   ? (dictionary['DreamReadingPage.sharedInterpretationTitle'] || "A Shared Dream Interpretation")
                   : (dictionary['DreamReadingPage.interpretationTitle'] || "Dream Interpretation")}
@@ -305,3 +305,4 @@ export default function DreamReadingPage({ params: paramsPromise }: DreamReading
 
   return <DreamReadingContent dictionary={dictionary} locale={params.locale} />;
 }
+
