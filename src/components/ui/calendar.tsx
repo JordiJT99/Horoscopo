@@ -89,117 +89,154 @@ function Calendar({
           const displayDate = dropdownProps.displayMonth;
 
           if (!displayDate) {
-            console.warn("Calendar Dropdown: displayDate is undefined. Props:", dropdownProps);
+            console.warn("Calendar Dropdown: displayDate is undefined. Rendering disabled selects. Props:", dropdownProps);
             return (
-              <Select disabled>
-                <SelectTrigger className={cn(buttonVariants({ variant: "ghost" }), "h-7 w-auto px-2 text-xs font-medium text-foreground")}>
-                  <SelectValue placeholder={dropdownProps.name === "months" ? format(new Date(), "MMMM", {locale: currentLocale}) : new Date().getFullYear().toString() } />
-                </SelectTrigger>
-              </Select>
+              <div className="flex gap-2 items-center justify-center">
+                <Select disabled>
+                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50">
+                    <SelectValue placeholder={"---"} />
+                  </SelectTrigger>
+                </Select>
+                <Select disabled>
+                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50">
+                    <SelectValue placeholder={"----"} />
+                  </SelectTrigger>
+                </Select>
+              </div>
             );
           }
 
-          const options: { value: string; label: string }[] = [];
+          const monthOptions: { value: string; label: string }[] = [];
+          const yearOptions: { value: string; label: string }[] = [];
 
-          if (dropdownProps.name === "months") {
-            const currentDisplayYear = displayDate.getFullYear();
-            let startMonthIndex = 0;
-            let endMonthIndex = 11;
+          const currentDisplayYear = displayDate.getFullYear();
 
-            if (fromMonth) {
-                if (currentDisplayYear === fromMonth.getFullYear()) {
-                    startMonthIndex = fromMonth.getMonth();
-                } else if (currentDisplayYear < fromMonth.getFullYear()) {
-                    startMonthIndex = 12; // Effectively disable months for this year
-                }
-            }
+          // Populate month options
+          let startMonthIndex = 0;
+          let endMonthIndex = 11;
 
-            if (toMonth) {
-                if (currentDisplayYear === toMonth.getFullYear()) {
-                    endMonthIndex = toMonth.getMonth();
-                } else if (currentDisplayYear > toMonth.getFullYear()) {
-                    endMonthIndex = -1; // Effectively disable months for this year
-                }
+          if (fromMonth) {
+            if (currentDisplayYear === fromMonth.getFullYear()) {
+              startMonthIndex = fromMonth.getMonth();
+            } else if (currentDisplayYear < fromMonth.getFullYear()) {
+              startMonthIndex = 12; // No months this year
             }
-            
-            for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
-                if (monthIdx >= startMonthIndex && monthIdx <= endMonthIndex) {
-                    options.push({
-                        value: monthIdx.toString(),
-                        label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
-                    });
-                }
-            }
-
-            if (options.length === 0) {
-                console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. Using fallback.`);
-                // Fallback: generate all months for the displayDate's year if filtering resulted in none
-                for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
-                    options.push({
-                        value: monthIdx.toString(),
-                        label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
-                    });
-                }
-            }
-          } else if (dropdownProps.name === "years") {
-            const first = fromYear ? fromYear.getFullYear() : 1900;
-            const last = toYear ? toYear.getFullYear() : new Date().getFullYear();
-            for (let i = first; i <= last; i++) {
-              options.push({ value: i.toString(), label: i.toString() });
-            }
-            if (options.length === 0 && first <=last ) { // Safety net if loop somehow failed
-                 console.warn(`Calendar Dropdown (Years): No options generated between ${first} and ${last}. Using current year.`);
-                 options.push({value: displayDate.getFullYear().toString(), label: displayDate.getFullYear().toString() });
+          }
+          if (toMonth) {
+            if (currentDisplayYear === toMonth.getFullYear()) {
+              endMonthIndex = toMonth.getMonth();
+            } else if (currentDisplayYear > toMonth.getFullYear()) {
+              endMonthIndex = -1; // No months this year
             }
           }
 
-          const handleChange = (value: string) => {
-            const newSelectedValue = parseInt(value);
-            if (dropdownProps.name === "months") {
-              goToMonth(new Date(displayDate.getFullYear(), newSelectedValue, 1));
-            } else if (dropdownProps.name === "years") {
-              let newMonth = displayDate.getMonth();
-              if (fromMonth && newSelectedValue === fromMonth.getFullYear() && newMonth < fromMonth.getMonth()) {
-                newMonth = fromMonth.getMonth();
-              }
-              if (toMonth && newSelectedValue === toMonth.getFullYear() && newMonth > toMonth.getMonth()) {
-                newMonth = toMonth.getMonth();
-              }
-              goToMonth(new Date(newSelectedValue, newMonth, 1));
+          for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
+            if (monthIdx >= startMonthIndex && monthIdx <= endMonthIndex) {
+               monthOptions.push({
+                value: monthIdx.toString(),
+                label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
+              });
             }
+          }
+          
+          if (monthOptions.length === 0 && (startMonthIndex <= endMonthIndex) ) {
+            // Fallback if filtering resulted in no options, but it shouldn't have based on raw indices
+            // This indicates a potential issue with fromMonth/toMonth from useNavigation vs displayDate
+            console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${fromMonth}, toMonth: ${toMonth}. Using fallback.`);
+            for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
+                 monthOptions.push({
+                    value: monthIdx.toString(),
+                    label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
+                });
+            }
+          }
+
+
+          // Populate year options
+          const firstYear = fromYear ? fromYear.getFullYear() : currentDisplayYear - 100;
+          const lastYear = toYear ? toYear.getFullYear() : currentDisplayYear + 10;
+          for (let i = firstYear; i <= lastYear; i++) {
+            yearOptions.push({ value: i.toString(), label: i.toString() });
+          }
+           if (yearOptions.length === 0 && firstYear <= lastYear) {
+             console.warn(`Calendar Dropdown (Years): No options generated between ${firstYear} and ${lastYear}. Using current year as fallback.`);
+             yearOptions.push({value: currentDisplayYear.toString(), label: currentDisplayYear.toString() });
+           }
+
+
+          const handleMonthChange = (value: string) => {
+            const newSelectedMonth = parseInt(value);
+            goToMonth(new Date(currentDisplayYear, newSelectedMonth, 1));
+          };
+
+          const handleYearChange = (value: string) => {
+            const newSelectedYear = parseInt(value);
+            let newMonth = displayDate.getMonth();
+            // Adjust month if it's out of bounds for the new year based on fromMonth/toMonth
+            if (fromMonth && newSelectedYear === fromMonth.getFullYear() && newMonth < fromMonth.getMonth()) {
+              newMonth = fromMonth.getMonth();
+            }
+            if (toMonth && newSelectedYear === toMonth.getFullYear() && newMonth > toMonth.getMonth()) {
+              newMonth = toMonth.getMonth();
+            }
+            goToMonth(new Date(newSelectedYear, newMonth, 1));
           };
           
-          const currentDropdownValue = dropdownProps.name === "months" 
-            ? displayDate.getMonth().toString() 
-            : displayDate.getFullYear().toString();
+          const currentMonthValue = displayDate.getMonth().toString();
+          const currentYearValue = currentDisplayYear.toString();
 
           return (
-            <Select
-              value={currentDropdownValue}
-              onValueChange={handleChange}
-              aria-label={dropdownProps.name === "months" ? "Select month" : "Select year"}
-            >
-              <SelectTrigger
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "h-7 w-auto px-2 text-xs font-medium text-foreground hover:bg-accent hover:text-accent-foreground",
-                  "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground" 
-                )}
+            <div className="flex gap-2 items-center justify-center">
+              <Select
+                value={currentMonthValue}
+                onValueChange={handleMonthChange}
               >
-                <SelectValue>
-                  {dropdownProps.name === "months"
-                    ? format(displayDate, "MMMM", { locale: currentLocale })
-                    : format(displayDate, "yyyy", { locale: currentLocale })}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-[200px] text-xs">
-                {options.map((option) => (
-                  <SelectItem key={`${dropdownProps.name}-${option.value}`} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                <SelectTrigger
+                  className={cn(
+                    "h-7 w-auto px-2 text-xs font-medium text-foreground",
+                    "hover:bg-accent hover:text-accent-foreground",
+                    "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
+                  )}
+                  aria-label="Select month"
+                >
+                  <SelectValue>
+                     {displayDate ? format(displayDate, "MMMM", { locale: currentLocale }) : "---"}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="max-h-[200px] text-xs">
+                  {monthOptions.map((option) => (
+                    <SelectItem key={`month-${option.value}`} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={currentYearValue}
+                onValueChange={handleYearChange}
+              >
+                <SelectTrigger
+                   className={cn(
+                    "h-7 w-auto px-2 text-xs font-medium text-foreground",
+                    "hover:bg-accent hover:text-accent-foreground",
+                    "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
+                  )}
+                  aria-label="Select year"
+                >
+                  <SelectValue>
+                    {displayDate ? format(displayDate, "yyyy", { locale: currentLocale }) : "----"}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="max-h-[200px] text-xs">
+                  {yearOptions.map((option) => (
+                    <SelectItem key={`year-${option.value}`} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           );
         },
       }}
