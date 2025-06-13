@@ -5,14 +5,14 @@ import type { AuthUser } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { auth, appInitializedSuccessfully } from '@/lib/firebase'; // Import appInitializedSuccessfully
-import { 
-  onAuthStateChanged, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
+import { auth, appInitializedSuccessfully } from '@/lib/firebase';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
   updateProfile,
-  type User as FirebaseUser 
+  type User as FirebaseUser
 } from 'firebase/auth';
 import { useToast } from "@/hooks/use-toast";
 import { getDictionary } from '@/lib/dictionaries';
@@ -30,16 +30,40 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false); // New state for client-side mount
   const router = useRouter();
   const pathname = usePathname();
   const { toast } = useToast();
 
   useEffect(() => {
+    setHasMounted(true); // Signal that the component has mounted on the client
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted) return; // Don't run Firebase logic until mounted
+
     if (!appInitializedSuccessfully || !auth) {
       console.warn("AuthContext: Firebase not properly initialized or auth instance is null. Auth features will be disabled.");
       setIsLoading(false);
       setUser(null);
-      return; 
+      (async () => {
+        try {
+          const locale = pathname.split('/')[1] as Locale || 'es';
+          const dictionary = await getDictionary(locale);
+          toast({
+            title: dictionary['Error.genericTitle'] || "Error",
+            description: dictionary['Auth.errorFirebaseNotConfigured'] || "Firebase not configured. Authentication features are disabled.",
+            variant: "destructive",
+          });
+        } catch (e) {
+          toast({
+            title: "Error",
+            description: "Firebase not configured. Authentication features are disabled. Dictionary load failed.",
+            variant: "destructive",
+          });
+        }
+      })();
+      return;
     }
 
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
@@ -56,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [hasMounted, pathname, toast, appInitializedSuccessfully]); // Ensure auth is not in deps if it causes re-runs before init
 
   const handleAuthError = async (error: any, locale: Locale, actionType: 'login' | 'signup') => {
     const dictionary = await getDictionary(locale);
@@ -110,19 +134,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // setUser will be updated by onAuthStateChanged
-      // router.push(`/${locale}/profile`); // Let onAuthStateChanged handle redirect if profile is protected
       const dictionary = await getDictionary(locale);
       toast({
         title: dictionary['Auth.loginSuccessTitle'] || "Login Successful",
         description: (dictionary['Auth.welcomeBack'] || "Welcome back!").replace('{email}', userCredential.user.email || 'user'),
       });
+       // router.push(`/${locale}/profile`); // Let useEffect handle redirect
     } catch (error: any) {
       await handleAuthError(error, locale, 'login');
     } finally {
       setIsLoading(false);
     }
-  }, [router, toast]);
+  }, [toast]); // Removed router dependency as redirect is handled by useEffect
 
   const signup = useCallback(async (email: string, password: string, username: string, locale: Locale) => {
     if (!appInitializedSuccessfully || !auth) {
@@ -136,37 +159,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       if (userCredential.user) {
         await updateProfile(userCredential.user, { displayName: username });
-        // setUser will be updated by onAuthStateChanged. We can also set it here for faster UI update.
          setUser({
           uid: userCredential.user.uid,
           email: userCredential.user.email,
-          displayName: username, // Use the username passed to signup
+          displayName: username,
         });
-        // router.push(`/${locale}/profile`); // Let onAuthStateChanged handle redirect
         const dictionary = await getDictionary(locale);
         toast({
             title: dictionary['Auth.signupSuccessTitle'] || "Signup Successful",
             description: (dictionary['Auth.welcomeNewUser'] || "Welcome, {username}! Your account has been created.").replace('{username}', username),
         });
+        // router.push(`/${locale}/profile`); // Let useEffect handle redirect
       }
     } catch (error: any) {
       await handleAuthError(error, locale, 'signup');
     } finally {
       setIsLoading(false);
     }
-  }, [router, toast]);
+  }, [toast]); // Removed router dependency
 
   const logout = useCallback(async (locale: Locale) => {
     if (!appInitializedSuccessfully || !auth) {
-      setUser(null); 
+      setUser(null);
       setIsLoading(false);
-      router.push(`/${locale}/login`);
+      router.push(`/${locale}/login`); // Redirect to login if Firebase isn't even usable
       return;
     }
     setIsLoading(true);
     try {
       await signOut(auth);
-      // setUser to null will be handled by onAuthStateChanged
       const dictionary = await getDictionary(locale);
       toast({
         title: dictionary['Auth.logoutSuccessTitle'] || "Logged Out",
@@ -177,7 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (pathname.startsWith(`/${locale}/profile`)) {
         router.push(loginPath);
       } else {
-        router.push(homePath);
+         router.push(homePath);
       }
     } catch (error: any) {
       const dictionary = await getDictionary(locale);
@@ -195,12 +216,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Effect to handle redirection after login/signup if user state changes
     // and current page is login, but user is now authenticated.
-    if (!isLoading && user && pathname.includes('/login')) {
+    if (hasMounted && !isLoading && user && pathname.includes('/login')) {
       const localeFromPath = pathname.split('/')[1] as Locale || 'es';
       router.push(`/${localeFromPath}/profile`);
     }
-  }, [user, isLoading, pathname, router]);
+  }, [user, isLoading, pathname, router, hasMounted]);
 
+  if (!hasMounted) {
+    return null; // Don't render children until provider has mounted on client
+  }
 
   return (
     <AuthContext.Provider value={{ user, isLoading, login, signup, logout }}>
