@@ -87,7 +87,6 @@ function Calendar({
 
           if (!displayDate) {
             console.warn("Calendar Dropdown: displayDate is undefined from dropdownProps. Props:", dropdownProps);
-            // Fallback to a disabled select if displayDate is not available
             return (
               <Select disabled>
                 <SelectTrigger className={cn(buttonVariants({ variant: "ghost" }), "h-7 w-auto px-2 text-xs font-medium text-foreground")}>
@@ -100,30 +99,59 @@ function Calendar({
           const options: { value: string; label: string }[] = [];
 
           if (dropdownProps.name === "months") {
-            const yearForMonthOptions = displayDate.getFullYear();
-            const startMonth = fromMonth && fromMonth.getFullYear() === yearForMonthOptions ? fromMonth.getMonth() : 0;
-            const endMonth = toMonth && toMonth.getFullYear() === yearForMonthOptions ? toMonth.getMonth() : 11;
-            
-            for (let i = startMonth; i <= endMonth; i++) {
+            const currentDisplayYear = displayDate.getFullYear();
+            const firstAvailableMonth = (fromMonth && fromMonth.getFullYear() === currentDisplayYear) ? fromMonth.getMonth() : 0;
+            const lastAvailableMonth = (toMonth && toMonth.getFullYear() === currentDisplayYear) ? toMonth.getMonth() : 11;
+
+            for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
+              // Create a date for the current month being considered in the loop
+              const monthDateInLoop = new Date(currentDisplayYear, monthIdx, 1);
+              // Check if this month is within the overall fromMonth/toMonth range provided by useNavigation
+              // This considers the full date (year, month, day) for comparison
+              const isWithinGlobalRange = 
+                (!fromMonth || monthDateInLoop >= fromMonth) &&
+                (!toMonth || monthDateInLoop <= toMonth);
+
+              if (isWithinGlobalRange && monthIdx >= firstAvailableMonth && monthIdx <= lastAvailableMonth) {
                  options.push({
-                    value: i.toString(),
-                    label: format(new Date(yearForMonthOptions, i, 1), "MMMM", { locale: currentLocale }),
+                    value: monthIdx.toString(),
+                    label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
                 });
+              }
+            }
+             // Fallback if no options were generated (e.g., displayDate is somehow out of explicit fromMonth/toMonth range for that year)
+            if (options.length === 0) {
+                for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
+                    options.push({
+                        value: monthIdx.toString(),
+                        label: format(new Date(displayDate.getFullYear(), monthIdx, 1), "MMMM", { locale: currentLocale }),
+                    });
+                }
             }
 
+
           } else if (dropdownProps.name === "years") {
-            const firstYear = fromYear?.getFullYear() ?? new Date().getFullYear() - 100;
-            const lastYear = toYear?.getFullYear() ?? new Date().getFullYear(); // Default to current year if toYear not set
+            const firstYear = fromYear?.getFullYear() ?? 1900;
+            const lastYear = toYear?.getFullYear() ?? new Date().getFullYear();
             for (let i = firstYear; i <= lastYear; i++) {
               options.push({ value: i.toString(), label: i.toString() });
             }
           }
 
           const handleChange = (value: string) => {
+            const newSelectedValue = parseInt(value);
             if (dropdownProps.name === "months") {
-              goToMonth(new Date(displayDate.getFullYear(), parseInt(value), 1));
+              goToMonth(new Date(displayDate.getFullYear(), newSelectedValue, 1));
             } else if (dropdownProps.name === "years") {
-              goToMonth(new Date(parseInt(value), displayDate.getMonth(), 1));
+              let currentMonth = displayDate.getMonth();
+              // Ensure the new date is within the overall calendar's month boundaries if they exist
+              if (fromMonth && newSelectedValue === fromMonth.getFullYear() && currentMonth < fromMonth.getMonth()) {
+                currentMonth = fromMonth.getMonth();
+              }
+              if (toMonth && newSelectedValue === toMonth.getFullYear() && currentMonth > toMonth.getMonth()) {
+                currentMonth = toMonth.getMonth();
+              }
+              goToMonth(new Date(newSelectedValue, currentMonth, 1));
             }
           };
           
@@ -141,7 +169,7 @@ function Calendar({
                 className={cn(
                   buttonVariants({ variant: "ghost" }),
                   "h-7 w-auto px-2 text-xs font-medium text-foreground hover:bg-accent hover:text-accent-foreground",
-                  "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground" // Style when open
+                  "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground" 
                 )}
               >
                 <SelectValue>
@@ -161,7 +189,7 @@ function Calendar({
           );
         },
       }}
-      locale={currentLocale} // Pass the date-fns locale to DayPicker
+      locale={currentLocale} 
       {...props}
     />
   )
