@@ -5,7 +5,7 @@ import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker, useNavigation } from "react-day-picker"
 import { format } from "date-fns"
-import { es, enUS, de, fr } from 'date-fns/locale'; // Import locales
+import { es, enUS, de, fr } from 'date-fns/locale';
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -16,15 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import type { Locale as AppLocale } from "@/lib/dictionaries"; // Renamed to avoid conflict
+import type { Locale as AppLocale } from "@/lib/dictionaries";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  locale?: AppLocale; // Use our AppLocale type
+  locale?: AppLocale;
 };
 
-
-// Map locales for date-fns
-const dateFnsLocalesMap: Record<string, globalThis.Locale> = { // Use string for key, globalThis.Locale for value
+const dateFnsLocalesMap: Record<string, globalThis.Locale> = {
   es,
   en: enUS,
   de,
@@ -36,7 +34,7 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  locale: propsLocale, // Get locale from props
+  locale: propsLocale,
   ...props
 }: CalendarProps) {
   const currentLocale = dateFnsLocalesMap[(propsLocale as AppLocale | undefined)?.toString() || 'es'] || enUS;
@@ -50,8 +48,8 @@ function Calendar({
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium hidden", // Hide default label if using custom dropdowns
-        caption_dropdowns: "flex gap-2 items-center justify-center", // Style for the container of dropdowns
+        caption_label: "text-sm font-medium hidden",
+        caption_dropdowns: "flex gap-2 items-center justify-center",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
@@ -85,20 +83,20 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" {...props} />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" {...props} />,
         Dropdown: (dropdownProps) => {
-          const { fromYear, toYear, fromMonth, toMonth, goToMonth } = useNavigation();
-          const displayDate = dropdownProps.displayMonth;
+          const { goToMonth, displayMonth, fromYear, toYear, fromMonth, toMonth } = useNavigation();
+          const displayDate = displayMonth; // Use displayMonth from useNavigation hook
 
           if (!displayDate) {
-            console.warn("Calendar Dropdown: displayDate is undefined. Rendering disabled selects. Props:", dropdownProps);
+            console.warn("Calendar Dropdown: displayMonth from useNavigation() is undefined. Rendering disabled selects. Props:", dropdownProps);
             return (
               <div className="flex gap-2 items-center justify-center">
                 <Select disabled>
-                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50">
+                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50" aria-label="Select month (disabled)">
                     <SelectValue placeholder={"---"} />
                   </SelectTrigger>
                 </Select>
                 <Select disabled>
-                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50">
+                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50" aria-label="Select year (disabled)">
                     <SelectValue placeholder={"----"} />
                   </SelectTrigger>
                 </Select>
@@ -111,38 +109,32 @@ function Calendar({
 
           const currentDisplayYear = displayDate.getFullYear();
 
-          // Populate month options
-          let startMonthIndex = 0;
-          let endMonthIndex = 11;
+          let startMonthIdx = 0;
+          let endMonthIdx = 11;
 
-          if (fromMonth) {
-            if (currentDisplayYear === fromMonth.getFullYear()) {
-              startMonthIndex = fromMonth.getMonth();
-            } else if (currentDisplayYear < fromMonth.getFullYear()) {
-              startMonthIndex = 12; // No months this year
-            }
-          }
-          if (toMonth) {
-            if (currentDisplayYear === toMonth.getFullYear()) {
-              endMonthIndex = toMonth.getMonth();
-            } else if (currentDisplayYear > toMonth.getFullYear()) {
-              endMonthIndex = -1; // No months this year
-            }
+          if (fromMonth && fromMonth.getFullYear() === currentDisplayYear) {
+            startMonthIdx = fromMonth.getMonth();
+          } else if (fromMonth && currentDisplayYear < fromMonth.getFullYear()){
+            startMonthIdx = 12; // No months this year
           }
 
+          if (toMonth && toMonth.getFullYear() === currentDisplayYear) {
+            endMonthIdx = toMonth.getMonth();
+          } else if (toMonth && currentDisplayYear > toMonth.getFullYear()){
+            endMonthIdx = -1; // No months this year
+          }
+          
           for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
-            if (monthIdx >= startMonthIndex && monthIdx <= endMonthIndex) {
+            if (monthIdx >= startMonthIdx && monthIdx <= endMonthIdx) {
                monthOptions.push({
                 value: monthIdx.toString(),
                 label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
               });
             }
           }
-          
-          if (monthOptions.length === 0 && (startMonthIndex <= endMonthIndex) ) {
-            // Fallback if filtering resulted in no options, but it shouldn't have based on raw indices
-            // This indicates a potential issue with fromMonth/toMonth from useNavigation vs displayDate
-            console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${fromMonth}, toMonth: ${toMonth}. Using fallback.`);
+
+          if (monthOptions.length === 0 && (startMonthIdx <= endMonthIdx)) {
+            console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${fromMonth}, toMonth: ${toMonth}. Using fallback to all months.`);
             for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
                  monthOptions.push({
                     value: monthIdx.toString(),
@@ -151,8 +143,6 @@ function Calendar({
             }
           }
 
-
-          // Populate year options
           const firstYear = fromYear ? fromYear.getFullYear() : currentDisplayYear - 100;
           const lastYear = toYear ? toYear.getFullYear() : currentDisplayYear + 10;
           for (let i = firstYear; i <= lastYear; i++) {
@@ -163,7 +153,6 @@ function Calendar({
              yearOptions.push({value: currentDisplayYear.toString(), label: currentDisplayYear.toString() });
            }
 
-
           const handleMonthChange = (value: string) => {
             const newSelectedMonth = parseInt(value);
             goToMonth(new Date(currentDisplayYear, newSelectedMonth, 1));
@@ -172,7 +161,6 @@ function Calendar({
           const handleYearChange = (value: string) => {
             const newSelectedYear = parseInt(value);
             let newMonth = displayDate.getMonth();
-            // Adjust month if it's out of bounds for the new year based on fromMonth/toMonth
             if (fromMonth && newSelectedYear === fromMonth.getFullYear() && newMonth < fromMonth.getMonth()) {
               newMonth = fromMonth.getMonth();
             }
@@ -181,7 +169,7 @@ function Calendar({
             }
             goToMonth(new Date(newSelectedYear, newMonth, 1));
           };
-          
+
           const currentMonthValue = displayDate.getMonth().toString();
           const currentYearValue = currentDisplayYear.toString();
 
@@ -200,7 +188,7 @@ function Calendar({
                   aria-label="Select month"
                 >
                   <SelectValue>
-                     {displayDate ? format(displayDate, "MMMM", { locale: currentLocale }) : "---"}
+                     {format(displayDate, "MMMM", { locale: currentLocale })}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent className="max-h-[200px] text-xs">
@@ -225,7 +213,7 @@ function Calendar({
                   aria-label="Select year"
                 >
                   <SelectValue>
-                    {displayDate ? format(displayDate, "yyyy", { locale: currentLocale }) : "----"}
+                    {format(displayDate, "yyyy", { locale: currentLocale })}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent className="max-h-[200px] text-xs">
@@ -240,7 +228,7 @@ function Calendar({
           );
         },
       }}
-      locale={currentLocale} 
+      locale={currentLocale}
       {...props}
     />
   )

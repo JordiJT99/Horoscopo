@@ -35,32 +35,30 @@ const dateFnsLocalesMap: Record<Locale, typeof enUS> = {
 function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
+  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1)); // Initialize with a default
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [currentYearForCalendar, setCurrentYearForCalendar] = useState<number | undefined>(undefined);
+  const [currentYearForCalendar] = useState<number>(() => new Date().getFullYear()); // Initialize directly
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
 
   useEffect(() => {
     setHasMounted(true);
-    const now = new Date();
-    setBirthDate(now); 
-    setCurrentYearForCalendar(now.getFullYear());
-  }, []); 
+    //setSelectedBirthDate(new Date(1990, 0, 1)); // Already initialized
+  }, []);
 
   useEffect(() => {
     if (!hasMounted) return;
     setIsLoadingLunar(true);
     const lunarTimer = setTimeout(() => {
-      setLunarData(getCurrentLunarData(locale)); 
+      setLunarData(getCurrentLunarData(locale));
       setIsLoadingLunar(false);
     }, 400);
     return () => clearTimeout(lunarTimer);
-  }, [locale, hasMounted]); 
+  }, [locale, hasMounted]);
 
   const handleCalculateAscendant = () => {
     if (!birthDate || !birthTime || !birthCity) {
@@ -76,7 +74,7 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
-      <SectionTitle 
+      <SectionTitle
         title={dictionary['LunarAscendantPage.title'] || "Lunar Phase & Ascendant Sign"}
         subtitle={dictionary['LunarAscendantPage.subtitle'] || "Explore current moon phases and discover your ascendant sign."}
         icon={Wand2}
@@ -143,17 +141,16 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                         <Calendar
                           mode="single"
                           selected={birthDate}
+                          defaultMonth={birthDate || new Date()}
                           onSelect={setBirthDate}
                           disabled={
-                            hasMounted
-                              ? (date: Date) => date > new Date() || date < new Date("1900-01-01")
-                              : (date: Date) => date < new Date("1900-01-01")
+                            (date: Date) => date > new Date() || date < new Date("1900-01-01")
                           }
                           initialFocus
-                          locale={currentDfnLocale} 
+                          locale={currentDfnLocale}
                           captionLayout="dropdown-buttons"
                           fromYear={1900}
-                          toYear={hasMounted ? currentYearForCalendar : undefined}
+                          toYear={currentYearForCalendar}
                         />
                     </PopoverContent>
                   </Popover>
@@ -207,7 +204,7 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
       </div>
     );
   }
-  
+
   return <LunarAscendantContent dictionary={dictionary} locale={params.locale} />;
 }
 

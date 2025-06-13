@@ -45,7 +45,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: undefined,
+    dateOfBirth: undefined, // Initialize as undefined
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -53,9 +53,9 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
     personalizedAdsConsent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
-  const [currentYearForCalendar] = useState<number>(() => new Date().getFullYear()); // Initialize directly
+  const [currentYearForCalendar] = useState<number>(() => new Date().getFullYear());
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -83,10 +83,9 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
           return false;
         }
         break;
-      // Optional fields don't need strict validation to proceed to next step
-      case 4: // Time of birth (optional)
-      case 5: // City of birth (optional)
-        break; 
+      case 4:
+      case 5:
+        break;
       case 6:
         if (!formData.relationshipStatus) {
            toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorRelationshipStatusRequired'], variant: 'destructive' });
@@ -99,8 +98,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
            return false;
         }
         break;
-      case 8: // Consent step, checkbox handles its own state
-        // No specific validation here other than the checkbox itself.
+      case 8:
         break;
       default:
         return true;
@@ -131,14 +129,13 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
   };
 
   const handleSubmitOnboarding = async () => {
-    if (!validateStep()) { // Final validation before submit
+    if (!validateStep()) {
       return;
     }
     setIsSubmitting(true);
     console.log("Onboarding data submitted:", formData);
-    // Simulate saving data
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     if (user) {
       markOnboardingAsComplete();
     }
@@ -150,7 +147,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
     setIsSubmitting(false);
     router.push(`/${locale}/profile`);
   };
-  
+
   const genderOptions: { value: Gender; labelKey: string }[] = [
     { value: "female", labelKey: "OnboardingPage.genderFemale" },
     { value: "male", labelKey: "OnboardingPage.genderMale" },
@@ -179,7 +176,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
     { value: "homemaker", labelKey: "OnboardingPage.employmentHomemaker" },
   ];
 
-  if (authLoading || (!user && !authLoading)) { 
+  if (authLoading || (!user && !authLoading)) {
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -197,7 +194,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
     7: { titleKey: 'OnboardingPage.step7Title', icon: Briefcase },
     8: { titleKey: 'OnboardingPage.step8Title', icon: ShieldCheck },
   };
-  
+
   const CurrentStepIcon = stepTitles[currentStep]?.icon || Edit;
   const currentStepTitleKey = stepTitles[currentStep]?.titleKey || 'OnboardingPage.stepComingSoonTitle';
 
@@ -254,7 +251,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
               </RadioGroup>
             </div>
           )}
-          
+
           {currentStep === 3 && (
              <div className="space-y-2">
               <Label htmlFor="dateOfBirth" className="font-body">{dictionary['OnboardingPage.dobLabel'] || "When were you born?"}</Label>
@@ -276,6 +273,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                     <Calendar
                       mode="single"
                       selected={formData.dateOfBirth}
+                      defaultMonth={formData.dateOfBirth || new Date()}
                       onSelect={(date) => handleChange('dateOfBirth', date)}
                       disabled={(date: Date) => date > new Date() || date < new Date("1900-01-01")}
                       initialFocus
@@ -353,7 +351,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
               </RadioGroup>
             </div>
           )}
-          
+
           {currentStep === 8 && (
             <div className="space-y-4">
                 <div className="items-top flex space-x-2">
@@ -371,7 +369,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                     </p>
                   </div>
                 </div>
-                
+
                 {isSubmitting && (
                   <div className="pt-4 text-center">
                       <Sparkles className="h-10 w-10 text-primary mx-auto mb-2 animate-spin" />
@@ -426,7 +424,7 @@ export default function OnboardingPage({ params: paramsPromise }: OnboardingPage
     setIsClient(true);
   }, []);
 
-  if (!isClient || Object.keys(dictionary).length === 0) { 
+  if (!isClient || Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
