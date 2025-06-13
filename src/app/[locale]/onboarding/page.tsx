@@ -22,7 +22,7 @@ import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Spar
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 
-const dateFnsLocalesMap: Record<Locale, typeof enUS> = {
+const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | typeof fr> = {
   es,
   en: enUS,
   de,
@@ -37,7 +37,6 @@ interface OnboardingPageProps {
 
 function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const router = useRouter();
-  const pathname = usePathname();
   const { user, isLoading: authLoading, markOnboardingAsComplete } = useAuth();
   const { toast } = useToast();
 
@@ -45,7 +44,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: undefined, // Initialize as undefined
+    dateOfBirth: new Date(1995, 5, 15), // Initialize with a default valid date
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -55,7 +54,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
-  const [currentYearForCalendar] = useState<number>(() => new Date().getFullYear());
+  const currentYearForCalendar = new Date().getFullYear();
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -83,9 +82,6 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
           return false;
         }
         break;
-      case 4:
-      case 5:
-        break;
       case 6:
         if (!formData.relationshipStatus) {
            toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorRelationshipStatusRequired'], variant: 'destructive' });
@@ -97,8 +93,6 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
            toast({ title: dictionary['Error.genericTitle'], description: dictionary['OnboardingPage.errorEmploymentStatusRequired'], variant: 'destructive' });
            return false;
         }
-        break;
-      case 8:
         break;
       default:
         return true;
@@ -273,14 +267,13 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                     <Calendar
                       mode="single"
                       selected={formData.dateOfBirth}
-                      defaultMonth={formData.dateOfBirth || new Date()}
                       onSelect={(date) => handleChange('dateOfBirth', date)}
+                      defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)} // Default to 30 years ago
                       disabled={(date: Date) => date > new Date() || date < new Date("1900-01-01")}
-                      initialFocus
                       locale={currentDfnLocale}
-                      captionLayout="dropdown-buttons"
                       fromYear={1900}
                       toYear={currentYearForCalendar}
+                      captionLayout="dropdowns" // Ensure this is set if you want dropdowns
                     />
                 </PopoverContent>
               </Popover>
@@ -385,8 +378,6 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                 )}
             </div>
           )}
-
-
         </CardContent>
 
         <CardFooter className="flex justify-between pt-6">

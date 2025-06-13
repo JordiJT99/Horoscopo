@@ -1,10 +1,10 @@
 
-"use client"; // This page uses client-side hooks
+"use client"; 
 
 import { useState, useEffect, use, useMemo } from 'react';
 import type { LunarData, AscendantData } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries'; // For client-side dictionary
+import { getDictionary } from '@/lib/dictionaries'; 
 import { getCurrentLunarData, getAscendantSign } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,12 +20,12 @@ import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 
 interface LunarAscendantPageProps {
-  params: { // params is a promise in client components
+  params: { 
     locale: Locale;
   };
 }
 
-const dateFnsLocalesMap: Record<Locale, typeof enUS> = {
+const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | typeof fr> = {
   es,
   en: enUS,
   de,
@@ -35,19 +35,18 @@ const dateFnsLocalesMap: Record<Locale, typeof enUS> = {
 function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1)); // Initialize with a default
+  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1)); 
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [currentYearForCalendar] = useState<number>(() => new Date().getFullYear()); // Initialize directly
+  const currentYearForCalendar = new Date().getFullYear();
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
 
   useEffect(() => {
     setHasMounted(true);
-    //setSelectedBirthDate(new Date(1990, 0, 1)); // Already initialized
   }, []);
 
   useEffect(() => {
@@ -106,7 +105,7 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
               ) : hasMounted ? (
                 <p className="text-center font-body text-destructive">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
               ) : (
-                 <div className="text-center py-4 h-[108px]"></div> // Placeholder for height consistency
+                 <div className="text-center py-4 h-[108px]"></div> 
               )}
             </div>
           </CardContent>
@@ -141,16 +140,13 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                         <Calendar
                           mode="single"
                           selected={birthDate}
-                          defaultMonth={birthDate || new Date()}
                           onSelect={setBirthDate}
-                          disabled={
-                            (date: Date) => date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
+                          defaultMonth={birthDate || new Date(currentYearForCalendar - 30, 0, 1)} // Default to 30 years ago
+                          disabled={(date: Date) => date > new Date() || date < new Date("1900-01-01")}
                           locale={currentDfnLocale}
-                          captionLayout="dropdown-buttons"
                           fromYear={1900}
                           toYear={currentYearForCalendar}
+                          captionLayout="dropdowns" // Ensure this is set if you want dropdowns
                         />
                     </PopoverContent>
                   </Popover>
