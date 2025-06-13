@@ -32,7 +32,7 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 const TOTAL_STEPS = 8;
 
 interface OnboardingPageProps {
-  params: { locale: Locale }; // Removed Promise for direct access after `use`
+  params: { locale: Locale };
 }
 
 interface OnboardingContentProps {
@@ -46,11 +46,12 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   const { toast } = useToast();
 
   const [currentStep, setCurrentStep] = useState(1);
+  // Ensure initialDateOfBirth is a valid Date object
   const initialDateOfBirth = new Date(1995, 5, 15); // June 15, 1995
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: initialDateOfBirth,
+    dateOfBirth: initialDateOfBirth, // Initialize with a Date object
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -60,7 +61,8 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
-  const currentYearForCalendar = new Date().getFullYear();
+  const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
+
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -274,11 +276,14 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
                       mode="single"
                       selected={formData.dateOfBirth}
                       onSelect={(date) => handleChange('dateOfBirth', date)}
-                      defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)}
-                      locale={currentDfnLocale}
+                      defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)} // Ensure a valid default month
+                      locale={currentDfnLocale} // Pass date-fns locale object
                       fromDate={new Date(1900, 0, 1)}
                       toDate={new Date()}
-                      captionLayout="dropdown" 
+                      captionLayout="dropdown" // Use react-day-picker's dropdowns
+                      fromYear={1900}
+                      toYear={currentYearForCalendar}
+                      classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
                       className="rounded-md border shadow"
                     />
                 </PopoverContent>
@@ -432,5 +437,3 @@ export default function OnboardingPage({ params: paramsPromise }: { params: Prom
 
   return <OnboardingContent dictionary={dictionary} locale={params.locale} />;
 }
-
-    

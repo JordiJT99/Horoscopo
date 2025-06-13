@@ -35,13 +35,14 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1));
+  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1)); // Initialized
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const currentYearForCalendar = new Date().getFullYear();
+  const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
+
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
 
@@ -145,7 +146,10 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                           locale={currentDfnLocale}
                           fromDate={new Date(1900, 0, 1)}
                           toDate={new Date()}
-                          captionLayout="dropdown"
+                          captionLayout="dropdown" // Use react-day-picker's dropdowns
+                          fromYear={1900}
+                          toYear={currentYearForCalendar}
+                          classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
                           className="rounded-md border shadow"
                         />
                     </PopoverContent>
@@ -203,5 +207,3 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
 
   return <LunarAscendantContent dictionary={dictionary} locale={params.locale} />;
 }
-
-    
