@@ -36,11 +36,15 @@ function LayoutWithOnboardingCheck({ locale, dictionary, children }: { locale: L
     }
 
     const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
-    const isOnboardingPage = pathname.endsWith(`/${locale}/onboarding`);
-    const isLoginPage = pathname.endsWith(`/${locale}/login`);
+    // Use exact path checks
+    const onboardingPath = `/${locale}/onboarding`;
+    const loginPath = `/${locale}/login`;
+
+    const isOnboardingPage = pathname === onboardingPath;
+    const isLoginPage = pathname === loginPath;
 
     if (!onboardingComplete && !isOnboardingPage && !isLoginPage) {
-      router.push(`/${locale}/onboarding`);
+      router.push(onboardingPath);
     }
   }, [user, authLoading, pathname, locale, router, hasMountedContext]);
 
