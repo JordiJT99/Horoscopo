@@ -9,7 +9,7 @@ import { useRouter, usePathname } from 'next/navigation';
 interface AuthContextType {
   user: AuthUser | null;
   isLoading: boolean;
-  login: (username: string, locale: Locale) => void;
+  login: (username: string, email: string, locale: Locale) => void;
   logout: (locale: Locale) => void;
 }
 
@@ -37,8 +37,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = useCallback((username: string, locale: Locale) => {
-    const newUser: AuthUser = { username };
+  const login = useCallback((username: string, email: string, locale: Locale) => {
+    const newUser: AuthUser = { username, email };
     setUser(newUser);
     localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(newUser));
     router.push(`/${locale}/profile`);
@@ -69,3 +69,4 @@ export const useAuth = (): AuthContextType => {
   }
   return context;
 };
+

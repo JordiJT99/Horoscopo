@@ -158,6 +158,6 @@ export interface TarotPersonalityOutputType {
 // Simulated Auth User
 export interface AuthUser {
   username: string;
-  // email?: string; // Optional, can be added later
-  // avatarUrl?: string; // Optional
+  email: string; 
 }
+

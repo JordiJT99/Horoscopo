@@ -32,9 +32,9 @@ function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: 
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // For simulation, we only use username. Email and password are for UI completeness.
-    if (username.trim()) {
-      login(username.trim(), locale);
+    // For simulation, we use username and email. Password is for UI completeness.
+    if (username.trim() && email.trim()) {
+      login(username.trim(), email.trim(), locale);
     }
   };
 
@@ -60,7 +60,7 @@ function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: 
             {dictionary['Auth.loginFormTitleNow'] || "Enter Your Credentials"}
           </CardTitle>
           <CardDescription className="text-center font-body">
-            {dictionary['Auth.loginFormDescription'] || "This is a simulated login for demo purposes. Only username is used."}
+            {dictionary['Auth.loginFormDescription'] || "This is a simulated login for demo purposes. Username and email are used for display."}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
@@ -141,3 +141,4 @@ export default function LoginPage({ params: paramsPromise }: LoginPageProps) {
   
   return <LoginContent dictionary={dictionary} locale={params.locale} />;
 }
+

@@ -2,7 +2,7 @@
 "use client";
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -28,7 +28,7 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
   // Placeholder data - will be overridden by auth user if logged in
   const placeholderUserData = {
     username: "AstroFan123",
-    email: "user@example.com",
+    email: "user@example.com", // Default placeholder email
     joinDate: new Date(2023, 0, 15).toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
@@ -38,7 +38,9 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
     bio: dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom. Exploring the universe one horoscope at a time.",
   };
 
-  const displayUser = user ? { ...placeholderUserData, username: user.username } : placeholderUserData;
+  const displayUser = user 
+    ? { ...placeholderUserData, username: user.username, email: user.email } 
+    : placeholderUserData;
 
   if (isLoading) {
     return (
@@ -218,3 +220,4 @@ export default function ProfilePage({ params: paramsPromise }: ProfilePageProps)
 
   return <ProfileContent dictionary={dictionary} locale={params.locale} />;
 }
+
