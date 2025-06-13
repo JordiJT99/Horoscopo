@@ -28,7 +28,7 @@ const TarotPersonalityInputSchema = z.object({
 const TarotPersonalityOutputSchema = z.object({
   cardName: z.string().describe('The name of the Major Arcana tarot card that best represents the user.'),
   cardDescription: z.string().describe('An explanation of why this card was chosen for the user based on their answers. This should be insightful and 2-3 paragraphs long.'),
-  cardImagePlaceholderUrl: z.string().url().describe('A placeholder image URL for the tarot card. Use "https://placehold.co/267x470.png" as a generic placeholder.'),
+  cardImagePlaceholderUrl: z.string().describe('A placeholder image URL for the tarot card. Use "https://placehold.co/267x470.png" as a generic placeholder.'),
 });
 
 
