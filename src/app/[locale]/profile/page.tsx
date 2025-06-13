@@ -5,12 +5,11 @@ import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'; // AvatarImage removed as we don't have custom avatars yet
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'; 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input'; // Added Input import
-import { Label } from '@/components/ui/label'; // Added Label import
+import { Input } from '@/components/ui/input'; 
+import { Label } from '@/components/ui/label'; 
 import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn } from 'lucide-react';
-// import Image from 'next/image'; // Not used as Firebase user.photoURL might not be set
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, use, useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -27,7 +26,6 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
     await logout(locale);
   };
 
-  // Placeholder data for join date, as Firebase Auth doesn't directly provide it without Firestore
   const placeholderJoinDate = new Date(2023, 0, 15).toLocaleDateString(locale, {
     year: 'numeric',
     month: 'long',
@@ -103,7 +101,6 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
           <Card className="shadow-xl">
             <CardHeader className="items-center text-center">
               <Avatar className="w-32 h-32 mb-4 border-4 border-primary shadow-md">
-                {/* Firebase user.photoURL could be used here if available with Image component */}
                 <AvatarFallback className="text-4xl">
                   {displayName.substring(0, 1).toUpperCase()}
                   {displayName.split(' ')[1] ? displayName.split(' ')[1].substring(0,1).toUpperCase() : (displayName.length > 1 ? displayName.substring(1,2) : '')}
@@ -113,8 +110,10 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
               <CardDescription className="font-body text-muted-foreground">{displayEmail}</CardDescription>
             </CardHeader>
             <CardContent className="text-center space-y-3">
-              <Button variant="outline" className="w-full font-body" disabled> {/* Edit profile not implemented yet */}
-                <Edit3 className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.editProfileButton'] || "Edit Profile"}
+              <Button variant="outline" className="w-full font-body" asChild>
+                <Link href={`/${locale}/onboarding`}>
+                  <Edit3 className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.editProfileButton'] || "Edit Profile"}
+                </Link>
               </Button>
                <Button onClick={handleLogout} variant="destructive" className="w-full font-body">
                 <LogOut className="mr-2 h-4 w-4" />

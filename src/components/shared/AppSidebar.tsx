@@ -20,7 +20,7 @@ import {
   sidebarMenuButtonVariants,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, Eye, BedDouble, Orbit, Wand, HelpCircle, Edit } from 'lucide-react'; // Added Edit
+import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, Eye, BedDouble, Orbit, Wand, HelpCircle, Edit } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
@@ -112,15 +112,10 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
     {
       href: `/${currentLocale}/tarot-personality-test`,
       label: dictionary['Sidebar.tarotPersonalityTest'] || "Your Tarot Card",
-      icon: TarotPersonalityTestIcon, // Using HelpCircle via constants
+      icon: TarotPersonalityTestIcon, 
       tooltip: dictionary['Sidebar.tarotPersonalityTestTooltip'] || "Discover Your Tarot Personality Card",
-    },
-    {
-      href: `/${currentLocale}/onboarding`, // New Onboarding Link
-      label: dictionary['Sidebar.onboarding'] || "Complete Profile",
-      icon: Edit,
-      tooltip: dictionary['Sidebar.onboardingTooltip'] || "Complete your onboarding profile",
-    },
+    }
+    // Removed Onboarding Link
   ];
 
   const horoscopeItems = [
