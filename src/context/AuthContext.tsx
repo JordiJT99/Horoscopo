@@ -39,8 +39,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.warn("AuthContext: Firebase not properly initialized or auth instance is null. Auth features will be disabled.");
       setIsLoading(false);
       setUser(null);
-      // Consider a toast only if it's truly an unexpected state, 
-      // as firebase.ts already logs a prominent error for bad API keys.
       return; 
     }
 
@@ -58,30 +56,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => unsubscribe();
-  }, []); // Monitor auth instance readiness implicitly via appInitializedSuccessfully
+  }, []);
 
   const handleAuthError = async (error: any, locale: Locale, actionType: 'login' | 'signup') => {
     const dictionary = await getDictionary(locale);
     let errorMessage = dictionary['Auth.errorDefault'] || "An unexpected error occurred.";
+    let isCommonUserError = false;
+
     if (error.code) {
       switch (error.code) {
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-        case 'auth/invalid-credential': // Common error for wrong email/password
+        case 'auth/invalid-credential':
           errorMessage = dictionary['Auth.errorInvalidCredentials'] || "Invalid email or password.";
+          isCommonUserError = true;
           break;
         case 'auth/email-already-in-use':
           errorMessage = dictionary['Auth.errorEmailInUse'] || "This email is already in use.";
+          isCommonUserError = true;
           break;
         case 'auth/weak-password':
           errorMessage = dictionary['Auth.errorWeakPassword'] || "Password is too weak. It should be at least 6 characters.";
+          isCommonUserError = true;
           break;
         case 'auth/invalid-email':
            errorMessage = dictionary['Auth.errorInvalidEmail'] || "The email address is not valid.";
+           isCommonUserError = true;
            break;
-        // Firebase can also throw 'auth/network-request-failed' if network is an issue
-        // or 'auth/too-many-requests'
-        default: // Handles other Firebase errors or generic errors
+        default:
           errorMessage = dictionary[`Auth.errorFire.${error.code}`] || error.message || errorMessage;
       }
     }
@@ -90,7 +92,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       description: errorMessage,
       variant: "destructive",
     });
-    console.error(`${actionType} error (code: ${error.code}):`, error.message);
+
+    if (isCommonUserError) {
+      console.warn(`${actionType} user error (code: ${error.code}): ${error.message}`);
+    } else {
+      console.error(`${actionType} error (code: ${error.code}):`, error.message);
+    }
   };
 
   const login = useCallback(async (email: string, password: string, locale: Locale) => {
@@ -102,12 +109,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push(`/${locale}/profile`);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // setUser will be updated by onAuthStateChanged
+      // router.push(`/${locale}/profile`); // Let onAuthStateChanged handle redirect if profile is protected
       const dictionary = await getDictionary(locale);
       toast({
         title: dictionary['Auth.loginSuccessTitle'] || "Login Successful",
-        description: (dictionary['Auth.welcomeBack'] || "Welcome back!").replace('{email}', email),
+        description: (dictionary['Auth.welcomeBack'] || "Welcome back!").replace('{email}', userCredential.user.email || 'user'),
       });
     } catch (error: any) {
       await handleAuthError(error, locale, 'login');
@@ -128,8 +136,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       if (userCredential.user) {
         await updateProfile(userCredential.user, { displayName: username });
-        // setUser will be updated by onAuthStateChanged
-        router.push(`/${locale}/profile`);
+        // setUser will be updated by onAuthStateChanged. We can also set it here for faster UI update.
+         setUser({
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          displayName: username, // Use the username passed to signup
+        });
+        // router.push(`/${locale}/profile`); // Let onAuthStateChanged handle redirect
         const dictionary = await getDictionary(locale);
         toast({
             title: dictionary['Auth.signupSuccessTitle'] || "Signup Successful",
@@ -145,10 +158,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = useCallback(async (locale: Locale) => {
     if (!appInitializedSuccessfully || !auth) {
-      // Should not happen if user is logged in, but as a safeguard
       setUser(null); 
       setIsLoading(false);
-      router.push(`/${locale}/login`); // Redirect to login if Firebase was not even set up
+      router.push(`/${locale}/login`);
       return;
     }
     setIsLoading(true);
@@ -160,13 +172,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         title: dictionary['Auth.logoutSuccessTitle'] || "Logged Out",
         description: dictionary['Auth.logoutSuccessMessage'] || "You have been successfully logged out.",
       });
-      // Determine redirect path
       const loginPath = `/${locale}/login`;
       const homePath = `/${locale}/`;
       if (pathname.startsWith(`/${locale}/profile`)) {
         router.push(loginPath);
       } else {
-         // If on any other page, redirect to home. If already on home, this is fine.
         router.push(homePath);
       }
     } catch (error: any) {
@@ -182,6 +192,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [router, pathname, toast]);
 
+  useEffect(() => {
+    // Effect to handle redirection after login/signup if user state changes
+    // and current page is login, but user is now authenticated.
+    if (!isLoading && user && pathname.includes('/login')) {
+      const localeFromPath = pathname.split('/')[1] as Locale || 'es';
+      router.push(`/${localeFromPath}/profile`);
+    }
+  }, [user, isLoading, pathname, router]);
+
+
   return (
     <AuthContext.Provider value={{ user, isLoading, login, signup, logout }}>
       {children}
@@ -196,3 +216,4 @@ export const useAuth = (): AuthContextType => {
   }
   return context;
 };
+
