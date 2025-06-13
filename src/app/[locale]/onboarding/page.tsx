@@ -100,6 +100,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
         }
         break;
       case 8: // Consent step, checkbox handles its own state
+        // No specific validation here other than the checkbox itself.
         break;
       default:
         return true;
@@ -178,7 +179,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
     { value: "homemaker", labelKey: "OnboardingPage.employmentHomemaker" },
   ];
 
-  if (authLoading || (!user && !authLoading)) { // Show loader if auth is loading OR if not loading and no user (implies redirect is imminent)
+  if (authLoading || (!user && !authLoading)) { 
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -359,7 +360,7 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                   <Checkbox
                     id="personalizedAdsConsent"
                     checked={formData.personalizedAdsConsent}
-                    onCheckedChange={(checked) => handleChange('personalizedAdsConsent', checked)}
+                    onCheckedChange={(checked) => handleChange('personalizedAdsConsent', Boolean(checked))}
                   />
                   <div className="grid gap-1.5 leading-none">
                     <Label htmlFor="personalizedAdsConsent" className="font-body">
@@ -370,10 +371,20 @@ function OnboardingContent({ dictionary, locale }: { dictionary: Dictionary, loc
                     </p>
                   </div>
                 </div>
-                <div className="pt-4 text-center">
-                    <Sparkles className="h-10 w-10 text-primary mx-auto mb-2 animate-pulse" />
-                    <p className="font-body text-muted-foreground">{dictionary['OnboardingPage.finalizingProfile'] || "Finalizing your cosmic profile..."}</p>
-                </div>
+                
+                {isSubmitting && (
+                  <div className="pt-4 text-center">
+                      <Sparkles className="h-10 w-10 text-primary mx-auto mb-2 animate-spin" />
+                      <p className="font-body text-muted-foreground">{dictionary['OnboardingPage.finalizingProfile'] || "Finalizing your cosmic profile..."}</p>
+                  </div>
+                )}
+                {!isSubmitting && (
+                   <div className="pt-4 text-center">
+                    <p className="font-body text-muted-foreground">
+                      {dictionary['OnboardingPage.reviewAndFinishPrompt'] || "Please review your choices and click 'Finish' to complete your profile."}
+                    </p>
+                  </div>
+                )}
             </div>
           )}
 
@@ -415,7 +426,7 @@ export default function OnboardingPage({ params: paramsPromise }: OnboardingPage
     setIsClient(true);
   }, []);
 
-  if (!isClient || Object.keys(dictionary).length === 0) { // Ensure dictionary is loaded
+  if (!isClient || Object.keys(dictionary).length === 0) { 
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -426,3 +437,4 @@ export default function OnboardingPage({ params: paramsPromise }: OnboardingPage
 
   return <OnboardingContent dictionary={dictionary} locale={params.locale} />;
 }
+

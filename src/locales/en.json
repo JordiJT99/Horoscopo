@@ -449,6 +449,7 @@
   "OnboardingPage.adsConsentLabel": "Allow Personalized Ads",
   "OnboardingPage.adsConsentDescription": "Allow us to use your information to show you more relevant ads and content. You can change this in settings later.",
   "OnboardingPage.finalizingProfile": "Finalizing your cosmic profile...",
+  "OnboardingPage.reviewAndFinishPrompt": "Please review your choices and click 'Finish' to complete your profile.",
   "OnboardingPage.previousButton": "Previous",
   "OnboardingPage.nextButton": "Next",
   "OnboardingPage.finishButton": "Finish",
@@ -464,3 +465,4 @@
   "OnboardingPage.stepContentComingSoon": "Content for this step is coming soon!",
   "OnboardingPage.stepTypePlaceholder": "Placeholder for: Step {currentStep} Form Fields"
 }
+

@@ -24,7 +24,7 @@
     --muted-foreground: 260 15% 70%; /* Gris lavanda medio para texto sobre silenciado */
 
     --accent: 280 70% 65%; /* Violeta místico brillante */
-    --accent-foreground: 280 40% 97%; /* Lavanda muy claro para texto sobre acento */
+    --accent-foreground: 280 50% 15%; /* Morado muy oscuro para texto sobre acento (MEJOR CONTRASTE) */
 
     --destructive: 0 65% 60%; /* Rojo (se mantiene para errores) */
     --destructive-foreground: 0 0% 100%; /* Blanco sobre rojo */
@@ -47,7 +47,7 @@
     --sidebar-primary: hsl(var(--primary)); /* Dorado */
     --sidebar-primary-foreground: hsl(var(--primary-foreground)); /* Marrón oscuro sobre dorado */
     --sidebar-accent: hsl(var(--accent)); /* Violeta Místico */
-    --sidebar-accent-foreground: hsl(var(--accent-foreground)); /* Lavanda muy claro sobre violeta */
+    --sidebar-accent-foreground: hsl(var(--accent-foreground)); /* Morado muy oscuro sobre violeta (para mejor contraste en sidebar si se usa) */
     --sidebar-border: 260 45% 12%;
     --sidebar-ring: hsl(var(--ring)); /* Dorado */
   }
@@ -67,7 +67,7 @@
     --muted: 260 30% 35%;
     --muted-foreground: 260 15% 70%;
     --accent: 280 70% 65%;
-    --accent-foreground: 280 40% 97%;
+    --accent-foreground: 280 50% 15%; /* Morado muy oscuro (MEJOR CONTRASTE) */
     --destructive: 0 65% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 260 35% 25%;

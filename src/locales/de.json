@@ -449,6 +449,7 @@
   "OnboardingPage.adsConsentLabel": "Personalisierte Werbung zulassen",
   "OnboardingPage.adsConsentDescription": "Erlauben Sie uns, Ihre Informationen zu verwenden, um Ihnen relevantere Anzeigen und Inhalte anzuzeigen. Sie können dies später in den Einstellungen ändern.",
   "OnboardingPage.finalizingProfile": "Ihr kosmisches Profil wird fertiggestellt...",
+  "OnboardingPage.reviewAndFinishPrompt": "Bitte überprüfen Sie Ihre Auswahl und klicken Sie auf 'Fertigstellen', um Ihr Profil zu vervollständigen.",
   "OnboardingPage.previousButton": "Zurück",
   "OnboardingPage.nextButton": "Weiter",
   "OnboardingPage.finishButton": "Fertigstellen",
@@ -464,3 +465,4 @@
   "OnboardingPage.stepContentComingSoon": "Inhalt für diesen Schritt kommt bald!",
   "OnboardingPage.stepTypePlaceholder": "Platzhalter für: Schritt {currentStep} Formularfelder"
 }
+

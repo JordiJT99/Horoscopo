@@ -449,6 +449,7 @@
   "OnboardingPage.adsConsentLabel": "Autoriser les Publicités Personnalisées",
   "OnboardingPage.adsConsentDescription": "Permettez-nous d'utiliser vos informations pour vous montrer des publicités et du contenu plus pertinents. Vous pourrez modifier cela dans les paramètres plus tard.",
   "OnboardingPage.finalizingProfile": "Finalisation de votre profil cosmique...",
+  "OnboardingPage.reviewAndFinishPrompt": "Veuillez vérifier vos choix et cliquer sur 'Terminer' pour compléter votre profil.",
   "OnboardingPage.previousButton": "Précédent",
   "OnboardingPage.nextButton": "Suivant",
   "OnboardingPage.finishButton": "Terminer",
@@ -464,3 +465,4 @@
   "OnboardingPage.stepContentComingSoon": "Le contenu de cette étape arrive bientôt !",
   "OnboardingPage.stepTypePlaceholder": "Espace réservé pour : Champs du formulaire de l'étape {currentStep}"
 }
+
