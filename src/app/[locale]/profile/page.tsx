@@ -7,6 +7,8 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'; // AvatarImage removed as we don't have custom avatars yet
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input'; // Added Input import
+import { Label } from '@/components/ui/label'; // Added Label import
 import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn } from 'lucide-react';
 // import Image from 'next/image'; // Not used as Firebase user.photoURL might not be set
 import { useAuth } from '@/context/AuthContext';
@@ -210,3 +212,4 @@ export default function ProfilePage({ params: paramsPromise }: ProfilePageProps)
 
   return <ProfileContent dictionary={dictionary} locale={params.locale} />;
 }
+
