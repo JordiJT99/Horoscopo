@@ -8,7 +8,7 @@ import { format } from "date-fns"
 import { es, enUS, de, fr } from 'date-fns/locale';
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+// Removed buttonVariants import as it's no longer directly used for SelectTriggers here
 import {
   Select,
   SelectContent,
@@ -19,10 +19,10 @@ import {
 import type { Locale as AppLocale } from "@/lib/dictionaries";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  locale?: AppLocale;
+  locale?: AppLocale; // Changed from globalThis.Locale to AppLocale
 };
 
-const dateFnsLocalesMap: Record<string, globalThis.Locale> = {
+const dateFnsLocalesMap: Record<string, globalThis.Locale> = { // Keep globalThis.Locale here for date-fns
   es,
   en: enUS,
   de,
@@ -34,10 +34,10 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  locale: propsLocale,
+  locale: propsLocale, // Use propsLocale for clarity
   ...props
 }: CalendarProps) {
-  const currentLocale = dateFnsLocalesMap[(propsLocale as AppLocale | undefined)?.toString() || 'es'] || enUS;
+  const currentLocale = dateFnsLocalesMap[(propsLocale?.toString()) || 'es'] || enUS;
 
 
   return (
@@ -48,12 +48,13 @@ function Calendar({
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium hidden",
-        caption_dropdowns: "flex gap-2 items-center justify-center",
+        caption_label: "text-sm font-medium hidden", // Hidden as dropdowns show value
+        caption_dropdowns: "flex gap-2 items-center justify-center", // Ensure this class is used
         nav: "space-x-1 flex items-center",
         nav_button: cn(
-          buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          // Using base button styles from globals or minimal styling if buttonVariants caused issues
+          "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+          "h-7 w-7 p-0 opacity-50 hover:opacity-100"
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
@@ -64,7 +65,8 @@ function Calendar({
         row: "flex w-full mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
-          buttonVariants({ variant: "ghost" }),
+          // Base button styles
+          "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground",
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
         day_range_end: "day-range-end",
@@ -83,20 +85,25 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" {...props} />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" {...props} />,
         Dropdown: (dropdownProps) => {
-          const { goToMonth, displayMonth, fromYear, toYear, fromMonth, toMonth } = useNavigation();
-          const displayDate = displayMonth; // Use displayMonth from useNavigation hook
+          const { goToMonth, displayMonth: navDisplayMonth, fromYear: navFromYear, toYear: navToYear, fromMonth: navFromMonth, toMonth: navToMonth } = useNavigation();
+          
+          let displayDate = dropdownProps.displayMonth; // Primary source from DayPicker's caption context
+          if (!displayDate && navDisplayMonth) {
+            // console.warn("Calendar Dropdown: dropdownProps.displayMonth is undefined. Falling back to navDisplayMonth from useNavigation().");
+            displayDate = navDisplayMonth; // Fallback to useNavigation's displayMonth
+          }
 
           if (!displayDate) {
-            console.warn("Calendar Dropdown: displayMonth from useNavigation() is undefined. Rendering disabled selects. Props:", dropdownProps);
+            console.warn("Calendar Dropdown: Both dropdownProps.displayMonth and navDisplayMonth (from useNavigation) are undefined. Rendering disabled selects. DropdownProps:", dropdownProps, "NavContext:", { navDisplayMonth, navFromYear, navToYear, navFromMonth, navToMonth });
             return (
-              <div className="flex gap-2 items-center justify-center">
+              <div className="flex gap-2 items-center justify-center" aria-live="polite">
                 <Select disabled>
-                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50" aria-label="Select month (disabled)">
+                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50 cursor-not-allowed" aria-label="Select month (disabled)">
                     <SelectValue placeholder={"---"} />
                   </SelectTrigger>
                 </Select>
                 <Select disabled>
-                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50" aria-label="Select year (disabled)">
+                  <SelectTrigger className="h-7 w-auto px-2 text-xs font-medium text-foreground opacity-50 cursor-not-allowed" aria-label="Select year (disabled)">
                     <SelectValue placeholder={"----"} />
                   </SelectTrigger>
                 </Select>
@@ -104,37 +111,45 @@ function Calendar({
             );
           }
 
-          const monthOptions: { value: string; label: string }[] = [];
-          const yearOptions: { value: string; label: string }[] = [];
-
           const currentDisplayYear = displayDate.getFullYear();
+          const currentDisplayMonth = displayDate.getMonth();
 
-          let startMonthIdx = 0;
-          let endMonthIdx = 11;
+          // Determine overall range from useNavigation, falling back to dropdownProps if nav context is incomplete
+          const fromYearValue = navFromYear?.getFullYear() ?? dropdownProps.fromYear?.getFullYear() ?? 1900;
+          const toYearValue = navToYear?.getFullYear() ?? dropdownProps.toYear?.getFullYear() ?? new Date().getFullYear() + 10;
+          
+          const monthOptions: { value: string; label: string }[] = [];
+          let startMonthIndex = 0;
+          let endMonthIndex = 11;
 
-          if (fromMonth && fromMonth.getFullYear() === currentDisplayYear) {
-            startMonthIdx = fromMonth.getMonth();
-          } else if (fromMonth && currentDisplayYear < fromMonth.getFullYear()){
-            startMonthIdx = 12; // No months this year
+          const effectiveFromMonth = navFromMonth ?? dropdownProps.fromMonth;
+          const effectiveToMonth = navToMonth ?? dropdownProps.toMonth;
+
+          if (effectiveFromMonth && effectiveFromMonth.getFullYear() === currentDisplayYear) {
+            startMonthIndex = effectiveFromMonth.getMonth();
+          } else if (effectiveFromMonth && currentDisplayYear < effectiveFromMonth.getFullYear()) {
+            startMonthIndex = 12; // Effectively no months this year before fromMonth
           }
 
-          if (toMonth && toMonth.getFullYear() === currentDisplayYear) {
-            endMonthIdx = toMonth.getMonth();
-          } else if (toMonth && currentDisplayYear > toMonth.getFullYear()){
-            endMonthIdx = -1; // No months this year
+          if (effectiveToMonth && effectiveToMonth.getFullYear() === currentDisplayYear) {
+            endMonthIndex = effectiveToMonth.getMonth();
+          } else if (effectiveToMonth && currentDisplayYear > effectiveToMonth.getFullYear()) {
+            endMonthIndex = -1; // Effectively no months this year after toMonth
           }
           
           for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
-            if (monthIdx >= startMonthIdx && monthIdx <= endMonthIdx) {
+            if (monthIdx >= startMonthIndex && monthIdx <= endMonthIndex) {
                monthOptions.push({
                 value: monthIdx.toString(),
                 label: format(new Date(currentDisplayYear, monthIdx, 1), "MMMM", { locale: currentLocale }),
               });
             }
           }
-
-          if (monthOptions.length === 0 && (startMonthIdx <= endMonthIdx)) {
-            console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${fromMonth}, toMonth: ${toMonth}. Using fallback to all months.`);
+          
+          if (monthOptions.length === 0 && (startMonthIndex <= endMonthIndex)) {
+            // Fallback if filtering somehow results in no options for a seemingly valid range.
+            // This could happen if DayPicker's internal state for displayMonth is temporarily misaligned with fromMonth/toMonth.
+            // console.warn(`Calendar Dropdown (Months): No options generated for ${currentDisplayYear} after filtering. displayDate: ${displayDate}, fromMonth: ${effectiveFromMonth}, toMonth: ${effectiveToMonth}. Using fallback to all months.`);
             for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
                  monthOptions.push({
                     value: monthIdx.toString(),
@@ -143,15 +158,16 @@ function Calendar({
             }
           }
 
-          const firstYear = fromYear ? fromYear.getFullYear() : currentDisplayYear - 100;
-          const lastYear = toYear ? toYear.getFullYear() : currentDisplayYear + 10;
-          for (let i = firstYear; i <= lastYear; i++) {
+
+          const yearOptions: { value: string; label: string }[] = [];
+          for (let i = fromYearValue; i <= toYearValue; i++) {
             yearOptions.push({ value: i.toString(), label: i.toString() });
           }
-           if (yearOptions.length === 0 && firstYear <= lastYear) {
-             console.warn(`Calendar Dropdown (Years): No options generated between ${firstYear} and ${lastYear}. Using current year as fallback.`);
-             yearOptions.push({value: currentDisplayYear.toString(), label: currentDisplayYear.toString() });
-           }
+          if (yearOptions.length === 0 && fromYearValue <= toYearValue) {
+            // console.warn(`Calendar Dropdown (Years): No options generated between ${fromYearValue} and ${toYearValue}. Using current year as fallback.`);
+            yearOptions.push({value: currentDisplayYear.toString(), label: currentDisplayYear.toString() });
+          }
+
 
           const handleMonthChange = (value: string) => {
             const newSelectedMonth = parseInt(value);
@@ -160,31 +176,27 @@ function Calendar({
 
           const handleYearChange = (value: string) => {
             const newSelectedYear = parseInt(value);
-            let newMonth = displayDate.getMonth();
-            if (fromMonth && newSelectedYear === fromMonth.getFullYear() && newMonth < fromMonth.getMonth()) {
-              newMonth = fromMonth.getMonth();
+            let newMonth = currentDisplayMonth; // Keep current month if possible
+            
+            // Adjust month if it falls outside the new year's valid range
+            if (effectiveFromMonth && newSelectedYear === effectiveFromMonth.getFullYear() && newMonth < effectiveFromMonth.getMonth()) {
+              newMonth = effectiveFromMonth.getMonth();
             }
-            if (toMonth && newSelectedYear === toMonth.getFullYear() && newMonth > toMonth.getMonth()) {
-              newMonth = toMonth.getMonth();
+            if (effectiveToMonth && newSelectedYear === effectiveToMonth.getFullYear() && newMonth > effectiveToMonth.getMonth()) {
+              newMonth = effectiveToMonth.getMonth();
             }
             goToMonth(new Date(newSelectedYear, newMonth, 1));
           };
 
-          const currentMonthValue = displayDate.getMonth().toString();
-          const currentYearValue = currentDisplayYear.toString();
-
           return (
-            <div className="flex gap-2 items-center justify-center">
+            <div className="flex gap-2 items-center justify-center" aria-live="polite">
               <Select
-                value={currentMonthValue}
+                value={currentDisplayMonth.toString()}
                 onValueChange={handleMonthChange}
+                disabled={monthOptions.length === 0}
               >
                 <SelectTrigger
-                  className={cn(
-                    "h-7 w-auto px-2 text-xs font-medium text-foreground",
-                    "hover:bg-accent hover:text-accent-foreground",
-                    "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
-                  )}
+                  className="h-7 w-auto min-w-[6rem] px-2 text-xs font-medium text-foreground hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
                   aria-label="Select month"
                 >
                   <SelectValue>
@@ -201,15 +213,12 @@ function Calendar({
               </Select>
 
               <Select
-                value={currentYearValue}
+                value={currentDisplayYear.toString()}
                 onValueChange={handleYearChange}
+                disabled={yearOptions.length === 0}
               >
                 <SelectTrigger
-                   className={cn(
-                    "h-7 w-auto px-2 text-xs font-medium text-foreground",
-                    "hover:bg-accent hover:text-accent-foreground",
-                    "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
-                  )}
+                   className="h-7 w-auto min-w-[4.5rem] px-2 text-xs font-medium text-foreground hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
                   aria-label="Select year"
                 >
                   <SelectValue>
@@ -228,7 +237,7 @@ function Calendar({
           );
         },
       }}
-      locale={currentLocale}
+      locale={currentLocale} // Pass the date-fns locale to DayPicker
       {...props}
     />
   )
@@ -236,4 +245,3 @@ function Calendar({
 Calendar.displayName = "Calendar"
 
 export { Calendar }
-
