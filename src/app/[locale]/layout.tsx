@@ -62,16 +62,16 @@ function LayoutContent({ locale, children }: { locale: Locale, children: React.R
   );
 }
 
+interface LocaleLayoutProps {
+  children: React.ReactNode;
+  params: LocaleLayoutParams; // Changed from Promise<LocaleLayoutParams>
+}
 
 export default function LocaleLayout({
   children,
-  params: paramsPromise, 
-}: Readonly<{
-  children: React.ReactNode;
-  params: Promise<LocaleLayoutParams>; 
-}>) {
-  const resolvedParams = use(paramsPromise); 
-  const currentLocale = resolvedParams.locale;
+  params, // Changed from paramsPromise
+}: Readonly<LocaleLayoutProps>) {
+  const currentLocale = params.locale; // Access locale directly
 
   // Dictionary is now fetched within LayoutContent
 
