@@ -19,6 +19,8 @@ interface LoginPageProps {
 
 function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, user, isLoading } = useAuth();
   const router = useRouter();
 
@@ -30,6 +32,7 @@ function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: 
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    // For simulation, we only use username. Email and password are for UI completeness.
     if (username.trim()) {
       login(username.trim(), locale);
     }
@@ -54,24 +57,52 @@ function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: 
       <Card className="w-full max-w-md mx-auto shadow-xl">
         <CardHeader>
           <CardTitle className="font-headline text-2xl text-primary text-center">
-            {dictionary['Auth.loginFormTitle'] || "Enter Your Username"}
+            {dictionary['Auth.loginFormTitleNow'] || "Enter Your Credentials"}
           </CardTitle>
           <CardDescription className="text-center font-body">
-            {dictionary['Auth.loginFormDescription'] || "This is a simulated login for demo purposes."}
+            {dictionary['Auth.loginFormDescription'] || "This is a simulated login for demo purposes. Only username is used."}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username" className="font-body">
+              <Label htmlFor="username-login" className="font-body">
                 {dictionary['Auth.usernameLabel'] || "Username"}
               </Label>
               <Input
-                id="username"
+                id="username-login"
                 type="text"
                 placeholder={dictionary['Auth.usernamePlaceholder'] || "Enter your username"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
+                className="font-body"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email-login" className="font-body">
+                {dictionary['Auth.emailLabel'] || "Email"}
+              </Label>
+              <Input
+                id="email-login"
+                type="email"
+                placeholder={dictionary['Auth.emailPlaceholder'] || "Enter your email"}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="font-body"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password-login" className="font-body">
+                {dictionary['Auth.passwordLabel'] || "Password"}
+              </Label>
+              <Input
+                id="password-login"
+                type="password"
+                placeholder={dictionary['Auth.passwordPlaceholder'] || "Enter your password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="font-body"
               />
