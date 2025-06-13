@@ -32,7 +32,7 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 const TOTAL_STEPS = 8;
 
 interface OnboardingPageProps {
-  params: Promise<{ locale: Locale }>; // Changed for use()
+  params: Promise<{ locale: Locale }>;
 }
 
 interface OnboardingContentProps {
@@ -49,7 +49,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
   const [formData, setFormData] = useState<OnboardingFormData>({
     name: '',
     gender: '',
-    dateOfBirth: new Date(1995, 5, 15),
+    dateOfBirth: new Date(1995, 5, 15), // Initial valid date
     timeOfBirth: '',
     cityOfBirth: '',
     relationshipStatus: '',
@@ -275,9 +275,10 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
                       onSelect={(date) => handleChange('dateOfBirth', date)}
                       defaultMonth={formData.dateOfBirth || new Date(currentYearForCalendar - 30, 0, 1)}
                       locale={currentDfnLocale}
-                      fromYear={1900}
-                      toYear={currentYearForCalendar}
-                      captionLayout="dropdowns"
+                      fromDate={new Date(1900, 0, 1)}
+                      toDate={new Date()}
+                      captionLayout="dropdown" // This is important for DayPicker to use our custom caption
+                      className="rounded-md border shadow"
                     />
                 </PopoverContent>
               </Popover>
@@ -410,9 +411,9 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
 
 export default function OnboardingPage({ params: paramsPromise }: OnboardingPageProps) {
-  const params = use(paramsPromise); // Resolve the params promise
+  const params = use(paramsPromise); 
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
-  const dictionary = use(dictionaryPromise); // Resolve the dictionary promise
+  const dictionary = use(dictionaryPromise); 
 
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
@@ -430,4 +431,3 @@ export default function OnboardingPage({ params: paramsPromise }: OnboardingPage
 
   return <OnboardingContent dictionary={dictionary} locale={params.locale} />;
 }
-

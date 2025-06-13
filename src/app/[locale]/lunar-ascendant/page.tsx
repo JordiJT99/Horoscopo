@@ -141,12 +141,12 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                           mode="single"
                           selected={birthDate}
                           onSelect={setBirthDate}
-                          defaultMonth={birthDate || new Date(currentYearForCalendar - 30, 0, 1)} // Default to 30 years ago
-                          disabled={(date: Date) => date > new Date() || date < new Date("1900-01-01")}
+                          defaultMonth={birthDate || new Date(currentYearForCalendar - 30, 0, 1)}
                           locale={currentDfnLocale}
-                          fromYear={1900}
-                          toYear={currentYearForCalendar}
-                          captionLayout="dropdowns" // Ensure this is set if you want dropdowns
+                          fromDate={new Date(1900, 0, 1)}
+                          toDate={new Date()}
+                          captionLayout="dropdown"
+                          className="rounded-md border shadow"
                         />
                     </PopoverContent>
                   </Popover>
@@ -203,4 +203,3 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
 
   return <LunarAscendantContent dictionary={dictionary} locale={params.locale} />;
 }
-
