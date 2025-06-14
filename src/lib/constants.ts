@@ -2,6 +2,8 @@
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
 import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle } from 'lucide-react';
+import { getCompatibilityReportFlow, type CompatibilityReportInput } from '@/ai/flows/compatibility-report-flow';
+
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Aries", icon: Activity, dateRange: "Mar 21 - Abr 19" },
@@ -18,7 +20,8 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Pisces", icon: Fish, dateRange: "Feb 19 - Mar 20" },
 ];
 
-export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name);
+export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name) as [ZodiacSignName, ...ZodiacSignName[]];
+
 
 const genericHoroscopeText = "Hoy es un día de nuevos comienzos. Abraza el cambio y busca oportunidades. Tus niveles de energía son altos, ¡aprovéchalos al máximo! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
@@ -29,34 +32,28 @@ export const getHoroscope = (sign: ZodiacSignName): HoroscopeData => ({
   monthly: `Horóscopo Mensual para ${sign}: El mes que viene es crucial para tu crecimiento profesional. ${genericHoroscopeText} Las relaciones requerirán atención.`,
 });
 
-const compatibilityPairings: Record<string, { report: string; score: number }> = {
-  "Aries-Scorpio": {
-    report: "Aries y Scorpio tienen una dinámica compleja pero potencialmente gratificante. La comunicación es clave. Aries aporta pasión, mientras que Scorpio ofrece estabilidad. Juntos pueden lograr grandes cosas si aprenden a apreciar sus diferencias.",
-    score: 3
-  },
-  // Otros pares pueden ser añadidos aquí
-};
 
-export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): CompatibilityData => {
-  const key1 = `${sign1}-${sign2}`;
-  const key2 = `${sign2}-${sign1}`;
-
-  if (compatibilityPairings[key1]) {
-    return { sign1, sign2, ...compatibilityPairings[key1] };
+export async function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, locale: Locale): Promise<CompatibilityData> {
+  try {
+    const input: CompatibilityReportInput = { sign1, sign2, locale };
+    const aiResult = await getCompatibilityReportFlow(input);
+    return {
+      sign1,
+      sign2,
+      report: aiResult.report,
+      score: aiResult.score,
+    };
+  } catch (error) {
+    console.error(`Error fetching compatibility report for ${sign1}-${sign2} from AI:`, error);
+    // Fallback to a generic message if AI fails
+    return {
+      sign1,
+      sign2,
+      report: `La compatibilidad entre ${sign1} y ${sign2} es un viaje de descubrimiento mutuo. (Error al generar informe detallado, se muestra mensaje genérico).`,
+      score: Math.floor(Math.random() * 3) + 2, // Generic score 2-4
+    };
   }
-  if (compatibilityPairings[key2]) {
-    // Si se encuentra la clave invertida, mantenemos el orden original de los signos para la salida
-    return { sign1, sign2, ...compatibilityPairings[key2] };
-  }
-
-  // Fallback genérico si no se encuentra una entrada específica
-  return {
-    sign1,
-    sign2,
-    report: `La compatibilidad entre ${sign1} y ${sign2} es un viaje de descubrimiento mutuo. Ambos signos tienen mucho que ofrecerse si están dispuestos a comprender y valorar sus diferencias. La paciencia y la comunicación abierta serán esenciales para construir una conexión armoniosa. (Texto genérico de compatibilidad).`,
-    score: Math.floor(Math.random() * 3) + 2, // Puntuación genérica entre 2 y 4
-  };
-};
+}
 
 
 const motivationalPhrases: Record<Locale, string[]> = {
@@ -342,4 +339,3 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 
 // Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.
 export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon };
-

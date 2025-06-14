@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Users, Heart } from 'lucide-react'; // Heart will be used for SectionTitle
+import { useToast } from "@/hooks/use-toast";
+
 
 interface CompatibilityPageProps {
   params: { // params is a promise in client components
@@ -24,20 +26,40 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
   const [sign2, setSign2] = useState<ZodiacSignName>(ZODIAC_SIGNS[1].name);
   const [compatibility, setCompatibility] = useState<CompatibilityData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleFetchCompatibility = () => {
+  const handleFetchCompatibility = async () => {
     if (!sign1 || !sign2) return;
     setIsLoading(true);
-    setTimeout(() => {
-      setCompatibility(getCompatibility(sign1, sign2));
+    setCompatibility(null); // Clear previous results
+    try {
+      // Simulate a short delay even for AI calls for better UX
+      // await new Promise(resolve => setTimeout(resolve, 300)); 
+      const result = await getCompatibility(sign1, sign2, locale);
+      setCompatibility(result);
+    } catch (error) {
+      console.error("Error fetching compatibility report:", error);
+      toast({
+        title: dictionary['Error.genericTitle'] || "Error",
+        description: dictionary['HoroscopeSection.error'] || "Could not load compatibility data.", // Re-use generic error
+        variant: "destructive",
+      });
+      // Set a fallback compatibility object to display an error message within the card
+      setCompatibility({
+        sign1,
+        sign2,
+        report: dictionary['HoroscopeSection.error'] || "Could not load compatibility data. Please try again.",
+        score: 0,
+      });
+    } finally {
       setIsLoading(false);
-    }, 500);
+    }
   };
   
   useEffect(() => {
     handleFetchCompatibility();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sign1, sign2]);
+  }, [sign1, sign2, locale]); // Added locale as dependency
 
 
   const renderStars = (score: number) => {
@@ -122,14 +144,16 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
                   .replace('{sign1}', dictionary[compatibility.sign1] || compatibility.sign1)
                   .replace('{sign2}', dictionary[compatibility.sign2] || compatibility.sign2)}
               </h3>
-              <div className="flex justify-center my-3">
-                {renderStars(compatibility.score)}
-              </div>
-              <p className="font-body text-card-foreground leading-relaxed">{compatibility.report}</p>
+              {compatibility.score > 0 && (
+                <div className="flex justify-center my-3">
+                    {renderStars(compatibility.score)}
+                </div>
+              )}
+              <p className="font-body text-card-foreground leading-relaxed whitespace-pre-line">{compatibility.report}</p>
             </div>
           )}
           {!isLoading && !compatibility && sign1 && sign2 && (
-            <p className="text-center font-body text-muted-foreground mt-6">Compatibility report will appear here.</p>
+            <p className="text-center font-body text-muted-foreground mt-6">{dictionary['CompatibilitySection.selectSignsPrompt'] || "Select two signs to view their compatibility report."}</p>
           )}
         </CardContent>
       </Card>
