@@ -26,40 +26,41 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
   const [sign2, setSign2] = useState<ZodiacSignName>(ZODIAC_SIGNS[1].name);
   const [compatibility, setCompatibility] = useState<CompatibilityData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
+  const { toast } = useToast(); // toast can still be used for general errors
 
-  const handleFetchCompatibility = async () => {
+  const handleFetchCompatibility = () => { // No longer async
     if (!sign1 || !sign2) return;
     setIsLoading(true);
-    setCompatibility(null); // Clear previous results
-    try {
-      // Simulate a short delay even for AI calls for better UX
-      // await new Promise(resolve => setTimeout(resolve, 300)); 
-      const result = await getCompatibility(sign1, sign2, locale);
-      setCompatibility(result);
-    } catch (error) {
-      console.error("Error fetching compatibility report:", error);
-      toast({
-        title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['HoroscopeSection.error'] || "Could not load compatibility data.", // Re-use generic error
-        variant: "destructive",
-      });
-      // Set a fallback compatibility object to display an error message within the card
-      setCompatibility({
-        sign1,
-        sign2,
-        report: dictionary['HoroscopeSection.error'] || "Could not load compatibility data. Please try again.",
-        score: 0,
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    setCompatibility(null); 
+
+    // Simulate a short delay for better UX, even though data is local
+    setTimeout(() => {
+      try {
+        const result = getCompatibility(sign1, sign2, locale); // Now synchronous
+        setCompatibility(result);
+      } catch (error) {
+        console.error("Error fetching compatibility (mock data):", error);
+        toast({
+          title: dictionary['Error.genericTitle'] || "Error",
+          description: dictionary['HoroscopeSection.error'] || "Could not load compatibility data.",
+          variant: "destructive",
+        });
+        setCompatibility({ // Fallback for display
+          sign1,
+          sign2,
+          report: dictionary['HoroscopeSection.error'] || "Could not load compatibility data. Please try again.",
+          score: 0,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }, 300); // 300ms delay
   };
   
   useEffect(() => {
     handleFetchCompatibility();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sign1, sign2, locale]); // Added locale as dependency
+  }, [sign1, sign2, locale]);
 
 
   const renderStars = (score: number) => {
@@ -73,7 +74,7 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
       <SectionTitle 
         title={dictionary['CompatibilityPage.title'] || "Zodiac Compatibility"}
         subtitle={dictionary['CompatibilityPage.subtitle'] || "Discover how well different zodiac signs match."}
-        icon={Heart} // Changed icon from Users to Heart
+        icon={Heart} 
         className="mb-12"
       />
       <Card className="w-full shadow-xl max-w-2xl mx-auto">

@@ -2,7 +2,7 @@
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
 import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle } from 'lucide-react';
-import { getCompatibilityReportFlow, type CompatibilityReportInput } from '@/ai/flows/compatibility-report-flow';
+// Removed: import { getCompatibilityReportFlow, type CompatibilityReportInput } from '@/ai/flows/compatibility-report-flow';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -32,27 +32,63 @@ export const getHoroscope = (sign: ZodiacSignName): HoroscopeData => ({
   monthly: `Horóscopo Mensual para ${sign}: El mes que viene es crucial para tu crecimiento profesional. ${genericHoroscopeText} Las relaciones requerirán atención.`,
 });
 
+interface CompatibilityReport {
+  report: string;
+  score: number;
+}
 
-export async function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, locale: Locale): Promise<CompatibilityData> {
-  try {
-    const input: CompatibilityReportInput = { sign1, sign2, locale };
-    const aiResult = await getCompatibilityReportFlow(input);
-    return {
-      sign1,
-      sign2,
-      report: aiResult.report,
-      score: aiResult.score,
-    };
-  } catch (error) {
-    console.error(`Error fetching compatibility report for ${sign1}-${sign2} from AI:`, error);
-    // Fallback to a generic message if AI fails
-    return {
-      sign1,
-      sign2,
-      report: `La compatibilidad entre ${sign1} y ${sign2} es un viaje de descubrimiento mutuo. (Error al generar informe detallado, se muestra mensaje genérico).`,
-      score: Math.floor(Math.random() * 3) + 2, // Generic score 2-4
-    };
+const compatibilityPairings: Record<string, CompatibilityReport> = {
+  "Aries-Taurus": {
+    report: "Aries, signo de fuego cardinal, y Tauro, signo de tierra fijo, representan dos energías muy distintas que, no obstante, pueden complementarse. Aries aporta la chispa inicial, la iniciativa y el dinamismo, mientras que Tauro ofrece estabilidad, paciencia y una visión práctica. En un entorno profesional, esta combinación puede ser poderosa. Aries puede generar ideas innovadoras y Tauro se encarga de darles forma y llevarlas a la práctica de manera organizada y persistente. El desafío reside en que Aries aprenda a valorar la meticulosidad de Tauro, y Tauro se abra a la espontaneidad de Aries. Si logran encontrar un punto medio, su colaboración será exitosa. La clave es la comunicación y el respeto mutuo por sus diferencias.\n\nEn el ámbito amoroso, la compatibilidad entre Aries y Tauro puede ser compleja pero gratificante. Aries se siente atraído por la solidez y la sensualidad de Tauro, mientras que Tauro admira la pasión y la energía de Aries. Sin embargo, sus diferentes ritmos y necesidades pueden generar conflictos. Aries busca la aventura y la novedad, mientras que Tauro anhela la seguridad y la rutina. Para que la relación funcione, Aries debe aprender a ser más paciente y considerado con las necesidades de Tauro, y Tauro debe esforzarse por ser más flexible y abierto a las experiencias que propone Aries. Si ambos están dispuestos a ceder y a comprender al otro, su relación puede ser duradera y profundamente enriquecedora. La clave está en encontrar un equilibrio entre la pasión y la estabilidad, la aventura y la seguridad.",
+    score: 4
+  },
+  "Aries-Scorpio": {
+    report: "Aries y Escorpio tienen una dinámica compleja pero potencialmente gratificante. La comunicación es clave. Aries aporta pasión e impulsividad, mientras que Escorpio ofrece intensidad y profundidad emocional. En el trabajo, pueden chocar por el control, pero si unen fuerzas, su determinación combinada es imparable. Aries admira la tenacidad de Escorpio, y Escorpio puede verse energizado por el entusiasmo ariano. Necesitan respetar sus diferentes enfoques.\n\nEn el amor, la atracción es magnética y poderosa. Ambos son signos apasionados y directos, lo que puede llevar a una conexión intensa o a conflictos explosivos. La lealtad es fundamental para ambos. Aries debe aprender a manejar la naturaleza posesiva y a veces reservada de Escorpio, mientras que Escorpio debe dar a Aries espacio para su independencia. Si logran construir confianza y canalizar su energía conjunta, la relación puede ser transformadora y muy profunda.",
+    score: 3
+  },
+  "Gemini-Libra": {
+    report: "Géminis, un signo de aire mutable, y Libra, un signo de aire cardinal, suelen encontrar una conexión intelectual y social estimulante. Ambos valoran la comunicación, la variedad y las nuevas ideas. En el ámbito profesional, su colaboración puede ser muy creativa y diplomática. Géminis aporta la versatilidad y la capacidad de generar múltiples opciones, mientras que Libra ofrece una perspectiva equilibrada y la habilidad para negociar. El desafío puede surgir si Géminis se dispersa demasiado o si Libra tarda en tomar decisiones. La clave es que Géminis se comprometa con un enfoque y que Libra confíe en la agilidad mental de Géminis.\n\nEn el amor, Géminis y Libra disfrutan de una relación ligera, divertida y llena de conversaciones interesantes. Ambos son sociables y les gusta explorar el mundo juntos. Géminis se siente atraído por el encanto y la elegancia de Libra, y Libra admira la inteligencia y el ingenio de Géminis. Sin embargo, pueden necesitar trabajar en la profundidad emocional y el compromiso a largo plazo. Géminis debe asegurar a Libra su constancia, y Libra debe dar a Géminis el espacio y la libertad que necesita. Si cultivan la conexión emocional además de la intelectual, su unión puede ser muy feliz y duradera.",
+    score: 5
+  },
+  "Cancer-Capricorn": {
+    report: "Cáncer, un signo de agua cardinal, y Capricornio, un signo de tierra cardinal, son opuestos en el zodíaco, lo que puede generar una atracción poderosa o una tensión considerable. Cáncer es emocional, nutritivo y busca seguridad, mientras que Capricornio es práctico, ambicioso y orientado a los logros. En el trabajo, pueden formar un equipo muy efectivo si aprenden a valorar sus diferencias. Cáncer puede aportar la intuición y el cuidado por el equipo, mientras que Capricornio ofrece estructura, disciplina y una visión a largo plazo. El desafío está en que Cáncer no se sienta desatendido por la dedicación de Capricornio al trabajo, y que Capricornio aprecie la sensibilidad de Cáncer.\n\nEn las relaciones amorosas, Cáncer y Capricornio pueden ofrecerse mutuamente lo que al otro le falta. Cáncer anhela la estabilidad y el compromiso que Capricornio puede proporcionar, y Capricornio se siente nutrido por el afecto y la calidez de Cáncer. Sin embargo, la reserva emocional de Capricornio puede chocar con la necesidad de expresión afectiva de Cáncer. Para que la relación prospere, Capricornio necesita abrirse emocionalmente, y Cáncer debe comprender la naturaleza reservada y las ambiciones de Capricornio. Si logran este equilibrio, pueden construir un hogar sólido y una vida familiar estable.",
+    score: 4
   }
+  // Añadir más combinaciones aquí con el mismo estilo detallado
+};
+
+function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, locale: Locale): CompatibilityReport {
+  // En una aplicación real, aquí se podrían usar plantillas más elaboradas y traducciones del diccionario.
+  // Por ahora, un mensaje genérico que intente seguir el tono.
+  const reportText = `La relación entre ${sign1} y ${sign2} presenta una dinámica única, llena de potencial y desafíos. ${sign1} aporta su energía característica de [cualidad principal de ${sign1}], mientras que ${sign2} contribuye con su distintiva [cualidad principal de ${sign2}].
+Profesionalmente, su colaboración puede ser [evaluación profesional, ej: 'productiva si se enfocan en sus fortalezas complementarias' o 'desafiante debido a sus diferentes enfoques']. ${sign1} podría liderar con [fortaleza de ${sign1}], y ${sign2} aportaría [fortaleza de ${sign2}]. Para el éxito, es crucial que [consejo clave para el trabajo].
+En el amor, la conexión entre ${sign1} y ${sign2} puede ser [evaluación amorosa, ej: 'profundamente emocional' o 'una aventura estimulante']. Se sentirán atraídos por [atracción mutua]. Sin embargo, para que la relación florezca, ambos deben [desafío a superar en el amor]. La comunicación honesta y el respeto por las necesidades individuales serán fundamentales.
+(Este es un informe de compatibilidad general. Los detalles pueden variar.)`;
+  return {
+    report: reportText,
+    score: Math.floor(Math.random() * 3) + 2 // Puntuación aleatoria entre 2 y 4 para los genéricos
+  };
+}
+
+export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, locale: Locale): CompatibilityData {
+  const key1 = `${sign1}-${sign2}`;
+  const key2 = `${sign2}-${sign1}`;
+  let reportData: CompatibilityReport;
+
+  if (compatibilityPairings[key1]) {
+    reportData = compatibilityPairings[key1];
+  } else if (compatibilityPairings[key2]) {
+    reportData = compatibilityPairings[key2];
+  } else {
+    reportData = getGenericCompatibilityReport(sign1, sign2, locale);
+  }
+
+  return {
+    sign1,
+    sign2,
+    report: reportData.report,
+    score: reportData.score,
+  };
 }
 
 
