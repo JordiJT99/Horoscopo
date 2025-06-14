@@ -29,12 +29,35 @@ export const getHoroscope = (sign: ZodiacSignName): HoroscopeData => ({
   monthly: `Horóscopo Mensual para ${sign}: El mes que viene es crucial para tu crecimiento profesional. ${genericHoroscopeText} Las relaciones requerirán atención.`,
 });
 
-export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): CompatibilityData => ({
-  sign1,
-  sign2,
-  report: `${sign1} y ${sign2} tienen una dinámica compleja pero potencialmente gratificante. La comunicación es clave. ${sign1} aporta pasión, mientras que ${sign2} ofrece estabilidad. Juntos pueden lograr grandes cosas si aprenden a apreciar sus diferencias. Este es un texto de ejemplo en español.`,
-  score: Math.floor(Math.random() * 5) + 1, // Placeholder score
-});
+const compatibilityPairings: Record<string, { report: string; score: number }> = {
+  "Aries-Scorpio": {
+    report: "Aries y Scorpio tienen una dinámica compleja pero potencialmente gratificante. La comunicación es clave. Aries aporta pasión, mientras que Scorpio ofrece estabilidad. Juntos pueden lograr grandes cosas si aprenden a apreciar sus diferencias.",
+    score: 3
+  },
+  // Otros pares pueden ser añadidos aquí
+};
+
+export const getCompatibility = (sign1: ZodiacSignName, sign2: ZodiacSignName): CompatibilityData => {
+  const key1 = `${sign1}-${sign2}`;
+  const key2 = `${sign2}-${sign1}`;
+
+  if (compatibilityPairings[key1]) {
+    return { sign1, sign2, ...compatibilityPairings[key1] };
+  }
+  if (compatibilityPairings[key2]) {
+    // Si se encuentra la clave invertida, mantenemos el orden original de los signos para la salida
+    return { sign1, sign2, ...compatibilityPairings[key2] };
+  }
+
+  // Fallback genérico si no se encuentra una entrada específica
+  return {
+    sign1,
+    sign2,
+    report: `La compatibilidad entre ${sign1} y ${sign2} es un viaje de descubrimiento mutuo. Ambos signos tienen mucho que ofrecerse si están dispuestos a comprender y valorar sus diferencias. La paciencia y la comunicación abierta serán esenciales para construir una conexión armoniosa. (Texto genérico de compatibilidad).`,
+    score: Math.floor(Math.random() * 3) + 2, // Puntuación genérica entre 2 y 4
+  };
+};
+
 
 const motivationalPhrases: Record<Locale, string[]> = {
   es: [
