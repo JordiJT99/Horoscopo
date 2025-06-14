@@ -1,24 +1,44 @@
 
-import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo } from '@/types';
+import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle } from 'lucide-react';
-// Removed: import { getCompatibilityReportFlow, type CompatibilityReportInput } from '@/ai/flows/compatibility-report-flow';
+import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
-  { name: "Aries", icon: Activity, dateRange: "Mar 21 - Abr 19" },
-  { name: "Taurus", icon: CircleDollarSign, dateRange: "Abr 20 - May 20" },
-  { name: "Gemini", icon: Users, dateRange: "May 21 - Jun 20" },
-  { name: "Cancer", icon: Moon, dateRange: "Jun 21 - Jul 22" },
-  { name: "Leo", icon: Sun, dateRange: "Jul 23 - Ago 22" },
-  { name: "Virgo", icon: Leaf, dateRange: "Ago 23 - Sep 22" },
-  { name: "Libra", icon: Scale, dateRange: "Sep 23 - Oct 22" },
-  { name: "Scorpio", icon: Zap, dateRange: "Oct 23 - Nov 21" },
-  { name: "Sagittarius", icon: ArrowUpRight, dateRange: "Nov 22 - Dic 21" },
-  { name: "Capricorn", icon: Mountain, dateRange: "Dic 22 - Ene 19" },
-  { name: "Aquarius", icon: Waves, dateRange: "Ene 20 - Feb 18" },
-  { name: "Pisces", icon: Fish, dateRange: "Feb 19 - Mar 20" },
+  { name: "Aries", icon: Activity, dateRange: "Mar 21 - Abr 19", element: "Fire", polarity: "Masculine", modality: "Cardinal" },
+  { name: "Taurus", icon: CircleDollarSign, dateRange: "Abr 20 - May 20", element: "Earth", polarity: "Feminine", modality: "Fixed" },
+  { name: "Gemini", icon: Users, dateRange: "May 21 - Jun 20", element: "Air", polarity: "Masculine", modality: "Mutable" },
+  { name: "Cancer", icon: Moon, dateRange: "Jun 21 - Jul 22", element: "Water", polarity: "Feminine", modality: "Cardinal" },
+  { name: "Leo", icon: Sun, dateRange: "Jul 23 - Ago 22", element: "Fire", polarity: "Masculine", modality: "Fixed" },
+  { name: "Virgo", icon: Leaf, dateRange: "Ago 23 - Sep 22", element: "Earth", polarity: "Feminine", modality: "Mutable" },
+  { name: "Libra", icon: Scale, dateRange: "Sep 23 - Oct 22", element: "Air", polarity: "Masculine", modality: "Cardinal" },
+  { name: "Scorpio", icon: Zap, dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
+  { name: "Sagittarius", icon: ArrowUpRight, dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
+  { name: "Capricorn", icon: Mountain, dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
+  { name: "Aquarius", icon: Waves, dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
+  { name: "Pisces", icon: Fish, dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
 ];
+
+export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // JS months are 0-indexed
+
+  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return ZODIAC_SIGNS.find(s => s.name === "Aries")!;
+  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Taurus")!;
+  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Gemini")!;
+  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Cancer")!;
+  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Leo")!;
+  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Virgo")!;
+  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Libra")!;
+  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return ZODIAC_SIGNS.find(s => s.name === "Scorpio")!;
+  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return ZODIAC_SIGNS.find(s => s.name === "Sagittarius")!;
+  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return ZODIAC_SIGNS.find(s => s.name === "Capricorn")!;
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return ZODIAC_SIGNS.find(s => s.name === "Aquarius")!;
+  if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Pisces")!;
+  
+  return null;
+};
+
 
 export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name) as [ZodiacSignName, ...ZodiacSignName[]];
 
@@ -37,8 +57,8 @@ interface CompatibilityReport {
   score: number;
 }
 
+// Extended compatibility pairings based on previous interactions
 const compatibilityPairings: Record<string, CompatibilityReport> = {
-  // Aries
   "Aries-Taurus": {
     report: "Aries, signo de fuego cardinal, y Tauro, signo de tierra fijo, representan dos energías muy distintas que, no obstante, pueden complementarse. Aries aporta la chispa inicial, la iniciativa y el dinamismo, mientras que Tauro ofrece estabilidad, paciencia y una visión práctica. En un entorno profesional, esta combinación puede ser poderosa. Aries puede generar ideas innovadoras y Tauro se encarga de darles forma y llevarlas a la práctica de manera organizada y persistente. El desafío reside en que Aries aprenda a valorar la meticulosidad de Tauro, y Tauro se abra a la espontaneidad de Aries. Si logran encontrar un punto medio, su colaboración será exitosa. La clave es la comunicación y el respeto mutuo por sus diferencias.\n\nEn el ámbito amoroso, la compatibilidad entre Aries y Tauro puede ser compleja pero gratificante. Aries se siente atraído por la solidez y la sensualidad de Tauro, mientras que Tauro admira la pasión y la energía de Aries. Sin embargo, sus diferentes ritmos y necesidades pueden generar conflictos. Aries busca la aventura y la novedad, mientras que Tauro anhela la seguridad y la rutina. Para que la relación funcione, Aries debe aprender a ser más paciente y considerado con las necesidades de Tauro, y Tauro debe esforzarse por ser más flexible y abierto a las experiencias que propone Aries. Si ambos están dispuestos a ceder y a comprender al otro, su relación puede ser duradera y profundamente enriquecedora. La clave está en encontrar un equilibrio entre la pasión y la estabilidad, la aventura y la seguridad.",
     score: 3
@@ -83,7 +103,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Aries, el fogoso pionero, y Piscis, el soñador empático, crean una mezcla de fuego y agua que puede ser tanto fascinante como desafiante. Aries es directo y asertivo, Piscis es sensible e intuitivo. Profesionalmente, sus enfoques son muy diferentes. Aries lidera con acción, Piscis con imaginación y compasión. Si logran colaborar, Aries puede ayudar a Piscis a materializar sus sueños, y Piscis puede aportar una perspectiva creativa y humana a los proyectos de Aries. La comunicación clara es vital para evitar malentendidos.\n\nEn el amor, Aries se siente atraído por la naturaleza gentil y misteriosa de Piscis, mientras que Piscis admira la fuerza y la confianza de Aries. Sin embargo, la rudeza involuntaria de Aries puede herir fácilmente al sensible Piscis, y la evasividad o pasividad de Piscis puede frustrar al directo Aries. Aries necesita cultivar la paciencia y la ternura, y Piscis debe aprender a expresar sus necesidades más claramente y a no tomarse las cosas de forma tan personal. Con mucho amor y comprensión, pueden crear una relación mágica y profundamente sanadora.",
     score: 3
   },
-  // Taurus
   "Taurus-Gemini": {
     report: "Tauro, signo de tierra fijo, y Géminis, signo de aire mutable, ofrecen una mezcla de estabilidad y variabilidad. Tauro busca seguridad y rutina, mientras que Géminis anhela estímulo y cambio. Profesionalmente, pueden complementarse si Tauro aporta la constancia y Géminis la adaptabilidad y las nuevas ideas. Tauro puede ayudar a Géminis a enfocarse, y Géminis puede evitar que Tauro se estanque. La comunicación es clave para armonizar sus diferentes ritmos de trabajo.\n\nEn el amor, la relación entre Tauro y Géminis requiere comprensión. Tauro, regido por Venus, valora la sensualidad y la conexión física, mientras que Géminis, regido por Mercurio, prioriza el estímulo intelectual y la conversación. Tauro puede encontrar a Géminis demasiado inconstante o superficial, y Géminis puede percibir a Tauro como posesivo o aburrido. Si Tauro aprende a apreciar la chispa y la ligereza de Géminis, y Géminis valora la lealtad y el afecto profundo de Tauro, pueden encontrar un punto medio enriquecedor.",
     score: 3
@@ -97,7 +116,7 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     score: 3
   },
   "Taurus-Virgo": {
-    report: "Dos signos de tierra, Tauro (fijo) y Virgo (mutable), comparten una afinidad natural y una comprensión mutua. Ambos son prácticos, trabajadores, valoran la estabilidad y aprecian la calidad. Profesionalmente, forman un equipo altamente eficiente y productivo. Tauro aporta la perseverancia y la visión a largo plazo, mientras que Virgo ofrece análisis detallado, organización y una ética de trabajo impecable. Juntos, pueden llevar cualquier proyecto al éxito con meticulosidad y dedicación.\n\nEn el amor, la relación entre Tauro y Virgo es sólida, tranquila y basada en el respeto mutuo. Ambos buscan una conexión estable y significativa. Tauro aprecia la inteligencia y la devoción de Virgo, y Virgo admira la fiabilidad y la sensualidad de Tauro. Disfrutan de una vida hogareña confortable y de placeres sencillos. Aunque no sea la pareja más explosivamente pasional, su amor es profundo, leal y duradero. La comunicación honesta y el cuidado mutuo son las claves de su felicidad compartida.",
+    report: "Dos signos de tierra, Tauro (fijo) y Virgo (mutable), comparten una afinidad natural y una comprensión mutua. Ambos son prácticos, trabajadores, valoran la estabilidad y aprecian la calidad. Profesionalmente, forman un equipo altamente eficiente y productivo. Tauro aporta la perseverancia y la visión a largo plazo, mientras que Virgo ofrece análisis detallado, organización y una ética de trabajo impecable. Juntos, pueden llevar cualquier proyecto al éxito con meticulosidad y dedicación.\n\nEn el amor, la relación entre Tauro y Virgo es sólida, tranquila y basada en el respeto mutuo. Ambos buscan una conexión stable y significativa. Tauro aprecia la inteligencia y la devoción de Virgo, y Virgo admira la fiabilidad y la sensualidad de Tauro. Disfrutan de una vida hogareña confortable y de placeres sencillos. Aunque no sea la pareja más explosivamente pasional, su amor es profundo, leal y duradero. La comunicación honesta y el cuidado mutuo son las claves de su felicidad compartida.",
     score: 5
   },
   "Taurus-Libra": {
@@ -124,7 +143,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Tauro, tierra, y Piscis, agua, forman una combinación naturalmente afín y muy romántica. Tauro ofrece la estabilidad y el sentido práctico que Piscis necesita, mientras que Piscis aporta sensibilidad, imaginación y compasión a la vida de Tauro. Profesionalmente, pueden trabajar bien juntos si Tauro se encarga de la estructura y Piscis de la visión creativa y el ambiente humano. Tauro ayuda a Piscis a materializar sus sueños, y Piscis inspira a Tauro.\n\nEn el amor, la relación entre Tauro y Piscis es tierna, afectuosa y llena de comprensión. Tauro se siente atraído por la naturaleza dulce y soñadora de Piscis, y Piscis encuentra en Tauro un refugio seguro y un amor constante. Ambos son sensuales y disfrutan de la intimidad y la conexión emocional. Tauro puede ayudar a Piscis a mantenerse con los pies en la tierra, y Piscis puede enseñar a Tauro a conectar con sus emociones más profundas. Es una unión que promete ser armoniosa y espiritualmente enriquecedora.",
     score: 5
   },
-  // Gemini
   "Gemini-Cancer": {
     report: "Géminis, el versátil signo de aire, y Cáncer, el sensible signo de agua, presentan una dinámica interesante pero que requiere adaptación. Géminis es mental y comunicativo, mientras que Cáncer es emocional y protector. Profesionalmente, pueden complementarse si Géminis aporta las ideas y la comunicación, y Cáncer la intuición y el cuidado del equipo. Géminis necesita variedad, Cáncer estabilidad. Si Géminis es considerado con los sentimientos de Cáncer, y Cáncer no ahoga la necesidad de libertad de Géminis, pueden lograr buenos resultados.\n\nEn el amor, Géminis y Cáncer pueden tener enfoques diferentes. Géminis busca un compañero intelectual y divertido, Cáncer un nido seguro y emocional. Géminis puede encontrar a Cáncer demasiado necesitado o temperamental, y Cáncer puede percibir a Géminis como superficial o poco comprometido. Sin embargo, el ingenio de Géminis puede alegrar a Cáncer, y la ternura de Cáncer puede tocar el corazón de Géminis. Necesitan mucha comunicación y paciencia para construir un entendimiento mutuo.",
     score: 3
@@ -161,7 +179,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Géminis, aire mutable, y Piscis, agua mutable, son dos signos de gran adaptabilidad pero con naturalezas muy diferentes, lo que puede llevar a una relación confusa o mágica. Géminis es lógico y comunicativo, Piscis es intuitivo y emocional. Profesionalmente, pueden tener dificultades para entenderse. Géminis busca hechos, Piscis percepciones. Sin embargo, la creatividad de Piscis puede inspirar a Géminis, y la elocuencia de Géminis puede ayudar a Piscis a expresar sus ideas. Necesitan claridad y límites.\n\nEn el amor, Géminis y Piscis pueden sentirse atraídos por el misterio y la sensibilidad del otro. Géminis puede encontrar fascinante la imaginación de Piscis, y Piscis puede sentirse cautivado por el ingenio de Géminis. Sin embargo, la necesidad de Piscis de una conexión emocional profunda puede chocar con la naturaleza más desapegada y mental de Géminis. Géminis puede herir sin querer la sensibilidad de Piscis. Si Géminis aprende a ser más empático y Piscis más directo en su comunicación, pueden encontrar un terreno común en su mutua creatividad y compasión.",
     score: 3
   },
-  // Cancer
   "Cancer-Leo": {
     report: "Cáncer, agua cardinal, y Leo, fuego fijo, son vecinos en el zodíaco y pueden formar una pareja cálida y protectora, aunque con algunas diferencias clave. Cáncer busca seguridad emocional y un hogar confortable, mientras que Leo anhela admiración y expresión creativa. Profesionalmente, si Leo lidera con generosidad y Cáncer apoya con lealtad e intuición, pueden ser muy efectivos. Leo aporta el brillo y Cáncer el cuidado. Deben evitar que el dramatismo de Leo abrume la sensibilidad de Cáncer.\n\nEn el amor, Cáncer se siente atraído por la calidez y la confianza de Leo, y Leo aprecia la devoción y el cariño de Cáncer. Leo ama ser el centro de atención, y Cáncer disfruta cuidando a sus seres queridos. Los desafíos surgen si Leo se vuelve demasiado egocéntrico o Cáncer demasiado posesivo o susceptible. Si Leo ofrece seguridad y reconocimiento a Cáncer, y Cáncer admira y apoya a Leo, pueden construir un hogar lleno de amor, lealtad y creatividad.",
     score: 4
@@ -194,7 +211,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Dos signos de agua, Cáncer (cardinal) y Piscis (mutable), comparten una profunda conexión emocional, intuitiva y compasiva. Ambos son sensibles, románticos y anhelan una unión espiritual. Profesionalmente, pueden crear un ambiente de trabajo muy inspirador y solidario, especialmente en campos creativos o de ayuda. Cáncer aporta la tenacidad para iniciar y proteger, mientras que Piscis ofrece imaginación y empatía. Se entienden bien y se apoyan mutuamente en sus esfuerzos.\n\nEn el amor, la relación entre Cáncer y Piscis es mágica, tierna y profundamente satisfactoria. Se entienden a un nivel anímico y comparten una gran capacidad de amar y cuidar. Ambos son muy románticos y disfrutan creando un mundo de ensueño juntos. Cáncer ofrece a Piscis la seguridad que necesita, y Piscis colma a Cáncer de afecto y comprensión. El único riesgo es que ambos pueden ser demasiado sensibles o evasivos ante los problemas. Si cultivan la comunicación abierta, su amor será un refugio de paz y felicidad.",
     score: 5
   },
-  // Leo
   "Leo-Virgo": {
     report: "Leo, el exuberante signo de fuego, y Virgo, el práctico signo de tierra, forman una pareja que combina brillo y eficiencia, aunque con ajustes. Leo es expansivo y busca admiración, Virgo es reservado y busca la perfección. Profesionalmente, pueden ser un equipo efectivo si Leo lidera con carisma y Virgo organiza con meticulosidad. Leo puede inspirar a Virgo, y Virgo puede ayudar a Leo a concretar sus ideas y a prestar atención a los detalles. Leo debe evitar ser demasiado autoritario, y Virgo no ser excesivamente crítico.\n\nEn el amor, Leo se siente atraído por la inteligencia y la dedicación de Virgo, mientras que Virgo admira la confianza y la calidez de Leo. Sin embargo, la necesidad de Leo de ser el centro de atención puede chocar con la modestia de Virgo. Virgo puede encontrar a Leo algo egocéntrico, y Leo puede ver a Virgo como demasiado crítico o frío. Si Leo aprende a apreciar el servicio y el afecto discreto de Virgo, y Virgo se permite disfrutar del brillo y la generosidad de Leo, pueden construir una relación estable y afectuosa.",
     score: 3
@@ -223,7 +239,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Leo, el extrovertido signo de fuego, y Piscis, el sensible signo de agua, forman una pareja que combina el drama y el ensueño. Leo es seguro y busca brillar, Piscis es compasivo y busca la conexión espiritual. Profesionalmente, sus estilos son diferentes. Leo lidera con carisma, Piscis inspira con empatía. Leo puede ayudar a Piscis a ganar confianza, y Piscis puede suavizar el ego de Leo y aportar una visión creativa. Necesitan apreciar sus fortalezas mutuas para colaborar eficazmente.\n\nEn el amor, Leo se siente atraído por la naturaleza gentil y misteriosa de Piscis, y Piscis admira la fuerza y la generosidad de Leo. Leo puede ofrecer a Piscis protección y un mundo de fantasía, mientras que Piscis puede ofrecer a Leo una devoción y una comprensión emocional profundas. Los desafíos surgen si Leo se vuelve demasiado dominante o insensible, o si Piscis se retrae en su mundo interior. Si Leo aprende a ser más tierno y Piscis más expresivo, pueden crear una relación mágica, llena de romance y apoyo mutuo.",
     score: 3
   },
-  // Virgo
   "Virgo-Libra": {
     report: "Virgo, tierra mutable, y Libra, aire cardinal, pueden formar una pareja agradable y refinada si logran equilibrar sus diferencias. Virgo es práctico y analítico, Libra es sociable y busca la armonía. Profesionalmente, pueden colaborar bien en proyectos que requieran atención al detalle y habilidades sociales. Virgo aporta la organización y la eficiencia, Libra la diplomacia y el sentido estético. Virgo debe cuidar no ser demasiado crítico, y Libra evitar la indecisión.\n\nEn el amor, Virgo y Libra comparten un gusto por la belleza y el orden. Virgo se siente atraído por el encanto y la amabilidad de Libra, y Libra admira la inteligencia y la dedicación de Virgo. Sin embargo, Virgo puede encontrar a Libra demasiado superficial o perezoso, y Libra puede ver a Virgo como excesivamente crítico o preocupado. Si Virgo aprende a relajarse y disfrutar más, y Libra se esfueraza por ser más práctico y decidido, pueden construir una relación armoniosa, basada en el respeto y la compañía agradable.",
     score: 4
@@ -248,7 +263,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Virgo y Piscis son signos opuestos en el zodíaco (tierra mutable y agua mutable), lo que crea una fuerte atracción y una dinámica de complementariedad. Virgo es práctico y analítico, Piscis es soñador y empático. Profesionalmente, pueden ser un excelente equipo si combinan sus fortalezas. Virgo aporta la organización y la atención al detalle, Piscis la creatividad y la intuición. Virgo puede ayudar a Piscis a materializar sus ideas, y Piscis puede inspirar a Virgo y suavizar su crítica.\n\nEn el amor, la relación entre Virgo y Piscis puede ser profundamente sanadora y romántica. Virgo se siente atraído por la sensibilidad y la compasión de Piscis, y Piscis encuentra en Virgo la estabilidad y el cuidado que necesita. Virgo puede ofrecer a Piscis un ancla en la realidad, y Piscis puede ayudar a Virgo a conectar con sus emociones y a ser menos autocrítico. El desafío es que Virgo no sea demasiado crítico con la naturaleza soñadora de Piscis, y que Piscis no se retraiga ante la practicidad de Virgo. Con amor y comprensión, su unión puede ser mágica.",
     score: 4
   },
-  // Libra
   "Libra-Scorpio": {
     report: "Libra, aire cardinal, y Escorpio, agua fija, forman una pareja intrigante y a menudo intensa. Libra busca armonía y conexión social, Escorpio anhela profundidad emocional y transformación. Profesionalmente, pueden ser un equipo poderoso si Libra aporta la diplomacia y las habilidades sociales, y Escorpio la estrategia y la determinación. Libra puede suavizar la intensidad de Escorpio, y Escorpio puede ayudar a Libra a tomar decisiones y a profundizar. Deben cuidar las luchas de poder sutiles.\n\nEn el amor, la atracción entre Libra y Escorpio es fuerte y magnética. Libra se siente atraído por el misterio y la pasión de Escorpio, y Escorpio valora el encanto y la inteligencia de Libra. Sin embargo, la necesidad de Escorpio de control y fusión emocional puede chocar con la naturaleza más ligera y sociable de Libra. Libra puede encontrar a Escorpio demasiado posesivo o celoso, y Escorpio puede ver a Libra como superficial o indeciso. Si Libra está dispuesto a explorar las profundidades emocionales y Escorpio a confiar y dar más espacio, su relación puede ser transformadora y muy apasionada.",
     score: 3
@@ -269,7 +283,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Libra, aire cardinal, y Piscis, agua mutable, son dos signos románticos y artísticos que pueden crear una relación hermosa pero a veces idealizada. Libra busca armonía y belleza en las relaciones, Piscis anhela una conexión anímica y compasiva. Profesionalmente, pueden colaborar bien en campos creativos o humanitarios. Libra aporta el sentido estético y la diplomacia, Piscis la imaginación y la empatía. El desafío es que ambos pueden ser indecisos o evitar la confrontación, lo que puede dificultar la toma de decisiones prácticas.\n\nEn el amor, Libra y Piscis se sienten atraídos por la sensibilidad y el idealismo del otro. Ambos son gentiles, afectuosos y disfrutan creando un ambiente romántico. Sin embargo, la necesidad de Piscis de una fusión emocional profunda puede ser abrumadora para el más sociable y mental Libra. Libra puede encontrar a Piscis demasiado evasivo o sensible, y Piscis puede percibir a Libra como superficial o distante. Si Libra aprende a conectar con la profundidad emocional de Piscis, y Piscis a comunicar sus necesidades más claramente, pueden disfrutar de una relación tierna y llena de inspiración.",
     score: 3
   },
-  // Scorpio
   "Scorpio-Sagittarius": {
     report: "Escorpio, el intenso signo de agua, y Sagitario, el aventurero signo de fuego, forman una pareja intrigante pero con diferencias fundamentales. Escorpio busca profundidad y transformación, Sagitario anhela libertad y expansión. Profesionalmente, pueden ser un dúo poderoso si canalizan sus energías. Escorpio aporta la estrategia y la determinación, Sagitario la visión y el optimismo. La franqueza de Sagitario puede chocar con la naturaleza reservada de Escorpio. Necesitan confianza y comunicación clara.\n\nEn el amor, la atracción puede ser fuerte debido a la pasión de Escorpio y el entusiasmo de Sagitario. Sin embargo, la necesidad de Escorpio de intimidad profunda y control puede entrar en conflicto con el deseo de Sagitario de independencia y exploración. Sagitario puede encontrar a Escorpio demasiado posesivo o celoso, y Escorpio puede ver a Sagitario como superficial o poco comprometido. Si Escorpio aprende a confiar y a dar espacio, y Sagitario está dispuesto a profundizar en la conexión emocional, pueden tener una relación apasionante y llena de crecimiento.",
     score: 3
@@ -286,7 +299,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Dos signos de agua, Escorpio (fijo) y Piscis (mutable), comparten una conexión emocional e intuitiva excepcionalmente profunda. Ambos son sensibles, compasivos y buscan una unión espiritual y trascendente. Profesionalmente, pueden ser un equipo muy creativo e inspirador, especialmente en campos artísticos o de sanación. Escorpio aporta la determinación y la capacidad de profundizar, mientras que Piscis ofrece la imaginación y la empatía. Se entienden a un nivel casi telepático.\n\nEn el amor, la compatibilidad entre Escorpio y Piscis es una de las más elevadas y mágicas del zodíaco. Se aman con una intensidad y una devoción que pocos pueden igualar. Escorpio ofrece a Piscis la fuerza y la protección que necesita, y Piscis colma a Escorpio de amor incondicional y comprensión. Su conexión es anímica y a menudo kármica. El único riesgo es que pueden perderse en un mundo de emociones intensas. Si mantienen un cable a tierra, su amor será una fuente inagotable de inspiración y felicidad.",
     score: 5
   },
-  // Sagittarius
   "Sagittarius-Capricorn": {
     report: "Sagitario, el optimista signo de fuego, y Capricornio, el pragmático signo de tierra, tienen enfoques de vida muy distintos. Sagitario es aventurero y busca la expansión, Capricornio es cauto y busca la seguridad y el logro. Profesionalmente, pueden complementarse si Sagitario aporta la visión y el entusiasmo, y Capricornio la estructura y la disciplina para llevar las ideas a cabo. La impaciencia de Sagitario puede chocar con la naturaleza metódica de Capricornio. Necesitan respetar los métodos del otro.\n\nEn el amor, Sagitario y Capricornio deben trabajar para encontrar un terreno común. Sagitario busca libertad y diversión, Capricornio estabilidad y compromiso. Sagitario puede encontrar a Capricornio demasiado serio o restrictivo, y Capricornio puede ver a Sagitario como irresponsable o poco fiable. Sin embargo, Sagitario puede enseñar a Capricornio a relajarse y disfrutar más de la vida, y Capricornio puede ofrecer a Sagitario una base sólida y un enfoque práctico. Si ambos están dispuestos a aprender y a ceder, pueden construir una relación equilibrada.",
     score: 3
@@ -299,7 +311,6 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Sagitario, fuego mutable, y Piscis, agua mutable, son dos signos regidos tradicionalmente por Júpiter, lo que les da una base de idealismo y búsqueda de significado, pero sus elementos pueden chocar. Sagitario es extrovertido y directo, Piscis es introspectivo y sensible. Profesionalmente, pueden tener dificultades si no se comunican bien. La franqueza de Sagitario puede herir a Piscis, y la evasividad de Piscis puede frustrar a Sagitario. Sin embargo, la visión de Sagitario puede inspirar la creatividad de Piscis, y la compasión de Piscis puede suavizar a Sagitario.\n\nEn el amor, Sagitario y Piscis necesitan mucha comprensión y adaptación. Sagitario busca aventura y libertad, Piscis anhela una conexión emocional profunda y romántica. Sagitario puede encontrar a Piscis demasiado necesitado o sensible, y Piscis puede ver a Sagitario como descuidado o insensible. Sin embargo, ambos son compasivos en el fondo. Si Sagitario aprende a ser más tierno y considerado, y Piscis a dar más espacio y a comunicar sus necesidades directamente, pueden encontrar un punto de encuentro en su mutuo idealismo y generosidad.",
     score: 3
   },
-  // Capricorn
   "Capricorn-Aquarius": {
     report: "Capricornio, tierra cardinal, y Acuario, aire fijo, son vecinos en el zodíaco pero con enfoques muy diferentes. Capricornio es tradicional, estructurado y práctico, mientras que Acuario es progresista, innovador y valora la libertad individual. Profesionalmente, pueden ser un equipo interesante si Capricornio aporta la disciplina para implementar las ideas vanguardistas de Acuario. Capricornio busca resultados tangibles, Acuario la originalidad. Deben respetar sus diferentes formas de trabajar para evitar frustraciones.\n\nEn el amor, Capricornio y Acuario pueden encontrar difícil conectar a un nivel profundo. Capricornio busca estabilidad y compromiso convencional, mientras que Acuario necesita independencia y una relación menos tradicional. Capricornio puede ver a Acuario como errático o poco fiable, y Acuario puede encontrar a Capricornio demasiado rígido o controlador. Sin embargo, ambos son inteligentes y pueden respetarse mutuamente. Si Capricornio se abre a nuevas formas de pensar y Acuario valora la lealtad de Capricornio, pueden construir una relación basada en el respeto intelectual y metas compartidas, aunque poco convencional.",
     score: 3
@@ -308,20 +319,18 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     report: "Capricornio, el pragmático signo de tierra, y Piscis, el soñador signo de agua, forman una combinación sorprendentemente armoniosa y de apoyo mutuo. Capricornio ofrece la estructura y la seguridad que Piscis necesita, mientras que Piscis aporta sensibilidad, compasión e imaginación a la vida de Capricornio. Profesionalmente, trabajan muy bien juntos. Capricornio se encarga de la planificación y la ejecución, y Piscis aporta la visión creativa y la empatía. Capricornio ayuda a Piscis a materializar sus sueños, y Piscis suaviza la rigidez de Capricornio.\n\nEn el amor, la relación entre Capricornio y Piscis es tierna, leal y profundamente satisfactoria. Capricornio se siente atraído por la naturaleza gentil y compasiva de Piscis, y Piscis encuentra en Capricornio la estabilidad y la protección que anhela. Capricornio puede ayudar a Piscis a sentirse seguro y a enfrentar la realidad, mientras que Piscis puede enseñar a Capricornio a conectar con sus emociones y a disfrutar de los placeres simples de la vida. Es una unión que promete ser duradera, basada en el cuidado mutuo y un profundo entendimiento.",
     score: 4
   },
-  // Aquarius
   "Aquarius-Pisces": {
     report: "Acuario, aire fijo, y Piscis, agua mutable, son los dos últimos signos del zodíaco y comparten una cualidad humanitaria y una visión que trasciende lo mundano, aunque de maneras diferentes. Acuario es intelectual y enfocado en el colectivo, Piscis es emocional y enfocado en la compasión universal. Profesionalmente, pueden ser un equipo muy creativo e inspirador, especialmente en causas sociales o proyectos artísticos. Acuario aporta las ideas innovadoras y Piscis la sensibilidad y la intuición. Deben cuidar que la lógica de Acuario no choque con la emocionalidad de Piscis.\n\nEn el amor, Acuario y Piscis pueden formar una unión espiritual y poco convencional. Acuario se siente atraído por la naturaleza mística y compasiva de Piscis, y Piscis admira la originalidad y el idealismo de Acuario. Sin embargo, la necesidad de Piscis de profunda conexión emocional puede ser un desafío para el más desapegado Acuario. Acuario puede encontrar a Piscis demasiado sensible o dependiente, y Piscis puede sentirse incomprendido por la necesidad de Acuario de libertad. Si Acuario aprende a ofrecer más calidez y Piscis a respetar la independencia de Acuario, pueden construir una relación basada en ideales compartidos y una profunda comprensión mutua.",
     score: 3
   }
 };
 
+
 function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, locale: Locale): CompatibilityReport {
-  // En una aplicación real, aquí se podrían usar plantillas más elaboradas y traducciones del diccionario.
-  // Por ahora, un mensaje genérico que intente seguir el tono.
-  const reportText = `La conexión entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente de [cualidad principal de ${sign1}], interactúa con ${sign2}, quien aporta su característica [cualidad principal de ${sign2}], creando una dinámica que puede ser tanto complementaria como desafiante. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente.\n\nEn el ámbito profesional, la colaboración entre ${sign1} y ${sign2} puede ser [evaluación profesional, ej: 'sorprendentemente productiva si logran alinear sus diversos talentos' o 'un campo de aprendizaje donde la paciencia es clave']. ${sign1} tiende a abordar los proyectos con [fortaleza de ${sign1}], mientras que ${sign2} usualmente contribuye con [fortaleza de ${sign2}]. Para que su sinergia florezca, es crucial que ${sign1} aprecie [virtud de ${sign2} a valorar] y que ${sign2} reconozca [virtud de ${sign1} a valorar]. La comunicación abierta sobre expectativas y métodos de trabajo allanará el camino hacia el éxito compartido.\n\nEn el amor, la relación entre ${sign1} y ${sign2} se presenta como [evaluación amorosa, ej: 'una danza de contrastes que puede llevar a una armonía inesperada' o 'un viaje de descubrimiento mutuo lleno de lecciones valiosas']. La atracción inicial puede surgir de [fuente de atracción]. Sin embargo, para que el lazo se fortalezca, ${sign1} necesitará comprender [necesidad de ${sign2} en el amor], y ${sign2} deberá esforzarse por aceptar [necesidad de ${sign1} en el amor]. El respeto por las diferencias individuales, la voluntad de adaptarse y el cultivo de un espacio emocional seguro serán fundamentales para una unión duradera y significativa.\n(Este es un informe de compatibilidad general. Los detalles específicos pueden variar basados en las cartas natales completas de los individuos.)`;
+  const reportText = `La conexión entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente.\n\nEn el ámbito profesional, la colaboración puede ser productiva si logran alinear sus talentos. Para que su sinergia florezca, es crucial apreciar las virtudes del otro y comunicarse abiertamente. En el amor, la relación se presenta como un viaje de descubrimiento. El respeto por las diferencias y la voluntad de adaptarse serán fundamentales para una unión duradera. (Este es un informe de compatibilidad general. Los detalles específicos pueden variar.)`;
   return {
     report: reportText,
-    score: Math.floor(Math.random() * 3) + 2 // Puntuación aleatoria entre 2 y 4 para los genéricos
+    score: Math.floor(Math.random() * 3) + 2 
   };
 }
 
@@ -335,7 +344,6 @@ export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, l
   } else if (compatibilityPairings[key2]) {
     reportData = compatibilityPairings[key2];
   } else {
-    // Si no se encuentra una entrada específica, se genera un informe genérico.
     console.warn(`No specific compatibility report found for ${sign1}-${sign2}. Using generic report.`);
     reportData = getGenericCompatibilityReport(sign1, sign2, locale);
   }
@@ -393,14 +401,12 @@ export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): Lu
 
 
 export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
-  const today = new Date(); // This will be client's 'today' when called in useEffect
-  const dayOfMonth = today.getDate(); // 1-31
+  const today = new Date(); 
+  const dayOfMonth = today.getDate(); 
 
   let phase: string;
   let illumination: number;
 
-  // Simplified deterministic logic based on the day of the month
-  // These phase names are in Spanish; ideally, they'd be keys for localization.
   if (dayOfMonth <= 4) {
     phase = "Luna Nueva";
     illumination = Math.round((dayOfMonth / 4) * 15);
@@ -415,10 +421,10 @@ export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
     illumination = 100 - Math.round(((dayOfMonth - 18) / 7) * 50);
   } else {
     phase = "Menguante Gibosa";
-    illumination = 50 - Math.round(((dayOfMonth - 25) / (6)) * 50); // Approx 6 days left
+    illumination = 50 - Math.round(((dayOfMonth - 25) / (6)) * 50); 
   }
 
-  illumination = Math.max(0, Math.min(100, illumination)); // Ensure illumination is within 0-100
+  illumination = Math.max(0, Math.min(100, illumination)); 
 
   const nextFullMoonDate = new Date(today);
   if (today.getDate() > 15 && phase !== "Luna Llena") {
@@ -442,8 +448,7 @@ export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
 
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData => {
-  const month = birthDate.getMonth(); // 0-11
-  // Simplistic placeholder logic
+  const month = birthDate.getMonth(); 
   const ascendantSign = ZODIAC_SIGNS[month % 12].name;
   return {
     sign: ascendantSign,
@@ -458,7 +463,7 @@ export const MayanAstrologyIcon = FeatherIcon;
 export const GalacticTonesIcon = Layers;
 export const CompatibilityIcon = Heart;
 export const KinCalculatorIcon = CalculatorIcon;
-export const TarotPersonalityTestIcon = HelpCircle; // Icon for the new test
+export const TarotPersonalityTestIcon = HelpCircle; 
 
 
 // --- Full data for Chinese Astrology ---
@@ -581,12 +586,10 @@ export const GALACTIC_TONES: GalacticTone[] = [
 ];
 
 
-// Base date: July 26, 1987, is Kin 1 (Imix, Tone 1) in the Dreamspell count.
-const DREAMSPELL_BASE_DATE_GREGORIAN = new Date(1987, 7 - 1, 26); // Month is 0-indexed
-const DREAMSPELL_BASE_KIN_NUMBER = 1; // Kin 1: Imix (index 0), Tone 1.
+const DREAMSPELL_BASE_DATE_GREGORIAN = new Date(1987, 7 - 1, 26); 
+const DREAMSPELL_BASE_KIN_NUMBER = 1; 
 
 function getDaysDifference(date1: Date, date2: Date): number {
-  // Normalize dates to UTC midnight to avoid timezone issues in day difference calculation
   const utcDate1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
   const utcDate2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
   const diffTime = utcDate2 - utcDate1;
@@ -599,16 +602,9 @@ export function calculateMayanKin(birthDate: Date): MayanKinInfo | null {
   }
 
   const daysDiff = getDaysDifference(DREAMSPELL_BASE_DATE_GREGORIAN, birthDate);
-
-  // Kin index (0-259)
   const kinIndexToday = ( (DREAMSPELL_BASE_KIN_NUMBER - 1 + daysDiff) % 260 + 260) % 260;
-
-  // Kin number (1-260) for display
   const kinNumber = kinIndexToday + 1;
-
-  // Day Sign (Nahual) - index 0-19
   const daySignIndex = kinIndexToday % 20;
-  // Tone - index 0-12 for array, but we need to match tone.id which is 1-13
   const toneId = (kinIndexToday % 13) + 1;
 
   const daySign = MAYAN_ZODIAC_SIGNS[daySignIndex];
@@ -629,7 +625,4 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
   "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"
 ];
 
-
-// Aliased DogIcon from Dog and TypeIcon from Type for clarity if needed elsewhere, though direct use is fine.
-export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon };
-
+export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon, Briefcase as WorkIcon };

@@ -13,10 +13,17 @@ export type ZodiacSignName =
   | "Aquarius"
   | "Pisces";
 
+export type AstrologicalElement = "Fire" | "Earth" | "Air" | "Water";
+export type AstrologicalPolarity = "Masculine" | "Feminine";
+export type AstrologicalModality = "Cardinal" | "Fixed" | "Mutable";
+
 export interface ZodiacSign {
   name: ZodiacSignName;
   icon?: React.ElementType; // For Lucide icons or custom components
   dateRange: string;
+  element: AstrologicalElement;
+  polarity: AstrologicalPolarity;
+  modality: AstrologicalModality;
 }
 
 export interface HoroscopeData {
@@ -26,7 +33,7 @@ export interface HoroscopeData {
   monthly: string;
 }
 
-export interface HoroscopeDetail { // This was missing but used by horoscope-flow.ts
+export interface HoroscopeDetail {
   main: string;
   love: string;
   money: string;
