@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A Genkit flow to generate zodiac sign compatibility reports.
@@ -27,6 +28,9 @@ const CompatibilityReportOutputSchema = z.object({
   score: z.number().min(1).max(5).describe('A compatibility score from 1 (low) to 5 (high).'),
 });
 export type CompatibilityReportOutput = z.infer<typeof CompatibilityReportOutputSchema>;
+
+// In-memory cache for compatibility reports
+const compatibilityCache = new Map<string, CompatibilityReportOutput>();
 
 const compatibilityPrompt = ai.definePrompt({
   name: 'compatibilityReportPrompt',
@@ -58,6 +62,16 @@ const getCompatibilityReportFlowInternal = ai.defineFlow(
     outputSchema: CompatibilityReportOutputSchema,
   },
   async (input) => {
+    // Normalize sign order for cache key to ensure (Aries, Taurus) and (Taurus, Aries) use the same cache entry
+    const sortedSigns = [input.sign1, input.sign2].sort();
+    const cacheKey = `${sortedSigns[0]}-${sortedSigns[1]}-${input.locale}`;
+
+    if (compatibilityCache.has(cacheKey)) {
+      console.log(`Cache hit for compatibility: ${cacheKey}`);
+      return compatibilityCache.get(cacheKey)!;
+    }
+    console.log(`Cache miss for compatibility: ${cacheKey}. Generating new report.`);
+
     const {output} = await compatibilityPrompt(input);
     if (!output) {
       throw new Error('Compatibility report AI provided no output.');
@@ -67,6 +81,7 @@ const getCompatibilityReportFlowInternal = ai.defineFlow(
     if (output.score < 1) output.score = 1;
     if (output.score > 5) output.score = 5;
     
+    compatibilityCache.set(cacheKey, output); // Store the generated report in cache
     return output;
   }
 );
@@ -74,3 +89,4 @@ const getCompatibilityReportFlowInternal = ai.defineFlow(
 export async function getCompatibilityReportFlow(input: CompatibilityReportInput): Promise<CompatibilityReportOutput> {
   return getCompatibilityReportFlowInternal(input);
 }
+
