@@ -29,7 +29,7 @@ const TarotReadingOutputSchema = z.object({
   cardName: z.string().describe('The name of the drawn tarot card (e.g., "The Magician", "The Lovers"). The AI should pick one from the Major Arcana.'),
   cardMeaning: z.string().describe('A general interpretation or meaning of the drawn tarot card. This should be 2-3 sentences.'),
   advice: z.string().describe('Specific advice or insight related to the user\'s question, based on the drawn card. This should be 2-3 sentences.'),
-  imagePlaceholderUrl: z.string().url().describe('A placeholder image URL for the tarot card. Use "https://placehold.co/267x470.png" as a generic placeholder.'),
+  imagePlaceholderUrl: z.string().describe('A placeholder image URL for the tarot card. Use "https://placehold.co/267x470.png" as a generic placeholder.'),
 });
 export type TarotReadingOutput = z.infer<typeof TarotReadingOutputSchema>;
 
@@ -84,3 +84,4 @@ const tarotReadingFlowInternal = ai.defineFlow(
 export async function tarotReadingFlow(input: TarotReadingInput): Promise<TarotReadingOutput> {
   return tarotReadingFlowInternal(input);
 }
+
