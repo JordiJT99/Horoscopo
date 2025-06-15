@@ -25,14 +25,15 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   return (
     <div className="bg-sub-header-background shadow-md sticky top-14 z-40"> {/* Assuming header height is 14 (h-14 = 3.5rem = 56px) */}
       <div className="container mx-auto px-0 sm:px-2">
-        <div className="flex justify-start items-center overflow-x-auto whitespace-nowrap no-scrollbar py-0.5">
+        {/* Removed no-scrollbar for diagnosis, increased padding for buttons */}
+        <div className="flex justify-start items-center overflow-x-auto whitespace-nowrap py-0.5">
           {tabs.map((tab) => (
             <Button
               key={tab.id}
               variant="ghost"
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "rounded-md py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-medium transition-colors duration-150 ease-in-out flex-shrink-0",
+                "rounded-md py-2.5 px-4 sm:px-5 text-xs sm:text-sm font-medium transition-colors duration-150 ease-in-out flex-shrink-0", // Increased padding
                 "hover:bg-sub-header-tab-active-background/20",
                 activeTab === tab.id
                   ? "bg-sub-header-tab-active-background text-sub-header-tab-active-foreground shadow-sm"
@@ -48,8 +49,9 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   );
 };
 
-// Helper CSS to hide scrollbar (optional, can be in globals.css)
+// Helper CSS to hide scrollbar (optional, can be in globals.css if re-added)
 // .no-scrollbar::-webkit-scrollbar { display: none; }
 // .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 export default SubHeaderTabs;
+
