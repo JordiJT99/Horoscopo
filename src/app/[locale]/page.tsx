@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState, useMemo, use } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
@@ -11,7 +12,7 @@ import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } f
 import { cn } from '@/lib/utils';
 
 import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -47,19 +48,20 @@ const getModalityIcon = (modality: AstrologicalModality, className?: string) => 
 
 const getPolarityIcon = (polarity: AstrologicalPolarity, className?: string) => {
   const props = { className: cn("w-3.5 h-3.5 sm:w-4 sm:h-4", className) };
-  if (polarity === "Masculine") return <Sun {...props} />; // Using Sun for Masculine
-  if (polarity === "Feminine") return <Shield {...props} />; // Using Shield for Feminine
+  if (polarity === "Masculine") return <Sun {...props} />;
+  if (polarity === "Feminine") return <Shield {...props} />;
   return <Sparkles {...props} />;
 };
 
 function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading: authLoading } = useAuth();
+  const router = useRouter(); // Initialize useRouter
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
-  const [currentPeriodHoroscope, setCurrentPeriodHoroscope] = useState<HoroscopeDetail | null>(null);
+  const [currentDailyHoroscope, setCurrentDailyHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(false);
-  const [activeSubTab, setActiveSubTab] = useState<HoroscopePeriod>('today');
+  const [activeDailyPeriod, setActiveDailyPeriod] = useState<HoroscopePeriod>('today'); // Manages 'yesterday', 'today', 'tomorrow' for this page
   const [selectedProfile, setSelectedProfile] = useState<'user' | 'generic'>('user');
 
   useEffect(() => {
@@ -119,29 +121,29 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
 
   useEffect(() => {
     if (fullHoroscopeData) {
-      switch (activeSubTab) {
-        case 'weekly':
-          setCurrentPeriodHoroscope(fullHoroscopeData.weekly);
-          break;
-        case 'monthly':
-          setCurrentPeriodHoroscope(fullHoroscopeData.monthly);
-          break;
-        case 'today':
-        case 'yesterday': // Placeholder for yesterday - uses today's data
-        case 'tomorrow':  // Placeholder for tomorrow - uses today's data
-        default:
-          setCurrentPeriodHoroscope(fullHoroscopeData.daily);
-          break;
-      }
+      // 'yesterday', 'today', 'tomorrow' currently all show daily data.
+      // This can be expanded if specific data for yesterday/tomorrow becomes available.
+      setCurrentDailyHoroscope(fullHoroscopeData.daily);
     } else {
-      setCurrentPeriodHoroscope(null);
+      setCurrentDailyHoroscope(null);
     }
-  }, [activeSubTab, fullHoroscopeData]);
+  }, [activeDailyPeriod, fullHoroscopeData]);
+
+
+  const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
+    if (tab === 'weekly') {
+      router.push(`/${locale}/weekly-horoscope`);
+    } else if (tab === 'monthly') {
+      router.push(`/${locale}/monthly-horoscope`);
+    } else {
+      setActiveDailyPeriod(tab); // For 'yesterday', 'today', 'tomorrow'
+    }
+  };
 
 
   const UserZodiacDetailCard = () => {
     const displaySign = selectedProfile === 'user' && userSunSign ? userSunSign : ZODIAC_SIGNS.find(s => s.name === "Aries")!;
-    const displayName = selectedProfile === 'user' && onboardingData?.name ? onboardingData.name : (dictionary['HomePage.genericProfile'] || "Horóscopos");
+    // const displayName = selectedProfile === 'user' && onboardingData?.name ? onboardingData.name : (dictionary['HomePage.genericProfile'] || "Horóscopos");
     
     if (authLoading && selectedProfile === 'user') {
         return <Skeleton className="h-[380px] w-full rounded-lg max-w-md mx-auto my-4 bg-card/50" />;
@@ -162,17 +164,25 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
         </Card>
       );
     }
+    
+    const cardTitle = selectedProfile === 'user' 
+        ? (onboardingData?.name ? (dictionary['HomePage.userForecastTitle'] || "{userName}'s Cosmic Forecast").replace('{userName}', onboardingData.name) : (dictionary['HomePage.userForecastTitle'] || "{userName}'s Cosmic Forecast").replace('{userName}', user?.displayName || 'Usuario'))
+        : (dictionary['HomePage.genericProfile'] || "Horóscopos");
+
 
     return (
       <Card className="bg-card/80 backdrop-blur-sm border-primary/30 text-center p-3 sm:p-4 max-w-md mx-auto my-4 overflow-hidden rounded-xl shadow-xl">
         <CardHeader className="p-2 space-y-1">
-          <CardTitle className="text-xl sm:text-2xl font-bold font-headline text-foreground">
-            {dictionary[displaySign.name] || displaySign.name}
+           <CardTitle className="text-xl sm:text-2xl font-bold font-headline text-foreground">
+            {cardTitle}
           </CardTitle>
-          <div className="flex justify-center items-center space-x-3 text-xs sm:text-sm text-muted-foreground">
-            <span className="flex items-center gap-1">{getElementIcon(displaySign.element, "text-primary")} {dictionary['Zodiac.element']}: {dictionary[displaySign.element] || displaySign.element}</span>
-            <span className="flex items-center gap-1">{getModalityIcon(displaySign.modality, "text-primary")} {dictionary['Zodiac.modality']}: {dictionary[displaySign.modality] || displaySign.modality}</span>
-            <span className="flex items-center gap-1">{getPolarityIcon(displaySign.polarity, "text-primary")} {dictionary['Zodiac.polarity']}: {dictionary[displaySign.polarity] || displaySign.polarity}</span>
+          <div className="text-center mt-1 mb-2">
+            <p className="text-2xl font-headline font-semibold text-primary">{dictionary[displaySign.name] || displaySign.name}</p>
+            <div className="flex justify-center items-center space-x-3 text-xs sm:text-sm text-muted-foreground mt-1">
+                <span className="flex items-center gap-1">{getElementIcon(displaySign.element, "text-primary")} {dictionary['Zodiac.elementShort'] || 'Elem'}: {dictionary[displaySign.element] || displaySign.element}</span>
+                <span className="flex items-center gap-1">{getModalityIcon(displaySign.modality, "text-primary")} {dictionary['Zodiac.modalityShort'] || 'Mod'}: {dictionary[displaySign.modality] || displaySign.modality}</span>
+                <span className="flex items-center gap-1">{getPolarityIcon(displaySign.polarity, "text-primary")} {dictionary['Zodiac.polarityShort'] || 'Pol'}: {dictionary[displaySign.polarity] || displaySign.polarity}</span>
+            </div>
           </div>
         </CardHeader>
 
@@ -180,7 +190,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
           <div className="flex justify-center my-2 sm:my-3">
             <Avatar className="w-28 h-28 sm:w-36 sm:h-36 border-2 border-primary shadow-lg">
               <AvatarImage 
-                src={`https://placehold.co/150x150.png`} // Placeholder
+                src={`https://placehold.co/150x150.png`} 
                 alt={displaySign.name} 
                 data-ai-hint={`${displaySign.name} zodiac sign symbol illustration vibrant cosmic glow`} 
               />
@@ -198,10 +208,16 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
                 </Button>
             </div>
           </div>
-
-          <Button variant="outline" size="sm" className="w-full sm:w-auto mt-2 sm:mt-3 border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs" asChild>
-            <Link href={`/${locale}/profile`}><Edit3 className="mr-1.5 h-3.5 w-3.5"/>{dictionary['HomePage.editProfileButton'] || "Editar Perfil"}</Link>
-          </Button>
+           {selectedProfile === 'user' && user && (
+            <Button variant="outline" size="sm" className="w-full sm:w-auto mt-2 sm:mt-3 border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs" asChild>
+                <Link href={`/${locale}/profile`}><Edit3 className="mr-1.5 h-3.5 w-3.5"/>{dictionary['HomePage.editProfileButton'] || "Editar Perfil"}</Link>
+            </Button>
+           )}
+           {selectedProfile === 'generic' && (
+             <Button variant="outline" size="sm" className="w-full sm:w-auto mt-2 sm:mt-3 border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs" asChild>
+                <Link href={`/${locale}/more`}><AlignJustify className="mr-1.5 h-3.5 w-3.5"/>{dictionary['HomePage.moreDetailsButton'] || "Más Detalles"}</Link>
+            </Button>
+           )}
         </CardContent>
       </Card>
     );
@@ -223,17 +239,17 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
   );
 
   const horoscopeCategories = [
-    { id: "main", titleKey: "HomePage.workCategory", icon: WorkIcon, content: currentPeriodHoroscope?.main, progress: 71 },
-    { id: "love", titleKey: "HoroscopeSection.loveTitle", icon: Heart, content: currentPeriodHoroscope?.love, progress: 85 },
-    { id: "money", titleKey: "HoroscopeSection.moneyTitle", icon: CircleDollarSign, content: currentPeriodHoroscope?.money, progress: 60 },
-    { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: currentPeriodHoroscope?.health, progress: 90 },
+    { id: "main", titleKey: "HomePage.workCategory", icon: WorkIcon, content: currentDailyHoroscope?.main, progress: 71 },
+    { id: "love", titleKey: "HoroscopeSection.loveTitle", icon: Heart, content: currentDailyHoroscope?.love, progress: 85 },
+    { id: "money", titleKey: "HoroscopeSection.moneyTitle", icon: CircleDollarSign, content: currentDailyHoroscope?.money, progress: 60 },
+    { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: currentDailyHoroscope?.health, progress: 90 },
   ];
 
   const currentDate = new Date().toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' });
 
   return (
     <div className="flex flex-col min-h-screen">
-      <SubHeaderTabs dictionary={dictionary} activeTab={activeSubTab} onTabChange={setActiveSubTab} />
+      <SubHeaderTabs dictionary={dictionary} activeTab={activeDailyPeriod} onTabChange={handleSubHeaderTabSelect} />
       
       <main className="flex-grow container mx-auto px-3 sm:px-4 py-3 sm:py-4 space-y-4 sm:space-y-6">
         <div className="flex justify-around items-center py-1 sm:py-2">
@@ -260,7 +276,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
                 <div className={cn("w-10 h-10 sm:w-12 sm:h-12 mb-0.5 border-2 border-dashed border-border rounded-full flex items-center justify-center bg-card/50 hover:border-primary")}>
                     <UserRoundPlus className="w-5 h-5 sm:w-6 sm:w-6"/>
                 </div>
-                <span className="text-[0.6rem] sm:text-xs font-medium">{dictionary['HomePage.addProfileButton'] || "Agregar"}</span>
+                <span className="text-[0.6rem] sm:text-xs font-medium">{user ? (dictionary['Header.profile'] || "Perfil") : (dictionary['HomePage.addProfileButton'] || "Agregar")}</span>
             </Link>
           </Button>
         </div>
@@ -321,3 +337,4 @@ export default function AstroVibesHomePageWrapper({ params: paramsPromise }: Ast
   }
   return <AstroVibesHomePageContent dictionary={dictionary} locale={params.locale} />;
 }
+
