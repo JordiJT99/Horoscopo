@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, AstrologicalElement, AstrologicalModality, AstrologicalPolarity } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
+import { cn } from '@/lib/utils'; // Added missing import
 
 import SubHeaderTabs from '@/components/shared/SubHeaderTabs';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -174,7 +175,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
             <div className="flex justify-center">
               <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-2 border-primary shadow-md">
                 <AvatarImage 
-                  src={`https://placehold.co/120x120.png`} // Larger placeholder for central image
+                  src={`https://placehold.co/120x120.png`} 
                   alt={displaySign.name} 
                   data-ai-hint={`${displaySign.name} zodiac sign symbol illustration vibrant cosmic`} 
                 />
