@@ -123,19 +123,19 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
             <div className="space-y-3">
               <div>
                 <h4 className="text-md sm:text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
-                  <Heart size={18} sm:size={20} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
+                  <Heart size={18} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
                 </h4>
                 <p className="font-body text-card-foreground leading-relaxed text-xs md:text-sm">{currentHoroscope.love}</p>
               </div>
               <div>
                 <h4 className="text-md sm:text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
-                  <CircleDollarSign size={18} sm:size={20} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
+                  <CircleDollarSign size={18} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
                 </h4>
                 <p className="font-body text-card-foreground leading-relaxed text-xs md:text-sm">{currentHoroscope.money}</p>
               </div>
               <div>
                 <h4 className="text-md sm:text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
-                  <Activity size={18} sm:size={20} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
+                  <Activity size={18} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
                 </h4>
                 <p className="font-body text-card-foreground leading-relaxed text-xs md:text-sm">{currentHoroscope.health}</p>
               </div>
