@@ -191,19 +191,19 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
         className="mb-12"
       />
       <Card className="w-full max-w-xl mx-auto shadow-xl">
-        <CardHeader>
-          <CardTitle className="font-headline text-2xl text-primary text-center">
+        <CardHeader className="px-4 py-4 md:px-6 md:py-5">
+          <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
             {isShowingSharedContent
               ? (dictionary['TarotReadingPage.sharedReadingTitle'] || "A Shared Tarot Reading")
               : (dictionary['TarotReadingPage.askTitle'] || "Ask Your Question")}
           </CardTitle>
           {!isShowingSharedContent && (
-            <CardDescription className="text-center font-body">
+            <CardDescription className="text-center font-body text-sm md:text-base">
               {dictionary['TarotReadingPage.askDescription'] || "Focus on your question and let the cards guide you. Draw one card for insight."}
             </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
           {!isShowingSharedContent && (
             <>
               <div>
@@ -217,7 +217,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                 />
               </div>
 
-              <Button onClick={handleDrawCard} disabled={isLoading} className="w-full font-body">
+              <Button onClick={handleDrawCard} disabled={isLoading} className="w-full font-body text-sm md:text-base">
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -233,38 +233,38 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             </>
           )}
 
-          {error && <p className="text-destructive text-center font-body">{error}</p>}
+          {error && <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>}
 
           {reading && !isLoading && (
-            <Card className="mt-6 bg-secondary/30 p-6 rounded-lg shadow">
-              <CardHeader className="p-0 pb-4 text-center">
-                 <CardTitle className="font-headline text-xl text-accent-foreground">
+            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
+              <CardHeader className="p-0 pb-3 md:pb-4 text-center">
+                 <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
                     {isShowingSharedContent 
                         ? (dictionary['TarotReadingPage.sharedCardTitle']?.replace('{cardName}', reading.cardName) || reading.cardName)
                         : reading.cardName
                     }
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-0 space-y-4">
-                <div className="flex justify-center mb-4">
+              <CardContent className="p-0 space-y-3 md:space-y-4">
+                <div className="flex justify-center mb-3 md:mb-4">
                   <Image 
                     src={reading.imagePlaceholderUrl} 
                     alt={reading.cardName} 
-                    width={134} 
-                    height={235} 
-                    className="rounded-md shadow-lg border-2 border-primary/50"
+                    width={100}  
+                    height={175} 
+                    className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[134px] sm:h-[235px]"
                     data-ai-hint="tarot card"
                   />
                 </div>
                 <div>
-                  <h4 className="font-headline text-lg font-semibold text-primary mb-1">{dictionary['TarotReadingPage.meaningTitle'] || "Meaning:"}</h4>
-                  <p className="font-body text-card-foreground leading-relaxed">{reading.cardMeaning}</p>
+                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotReadingPage.meaningTitle'] || "Meaning:"}</h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-xs sm:text-sm">{reading.cardMeaning}</p>
                 </div>
                 <div>
-                  <h4 className="font-headline text-lg font-semibold text-primary mb-1">{dictionary['TarotReadingPage.adviceTitle'] || "Advice for Your Question:"}</h4>
-                  <p className="font-body text-card-foreground leading-relaxed">{reading.advice}</p>
+                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotReadingPage.adviceTitle'] || "Advice for Your Question:"}</h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-xs sm:text-sm">{reading.advice}</p>
                 </div>
-                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
+                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body text-xs md:text-sm">
                   <Share2 className="mr-2 h-4 w-4" />
                   {dictionary['Share.buttonLabelTarotReadingLinkContent'] || "Share This Reading"}
                 </Button>
@@ -272,7 +272,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             </Card>
           )}
           {isShowingSharedContent && (
-            <Button onClick={handleNewReading} variant="ghost" className="w-full font-body mt-4">
+            <Button onClick={handleNewReading} variant="ghost" className="w-full font-body mt-4 text-xs md:text-sm">
               <RotateCcw className="mr-2 h-4 w-4" />
               {dictionary['TarotReadingPage.newReadingButton'] || "Get a New Reading"}
             </Button>

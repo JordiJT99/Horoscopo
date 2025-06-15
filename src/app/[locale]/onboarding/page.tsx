@@ -247,33 +247,33 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
         className="mb-8"
       />
       <Card className="w-full max-w-lg mx-auto shadow-xl">
-        <CardHeader>
-           <CardTitle className="font-headline text-xl text-primary text-center flex items-center justify-center gap-2">
-            <CurrentStepIcon className="w-6 h-6" />
+        <CardHeader className="px-4 py-4 md:px-6 md:py-5">
+           <CardTitle className="font-headline text-lg md:text-xl text-primary text-center flex items-center justify-center gap-2">
+            <CurrentStepIcon className="w-5 h-5 md:w-6 md:h-6" />
             {dictionary[currentStepTitleKey] || `Step ${currentStep}`}
           </CardTitle>
           {currentStepDescriptionKey && (
-            <CardDescription className="text-center font-body mt-1">
+            <CardDescription className="text-center font-body text-xs md:text-sm mt-1">
               {dictionary[currentStepDescriptionKey]}
             </CardDescription>
           )}
-          <div className="w-full bg-muted rounded-full h-2.5 mt-2">
-            <div className="bg-primary h-2.5 rounded-full transition-all duration-300 ease-out" style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}></div>
+          <div className="w-full bg-muted rounded-full h-2 md:h-2.5 mt-2">
+            <div className="bg-primary h-2 md:h-2.5 rounded-full transition-all duration-300 ease-out" style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}></div>
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-6 min-h-[280px] flex flex-col justify-center">
+        <CardContent className="space-y-4 md:space-y-6 min-h-[250px] md:min-h-[280px] flex flex-col justify-center px-4 pb-4 md:px-6 md:pb-6 pt-0">
           {isSubmitting ? (
             <div className="text-center space-y-4 py-8">
-              <Sparkles className="h-16 w-16 text-primary mx-auto animate-pulse" />
-              <p className="font-headline text-xl text-accent-foreground">{currentMysticalPhrase}</p>
-              <p className="font-body text-muted-foreground">{dictionary['OnboardingPage.finalizingProfile']}</p>
+              <Sparkles className="h-12 w-12 md:h-16 md:w-16 text-primary mx-auto animate-pulse" />
+              <p className="font-headline text-lg md:text-xl text-accent-foreground">{currentMysticalPhrase}</p>
+              <p className="font-body text-sm md:text-base text-muted-foreground">{dictionary['OnboardingPage.finalizingProfile']}</p>
             </div>
           ) : (
             <>
               {currentStep === 1 && (
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="font-body">{dictionary['OnboardingPage.nameLabel'] || "What's your name?"}</Label>
+                  <Label htmlFor="name" className="font-body text-sm md:text-base">{dictionary['OnboardingPage.nameLabel'] || "What's your name?"}</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -288,16 +288,16 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
               {currentStep === 2 && (
                 <div className="space-y-2">
-                  <Label className="font-body">{dictionary['OnboardingPage.genderLabel'] || "How do you identify?"}</Label>
+                  <Label className="font-body text-sm md:text-base">{dictionary['OnboardingPage.genderLabel'] || "How do you identify?"}</Label>
                   <RadioGroup
                     value={formData.gender}
                     onValueChange={(value) => handleChange('gender', value as Gender)}
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 sm:gap-x-4 gap-y-1 sm:gap-y-2"
                   >
                     {genderOptions.map(opt => (
                       <div key={opt.value} className="flex items-center space-x-2">
                         <RadioGroupItem value={opt.value} id={`gender-${opt.value}`} />
-                        <Label htmlFor={`gender-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
+                        <Label htmlFor={`gender-${opt.value}`} className="font-body font-normal text-sm md:text-base">{dictionary[opt.labelKey] || opt.value}</Label>
                       </div>
                     ))}
                   </RadioGroup>
@@ -306,7 +306,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
               {currentStep === 3 && (
                  <div className="space-y-2">
-                  <Label htmlFor="dateOfBirth" className="font-body">{dictionary['OnboardingPage.dobLabel'] || "When were you born?"}</Label>
+                  <Label htmlFor="dateOfBirth" className="font-body text-sm md:text-base">{dictionary['OnboardingPage.dobLabel'] || "When were you born?"}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -343,7 +343,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
               {currentStep === 4 && (
                 <div className="space-y-2">
-                  <Label htmlFor="timeOfBirth" className="font-body">{dictionary['OnboardingPage.timeOfBirthLabel'] || "Time of Birth (Optional)"}</Label>
+                  <Label htmlFor="timeOfBirth" className="font-body text-sm md:text-base">{dictionary['OnboardingPage.timeOfBirthLabel'] || "Time of Birth (Optional)"}</Label>
                   <Input
                     id="timeOfBirth"
                     type="time"
@@ -357,7 +357,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
               {currentStep === 5 && (
                 <div className="space-y-2">
-                  <Label htmlFor="cityOfBirth" className="font-body">{dictionary['OnboardingPage.cityOfBirthLabel'] || "City of Birth (Optional)"}</Label>
+                  <Label htmlFor="cityOfBirth" className="font-body text-sm md:text-base">{dictionary['OnboardingPage.cityOfBirthLabel'] || "City of Birth (Optional)"}</Label>
                   <Input
                     id="cityOfBirth"
                     value={formData.cityOfBirth}
@@ -372,16 +372,16 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
               {currentStep === 6 && (
                 <div className="space-y-2">
-                  <Label className="font-body">{dictionary['OnboardingPage.relationshipStatusLabel'] || "Relationship Status"}</Label>
+                  <Label className="font-body text-sm md:text-base">{dictionary['OnboardingPage.relationshipStatusLabel'] || "Relationship Status"}</Label>
                   <RadioGroup
                     value={formData.relationshipStatus}
                     onValueChange={(value) => handleChange('relationshipStatus', value as RelationshipStatus)}
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 sm:gap-x-4 gap-y-1 sm:gap-y-2"
                   >
                     {relationshipStatusOptions.map(opt => (
                       <div key={opt.value} className="flex items-center space-x-2">
                         <RadioGroupItem value={opt.value} id={`rel-${opt.value}`} />
-                        <Label htmlFor={`rel-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
+                        <Label htmlFor={`rel-${opt.value}`} className="font-body font-normal text-sm md:text-base">{dictionary[opt.labelKey] || opt.value}</Label>
                       </div>
                     ))}
                   </RadioGroup>
@@ -390,16 +390,16 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
 
               {currentStep === 7 && (
                 <div className="space-y-2">
-                  <Label className="font-body">{dictionary['OnboardingPage.employmentStatusLabel'] || "Employment Status"}</Label>
+                  <Label className="font-body text-sm md:text-base">{dictionary['OnboardingPage.employmentStatusLabel'] || "Employment Status"}</Label>
                    <RadioGroup
                     value={formData.employmentStatus}
                     onValueChange={(value) => handleChange('employmentStatus', value as EmploymentStatus)}
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 sm:gap-x-4 gap-y-1 sm:gap-y-2"
                   >
                     {employmentStatusOptions.map(opt => (
                       <div key={opt.value} className="flex items-center space-x-2">
                         <RadioGroupItem value={opt.value} id={`emp-${opt.value}`} />
-                        <Label htmlFor={`emp-${opt.value}`} className="font-body font-normal">{dictionary[opt.labelKey] || opt.value}</Label>
+                        <Label htmlFor={`emp-${opt.value}`} className="font-body font-normal text-sm md:text-base">{dictionary[opt.labelKey] || opt.value}</Label>
                       </div>
                     ))}
                   </RadioGroup>
@@ -416,7 +416,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
                         aria-labelledby="ads-consent-label"
                       />
                       <div className="grid gap-1.5 leading-none">
-                        <Label htmlFor="personalizedAdsConsent" id="ads-consent-label" className="font-body">
+                        <Label htmlFor="personalizedAdsConsent" id="ads-consent-label" className="font-body text-sm md:text-base">
                           {dictionary['OnboardingPage.adsConsentLabel'] || "Allow Personalized Ads"}
                         </Label>
                         <p className="text-xs text-muted-foreground">
@@ -425,7 +425,7 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
                       </div>
                     </div>
                    <div className="pt-4 text-center">
-                    <p className="font-body text-muted-foreground">
+                    <p className="font-body text-sm md:text-base text-muted-foreground">
                       {dictionary['OnboardingPage.reviewAndFinishPrompt'] || "Please review your choices and click 'Finish' to complete your profile."}
                     </p>
                   </div>
@@ -436,23 +436,23 @@ function OnboardingContent({ dictionary, locale }: OnboardingContentProps) {
         </CardContent>
 
         {!isSubmitting && (
-          <CardFooter className="flex justify-between pt-6">
-            <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1 || isSubmitting} className="font-body">
-              <ChevronLeft className="mr-2 h-4 w-4" />
+          <CardFooter className="flex justify-between pt-4 md:pt-6 px-4 pb-4 md:px-6 md:pb-6">
+            <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1 || isSubmitting} className="font-body text-xs md:text-sm">
+              <ChevronLeft className="mr-1 md:mr-2 h-4 w-4" />
               {dictionary['OnboardingPage.previousButton'] || "Previous"}
             </Button>
-            <Button onClick={handleNext} disabled={isSubmitting} className="font-body">
+            <Button onClick={handleNext} disabled={isSubmitting} className="font-body text-xs md:text-sm">
               {currentStep === TOTAL_STEPS ? (
                 dictionary['OnboardingPage.finishButton'] || "Finish"
               ) : (
                 dictionary['OnboardingPage.nextButton'] || "Next"
               )}
-               {currentStep < TOTAL_STEPS && <ChevronRight className="ml-2 h-4 w-4" />}
+               {currentStep < TOTAL_STEPS && <ChevronRight className="ml-1 md:ml-2 h-4 w-4" />}
             </Button>
           </CardFooter>
         )}
       </Card>
-      <p className="text-center text-xs text-muted-foreground mt-8 font-body">
+      <p className="text-center text-xs text-muted-foreground mt-6 md:mt-8 font-body px-2">
         {dictionary['OnboardingPage.dataUsageNote'] || "Your information helps us tailor your astrological experience. We respect your privacy."}
       </p>
     </main>

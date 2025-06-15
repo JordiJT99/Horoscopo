@@ -75,24 +75,24 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
 
   return (
     <Card className="w-full shadow-xl">
-      <CardHeader className="text-center">
+      <CardHeader className="text-center px-4 py-4 md:px-6 md:py-6">
         <div className="flex items-center justify-center mb-2">
-          <ZodiacSignIcon signName={selectedSign} className="w-12 h-12 text-primary mr-2" />
-          <CardTitle className="font-headline text-3xl">
+          <ZodiacSignIcon signName={selectedSign} className="w-10 h-10 md:w-12 md:h-12 text-primary mr-2" />
+          <CardTitle className="font-headline text-2xl sm:text-3xl">
             {(dictionary[cardTitleKey] || '{signName} Horoscope').replace('{signName}', translatedSignName)}
           </CardTitle>
         </div>
-        <CardDescription className="font-body">
+        <CardDescription className="font-body text-sm md:text-base">
           {dictionary['HoroscopeSection.description'] || "Select your sign to view your astrological forecast."}
         </CardDescription>
         <div className="mt-4 max-w-xs mx-auto">
           <Select value={selectedSign} onValueChange={handleSignChange}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full text-sm md:text-base">
               <SelectValue placeholder={dictionary['HoroscopeSection.selectSignPlaceholder'] || "Select Sign"} />
             </SelectTrigger>
             <SelectContent>
               {ZODIAC_SIGNS.map((sign) => (
-                <SelectItem key={sign.name} value={sign.name}>
+                <SelectItem key={sign.name} value={sign.name} className="text-sm md:text-base">
                   <div className="flex items-center">
                     <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2" />
                     {dictionary[sign.name] || sign.name} ({sign.dateRange})
@@ -103,46 +103,46 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
           </Select>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-4 md:px-6 md:pb-6">
         {isLoading ? (
-          <div className="text-center p-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 font-body text-muted-foreground">{dictionary['HoroscopeSection.loading'] || "Loading your cosmic insights..."}</p>
+          <div className="text-center p-6 md:p-8">
+            <div className="animate-spin rounded-full h-10 w-10 md:h-12 md:w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 font-body text-muted-foreground text-sm md:text-base">{dictionary['HoroscopeSection.loading'] || "Loading your cosmic insights..."}</p>
           </div>
         ) : error ? (
-           <p className="text-center font-body text-destructive p-4">{error}</p>
+           <p className="text-center font-body text-destructive p-4 text-sm md:text-base">{error}</p>
         ) : currentHoroscope ? (
           <div className="space-y-4 p-4 bg-secondary/30 rounded-md shadow">
             <div>
-              <h3 className="text-xl font-headline font-semibold mb-2 text-primary flex items-center gap-2">
+              <h3 className="text-lg sm:text-xl font-headline font-semibold mb-2 text-primary flex items-center gap-2">
                 <CalendarDays size={20} /> {dictionary[periodTitleKey] || "Forecast"}
               </h3>
-              <p className="font-body text-card-foreground leading-relaxed">{currentHoroscope.main}</p>
+              <p className="font-body text-card-foreground leading-relaxed text-sm md:text-base">{currentHoroscope.main}</p>
             </div>
             <Separator />
             <div className="space-y-3">
               <div>
-                <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
-                  <Heart size={20} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
+                <h4 className="text-md sm:text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                  <Heart size={18} sm:size={20} className="text-red-500" /> {dictionary['HoroscopeSection.loveTitle'] || "Love"}
                 </h4>
-                <p className="font-body text-card-foreground leading-relaxed text-sm">{currentHoroscope.love}</p>
+                <p className="font-body text-card-foreground leading-relaxed text-xs md:text-sm">{currentHoroscope.love}</p>
               </div>
               <div>
-                <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
-                  <CircleDollarSign size={20} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
+                <h4 className="text-md sm:text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                  <CircleDollarSign size={18} sm:size={20} className="text-green-500" /> {dictionary['HoroscopeSection.moneyTitle'] || "Money"}
                 </h4>
-                <p className="font-body text-card-foreground leading-relaxed text-sm">{currentHoroscope.money}</p>
+                <p className="font-body text-card-foreground leading-relaxed text-xs md:text-sm">{currentHoroscope.money}</p>
               </div>
               <div>
-                <h4 className="text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
-                  <Activity size={20} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
+                <h4 className="text-md sm:text-lg font-headline font-medium flex items-center gap-2 text-accent-foreground mb-1">
+                  <Activity size={18} sm:size={20} className="text-blue-500" /> {dictionary['HoroscopeSection.healthTitle'] || "Health"}
                 </h4>
-                <p className="font-body text-card-foreground leading-relaxed text-sm">{currentHoroscope.health}</p>
+                <p className="font-body text-card-foreground leading-relaxed text-xs md:text-sm">{currentHoroscope.health}</p>
               </div>
             </div>
           </div>
         ) : (
-          <p className="text-center font-body text-muted-foreground p-4">{dictionary['HoroscopeSection.noData'] || "No horoscope data available. Please select a sign."}</p>
+          <p className="text-center font-body text-muted-foreground p-4 text-sm md:text-base">{dictionary['HoroscopeSection.noData'] || "No horoscope data available. Please select a sign."}</p>
         )}
       </CardContent>
     </Card>
@@ -150,3 +150,4 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
 };
 
 export default HoroscopeSection;
+

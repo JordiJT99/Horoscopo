@@ -163,19 +163,19 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         className="mb-12"
       />
       <Card className="w-full max-w-xl mx-auto shadow-xl">
-        <CardHeader>
-          <CardTitle className="font-headline text-2xl text-primary text-center">
+        <CardHeader className="px-4 py-4 md:px-6 md:py-5">
+          <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
             {isShowingSharedContent 
               ? (dictionary['CrystalBallPage.sharedRevelationTitle'] || "A Shared Revelation") 
               : (dictionary['CrystalBallPage.askTitle'] || "Ask the Crystal Ball")}
           </CardTitle>
           {!isShowingSharedContent && (
-            <CardDescription className="text-center font-body">
+            <CardDescription className="text-center font-body text-sm md:text-base">
               {dictionary['CrystalBallPage.askDescription'] || "Focus your mind, type your question below, and unveil the ball's cryptic wisdom."}
             </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
           {!isShowingSharedContent && (
             <>
               <div>
@@ -190,7 +190,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
               </div>
 
               <div className="space-y-2">
-                <Label className="font-body text-muted-foreground">{dictionary['CrystalBallPage.precisionLevelLabel'] || "Select Precision Level:"}</Label>
+                <Label className="font-body text-sm md:text-base text-muted-foreground">{dictionary['CrystalBallPage.precisionLevelLabel'] || "Select Precision Level:"}</Label>
                 <RadioGroup
                   value={precisionLevel}
                   onValueChange={(value) => setPrecisionLevel(value as PrecisionLevel)}
@@ -198,20 +198,20 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="basic" id="rb-basic" />
-                    <Label htmlFor="rb-basic" className="font-body">{dictionary['CrystalBallPage.precisionBasic'] || "Basic"}</Label>
+                    <Label htmlFor="rb-basic" className="font-body text-sm md:text-base">{dictionary['CrystalBallPage.precisionBasic'] || "Basic"}</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="deep" id="rb-deep" />
-                    <Label htmlFor="rb-deep" className="font-body">{dictionary['CrystalBallPage.precisionDeep'] || "Deep"}</Label>
+                    <Label htmlFor="rb-deep" className="font-body text-sm md:text-base">{dictionary['CrystalBallPage.precisionDeep'] || "Deep"}</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="mystic" id="rb-mystic" />
-                    <Label htmlFor="rb-mystic" className="font-body">{dictionary['CrystalBallPage.precisionMystic'] || "Mystic"}</Label>
+                    <Label htmlFor="rb-mystic" className="font-body text-sm md:text-base">{dictionary['CrystalBallPage.precisionMystic'] || "Mystic"}</Label>
                   </div>
                 </RadioGroup>
               </div>
 
-              <Button onClick={handleConsultCrystalBall} disabled={isLoading} className="w-full font-body">
+              <Button onClick={handleConsultCrystalBall} disabled={isLoading} className="w-full font-body text-sm md:text-base">
                 {isLoading ? (
                   <>
                     <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
@@ -224,20 +224,20 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
             </>
           )}
 
-          {error && <p className="text-destructive text-center font-body">{error}</p>}
+          {error && <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>}
 
           {answer && !isLoading && (
-            <Card className="mt-6 bg-secondary/30 p-6 rounded-lg shadow">
-              <CardHeader className="p-0 pb-2 text-center">
-                <CardTitle className="font-headline text-xl text-primary"> {/* Changed to text-primary */}
+            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
+              <CardHeader className="p-0 pb-2 md:pb-3 text-center">
+                <CardTitle className="font-headline text-lg md:text-xl text-primary"> 
                   {isShowingSharedContent 
                     ? (dictionary['CrystalBallPage.sharedRevelationTitle'] || "A Shared Revelation")
                     : (dictionary['CrystalBallPage.answerTitle'] || "The Crystal Ball Reveals...")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <p className="font-body text-center italic leading-relaxed text-card-foreground">{answer}</p>
-                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
+                <p className="font-body text-center italic leading-relaxed text-card-foreground text-sm md:text-base">{answer}</p>
+                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body text-xs md:text-sm">
                   <Share2 className="mr-2 h-4 w-4" />
                   {dictionary['Share.buttonLabelRevelationLinkContent'] || "Share This Revelation"}
                 </Button>
@@ -245,7 +245,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
             </Card>
           )}
           {isShowingSharedContent && (
-            <Button onClick={handleNewQuery} variant="ghost" className="w-full font-body mt-4">
+            <Button onClick={handleNewQuery} variant="ghost" className="w-full font-body mt-4 text-xs md:text-sm">
               <RotateCcw className="mr-2 h-4 w-4" />
               {dictionary['CrystalBallPage.newQueryButton'] || "Ask a New Question"}
             </Button>

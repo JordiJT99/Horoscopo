@@ -47,33 +47,33 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
   };
 
   return (
-    <header className="py-4 bg-sidebar shadow-md sticky top-0 z-50">
+    <header className="py-3 md:py-4 bg-sidebar shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <div className="md:hidden"> 
             <SidebarTrigger className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" />
           </div>
-          <Link href={`/${currentLocale}/`} className="flex items-center gap-3 text-sidebar-foreground hover:opacity-90 transition-opacity">
-            <AstroAppLogo className="h-10 w-10" />
-            <h1 className="text-3xl md:text-4xl font-headline font-bold">
+          <Link href={`/${currentLocale}/`} className="flex items-center gap-2 md:gap-3 text-sidebar-foreground hover:opacity-90 transition-opacity">
+            <AstroAppLogo className="h-8 w-8 md:h-10 md:w-10" />
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold">
               {dictionary['Header.title']}
             </h1>
           </Link>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {isLoading ? (
-            <Skeleton className="h-10 w-10 rounded-full" />
+            <Skeleton className="h-9 w-9 md:h-10 md:w-10 rounded-full" />
           ) : user ? (
-            <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+            <Button variant="ghost" size="icon" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-9 w-9 md:h-10 md:w-10">
               <Link href={`/${currentLocale}/profile`} title={dictionary['Sidebar.profileTooltip'] || "View Your Profile"}>
-                <UserCircle className="h-7 w-7" />
+                <UserCircle className="h-6 w-6 md:h-7 md:w-7" />
                 <span className="sr-only">{dictionary['Sidebar.profile'] || "User Profile"}</span>
               </Link>
             </Button>
           ) : (
-            <Button variant="ghost" size="default" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground px-3">
+            <Button variant="ghost" size="sm" asChild className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground px-2 sm:px-3 py-1 sm:py-2 h-9 md:h-10 text-xs sm:text-sm">
               <Link href={`/${currentLocale}/login`}>
-                <LogIn className="h-5 w-5 mr-1 md:mr-2" />
+                <LogIn className="h-4 w-4 sm:h-5 sm:w-5 mr-1 md:mr-2" />
                 <span className="hidden sm:inline">{dictionary['Auth.loginRegisterButton'] || "Login / Register"}</span>
                 <span className="sm:hidden">{dictionary['Auth.loginButtonShort'] || "Login"}</span>
               </Link>
@@ -82,8 +82,8 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-                <Globe className="h-7 w-7" />
+              <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-9 w-9 md:h-10 md:w-10">
+                <Globe className="h-6 w-6 md:h-7 md:w-7" />
                 <span className="sr-only">{dictionary['Header.changeLanguage'] || "Change language"}</span>
               </Button>
             </DropdownMenuTrigger>
@@ -104,3 +104,4 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
 };
 
 export default Header;
+

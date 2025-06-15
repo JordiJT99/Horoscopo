@@ -181,20 +181,20 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     return (
       <Card className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
         <CardHeader className="p-0 pb-4 text-center">
-          <CardTitle className="font-headline text-xl text-primary flex items-center justify-center gap-2">
-            <PackageSearch className="w-6 h-6" /> {dictionary['DreamReadingPage.dreamMapTitle'] || "Dream Map"}
+          <CardTitle className="font-headline text-lg md:text-xl text-primary flex items-center justify-center gap-2">
+            <PackageSearch className="w-5 h-5 md:w-6 md:h-6" /> {dictionary['DreamReadingPage.dreamMapTitle'] || "Dream Map"}
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-0 space-y-4">
+        <CardContent className="p-0 space-y-3 md:space-y-4">
           {elementCategories.map((category, index) => (
             category.items && category.items.length > 0 && (
               <div key={index}>
-                <h4 className="font-headline text-md font-semibold text-accent-foreground mb-2 flex items-center gap-2">
-                  <category.icon className="w-5 h-5" /> {dictionary[category.titleKey] || category.titleKey.split('.').pop()}
+                <h4 className="font-headline text-sm md:text-md font-semibold text-accent-foreground mb-2 flex items-center gap-2">
+                  <category.icon className="w-4 h-4 md:w-5 md:h-5" /> {dictionary[category.titleKey] || category.titleKey.split('.').pop()}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {category.items.map((item, itemIndex) => (
-                    <Badge key={itemIndex} variant="secondary" className="text-sm font-body">{item}</Badge>
+                    <Badge key={itemIndex} variant="secondary" className="text-xs md:text-sm font-body">{item}</Badge>
                   ))}
                 </div>
               </div>
@@ -216,19 +216,19 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   return (
     <Card className="w-full max-w-xl mx-auto shadow-xl">
-      <CardHeader>
-        <CardTitle className="font-headline text-2xl text-primary text-center">
+      <CardHeader className="px-4 py-4 md:px-6 md:py-5">
+        <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
           {isShowingSharedContent
             ? (dictionary['DreamReadingPage.sharedInterpretationTitle'] || "A Shared Dream Interpretation")
             : (dictionary['DreamReadingPage.describeTitle'] || "Describe Your Dream")}
         </CardTitle>
         {!isShowingSharedContent && (
-          <CardDescription className="text-center font-body">
+          <CardDescription className="text-center font-body text-sm md:text-base">
             {dictionary['DreamReadingPage.describeDescription'] || "Detail the key events, emotions, and symbols you remember. The more detail, the richer the insight."}
           </CardDescription>
         )}
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
         {!isShowingSharedContent && (
           <>
             <div>
@@ -241,7 +241,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
                 aria-label={dictionary['DreamReadingPage.dreamLabel'] || "Your dream description"}
               />
             </div>
-            <Button onClick={handleInterpretDream} disabled={isLoading} className="w-full font-body">
+            <Button onClick={handleInterpretDream} disabled={isLoading} className="w-full font-body text-sm md:text-base">
               {isLoading ? (
                 <>
                   <Brain className="mr-2 h-4 w-4 animate-pulse" />
@@ -254,24 +254,24 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
           </>
         )}
 
-        {error && <p className="text-destructive text-center font-body">{error}</p>}
+        {error && <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>}
 
         {interpretation && !isLoading && (
-          <Card className="mt-6 bg-secondary/30 p-6 rounded-lg shadow">
-            <CardHeader className="p-0 pb-2 text-center">
-              <CardTitle className="font-headline text-xl text-primary">
+          <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
+            <CardHeader className="p-0 pb-2 md:pb-3 text-center">
+              <CardTitle className="font-headline text-lg md:text-xl text-primary">
               {isShowingSharedContent
                 ? (dictionary['DreamReadingPage.sharedInterpretationTitle'] || "A Shared Dream Interpretation")
                 : (dictionary['DreamReadingPage.interpretationTitle'] || "Dream Interpretation")}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <div className="font-body text-card-foreground leading-relaxed space-y-3">
+              <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm md:text-base">
                 {interpretation.split('\n').map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
               </div>
-              <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body">
+              <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body text-xs md:text-sm">
                 <Share2 className="mr-2 h-4 w-4" />
                 {dictionary['Share.buttonLabelInterpretationLinkContent'] || "Share This Interpretation"}
               </Button>
@@ -281,7 +281,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
         {dreamElements && !isLoading && !isShowingSharedContent && renderDreamElements(dreamElements)}
 
           {isShowingSharedContent && (
-          <Button onClick={handleNewInterpretation} variant="ghost" className="w-full font-body mt-4">
+          <Button onClick={handleNewInterpretation} variant="ghost" className="w-full font-body mt-4 text-xs md:text-sm">
             <RotateCcw className="mr-2 h-4 w-4" />
             {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"}
           </Button>

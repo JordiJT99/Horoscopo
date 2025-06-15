@@ -91,22 +91,22 @@ function TarotPersonalityTestContent({ dictionary, locale }: TarotPersonalityTes
         className="mb-12"
       />
       <Card className="w-full max-w-xl mx-auto shadow-xl">
-        <CardHeader>
-          <CardTitle className="font-headline text-2xl text-primary text-center">
+        <CardHeader className="px-4 py-4 md:px-6 md:py-5">
+          <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
             {result ? (dictionary['TarotPersonalityPage.resultTitle'] || "Your Tarot Card") : (dictionary['TarotPersonalityPage.quizTitle'] || "Discover Your Card")}
           </CardTitle>
           {!result && (
-            <CardDescription className="text-center font-body">
+            <CardDescription className="text-center font-body text-sm md:text-base">
               {dictionary['TarotPersonalityPage.quizDescription'] || "Reflect on the questions below. Your answers will help reveal the tarot card that resonates with you."}
             </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
           {!result ? (
             <>
               {questions.map((q, index) => (
                 <div key={q.id} className="space-y-1">
-                  <Label htmlFor={q.id} className="font-body font-semibold">{index + 1}. {q.text}</Label>
+                  <Label htmlFor={q.id} className="font-body font-semibold text-sm md:text-base">{index + 1}. {q.text}</Label>
                   <Textarea
                     id={q.id}
                     value={q.answer}
@@ -117,7 +117,7 @@ function TarotPersonalityTestContent({ dictionary, locale }: TarotPersonalityTes
                   />
                 </div>
               ))}
-              <Button onClick={handleSubmitTest} disabled={isLoading} className="w-full font-body">
+              <Button onClick={handleSubmitTest} disabled={isLoading} className="w-full font-body text-sm md:text-base">
                 {isLoading ? (
                   <>
                     <Brain className="mr-2 h-4 w-4 animate-pulse" />
@@ -130,35 +130,35 @@ function TarotPersonalityTestContent({ dictionary, locale }: TarotPersonalityTes
                   </>
                 )}
               </Button>
-              {error && <p className="text-destructive text-center font-body">{error}</p>}
+              {error && <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>}
             </>
           ) : (
-            <Card className="mt-6 bg-secondary/30 p-6 rounded-lg shadow">
-              <CardHeader className="p-0 pb-4 text-center">
-                 <CardTitle className="font-headline text-xl text-accent-foreground">
+            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
+              <CardHeader className="p-0 pb-3 md:pb-4 text-center">
+                 <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
                    {dictionary['TarotPersonalityPage.yourCardIs'] || "You are:"} {result.cardName}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-0 space-y-4">
-                <div className="flex justify-center mb-4">
+              <CardContent className="p-0 space-y-3 md:space-y-4">
+                <div className="flex justify-center mb-3 md:mb-4">
                   <Image
                     src={result.cardImagePlaceholderUrl}
                     alt={result.cardName}
-                    width={134} 
-                    height={235}
-                    className="rounded-md shadow-lg border-2 border-primary/50"
+                    width={100} 
+                    height={175}
+                    className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[134px] sm:h-[235px]"
                     data-ai-hint="tarot card"
                   />
                 </div>
                 <div>
-                  <h4 className="font-headline text-lg font-semibold text-primary mb-1">{dictionary['TarotPersonalityPage.cardDescriptionTitle'] || "What this means for you:"}</h4>
-                   <div className="font-body text-card-foreground leading-relaxed space-y-3">
+                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotPersonalityPage.cardDescriptionTitle'] || "What this means for you:"}</h4>
+                   <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-xs sm:text-sm">
                     {result.cardDescription.split('\n').map((paragraph, index) => (
                       <p key={index}>{paragraph}</p>
                     ))}
                   </div>
                 </div>
-                <Button onClick={handleTryAgain} variant="outline" className="w-full font-body">
+                <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm">
                   {dictionary['TarotPersonalityPage.tryAgainButton'] || "Try Again"}
                 </Button>
               </CardContent>
@@ -195,4 +195,5 @@ export default function TarotPersonalityTestPage({ params: paramsPromise }: Taro
   // Pass the resolved dictionary and locale to the content component.
   return <TarotPersonalityTestContent dictionary={dictionary} locale={params.locale} />;
 }
+
 
