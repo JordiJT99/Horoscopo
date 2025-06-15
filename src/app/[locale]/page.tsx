@@ -5,23 +5,55 @@ import { useEffect, useState, useMemo, use } from 'react';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail } from '@/types';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, AstrologicalElement, AstrologicalModality, AstrologicalPolarity } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
 
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from '@/components/ui/skeleton';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Sparkles, LogIn, UserPlus, Heart, CircleDollarSign, Activity, Leaf, Edit3, Moon, Sunrise, UserCircle, Sun } from 'lucide-react'; // Added Sun for Sun Sign icon
+import {
+  Sparkles, LogIn, UserPlus, Heart, CircleDollarSign, Activity, Edit3, UserCircle,
+  Flame, Mountain, Wind, Droplets, Layers, Anchor, RefreshCw, Sun, Moon, Orbit, Shield // Added new icons
+} from 'lucide-react';
+import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon'; // For Avatar Fallback
 
 interface AstroVibesHomePageProps {
   params: { locale: Locale };
 }
+
+// Helper to get Element Icon
+const getElementIcon = (element: AstrologicalElement, className?: string) => {
+  const props = { className: className || "w-4 h-4 mr-2" };
+  if (element === "Fire") return <Flame {...props} />;
+  if (element === "Earth") return <Mountain {...props} />;
+  if (element === "Air") return <Wind {...props} />;
+  if (element === "Water") return <Droplets {...props} />;
+  return <Sparkles {...props} />; // Fallback
+};
+
+// Helper to get Modality Icon
+const getModalityIcon = (modality: AstrologicalModality, className?: string) => {
+  const props = { className: className || "w-4 h-4 mr-2" };
+  if (modality === "Cardinal") return <Layers {...props} />;
+  if (modality === "Fixed") return <Anchor {...props} />;
+  if (modality === "Mutable") return <RefreshCw {...props} />;
+  return <Sparkles {...props} />; // Fallback
+};
+
+// Helper to get Polarity Icon
+const getPolarityIcon = (polarity: AstrologicalPolarity, className?: string) => {
+  const props = { className: className || "w-4 h-4 mr-2" };
+  if (polarity === "Masculine") return <Sun {...props} />;
+  if (polarity === "Feminine") return <Shield {...props} />; // Using Shield for Feminine
+  return <Sparkles {...props} />; // Fallback
+};
+
 
 function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading: authLoading } = useAuth();
@@ -37,7 +69,6 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
       if (storedData) {
         const parsedData = JSON.parse(storedData) as OnboardingFormData;
         if (parsedData.dateOfBirth) {
-          // Ensure dateOfBirth is a Date object
           parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
         }
         setOnboardingData(parsedData);
@@ -45,7 +76,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
           setUserSunSign(getSunSignFromDate(parsedData.dateOfBirth));
         }
       } else {
-        setUserSunSign(null); // No onboarding data
+        setUserSunSign(null); 
       }
     } else {
       setOnboardingData(null);
@@ -59,24 +90,22 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
         setIsHoroscopeLoading(true);
         try {
           const input: HoroscopeFlowInput = { sign: userSunSign.name, locale };
-          // For now, always fetch daily. "Yesterday" and "Tomorrow" are placeholders.
           const result = await getHoroscopeFlow(input);
-          setHoroscopeDetails(result.daily); 
+          setHoroscopeDetails(result.daily);
         } catch (error) {
           console.error("Error fetching horoscope:", error);
-          setHoroscopeDetails(null); // Or set an error state
+          setHoroscopeDetails(null);
         } finally {
           setIsHoroscopeLoading(false);
         }
       } else {
-        // Fetch for a default sign if no user or no sun sign
         setIsHoroscopeLoading(true);
         try {
             const defaultSign = ZODIAC_SIGNS.find(s => s.name === "Aries")!;
             const input: HoroscopeFlowInput = { sign: defaultSign.name, locale };
             const result = await getHoroscopeFlow(input);
             setHoroscopeDetails(result.daily);
-            setUserSunSign(defaultSign); // Set a default sun sign for display purposes
+            setUserSunSign(defaultSign);
         } catch (error) {
             console.error("Error fetching default horoscope:", error);
             setHoroscopeDetails(null);
@@ -86,18 +115,18 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
       }
     };
 
-    if (!authLoading) { // Only fetch once auth state is resolved
+    if (!authLoading) {
         fetchHoroscope();
     }
   }, [userSunSign, locale, authLoading]);
 
   const UserZodiacDetailCard = () => {
     if (authLoading) {
-        return <Skeleton className="h-[280px] w-full rounded-lg" />;
+        return <Skeleton className="h-[480px] w-full rounded-lg max-w-sm mx-auto" />;
     }
     if (!user || !onboardingData || !userSunSign) {
       return (
-        <Card className="shadow-xl bg-card/80 backdrop-blur-sm border-primary/30 text-center p-6">
+        <Card className="shadow-xl bg-card/80 backdrop-blur-sm border-primary/30 text-center p-6 max-w-md mx-auto">
           <CardHeader>
             <CardTitle className="font-headline text-xl md:text-2xl text-primary">{dictionary['HomePage.welcomeGuestTitle'] || "Welcome to AstroVibes!"}</CardTitle>
           </CardHeader>
@@ -116,51 +145,58 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
       );
     }
     
-    const ZodiacIcon = userSunSign.icon || Sun;
-
     return (
-      <Card className="shadow-xl bg-card/80 backdrop-blur-sm border-primary/30 overflow-hidden">
-        <CardHeader className="text-center p-4 md:p-6">
-          <CardTitle className="font-headline text-xl md:text-2xl lg:text-3xl text-primary">
-            {(dictionary['HomePage.userForecastTitle'] || "{userName}'s Cosmic Forecast").replace('{userName}', onboardingData.name || user.displayName || 'Your')}
+      <Card className="shadow-xl bg-card/80 backdrop-blur-sm border-primary/30 text-center p-4 md:p-6 max-w-sm mx-auto">
+        <CardHeader className="pb-3 pt-2">
+          <CardTitle className="text-3xl md:text-4xl font-bold font-headline text-primary">
+            {dictionary[userSunSign.name] || userSunSign.name}
           </CardTitle>
-          <CardDescription className="font-body text-xs md:text-sm text-muted-foreground">
-            {dictionary['Zodiac.sunSign'] || "Sun Sign"}: {dictionary[userSunSign.name] || userSunSign.name}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-4 md:p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-            <div className="md:col-span-1 flex flex-col items-center md:items-start space-y-1 md:space-y-2">
-              <div className="flex items-center gap-2">
-                <Sun className="w-4 h-4 md:w-5 md:h-5 text-amber-400" />
-                <span className="font-body text-xs md:text-sm">{dictionary['Zodiac.sunSign'] || "Sun Sign"}: <strong className="text-foreground">{dictionary[userSunSign.name] || userSunSign.name}</strong></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Moon className="w-4 h-4 md:w-5 md:h-5 text-slate-400" />
-                <span className="font-body text-xs md:text-sm">{dictionary['Zodiac.moonSign'] || "Moon Sign"}: <em className="text-muted-foreground">{dictionary['HomePage.comingSoon'] || "Coming Soon"}</em></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Sunrise className="w-4 h-4 md:w-5 md:h-5 text-orange-400" />
-                <span className="font-body text-xs md:text-sm">{dictionary['Zodiac.risingSign'] || "Rising Sign"}: <em className="text-muted-foreground">{dictionary['HomePage.comingSoon'] || "Coming Soon"}</em></span>
-              </div>
-            </div>
-            
-            <div className="md:col-span-1 flex justify-center my-4 md:my-0">
-              <Avatar className="w-24 h-24 md:w-32 lg:w-36 md:h-32 lg:h-36 border-4 border-primary shadow-lg">
-                <AvatarImage src={`https://placehold.co/150x150.png`} alt={userSunSign.name} data-ai-hint={`${userSunSign.name} zodiac symbol illustration`} />
-                <AvatarFallback><ZodiacIcon className="w-12 h-12 md:w-16 md:h-16" /></AvatarFallback>
-              </Avatar>
-            </div>
-
-            <div className="md:col-span-1 flex flex-col items-center md:items-end space-y-1 md:space-y-2 text-center md:text-right">
-              <span className="font-body text-xs md:text-sm">{dictionary['Zodiac.element'] || "Element"}: <strong className="text-foreground">{dictionary[userSunSign.element] || userSunSign.element}</strong></span>
-              <span className="font-body text-xs md:text-sm">{dictionary['Zodiac.polarity'] || "Polarity"}: <strong className="text-foreground">{dictionary[userSunSign.polarity] || userSunSign.polarity}</strong></span>
-              <span className="font-body text-xs md:text-sm">{dictionary['Zodiac.modality'] || "Modality"}: <strong className="text-foreground">{dictionary[userSunSign.modality] || userSunSign.modality}</strong></span>
-            </div>
+          <div className="mt-2 space-y-1 text-sm md:text-base text-muted-foreground">
+            <p className="flex items-center justify-center">
+              {getElementIcon(userSunSign.element, "w-4 h-4 mr-2 text-primary")}
+              {dictionary['Zodiac.element'] || "Element"}: {dictionary[userSunSign.element] || userSunSign.element}
+            </p>
+            <p className="flex items-center justify-center">
+              {getModalityIcon(userSunSign.modality, "w-4 h-4 mr-2 text-primary")}
+              {dictionary['Zodiac.modality'] || "Modality"}: {dictionary[userSunSign.modality] || userSunSign.modality}
+            </p>
+            <p className="flex items-center justify-center">
+              {getPolarityIcon(userSunSign.polarity, "w-4 h-4 mr-2 text-primary")}
+              {dictionary['Zodiac.polarity'] || "Polarity"}: {dictionary[userSunSign.polarity] || userSunSign.polarity}
+            </p>
           </div>
-           <Button variant="outline" className="w-full mt-6 text-xs md:text-sm" asChild>
-             <Link href={`/${locale}/profile`}><Edit3 className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.editProfileButton'] || "View/Edit Profile Details"}</Link>
-           </Button>
+        </CardHeader>
+
+        <CardContent className="pt-4 space-y-4 md:space-y-6">
+          <div className="flex justify-center my-3">
+            <Avatar className="w-36 h-36 md:w-40 md:h-40 border-4 border-primary shadow-lg">
+              <AvatarImage 
+                src={`https://placehold.co/150x150.png`} 
+                alt={userSunSign.name} 
+                data-ai-hint={`${userSunSign.name.toLowerCase()} zodiac symbol illustration`} 
+              />
+              <AvatarFallback><ZodiacSignIcon signName={userSunSign.name} className="w-20 h-20" /></AvatarFallback>
+            </Avatar>
+          </div>
+
+          <div className="space-y-2 text-base md:text-lg">
+            <p className="flex items-center justify-center font-medium">
+              <Sun className="w-5 h-5 mr-2 text-amber-400" /> 
+              {dictionary['Zodiac.sunSign'] || "Sun Sign"}: <strong className="ml-1.5 text-foreground">{dictionary[userSunSign.name] || userSunSign.name}</strong>
+            </p>
+            <p className="flex items-center justify-center text-muted-foreground">
+              <Moon className="w-5 h-5 mr-2 text-slate-400" /> 
+              {dictionary['Zodiac.moonSign'] || "Moon Sign"}: <em className="ml-1.5">{dictionary['HomePage.comingSoon'] || "Coming Soon"}</em>
+            </p>
+            <p className="flex items-center justify-center text-muted-foreground">
+              <Orbit className="w-5 h-5 mr-2 text-purple-400" /> 
+              {dictionary['Zodiac.risingSign'] || "Rising Sign"}: <em className="ml-1.5">{dictionary['HomePage.comingSoon'] || "Coming Soon"}</em>
+            </p>
+          </div>
+
+          <Button variant="outline" className="w-full sm:w-auto text-sm md:text-base" asChild>
+            <Link href={`/${locale}/profile`}><Edit3 className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.editProfileButton'] || "View/Edit Profile Details"}</Link>
+          </Button>
         </CardContent>
       </Card>
     );
@@ -169,11 +205,11 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
   const HoroscopeCategoryCard = ({ title, icon: Icon, content, isLoading }: { title: string, icon: React.ElementType, content: string | undefined | null, isLoading: boolean }) => (
     <Card className="shadow-lg bg-secondary/30 hover:shadow-primary/30 transition-shadow duration-300">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4 px-4">
-        <CardTitle className="text-sm font-medium font-body text-accent-foreground">{title}</CardTitle>
-        <Icon className="h-5 w-5 text-primary" />
+        <CardTitle className="text-base sm:text-lg font-medium font-body text-accent-foreground">{title}</CardTitle>
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0">
-        {isLoading ? <Skeleton className="h-16 w-full" /> : <p className="text-xs font-body text-card-foreground leading-relaxed line-clamp-4">{content || (dictionary['HoroscopeSection.noData'] || "No data available.")}</p>}
+        {isLoading ? <Skeleton className="h-20 w-full" /> : <p className="text-sm font-body text-card-foreground leading-relaxed line-clamp-4 md:line-clamp-5">{content || (dictionary['HoroscopeSection.noData'] || "No data available.")}</p>}
       </CardContent>
     </Card>
   );
@@ -182,7 +218,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
     { id: "love", titleKey: "HoroscopeSection.loveTitle", icon: Heart, content: horoscopeDetails?.love },
     { id: "money", titleKey: "HoroscopeSection.moneyTitle", icon: CircleDollarSign, content: horoscopeDetails?.money },
     { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: horoscopeDetails?.health },
-    { id: "work", titleKey: "HomePage.workCategory", icon: WorkIcon, content: horoscopeDetails?.main }, // Using main for "Work/General" for now
+    { id: "work", titleKey: "HomePage.workCategory", icon: WorkIcon, content: horoscopeDetails?.main },
   ];
 
 
@@ -198,13 +234,12 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
 
       { (user && onboardingData && userSunSign) && (
         <>
-          <Tabs value={currentTab} onValueChange={(value) => setCurrentTab(value as "today" | "yesterday" | "tomorrow")} className="w-full max-w-md mx-auto">
+          <Tabs value={currentTab} onValueChange={(value) => setCurrentTab(value as "today" | "yesterday" | "tomorrow")} className="w-full max-w-xl mx-auto">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="yesterday" className="font-body text-xs sm:text-sm">{dictionary['HomePage.yesterdayTab'] || "Yesterday"}</TabsTrigger>
               <TabsTrigger value="today" className="font-body text-xs sm:text-sm">{dictionary['HomePage.todayTab'] || "Today"}</TabsTrigger>
               <TabsTrigger value="tomorrow" className="font-body text-xs sm:text-sm">{dictionary['HomePage.tomorrowTab'] || "Tomorrow"}</TabsTrigger>
             </TabsList>
-            {/* Content for tabs - For now, all will show 'today's' data */}
             {(["yesterday", "today", "tomorrow"] as const).map(tabValue => (
               <TabsContent key={tabValue} value={tabValue} className="mt-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -223,7 +258,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
           </Tabs>
         </>
       )}
-       {/* Ad Placeholder */}
+       
       <div className="mt-12 p-4 md:p-6 bg-muted/20 border-2 border-dashed border-muted-foreground/30 rounded-lg text-center text-muted-foreground font-body">
         <p className="text-xs md:text-sm">{dictionary['HomePage.adPlaceholderText'] || "Advertisement Placeholder - Your ad could be here!"}</p>
       </div>
@@ -252,3 +287,4 @@ export default function AstroVibesHomePageWrapper({ params: paramsPromise }: Ast
   return <AstroVibesHomePageContent dictionary={dictionary} locale={params.locale} />;
 }
 
+    
