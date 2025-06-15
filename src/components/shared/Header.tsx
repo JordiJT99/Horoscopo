@@ -13,7 +13,8 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { Home, Users, Wand, Eye, MoreHorizontal, UserCircle, Languages, Settings, Info, Sparkles, HeartHandshake, Clover, Wand2 as LunarIcon, GanttChartSquare } from 'lucide-react'; // Added GanttChartSquare for Mayan/Chinese
+import { Home, Users, Wand, Eye, MoreHorizontal, UserCircle, Languages, Settings, Info, Sparkles, HeartHandshake, Clover, Wand2 as LunarIcon, GanttChartSquare } from 'lucide-react';
+import { cn } from '@/lib/utils'; // Added missing import
 
 interface HeaderProps {
   dictionary: Dictionary;
