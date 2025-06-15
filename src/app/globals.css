@@ -45,13 +45,13 @@
     --chart-4: 250 70% 70%; /* Indigo-ish purple */
     --chart-5: 260 70% 75%; /* Lavender */
 
-    /* Header/Top Nav specific (can be same as card or background) */
-    --header-background: 260 55% 10%; /* Slightly different dark for header */
-    --header-foreground: 260 25% 85%;
-    --header-icon-active: hsl(var(--primary));
+    /* Header/Top Nav specific */
+    --header-background: 260 60% 8%; /* Same as page background for seamless look */
+    --header-foreground: 260 25% 85%; /* Slightly brighter than main foreground for emphasis */
+    --header-icon-active: hsl(var(--primary)); /* Accent color for active icon */
 
     /* Sub-header Tabs */
-    --sub-header-background: 260 50% 12%; /* Same as card or slightly different */
+    --sub-header-background: 260 55% 10%; /* Slightly lighter dark purple */
     --sub-header-tab-active-background: hsl(var(--primary));
     --sub-header-tab-active-foreground: hsl(var(--primary-foreground));
     --sub-header-tab-inactive-foreground: hsl(var(--muted-foreground));
@@ -80,11 +80,11 @@
     --input: 260 40% 18%;
     --ring: 275 70% 70%;
     
-    --header-background: 260 55% 10%;
+    --header-background: 260 60% 8%;
     --header-foreground: 260 25% 85%;
     --header-icon-active: hsl(var(--primary));
 
-    --sub-header-background: 260 50% 12%;
+    --sub-header-background: 260 55% 10%;
     --sub-header-tab-active-background: hsl(var(--primary));
     --sub-header-tab-active-foreground: hsl(var(--primary-foreground));
     --sub-header-tab-inactive-foreground: hsl(var(--muted-foreground));
@@ -98,6 +98,14 @@
   body {
     @apply bg-background text-foreground;
     /* font-family is set by Tailwind's font-body class in layout.tsx */
-    /* Removed starry background for a cleaner, app-like look */
   }
+}
+
+/* Helper to hide scrollbar (use with caution for accessibility) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

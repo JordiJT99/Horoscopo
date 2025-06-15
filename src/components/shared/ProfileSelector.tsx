@@ -27,20 +27,20 @@ export default function ProfileSelector({
   onboardingData,
 }: ProfileSelectorProps) {
   return (
-    <div className="flex justify-around items-center py-1 sm:py-2">
+    <div className="flex justify-around items-center py-3 sm:py-4">
       <Button
         variant="ghost"
         onClick={() => setSelectedProfile('generic')}
         className={cn(
-          "flex flex-col items-center h-auto p-1 sm:p-1.5",
-          selectedProfile === 'generic' && "text-primary"
+          "flex flex-col items-center h-auto p-1.5 sm:p-2", // Adjusted padding
+          selectedProfile === 'generic' ? "text-primary" : "text-foreground" // Ensure active one uses primary color
         )}
       >
-        <Avatar className={cn("w-10 h-10 sm:w-12 sm:h-12 mb-0.5 border-2", selectedProfile === 'generic' ? "border-primary" : "border-border")}>
-          <AvatarImage src="https://placehold.co/64x64.png" alt={dictionary['HomePage.genericProfile'] || "Horoscopes"} data-ai-hint="galaxy stars icon" />
-          <AvatarFallback><Sparkles className="w-5 h-5 sm:w-6 sm:w-6" /></AvatarFallback>
+        <Avatar className={cn("w-16 h-16 sm:w-20 sm:h-20 mb-1 border-2", selectedProfile === 'generic' ? "border-primary shadow-lg shadow-primary/30" : "border-border")}> {/* Increased size */}
+          <AvatarImage src="https://placehold.co/80x80.png" alt={dictionary['HomePage.genericProfile'] || "Horoscopes"} data-ai-hint="abstract cosmic sphere vibrant colors" />
+          <AvatarFallback><Sparkles className="w-8 h-8 sm:w-10 sm:h-10" /></AvatarFallback>
         </Avatar>
-        <span className="text-[0.6rem] sm:text-xs font-medium">{dictionary['HomePage.genericProfile'] || "Horoscopes"}</span>
+        <span className="text-xs sm:text-sm font-medium">{dictionary['HomePage.genericProfile'] || "Horoscopes"}</span>
       </Button>
 
       {user && (
@@ -48,17 +48,17 @@ export default function ProfileSelector({
           variant="ghost"
           onClick={() => setSelectedProfile('user')}
           className={cn(
-            "flex flex-col items-center h-auto p-1 sm:p-1.5",
-            selectedProfile === 'user' && "text-primary"
+            "flex flex-col items-center h-auto p-1.5 sm:p-2",
+             selectedProfile === 'user' ? "text-primary" : "text-foreground"
           )}
         >
-          <Avatar className={cn("w-10 h-10 sm:w-12 sm:h-12 mb-0.5 border-2", selectedProfile === 'user' ? "border-primary" : "border-border")}>
-            <AvatarImage src={user.photoURL || `https://placehold.co/64x64.png`} alt={onboardingData?.name || user.displayName || "User"} data-ai-hint="abstract user avatar gradient" />
-            <AvatarFallback className="text-sm sm:text-base">
+          <Avatar className={cn("w-16 h-16 sm:w-20 sm:h-20 mb-1 border-2", selectedProfile === 'user' ? "border-primary shadow-lg shadow-primary/30" : "border-border")}>
+            <AvatarImage src={user.photoURL || `https://placehold.co/80x80.png`} alt={onboardingData?.name || user.displayName || "User"} data-ai-hint="user modern avatar digital art" />
+            <AvatarFallback className="text-lg sm:text-xl">
               {(onboardingData?.name?.charAt(0) || user.displayName?.charAt(0) || <UserCircle />).toString().toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <span className="text-[0.6rem] sm:text-xs font-medium truncate max-w-[60px] sm:max-w-[80px]">
+          <span className="text-xs sm:text-sm font-medium truncate max-w-[70px] sm:max-w-[90px]">
             {onboardingData?.name || user.displayName || (dictionary['Auth.userLabel'] || "User")}
           </span>
         </Button>
@@ -67,14 +67,14 @@ export default function ProfileSelector({
       <Button
         variant="ghost"
         asChild
-        className="flex flex-col items-center h-auto p-1 sm:p-1.5 text-muted-foreground hover:text-primary"
+        className="flex flex-col items-center h-auto p-1.5 sm:p-2 text-foreground hover:text-primary"
       >
-        <Link href={user ? `/${locale}/profile` : `/${locale}/onboarding`}>
-          <div className={cn("w-10 h-10 sm:w-12 sm:h-12 mb-0.5 border-2 border-dashed border-border rounded-full flex items-center justify-center bg-card/50 hover:border-primary")}>
-            <UserRoundPlus className="w-5 h-5 sm:w-6 sm:w-6" />
+        <Link href={user ? `/${locale}/profile` : `/${locale}/onboarding`}> {/* Redirect to onboarding if not logged in to "add profile" */}
+          <div className={cn("w-16 h-16 sm:w-20 sm:h-20 mb-1 border-2 border-dashed border-border rounded-full flex items-center justify-center bg-card/50 hover:border-primary")}>
+            <UserRoundPlus className="w-8 h-8 sm:w-10 sm:h-10" />
           </div>
-          <span className="text-[0.6rem] sm:text-xs font-medium">
-            {user ? (dictionary['Header.profile'] || "Profile") : (dictionary['HomePage.addProfileButton'] || "Add")}
+          <span className="text-xs sm:text-sm font-medium">
+            {dictionary['HomePage.addProfileButton'] || "Add"}
           </span>
         </Link>
       </Button>
