@@ -166,10 +166,12 @@ export default async function MorePage({ params }: MorePageProps) {
             </div>
             <div className="grid grid-cols-2 gap-2">
               {availableLocales.map(lang => (
-                <Link key={lang.code} href={`/${lang.code}${params.locale === lang.code ? '/more' : '/more'}`} passHref legacyBehavior>
-                  <a className={`w-full ${params.locale === lang.code ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-muted text-muted-foreground hover:bg-muted/80'} text-xs sm:text-sm font-medium py-2 px-3 rounded-md text-center transition-colors`}>
-                    {lang.name}
-                  </a>
+                <Link
+                  key={lang.code}
+                  href={`/${lang.code}/more`}
+                  className={`w-full ${params.locale === lang.code ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-muted text-muted-foreground hover:bg-muted/80'} text-xs sm:text-sm font-medium py-2 px-3 rounded-md text-center transition-colors`}
+                >
+                  {lang.name}
                 </Link>
               ))}
             </div>
