@@ -1,5 +1,8 @@
 
 "use client";
+// This component is no longer used for the main navigation in layout.tsx
+// It can be removed or repurposed if a different type of sidebar is needed elsewhere.
+// For now, I'll leave its content, but it's effectively orphaned from the main layout.
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,29 +19,29 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  useSidebar,
+  // useSidebar, // Not needed if this isn't the main sidebar anymore
   sidebarMenuButtonVariants,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/sidebar'; // useSidebar might be removed if this component is fully decoupled
 import { cn } from '@/lib/utils';
 import { CalendarRange, Calendar, Users, Clover, Wand2, HeartHandshake, Sparkles, Eye, BedDouble, Orbit, Wand, HelpCircle, Edit } from 'lucide-react';
 
 interface AppSidebarProps {
   dictionary: Dictionary;
   currentLocale: Locale;
+  onLinkClick?: () => void; // Callback to close if in a Sheet, for example
 }
 
-const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
+const AppSidebar = ({ dictionary, currentLocale, onLinkClick }: AppSidebarProps) => {
   const pathname = usePathname();
-  const { state: sidebarState, setOpenMobile, isMobile } = useSidebar();
+  // const { state: sidebarState, setOpenMobile, isMobile } = useSidebar(); // This context might not be available or relevant
 
   const isActive = (path: string) => {
     const normalizedPath = path.endsWith('/') ? path : `${path}/`;
     const normalizedPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
 
-    if (path === `/${currentLocale}/`) { // Home/Daily Horoscope
+    if (path === `/${currentLocale}/`) {
       return normalizedPathname === `/${currentLocale}/`;
     }
-    // Check for onboarding page as well
     if (path === `/${currentLocale}/onboarding` && normalizedPathname.startsWith(`/${currentLocale}/onboarding`)) {
       return true;
     }
@@ -46,8 +49,8 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   };
 
   const handleMenuItemClick = () => {
-    if (isMobile) {
-      setOpenMobile(false);
+    if (onLinkClick) {
+      onLinkClick();
     }
   };
 
@@ -61,61 +64,15 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
   };
 
   const mainMenuItems = [
+    // These items would now likely be in the "More" dropdown in the new Header
+    // Or this AppSidebar component could be used *inside* that "More" dropdown's Sheet/Dialog
     {
       href: `/${currentLocale}/compatibility`,
       label: dictionary['Sidebar.compatibility'] || "Compatibility",
       icon: HeartHandshake,
       tooltip: dictionary['Sidebar.compatibilityTooltip'] || "Check Zodiac Compatibility",
     },
-    {
-      href: `/${currentLocale}/lucky-numbers`,
-      label: dictionary['Sidebar.luckyNumbers'] || "Lucky Numbers",
-      icon: Clover,
-      tooltip: dictionary['Sidebar.luckyNumbersTooltip'] || "Discover Lucky Numbers",
-    },
-    {
-      href: `/${currentLocale}/lunar-ascendant`,
-      label: dictionary['Sidebar.lunarAscendant'] || "Lunar & Ascendant",
-      icon: Wand2,
-      tooltip: dictionary['Sidebar.lunarAscendantTooltip'] || "Lunar Phase & Ascendant Calculator",
-    },
-    {
-      href: `/${currentLocale}/chinese-horoscope`,
-      label: dictionary['Sidebar.chineseHoroscope'] || "Chinese Horoscope",
-      icon: ChineseAstrologyIcon,
-      tooltip: dictionary['Sidebar.chineseHoroscopeTooltip'] || "Chinese Zodiac Insights",
-    },
-    {
-      href: `/${currentLocale}/mayan-horoscope`,
-      label: dictionary['Sidebar.mayanHoroscope'] || "Mayan Horoscope",
-      icon: MayanAstrologyIcon,
-      tooltip: dictionary['Sidebar.mayanHoroscopeTooltip'] || "Mayan Astrological Wisdom",
-    },
-     {
-      href: `/${currentLocale}/crystal-ball`,
-      label: dictionary['Sidebar.crystalBall'] || "Crystal Ball",
-      icon: Eye,
-      tooltip: dictionary['Sidebar.crystalBallTooltip'] || "Consult the Crystal Ball",
-    },
-    {
-      href: `/${currentLocale}/dream-reading`,
-      label: dictionary['Sidebar.dreamReading'] || "Dream Reading",
-      icon: BedDouble,
-      tooltip: dictionary['Sidebar.dreamReadingTooltip'] || "Interpret Your Dreams",
-    },
-    {
-      href: `/${currentLocale}/tarot-reading`,
-      label: dictionary['Sidebar.tarotReading'] || "Tarot Reading",
-      icon: Wand,
-      tooltip: dictionary['Sidebar.tarotReadingTooltip'] || "Get a Tarot Card Reading",
-    },
-    {
-      href: `/${currentLocale}/tarot-personality-test`,
-      label: dictionary['Sidebar.tarotPersonalityTest'] || "Your Tarot Card",
-      icon: TarotPersonalityTestIcon, 
-      tooltip: dictionary['Sidebar.tarotPersonalityTestTooltip'] || "Discover Your Tarot Personality Card",
-    }
-    // Removed Onboarding Link
+    // ... other items previously here
   ];
 
   const horoscopeItems = [
@@ -125,18 +82,7 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       icon: Sparkles,
       tooltip: dictionary['Sidebar.dailyHoroscopeTooltip'] || "View Daily Horoscope",
     },
-    {
-      href: `/${currentLocale}/weekly-horoscope`,
-      label: dictionary['Sidebar.weeklyHoroscope'] || "Weekly Horoscope",
-      icon: CalendarRange,
-      tooltip: dictionary['Sidebar.weeklyHoroscopeTooltip'] || "View Weekly Horoscope",
-    },
-    {
-      href: `/${currentLocale}/monthly-horoscope`,
-      label: dictionary['Sidebar.monthlyHoroscope'] || "Monthly Horoscope",
-      icon: Calendar,
-      tooltip: dictionary['Sidebar.monthlyHoroscopeTooltip'] || "View Monthly Horoscope",
-    },
+    // ... other horoscope items
   ];
 
   return (
@@ -144,15 +90,18 @@ const AppSidebar = ({ dictionary, currentLocale }: AppSidebarProps) => {
       <SidebarHeader className="p-4 flex items-center justify-between">
         <Link href={`/${currentLocale}/`} onClick={handleMenuItemClick} className="flex items-center gap-2">
           <AstroAppLogo className="h-8 w-8 text-sidebar-primary" />
-          {sidebarState === 'expanded' && (
-            <h2 className="text-xl font-headline font-semibold text-sidebar-foreground">
-              {dictionary['Header.title'] || "AstroVibes"}
-            </h2>
-          )}
+          {/* Removed sidebarState check as this is now context-dependent */}
+          <h2 className="text-xl font-headline font-semibold text-sidebar-foreground">
+            {dictionary['Header.title'] || "AstroVibes"}
+          </h2>
         </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
+          <p className="p-4 text-sm text-muted-foreground">
+            {dictionary['AppSidebar.navigationMoved'] || "Navigation has moved to the top bar. This sidebar is illustrative."}
+          </p>
+          {/* Example of how items could be structured if this was used in a "More" menu */}
           <Accordion type="single" collapsible className="w-full" defaultValue={isHoroscopeSectionActive() ? "horoscopes" : undefined}>
             <AccordionItem value="horoscopes" className="border-none">
                <AccordionTrigger

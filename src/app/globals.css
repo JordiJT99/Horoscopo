@@ -5,83 +5,89 @@
 
 @layer base {
   :root {
-    --background: 260 45% 10%; /* Morado muy oscuro, casi azul noche */
-    --foreground: 50 30% 95%; /* Blanco hueso / dorado muy pálido */
+    --background: 260 60% 8%; /* Deep dark purple, almost black */
+    --foreground: 260 25% 90%; /* Light lavender/off-white */
 
-    --card: 260 40% 14%; /* Ligeramente más claro que el fondo, morado oscuro */
-    --card-foreground: 50 30% 95%;
+    --card: 260 50% 12%; /* Dark purple, slightly lighter than background */
+    --card-foreground: 260 25% 88%;
 
-    --popover: 260 45% 8%; /* Aún más oscuro para popovers, morado muy profundo */
-    --popover-foreground: 50 30% 95%;
+    --popover: 260 55% 10%; /* Similar to background for popovers */
+    --popover-foreground: 260 25% 90%;
 
-    --primary: 45 80% 58%; /* Dorado vibrante y rico */
-    --primary-foreground: 45 70% 10%; /* Marrón muy oscuro para texto sobre dorado */
+    /* Primary is the bright violet/purple for active elements and accents */
+    --primary: 275 80% 65%;
+    --primary-foreground: 275 20% 95%; /* Very light color for text on primary */
 
-    --secondary: 270 35% 28%; /* Morado oscuro apagado para fondos de sección */
-    --secondary-foreground: 270 20% 88%; /* Lavanda claro para texto sobre secundario */
+    /* Secondary can be a less saturated purple for tab backgrounds or secondary elements */
+    --secondary: 260 40% 20%;
+    --secondary-foreground: 260 20% 80%;
 
-    --muted: 260 30% 35%; /* Morado/Azul apagado para elementos silenciados */
-    --muted-foreground: 260 15% 70%; /* Gris lavanda medio para texto sobre silenciado */
+    /* Muted for less important text or subtle backgrounds */
+    --muted: 260 30% 30%;
+    --muted-foreground: 260 15% 65%; /* Lighter muted text */
 
-    --accent: 280 70% 65%; /* Violeta místico brillante */
-    --accent-foreground: 280 50% 15%; /* Morado muy oscuro para texto sobre acento (MEJOR CONTRASTE) */
+    /* Accent can be another highlight color if needed, or same as primary */
+    --accent: 275 80% 65%; /* Using same as primary for strong accent */
+    --accent-foreground: 275 20% 95%;
 
-    --destructive: 0 65% 60%; /* Rojo (se mantiene para errores) */
-    --destructive-foreground: 0 0% 100%; /* Blanco sobre rojo */
+    --destructive: 0 70% 55%; /* Standard red for errors */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 260 35% 25%; /* Borde morado oscuro */
-    --input: 260 35% 20%; /* Fondo de input morado oscuro */
-    --ring: 45 80% 62%; /* Dorado para anillos de enfoque (ligeramente más brillante) */
+    --border: 260 40% 25%; /* Subtle border color */
+    --input: 260 40% 18%; /* Dark input background */
+    --ring: 275 70% 70%; /* Brighter violet for focus rings */
 
     --radius: 0.5rem;
 
-    --chart-1: 45 80% 60%; /* Dorado */
-    --chart-2: 280 70% 70%; /* Violeta Místico */
-    --chart-3: 250 60% 65%; /* Azul Profundo */
-    --chart-4: 50 85% 68%; /* Dorado Naranja */
-    --chart-5: 290 60% 75%; /* Lavanda Brillante */
+    --chart-1: hsl(var(--primary));
+    --chart-2: 290 70% 70%; /* A slightly different purple */
+    --chart-3: 320 70% 70%; /* Magenta-ish purple */
+    --chart-4: 250 70% 70%; /* Indigo-ish purple */
+    --chart-5: 260 70% 75%; /* Lavender */
 
-    /* Sidebar se mantiene muy oscura para contraste */
-    --sidebar-background: 260 50% 7%; /* Morado casi negro, muy oscuro */
-    --sidebar-foreground: 50 25% 88%; /* Blanco hueso pálido para texto de sidebar */
-    --sidebar-primary: hsl(var(--primary)); /* Dorado */
-    --sidebar-primary-foreground: hsl(var(--primary-foreground)); /* Marrón oscuro sobre dorado */
-    --sidebar-accent: hsl(var(--accent)); /* Violeta Místico */
-    --sidebar-accent-foreground: hsl(var(--accent-foreground)); /* Morado muy oscuro sobre violeta (para mejor contraste en sidebar si se usa) */
-    --sidebar-border: 260 45% 12%;
-    --sidebar-ring: hsl(var(--ring)); /* Dorado */
+    /* Header/Top Nav specific (can be same as card or background) */
+    --header-background: 260 55% 10%; /* Slightly different dark for header */
+    --header-foreground: 260 25% 85%;
+    --header-icon-active: hsl(var(--primary));
+
+    /* Sub-header Tabs */
+    --sub-header-background: 260 50% 12%; /* Same as card or slightly different */
+    --sub-header-tab-active-background: hsl(var(--primary));
+    --sub-header-tab-active-foreground: hsl(var(--primary-foreground));
+    --sub-header-tab-inactive-foreground: hsl(var(--muted-foreground));
+
   }
 
   .dark {
-    /* Replicar :root para tema oscuro único */
-    --background: 260 45% 10%;
-    --foreground: 50 30% 95%;
-    --card: 260 40% 14%;
-    --card-foreground: 50 30% 95%;
-    --popover: 260 45% 8%;
-    --popover-foreground: 50 30% 95%;
-    --primary: 45 80% 58%;
-    --primary-foreground: 45 70% 10%;
-    --secondary: 270 35% 28%;
-    --secondary-foreground: 270 20% 88%;
-    --muted: 260 30% 35%;
-    --muted-foreground: 260 15% 70%;
-    --accent: 280 70% 65%;
-    --accent-foreground: 280 50% 15%; /* Morado muy oscuro (MEJOR CONTRASTE) */
-    --destructive: 0 65% 60%;
+    /* Replicate :root for the single dark theme */
+    --background: 260 60% 8%;
+    --foreground: 260 25% 90%;
+    --card: 260 50% 12%;
+    --card-foreground: 260 25% 88%;
+    --popover: 260 55% 10%;
+    --popover-foreground: 260 25% 90%;
+    --primary: 275 80% 65%;
+    --primary-foreground: 275 20% 95%;
+    --secondary: 260 40% 20%;
+    --secondary-foreground: 260 20% 80%;
+    --muted: 260 30% 30%;
+    --muted-foreground: 260 15% 65%;
+    --accent: 275 80% 65%;
+    --accent-foreground: 275 20% 95%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 35% 25%;
-    --input: 260 35% 20%;
-    --ring: 45 80% 62%;
+    --border: 260 40% 25%;
+    --input: 260 40% 18%;
+    --ring: 275 70% 70%;
     
-    --sidebar-background: 260 50% 7%;
-    --sidebar-foreground: 50 25% 88%;
-    --sidebar-primary: hsl(var(--primary));
-    --sidebar-primary-foreground: hsl(var(--primary-foreground));
-    --sidebar-accent: hsl(var(--accent));
-    --sidebar-accent-foreground: hsl(var(--accent-foreground));
-    --sidebar-border: 260 45% 12%;
-    --sidebar-ring: hsl(var(--ring));
+    --header-background: 260 55% 10%;
+    --header-foreground: 260 25% 85%;
+    --header-icon-active: hsl(var(--primary));
+
+    --sub-header-background: 260 50% 12%;
+    --sub-header-tab-active-background: hsl(var(--primary));
+    --sub-header-tab-active-foreground: hsl(var(--primary-foreground));
+    --sub-header-tab-inactive-foreground: hsl(var(--muted-foreground));
   }
 }
 
@@ -90,40 +96,8 @@
     @apply border-border;
   }
   body {
-    @apply text-foreground;
+    @apply bg-background text-foreground;
     /* font-family is set by Tailwind's font-body class in layout.tsx */
-    
-    /* Base background color using the CSS variable */
-    background-color: hsl(var(--background));
-
-    /* Starry background layers - ESTRELLAS DORADAS Y BLANCAS */
-    background-image: 
-      /* Pequeñas, densas, blancas brillantes y doradas pálidas */
-      radial-gradient(1.2px 1.2px at 20px 30px, hsla(0, 0%, 98%, 0.9), transparent),
-      radial-gradient(1px 1px at 40px 70px, hsla(50, 100%, 90%, 0.6), transparent), /* Dorado pálido */
-      radial-gradient(1.2px 1.2px at 50px 160px, hsla(0, 0%, 95%, 0.8), transparent),
-      radial-gradient(1.5px 1.5px at 90px 40px, hsla(0, 0%, 99%, 0.95), transparent),
-      radial-gradient(1px 1px at 130px 80px, hsla(50, 100%, 88%, 0.65), transparent), /* Dorado pálido */
-      radial-gradient(1.2px 1.2px at 160px 120px, hsla(0, 0%, 98%, 0.9), transparent),
-      
-      /* Medianas, blancas y doradas */
-      radial-gradient(1.8px 1.8px at 180px 50px, hsla(0, 0%, 99%, 0.95), transparent),
-      radial-gradient(1.5px 1.5px at 10px 90px, hsla(48, 100%, 85%, 0.75), transparent), /* Dorado medio */
-      radial-gradient(1.8px 1.8px at 120px 190px, hsla(0, 0%, 97%, 0.85), transparent),
-
-      /* Grandes, dispersas, blancas muy brillantes y doradas más intensas */
-      radial-gradient(2.2px 2.2px at 70px 20px, hsla(0, 0%, 100%, 1), transparent),
-      radial-gradient(2px 2px at 100px 100px, hsla(45, 90%, 75%, 0.8), transparent), /* Dorado brillante */
-      radial-gradient(2.2px 2.2px at 30px 130px, hsla(0, 0%, 99%, 0.95), transparent),
-      
-      /* Muy grandes, muy dispersas, super brillantes blancas y doradas */
-      radial-gradient(2.8px 2.8px at 190px 100px, hsla(0, 0%, 100%, 1), transparent),
-      radial-gradient(2.5px 2.5px at 60px 10px, hsla(45, 100%, 80%, 0.9), transparent); /* Dorado muy brillante */
-
-    background-repeat: repeat;
-    background-size: 220px 220px; /* Ajustado para un buen campo de estrellas */
-    background-attachment: fixed; 
+    /* Removed starry background for a cleaner, app-like look */
   }
 }
-
-    

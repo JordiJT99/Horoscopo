@@ -4,12 +4,9 @@
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
-import { SidebarProvider, SidebarInset, useSidebar } from "@/components/ui/sidebar"; // Removed Sidebar
-import AppSidebar from '@/components/shared/AppSidebar';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"; // Added Sheet
 import { useEffect, useState, use, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import '../globals.css';
@@ -18,12 +15,10 @@ interface LocaleLayoutParams {
   locale: Locale;
 }
 
-// Componente que maneja la lógica de redirección de onboarding Y la estructura condicional del layout
-function ConditionalAppLayout({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
+function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { openMobile, setOpenMobile } = useSidebar(); // isMobile is not needed here as Sheet handles responsiveness
   const [hasMountedContext, setHasMountedContext] = useState(false);
 
   useEffect(() => {
@@ -41,29 +36,32 @@ function ConditionalAppLayout({ locale, dictionary, children }: { locale: Locale
     }
 
     if (!user && !isLoginPage && !isOnboardingPage) {
-      router.push(loginPath);
+      // For this new design, we won't auto-redirect to login from all pages
+      // User can browse content and will be prompted on specific actions or profile page
+      // router.push(loginPath); 
       return;
     }
     
     if (user) {
       const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
       if (!onboardingComplete && !isOnboardingPage && !isLoginPage) {
+        // Only redirect to onboarding if user is logged in but hasn't completed it
         router.push(onboardingPath);
       }
     }
   }, [user, authLoading, pathname, locale, router, hasMountedContext, onboardingPath, loginPath, isLoginPage, isOnboardingPage]);
 
 
-  if (!hasMountedContext || authLoading) {
+  if (!hasMountedContext || authLoading && !user && !isOnboardingPage && !isLoginPage) { // Show loader primarily on initial auth check or if explicitly loading
      return (
       <div className="flex-grow flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
       </div>
     );
   }
-
-  // Si estamos en la página de onboarding, renderizar solo el contenido y el toaster
-  if (isOnboardingPage) {
+  
+  // If on onboarding or login, render only children and toaster
+  if (isOnboardingPage || isLoginPage) {
     return (
       <div className="flex-grow bg-background text-foreground">
         {children}
@@ -71,29 +69,14 @@ function ConditionalAppLayout({ locale, dictionary, children }: { locale: Locale
     );
   }
 
-  // Estructura completa de la app para páginas autenticadas y otras
+  // Full app structure for other pages
   return (
     <>
-      <Sheet open={openMobile} onOpenChange={setOpenMobile}>
-        <SheetContent
-          side="left"
-          className="w-full max-w-xs sm:max-w-sm bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden" // Hide default close, ensure AppSidebar handles it
-          aria-describedby={undefined} // Remove default aria-describedby if SheetTitle is not used
-          aria-labelledby={undefined}   // Remove default aria-labelledby if SheetTitle is not used
-        >
-          {/* SheetTitle is visually hidden if not provided but might be needed for ARIA if not handled by AppSidebar's header */}
-          <SheetTitle className="sr-only">{dictionary['Header.title'] || "Navigation Menu"}</SheetTitle>
-          <AppSidebar dictionary={dictionary} currentLocale={locale} />
-        </SheetContent>
-      </Sheet>
-
-      <SidebarInset>
-        <Header dictionary={dictionary} currentLocale={locale} />
-        <div className="flex-grow">
-          {children}
-        </div>
-        <Footer dictionary={dictionary} />
-      </SidebarInset>
+      <Header dictionary={dictionary} currentLocale={locale} />
+      <div className="flex-grow">
+        {children}
+      </div>
+      <Footer dictionary={dictionary} />
     </>
   );
 }
@@ -122,7 +105,7 @@ export default function LocaleLayout({
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
         </head>
-        <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background">
+        <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark">
            <div className="flex-grow flex items-center justify-center min-h-screen">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           </div>
@@ -139,13 +122,12 @@ export default function LocaleLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased min-h-screen flex flex-col text-foreground">
+      {/* Ensure the dark class is applied for the new theme */}
+      <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark">
         <AuthProvider>
-          <SidebarProvider defaultOpen={true}> 
-            <ConditionalAppLayout locale={currentLocale} dictionary={dictionary}>
-              {children}
-            </ConditionalAppLayout>
-          </SidebarProvider>
+          <AppStructure locale={currentLocale} dictionary={dictionary}>
+            {children}
+          </AppStructure>
         </AuthProvider>
         <Toaster />
       </body>
