@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, SelectedProfileType } from '@/types';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, SelectedProfileType, ZodiacSignName } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
 import { format, subDays } from 'date-fns';
@@ -14,10 +14,9 @@ import { format, subDays } from 'date-fns';
 import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
 import ProfileSelector from '@/components/shared/ProfileSelector';
 import UserZodiacDetailCard from '@/components/shared/UserZodiacDetailCard';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard'; // Import shared component
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Skeleton } from '@/components/ui/skeleton';
+
 import {
   Sparkles, Heart, CircleDollarSign, Activity, CalendarDays, Upload
 } from 'lucide-react';
@@ -59,12 +58,13 @@ function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Diction
 
   useEffect(() => {
     const fetchHoroscopeForYesterday = async () => {
-      let signToFetch: ZodiacSign | null = null;
+      let signToFetch: ZodiacSignName | null = null;
       if (selectedProfile === 'user' && userSunSign) {
-        signToFetch = userSunSign;
-      } else {
-        signToFetch = ZODIAC_SIGNS.find(s => s.name === "Aries")!; // Default to Aries for generic
+        signToFetch = userSunSign.name;
+      } else if (selectedProfile === 'generic') {
+        signToFetch = ZODIAC_SIGNS[0].name; 
       }
+
 
       if (signToFetch) {
         setIsHoroscopeLoading(true);
@@ -72,7 +72,7 @@ function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Diction
           const yesterdayDate = subDays(new Date(), 1);
           const targetDateStr = format(yesterdayDate, 'yyyy-MM-dd');
           const input: HoroscopeFlowInput = { 
-            sign: signToFetch.name, 
+            sign: signToFetch, 
             locale, 
             targetDate: targetDateStr 
           };
@@ -86,6 +86,7 @@ function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Diction
         }
       } else {
          setYesterdayHoroscope(null);
+         setIsHoroscopeLoading(false); // Ensure loading stops if no sign to fetch
       }
     };
 
@@ -105,21 +106,6 @@ function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Diction
     }
     // If 'yesterday' is clicked, do nothing (already on the page)
   };
-
-  const HoroscopeCategoryCard = ({ titleKey, icon: Icon, content, progressValue, isLoading }: { titleKey: string, icon: React.ElementType, content: string | undefined | null, progressValue: number, isLoading: boolean }) => (
-    <Card className="shadow-lg bg-card/80 hover:shadow-primary/30 transition-shadow duration-300 backdrop-blur-sm rounded-xl">
-      <CardContent className="p-3 sm:p-4">
-        <div className="flex items-center mb-1.5 sm:mb-2">
-          <div className="bg-primary/10 p-1.5 rounded-full mr-2 sm:mr-3">
-            <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-          </div>
-          <CardTitle className="text-sm sm:text-base font-semibold font-headline text-foreground">{dictionary[titleKey]}</CardTitle>
-        </div>
-        {isLoading ? <Skeleton className="h-1.5 w-1/4 mb-1.5" /> : <Progress value={progressValue} className="h-1.5 sm:h-2 w-full mb-1.5 sm:mb-2 bg-muted/50" indicatorClassName="bg-gradient-to-r from-primary to-purple-500" />}
-        {isLoading ? <Skeleton className="h-10 w-full" /> : <p className="text-xs sm:text-sm font-body text-card-foreground/80 leading-relaxed line-clamp-3">{content || (dictionary['HoroscopeSection.noData'] || "No data available.")}</p>}
-      </CardContent>
-    </Card>
-  );
 
   const horoscopeCategories = [
     { id: "main", titleKey: "HomePage.workCategory", icon: WorkIcon, content: yesterdayHoroscope?.main, progress: 65 },
@@ -153,6 +139,7 @@ function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Diction
           onboardingData={onboardingData}
           user={user}
           authLoading={authLoading}
+          activeHoroscopePeriod={'daily'} // Yesterday is a daily view
         />
 
         <div>
@@ -171,6 +158,7 @@ function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Diction
             {horoscopeCategories.map(cat => (
               <HoroscopeCategoryCard
                 key={cat.id}
+                dictionary={dictionary} // Pass dictionary
                 titleKey={cat.titleKey}
                 icon={cat.icon}
                 content={cat.content}
@@ -203,7 +191,7 @@ export default function YesterdayHoroscopePageWrapper({ params: paramsPromise }:
     return (
       <div className="flex-grow flex items-center justify-center min-h-screen bg-background text-foreground">
         <Sparkles className="h-12 w-12 animate-pulse text-primary mx-auto" />
-        <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>
+        {Object.keys(dictionary).length > 0 && <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>}
       </div>
     );
   }
