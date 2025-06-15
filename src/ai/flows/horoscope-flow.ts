@@ -59,19 +59,21 @@ Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 Busca una profundidad y un tono similares en tus respuestas.
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales o tránsitos menores (puedes inferirlos arquetípicamente si no tienes datos específicos del día {{dateDescriptor}}) podrían influir en {{sign}}. Céntrate en la introspección, el manejo de las emociones y las oportunidades de claridad o sanación para el día. Evita consejos demasiado genéricos.
-Para 'love', ofrece consejos reflexivos para las conexiones, la comprensión y la expresión emocional en el día {{dateDescriptor}}. Considera cómo {{sign}} podría abordar los desafíos o alegrías en sus relaciones hoy.
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales, quizás vinculándolos con el enfoque, la claridad o nuevas perspectivas que las energías del día {{dateDescriptor}} podrían traer a {{sign}}.
-Para 'health', sugiere cómo mantener el bienestar conectando con la paz interior, gestionando los factores de estrés diarios o aprovechando la energía del día {{dateDescriptor}} para actividades restauradoras.
+IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health". El contenido de estas secciones debe ser la predicción para el día indicado por {{dateDescriptor}}, pero sin mencionar explícitamente la fecha dentro del texto de la predicción.
+
+Para la sección 'main', profundiza en cómo las energías diarias actuales o tránsitos menores (puedes inferirlos arquetípicamente si no tienes datos específicos del día) podrían influir en {{sign}}. Céntrate en la introspección, el manejo de las emociones y las oportunidades de claridad o sanación para el día. Evita consejos demasiado genéricos.
+Para 'love', ofrece consejos reflexivos para las conexiones, la comprensión y la expresión emocional en el día. Considera cómo {{sign}} podría abordar los desafíos o alegrías en sus relaciones.
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales, quizás vinculándolos con el enfoque, la claridad o nuevas perspectivas que las energías del día podrían traer a {{sign}}.
+Para 'health', sugiere cómo mantener el bienestar conectando con la paz interior, gestionando los factores de estrés diarios o aprovechando la energía del día para actividades restauradoras.
 
 La salida debe ser un objeto JSON con las siguientes claves: "main", "love", "money", "health". Todas las cadenas de texto deben ser elaboradas y ofrecer consejos significativos y personalizados para {{sign}}.
 
-Ejemplo de estructura de salida para {{sign}} (Aries) en {{locale}} (es), para el día {{dateDescriptor}} (CONTENIDO EJEMPLO, GENERA EL TUYO PROPIO):
+Ejemplo de estructura de salida para {{sign}} (Aries) en {{locale}} (es) (CONTENIDO EJEMPLO, GENERA EL TUYO PROPIO):
 {
-  "main": "Aries, {{dateDescriptor}} podrías sentir un eco de decepciones pasadas que dificultan la confianza. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad. Quizás es momento de sanar alguna herida y mirar hacia adelante con nueva determinación.",
-  "love": "En el amor, la honestidad contigo mismo sobre lo que necesitas para confiar es crucial {{dateDescriptor}}. Si sientes que viejas heridas afectan tus interacciones, permítete un espacio para la reflexión. La comunicación auténtica, incluso sobre tus vulnerabilidades, puede atraer conexiones más genuinas.",
-  "money": "Tu regente Marte impulsa la acción, pero {{dateDescriptor}} la claridad mental es tu mejor activo financiero. Antes de tomar decisiones, especialmente si surgen de impulsos pasados, evalúa si se alinean con tus metas actuales. Podrías identificar una nueva dirección para tus esfuerzos profesionales.",
-  "health": "Dedica tiempo {{dateDescriptor}} a actividades que te reconecten con tu fuerza interior, Aries. Sanar implica tanto el cuerpo como la mente. Si viejas tensiones resurgen, canaliza esa energía en ejercicio consciente o una práctica que te brinde paz y te permita avanzar."
+  "main": "Aries, podrías sentir un eco de decepciones pasadas que dificultan la confianza. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad. Quizás es momento de sanar alguna herida y mirar hacia adelante con nueva determinación.",
+  "love": "En el amor, la honestidad contigo mismo sobre lo que necesitas para confiar es crucial. Si sientes que viejas heridas afectan tus interacciones, permítete un espacio para la reflexión. La comunicación auténtica, incluso sobre tus vulnerabilidades, puede atraer conexiones más genuinas.",
+  "money": "Tu regente Marte impulsa la acción, pero la claridad mental es tu mejor activo financiero. Antes de tomar decisiones, especialmente si surgen de impulsos pasados, evalúa si se alinean con tus metas actuales. Podrías identificar una nueva dirección para tus esfuerzos profesionales.",
+  "health": "Dedica tiempo a actividades que te reconecten con tu fuerza interior, Aries. Sanar implica tanto el cuerpo como la mente. Si viejas tensiones resurgen, canaliza esa energía en ejercicio consciente o una práctica que te brinde paz y te permita avanzar."
 }
 Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}}, reflejando este estilo perspicaz y empático:
 `,
@@ -259,7 +261,7 @@ const horoscopeFlowInternal = ai.defineFlow(
     if (input.targetDate) {
         const [year, month, day] = input.targetDate.split('-').map(Number);
         // JavaScript months are 0-indexed, so subtract 1 from the month
-        const parsedDate = new Date(year, month - 1, day);
+        const parsedDate = new Date(Date.UTC(year, month - 1, day)); // Use UTC to avoid timezone issues with date parsing
         if (!isNaN(parsedDate.getTime())) {
             dailyTargetDate = parsedDate;
         } else {
