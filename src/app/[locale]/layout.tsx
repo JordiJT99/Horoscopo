@@ -4,12 +4,12 @@
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
-import { SidebarProvider, Sidebar, SidebarInset, useSidebar } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, useSidebar } from "@/components/ui/sidebar"; // Removed Sidebar
 import AppSidebar from '@/components/shared/AppSidebar';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"; // Added Sheet
 import { useEffect, useState, use, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import '../globals.css';
@@ -23,7 +23,7 @@ function ConditionalAppLayout({ locale, dictionary, children }: { locale: Locale
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { isMobile, openMobile, setOpenMobile } = useSidebar();
+  const { openMobile, setOpenMobile } = useSidebar(); // isMobile is not needed here as Sheet handles responsiveness
   const [hasMountedContext, setHasMountedContext] = useState(false);
 
   useEffect(() => {
@@ -36,18 +36,15 @@ function ConditionalAppLayout({ locale, dictionary, children }: { locale: Locale
   const isLoginPage = pathname === loginPath;
 
   useEffect(() => {
-    if (!hasMountedContext || authLoading) { // No redirigir si auth está cargando
+    if (!hasMountedContext || authLoading) { 
       return; 
     }
 
-    // Si no hay usuario y no estamos en la página de login, redirigir a login
-    // Esto permite que el onboarding cargue si ya está en esa ruta, incluso sin usuario (aunque la página de onboarding luego redirigirá si no hay usuario)
     if (!user && !isLoginPage && !isOnboardingPage) {
       router.push(loginPath);
       return;
     }
     
-    // Si hay usuario, verificar onboarding
     if (user) {
       const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
       if (!onboardingComplete && !isOnboardingPage && !isLoginPage) {
@@ -70,29 +67,25 @@ function ConditionalAppLayout({ locale, dictionary, children }: { locale: Locale
     return (
       <div className="flex-grow bg-background text-foreground">
         {children}
-        {/* Toaster puede ser útil aquí también para mensajes de validación del onboarding */}
       </div>
     );
   }
 
-  // Si no es la página de onboarding, renderizar la estructura completa de la app
+  // Estructura completa de la app para páginas autenticadas y otras
   return (
     <>
-      <Sidebar>
-        <AppSidebar dictionary={dictionary} currentLocale={locale} />
-      </Sidebar>
-
-      {isMobile && (
-        <Sheet open={openMobile} onOpenChange={setOpenMobile}>
-          <SheetContent
-            side="left" 
-            className="w-[var(--sidebar-width-mobile)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-          >
-            <SheetTitle className="sr-only">{dictionary['Header.title'] || "Navigation Menu"}</SheetTitle>
-            <AppSidebar dictionary={dictionary} currentLocale={locale} />
-          </SheetContent>
-        </Sheet>
-      )}
+      <Sheet open={openMobile} onOpenChange={setOpenMobile}>
+        <SheetContent
+          side="left"
+          className="w-full max-w-xs sm:max-w-sm bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden" // Hide default close, ensure AppSidebar handles it
+          aria-describedby={undefined} // Remove default aria-describedby if SheetTitle is not used
+          aria-labelledby={undefined}   // Remove default aria-labelledby if SheetTitle is not used
+        >
+          {/* SheetTitle is visually hidden if not provided but might be needed for ARIA if not handled by AppSidebar's header */}
+          <SheetTitle className="sr-only">{dictionary['Header.title'] || "Navigation Menu"}</SheetTitle>
+          <AppSidebar dictionary={dictionary} currentLocale={locale} />
+        </SheetContent>
+      </Sheet>
 
       <SidebarInset>
         <Header dictionary={dictionary} currentLocale={locale} />
@@ -121,7 +114,7 @@ export default function LocaleLayout({
   const dictionaryPromise = useMemo(() => getDictionary(currentLocale), [currentLocale]);
   const dictionary = use(dictionaryPromise);
 
-  if (Object.keys(dictionary).length === 0) { // Simple check, AuthProvider/SidebarProvider might not like null dictionary
+  if (Object.keys(dictionary).length === 0) { 
     return (
       <html lang={currentLocale} suppressHydrationWarning>
         <head>
