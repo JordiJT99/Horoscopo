@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, ArrowUpRight as AscendantIcon,
-  Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brainwave as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages
+  Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages
 } from 'lucide-react';
 
 interface MorePageProps {
