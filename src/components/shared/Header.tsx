@@ -29,7 +29,7 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
     { href: "/compatibility", labelKey: "Header.compatibility", icon: HeartHandshake },
     { href: "/tarot-reading", labelKey: "Header.tarot", icon: Wand },
     { href: "/crystal-ball", labelKey: "Header.crystalBall", icon: Eye, notificationCount: 1 },
-    { href: "/more", labelKey: "Header.more", icon: MoreHorizontal }, // Changed to AlignJustify later for consistency
+    { href: "/more", labelKey: "Header.more", icon: AlignJustify }, // Consistent icon for "More"
   ];
 
   return (
@@ -37,8 +37,8 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
       <div className="container flex h-14 max-w-screen-2xl items-center justify-around px-1 sm:px-2 md:px-4">
         {mainNavItems.map(item => {
           const IconComponent = item.icon;
-          // The "More" icon in the image looks more like AlignJustify (hamburger variant) than MoreHorizontal
-          const displayIcon = item.labelKey === "Header.more" ? AlignJustify : IconComponent;
+          // The variable holding the component must start with an uppercase letter.
+          const DisplayIcon = item.icon; 
           
           return (
             <Button
@@ -51,7 +51,7 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
               )}
             >
               <Link href={`/${currentLocale}${item.href}`}>
-                <displayIcon className="h-4 w-4 sm:h-5 sm:w-5 mb-0.5" />
+                <DisplayIcon className="h-4 w-4 sm:h-5 sm:w-5 mb-0.5" />
                 <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
                 {item.notificationCount && item.notificationCount > 0 && (
                   <Badge variant="destructive" className="absolute top-0.5 right-0 sm:right-0.5 transform translate-x-1/3 -translate-y-1/3 p-0 h-3.5 w-3.5 min-w-[0.875rem] text-[0.55rem] flex items-center justify-center">
@@ -68,3 +68,4 @@ const Header = ({ dictionary, currentLocale }: HeaderProps) => {
 };
 
 export default Header;
+
