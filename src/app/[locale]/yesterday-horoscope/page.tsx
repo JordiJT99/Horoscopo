@@ -19,22 +19,20 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
-  Sparkles, Heart, CircleDollarSign, Activity, Edit3, UserCircle, CalendarDays, Upload, AlignJustify
+  Sparkles, Heart, CircleDollarSign, Activity, CalendarDays, Upload
 } from 'lucide-react';
 
-interface AstroVibesHomePageProps {
+interface YesterdayHoroscopePageProps {
   params: { locale: Locale };
 }
 
-function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
+function YesterdayHoroscopeContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
-  const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
-  const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
+  const [yesterdayHoroscope, setYesterdayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(false);
-  const [activeSubTab, setActiveSubTab] = useState<HoroscopePeriod>('today');
   const [selectedProfile, setSelectedProfile] = useState<SelectedProfileType>('user');
 
   useEffect(() => {
@@ -48,23 +46,19 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
         setOnboardingData(parsedData);
         if (parsedData.dateOfBirth) {
           setUserSunSign(getSunSignFromDate(parsedData.dateOfBirth));
-          // setSelectedProfile('user'); // Keep current selectedProfile or default to user if just logged in
-        } else {
-           // setSelectedProfile('generic'); // If no birth date, generic might be better
         }
       } else {
         setUserSunSign(null);
-        // setSelectedProfile('generic');
       }
     } else {
       setOnboardingData(null);
       setUserSunSign(null);
-      setSelectedProfile('generic'); // Default to generic if no user
+      setSelectedProfile('generic');
     }
   }, [user]);
 
   useEffect(() => {
-    const fetchHoroscope = async () => {
+    const fetchHoroscopeForYesterday = async () => {
       let signToFetch: ZodiacSign | null = null;
       if (selectedProfile === 'user' && userSunSign) {
         signToFetch = userSunSign;
@@ -72,50 +66,44 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
         signToFetch = ZODIAC_SIGNS.find(s => s.name === "Aries")!; // Default to Aries for generic
       }
 
-      if (signToFetch && (activeSubTab === 'today' || activeSubTab === 'tomorrow')) { // Only fetch for today/tomorrow on main page for now
+      if (signToFetch) {
         setIsHoroscopeLoading(true);
         try {
-          // For "tomorrow", we still request "today" as per current flow limitations
-          const targetDateStr = format(new Date(), 'yyyy-MM-dd');
+          const yesterdayDate = subDays(new Date(), 1);
+          const targetDateStr = format(yesterdayDate, 'yyyy-MM-dd');
           const input: HoroscopeFlowInput = { 
             sign: signToFetch.name, 
             locale, 
-            targetDate: targetDateStr // Always fetch for today on this page for daily view
+            targetDate: targetDateStr 
           };
           const result = await getHoroscopeFlow(input);
-          setFullHoroscopeData(result);
-          setCurrentDisplayHoroscope(result.daily); // Default to daily
+          setYesterdayHoroscope(result.daily);
         } catch (error) {
-          console.error("Error fetching horoscope:", error);
-          setFullHoroscopeData(null);
-          setCurrentDisplayHoroscope(null);
+          console.error("Error fetching yesterday's horoscope:", error);
+          setYesterdayHoroscope(null);
         } finally {
           setIsHoroscopeLoading(false);
         }
-      } else if (!signToFetch && (activeSubTab === 'today' || activeSubTab === 'tomorrow')) {
-        // Handle case where signToFetch is null but we expect data (e.g. user profile selected but no sun sign yet)
-        setCurrentDisplayHoroscope(null); // Clear horoscope if no sign to fetch for
-        setFullHoroscopeData(null);
+      } else {
+         setYesterdayHoroscope(null);
       }
     };
 
     if (!authLoading) {
-        fetchHoroscope();
+        fetchHoroscopeForYesterday();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProfile, userSunSign, locale, authLoading, activeSubTab]);
-
+  }, [selectedProfile, userSunSign, locale, authLoading]);
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
-    setActiveSubTab(tab);
-    if (tab === 'yesterday') {
-      router.push(`/${locale}/yesterday-horoscope`);
+    if (tab === 'today' || tab === 'tomorrow') {
+      router.push(`/${locale}`);
     } else if (tab === 'weekly') {
       router.push(`/${locale}/weekly-horoscope`);
     } else if (tab === 'monthly') {
       router.push(`/${locale}/monthly-horoscope`);
     }
-    // For 'today' and 'tomorrow', the useEffect for fetching horoscope will re-trigger.
+    // If 'yesterday' is clicked, do nothing (already on the page)
   };
 
   const HoroscopeCategoryCard = ({ titleKey, icon: Icon, content, progressValue, isLoading }: { titleKey: string, icon: React.ElementType, content: string | undefined | null, progressValue: number, isLoading: boolean }) => (
@@ -134,29 +122,18 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
   );
 
   const horoscopeCategories = [
-    { id: "main", titleKey: "HomePage.workCategory", icon: WorkIcon, content: currentDisplayHoroscope?.main, progress: 71 },
-    { id: "love", titleKey: "HoroscopeSection.loveTitle", icon: Heart, content: currentDisplayHoroscope?.love, progress: 85 },
-    { id: "money", titleKey: "HoroscopeSection.moneyTitle", icon: CircleDollarSign, content: currentDisplayHoroscope?.money, progress: 60 },
-    { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: currentDisplayHoroscope?.health, progress: 90 },
+    { id: "main", titleKey: "HomePage.workCategory", icon: WorkIcon, content: yesterdayHoroscope?.main, progress: 65 },
+    { id: "love", titleKey: "HoroscopeSection.loveTitle", icon: Heart, content: yesterdayHoroscope?.love, progress: 70 },
+    { id: "money", titleKey: "HoroscopeSection.moneyTitle", icon: CircleDollarSign, content: yesterdayHoroscope?.money, progress: 50 },
+    { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: yesterdayHoroscope?.health, progress: 80 },
   ];
-
-  const getDateDescriptor = () => {
-    const today = new Date();
-    if (activeSubTab === 'tomorrow') {
-        // As per flow, tomorrow's data is currently today's.
-        return today.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' });
-    }
-    return today.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' });
-  };
-
-  const currentHoroscopeTitle = activeSubTab === 'tomorrow' 
-    ? (dictionary['HomePage.yourHoroscopeTomorrow'] || "Your Horoscope for Tomorrow")
-    : (dictionary['HomePage.yourHoroscopeToday'] || "Your Horoscope for Today");
-
+  
+  const yesterdayDate = subDays(new Date(), 1);
+  const dateDescriptor = yesterdayDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric', weekday: 'short' });
 
   return (
     <div className="flex flex-col min-h-screen">
-      <SubHeaderTabs dictionary={dictionary} activeTab={activeSubTab} onTabChange={handleSubHeaderTabSelect} />
+      <SubHeaderTabs dictionary={dictionary} activeTab="yesterday" onTabChange={handleSubHeaderTabSelect} />
       
       <main className="flex-grow container mx-auto px-3 sm:px-4 py-3 sm:py-4 space-y-4 sm:space-y-6">
         <ProfileSelector
@@ -178,33 +155,31 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
           authLoading={authLoading}
         />
 
-        {(activeSubTab === 'today' || activeSubTab === 'tomorrow') && (
-          <div>
-            <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
-              <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
-                <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
-                {currentHoroscopeTitle}
-                <span className="text-[0.65rem] sm:text-xs text-muted-foreground ml-1.5 sm:ml-2 hidden sm:inline">({getDateDescriptor()})</span>
-              </h2>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary h-7 w-7 sm:h-8 sm:w-8">
-                <Upload className="w-3.5 h-3.5 sm:w-4 sm:w-4"/>
-                <span className="sr-only">{dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}</span>
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
-              {horoscopeCategories.map(cat => (
-                <HoroscopeCategoryCard
-                  key={cat.id}
-                  titleKey={cat.titleKey}
-                  icon={cat.icon}
-                  content={cat.content}
-                  progressValue={cat.progress}
-                  isLoading={isHoroscopeLoading}
-                />
-              ))}
-            </div>
+        <div>
+          <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
+            <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
+              <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
+              {dictionary['HomePage.yourHoroscopeYesterday'] || "Your Horoscope for Yesterday"}
+              <span className="text-[0.65rem] sm:text-xs text-muted-foreground ml-1.5 sm:ml-2 hidden sm:inline">({dateDescriptor})</span>
+            </h2>
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary h-7 w-7 sm:h-8 sm:w-8">
+              <Upload className="w-3.5 h-3.5 sm:w-4 sm:w-4"/>
+              <span className="sr-only">{dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}</span>
+            </Button>
           </div>
-        )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
+            {horoscopeCategories.map(cat => (
+              <HoroscopeCategoryCard
+                key={cat.id}
+                titleKey={cat.titleKey}
+                icon={cat.icon}
+                content={cat.content}
+                progressValue={cat.progress}
+                isLoading={isHoroscopeLoading}
+              />
+            ))}
+          </div>
+        </div>
        
         <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-card/50 border-2 border-dashed border-muted-foreground/20 rounded-lg text-center text-muted-foreground font-body">
           <p className="text-xs sm:text-sm">{dictionary['HomePage.adPlaceholderText'] || "Advertisement Placeholder - Your ad could be here!"}</p>
@@ -214,7 +189,7 @@ function AstroVibesHomePageContent({ dictionary, locale }: { dictionary: Diction
   );
 }
 
-export default function AstroVibesHomePageWrapper({ params: paramsPromise }: AstroVibesHomePageProps) {
+export default function YesterdayHoroscopePageWrapper({ params: paramsPromise }: YesterdayHoroscopePageProps) {
   const params = use(paramsPromise);
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
@@ -232,5 +207,5 @@ export default function AstroVibesHomePageWrapper({ params: paramsPromise }: Ast
       </div>
     );
   }
-  return <AstroVibesHomePageContent dictionary={dictionary} locale={params.locale} />;
+  return <YesterdayHoroscopeContent dictionary={dictionary} locale={params.locale} />;
 }

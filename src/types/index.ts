@@ -40,6 +40,19 @@ export interface HoroscopeDetail {
   health: string;
 }
 
+export interface HoroscopeFlowInput {
+  sign: ZodiacSignName;
+  locale: string;
+  targetDate?: string; // YYYY-MM-DD format, optional
+}
+
+export interface HoroscopeFlowOutput {
+  daily: HoroscopeDetail;
+  weekly: HoroscopeDetail;
+  monthly: HoroscopeDetail;
+}
+
+
 export interface CompatibilityData {
   sign1: ZodiacSignName;
   sign2: ZodiacSignName;
@@ -167,6 +180,7 @@ export interface AuthUser {
   uid: string;
   email: string | null;
   displayName: string | null;
+  photoURL?: string | null; // Added photoURL for profile images
 }
 
 // Onboarding Flow Types
@@ -184,3 +198,7 @@ export interface OnboardingFormData {
   employmentStatus: EmploymentStatus;
   personalizedAdsConsent: boolean;
 }
+
+// Profile selector type
+export type SelectedProfileType = 'user' | 'generic';
+
