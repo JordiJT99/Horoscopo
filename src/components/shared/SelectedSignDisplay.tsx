@@ -25,9 +25,6 @@ export default function SelectedSignDisplay({
   if (selectedSign.customIconPath) {
     imagePath = selectedSign.customIconPath;
     aiHint = `${selectedSign.name.toLowerCase()} zodiac symbol illustration`;
-  } else {
-    // Fallback if no customIconPath, could also use the Lucide icon component enlarged
-    // For now, sticking to placeholder to maintain image structure
   }
 
   return (
@@ -38,10 +35,9 @@ export default function SelectedSignDisplay({
       <p className="text-sm text-muted-foreground mb-4">
         {selectedSign.dateRange}
       </p>
-      {/* Contenedor que define la forma circular y el borde */}
+      {/* Contenedor que define la forma circular, ahora sin el anillo */}
       <div className={cn(
-        "relative w-32 h-32 sm:w-36 sm:h-36 mb-4 rounded-full shadow-lg overflow-hidden bg-card",
-        "ring-4 ring-primary ring-inset" // Reemplazado border con ring
+        "relative w-32 h-32 sm:w-36 sm:h-36 mb-4 rounded-full shadow-lg overflow-hidden bg-card" 
       )}>
         <Image
             src={imagePath}
@@ -50,12 +46,12 @@ export default function SelectedSignDisplay({
             objectFit="cover"
             priority={true}
             key={imagePath} 
-            className="rounded-full" // Mantener rounded-full aquí puede ayudar
+            className="rounded-full" 
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.onerror = null; 
-              // Fallback a un placeholder aún más simple si el principal falla
               target.src = `https://placehold.co/144x144/CCCCCC/000000.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`;
+              target.setAttribute("data-ai-hint", "letter placeholder");
             }}
             data-ai-hint={aiHint}
         />
