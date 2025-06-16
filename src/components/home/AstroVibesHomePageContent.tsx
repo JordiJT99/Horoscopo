@@ -8,7 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, SelectedProfileType, ZodiacSignName, HoroscopeFlowOutput } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
-import { motion, PanInfo } from 'framer-motion';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
 import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
@@ -18,8 +18,6 @@ import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesS
 import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard';
 import PromotionCard from '@/components/shared/PromotionCard';
 import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays } from 'lucide-react';
-// import UserZodiacDetailCard from '../shared/UserZodiacDetailCard'; // Not used in current design
-// import ProfileSelector from '../shared/ProfileSelector'; // Not used in current design
 import { useIsMobile } from '@/hooks/use-mobile';
 
 
@@ -50,16 +48,12 @@ export default function AstroVibesHomePageContent({
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
   
-  // selectedProfile is not directly used for display anymore in this new design,
-  // but the logic to determine selectedDisplaySignName might still depend on user context.
-  // const [selectedProfile, setSelectedProfile] = useState<SelectedProfileType>('generic'); 
-
   const [selectedDisplaySignName, setSelectedDisplaySignName] = useState<ZodiacSignName>(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       return signFromUrl;
     }
-    return "Capricorn"; // Default fallback, will be updated by effects
+    return "Capricorn"; 
   });
 
   const selectedDisplaySign = useMemo(() => {
@@ -69,9 +63,10 @@ export default function AstroVibesHomePageContent({
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
   const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true);
+  const [dragDirection, setDragDirection] = useState<'left' | 'right' | null>(null);
+
 
   useEffect(() => {
-    // Logic to determine initial selectedDisplaySignName based on user and URL
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
     let initialSign = "Capricorn" as ZodiacSignName;
 
@@ -79,7 +74,7 @@ export default function AstroVibesHomePageContent({
       const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
       if (storedData) {
         const parsedData = JSON.parse(storedData) as OnboardingFormData;
-        if (parsedData.dateOfBirth) {
+         if (parsedData.dateOfBirth) { // Ensure dateOfBirth is a Date object if it exists
             parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
         }
         setOnboardingData(parsedData);
@@ -102,8 +97,8 @@ export default function AstroVibesHomePageContent({
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySignName || authLoading && !searchParams.get('sign')) {
-         if (authLoading) setIsHoroscopeLoading(true); // Keep loading if auth is still pending
+      if (!selectedDisplaySignName || (authLoading && !searchParams.get('sign'))) {
+         if (authLoading) setIsHoroscopeLoading(true);
         return;
       }
       setIsHoroscopeLoading(true);
@@ -115,14 +110,7 @@ export default function AstroVibesHomePageContent({
         };
         const result = await getHoroscopeFlow(input);
         setFullHoroscopeData(result);
-
-        if (displayPeriod === 'daily') {
-          setCurrentDisplayHoroscope(result.daily);
-        } else if (displayPeriod === 'weekly') {
-          setCurrentDisplayHoroscope(result.weekly);
-        } else if (displayPeriod === 'monthly') {
-          setCurrentDisplayHoroscope(result.monthly);
-        }
+        setCurrentDisplayHoroscope(result[displayPeriod]);
 
       } catch (error) {
         console.error("Error fetching horoscope:", error);
@@ -134,7 +122,8 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, authLoading, displayPeriod, targetDate, searchParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDisplaySignName, locale, authLoading, displayPeriod, targetDate]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -148,10 +137,10 @@ export default function AstroVibesHomePageContent({
     } else if (tab === 'monthly') {
       newPath = `/${locale}/monthly-horoscope?sign=${currentSignParam}`;
     } else { 
-      const basePagePath = pathname.split('/').slice(0,2).join('/'); // e.g. /es or /en
+      const basePagePath = pathname.split('/').slice(0,2).join('/');
       newPath = `${basePagePath}?sign=${currentSignParam}`;
       if (tab === 'tomorrow') {
-        newPath += '&period=tomorrow'; // Add period for tomorrow, keep root for today
+        newPath += '&period=tomorrow';
       }
     }
     router.push(newPath, { scroll: false });
@@ -169,6 +158,11 @@ export default function AstroVibesHomePageContent({
     const currentIndex = orderedTabs.indexOf(activeHoroscopePeriodForTitles);
     const nextIndex = currentIndex + direction;
     if (nextIndex >= 0 && nextIndex < orderedTabs.length) {
+      if (direction > 0) { // Swiped left, new content comes from right
+        setDragDirection('right');
+      } else { // Swiped right, new content comes from left
+        setDragDirection('left');
+      }
       handleSubHeaderTabSelect(orderedTabs[nextIndex]);
     }
   };
@@ -230,9 +224,26 @@ export default function AstroVibesHomePageContent({
     );
   }
 
+  const variants = {
+    enter: (direction: string | null) => ({
+      x: direction === 'right' ? 300 : direction === 'left' ? -300 : 0,
+      opacity: 0
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction: string | null) => ({
+      zIndex: 0,
+      x: direction === 'left' ? 300 : direction === 'right' ? -300 : 0, // Exit to opposite of enter
+      opacity: 0
+    })
+  };
+
   return (
     <div className="flex flex-col">
-      <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4">
+      <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden"> {/* Added overflow-x-hidden here */}
         <SignSelectorHorizontalScroll
           dictionary={dictionary}
           locale={locale}
@@ -242,42 +253,45 @@ export default function AstroVibesHomePageContent({
           user={user}
         />
         
-        {/* Swipeable content area starts here */}
-        <motion.div
-          drag={isMobile ? "x" : false}
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.1}
-          onDragEnd={isMobile ? handleDragEnd : undefined}
-          className="overflow-hidden" // Important to contain elements during drag if they visually move
-                                    // Could also set overflow-x-hidden if content is not meant to scroll horizontally
-        >
-          <motion.div 
-            key={activeHoroscopePeriodForTitles + selectedDisplaySignName} // Re-trigger animation on tab or sign change
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 0.3 }}
+        <AnimatePresence initial={false} custom={dragDirection} mode="wait">
+          <motion.div
+            key={activeHoroscopePeriodForTitles + selectedDisplaySignName} // This key is crucial
+            custom={dragDirection}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30, duration: 0.2 },
+              opacity: { duration: 0.2 }
+            }}
+            drag={isMobile ? "x" : false}
+            dragConstraints={{ left: 0, right: 0 }} 
+            dragElastic={1} 
+            onDragEnd={isMobile ? handleDragEnd : undefined}
+            className="w-full cursor-grab active:cursor-grabbing" 
           >
             <SelectedSignDisplay
               dictionary={dictionary}
               locale={locale}
               selectedSign={selectedDisplaySign}
             />
-          </motion.div>
+          
+            <SubHeaderTabs
+              dictionary={dictionary}
+              activeTab={activeHoroscopePeriodForTitles}
+              onTabChange={(tab) => {
+                const currentIndex = orderedTabs.indexOf(activeHoroscopePeriodForTitles);
+                const nextIndex = orderedTabs.indexOf(tab);
+                if (nextIndex > currentIndex) setDragDirection('right');
+                else if (nextIndex < currentIndex) setDragDirection('left');
+                else setDragDirection(null);
+                handleSubHeaderTabSelect(tab);
+              }}
+            />
 
-          <SubHeaderTabs
-            dictionary={dictionary}
-            activeTab={activeHoroscopePeriodForTitles}
-            onTabChange={handleSubHeaderTabSelect}
-          />
+            <FeatureLinkCards dictionary={dictionary} locale={locale} />
 
-          <FeatureLinkCards dictionary={dictionary} locale={locale} />
-
-          <motion.div
-            key={`summary-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
             <HoroscopeCategoriesSummary
               dictionary={dictionary}
               titleKey={summaryTitleKey}
@@ -286,14 +300,7 @@ export default function AstroVibesHomePageContent({
               isLoading={isHoroscopeLoading}
               horoscopeDetail={currentDisplayHoroscope}
             />
-          </motion.div>
-
-          <motion.div
-              key={`details-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          
             <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
               <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
                 <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
@@ -302,36 +309,24 @@ export default function AstroVibesHomePageContent({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
               {detailedHoroscopeCategories.map((cat, index) => (
-                <motion.div
-                  key={`${cat.id}-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
-                >
-                  <HoroscopeCategoryCard
+                <HoroscopeCategoryCard
+                    key={`${cat.id}-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}-detail`} // Ensure unique key
                     dictionary={dictionary}
                     titleKey={cat.titleKey}
                     icon={cat.icon}
                     content={cat.content}
                     isLoading={isHoroscopeLoading}
                   />
-                </motion.div>
               ))}
               {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
-                 <motion.div
-                  key={`skeleton-${index}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
-                >
                   <HoroscopeCategoryCard
+                    key={`skeleton-${index}`}
                     dictionary={dictionary}
                     titleKey="Loading..."
                     icon={ContentSparklesIcon}
                     content=""
                     isLoading={true}
                   />
-                </motion.div>
               ))}
               {!isHoroscopeLoading && !currentDisplayHoroscope && (
                  <div className="sm:col-span-2 text-center py-10">
@@ -339,17 +334,9 @@ export default function AstroVibesHomePageContent({
                 </div>
               )}
             </div>
-          </motion.div>
-
-          <motion.div
-            key={`promo-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-          >
             <PromotionCard dictionary={dictionary} />
           </motion.div>
-        </motion.div> {/* End of swipeable motion.div */}
+        </AnimatePresence>
       </main>
     </div>
   );
