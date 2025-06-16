@@ -4,7 +4,6 @@
 import type { ZodiacSign } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Button } from '@/components/ui/button';
-// import { Avatar, AvatarFallback } from '@/components/ui/avatar'; // No se usa directamente Avatar para la imagen principal
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
@@ -26,6 +25,9 @@ export default function SelectedSignDisplay({
   if (selectedSign.customIconPath) {
     imagePath = selectedSign.customIconPath;
     aiHint = `${selectedSign.name.toLowerCase()} zodiac symbol illustration`;
+  } else {
+    // Fallback if no customIconPath, could also use the Lucide icon component enlarged
+    // For now, sticking to placeholder to maintain image structure
   }
 
   return (
@@ -37,19 +39,23 @@ export default function SelectedSignDisplay({
         {selectedSign.dateRange}
       </p>
       {/* Contenedor que define la forma circular y el borde */}
-      <div className="relative w-32 h-32 sm:w-36 sm:h-36 mb-4 rounded-full border-4 border-primary shadow-lg overflow-hidden bg-card">
+      <div className={cn(
+        "relative w-32 h-32 sm:w-36 sm:h-36 mb-4 rounded-full shadow-lg overflow-hidden bg-card",
+        "ring-4 ring-primary ring-inset" // Reemplazado border con ring
+      )}>
         <Image
             src={imagePath}
             alt={dictionary[selectedSign.name] || selectedSign.name}
             layout="fill" 
-            objectFit="cover" // Hace que la imagen cubra el contenedor, recortándose si es necesario
+            objectFit="cover"
             priority={true}
-            key={imagePath} // Ayuda a Next.js a re-renderizar si la ruta cambia
-            className="rounded-full" // Aplicar rounded-full aquí también puede ayudar al anti-aliasing del navegador
+            key={imagePath} 
+            className="rounded-full" // Mantener rounded-full aquí puede ayudar
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.onerror = null; 
-              target.src = `https://placehold.co/144x144/CCCCCC/999999.png?text=${selectedSign.name.substring(0,1).toUpperCase()}`;
+              // Fallback a un placeholder aún más simple si el principal falla
+              target.src = `https://placehold.co/144x144/CCCCCC/000000.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`;
             }}
             data-ai-hint={aiHint}
         />
@@ -60,4 +66,3 @@ export default function SelectedSignDisplay({
     </div>
   );
 }
-
