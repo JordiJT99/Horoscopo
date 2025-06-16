@@ -1,61 +1,60 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 258 50% 7%; /* Deep dark blue/purple */
-    --foreground: 260 25% 92%; /* Very light lavender/off-white */
+    /* Vibrant Purple Theme */
+    --background: 270 60% 8%; /* Deep Dark Purple/Indigo */
+    --foreground: 270 100% 96%; /* Very Light Lavender/Almost White */
 
-    --card: 258 45% 10%; /* Slightly lighter dark blue/purple for cards */
-    --card-foreground: 260 25% 90%;
+    --card: 270 50% 12%; /* Darker Purple for solid cards */
+    --card-foreground: 270 90% 94%;
 
-    --popover: 258 50% 9%; /* Similar to card for popovers */
-    --popover-foreground: 260 25% 90%;
+    --popover: 270 50% 10%; 
+    --popover-foreground: 270 90% 94%;
 
-    /* Primary is a vibrant purple/magenta for active elements and accents */
-    --primary: 280 80% 60%;
-    --primary-foreground: 280 20% 98%; /* Very light color for text on primary */
+    --primary: 320 90% 60%; /* Vibrant Pink/Magenta */
+    --primary-foreground: 320 100% 98%;
 
-    /* Secondary can be a less saturated purple or a contrasting accent */
-    --secondary: 270 50% 25%;
-    --secondary-foreground: 270 15% 85%;
+    --secondary: 280 70% 45%; /* Medium Purple */
+    --secondary-foreground: 280 80% 92%;
 
-    /* Muted for less important text or subtle backgrounds/borders */
-    --muted: 260 30% 20%;
-    --muted-foreground: 260 15% 65%; /* Lighter muted text */
+    --muted: 270 40% 25%; /* Muted Purple */
+    --muted-foreground: 270 25% 70%; 
 
-    /* Accent can be same as primary or a different highlight */
-    --accent: 280 80% 60%; /* Using same as primary */
-    --accent-foreground: 280 20% 98%;
+    --accent: 190 90% 55%; /* Bright Cyan/Aqua as accent */
+    --accent-foreground: 190 100% 98%;
 
-    --destructive: 0 70% 55%; /* Standard red for errors */
+    --destructive: 0 80% 60%; 
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 30% 18%; /* Subtle border color */
-    --input: 260 40% 15%; /* Dark input background */
-    --ring: 280 70% 65%; /* Brighter purple for focus rings */
+    --border: 270 40% 35%; /* Border for glassmorphism or regular borders */
+    --input: 270 45% 18%; 
+    --ring: 320 80% 65%; /* Ring color related to primary */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly larger default radius */
 
     --chart-1: hsl(var(--primary));
-    --chart-2: 295 70% 65%; /* A slightly different purple */
-    --chart-3: 310 70% 68%; /* Magenta-ish purple */
-    --chart-4: 265 70% 60%; /* Indigo-ish purple */
-    --chart-5: 275 70% 70%; /* Lavender */
+    --chart-2: 295 70% 65%; 
+    --chart-3: 310 70% 68%; 
+    --chart-4: 265 70% 60%; 
+    --chart-5: 275 70% 70%; 
 
-    /* Specific for new design */
-    --top-bar-background: hsl(var(--background));
+    /* Specific for new design - can be adjusted if needed */
+    --top-bar-background: hsl(var(--background) / 0.8); /* Semi-transparent for glass effect */
     --top-bar-foreground: hsl(var(--foreground));
 
-    --bottom-nav-background: 258 45% 10%; /* Same as card */
+    --bottom-nav-background: hsl(var(--card) / 0.8); /* Semi-transparent for glass effect */
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
 
     --sign-selector-active-border: hsl(var(--primary));
 
-    --feature-card-background: hsl(var(--primary));
+    --feature-card-background: hsl(var(--primary)); /* Solid primary for these cards */
     --feature-card-foreground: hsl(var(--primary-foreground));
 
     --horoscope-summary-title: hsl(var(--foreground));
@@ -65,29 +64,30 @@
   }
 
   .dark {
-    --background: 258 50% 7%;
-    --foreground: 260 25% 92%;
-    --card: 258 45% 10%;
-    --card-foreground: 260 25% 90%;
-    --popover: 258 50% 9%;
-    --popover-foreground: 260 25% 90%;
-    --primary: 280 80% 60%;
-    --primary-foreground: 280 20% 98%;
-    --secondary: 270 50% 25%;
-    --secondary-foreground: 270 15% 85%;
-    --muted: 260 30% 20%;
-    --muted-foreground: 260 15% 65%;
-    --accent: 280 80% 60%;
-    --accent-foreground: 280 20% 98%;
-    --destructive: 0 70% 55%;
+    /* Ensure dark theme variables match the new vibrant theme */
+    --background: 270 60% 8%; 
+    --foreground: 270 100% 96%; 
+    --card: 270 50% 12%; 
+    --card-foreground: 270 90% 94%;
+    --popover: 270 50% 10%;
+    --popover-foreground: 270 90% 94%;
+    --primary: 320 90% 60%; 
+    --primary-foreground: 320 100% 98%;
+    --secondary: 280 70% 45%; 
+    --secondary-foreground: 280 80% 92%;
+    --muted: 270 40% 25%; 
+    --muted-foreground: 270 25% 70%;
+    --accent: 190 90% 55%; 
+    --accent-foreground: 190 100% 98%;
+    --destructive: 0 80% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 30% 18%;
-    --input: 260 40% 15%;
-    --ring: 280 70% 65%;
+    --border: 270 40% 35%;
+    --input: 270 45% 18%;
+    --ring: 320 80% 65%;
 
-    --top-bar-background: hsl(var(--background));
+    --top-bar-background: hsl(var(--background) / 0.8);
     --top-bar-foreground: hsl(var(--foreground));
-    --bottom-nav-background: 258 45% 10%;
+    --bottom-nav-background: hsl(var(--card) / 0.8);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
     --sign-selector-active-border: hsl(var(--primary));
@@ -105,7 +105,24 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased; /* Apply new body font globally */
+    /* Removed fixed radial gradient from body, will apply locally */
+  }
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background) / 0.5);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.6);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
   }
 }
 
@@ -115,4 +132,13 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Heart Pulse Animation */
+@keyframes pulseHeart {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.12); opacity: 0.85; }
+}
+.animate-pulseHeart {
+  animation: pulseHeart 1.8s ease-in-out infinite;
 }

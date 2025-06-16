@@ -4,12 +4,12 @@
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
-import TopBar from '@/components/shared/TopBar'; // New TopBar
-import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; // New BottomNav
+import TopBar from '@/components/shared/TopBar'; 
+import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; 
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { useEffect, useState, use, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import '../globals.css';
+import '../globals.css'; // globals.css now imports fonts
 
 interface LocaleLayoutParams {
   locale: Locale;
@@ -36,7 +36,11 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     }
 
     if (!user && !isLoginPage && !isOnboardingPage) {
-      return;
+      // If not logged in and not on login/onboarding, let them stay or handle as per specific page logic
+      // Some public pages might be accessible.
+      // If strict auth is needed for all pages except login/onboarding, redirect here.
+      // For now, we assume some pages are public.
+      return; 
     }
     
     if (user) {
@@ -56,9 +60,10 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     );
   }
   
+  // For onboarding or login pages, we might want a simpler layout (no top/bottom bars)
   if (isOnboardingPage || isLoginPage) {
     return (
-      <div className="flex-grow bg-background text-foreground">
+      <div className="flex-grow bg-background text-foreground font-body"> {/* Apply font-body here too */}
         {children}
       </div>
     );
@@ -95,9 +100,7 @@ export default function LocaleLayout({
     return (
       <html lang={currentLocale} suppressHydrationWarning>
         <head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+          {/* Font links are now in globals.css via @import */}
         </head>
         <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark">
            <div className="flex-grow flex items-center justify-center min-h-screen">
@@ -112,11 +115,9 @@ export default function LocaleLayout({
   return (
     <html lang={currentLocale} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+         {/* Font links are now in globals.css via @import */}
       </head>
-      <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark">
+      <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark"> {/* Ensure font-body is applied */}
         <AuthProvider>
           <AppStructure locale={currentLocale} dictionary={dictionary}>
             {children}

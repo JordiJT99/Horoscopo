@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Alegreya', 'serif'],
-        headline: ['Alegreya', 'serif'],
+        body: ['Poppins', 'sans-serif'],
+        headline: ['Playfair Display', 'serif'],
         code: ['monospace'],
       },
       colors: {
@@ -70,6 +70,7 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        '3xl': '1.5rem', // Added for new card style
       },
       keyframes: {
         'accordion-down': {
@@ -88,11 +89,19 @@ export default {
             height: '0',
           },
         },
+        pulseHeart: { // Added new animation
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.15)', opacity: '0.8' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        pulseHeart: 'pulseHeart 1.8s ease-in-out infinite', // Added new animation utility
       },
+      backgroundImage: { // Added for radial background
+        'radial-purple-gradient': 'radial-gradient(circle at top center, hsl(var(--primary) / 0.5), hsl(var(--background)))',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],
