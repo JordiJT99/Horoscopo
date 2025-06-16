@@ -23,7 +23,6 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   ];
 
   return (
-    // Removed sticky and shadow, as per new design, tabs are part of main content flow
     <div className="bg-transparent"> 
       <div className="container mx-auto px-0 sm:px-1">
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2">
@@ -33,11 +32,10 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
               variant="ghost"
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "rounded-full py-2 px-5 text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1",
-                "hover:text-primary", // Subtle hover for inactive tabs
+                "rounded-full py-2 px-4 sm:px-5 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1",
                 activeTab === tab.id
-                  ? "bg-primary text-primary-foreground shadow-md" // Active tab style from image
-                  : "text-muted-foreground bg-transparent" 
+                  ? "bg-primary text-primary-foreground shadow-md" 
+                  : "text-muted-foreground bg-transparent hover:text-foreground/80 hover:bg-muted/50" 
               )}
             >
               {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}

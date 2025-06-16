@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap'); /* Reverted to Alegreya */
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,93 +7,95 @@
 
 @layer base {
   :root {
-    /* Original PRD-compliant theme (dark mode focus) - REVERTED */
-    --background: 270 3.7% 11%; 
-    --foreground: 0 0% 95%; 
+    /* New theme based on the provided image: Dark with vibrant pink/magenta accent */
+    --background: 270 10% 8%; /* Very dark desaturated purple */
+    --foreground: 0 0% 98%; /* White / very light gray */
 
-    --card: 270 3.7% 15%; 
-    --card-foreground: 0 0% 90%;
+    --card: 270 8% 12%; /* Slightly lighter dark purple for cards */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 270 3.7% 13%; 
-    --popover-foreground: 0 0% 90%;
+    --popover: 270 8% 10%; /* Darker popover */
+    --popover-foreground: 0 0% 95%;
 
-    /* Primary: Deep Violet as per PRD */
-    --primary: 270 60% 50%; 
-    --primary-foreground: 0 0% 100%; 
+    /* Primary: Vibrant Pink/Magenta */
+    --primary: 335 90% 58%; /* Adjusted to be slightly more vibrant like image */
+    --primary-foreground: 0 0% 100%; /* White */
     
-    /* Accent: Soft Lavender as per PRD */
-    --accent: 270 40% 70%; 
-    --accent-foreground: 270 10% 15%; 
+    /* Accent: Can be same as primary if there's one dominant accent */
+    --accent: 335 90% 58%; 
+    --accent-foreground: 0 0% 100%; /* Text on accent */
 
-    --secondary: 270 20% 40%; 
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 270 15% 25%; /* Muted purple for secondary elements */
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 270 10% 25%; 
-    --muted-foreground: 270 5% 55%; 
+    --muted: 270 5% 18%; /* Darker muted for subtle backgrounds/borders */
+    --muted-foreground: 270 10% 65%; /* Lighter muted purple/gray for text */
 
     --destructive: 0 70% 50%; 
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 10% 30%;
-    --input: 270 10% 22%; 
-    --ring: 270 50% 60%; 
+    --border: 270 5% 22%; /* Subtle border */
+    --input: 270 8% 15%; /* Dark input background */
+    --ring: 335 90% 60%; /* Ring color, primary accent */
 
-    --radius: 0.5rem; /* Original radius */
+    --radius: 0.5rem; /* Standard radius */
 
     --chart-1: hsl(var(--primary));
-    --chart-2: 285 50% 55%; 
-    --chart-3: 260 50% 60%; 
-    --chart-4: 290 45% 50%; 
-    --chart-5: 275 40% 65%; 
+    --chart-2: 340 80% 65%; 
+    --chart-3: 330 70% 70%; 
+    --chart-4: 345 85% 60%; 
+    --chart-5: 325 75% 62%; 
 
+    /* Theme specific variables from previous setup, adapted to new palette */
     --top-bar-background: hsl(var(--background) / 0.85); 
     --top-bar-foreground: hsl(var(--foreground));
 
-    --bottom-nav-background: hsl(var(--card) / 0.85); 
+    --bottom-nav-background: hsl(var(--background) / 0.85); /* Darker bottom nav like top bar */
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
 
     --sign-selector-active-border: hsl(var(--primary));
 
-    --feature-card-background: hsl(var(--accent)); 
-    --feature-card-foreground: hsl(var(--accent-foreground));
+    /* Feature cards might need a different approach if they exist, for now use secondary */
+    --feature-card-background: hsl(var(--secondary)); 
+    --feature-card-foreground: hsl(var(--secondary-foreground));
 
     --horoscope-summary-title: hsl(var(--foreground));
-    --horoscope-category-text: hsl(var(--foreground));
+    --horoscope-category-text: hsl(var(--foreground)); /* Ensuring text is light */
     --horoscope-progress-background: hsl(var(--muted));
     --horoscope-progress-indicator: hsl(var(--primary));
   }
 
   .dark {
-    /* Ensure dark theme variables match the :root for a dark-first approach */
-    --background: 270 3.7% 11%; 
-    --foreground: 0 0% 95%; 
-    --card: 270 3.7% 15%; 
-    --card-foreground: 0 0% 90%;
-    --popover: 270 3.7% 13%;
-    --popover-foreground: 0 0% 90%;
-    --primary: 270 60% 50%; 
+    /* Dark theme is the default, these variables ensure consistency if .dark class is used */
+    --background: 270 10% 8%;
+    --foreground: 0 0% 98%;
+    --card: 270 8% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 270 8% 10%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 335 90% 58%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 270 20% 40%; 
-    --secondary-foreground: 0 0% 95%;
-    --muted: 270 10% 25%; 
-    --muted-foreground: 270 5% 55%;
-    --accent: 270 40% 70%; 
-    --accent-foreground: 270 10% 15%;
+    --secondary: 270 15% 25%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 270 5% 18%;
+    --muted-foreground: 270 10% 65%;
+    --accent: 335 90% 58%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 270 10% 30%;
-    --input: 270 10% 22%;
-    --ring: 270 50% 60%;
+    --border: 270 5% 22%;
+    --input: 270 8% 15%;
+    --ring: 335 90% 60%;
 
     --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
-    --bottom-nav-background: hsl(var(--card) / 0.85);
+    --bottom-nav-background: hsl(var(--background) / 0.85);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
     --sign-selector-active-border: hsl(var(--primary));
-    --feature-card-background: hsl(var(--accent));
-    --feature-card-foreground: hsl(var(--accent-foreground));
+    --feature-card-background: hsl(var(--secondary));
+    --feature-card-foreground: hsl(var(--secondary-foreground));
     --horoscope-summary-title: hsl(var(--foreground));
     --horoscope-category-text: hsl(var(--foreground));
     --horoscope-progress-background: hsl(var(--muted));
@@ -114,7 +116,7 @@
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: hsl(var(--background) / 0.5);
+    background: hsl(var(--muted) / 0.5); /* Adjusted for new theme */
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
@@ -134,7 +136,7 @@
   scrollbar-width: none;
 }
 
-/* Heartbeat animation - Adjusted */
+/* Heartbeat animation - Adjusted for slower, larger pulse */
 @keyframes pulseHeart {
   0%, 100% {
     transform: scale(1);
