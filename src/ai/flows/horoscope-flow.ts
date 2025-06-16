@@ -150,6 +150,13 @@ Ahora genera el horóscopo MENSUAL MUY DETALLADO para {{sign}} en {{locale}} par
 `,
 });
 
+const fallbackHoroscopeDetail: HoroscopeDetail = {
+  main: "Información principal del horóscopo no disponible en este momento. Por favor, intente más tarde.",
+  love: "Perspectivas de amor no disponibles. Mantenga una actitud abierta.",
+  money: "Información financiera no disponible. Sea prudente con sus decisiones.",
+  health: "Consejos de salud no disponibles. Cuide su bienestar general.",
+};
+
 
 async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targetDateObj: Date): Promise<HoroscopeDetail> {
   const dateStr = formatDateForDailyCache(targetDateObj);
@@ -157,7 +164,6 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
 
   if (dailyCache.has(cacheKey)) {
     const cachedValue = dailyCache.get(cacheKey)!;
-    // Validate against schema before returning from cache
     const parsed = HoroscopeDetailSchema.safeParse(cachedValue);
     if (parsed.success) return parsed.data;
     console.warn(`Invalid daily horoscope data in cache for ${cacheKey}. Fetching anew.`);
@@ -166,11 +172,16 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
 
   let dateDescriptor = `para la fecha ${dateStr}`;
   const today = new Date();
+  today.setHours(0,0,0,0); // Normalize today for comparison
   const yesterday = subDays(today, 1);
+  
+  const targetDateNormalized = new Date(targetDateObj);
+  targetDateNormalized.setHours(0,0,0,0);
 
-  if (dateStr === formatDateForDailyCache(today)) {
+
+  if (targetDateNormalized.getTime() === today.getTime()) {
     dateDescriptor = "HOY";
-  } else if (dateStr === formatDateForDailyCache(yesterday)) {
+  } else if (targetDateNormalized.getTime() === yesterday.getTime()) {
     dateDescriptor = "AYER";
   }
   
@@ -181,27 +192,50 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
 
   try {
     const {output} = await dailyHoroscopePrompt(promptPayload);
-    if (!output) { // Output will be null if schema validation fails
-      console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) failed schema validation or was null. Using mock data.`);
-      const mockData = getRandomMockHoroscope('daily', input.sign, input.locale);
-      dailyCache.set(cacheKey, mockData);
-      return mockData;
+    if (output) { 
+        const parsedOutput = HoroscopeDetailSchema.safeParse(output);
+        if (parsedOutput.success) {
+            dailyCache.set(cacheKey, parsedOutput.data);
+            return parsedOutput.data;
+        } else {
+             console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) failed Zod validation. Error: ${JSON.stringify(parsedOutput.error.flatten())}. Using mock data.`);
+        }
+    } else {
+      console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) was null (likely schema validation failure by Genkit). Using mock data.`);
     }
-    // Output here is validated by Genkit against HoroscopeDetailSchema
-    dailyCache.set(cacheKey, output);
-    return output;
+
+    let mockData = getRandomMockHoroscope('daily', input.sign, input.locale);
+    const parsedMock = HoroscopeDetailSchema.safeParse(mockData);
+    if(parsedMock.success) {
+        dailyCache.set(cacheKey, parsedMock.data);
+        return parsedMock.data;
+    } else {
+        console.error(`CRITICAL: Daily mock data for ${input.sign} (${input.locale}) failed schema. Error: ${JSON.stringify(parsedMock.error.flatten())}. Returning hardcoded fallback.`);
+        dailyCache.set(cacheKey, fallbackHoroscopeDetail);
+        return fallbackHoroscopeDetail;
+    }
+
   } catch (err: any) {
     console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}, ${dateStr}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    const mockData = getRandomMockHoroscope('daily', input.sign, input.locale); 
-    dailyCache.set(cacheKey, mockData); 
+    
+    let mockDataOnError = getRandomMockHoroscope('daily', input.sign, input.locale); 
+    const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
       console.warn(`Genkit API error for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}). Using mock data as fallback. Error: ${errorMessage}`);
     } else {
       console.error(`Unexpected error fetching daily horoscope (${input.sign}, ${input.locale}, ${dateStr}). Using mock data. Error: ${errorMessage}`);
     }
-    return mockData;
+
+    if(parsedMockOnError.success) {
+        dailyCache.set(cacheKey, parsedMockOnError.data);
+        return parsedMockOnError.data;
+    } else {
+        console.error(`CRITICAL: Daily mock data (catch) for ${input.sign} (${input.locale}) failed schema. Error: ${JSON.stringify(parsedMockOnError.error.flatten())}. Returning hardcoded fallback.`);
+        dailyCache.set(cacheKey, fallbackHoroscopeDetail);
+        return fallbackHoroscopeDetail;
+    }
   }
 }
 
@@ -218,26 +252,50 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
   }
   try {
     const {output} = await weeklyHoroscopePrompt(input);
-     if (!output) {
-      console.warn(`AI response for weekly horoscope (${input.sign}, ${input.locale}) failed schema validation or was null. Using mock data.`);
-      const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale);
-      weeklyCache.set(cacheKey, mockData);
-      return mockData;
+     if (output) {
+        const parsedOutput = HoroscopeDetailSchema.safeParse(output);
+        if (parsedOutput.success) {
+            weeklyCache.set(cacheKey, parsedOutput.data);
+            return parsedOutput.data;
+        } else {
+            console.warn(`AI response for weekly horoscope (${input.sign}, ${input.locale}) failed Zod validation. Error: ${JSON.stringify(parsedOutput.error.flatten())}. Using mock data.`);
+        }
+    } else {
+      console.warn(`AI response for weekly horoscope (${input.sign}, ${input.locale}) was null. Using mock data.`);
     }
-    weeklyCache.set(cacheKey, output);
-    return output;
+
+    let mockData = getRandomMockHoroscope('weekly', input.sign, input.locale);
+    const parsedMock = HoroscopeDetailSchema.safeParse(mockData);
+    if(parsedMock.success) {
+        weeklyCache.set(cacheKey, parsedMock.data);
+        return parsedMock.data;
+    } else {
+        console.error(`CRITICAL: Weekly mock data for ${input.sign} (${input.locale}) failed schema. Error: ${JSON.stringify(parsedMock.error.flatten())}. Returning hardcoded fallback.`);
+        weeklyCache.set(cacheKey, fallbackHoroscopeDetail);
+        return fallbackHoroscopeDetail;
+    }
+
   } catch (err: any) {
     console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale); 
-    weeklyCache.set(cacheKey, mockData); 
+    
+    let mockDataOnError = getRandomMockHoroscope('weekly', input.sign, input.locale); 
+    const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
      if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
       console.warn(`Genkit API error for weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data as fallback. Error: ${errorMessage}`);
     } else {
       console.error(`Unexpected error fetching weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data. Error: ${errorMessage}`);
     }
-    return mockData;
+    
+    if(parsedMockOnError.success) {
+        weeklyCache.set(cacheKey, parsedMockOnError.data);
+        return parsedMockOnError.data;
+    } else {
+        console.error(`CRITICAL: Weekly mock data (catch) for ${input.sign} (${input.locale}) failed schema. Error: ${JSON.stringify(parsedMockOnError.error.flatten())}. Returning hardcoded fallback.`);
+        weeklyCache.set(cacheKey, fallbackHoroscopeDetail);
+        return fallbackHoroscopeDetail;
+    }
   }
 }
 
@@ -254,26 +312,50 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
   }
   try {
     const {output} = await monthlyHoroscopePrompt(input);
-    if (!output) {
-      console.warn(`AI response for monthly horoscope (${input.sign}, ${input.locale}) failed schema validation or was null. Using mock data.`);
-      const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale);
-      monthlyCache.set(cacheKey, mockData);
-      return mockData;
+    if (output) {
+        const parsedOutput = HoroscopeDetailSchema.safeParse(output);
+        if (parsedOutput.success) {
+            monthlyCache.set(cacheKey, parsedOutput.data);
+            return parsedOutput.data;
+        } else {
+            console.warn(`AI response for monthly horoscope (${input.sign}, ${input.locale}) failed Zod validation. Error: ${JSON.stringify(parsedOutput.error.flatten())}. Using mock data.`);
+        }
+    } else {
+      console.warn(`AI response for monthly horoscope (${input.sign}, ${input.locale}) was null. Using mock data.`);
     }
-    monthlyCache.set(cacheKey, output);
-    return output;
+
+    let mockData = getRandomMockHoroscope('monthly', input.sign, input.locale);
+    const parsedMock = HoroscopeDetailSchema.safeParse(mockData);
+     if(parsedMock.success) {
+        monthlyCache.set(cacheKey, parsedMock.data);
+        return parsedMock.data;
+    } else {
+        console.error(`CRITICAL: Monthly mock data for ${input.sign} (${input.locale}) failed schema. Error: ${JSON.stringify(parsedMock.error.flatten())}. Returning hardcoded fallback.`);
+        monthlyCache.set(cacheKey, fallbackHoroscopeDetail);
+        return fallbackHoroscopeDetail;
+    }
+
   } catch (err: any) {
     console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale); 
-    monthlyCache.set(cacheKey, mockData); 
+    
+    let mockDataOnError = getRandomMockHoroscope('monthly', input.sign, input.locale); 
+    const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
       console.warn(`Genkit API error for monthly horoscope (${input.sign}, ${input.locale}, ${monthStr}). Using mock data as fallback. Error: ${errorMessage}`);
     } else {
       console.error(`Unexpected error fetching monthly horoscope (${input.sign}, ${input.locale}, ${monthStr}). Using mock data. Error: ${errorMessage}`);
     }
-    return mockData;
+
+    if(parsedMockOnError.success) {
+        monthlyCache.set(cacheKey, parsedMockOnError.data);
+        return parsedMockOnError.data;
+    } else {
+        console.error(`CRITICAL: Monthly mock data (catch) for ${input.sign} (${input.locale}) failed schema. Error: ${JSON.stringify(parsedMockOnError.error.flatten())}. Returning hardcoded fallback.`);
+        monthlyCache.set(cacheKey, fallbackHoroscopeDetail);
+        return fallbackHoroscopeDetail;
+    }
   }
 }
 
@@ -298,27 +380,32 @@ const horoscopeFlowInternal = ai.defineFlow(
         }
     }
     
-    const [daily, weekly, monthly] = await Promise.all([
+    const [dailyDetails, weeklyDetails, monthlyDetails] = await Promise.all([
         getDailyHoroscopeDetails(input, dailyTargetDate),
         getWeeklyHoroscopeDetails(input, currentDate),
         getMonthlyHoroscopeDetails(input, currentDate),
     ]);
 
-    // The individual get...Details functions always return a HoroscopeDetail (real or mock).
-    // Thus, daily, weekly, and monthly will be valid HoroscopeDetail objects.
-    const result = {
-      daily: daily,
-      weekly: weekly,
-      monthly: monthly,
+    // Ensure each detail is a valid object, falling back if necessary
+    // Though get...Details functions are now designed to always return valid HoroscopeDetail
+    const finalDaily = dailyDetails && typeof dailyDetails === 'object' ? dailyDetails : fallbackHoroscopeDetail;
+    const finalWeekly = weeklyDetails && typeof weeklyDetails === 'object' ? weeklyDetails : fallbackHoroscopeDetail;
+    const finalMonthly = monthlyDetails && typeof monthlyDetails === 'object' ? monthlyDetails : fallbackHoroscopeDetail;
+    
+    const result: HoroscopeFlowOutput = {
+      daily: finalDaily,
+      weekly: finalWeekly,
+      monthly: finalMonthly,
     };
     
-    // Validate the final structure before returning from the flow
+    // Validate the final constructed structure before returning from the flow
     const parsedResult = HoroscopeFlowOutputSchema.safeParse(result);
     if (!parsedResult.success) {
         console.error("HoroscopeFlowInternal: Final constructed output does not match HoroscopeFlowOutputSchema.", parsedResult.error.flatten());
         // Fallback to a fully mock HoroscopeFlowOutput if structure is somehow broken
+        // This implies an issue with fallbackHoroscopeDetail or getRandomMockHoroscope not matching HoroscopeDetailSchema
         return {
-            daily: getRandomMockHoroscope('daily', input.sign, input.locale),
+            daily: getRandomMockHoroscope('daily', input.sign, input.locale), // These mocks should be valid
             weekly: getRandomMockHoroscope('weekly', input.sign, input.locale),
             monthly: getRandomMockHoroscope('monthly', input.sign, input.locale),
         };
@@ -335,8 +422,6 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
     locale: input.locale,
     targetDate: input.targetDate,
   };
-  // horoscopeFlowInternal should now always return a valid HoroscopeFlowOutput or throw
-  // an error that should be caught by the caller.
   return horoscopeFlowInternal(internalInput);
 }
 
