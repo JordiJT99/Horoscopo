@@ -13,7 +13,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import type { ZodiacSignName, HoroscopeFlowInput, HoroscopeFlowOutput, HoroscopeDetail } from '@/types';
-import { ALL_SIGN_NAMES, ZODIAC_SIGNS } from '@/lib/constants'; // Added ZODIAC_SIGNS for robust fallback
+import { ALL_SIGN_NAMES, ZODIAC_SIGNS } from '@/lib/constants';
 import { format, getISOWeekYear, getMonth, getYear, subDays } from 'date-fns';
 import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 
@@ -249,10 +249,10 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
 const isValidHoroscopeDetail = (detail: any): detail is HoroscopeDetail => {
   return detail &&
          typeof detail === 'object' &&
-         typeof detail.main === 'string' &&
-         typeof detail.love === 'string' &&
-         typeof detail.money === 'string' &&
-         typeof detail.health === 'string';
+         typeof detail.main === 'string' && detail.main.trim() !== '' &&
+         typeof detail.love === 'string' && detail.love.trim() !== '' &&
+         typeof detail.money === 'string' && detail.money.trim() !== '' &&
+         typeof detail.health === 'string' && detail.health.trim() !== '';
 };
 
 const horoscopeFlowInternal = ai.defineFlow(
@@ -275,25 +275,43 @@ const horoscopeFlowInternal = ai.defineFlow(
         }
     }
     
-    const [daily, weekly, monthly] = await Promise.all([
-      getDailyHoroscopeDetails(input, dailyTargetDate),
-      getWeeklyHoroscopeDetails(input, currentDate),
-      getMonthlyHoroscopeDetails(input, currentDate),
-    ]);
+    let daily: HoroscopeDetail | undefined;
+    let weekly: HoroscopeDetail | undefined;
+    let monthly: HoroscopeDetail | undefined;
+
+    try {
+        [daily, weekly, monthly] = await Promise.all([
+            getDailyHoroscopeDetails(input, dailyTargetDate),
+            getWeeklyHoroscopeDetails(input, currentDate),
+            getMonthlyHoroscopeDetails(input, currentDate),
+        ]);
+    } catch (flowError: any) {
+        // This catch block is for errors during the Promise.all itself or if one of the get...Details functions throws an unhandled error
+        // despite their internal try/catch.
+        console.error("CRITICAL: Error during Promise.all in horoscopeFlowInternal:", flowError.message || flowError);
+        // Ensure all are assigned mock data if Promise.all fails catastrophically
+        const fallbackSign = input.sign || ZODIAC_SIGNS[0].name;
+        const fallbackLocale = input.locale || 'es';
+        daily = getRandomMockHoroscope('daily', fallbackSign, fallbackLocale);
+        weekly = getRandomMockHoroscope('weekly', fallbackSign, fallbackLocale);
+        monthly = getRandomMockHoroscope('monthly', fallbackSign, fallbackLocale);
+    }
+
 
     // Defensive check to ensure all parts are valid HoroscopeDetail objects
+    // This is the crucial part: if any detail is not valid (e.g., undefined from a failed get...Details), use mock.
     if (!isValidHoroscopeDetail(daily) || !isValidHoroscopeDetail(weekly) || !isValidHoroscopeDetail(monthly)) {
-        console.error(
-            "CRITICAL: One or more horoscope detail functions returned invalid data structure to horoscopeFlowInternal.",
+        console.warn(
+            "Warning: One or more horoscope detail parts were invalid/undefined after fetching. Using mocks as fallback for the invalid parts.",
             { 
                 dailyValid: isValidHoroscopeDetail(daily), 
                 weeklyValid: isValidHoroscopeDetail(weekly), 
                 monthlyValid: isValidHoroscopeDetail(monthly) 
             }
         );
-        // Fallback to a fully mock HoroscopeFlowOutput
         const fallbackSign = input.sign || ZODIAC_SIGNS[0].name;
         const fallbackLocale = input.locale || 'es';
+        
         return {
             daily: isValidHoroscopeDetail(daily) ? daily : getRandomMockHoroscope('daily', fallbackSign, fallbackLocale),
             weekly: isValidHoroscopeDetail(weekly) ? weekly : getRandomMockHoroscope('weekly', fallbackSign, fallbackLocale),
@@ -316,7 +334,7 @@ export async function getHoroscopeFlow(input: HoroscopeFlowInput): Promise<Horos
     targetDate: input.targetDate,
   };
   // The flow itself should now always return a valid HoroscopeFlowOutput
-  // due to the internal checks in horoscopeFlowInternal and get...Details functions.
+  // due to the internal checks in horoscopeFlowInternal.
   return horoscopeFlowInternal(internalInput);
 }
 
