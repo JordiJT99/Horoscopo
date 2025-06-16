@@ -2,41 +2,53 @@
 "use client";
 
 import { useEffect, useState, useMemo } from 'react';
-import { useRouter } 
-from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, SelectedProfileType, ZodiacSignName } from '@/types';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, SelectedProfileType, ZodiacSignName, HoroscopeFlowOutput } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
-import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
-import { format } from 'date-fns'; 
+import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
+import { format, subDays } from 'date-fns';
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
 import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
 import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
 import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
-import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard'; // Import for detailed text
+import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard';
 import PromotionCard from '@/components/shared/PromotionCard';
-import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays, Upload } from 'lucide-react';
+import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays } from 'lucide-react';
 
-interface AstroVibesHomePageContentProps {
+interface AstroVibesPageContentProps {
   dictionary: Dictionary;
   locale: Locale;
+  // Determines which set of data to fetch and display (daily, weekly, monthly)
+  // And also which detail to show in the 4-card grid
+  displayPeriod: 'daily' | 'weekly' | 'monthly';
+  // For 'daily' period, this can specify 'yesterday'
+  targetDate?: string;
+  // This prop will determine which tab is highlighted in SubHeaderTabs
+  // and also which titles to use for summaries and sections.
+  activeHoroscopePeriodForTitles: HoroscopePeriod;
 }
 
-export default function AstroVibesHomePageContent({ dictionary, locale }: AstroVibesHomePageContentProps) {
+export default function AstroVibesHomePageContent({
+  dictionary,
+  locale,
+  displayPeriod,
+  targetDate,
+  activeHoroscopePeriodForTitles,
+}: AstroVibesPageContentProps) {
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
-  
-  const [selectedDisplaySign, setSelectedDisplaySign] = useState<ZodiacSign>(ZODIAC_SIGNS.find(s => s.name === "Capricorn")!); 
-  
+
+  const [selectedDisplaySign, setSelectedDisplaySign] = useState<ZodiacSign>(ZODIAC_SIGNS.find(s => s.name === "Capricorn")!);
+
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
-  const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null); // For detailed text cards
+  const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(false);
-  const [activeSubTab, setActiveSubTab] = useState<HoroscopePeriod>('today'); 
 
   useEffect(() => {
     if (user?.uid) {
@@ -49,42 +61,49 @@ export default function AstroVibesHomePageContent({ dictionary, locale }: AstroV
         setOnboardingData(parsedData);
         const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
         setUserSunSign(sunSign);
-        // if (sunSign) {
-        //   setSelectedDisplaySign(sunSign); 
-        // }
+        if (sunSign) {
+           // Keep current selectedDisplaySign if a user logs in, unless it's still the default Capricorn
+          if (selectedDisplaySign.name === "Capricorn") {
+            setSelectedDisplaySign(sunSign);
+          }
+        }
       } else {
         setUserSunSign(null);
       }
     } else {
       setOnboardingData(null);
       setUserSunSign(null);
+       // If user logs out, revert to default or keep current if it wasn't user-specific
+      if (userSunSign && selectedDisplaySign.name === userSunSign.name) {
+        setSelectedDisplaySign(ZODIAC_SIGNS.find(s => s.name === "Capricorn")!);
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySign) return; 
+      if (!selectedDisplaySign) return;
 
       setIsHoroscopeLoading(true);
       try {
-        let targetDateStr: string | undefined = undefined;
-        const today = new Date();
-        
-        if (activeSubTab === 'today' || activeSubTab === 'tomorrow') {
-          targetDateStr = format(today, 'yyyy-MM-dd');
-        }
-        // 'yesterday', 'weekly', 'monthly' are handled by their own pages.
-
-        const input: HoroscopeFlowInput = { 
-          sign: selectedDisplaySign.name, 
-          locale, 
-          targetDate: targetDateStr 
+        const input: HoroscopeFlowInput = {
+          sign: selectedDisplaySign.name,
+          locale,
+          targetDate: targetDate, // Use the prop
         };
         const result = await getHoroscopeFlow(input);
-        setFullHoroscopeData(result); 
+        setFullHoroscopeData(result);
         
-        setCurrentDisplayHoroscope(result.daily); // For Today & Tomorrow, we show daily details
+        // Set currentDisplayHoroscope based on the displayPeriod prop
+        if (displayPeriod === 'daily') {
+          setCurrentDisplayHoroscope(result.daily);
+        } else if (displayPeriod === 'weekly') {
+          setCurrentDisplayHoroscope(result.weekly);
+        } else if (displayPeriod === 'monthly') {
+          setCurrentDisplayHoroscope(result.monthly);
+        }
 
       } catch (error) {
         console.error("Error fetching horoscope:", error);
@@ -95,11 +114,11 @@ export default function AstroVibesHomePageContent({ dictionary, locale }: AstroV
       }
     };
 
-    if (!authLoading) { 
-        fetchHoroscope();
+    if (!authLoading) {
+      fetchHoroscope();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDisplaySign, locale, authLoading, activeSubTab]);
+  }, [selectedDisplaySign, locale, authLoading, displayPeriod, targetDate]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -109,18 +128,18 @@ export default function AstroVibesHomePageContent({ dictionary, locale }: AstroV
       router.push(`/${locale}/weekly-horoscope`);
     } else if (tab === 'monthly') {
       router.push(`/${locale}/monthly-horoscope`);
-    } else { 
-      setActiveSubTab(tab); 
+    } else { // today or tomorrow, handled by main page
+      router.push(`/${locale}${tab === 'tomorrow' ? '?period=tomorrow' : ''}`);
     }
   };
-  
+
   const handleSignSelected = (sign: ZodiacSign) => {
     setSelectedDisplaySign(sign);
   };
 
   const summaryCategories = [
     { nameKey: "HoroscopeSummary.love", percentage: 80, dataKey: "love" as keyof HoroscopeDetail },
-    { nameKey: "HoroscopeSummary.career", percentage: 60, dataKey: "main" as keyof HoroscopeDetail }, // main is usually work/general
+    { nameKey: "HoroscopeSummary.career", percentage: 60, dataKey: "main" as keyof HoroscopeDetail },
     { nameKey: "HoroscopeSummary.health", percentage: 40, dataKey: "health" as keyof HoroscopeDetail },
   ];
 
@@ -131,12 +150,35 @@ export default function AstroVibesHomePageContent({ dictionary, locale }: AstroV
     { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: currentDisplayHoroscope?.health },
   ] : [];
 
-  const pageTitle = activeSubTab === 'today' 
-    ? (dictionary['HomePage.yourHoroscopeToday'] || "Your Horoscope for Today")
-    : (dictionary['HomePage.yourHoroscopeTomorrow'] || "Your Horoscope for Tomorrow");
+  let pageTitleKey = "HomePage.yourHoroscopeToday";
+  let summaryTitleKey = "HoroscopeSummary.essentialToday";
 
-  if (authLoading && !user) { 
-     return (
+  switch (activeHoroscopePeriodForTitles) {
+    case 'today':
+      pageTitleKey = "HomePage.yourHoroscopeToday";
+      summaryTitleKey = "HoroscopeSummary.essentialToday";
+      break;
+    case 'tomorrow':
+      pageTitleKey = "HomePage.yourHoroscopeTomorrow";
+      summaryTitleKey = "HoroscopeSummary.essentialTomorrow";
+      break;
+    case 'yesterday':
+      pageTitleKey = "HomePage.yourHoroscopeYesterday";
+      summaryTitleKey = "HoroscopeSummary.essentialYesterday";
+      break;
+    case 'weekly':
+      pageTitleKey = "WeeklyHoroscopePage.title";
+      summaryTitleKey = "HoroscopeSummary.essentialWeekly";
+      break;
+    case 'monthly':
+      pageTitleKey = "MonthlyHoroscopePage.title";
+      summaryTitleKey = "HoroscopeSummary.essentialMonthly";
+      break;
+  }
+
+
+  if (authLoading && !user) {
+    return (
       <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-var(--top-bar-height)-var(--bottom-nav-height))]">
         <ContentSparklesIcon className="h-12 w-12 animate-pulse text-primary mx-auto" />
         {dictionary && Object.keys(dictionary).length > 0 && <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>}
@@ -153,40 +195,38 @@ export default function AstroVibesHomePageContent({ dictionary, locale }: AstroV
           signs={ZODIAC_SIGNS}
           selectedSignName={selectedDisplaySign.name}
           onSignSelect={handleSignSelected}
-          user={user} 
+          user={user}
         />
-        
+
         <SelectedSignDisplay
           dictionary={dictionary}
           locale={locale}
           selectedSign={selectedDisplaySign}
         />
 
-        <SubHeaderTabs 
-          dictionary={dictionary} 
-          activeTab={activeSubTab} 
-          onTabChange={handleSubHeaderTabSelect} 
+        <SubHeaderTabs
+          dictionary={dictionary}
+          activeTab={activeHoroscopePeriodForTitles}
+          onTabChange={handleSubHeaderTabSelect}
         />
 
         <FeatureLinkCards dictionary={dictionary} locale={locale} />
-        
+
         <HoroscopeCategoriesSummary
-            dictionary={dictionary}
-            titleKey={activeSubTab === 'today' ? "HoroscopeSummary.essentialToday" : "HoroscopeSummary.essentialTomorrow"}
-            subtitleKey="HoroscopeSummary.relations" // This seems static from the image
-            categories={summaryCategories}
-            isLoading={isHoroscopeLoading}
-            horoscopeDetail={currentDisplayHoroscope}
+          dictionary={dictionary}
+          titleKey={summaryTitleKey}
+          subtitleKey="HoroscopeSummary.relations" 
+          categories={summaryCategories}
+          isLoading={isHoroscopeLoading}
+          horoscopeDetail={currentDisplayHoroscope}
         />
 
-        {/* Detailed Horoscope Text Section */}
         <div>
           <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
             <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
               <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
-              {pageTitle}
+              {dictionary[pageTitleKey] || "Horoscope Details"}
             </h2>
-            {/* Share button can be added here if needed */}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
             {detailedHoroscopeCategories.map(cat => (
@@ -196,23 +236,27 @@ export default function AstroVibesHomePageContent({ dictionary, locale }: AstroV
                 titleKey={cat.titleKey}
                 icon={cat.icon}
                 content={cat.content}
-                // progressValue prop is removed/made optional, so not passing it here
                 isLoading={isHoroscopeLoading}
               />
             ))}
             {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
-                 <HoroscopeCategoryCard
-                    key={`skeleton-${index}`}
-                    dictionary={dictionary}
-                    titleKey="Loading..."
-                    icon={ContentSparklesIcon}
-                    content=""
-                    isLoading={true}
-                  />
+              <HoroscopeCategoryCard
+                key={`skeleton-${index}`}
+                dictionary={dictionary}
+                titleKey="Loading..."
+                icon={ContentSparklesIcon}
+                content=""
+                isLoading={true}
+              />
             ))}
+            {!isHoroscopeLoading && !currentDisplayHoroscope && (
+               <div className="sm:col-span-2 text-center py-10">
+                 <p className="text-muted-foreground">{dictionary['HoroscopeSection.noData']}</p>
+              </div>
+            )}
           </div>
         </div>
-       
+
         <PromotionCard dictionary={dictionary} />
       </main>
     </div>

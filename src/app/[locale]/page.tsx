@@ -3,21 +3,21 @@
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
-import { useMemo } from 'react'; // useMemo can be used in Server Components for promises
-import { use } from 'react'; // The `use` hook for resolving promises in Server Components
+// Removed: import { useMemo } from 'react'; 
+import { use } from 'react'; 
 
 // Import the new client component
 import AstroVibesHomePageContent from '@/components/home/AstroVibesHomePageContent';
+import type { HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
+
 
 interface AstroVibesHomePageProps {
   params: Promise<{ locale: Locale }>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function AstroVibesHomePageWrapper({ params: paramsPromise }: AstroVibesHomePageProps) {
+export default async function AstroVibesHomePageWrapper({ params: paramsPromise, searchParams }: AstroVibesHomePageProps) {
   const params = await paramsPromise;
-  // Using useMemo and use here for dictionary loading is fine in Server Components if needed,
-  // but direct await is often cleaner for initial data fetching.
-  // For simplicity and directness in Server Component data fetching:
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {
@@ -28,7 +28,20 @@ export default async function AstroVibesHomePageWrapper({ params: paramsPromise 
       </div>
     );
   }
-  
-  return <AstroVibesHomePageContent dictionary={dictionary} locale={params.locale} />;
-}
 
+  const periodParam = searchParams?.period;
+  let activePeriodForTitles: HoroscopePeriod = 'today';
+  if (periodParam === 'tomorrow') {
+    activePeriodForTitles = 'tomorrow';
+  }
+  
+  return (
+    <AstroVibesHomePageContent 
+      dictionary={dictionary} 
+      locale={params.locale}
+      displayPeriod="daily" // For 'today' and 'tomorrow', we always display daily data
+      // targetDate is not needed for today/tomorrow as flow defaults to current day
+      activeHoroscopePeriodForTitles={activePeriodForTitles}
+    />
+  );
+}
