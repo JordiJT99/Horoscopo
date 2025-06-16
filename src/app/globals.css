@@ -7,38 +7,38 @@
 
 @layer base {
   :root {
-    /* New theme based on the provided image: Dark with vibrant pink/magenta accent */
-    --background: 270 10% 8%; /* Very dark desaturated purple */
-    --foreground: 0 0% 98%; /* White / very light gray */
+    /* Tema Lila Claro con Acentos Magenta Vibrantes */
+    --background: 260 70% 92%; /* Lila muy claro */
+    --foreground: 260 30% 20%; /* Púrpura oscuro para texto */
 
-    --card: 270 8% 12%; /* Slightly lighter dark purple for cards */
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 100%; /* Blanco para tarjetas */
+    --card-foreground: 260 30% 25%; /* Púrpura oscuro para texto en tarjetas */
 
-    --popover: 270 8% 10%; /* Darker popover */
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%; /* Blanco para popovers */
+    --popover-foreground: 260 30% 20%;
 
-    /* Primary: Vibrant Pink/Magenta */
-    --primary: 335 90% 58%; /* Adjusted to be slightly more vibrant like image */
-    --primary-foreground: 0 0% 100%; /* White */
+    /* Primario: Magenta Vibrante (de la imagen) */
+    --primary: 335 90% 58%; 
+    --primary-foreground: 0 0% 100%; /* Blanco */
     
-    /* Accent: Can be same as primary if there's one dominant accent */
+    /* Acento: Mismo que primario */
     --accent: 335 90% 58%; 
-    --accent-foreground: 0 0% 100%; /* Text on accent */
+    --accent-foreground: 0 0% 100%;
 
-    --secondary: 270 15% 25%; /* Muted purple for secondary elements */
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 260 60% 85%; /* Lila más suave para elementos secundarios */
+    --secondary-foreground: 260 30% 20%; /* Texto oscuro sobre secundario */
 
-    --muted: 270 5% 18%; /* Darker muted for subtle backgrounds/borders */
-    --muted-foreground: 270 10% 65%; /* Lighter muted purple/gray for text */
+    --muted: 260 60% 90%; /* Lila aún más pálido para fondos sutiles */
+    --muted-foreground: 260 30% 45%; /* Púrpura medio para texto muted */
 
-    --destructive: 0 70% 50%; 
+    --destructive: 0 70% 50%; /* Rojo estándar para destructivo */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 5% 22%; /* Subtle border */
-    --input: 270 8% 15%; /* Dark input background */
-    --ring: 335 90% 60%; /* Ring color, primary accent */
+    --border: 260 50% 80%; /* Borde lila medio-claro */
+    --input: 0 0% 100%; /* Fondo de input blanco */
+    --ring: 335 90% 62%; /* Color de anillo, primario con ligero ajuste */
 
-    --radius: 0.5rem; /* Standard radius */
+    --radius: 0.75rem; /* Radio de borde de la imagen (más grande) */
 
     --chart-1: hsl(var(--primary));
     --chart-2: 340 80% 65%; 
@@ -46,51 +46,51 @@
     --chart-4: 345 85% 60%; 
     --chart-5: 325 75% 62%; 
 
-    /* Theme specific variables from previous setup, adapted to new palette */
+    /* Variables específicas del tema adaptadas */
     --top-bar-background: hsl(var(--background) / 0.85); 
     --top-bar-foreground: hsl(var(--foreground));
 
-    --bottom-nav-background: hsl(var(--background) / 0.85); /* Darker bottom nav like top bar */
+    --bottom-nav-background: hsl(var(--card) / 0.9); /* Fondo de tarjeta para nav inferior */
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
 
     --sign-selector-active-border: hsl(var(--primary));
 
-    /* Feature cards might need a different approach if they exist, for now use secondary */
     --feature-card-background: hsl(var(--secondary)); 
     --feature-card-foreground: hsl(var(--secondary-foreground));
 
     --horoscope-summary-title: hsl(var(--foreground));
-    --horoscope-category-text: hsl(var(--foreground)); /* Ensuring text is light */
+    --horoscope-category-text: hsl(var(--foreground));
     --horoscope-progress-background: hsl(var(--muted));
     --horoscope-progress-indicator: hsl(var(--primary));
   }
 
   .dark {
-    /* Dark theme is the default, these variables ensure consistency if .dark class is used */
-    --background: 270 10% 8%;
-    --foreground: 0 0% 98%;
-    --card: 270 8% 12%;
-    --card-foreground: 0 0% 95%;
-    --popover: 270 8% 10%;
-    --popover-foreground: 0 0% 95%;
+    /* Si se usa la clase .dark, aplicará este mismo tema lila claro. */
+    /* Para un tema oscuro real, estas variables necesitarían valores oscuros. */
+    --background: 260 70% 92%;
+    --foreground: 260 30% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 260 30% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 260 30% 20%;
     --primary: 335 90% 58%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 270 15% 25%;
-    --secondary-foreground: 0 0% 90%;
-    --muted: 270 5% 18%;
-    --muted-foreground: 270 10% 65%;
+    --secondary: 260 60% 85%;
+    --secondary-foreground: 260 30% 20%;
+    --muted: 260 60% 90%;
+    --muted-foreground: 260 30% 45%;
     --accent: 335 90% 58%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 270 5% 22%;
-    --input: 270 8% 15%;
-    --ring: 335 90% 60%;
+    --border: 260 50% 80%;
+    --input: 0 0% 100%;
+    --ring: 335 90% 62%;
 
     --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
-    --bottom-nav-background: hsl(var(--background) / 0.85);
+    --bottom-nav-background: hsl(var(--card) / 0.9);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
     --sign-selector-active-border: hsl(var(--primary));
@@ -108,7 +108,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased; /* font-body will use Alegreya */
+    @apply bg-background text-foreground font-body antialiased; /* font-body usará Alegreya */
   }
   /* Custom scrollbar for webkit browsers */
   ::-webkit-scrollbar {
@@ -116,11 +116,11 @@
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: hsl(var(--muted) / 0.5); /* Adjusted for new theme */
+    background: hsl(var(--muted) / 0.5); 
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.6);
+    background: hsl(var(--primary) / 0.6); /* Usar primario para el pulgar */
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
@@ -136,12 +136,18 @@
   scrollbar-width: none;
 }
 
-/* Heartbeat animation - Adjusted for slower, larger pulse */
+/* Heartbeat animation - Lenta y grande */
 @keyframes pulseHeart {
   0%, 100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.3); /* Larger scale */
+    transform: scale(1.3); /* Escala más grande */
   }
+}
+
+/* Clase para fondo degradado radial - opcional si se quiere aplicar a páginas específicas además del fondo lila base */
+.bg-radial-gradient-purple {
+  background-image: radial-gradient(circle at top right, hsl(var(--primary) / 0.2), transparent 60%), 
+                    radial-gradient(circle at bottom left, hsl(280 50% 40% / 0.3), transparent 70%);
 }
