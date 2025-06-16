@@ -27,12 +27,12 @@ const FeatureCard = ({
   dictionary: Dictionary;
 }) => {
   return (
-    <Link href={`/${locale}${href}`} passHref legacyBehavior>
-      <motion.a
-        className="block"
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      >
+    <motion.div
+      className="block"
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+    >
+      <Link href={`/${locale}${href}`} className="block">
         <Card className="bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-md transition-opacity">
           <CardContent className="flex items-center justify-between p-0">
             <div className="flex items-center gap-3">
@@ -42,8 +42,8 @@ const FeatureCard = ({
             <ChevronRight className="w-5 h-5 opacity-70" />
           </CardContent>
         </Card>
-      </motion.a>
-    </Link>
+      </Link>
+    </motion.div>
   );
 };
 
