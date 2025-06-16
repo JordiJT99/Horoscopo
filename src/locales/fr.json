@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Votre source quotidienne d'horoscopes et d'informations astrologiques.",
@@ -165,6 +166,13 @@
   "LunarAscendantSection.ascendantSignTitle": "Votre Signe Ascendant :",
   "LunarAscendantSection.fillAllDetails": "Veuillez remplir toutes les informations de naissance.",
   "LunarAscendantSection.lunarPhaseGlobalNote": "La phase lunaire est globale. Les heures exactes de nouvelle/pleine lune peuvent varier selon votre fuseau horaire. Informations basées sur l'heure actuelle de votre appareil.",
+  "LunarAscendantPage.title": "Phase Lunaire & Signe Ascendant",
+  "LunarAscendantPage.subtitle": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant.",
+  "LunarAscendantPage.lunarCalendarTitle": "Calendrier Lunaire",
+  "LunarAscendantPage.currentMoonAlt": "Phase lunaire actuelle",
+  "LunarAscendantPage.moonInSignText": "en {signName}",
+  "LunarAscendantPage.illuminationText": "Illumination {percentage}%",
+  "LunarAscendantPage.easternTimeNote": "Note : Toutes les heures ET",
   "WeeklyHoroscopePage.title": "Horoscope Hebdomadaire",
   "WeeklyHoroscopePage.subtitle": "Vos prévisions astrologiques pour la semaine à venir. Sélectionnez votre signe.",
   "MonthlyHoroscopePage.title": "Horoscope Mensuel",
@@ -175,8 +183,6 @@
   "CompatibilityPage.subtitle": "Découvrez à quel point les différents signes du zodiaque correspondent.",
   "LuckyNumbersPage.title": "Numéros Chanceux",
   "LuckyNumbersPage.subtitle": "Découvrez vos numéros porte-bonheur, votre couleur et votre pierre précieuse pour votre signe.",
-  "LunarAscendantPage.title": "Phase Lunaire & Signe Ascendant",
-  "LunarAscendantPage.subtitle": "Explorez les phases lunaires actuelles et découvrez votre signe ascendant.",
   "ChineseHoroscopePage.title": "Horoscope Chinois",
   "ChineseHoroscopePage.subtitle": "Explorez la sagesse du zodiaque chinois. Découvrez votre signe animal et ses traits.",
   "ChineseHoroscopePage.comingSoon": "Horoscopes détaillés et plus encore à venir pour l'astrologie chinoise !",
@@ -550,5 +556,15 @@
   "Language.es": "Espagnol",
   "Language.en": "Anglais",
   "Language.de": "Allemand",
-  "Language.fr": "Français"
+  "Language.fr": "Français",
+  "MoonPhase.Unknown": "Phase Inconnue",
+  "MoonPhase.new": "Nouvelle Lune",
+  "MoonPhase.waxingCrescent": "Premier Croissant",
+  "MoonPhase.firstQuarter": "Premier Quartier",
+  "MoonPhase.waxingGibbous": "Gibbeuse Croissante",
+  "MoonPhase.full": "Pleine Lune",
+  "MoonPhase.waningGibbous": "Gibbeuse Décroissante",
+  "MoonPhase.lastQuarter": "Dernier Quartier",
+  "MoonPhase.waningCrescent": "Dernier Croissant"
 }
+

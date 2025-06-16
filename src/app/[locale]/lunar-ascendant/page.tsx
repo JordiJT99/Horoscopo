@@ -1,23 +1,25 @@
 
+
 "use client";
 
 import { useState, useEffect, use, useMemo } from 'react';
 import type { LunarData, AscendantData } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
-import { getCurrentLunarData, getAscendantSign } from '@/lib/constants';
+import { getCurrentLunarData, getAscendantSign, ZODIAC_SIGNS } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Moon, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2 } from 'lucide-react';
+import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2 } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
+import Image from 'next/image';
 
 interface LunarAscendantPageProps {
   params: {
@@ -54,11 +56,20 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
     if (!hasMounted) return;
     setIsLoadingLunar(true);
     const lunarTimer = setTimeout(() => {
-      setLunarData(getCurrentLunarData(locale));
+      // Pass the dictionary to translate phase name inside getCurrentLunarData
+      const rawLunarData = getCurrentLunarData(locale);
+      const translatedPhaseName = dictionary[rawLunarData.phaseKey ? `MoonPhase.${rawLunarData.phaseKey}` : 'MoonPhase.Unknown'] || rawLunarData.phase;
+      const translatedMoonInSign = dictionary[rawLunarData.moonInSign] || rawLunarData.moonInSign;
+
+      setLunarData({
+        ...rawLunarData,
+        phase: translatedPhaseName,
+        moonInSign: translatedMoonInSign,
+      });
       setIsLoadingLunar(false);
     }, 400);
     return () => clearTimeout(lunarTimer);
-  }, [locale, hasMounted]);
+  }, [locale, hasMounted, dictionary]);
 
   const handleCalculateAscendant = () => {
     if (!birthDate || !birthTime || !birthCity) {
@@ -81,44 +92,79 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
         className="mb-12"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <Card className="w-full shadow-xl">
+        <Card className="w-full shadow-xl bg-card/70 backdrop-blur-sm border border-white/10">
           <CardHeader className="text-center">
-            <CardTitle className="font-headline text-2xl flex items-center justify-center gap-2">
-              <Moon className="w-7 h-7 text-primary" /> {dictionary['LunarAscendantSection.currentLunarPhaseTitle'] || "Current Lunar Phase"}
+            <CardTitle className="font-headline text-2xl flex items-center justify-center gap-2 text-primary">
+              <MoonIconLucide className="w-7 h-7" /> {dictionary['LunarAscendantPage.lunarCalendarTitle'] || "Calendario Lunar"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="p-4 bg-secondary/30 rounded-md shadow min-h-[150px] flex flex-col justify-center">
-              {isLoadingLunar && hasMounted ? (
-                <div className="text-center py-4">
-                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
-                  <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
+          <CardContent className="space-y-4 px-3 py-4 sm:px-4">
+            {isLoadingLunar && hasMounted ? (
+              <div className="text-center py-10">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
+              </div>
+            ) : lunarData && hasMounted ? (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
+                  <Image
+                    src={lunarData.currentMoonImage}
+                    alt={dictionary['LunarAscendantPage.currentMoonAlt'] || `Current moon phase: ${lunarData.phase}`}
+                    width={72}
+                    height={72}
+                    className="rounded-full bg-slate-700 object-cover"
+                    data-ai-hint="moon phase realistic"
+                  />
+                  <div className="flex-1">
+                    <p className="text-lg sm:text-xl font-semibold text-foreground">{lunarData.phase}</p>
+                    {lunarData.moonInSign && lunarData.moonSignIcon && (
+                      <p className="text-sm text-muted-foreground flex items-center">
+                        {(dictionary['LunarAscendantPage.moonInSignText'] || "in {signName}").replace('{signName}', lunarData.moonInSign)}
+                        <ZodiacSignIcon signName={lunarData.moonSignIcon} className="w-4 h-4 ml-1.5 text-primary" />
+                        {/* Simple degree display, refine if needed */}
+                        <span className="ml-1 text-xs">({Math.floor(Math.random()*29)}°{Math.floor(Math.random()*59)}&apos;)</span>
+                      </p>
+                    )}
+                    <p className="text-sm text-muted-foreground">
+                      {(dictionary['LunarAscendantPage.illuminationText'] || "Illumination: {percentage}%").replace('{percentage}', lunarData.illumination.toString())}
+                    </p>
+                  </div>
                 </div>
-              ) : lunarData && hasMounted ? (
-                <div className="text-center space-y-2">
-                  <p className="text-xl font-body"><strong className="font-semibold">{lunarData.phase}</strong> ({lunarData.illumination}%)</p>
-                  <p className="text-sm font-body text-muted-foreground">{(dictionary['LunarAscendantSection.nextFullMoon'] || "Next Full Moon: {date}").replace('{date}', lunarData.nextFullMoon)}</p>
-                  <p className="text-sm font-body text-muted-foreground">{(dictionary['LunarAscendantSection.nextNewMoon'] || "Next New Moon: {date}").replace('{date}', lunarData.nextNewMoon)}</p>
-                  <p className="text-xs font-body text-muted-foreground/80 mt-2 px-2">
-                    {dictionary['LunarAscendantSection.lunarPhaseGlobalNote'] || "Lunar phase is global. Exact new/full moon times may vary by your time zone. Info based on your device's current time."}
-                  </p>
+
+                <div className="grid grid-cols-4 gap-2 text-center">
+                  {lunarData.upcomingPhases.map((phase, index) => (
+                    <div key={index} className="flex flex-col items-center p-1.5 bg-secondary/20 rounded-md">
+                      <Image
+                        src={phase.iconUrl}
+                        alt={dictionary[phase.nameKey] || phase.nameKey.split('.').pop() || phase.phaseKey}
+                        width={36}
+                        height={36}
+                        className="rounded-full bg-slate-600 object-cover mb-1"
+                        data-ai-hint="moon phase icon"
+                      />
+                      <p className="text-xs text-muted-foreground">{phase.date}</p>
+                    </div>
+                  ))}
                 </div>
-              ) : hasMounted ? (
-                <p className="text-center font-body text-destructive">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
-              ) : (
-                 <div className="text-center py-4 h-[108px]"></div>
-              )}
-            </div>
+                <p className="text-xs text-muted-foreground/80 text-center pt-2">
+                  {dictionary['LunarAscendantPage.easternTimeNote'] || "Nota: Todos los horarios ET"}
+                </p>
+              </div>
+            ) : hasMounted ? (
+              <p className="text-center font-body text-destructive py-10">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
+            ) : (
+              <div className="text-center py-10 h-[200px]"></div> // Placeholder for height consistency before mount
+            )}
           </CardContent>
         </Card>
 
-        <Card className="w-full shadow-xl">
+        <Card className="w-full shadow-xl bg-card/70 backdrop-blur-sm border border-white/10">
            <CardHeader className="text-center">
-            <CardTitle className="font-headline text-2xl flex items-center justify-center gap-2">
-                <Sunrise className="w-7 h-7 text-primary" /> {dictionary['LunarAscendantSection.calculateAscendantTitle'] || "Calculate Your Ascendant Sign"}
+            <CardTitle className="font-headline text-2xl flex items-center justify-center gap-2 text-primary">
+                <Sunrise className="w-7 h-7" /> {dictionary['LunarAscendantSection.calculateAscendantTitle'] || "Calculate Your Ascendant Sign"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 px-3 py-4 sm:px-4">
             <div className="p-4 bg-secondary/30 rounded-md shadow">
               <div className="space-y-4 max-w-md mx-auto">
                 <div>
@@ -146,7 +192,7 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                           locale={currentDfnLocale}
                           fromDate={new Date(1900, 0, 1)}
                           toDate={new Date()}
-                          captionLayout="dropdown" // Use react-day-picker's dropdowns
+                          captionLayout="dropdown" 
                           fromYear={1900}
                           toYear={currentYearForCalendar}
                           classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
@@ -207,3 +253,4 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
 
   return <LunarAscendantContent dictionary={dictionary} locale={params.locale} />;
 }
+

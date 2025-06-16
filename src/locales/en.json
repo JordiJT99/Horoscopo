@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Your daily source for horoscopes and astrological insights.",
@@ -165,6 +166,13 @@
   "LunarAscendantSection.ascendantSignTitle": "Your Ascendant Sign:",
   "LunarAscendantSection.fillAllDetails": "Please fill in all birth details.",
   "LunarAscendantSection.lunarPhaseGlobalNote": "Lunar phase is global. Exact new/full moon times may vary by your time zone. Info based on your device's current time.",
+  "LunarAscendantPage.title": "Lunar Phase & Ascendant Sign",
+  "LunarAscendantPage.subtitle": "Explore current moon phases and discover your ascendant sign.",
+  "LunarAscendantPage.lunarCalendarTitle": "Lunar Calendar",
+  "LunarAscendantPage.currentMoonAlt": "Current moon phase",
+  "LunarAscendantPage.moonInSignText": "in {signName}",
+  "LunarAscendantPage.illuminationText": "Illumination {percentage}%",
+  "LunarAscendantPage.easternTimeNote": "Note: All times ET",
   "WeeklyHoroscopePage.title": "Weekly Horoscope",
   "WeeklyHoroscopePage.subtitle": "Your astrological forecast for the week ahead. Select your sign.",
   "MonthlyHoroscopePage.title": "Monthly Horoscope",
@@ -175,8 +183,6 @@
   "CompatibilityPage.subtitle": "Discover how well different zodiac signs match.",
   "LuckyNumbersPage.title": "Lucky Numbers",
   "LuckyNumbersPage.subtitle": "Find out your lucky numbers, color, and gemstone for your sign.",
-  "LunarAscendantPage.title": "Lunar Phase & Ascendant Sign",
-  "LunarAscendantPage.subtitle": "Explore current moon phases and discover your ascendant sign.",
   "ChineseHoroscopePage.title": "Chinese Horoscope",
   "ChineseHoroscopePage.subtitle": "Explore the wisdom of the Chinese zodiac. Discover your animal sign and its traits.",
   "ChineseHoroscopePage.comingSoon": "Detailed horoscopes and more coming soon for Chinese Astrology!",
@@ -550,5 +556,15 @@
   "Language.es": "Spanish",
   "Language.en": "English",
   "Language.de": "German",
-  "Language.fr": "French"
+  "Language.fr": "French",
+  "MoonPhase.Unknown": "Unknown Phase",
+  "MoonPhase.new": "New Moon",
+  "MoonPhase.waxingCrescent": "Waxing Crescent",
+  "MoonPhase.firstQuarter": "First Quarter",
+  "MoonPhase.waxingGibbous": "Waxing Gibbous",
+  "MoonPhase.full": "Full Moon",
+  "MoonPhase.waningGibbous": "Waning Gibbous",
+  "MoonPhase.lastQuarter": "Last Quarter",
+  "MoonPhase.waningCrescent": "Waning Crescent"
 }
+

@@ -1,5 +1,6 @@
 
-import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality } from '@/types';
+
+import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
 import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
 
@@ -401,48 +402,95 @@ export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): Lu
 
 
 export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
-  const today = new Date(); 
-  const dayOfMonth = today.getDate(); 
+  const today = new Date();
+  const dayOfMonth = today.getDate();
 
-  let phase: string;
+  let phaseName: string;
+  let phaseKey: MoonPhaseKey;
   let illumination: number;
 
+  // Simplified mock logic for current phase based on day of month
   if (dayOfMonth <= 4) {
-    phase = "Luna Nueva";
+    phaseName = "Luna Nueva";
+    phaseKey = 'new';
     illumination = Math.round((dayOfMonth / 4) * 15);
+  } else if (dayOfMonth <= 7) {
+    phaseName = "Luna Creciente";
+    phaseKey = 'waxingCrescent';
+    illumination = 15 + Math.round(((dayOfMonth - 4) / 3) * 35);
   } else if (dayOfMonth <= 11) {
-    phase = "Cuarto Creciente";
-    illumination = 15 + Math.round(((dayOfMonth - 4) / 7) * 35);
+    phaseName = "Cuarto Creciente";
+    phaseKey = 'firstQuarter';
+    illumination = 50 + Math.round(((dayOfMonth - 7) / 4) * 25); // Should reach 50%
+  } else if (dayOfMonth <= 14) {
+    phaseName = "Gibosa Creciente";
+    phaseKey = 'waxingGibbous';
+    illumination = 50 + Math.round(((dayOfMonth - 11) / 3) * 35);
   } else if (dayOfMonth <= 18) {
-    phase = "Luna Llena";
-    illumination = 50 + Math.round(((dayOfMonth - 11) / 7) * 50);
+    phaseName = "Luna Llena";
+    phaseKey = 'full';
+    illumination = 85 + Math.round(((dayOfMonth - 14) / 4) * 15); // Should reach 100%
+  } else if (dayOfMonth <= 21) {
+    phaseName = "Gibosa Menguante"; // As in example
+    phaseKey = 'waningGibbous';
+    illumination = 100 - Math.round(((dayOfMonth - 18) / 3) * 25); // Example had 75%
   } else if (dayOfMonth <= 25) {
-    phase = "Cuarto Menguante";
-    illumination = 100 - Math.round(((dayOfMonth - 18) / 7) * 50);
+    phaseName = "Cuarto Menguante";
+    phaseKey = 'lastQuarter';
+    illumination = 75 - Math.round(((dayOfMonth - 21) / 4) * 25); // Should reach 50%
   } else {
-    phase = "Menguante Gibosa";
-    illumination = 50 - Math.round(((dayOfMonth - 25) / (6)) * 50); 
+    phaseName = "Luna Menguante";
+    phaseKey = 'waningCrescent';
+    illumination = 50 - Math.round(((dayOfMonth - 25) / (31-25)) * 50);
   }
+  
+  illumination = Math.max(0, Math.min(100, illumination));
+  if (phaseKey === 'full') illumination = 100;
+  if (phaseKey === 'new') illumination = 0;
 
-  illumination = Math.max(0, Math.min(100, illumination)); 
 
   const nextFullMoonDate = new Date(today);
-  if (today.getDate() > 15 && phase !== "Luna Llena") {
+  if (today.getDate() > 15 && phaseKey !== "full") {
     nextFullMoonDate.setMonth(today.getMonth() + 1);
   }
   nextFullMoonDate.setDate(15);
 
   const nextNewMoonDate = new Date(today);
-  if (today.getDate() > 1 && phase !== "Luna Nueva") {
+  if (today.getDate() > 1 && phaseKey !== "new") {
     nextNewMoonDate.setMonth(today.getMonth() + 1);
   }
   nextNewMoonDate.setDate(1);
 
+  // Mock upcoming phases based on example image
+  const upcomingPhases: UpcomingPhase[] = [
+    { nameKey: "MoonPhase.FirstQuarter", date: "Jun 2", iconUrl: "https://placehold.co/48x48/E2E8F0/1E293B.png?text=FQ", phaseKey: "firstQuarter" },
+    { nameKey: "MoonPhase.FullMoon", date: "Jun 11", iconUrl: "https://placehold.co/48x48/FFFFFF/1E293B.png?text=FM", phaseKey: "full" },
+    { nameKey: "MoonPhase.LastQuarter", date: "Jun 18", iconUrl: "https://placehold.co/48x48/A0AEC0/1E293B.png?text=LQ", phaseKey: "lastQuarter" },
+    { nameKey: "MoonPhase.NewMoon", date: "Jun 25", iconUrl: "https://placehold.co/48x48/2D3748/1E293B.png?text=NM", phaseKey: "new" },
+  ];
+  
+  // For current large moon image, use a generic one based on the current phase from example
+  // If the current mocked phase is "Gibosa Menguante", use that kind of image.
+  // Otherwise, a general placeholder.
+  let currentMoonImageUrl = "https://placehold.co/80x80/E2E8F0/1E293B.png?text=)"; // Default placeholder
+
+  if (phaseKey === 'waningGibbous') {
+      currentMoonImageUrl = "https://placehold.co/80x80/cccccc/1E293B.png?text=WG"; // Placeholder for Waning Gibbous
+  } else if (phaseKey === 'full') {
+      currentMoonImageUrl = "https://placehold.co/80x80/FFFFFF/1E293B.png?text=FM";
+  } // Add more specific placeholders if needed
+
+
   return {
-    phase: phase,
-    illumination: illumination,
+    phase: phaseName, // This is already translated if dictionary["MoonPhase.WaningGibbous"] exists
+    phaseKey,
+    illumination: (phaseKey === 'waningGibbous' && dayOfMonth > 18 && dayOfMonth <= 21) ? 75 : illumination, // Override for example
     nextFullMoon: nextFullMoonDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric'}),
     nextNewMoon: nextNewMoonDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric'}),
+    currentMoonImage: currentMoonImageUrl,
+    moonInSign: "Acuario", // Mocked as per image
+    moonSignIcon: "Aquarius", // Mocked
+    upcomingPhases: upcomingPhases
   };
 };
 
@@ -626,3 +674,4 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon, Briefcase as WorkIcon };
+

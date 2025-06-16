@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Ihre tägliche Quelle für Horoskope und astrologische Einblicke.",
@@ -165,6 +166,13 @@
   "LunarAscendantSection.ascendantSignTitle": "Dein Aszendentenzeichen:",
   "LunarAscendantSection.fillAllDetails": "Bitte füllen Sie alle Geburtsdetails aus.",
   "LunarAscendantSection.lunarPhaseGlobalNote": "Die Mondphase ist global. Die genauen Zeiten für Neumond/Vollmond können je nach Ihrer Zeitzone variieren. Informationen basieren auf der aktuellen Zeit Ihres Geräts.",
+  "LunarAscendantPage.title": "Mondphase & Aszendentenzeichen",
+  "LunarAscendantPage.subtitle": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen.",
+  "LunarAscendantPage.lunarCalendarTitle": "Mondkalender",
+  "LunarAscendantPage.currentMoonAlt": "Aktuelle Mondphase",
+  "LunarAscendantPage.moonInSignText": "in {signName}",
+  "LunarAscendantPage.illuminationText": "Beleuchtung {percentage}%",
+  "LunarAscendantPage.easternTimeNote": "Hinweis: Alle Zeiten ET",
   "WeeklyHoroscopePage.title": "Wöchentliches Horoskop",
   "WeeklyHoroscopePage.subtitle": "Ihre astrologische Prognose für die kommende Woche. Wählen Sie Ihr Zeichen.",
   "MonthlyHoroscopePage.title": "Monatliches Horoskop",
@@ -175,8 +183,6 @@
   "CompatibilityPage.subtitle": "Entdecken Sie, wie gut verschiedene Sternzeichen zusammenpassen.",
   "LuckyNumbersPage.title": "Glücksbringer",
   "LuckyNumbersPage.subtitle": "Finden Sie Ihre Glückszahlen, -farbe und -edelstein für Ihr Zeichen heraus.",
-  "LunarAscendantPage.title": "Mondphase & Aszendentenzeichen",
-  "LunarAscendantPage.subtitle": "Erkunden Sie aktuelle Mondphasen und entdecken Sie Ihr Aszendentenzeichen.",
   "ChineseHoroscopePage.title": "Chinesisches Horoskop",
   "ChineseHoroscopePage.subtitle": "Erkunden Sie die Weisheit des chinesischen Tierkreises. Entdecken Sie Ihr Tierzeichen und seine Eigenschaften.",
   "ChineseHoroscopePage.comingSoon": "Detaillierte Horoskope und mehr folgen in Kürze für die chinesische Astrologie!",
@@ -550,5 +556,15 @@
   "Language.es": "Spanisch",
   "Language.en": "Englisch",
   "Language.de": "Deutsch",
-  "Language.fr": "Französisch"
+  "Language.fr": "Französisch",
+  "MoonPhase.Unknown": "Unbekannte Phase",
+  "MoonPhase.new": "Neumond",
+  "MoonPhase.waxingCrescent": "Zunehmender Halbmond",
+  "MoonPhase.firstQuarter": "Erstes Viertel",
+  "MoonPhase.waxingGibbous": "Zunehmender Buckelmond",
+  "MoonPhase.full": "Vollmond",
+  "MoonPhase.waningGibbous": "Abnehmender Buckelmond",
+  "MoonPhase.lastQuarter": "Letztes Viertel",
+  "MoonPhase.waningCrescent": "Abnehmender Halbmond"
 }
+

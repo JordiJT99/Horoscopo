@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -165,6 +166,13 @@
   "LunarAscendantSection.ascendantSignTitle": "Tu Signo Ascendente:",
   "LunarAscendantSection.fillAllDetails": "Por favor, completa todos los detalles de nacimiento.",
   "LunarAscendantSection.lunarPhaseGlobalNote": "La fase lunar es global. Las horas exactas de luna nueva/llena pueden variar según tu zona horaria. Información basada en la hora actual de tu dispositivo.",
+  "LunarAscendantPage.title": "Fase Lunar y Signo Ascendente",
+  "LunarAscendantPage.subtitle": "Explora las fases lunares actuales y descubre tu signo ascendente.",
+  "LunarAscendantPage.lunarCalendarTitle": "Calendario Lunar",
+  "LunarAscendantPage.currentMoonAlt": "Fase lunar actual",
+  "LunarAscendantPage.moonInSignText": "en {signName}",
+  "LunarAscendantPage.illuminationText": "Iluminación {percentage}%",
+  "LunarAscendantPage.easternTimeNote": "Nota: Todos los horarios ET",
   "WeeklyHoroscopePage.title": "Horóscopo Semanal",
   "WeeklyHoroscopePage.subtitle": "Tu predicción astrológica para la semana. Selecciona tu signo.",
   "MonthlyHoroscopePage.title": "Horóscopo Mensual",
@@ -175,8 +183,6 @@
   "CompatibilityPage.subtitle": "Descubre qué tan bien congenian los diferentes signos zodiacales.",
   "LuckyNumbersPage.title": "Números de la Suerte",
   "LuckyNumbersPage.subtitle": "Descubre tus números de la suerte, color y gema para tu signo.",
-  "LunarAscendantPage.title": "Fase Lunar y Signo Ascendente",
-  "LunarAscendantPage.subtitle": "Explora las fases lunares actuales y descubre tu signo ascendente.",
   "ChineseHoroscopePage.title": "Horóscopo Chino",
   "ChineseHoroscopePage.subtitle": "Explora la sabiduría del zodiaco chino. Descubre tu signo animal y sus características.",
   "ChineseHoroscopePage.comingSoon": "¡Próximamente horóscopos detallados y más para la Astrología China!",
@@ -550,5 +556,15 @@
   "Language.es": "Español",
   "Language.en": "English",
   "Language.de": "Deutsch",
-  "Language.fr": "Français"
+  "Language.fr": "Français",
+  "MoonPhase.Unknown": "Fase Desconocida",
+  "MoonPhase.new": "Luna Nueva",
+  "MoonPhase.waxingCrescent": "Luna Creciente",
+  "MoonPhase.firstQuarter": "Cuarto Creciente",
+  "MoonPhase.waxingGibbous": "Gibosa Creciente",
+  "MoonPhase.full": "Luna Llena",
+  "MoonPhase.waningGibbous": "Gibosa Menguante",
+  "MoonPhase.lastQuarter": "Cuarto Menguante",
+  "MoonPhase.waningCrescent": "Luna Menguante"
 }
+

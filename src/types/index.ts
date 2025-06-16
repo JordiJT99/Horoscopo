@@ -1,4 +1,5 @@
 
+
 export type ZodiacSignName =
   | "Aries"
   | "Taurus"
@@ -68,12 +69,27 @@ export interface LuckyNumbersData {
   motivationalPhrase: string;
 }
 
+export type MoonPhaseKey = 'new' | 'firstQuarter' | 'full' | 'lastQuarter' | 'waningGibbous' | 'waxingCrescent' | 'waningCrescent' | 'waxingGibbous';
+
+
+export interface UpcomingPhase {
+  nameKey: string; // e.g., "MoonPhase.FirstQuarter" for translation
+  date: string;    // e.g., "Jun 2"
+  iconUrl: string;
+  phaseKey: MoonPhaseKey;
+}
 export interface LunarData {
-  phase: string; // e.g., "Full Moon", "New Moon", "Waxing Crescent"
+  phase: string; // e.g., "Full Moon", "New Moon", "Waxing Crescent" (translated)
+  phaseKey: MoonPhaseKey; // Key for the main current phase
   illumination: number; // Percentage
   nextFullMoon: string;
   nextNewMoon: string;
+  currentMoonImage: string; // URL for the large moon image
+  moonInSign: string; // e.g., "Acuario" (translated)
+  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius"
+  upcomingPhases: UpcomingPhase[];
 }
+
 
 export interface AscendantData {
   sign: ZodiacSignName;
@@ -201,4 +217,5 @@ export interface OnboardingFormData {
 
 // Profile selector type
 export type SelectedProfileType = 'user' | 'generic';
+
 
