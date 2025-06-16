@@ -488,7 +488,8 @@ const DEFAULT_LATITUDE = -34.61;
 const DEFAULT_LONGITUDE = -58.38;
 
 export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${DEFAULT_LATITUDE}&longitude=${DEFAULT_LONGITUDE}&daily=moon_phase&timezone=auto`;
+  // Changed timezone from 'auto' to 'GMT' to make the request more robust
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${DEFAULT_LATITUDE}&longitude=${DEFAULT_LONGITUDE}&daily=moon_phase&timezone=GMT`;
 
   try {
     const response = await fetch(apiUrl);
@@ -709,4 +710,5 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon, Briefcase as WorkIcon };
+
 
