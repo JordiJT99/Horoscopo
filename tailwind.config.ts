@@ -11,9 +11,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Reverted to Alegreya as per PRD and previous theme
-        body: ['Alegreya', 'sans-serif'], 
-        headline: ['Alegreya', 'serif'],
+        body: ['Alegreya', 'sans-serif'], // Reverted to Alegreya
+        headline: ['Alegreya', 'serif'], // Reverted to Alegreya
         code: ['monospace'],
       },
       colors: {
@@ -57,7 +56,6 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        // These specific theme vars can remain if globals.css defines them
         'top-bar-background': 'hsl(var(--top-bar-background))',
         'top-bar-foreground': 'hsl(var(--top-bar-foreground))',
         'bottom-nav-background': 'hsl(var(--bottom-nav-background))',
@@ -71,11 +69,10 @@ export default {
         'horoscope-progress-background': 'hsl(var(--horoscope-progress-background))',
         'horoscope-progress-indicator': 'hsl(var(--horoscope-progress-indicator))',
       },
-      borderRadius: {
-        lg: 'var(--radius)', // Default is 0.5rem
+      borderRadius: { // Reverted: no '3xl', default lg is 0.5rem via var(--radius)
+        lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        // Removed '3xl'
       },
       keyframes: {
         'accordion-down': {
@@ -94,17 +91,16 @@ export default {
             height: '0',
           },
         },
-        pulseHeart: { // Added pulseHeart animation
+        pulseHeart: { // Adjusted for slower and larger pulse
           '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.15)' },
+          '50%': { transform: 'scale(1.3)' }, // Larger scale
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        pulseHeart: 'pulseHeart 2s infinite ease-in-out', // Added pulseHeart utility
+        pulseHeart: 'pulseHeart 3s infinite ease-in-out', // Slower duration
       },
-      // Removed backgroundImage radial-purple-gradient
     },
   },
   plugins: [require('tailwindcss-animate')],
