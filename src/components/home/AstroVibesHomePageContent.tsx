@@ -8,7 +8,8 @@ import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
-import { motion, type PanInfo } from 'framer-motion';
+import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
+import { useToast } from "@/hooks/use-toast";
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
 import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
@@ -24,13 +25,36 @@ import { useIsMobile } from '@/hooks/use-mobile';
 interface AstroVibesPageContentProps {
   dictionary: Dictionary;
   locale: Locale;
-  displayPeriod: 'daily' | 'weekly' | 'monthly';
-  targetDate?: string;
-  activeHoroscopePeriodForTitles: HoroscopePeriod;
+  displayPeriod: 'daily' | 'weekly' | 'monthly'; // What data to fetch/show in details
+  targetDate?: string; // For daily, if not today
+  activeHoroscopePeriodForTitles: HoroscopePeriod; // For titles and active tab
 }
 
 const orderedTabs: HoroscopePeriod[] = ['yesterday', 'today', 'tomorrow', 'weekly', 'monthly'];
-const SWIPE_CONFIDENCE_THRESHOLD = 10000;
+const SWIPE_CONFIDENCE_THRESHOLD = 8000; // Adjusted threshold
+const SWIPE_OFFSET_THRESHOLD = 50; // Minimum drag offset to consider a swipe
+
+
+const swipeVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? '100%' : '-100%',
+    opacity: 0,
+    zIndex: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    zIndex: 1,
+    transition: { type: 'spring', stiffness: 300, damping: 30, duration: 0.3 }
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? '100%' : '-100%',
+    opacity: 0,
+    zIndex: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 30, duration: 0.3 }
+  }),
+};
+
 
 export default function AstroVibesHomePageContent({
   dictionary,
@@ -44,17 +68,18 @@ export default function AstroVibesHomePageContent({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
-
-  const initialSignFromUrl = searchParams.get('sign') as ZodiacSignName | null;
+  const initialSignFromUrl = useMemo(() => searchParams.get('sign') as ZodiacSignName | null, [searchParams]);
 
   const [selectedDisplaySignName, setSelectedDisplaySignName] = useState<ZodiacSignName>(() => {
     if (initialSignFromUrl && ZODIAC_SIGNS.find(s => s.name === initialSignFromUrl)) {
       return initialSignFromUrl;
     }
-    return "Capricorn"; // Default fallback
+    // User sign determination will happen in useEffect
+    return "Capricorn"; // Default fallback, refined in useEffect
   });
 
   const selectedDisplaySign = useMemo(() => {
@@ -64,18 +89,20 @@ export default function AstroVibesHomePageContent({
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
   const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true);
+  const [swipeDirection, setSwipeDirection] = useState(0);
+
 
   useEffect(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
-    let determinedInitialSign = "Capricorn" as ZodiacSignName; // Default if no other source
+    let determinedInitialSign = "Capricorn" as ZodiacSignName;
 
-    if (user?.uid) {
+    if (user?.uid && !authLoading) { // Only use user data if auth is not loading
       const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
       if (storedData) {
         try {
             const parsedData = JSON.parse(storedData) as OnboardingFormData;
             if (parsedData.dateOfBirth) {
-                parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
+                parsedData.dateOfBirth = new Date(parsedData.dateOfBirth); // Ensure Date object
             }
             setOnboardingData(parsedData);
             const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
@@ -88,7 +115,7 @@ export default function AstroVibesHomePageContent({
         }
       }
     }
-    // URL parameter takes precedence over user sign if present
+
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
     }
@@ -100,10 +127,15 @@ export default function AstroVibesHomePageContent({
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySignName || (authLoading && !searchParams.get('sign'))) {
-         if (authLoading) setIsHoroscopeLoading(true);
-        return;
+      if (!selectedDisplaySignName) {
+          setIsHoroscopeLoading(true); // Show loading if sign is not yet determined
+          return;
       }
+      // This guard was: if (!selectedDisplaySignName || (authLoading && !searchParams.get('sign')))
+      // If selectedDisplaySignName is now guaranteed by the previous effect's fallback,
+      // we only need to worry about authLoading if it impacts the data source (e.g. user-specific data).
+      // For horoscopes, selectedDisplaySignName is the primary driver.
+
       setIsHoroscopeLoading(true);
       try {
         const input: HoroscopeFlowInput = {
@@ -111,29 +143,50 @@ export default function AstroVibesHomePageContent({
           locale,
           targetDate: targetDate,
         };
-        const result = await getHoroscopeFlow(input);
-        setFullHoroscopeData(result);
-        setCurrentDisplayHoroscope(result[displayPeriod]);
+        // Explicitly type result to allow for undefined/null for robust checking
+        const result: HoroscopeFlowOutput | null | undefined = await getHoroscopeFlow(input);
 
+        if (result && typeof result === 'object' && result.daily && result.weekly && result.monthly) {
+          setFullHoroscopeData(result);
+          setCurrentDisplayHoroscope(result[displayPeriod]);
+        } else {
+          // Handle cases where result is null, undefined, or not the expected object structure
+          console.error("Error fetching horoscope: getHoroscopeFlow returned invalid data or no result.", result);
+          setFullHoroscopeData(null);
+          setCurrentDisplayHoroscope(null);
+          if (dictionary && Object.keys(dictionary).length > 0) {
+            toast({
+              title: dictionary['Error.genericTitle'] || "Error",
+              description: dictionary['HoroscopeSection.error'] || "Could not load horoscope data. Unexpected response from service.",
+              variant: "destructive",
+            });
+          }
+        }
       } catch (error) {
-        console.error("Error fetching horoscope:", error);
+        console.error("Error fetching horoscope (exception caught):", error);
         setFullHoroscopeData(null);
         setCurrentDisplayHoroscope(null);
+        if (dictionary && Object.keys(dictionary).length > 0) {
+          toast({
+            title: dictionary['Error.genericTitle'] || "Error",
+            description: dictionary['HoroscopeSection.error'] || "Could not load horoscope data. Please try again later.",
+            variant: "destructive",
+          });
+        }
       } finally {
         setIsHoroscopeLoading(false);
       }
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, authLoading, displayPeriod, targetDate, searchParams]);
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast]); // Removed authLoading and searchParams as selectedDisplaySignName now depends on them
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
-    const currentSignParam = selectedDisplaySignName || (userSunSign?.name) || "Capricorn";
+    const currentSignParam = searchParams.get('sign') || selectedDisplaySignName || (userSunSign?.name) || "Capricorn";
     let newPath = '';
     const queryParams = new URLSearchParams();
     queryParams.set('sign', currentSignParam);
-
 
     if (tab === 'yesterday') {
       newPath = `/${locale}/yesterday-horoscope`;
@@ -142,45 +195,61 @@ export default function AstroVibesHomePageContent({
     } else if (tab === 'monthly') {
       newPath = `/${locale}/monthly-horoscope`;
     } else {
-      newPath = `/${locale}`; // Base for 'today' and 'tomorrow'
+      newPath = `/${locale}`;
       if (tab === 'tomorrow') {
-        queryParams.set('period', 'tomorrow');
+        queryParams.set('period', 'tomorrow'); // Special handling for tomorrow on main page
       }
     }
     router.push(`${newPath}?${queryParams.toString()}`, { scroll: false });
   };
 
   const handleSignSelectedFromScroll = (sign: ZodiacSign) => {
-    setSelectedDisplaySignName(sign.name);
+    setSelectedDisplaySignName(sign.name); // Update state immediately for responsiveness
     const currentQueryParams = new URLSearchParams(searchParams.toString());
     currentQueryParams.set('sign', sign.name);
     
     let basePath = pathname.split('?')[0]; 
+    if (basePath === `/${locale}/yesterday-horoscope` || basePath === `/${locale}/weekly-horoscope` || basePath === `/${locale}/monthly-horoscope`) {
+      // Stay on the current period page
+    } else {
+      // Default to today's page if on root or unrecognized path
+      basePath = `/${locale}`; 
+      // Clear period if switching sign from root to avoid invalid period=tomorrow for other signs
+      if (currentQueryParams.has('period')) {
+        currentQueryParams.delete('period');
+      }
+    }
     const newPath = `${basePath}?${currentQueryParams.toString()}`;
     router.push(newPath, { scroll: false });
   };
 
-  const paginate = (direction: number) => {
+  const paginate = (newDirection: number) => {
+    setSwipeDirection(newDirection);
     const currentIndex = orderedTabs.indexOf(activeHoroscopePeriodForTitles);
-    const nextIndex = currentIndex + direction;
+    const nextIndex = currentIndex + newDirection;
     if (nextIndex >= 0 && nextIndex < orderedTabs.length) {
       handleSubHeaderTabSelect(orderedTabs[nextIndex]);
     }
   };
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const swipe = info.offset.x * info.velocity.x;
-    if (swipe < -SWIPE_CONFIDENCE_THRESHOLD) {
-      paginate(1); // Deslizar a la izquierda -> siguiente
-    } else if (swipe > SWIPE_CONFIDENCE_THRESHOLD) {
-      paginate(-1); // Deslizar a la derecha -> anterior
+    const { offset, velocity } = info;
+    const swipePower = Math.abs(offset.x) * velocity.x;
+
+    if (Math.abs(offset.x) > SWIPE_OFFSET_THRESHOLD) { // Check if drag offset is significant
+        if (swipePower < -SWIPE_CONFIDENCE_THRESHOLD) {
+            paginate(1); // Swipe left -> next
+        } else if (swipePower > SWIPE_CONFIDENCE_THRESHOLD) {
+            paginate(-1); // Swipe right -> previous
+        }
     }
   };
 
+
   const summaryCategories = [
-    { nameKey: "HoroscopeSummary.love", percentage: 80, dataKey: "love" as keyof HoroscopeDetail },
-    { nameKey: "HoroscopeSummary.career", percentage: 60, dataKey: "main" as keyof HoroscopeDetail },
-    { nameKey: "HoroscopeSummary.health", percentage: 40, dataKey: "health" as keyof HoroscopeDetail },
+    { nameKey: "HoroscopeSummary.love", percentage: Math.floor(Math.random() * 60) + 40, dataKey: "love" as keyof HoroscopeDetail },
+    { nameKey: "HoroscopeSummary.career", percentage: Math.floor(Math.random() * 60) + 40, dataKey: "main" as keyof HoroscopeDetail },
+    { nameKey: "HoroscopeSummary.health", percentage: Math.floor(Math.random() * 60) + 40, dataKey: "health" as keyof HoroscopeDetail },
   ];
 
   const detailedHoroscopeCategories = currentDisplayHoroscope ? [
@@ -218,12 +287,16 @@ export default function AstroVibesHomePageContent({
 
   if (authLoading && !user && !initialSignFromUrl) {
     return (
-      <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-var(--top-bar-height)-var(--bottom-nav-height))]">
+      <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-var(--top-bar-height,56px)-var(--bottom-nav-height,64px))]">
         <ContentSparklesIcon className="h-12 w-12 animate-pulse text-primary mx-auto" />
         {dictionary && Object.keys(dictionary).length > 0 && <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>}
       </div>
     );
   }
+  
+  // Unique key for the main content wrapper to ensure Framer Motion re-renders it on tab/sign change
+  // for individual section animations to re-trigger.
+  const contentKey = `${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`;
 
   return (
     <div className="flex flex-col">
@@ -237,20 +310,18 @@ export default function AstroVibesHomePageContent({
           user={user}
         />
 
-        {/* Este motion.div maneja el gesto de arrastre en móviles y sirve como contenedor para las animaciones internas */}
         <motion.div
-          key={activeHoroscopePeriodForTitles + selectedDisplaySignName} // Clave importante para re-animar hijos
-          drag={isMobile ? "x" : false}
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2} // Un poco de "tirón" visual
-          onDragEnd={isMobile ? handleDragEnd : undefined}
-          className="w-full cursor-grab active:cursor-grabbing"
+            key={contentKey} // This key forces re-render of children on change, allowing their animations
+            drag={isMobile ? "x" : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={isMobile ? handleDragEnd : undefined}
+            className="w-full cursor-grab active:cursor-grabbing"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            key={`sign-display-${selectedDisplaySignName}-${activeHoroscopePeriodForTitles}`} // Clave más específica
           >
             <SelectedSignDisplay
               dictionary={dictionary}
@@ -269,7 +340,6 @@ export default function AstroVibesHomePageContent({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            key={`features-${selectedDisplaySignName}-${activeHoroscopePeriodForTitles}`}
           >
             <FeatureLinkCards dictionary={dictionary} locale={locale} />
           </motion.div>
@@ -277,8 +347,7 @@ export default function AstroVibesHomePageContent({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }} // Mismo delay que features
-            key={`summary-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <HoroscopeCategoriesSummary
               dictionary={dictionary}
@@ -294,7 +363,6 @@ export default function AstroVibesHomePageContent({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            key={`details-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
           >
             <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
               <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
@@ -317,7 +385,7 @@ export default function AstroVibesHomePageContent({
                   <HoroscopeCategoryCard
                     key={`skeleton-${index}`}
                     dictionary={dictionary}
-                    titleKey="Loading..." // Debería ser una clave de diccionario
+                    titleKey={dictionary['HoroscopeSection.loading'] || "Loading..."} 
                     icon={ContentSparklesIcon}
                     content=""
                     isLoading={true}
@@ -325,7 +393,7 @@ export default function AstroVibesHomePageContent({
               ))}
               {!isHoroscopeLoading && !currentDisplayHoroscope && (
                  <div className="sm:col-span-2 text-center py-10">
-                   <p className="text-muted-foreground">{dictionary['HoroscopeSection.noData']}</p>
+                   <p className="text-muted-foreground">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
                 </div>
               )}
             </div>
@@ -334,7 +402,6 @@ export default function AstroVibesHomePageContent({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            key={`promo-${activeHoroscopePeriodForTitles}-${selectedDisplaySignName}`}
           >
             <PromotionCard dictionary={dictionary} />
           </motion.div>
@@ -343,4 +410,3 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
-
