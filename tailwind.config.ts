@@ -91,7 +91,7 @@ export default {
             height: '0',
           },
         },
-        pulseHeart: { 
+        pulseHeart: { /* Keyframes defined in globals.css */
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.3)' }, 
         },
@@ -99,7 +99,7 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        pulseHeart: 'pulseHeart 3s infinite ease-in-out', 
+        pulseHeart: 'pulseHeart 5s infinite ease-in-out', /* Slower duration */
       },
     },
   },
