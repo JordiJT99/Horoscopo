@@ -23,20 +23,21 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   ];
 
   return (
-    <div className="bg-sub-header-background shadow-md sticky top-16 z-40"> {/* Adjusted sticky top based on new header height h-16 (4rem) */}
+    // Removed sticky and shadow, as per new design, tabs are part of main content flow
+    <div className="bg-transparent"> 
       <div className="container mx-auto px-0 sm:px-1">
-        <div className="flex justify-start items-center overflow-x-auto whitespace-nowrap no-scrollbar py-1"> {/* Added no-scrollbar */}
+        <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2">
           {tabs.map((tab) => (
             <Button
               key={tab.id}
               variant="ghost"
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "rounded-md py-2.5 px-6 text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0", // Increased padding and font size
-                "hover:bg-sub-header-tab-active-background/20",
+                "rounded-full py-2 px-5 text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1",
+                "hover:text-primary", // Subtle hover for inactive tabs
                 activeTab === tab.id
-                  ? "bg-sub-header-tab-active-background text-sub-header-tab-active-foreground shadow-sm"
-                  : "text-sub-header-tab-inactive-foreground bg-transparent hover:bg-secondary/30" // Ensure inactive tabs have distinct bg on hover
+                  ? "bg-primary text-primary-foreground shadow-md" // Active tab style from image
+                  : "text-muted-foreground bg-transparent" 
               )}
             >
               {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}

@@ -5,89 +5,98 @@
 
 @layer base {
   :root {
-    --background: 260 60% 8%; /* Deep dark purple, almost black */
-    --foreground: 260 25% 90%; /* Light lavender/off-white */
+    --background: 258 50% 7%; /* Deep dark blue/purple */
+    --foreground: 260 25% 92%; /* Very light lavender/off-white */
 
-    --card: 260 50% 12%; /* Dark purple, slightly lighter than background */
-    --card-foreground: 260 25% 88%;
+    --card: 258 45% 10%; /* Slightly lighter dark blue/purple for cards */
+    --card-foreground: 260 25% 90%;
 
-    --popover: 260 55% 10%; /* Similar to background for popovers */
+    --popover: 258 50% 9%; /* Similar to card for popovers */
     --popover-foreground: 260 25% 90%;
 
-    /* Primary is the bright violet/purple for active elements and accents */
-    --primary: 275 80% 65%;
-    --primary-foreground: 275 20% 95%; /* Very light color for text on primary */
+    /* Primary is a vibrant purple/magenta for active elements and accents */
+    --primary: 280 80% 60%;
+    --primary-foreground: 280 20% 98%; /* Very light color for text on primary */
 
-    /* Secondary can be a less saturated purple for tab backgrounds or secondary elements */
-    --secondary: 260 40% 20%;
-    --secondary-foreground: 260 20% 80%;
+    /* Secondary can be a less saturated purple or a contrasting accent */
+    --secondary: 270 50% 25%;
+    --secondary-foreground: 270 15% 85%;
 
-    /* Muted for less important text or subtle backgrounds */
-    --muted: 260 30% 30%;
+    /* Muted for less important text or subtle backgrounds/borders */
+    --muted: 260 30% 20%;
     --muted-foreground: 260 15% 65%; /* Lighter muted text */
 
-    /* Accent can be another highlight color if needed, or same as primary */
-    --accent: 275 80% 65%; /* Using same as primary for strong accent */
-    --accent-foreground: 275 20% 95%;
+    /* Accent can be same as primary or a different highlight */
+    --accent: 280 80% 60%; /* Using same as primary */
+    --accent-foreground: 280 20% 98%;
 
     --destructive: 0 70% 55%; /* Standard red for errors */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 40% 25%; /* Subtle border color */
-    --input: 260 40% 18%; /* Dark input background */
-    --ring: 275 70% 70%; /* Brighter violet for focus rings */
+    --border: 260 30% 18%; /* Subtle border color */
+    --input: 260 40% 15%; /* Dark input background */
+    --ring: 280 70% 65%; /* Brighter purple for focus rings */
 
     --radius: 0.5rem;
 
     --chart-1: hsl(var(--primary));
-    --chart-2: 290 70% 70%; /* A slightly different purple */
-    --chart-3: 320 70% 70%; /* Magenta-ish purple */
-    --chart-4: 250 70% 70%; /* Indigo-ish purple */
-    --chart-5: 260 70% 75%; /* Lavender */
+    --chart-2: 295 70% 65%; /* A slightly different purple */
+    --chart-3: 310 70% 68%; /* Magenta-ish purple */
+    --chart-4: 265 70% 60%; /* Indigo-ish purple */
+    --chart-5: 275 70% 70%; /* Lavender */
 
-    /* Header/Top Nav specific */
-    --header-background: 260 60% 8%; /* Same as page background for seamless look */
-    --header-foreground: 260 25% 85%; /* Slightly brighter than main foreground for emphasis */
-    --header-icon-active: hsl(var(--primary)); /* Accent color for active icon */
+    /* Specific for new design */
+    --top-bar-background: hsl(var(--background));
+    --top-bar-foreground: hsl(var(--foreground));
 
-    /* Sub-header Tabs */
-    --sub-header-background: 260 55% 10%; /* Slightly lighter dark purple */
-    --sub-header-tab-active-background: hsl(var(--primary));
-    --sub-header-tab-active-foreground: hsl(var(--primary-foreground));
-    --sub-header-tab-inactive-foreground: hsl(var(--muted-foreground));
+    --bottom-nav-background: 258 45% 10%; /* Same as card */
+    --bottom-nav-foreground: hsl(var(--muted-foreground));
+    --bottom-nav-active-foreground: hsl(var(--primary));
 
+    --sign-selector-active-border: hsl(var(--primary));
+
+    --feature-card-background: hsl(var(--primary));
+    --feature-card-foreground: hsl(var(--primary-foreground));
+
+    --horoscope-summary-title: hsl(var(--foreground));
+    --horoscope-category-text: hsl(var(--foreground));
+    --horoscope-progress-background: hsl(var(--muted));
+    --horoscope-progress-indicator: hsl(var(--primary));
   }
 
   .dark {
-    /* Replicate :root for the single dark theme */
-    --background: 260 60% 8%;
-    --foreground: 260 25% 90%;
-    --card: 260 50% 12%;
-    --card-foreground: 260 25% 88%;
-    --popover: 260 55% 10%;
+    --background: 258 50% 7%;
+    --foreground: 260 25% 92%;
+    --card: 258 45% 10%;
+    --card-foreground: 260 25% 90%;
+    --popover: 258 50% 9%;
     --popover-foreground: 260 25% 90%;
-    --primary: 275 80% 65%;
-    --primary-foreground: 275 20% 95%;
-    --secondary: 260 40% 20%;
-    --secondary-foreground: 260 20% 80%;
-    --muted: 260 30% 30%;
+    --primary: 280 80% 60%;
+    --primary-foreground: 280 20% 98%;
+    --secondary: 270 50% 25%;
+    --secondary-foreground: 270 15% 85%;
+    --muted: 260 30% 20%;
     --muted-foreground: 260 15% 65%;
-    --accent: 275 80% 65%;
-    --accent-foreground: 275 20% 95%;
+    --accent: 280 80% 60%;
+    --accent-foreground: 280 20% 98%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 40% 25%;
-    --input: 260 40% 18%;
-    --ring: 275 70% 70%;
-    
-    --header-background: 260 60% 8%;
-    --header-foreground: 260 25% 85%;
-    --header-icon-active: hsl(var(--primary));
+    --border: 260 30% 18%;
+    --input: 260 40% 15%;
+    --ring: 280 70% 65%;
 
-    --sub-header-background: 260 55% 10%;
-    --sub-header-tab-active-background: hsl(var(--primary));
-    --sub-header-tab-active-foreground: hsl(var(--primary-foreground));
-    --sub-header-tab-inactive-foreground: hsl(var(--muted-foreground));
+    --top-bar-background: hsl(var(--background));
+    --top-bar-foreground: hsl(var(--foreground));
+    --bottom-nav-background: 258 45% 10%;
+    --bottom-nav-foreground: hsl(var(--muted-foreground));
+    --bottom-nav-active-foreground: hsl(var(--primary));
+    --sign-selector-active-border: hsl(var(--primary));
+    --feature-card-background: hsl(var(--primary));
+    --feature-card-foreground: hsl(var(--primary-foreground));
+    --horoscope-summary-title: hsl(var(--foreground));
+    --horoscope-category-text: hsl(var(--foreground));
+    --horoscope-progress-background: hsl(var(--muted));
+    --horoscope-progress-indicator: hsl(var(--primary));
   }
 }
 
@@ -97,15 +106,13 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* font-family is set by Tailwind's font-body class in layout.tsx */
   }
 }
 
-/* Helper to hide scrollbar (use with caution for accessibility) */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

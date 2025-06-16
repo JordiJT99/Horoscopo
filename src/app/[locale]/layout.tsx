@@ -4,8 +4,8 @@
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
-import Header from '@/components/shared/Header';
-import Footer from '@/components/shared/Footer';
+import TopBar from '@/components/shared/TopBar'; // New TopBar
+import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; // New BottomNav
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { useEffect, useState, use, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
@@ -36,23 +36,19 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     }
 
     if (!user && !isLoginPage && !isOnboardingPage) {
-      // For this new design, we won't auto-redirect to login from all pages
-      // User can browse content and will be prompted on specific actions or profile page
-      // router.push(loginPath); 
       return;
     }
     
     if (user) {
       const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
       if (!onboardingComplete && !isOnboardingPage && !isLoginPage) {
-        // Only redirect to onboarding if user is logged in but hasn't completed it
         router.push(onboardingPath);
       }
     }
   }, [user, authLoading, pathname, locale, router, hasMountedContext, onboardingPath, loginPath, isLoginPage, isOnboardingPage]);
 
 
-  if (!hasMountedContext || authLoading && !user && !isOnboardingPage && !isLoginPage) { // Show loader primarily on initial auth check or if explicitly loading
+  if (!hasMountedContext || authLoading && !user && !isOnboardingPage && !isLoginPage) {
      return (
       <div className="flex-grow flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -60,7 +56,6 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     );
   }
   
-  // If on onboarding or login, render only children and toaster
   if (isOnboardingPage || isLoginPage) {
     return (
       <div className="flex-grow bg-background text-foreground">
@@ -69,14 +64,13 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     );
   }
 
-  // Full app structure for other pages
   return (
     <>
-      <Header dictionary={dictionary} currentLocale={locale} />
-      <div className="flex-grow">
+      <TopBar dictionary={dictionary} currentLocale={locale} />
+      <div className="flex-grow pb-16"> {/* Add padding-bottom to avoid overlap with BottomNav */}
         {children}
       </div>
-      <Footer dictionary={dictionary} />
+      <BottomNavigationBar dictionary={dictionary} currentLocale={locale} />
     </>
   );
 }
@@ -122,7 +116,6 @@ export default function LocaleLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
-      {/* Ensure the dark class is applied for the new theme */}
       <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark">
         <AuthProvider>
           <AppStructure locale={currentLocale} dictionary={dictionary}>
