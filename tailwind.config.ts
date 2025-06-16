@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Alegreya', 'sans-serif'], // Reverted to Alegreya
-        headline: ['Alegreya', 'serif'], // Reverted to Alegreya
+        body: ['Alegreya', 'sans-serif'], 
+        headline: ['Alegreya', 'serif'], 
         code: ['monospace'],
       },
       colors: {
@@ -69,8 +69,8 @@ export default {
         'horoscope-progress-background': 'hsl(var(--horoscope-progress-background))',
         'horoscope-progress-indicator': 'hsl(var(--horoscope-progress-indicator))',
       },
-      borderRadius: { // Reverted: no '3xl', default lg is 0.5rem via var(--radius)
-        lg: 'var(--radius)',
+      borderRadius: { 
+        lg: 'var(--radius)', // Original: uses CSS variable
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
@@ -91,15 +91,15 @@ export default {
             height: '0',
           },
         },
-        pulseHeart: { // Adjusted for slower and larger pulse
+        pulseHeart: { 
           '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.3)' }, // Larger scale
+          '50%': { transform: 'scale(1.3)' }, 
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        pulseHeart: 'pulseHeart 3s infinite ease-in-out', // Slower duration
+        pulseHeart: 'pulseHeart 3s infinite ease-in-out', 
       },
     },
   },
