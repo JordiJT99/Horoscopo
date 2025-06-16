@@ -13,7 +13,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import type { ZodiacSignName, HoroscopeFlowInput, HoroscopeFlowOutput, HoroscopeDetail } from '@/types';
-import { ALL_SIGN_NAMES } from '@/lib/constants';
+import { ALL_SIGN_NAMES, ZODIAC_SIGNS } from '@/lib/constants'; // Added ZODIAC_SIGNS for robust fallback
 import { format, getISOWeekYear, getMonth, getYear, subDays } from 'date-fns';
 import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 
@@ -85,7 +85,7 @@ const weeklyHoroscopePrompt = ai.definePrompt({
   input: { schema: HoroscopeFlowInputSchemaInternal },
   output: { schema: z.custom<HoroscopeDetail>() },
   prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda. Genera ÚNICAMENTE el horóscopo SEMANAL para ESTA SEMANA ACTUAL para el signo zodiacal {{sign}} en el idioma {{locale}}.
-Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para la semana, como el ingreso de un planeta en un nuevo sector o signo) con el crecimiento personal y el bienestar emocional.
+Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípics para la semana, como el ingreso de un planeta en un nuevo sector o signo) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 Busca una profundidad y un tono similares en tus respuestas, adaptados a una perspectiva semanal.
 
@@ -169,15 +169,15 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   } catch (err: any) {
     console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}, ${dateStr}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    const mockData = getRandomMockHoroscope('daily', input.sign, input.locale); // Prepare mock data for all error cases
-    dailyCache.set(cacheKey, mockData); // Cache mock data
+    const mockData = getRandomMockHoroscope('daily', input.sign, input.locale); 
+    dailyCache.set(cacheKey, mockData); 
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
       console.warn(`Genkit API error for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}). Using mock data as fallback. Error: ${errorMessage}`);
     } else {
       console.error(`Unexpected error fetching daily horoscope (${input.sign}, ${input.locale}, ${dateStr}). Using mock data. Error: ${errorMessage}`);
     }
-    return mockData; // Return mock data in all catch paths
+    return mockData; 
   }
 }
 
@@ -201,15 +201,15 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
   } catch (err: any) {
     console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale); // Prepare mock data for all error cases
-    weeklyCache.set(cacheKey, mockData); // Cache mock data
+    const mockData = getRandomMockHoroscope('weekly', input.sign, input.locale); 
+    weeklyCache.set(cacheKey, mockData); 
 
      if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
       console.warn(`Genkit API error for weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data as fallback. Error: ${errorMessage}`);
     } else {
       console.error(`Unexpected error fetching weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data. Error: ${errorMessage}`);
     }
-    return mockData; // Return mock data in all catch paths
+    return mockData; 
   }
 }
 
@@ -233,17 +233,27 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
   } catch (err: any) {
     console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale); // Prepare mock data for all error cases
-    monthlyCache.set(cacheKey, mockData); // Cache mock data
+    const mockData = getRandomMockHoroscope('monthly', input.sign, input.locale); 
+    monthlyCache.set(cacheKey, mockData); 
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
       console.warn(`Genkit API error for monthly horoscope (${input.sign}, ${input.locale}, ${monthStr}). Using mock data as fallback. Error: ${errorMessage}`);
     } else {
       console.error(`Unexpected error fetching monthly horoscope (${input.sign}, ${input.locale}, ${monthStr}). Using mock data. Error: ${errorMessage}`);
     }
-    return mockData; // Return mock data in all catch paths
+    return mockData; 
   }
 }
+
+// Helper to check if a detail object is valid
+const isValidHoroscopeDetail = (detail: any): detail is HoroscopeDetail => {
+  return detail &&
+         typeof detail === 'object' &&
+         typeof detail.main === 'string' &&
+         typeof detail.love === 'string' &&
+         typeof detail.money === 'string' &&
+         typeof detail.health === 'string';
+};
 
 const horoscopeFlowInternal = ai.defineFlow(
   {
@@ -251,14 +261,13 @@ const horoscopeFlowInternal = ai.defineFlow(
     inputSchema: HoroscopeFlowInputSchemaInternal,
     outputSchema: z.custom<HoroscopeFlowOutput>(),
   },
-  async (input) => {
+  async (input): Promise<HoroscopeFlowOutput> => {
     const currentDate = new Date();
     let dailyTargetDate = currentDate;
 
     if (input.targetDate) {
         const [year, month, day] = input.targetDate.split('-').map(Number);
-        // JavaScript months are 0-indexed, so subtract 1 from the month
-        const parsedDate = new Date(Date.UTC(year, month - 1, day)); // Use UTC to avoid timezone issues with date parsing
+        const parsedDate = new Date(Date.UTC(year, month - 1, day)); 
         if (!isNaN(parsedDate.getTime())) {
             dailyTargetDate = parsedDate;
         } else {
@@ -266,27 +275,48 @@ const horoscopeFlowInternal = ai.defineFlow(
         }
     }
     
-    const [dailyDetails, weeklyDetails, monthlyDetails] = await Promise.all([
+    const [daily, weekly, monthly] = await Promise.all([
       getDailyHoroscopeDetails(input, dailyTargetDate),
-      getWeeklyHoroscopeDetails(input, currentDate), // Weekly always for current week
-      getMonthlyHoroscopeDetails(input, currentDate), // Monthly always for current month
+      getWeeklyHoroscopeDetails(input, currentDate),
+      getMonthlyHoroscopeDetails(input, currentDate),
     ]);
 
+    // Defensive check to ensure all parts are valid HoroscopeDetail objects
+    if (!isValidHoroscopeDetail(daily) || !isValidHoroscopeDetail(weekly) || !isValidHoroscopeDetail(monthly)) {
+        console.error(
+            "CRITICAL: One or more horoscope detail functions returned invalid data structure to horoscopeFlowInternal.",
+            { 
+                dailyValid: isValidHoroscopeDetail(daily), 
+                weeklyValid: isValidHoroscopeDetail(weekly), 
+                monthlyValid: isValidHoroscopeDetail(monthly) 
+            }
+        );
+        // Fallback to a fully mock HoroscopeFlowOutput
+        const fallbackSign = input.sign || ZODIAC_SIGNS[0].name;
+        const fallbackLocale = input.locale || 'es';
+        return {
+            daily: isValidHoroscopeDetail(daily) ? daily : getRandomMockHoroscope('daily', fallbackSign, fallbackLocale),
+            weekly: isValidHoroscopeDetail(weekly) ? weekly : getRandomMockHoroscope('weekly', fallbackSign, fallbackLocale),
+            monthly: isValidHoroscopeDetail(monthly) ? monthly : getRandomMockHoroscope('monthly', fallbackSign, fallbackLocale),
+        };
+    }
+
     return {
-      daily: dailyDetails,
-      weekly: weeklyDetails,
-      monthly: monthlyDetails,
+      daily: daily,
+      weekly: weekly,
+      monthly: monthly,
     };
   }
 );
 
 export async function getHoroscopeFlow(input: HoroscopeFlowInput): Promise<HoroscopeFlowOutput> {
-  // Adapt the external HoroscopeFlowInput to the internal HoroscopeFlowInputInternal
   const internalInput: HoroscopeFlowInputInternal = {
     sign: input.sign,
     locale: input.locale,
     targetDate: input.targetDate,
   };
+  // The flow itself should now always return a valid HoroscopeFlowOutput
+  // due to the internal checks in horoscopeFlowInternal and get...Details functions.
   return horoscopeFlowInternal(internalInput);
 }
 
