@@ -1,22 +1,22 @@
 
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
+import { SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
-  { name: "Aries", icon: Activity, dateRange: "Mar 21 - Abr 19", element: "Fire", polarity: "Masculine", modality: "Cardinal" },
-  { name: "Taurus", icon: CircleDollarSign, dateRange: "Abr 20 - May 20", element: "Earth", polarity: "Feminine", modality: "Fixed" },
-  { name: "Gemini", icon: Users, dateRange: "May 21 - Jun 20", element: "Air", polarity: "Masculine", modality: "Mutable" },
-  { name: "Cancer", icon: Moon, dateRange: "Jun 21 - Jul 22", element: "Water", polarity: "Feminine", modality: "Cardinal" },
-  { name: "Leo", icon: Sun, dateRange: "Jul 23 - Ago 22", element: "Fire", polarity: "Masculine", modality: "Fixed" },
-  { name: "Virgo", icon: Leaf, dateRange: "Ago 23 - Sep 22", element: "Earth", polarity: "Feminine", modality: "Mutable" },
-  { name: "Libra", icon: Scale, dateRange: "Sep 23 - Oct 22", element: "Air", polarity: "Masculine", modality: "Cardinal" },
-  { name: "Scorpio", icon: Zap, dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
-  { name: "Sagittarius", icon: ArrowUpRight, dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
-  { name: "Capricorn", icon: Mountain, dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
+  { name: "Aries", customIconPath: "/custom_assets/aries_display.png", dateRange: "Mar 21 - Abr 19", element: "Fire", polarity: "Masculine", modality: "Cardinal" },
+  { name: "Taurus", customIconPath: "/custom_assets/taurus_display.png", dateRange: "Abr 20 - May 20", element: "Earth", polarity: "Feminine", modality: "Fixed" },
+  { name: "Gemini", customIconPath: "/custom_assets/gemini_display.png", dateRange: "May 21 - Jun 20", element: "Air", polarity: "Masculine", modality: "Mutable" },
+  { name: "Cancer", customIconPath: "/custom_assets/cancer_display.png", dateRange: "Jun 21 - Jul 22", element: "Water", polarity: "Feminine", modality: "Cardinal" },
+  { name: "Leo", customIconPath: "/custom_assets/leo_display.png", dateRange: "Jul 23 - Ago 22", element: "Fire", polarity: "Masculine", modality: "Fixed" },
+  { name: "Virgo", customIconPath: "/custom_assets/virgo_display.png", dateRange: "Ago 23 - Sep 22", element: "Earth", polarity: "Feminine", modality: "Mutable" },
+  { name: "Libra", customIconPath: "/custom_assets/libra_display.png", dateRange: "Sep 23 - Oct 22", element: "Air", polarity: "Masculine", modality: "Cardinal" },
+  { name: "Scorpio", customIconPath: "/custom_assets/scorpio_display.png", dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
+  { name: "Sagittarius", customIconPath: "/custom_assets/sagittarius_display.png", dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
+  { name: "Capricorn", customIconPath: "/custom_assets/capricorn_display.png", dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
   { name: "Aquarius", customIconPath: "/custom_assets/aquarius_display.png", dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
-  { name: "Pisces", icon: Fish, dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
+  { name: "Pisces", customIconPath: "/custom_assets/pisces_display.png", dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
 ];
 
 export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
@@ -308,7 +308,7 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
     score: 5
   },
   "Sagittarius-Pisces": {
-    report: "Sagitario, fuego mutable, y Piscis, agua mutable, son dos signos regidos tradicionalmente por Júpiter, lo que les da una base de idealismo y búsqueda de significado, pero sus elementos pueden chocar. Sagitario es extrovertido y directo, Piscis es introspectivo y sensible. Profesionalmente, pueden tener dificultades si no se comunican bien. La franqueza de Sagitario puede herir a Piscis, y la evasividad de Piscis puede frustrar a Sagitario. Sin embargo, la visión de Sagitario puede inspirar la creatividad de Piscis, y la compasión de Piscis puede suavizar a Sagitario.\n\nEn el amor, Sagitario y Piscis necesitan mucha comprensión y adaptación. Sagitario busca aventura y libertad, Piscis anhela una conexión emocional profunda y romántica. Sagitario puede encontrar a Piscis demasiado necesitado o sensible, y Piscis puede ver a Sagitario como descuidado o insensible. Sin embargo, ambos son compasivos en el fondo. Si Sagitario aprende a ser más tierno y considerado, y Piscis a dar más espacio y a comunicar sus necesidades directamente, pueden encontrar un punto de encuentro en su mutuo idealismo y generosidad.",
+    report: "Sagitario, fuego mutable, y Piscis, agua mutable, son dos signos regidos tradicionalmente por Júpiter, lo que les da una base de idealismo y búsqueda de significado, pero sus elementos pueden chocar. Sagitario es extrovertido y directo, Piscis es introspectivo y sensible. Profesionalmente, pueden tener dificultades si no se comunican bien. La franqueza de Sagitario puede herir a Piscis, y la evasividad de Piscis puede frustrar a Sagitario. Sin embargo, la visión de Sagitario puede inspirar la creatividad de Piscis, y la compasión de Piscis puede suavizar a Sagitario.\n\nEn el amor, Sagitario y Piscis necesitan mucha comprensión y adaptación. Sagitario busca aventura y libertad, Piscis anhela una conexión emocional profunda y romántica. Sagitario puede encontrar a Piscis demasiado necesitado o sensible, y Piscis puede ver a Sagitario como descuidado o insensible. Sin embargo, ambos son compasivos en el fondo. Si Sagitario aprende a ser más tierno y considerado, y Piscis a dar más espacio y a comunicar sus necesidades más directamente, pueden encontrar un punto de encuentro en su mutuo idealismo y generosidad.",
     score: 3
   },
   "Capricorn-Aquarius": {
@@ -504,13 +504,20 @@ export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale
     }
   } catch (error) {
     console.error("Error fetching lunar data from Open-Meteo:", error);
+    // Fallback to mock data if API call fails
+    const randomSignIndex = Math.floor(Math.random() * ZODIAC_SIGNS.length);
+    const randomPhaseKeys: MoonPhaseKey[] = ['new', 'firstQuarter', 'full', 'lastQuarter', 'waxingCrescent', 'waningGibbous'];
+    const randomPhaseKey = randomPhaseKeys[Math.floor(Math.random() * randomPhaseKeys.length)];
+    
     return {
-      phase: getPhaseNameFromKey('unknown', dictionary),
-      phaseKey: 'unknown',
-      illumination: 0,
-      currentMoonImage: getMoonImageUrl('unknown'),
+      phase: getPhaseNameFromKey(randomPhaseKey, dictionary),
+      phaseKey: randomPhaseKey,
+      illumination: Math.floor(Math.random() * 101),
+      currentMoonImage: getMoonImageUrl(randomPhaseKey),
+      moonInSign: dictionary[ZODIAC_SIGNS[randomSignIndex].name] || ZODIAC_SIGNS[randomSignIndex].name,
+      moonSignIcon: ZODIAC_SIGNS[randomSignIndex].name,
       upcomingPhases: getMockUpcomingPhases(dictionary),
-      error: (error as Error).message || "Failed to fetch lunar data",
+      error: (error as Error).message || "Failed to fetch lunar data, using mock.",
     };
   }
 };
@@ -530,25 +537,25 @@ export const WesternAstrologyIcon = StarIcon;
 export const ChineseAstrologyIcon = RabbitIcon;
 export const MayanAstrologyIcon = FeatherIcon;
 export const GalacticTonesIcon = Layers;
-export const CompatibilityIcon = Heart;
+export const CompatibilityIcon = HelpCircle; // Changed from Heart to HelpCircle based on current usage
 export const KinCalculatorIcon = CalculatorIcon;
 export const TarotPersonalityTestIcon = HelpCircle; 
 
 
 // --- Full data for Chinese Astrology ---
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
-  { name: "Rat", icon: Squirrel, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Agua", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
-  { name: "Ox", icon: VenetianMask, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Tierra", description: "Diligente, confiable, fuerte y determinado." },
-  { name: "Tiger", icon: PawPrint, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Madera", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
+  { name: "Rat", icon: SparklesIcon, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Agua", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
+  { name: "Ox", icon: SparklesIcon, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Tierra", description: "Diligente, confiable, fuerte y determinado." },
+  { name: "Tiger", icon: SparklesIcon, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Madera", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
   { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Madera", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
-  { name: "Dragon", icon: Crown, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Tierra", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
-  { name: "Snake", icon: Shell, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fuego", description: "Enigmática, inteligente, sabia e intuitiva." },
-  { name: "Horse", icon: Zap, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fuego", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
-  { name: "Goat", icon: Leaf, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Tierra", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
-  { name: "Monkey", icon: Bird, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
-  { name: "Rooster", icon: VenetianMask, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
-  { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Tierra", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
-  { name: "Pig", icon: Bone, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Agua", description: "Diligente, compasivo, generoso y de trato fácil." },
+  { name: "Dragon", icon: SparklesIcon, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Tierra", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
+  { name: "Snake", icon: SparklesIcon, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fuego", description: "Enigmática, inteligente, sabia e intuitiva." },
+  { name: "Horse", icon: SparklesIcon, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fuego", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
+  { name: "Goat", icon: SparklesIcon, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Tierra", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
+  { name: "Monkey", icon: SparklesIcon, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
+  { name: "Rooster", icon: SparklesIcon, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
+  { name: "Dog", icon: SparklesIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Tierra", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
+  { name: "Pig", icon: SparklesIcon, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Agua", description: "Diligente, compasivo, generoso y de trato fácil." },
 ];
 export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as string) as [string, ...string[]];
 
@@ -612,7 +619,7 @@ export const getChineseCompatibility = (animal1: ChineseAnimalSignName, animal2:
   };
 };
 
-const DefaultMayanIcon = TypeIcon;
+const DefaultMayanIcon = HelpCircle; // Using HelpCircle as a default icon
 
 export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
   { name: "Imix", icon: DefaultMayanIcon, description: "Dragón/Cocodrilo - Representa el mar primordial, la fuente de toda vida, abundancia y nuevos comienzos.", detailedInterpretation: "Imix es la energía de la iniciación pura, la nutrición y el sustento maternal. Te invita a confiar en la abundancia del universo y a atreverte a empezar de nuevo. Es un día para conectar con tus instintos más primarios y recordar que todo es posible.", associatedColor: "Rojo" },
@@ -694,5 +701,6 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
   "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"
 ];
 
-export { DogIcon as ActualDogIcon, TypeIcon as ActualTypeIcon, Briefcase as WorkIcon };
+export { Briefcase as WorkIcon }; // Exporting with a clearer name if used specifically for work category
+
 
