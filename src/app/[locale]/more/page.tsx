@@ -91,7 +91,7 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/mayan-horoscope", icon: MayanAstrologyIcon, titleKey: "MayanHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/palm-reading", icon: Hand, titleKey: "FeatureCards.palmReading", newBadge: true, isPlaceholder: true }, // Placeholder
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
-    { href: "/meditation", icon: Brain, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
+    { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
     { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: true },
     { href: "/fortune-cookie", icon: Cookie, titleKey: "MorePage.fortuneCookie", newBadge: false, isPlaceholder: true },
     { href: "/celebrity-compatibility", icon: CelebrityIcon, titleKey: "MorePage.celebrityCompatibility", newBadge: false, isPlaceholder: true },
@@ -192,3 +192,4 @@ export default async function MorePage({ params }: MorePageProps) {
     </main>
   );
 }
+
