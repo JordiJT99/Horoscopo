@@ -94,12 +94,15 @@ export default {
             height: '0',
           },
         },
-        // Removed pulseHeart keyframe
+        pulseHeart: { // Added pulseHeart animation
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.15)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        // Removed pulseHeart animation utility
+        pulseHeart: 'pulseHeart 2s infinite ease-in-out', // Added pulseHeart utility
       },
       // Removed backgroundImage radial-purple-gradient
     },

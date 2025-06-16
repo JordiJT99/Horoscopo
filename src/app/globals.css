@@ -135,4 +135,12 @@
   scrollbar-width: none;
 }
 
-/* Removed pulseHeart animation */
+/* Heartbeat animation */
+@keyframes pulseHeart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
