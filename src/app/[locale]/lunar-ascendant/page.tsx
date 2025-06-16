@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useState, useEffect, use, useMemo } from 'react';
@@ -53,9 +52,12 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
   useEffect(() => {
     if (!hasMounted || !dictionary) return;
     
-    // getCurrentLunarData is now synchronous and mock-based
-    const data = getCurrentLunarData(dictionary, locale);
-    setLunarData(data);
+    const fetchAndSetLunarData = async () => {
+      const data = await getCurrentLunarData(dictionary, locale);
+      setLunarData(data);
+    };
+    
+    fetchAndSetLunarData();
     
   }, [locale, hasMounted, dictionary]);
 
@@ -87,57 +89,68 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 px-3 py-4 sm:px-4">
-            {lunarData && hasMounted ? (
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
-                  <Image
-                    src={lunarData.currentMoonImage}
-                    alt={dictionary['LunarAscendantPage.currentMoonAlt'] || `Current moon phase: ${lunarData.phase}`}
-                    width={72}
-                    height={72}
-                    className="rounded-full bg-slate-700 object-cover"
-                    data-ai-hint="moon phase realistic"
-                  />
-                  <div className="flex-1">
-                    <p className="text-lg sm:text-xl font-semibold text-foreground">{lunarData.phase}</p>
-                    {lunarData.moonInSign && lunarData.moonSignIcon && (
-                      <p className="text-sm text-muted-foreground flex items-center">
-                        {(dictionary['LunarAscendantPage.moonInSignText'] || "in {signName}").replace('{signName}', lunarData.moonInSign)}
-                        <ZodiacSignIcon signName={lunarData.moonSignIcon} className="w-4 h-4 ml-1.5 text-primary" />
-                      </p>
-                    )}
-                    <p className="text-sm text-muted-foreground">
-                      {(dictionary['LunarAscendantPage.illuminationText'] || "Illumination: {percentage}%").replace('{percentage}', lunarData.illumination.toString())}
+            {hasMounted ? (
+              lunarData ? (
+                lunarData.error ? (
+                  <p className="text-center font-body text-destructive py-10">
+                    {dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}
+                    {`: ${lunarData.error}`}
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
+                      <Image
+                        src={lunarData.currentMoonImage}
+                        alt={dictionary['LunarAscendantPage.currentMoonAlt'] || `Current moon phase: ${lunarData.phase}`}
+                        width={72}
+                        height={72}
+                        className="rounded-full bg-slate-700 object-cover"
+                        data-ai-hint="moon phase realistic"
+                      />
+                      <div className="flex-1">
+                        <p className="text-lg sm:text-xl font-semibold text-foreground">{lunarData.phase}</p>
+                        {lunarData.moonInSign && lunarData.moonSignIcon && (
+                          <p className="text-sm text-muted-foreground flex items-center">
+                            {(dictionary['LunarAscendantPage.moonInSignText'] || "in {signName}").replace('{signName}', lunarData.moonInSign)}
+                            <ZodiacSignIcon signName={lunarData.moonSignIcon} className="w-4 h-4 ml-1.5 text-primary" />
+                          </p>
+                        )}
+                        <p className="text-sm text-muted-foreground">
+                          {typeof lunarData.illumination === 'number'
+                            ? (dictionary['LunarAscendantPage.illuminationText'] || "Illumination: {percentage}%").replace('{percentage}', lunarData.illumination.toString())
+                            : `${dictionary['LunarAscendantPage.illuminationText']?.split(':')[0] || "Illumination"}: ${dictionary['Data.notAvailable'] || 'N/A'}`}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-2 text-center">
+                      {lunarData.upcomingPhases.map((phase, index) => (
+                        <div key={index} className="flex flex-col items-center p-1.5 bg-secondary/20 rounded-md">
+                          <Image
+                            src={phase.iconUrl}
+                            alt={dictionary[phase.nameKey] || phase.nameKey.split('.').pop() || phase.phaseKey}
+                            width={36}
+                            height={36}
+                            className="rounded-full bg-slate-600 object-cover mb-1"
+                            data-ai-hint="moon phase icon"
+                          />
+                          <p className="text-xs text-muted-foreground">{phase.date}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground/80 text-center pt-2">
+                      {dictionary['LunarAscendantPage.easternTimeNote'] || "Nota: Todos los horarios ET"}
                     </p>
                   </div>
-                </div>
-
-                <div className="grid grid-cols-4 gap-2 text-center">
-                  {lunarData.upcomingPhases.map((phase, index) => (
-                    <div key={index} className="flex flex-col items-center p-1.5 bg-secondary/20 rounded-md">
-                      <Image
-                        src={phase.iconUrl}
-                        alt={dictionary[phase.nameKey] || phase.nameKey.split('.').pop() || phase.phaseKey}
-                        width={36}
-                        height={36}
-                        className="rounded-full bg-slate-600 object-cover mb-1"
-                        data-ai-hint="moon phase icon"
-                      />
-                      <p className="text-xs text-muted-foreground">{phase.date}</p>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground/80 text-center pt-2">
-                  {dictionary['LunarAscendantPage.easternTimeNote'] || "Nota: Todos los horarios ET"}
-                </p>
-              </div>
-            ) : hasMounted ? (
-              <p className="text-center font-body text-destructive py-10">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
+                )
+              ) : (
+                <p className="text-center font-body text-destructive py-10">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
+              )
             ) : (
               <div className="text-center py-10 h-[200px]">
-                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
-                 <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
-              </div> 
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
+                  <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
+              </div>
             )}
           </CardContent>
         </Card>
@@ -226,7 +239,6 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
 
-  // To prevent hydration mismatch for client-side only logic like `hasMounted`
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
@@ -244,4 +256,3 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
 
   return <LunarAscendantContent dictionary={dictionary} locale={params.locale} />;
 }
-

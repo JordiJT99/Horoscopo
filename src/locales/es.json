@@ -1,5 +1,4 @@
 
-
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -171,7 +170,7 @@
   "LunarAscendantPage.lunarCalendarTitle": "Calendario Lunar",
   "LunarAscendantPage.currentMoonAlt": "Fase lunar actual",
   "LunarAscendantPage.moonInSignText": "en {signName}",
-  "LunarAscendantPage.illuminationText": "Iluminación {percentage}%",
+  "LunarAscendantPage.illuminationText": "Iluminación: {percentage}%",
   "LunarAscendantPage.easternTimeNote": "Nota: Todos los horarios ET",
   "WeeklyHoroscopePage.title": "Horóscopo Semanal",
   "WeeklyHoroscopePage.subtitle": "Tu predicción astrológica para la semana. Selecciona tu signo.",
@@ -569,6 +568,6 @@
   "UpcomingPhase.sampleDate1": "Muestra 1",
   "UpcomingPhase.sampleDate2": "Muestra 2",
   "UpcomingPhase.sampleDate3": "Muestra 3",
-  "UpcomingPhase.sampleDate4": "Muestra 4"
+  "UpcomingPhase.sampleDate4": "Muestra 4",
+  "Data.notAvailable": "N/D"
 }
-
