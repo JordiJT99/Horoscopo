@@ -1,22 +1,22 @@
 
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
+import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame } from 'lucide-react';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
-  { name: "Aries", customIconPath: "/custom_assets/aries_display.png", dateRange: "Mar 21 - Abr 19", element: "Fire", polarity: "Masculine", modality: "Cardinal" },
-  { name: "Taurus", customIconPath: "/custom_assets/taurus_display.png", dateRange: "Abr 20 - May 20", element: "Earth", polarity: "Feminine", modality: "Fixed" },
-  { name: "Gemini", customIconPath: "/custom_assets/gemini_display.png", dateRange: "May 21 - Jun 20", element: "Air", polarity: "Masculine", modality: "Mutable" },
-  { name: "Cancer", customIconPath: "/custom_assets/cancer_display.png", dateRange: "Jun 21 - Jul 22", element: "Water", polarity: "Feminine", modality: "Cardinal" },
-  { name: "Leo", customIconPath: "/custom_assets/leo_display.png", dateRange: "Jul 23 - Ago 22", element: "Fire", polarity: "Masculine", modality: "Fixed" },
-  { name: "Virgo", customIconPath: "/custom_assets/virgo_display.png", dateRange: "Ago 23 - Sep 22", element: "Earth", polarity: "Feminine", modality: "Mutable" },
-  { name: "Libra", customIconPath: "/custom_assets/libra_display.png", dateRange: "Sep 23 - Oct 22", element: "Air", polarity: "Masculine", modality: "Cardinal" },
-  { name: "Scorpio", customIconPath: "/custom_assets/scorpio_display.png", dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
-  { name: "Sagittarius", customIconPath: "/custom_assets/sagittarius_display.png", dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
-  { name: "Capricorn", customIconPath: "/custom_assets/capricorn_display.png", dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
-  { name: "Aquarius", customIconPath: "/custom_assets/aquarius_display.png", dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
-  { name: "Pisces", customIconPath: "/custom_assets/pisces_display.png", dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
+  { name: "Aries", icon: Flame, dateRange: "Mar 21 - Abr 19", element: "Fire", polarity: "Masculine", modality: "Cardinal" },
+  { name: "Taurus", icon: Mountain, dateRange: "Abr 20 - May 20", element: "Earth", polarity: "Feminine", modality: "Fixed" },
+  { name: "Gemini", icon: Wind, dateRange: "May 21 - Jun 20", element: "Air", polarity: "Masculine", modality: "Mutable" },
+  { name: "Cancer", icon: Droplets, dateRange: "Jun 21 - Jul 22", element: "Water", polarity: "Feminine", modality: "Cardinal" },
+  { name: "Leo", icon: Sun, dateRange: "Jul 23 - Ago 22", element: "Fire", polarity: "Masculine", modality: "Fixed" },
+  { name: "Virgo", icon: Leaf, dateRange: "Ago 23 - Sep 22", element: "Earth", polarity: "Feminine", modality: "Mutable" },
+  { name: "Libra", icon: SparklesIcon, dateRange: "Sep 23 - Oct 22", element: "Air", polarity: "Masculine", modality: "Cardinal" },
+  { name: "Scorpio", icon: SparklesIcon, dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
+  { name: "Sagittarius", icon: SparklesIcon, dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
+  { name: "Capricorn", icon: Mountain, dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
+  { name: "Aquarius", icon: Waves, dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
+  { name: "Pisces", icon: Moon, dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
 ];
 
 export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
@@ -437,89 +437,20 @@ const getPhaseNameFromKey = (key: MoonPhaseKey, dictionary: Dictionary): string 
     return nameMap[key] || nameMap.unknown;
 };
 
-
-// --- Lunar Phase Logic (API integration) ---
-const mapOpenMeteoPhaseToApp = (value: number, dictionary: Dictionary): { phase: string, phaseKey: MoonPhaseKey, illumination: number } => {
-  let phaseKey: MoonPhaseKey;
-  let illumination: number;
-
-  // Mapping based on Open-Meteo documentation: Phase (0-1)
-  // 0.0-0.02 & 0.98-1.0: New Moon
-  // 0.02-0.23: Waxing Crescent
-  // 0.23-0.27: First Quarter
-  // 0.27-0.48: Waxing Gibbous
-  // 0.48-0.52: Full Moon
-  // 0.52-0.73: Waning Gibbous
-  // 0.73-0.77: Last Quarter
-  // 0.77-0.98: Waning Crescent
-
-  if (value >= 0 && value < 0.02) { phaseKey = 'new'; illumination = Math.round(value / 0.02 * 2); } // Approximation
-  else if (value < 0.23) { phaseKey = 'waxingCrescent'; illumination = Math.round(2 + (value - 0.02) / 0.21 * 48); } // 2 to 50
-  else if (value < 0.27) { phaseKey = 'firstQuarter'; illumination = 50; }
-  else if (value < 0.48) { phaseKey = 'waxingGibbous'; illumination = Math.round(50 + (value - 0.27) / 0.21 * 48); } // 50 to 98
-  else if (value < 0.52) { phaseKey = 'full'; illumination = 100; }
-  else if (value < 0.73) { phaseKey = 'waningGibbous'; illumination = Math.round(98 - (value - 0.52) / 0.21 * 48); } // 98 to 50
-  else if (value < 0.77) { phaseKey = 'lastQuarter'; illumination = 50; }
-  else if (value < 0.98) { phaseKey = 'waningCrescent'; illumination = Math.round(48 - (value - 0.77) / 0.21 * 48); } // 48 to 2
-  else if (value <= 1.0) { phaseKey = 'new'; illumination = Math.round(2 - (value - 0.98) / 0.02 * 2); }
-  else { phaseKey = 'unknown'; illumination = 0; }
-
+export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es'): LunarData => {
+  const randomSignIndex = Math.floor(Math.random() * ZODIAC_SIGNS.length);
+  const randomPhaseKeys: MoonPhaseKey[] = ['new', 'firstQuarter', 'full', 'lastQuarter', 'waxingCrescent', 'waningGibbous', 'waningCrescent', 'waxingGibbous'];
+  const randomPhaseKey = randomPhaseKeys[Math.floor(Math.random() * randomPhaseKeys.length)];
+  
   return {
-    phase: getPhaseNameFromKey(phaseKey, dictionary),
-    phaseKey,
-    illumination
+    phase: getPhaseNameFromKey(randomPhaseKey, dictionary),
+    phaseKey: randomPhaseKey,
+    illumination: Math.floor(Math.random() * 101),
+    currentMoonImage: getMoonImageUrl(randomPhaseKey),
+    moonInSign: dictionary[ZODIAC_SIGNS[randomSignIndex].name] || ZODIAC_SIGNS[randomSignIndex].name,
+    moonSignIcon: ZODIAC_SIGNS[randomSignIndex].name,
+    upcomingPhases: getMockUpcomingPhases(dictionary),
   };
-};
-
-export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
-  const today = new Date().toISOString().split('T')[0];
-  // Using Buenos Aires as default. Consider making this configurable or using geolocation if allowed.
-  const lat = -34.61;
-  const lon = -58.38;
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=moon_phase&timezone=GMT&start_date=${today}&end_date=${today}`;
-
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      console.error("Open-Meteo API request failed:", response.status, response.statusText);
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (data && data.daily && data.daily.moon_phase && data.daily.moon_phase.length > 0) {
-      const phaseValue = data.daily.moon_phase[0]; // Value between 0 and 1
-      const { phase, phaseKey, illumination } = mapOpenMeteoPhaseToApp(phaseValue, dictionary);
-      
-      return {
-        phase: phase,
-        phaseKey: phaseKey,
-        illumination: illumination,
-        currentMoonImage: getMoonImageUrl(phaseKey),
-        // moonInSign and moonSignIcon are not provided by this basic Open-Meteo endpoint
-        upcomingPhases: getMockUpcomingPhases(dictionary), // Keep mock upcoming phases for now
-      };
-    } else {
-      console.error("Open-Meteo API response format unexpected:", data);
-      throw new Error("Unexpected API response format");
-    }
-  } catch (error) {
-    console.error("Error fetching lunar data from Open-Meteo:", error);
-    // Fallback to mock data if API call fails
-    const randomSignIndex = Math.floor(Math.random() * ZODIAC_SIGNS.length);
-    const randomPhaseKeys: MoonPhaseKey[] = ['new', 'firstQuarter', 'full', 'lastQuarter', 'waxingCrescent', 'waningGibbous'];
-    const randomPhaseKey = randomPhaseKeys[Math.floor(Math.random() * randomPhaseKeys.length)];
-    
-    return {
-      phase: getPhaseNameFromKey(randomPhaseKey, dictionary),
-      phaseKey: randomPhaseKey,
-      illumination: Math.floor(Math.random() * 101),
-      currentMoonImage: getMoonImageUrl(randomPhaseKey),
-      moonInSign: dictionary[ZODIAC_SIGNS[randomSignIndex].name] || ZODIAC_SIGNS[randomSignIndex].name,
-      moonSignIcon: ZODIAC_SIGNS[randomSignIndex].name,
-      upcomingPhases: getMockUpcomingPhases(dictionary),
-      error: (error as Error).message || "Failed to fetch lunar data, using mock.",
-    };
-  }
 };
 
 
@@ -537,7 +468,7 @@ export const WesternAstrologyIcon = StarIcon;
 export const ChineseAstrologyIcon = RabbitIcon;
 export const MayanAstrologyIcon = FeatherIcon;
 export const GalacticTonesIcon = Layers;
-export const CompatibilityIcon = HelpCircle; // Changed from Heart to HelpCircle based on current usage
+export const CompatibilityIcon = HelpCircle; 
 export const KinCalculatorIcon = CalculatorIcon;
 export const TarotPersonalityTestIcon = HelpCircle; 
 
@@ -702,5 +633,6 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { Briefcase as WorkIcon }; // Exporting with a clearer name if used specifically for work category
+
 
 

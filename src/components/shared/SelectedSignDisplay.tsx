@@ -20,11 +20,12 @@ export default function SelectedSignDisplay({
   locale,
   selectedSign,
 }: SelectedSignDisplayProps) {
-  // Prioritize customIconPath if available (like for Aquarius .png)
-  // Otherwise, fall back to the {sign_name}_display.gif convention
+  // If customIconPath is defined, use it. Otherwise, use a generic placeholder.
   const imagePath = selectedSign.customIconPath 
     ? selectedSign.customIconPath 
-    : `/custom_assets/${selectedSign.name.toLowerCase()}_display.gif`;
+    : `https://placehold.co/144x144/7c3aed/ffffff.png?text=${selectedSign.name.substring(0,2).toUpperCase()}`;
+  
+  const isPlaceholder = !selectedSign.customIconPath;
 
   return (
     <div className="flex flex-col items-center text-center py-4">
@@ -36,16 +37,15 @@ export default function SelectedSignDisplay({
       </p>
       <div className="relative w-32 h-32 sm:w-36 sm:h-36 mb-4">
         <Image 
-            src={imagePath} // Use the determined imagePath
+            src={imagePath}
             alt={dictionary[selectedSign.name] || selectedSign.name} 
             width={144} 
             height={144} 
             className="rounded-full object-cover border-4 border-primary shadow-lg"
-            data-ai-hint={`${selectedSign.name.toLowerCase()} zodiac symbol illustration`} // General hint
-            // Fallback for missing images (optional, but good for robustness)
+            data-ai-hint={isPlaceholder ? "zodiac placeholder" : `${selectedSign.name.toLowerCase()} zodiac symbol illustration`}
             onError={(e) => { 
               const target = e.target as HTMLImageElement;
-              target.onerror = null; // Prevent infinite loop if placeholder also fails
+              target.onerror = null; 
               target.src = `https://placehold.co/144x144/7c3aed/ffffff.png?text=${selectedSign.name.substring(0,1)}`;
             }}
         />
