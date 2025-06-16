@@ -20,19 +20,7 @@ interface CompatibilityPageProps {
   };
 }
 
-// SVG Heart component for animation
-const AnimatedHeart = ({ filled, className }: { filled: boolean, className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    className={`w-6 h-6 sm:w-7 sm:h-7 transition-all duration-300 ${className} ${
-      filled ? 'fill-primary text-primary animate-pulseHeart' : 'fill-muted-foreground/20 text-muted-foreground/40'
-    }`}
-  >
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-  </svg>
-);
-
+// Removed AnimatedHeart SVG component
 
 function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [sign1, setSign1] = useState<ZodiacSignName>(ZODIAC_SIGNS[0].name);
@@ -76,39 +64,43 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
 
 
   const renderStars = (score: number) => {
+    // Reverted to HeartLucide
     return Array(5).fill(null).map((_, i) => (
-      <AnimatedHeart key={i} filled={i < score} />
+      <HeartLucide key={i} className={`w-5 h-5 sm:w-6 sm:h-6 ${i < score ? 'fill-destructive text-destructive' : 'text-muted-foreground'}`} />
     ));
   };
 
   return (
-    <main className="flex-grow container mx-auto px-4 py-8 md:py-12 bg-gradient-to-br from-purple-700 via-purple-900 to-indigo-950 min-h-screen">
+    // Reverted main background to default (no gradient)
+    <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
       <SectionTitle 
         title={dictionary['CompatibilityPage.title'] || "Zodiac Compatibility"}
         subtitle={dictionary['CompatibilityPage.subtitle'] || "Discover how well different zodiac signs match."}
         icon={HeartLucide} 
-        className="mb-10 sm:mb-12 font-headline text-foreground"
+        className="mb-10 sm:mb-12" // Removed specific text/font classes
       />
-      <Card className="w-full shadow-2xl max-w-2xl mx-auto rounded-3xl bg-white/10 backdrop-blur-lg border border-white/20">
+      {/* Reverted Card styling */}
+      <Card className="w-full shadow-xl max-w-2xl mx-auto rounded-lg"> {/* Reverted rounded-3xl */}
         <CardHeader className="text-center p-6 sm:p-8">
-          <CardTitle className="font-headline text-3xl sm:text-4xl flex items-center justify-center gap-2 sm:gap-3 text-primary">
+          <CardTitle className="text-3xl sm:text-4xl flex items-center justify-center gap-2 sm:gap-3"> {/* Removed text-primary, font-headline */}
             <Users className="w-8 h-8 sm:w-10 sm:h-10" /> {dictionary['CompatibilitySection.title'] || "Compatibility Check"}
           </CardTitle>
-          <CardDescription className="font-body text-foreground/80 mt-2 text-sm sm:text-base">
+          <CardDescription className="mt-2 text-sm sm:text-base"> {/* Removed text-foreground/80, font-body */}
             {dictionary['CompatibilitySection.description'] || "Select two signs to see their compatibility report."}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 sm:p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <div>
-              <label htmlFor="sign1-select" className="block text-sm font-medium text-foreground/70 mb-1.5 font-body">{dictionary['CompatibilitySection.selectFirstSign'] || "Select First Sign"}</label>
+              <label htmlFor="sign1-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectFirstSign'] || "Select First Sign"}</label>
+              {/* Reverted Select styling */}
               <Select value={sign1} onValueChange={(val) => setSign1(val as ZodiacSignName)}>
-                <SelectTrigger id="sign1-select" className="font-body rounded-xl bg-white/5 border-white/10 hover:border-white/30 focus:ring-primary focus:ring-2 text-foreground h-12 text-base">
+                <SelectTrigger id="sign1-select" className="h-12 text-base">
                   <SelectValue placeholder={dictionary['CompatibilitySection.selectSignPlaceholder'] || "Select Sign"} />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl bg-purple-800/90 backdrop-blur-md border-white/20 text-foreground font-body">
+                <SelectContent>
                   {ZODIAC_SIGNS.map((sign) => (
-                    <SelectItem key={sign.name} value={sign.name} className="hover:bg-primary/20 focus:bg-primary/30 py-2.5 text-base">
+                    <SelectItem key={sign.name} value={sign.name} className="py-2.5 text-base">
                       <div className="flex items-center">
                         <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
                         {dictionary[sign.name] || sign.name}
@@ -119,14 +111,14 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
               </Select>
             </div>
             <div>
-              <label htmlFor="sign2-select" className="block text-sm font-medium text-foreground/70 mb-1.5 font-body">{dictionary['CompatibilitySection.selectSecondSign'] || "Select Second Sign"}</label>
+              <label htmlFor="sign2-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectSecondSign'] || "Select Second Sign"}</label>
               <Select value={sign2} onValueChange={(val) => setSign2(val as ZodiacSignName)}>
-                <SelectTrigger id="sign2-select" className="font-body rounded-xl bg-white/5 border-white/10 hover:border-white/30 focus:ring-primary focus:ring-2 text-foreground h-12 text-base">
+                <SelectTrigger id="sign2-select" className="h-12 text-base">
                   <SelectValue placeholder={dictionary['CompatibilitySection.selectSignPlaceholder'] || "Select Sign"} />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl bg-purple-800/90 backdrop-blur-md border-white/20 text-foreground font-body">
+                <SelectContent>
                   {ZODIAC_SIGNS.map((sign) => (
-                    <SelectItem key={sign.name} value={sign.name} disabled={sign.name === sign1} className="hover:bg-primary/20 focus:bg-primary/30 py-2.5 text-base">
+                    <SelectItem key={sign.name} value={sign.name} disabled={sign.name === sign1} className="py-2.5 text-base">
                        <div className="flex items-center">
                         <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
                         {dictionary[sign.name] || sign.name}
@@ -141,18 +133,19 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
           {isLoading && (
               <div className="text-center p-8 min-h-[200px] flex flex-col justify-center items-center">
                   <Loader2 className="h-12 w-12 sm:h-14 sm:h-14 text-primary animate-spin" />
-                  <p className="mt-4 font-body text-foreground/70 text-sm sm:text-base">{dictionary['CompatibilitySection.checkingCosmicConnection'] || "Checking cosmic connection..."}</p>
+                  <p className="mt-4 text-muted-foreground text-sm sm:text-base">{dictionary['CompatibilitySection.checkingCosmicConnection'] || "Checking cosmic connection..."}</p>
               </div>
           )}
 
           {!isLoading && compatibility && (
-            <div className="mt-6 p-4 sm:p-6 bg-white/5 backdrop-blur-sm rounded-2xl shadow-lg text-center border border-white/10 min-h-[200px]">
+            // Reverted result card styling
+            <div className="mt-6 p-4 sm:p-6 bg-secondary/30 rounded-lg shadow-md text-center min-h-[200px]"> 
               <div className="flex justify-center items-center gap-4 mb-4">
                 <ZodiacSignIcon signName={compatibility.sign1} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
                 <HeartLucide className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
                 <ZodiacSignIcon signName={compatibility.sign2} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-headline font-semibold text-primary">
+              <h3 className="text-xl sm:text-2xl font-semibold text-primary"> {/* Removed font-headline */}
                 {(dictionary['CompatibilitySection.reportTitle'] || "{sign1} & {sign2}")
                   .replace('{sign1}', dictionary[compatibility.sign1] || compatibility.sign1)
                   .replace('{sign2}', dictionary[compatibility.sign2] || compatibility.sign2)}
@@ -162,15 +155,16 @@ function CompatibilityContent({ dictionary, locale }: { dictionary: Dictionary, 
                     {renderStars(compatibility.score)}
                 </div>
               )}
-              <p className="font-body text-foreground/90 leading-relaxed whitespace-pre-line text-sm sm:text-base">{compatibility.report}</p>
+              <p className="leading-relaxed whitespace-pre-line text-sm sm:text-base">{compatibility.report}</p> {/* Removed font-body, text-foreground/90 */}
             </div>
           )}
           {!isLoading && !compatibility && sign1 && sign2 && (
-            <p className="text-center font-body text-foreground/70 mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsPrompt'] || "Select two signs to view their compatibility report."}</p>
+            <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsPrompt'] || "Select two signs to view their compatibility report."}</p>
           )}
           <Button 
             onClick={handleFetchCompatibility} 
-            className="w-full mt-8 font-body bg-primary hover:bg-primary/80 text-primary-foreground rounded-xl py-3 text-base sm:text-lg shadow-lg"
+            // Reverted button styling
+            className="w-full mt-8 py-3 text-base sm:text-lg"
             disabled={isLoading}
           >
             {isLoading ? (dictionary['CompatibilitySection.loading'] || "Loading...") : (dictionary['CompatibilitySection.refreshReportButton'] || "Refresh Report")}
@@ -189,13 +183,13 @@ export default function CompatibilityPage({ params: paramsPromise }: Compatibili
 
   if (Object.keys(dictionary).length === 0) {
     return (
-      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center bg-gradient-to-br from-purple-700 via-purple-900 to-indigo-950 min-h-screen">
+      // Reverted main background
+      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
         <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
-        <p className="mt-4 font-body text-foreground/80">Loading dictionary...</p>
+        <p className="mt-4">Loading dictionary...</p> {/* Removed font-body, text-foreground/80 */}
       </div>
     );
   }
 
   return <CompatibilityContent dictionary={dictionary} locale={params.locale} />;
 }
-

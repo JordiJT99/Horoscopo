@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -10,8 +11,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Poppins', 'sans-serif'],
-        headline: ['Playfair Display', 'serif'],
+        // Reverted to Alegreya as per PRD and previous theme
+        body: ['Alegreya', 'sans-serif'], 
+        headline: ['Alegreya', 'serif'],
         code: ['monospace'],
       },
       colors: {
@@ -55,22 +57,25 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
+        // These specific theme vars can remain if globals.css defines them
+        'top-bar-background': 'hsl(var(--top-bar-background))',
+        'top-bar-foreground': 'hsl(var(--top-bar-foreground))',
+        'bottom-nav-background': 'hsl(var(--bottom-nav-background))',
+        'bottom-nav-foreground': 'hsl(var(--bottom-nav-foreground))',
+        'bottom-nav-active-foreground': 'hsl(var(--bottom-nav-active-foreground))',
+        'sign-selector-active-border': 'hsl(var(--sign-selector-active-border))',
+        'feature-card-background': 'hsl(var(--feature-card-background))',
+        'feature-card-foreground': 'hsl(var(--feature-card-foreground))',
+        'horoscope-summary-title': 'hsl(var(--horoscope-summary-title))',
+        'horoscope-category-text': 'hsl(var(--horoscope-category-text))',
+        'horoscope-progress-background': 'hsl(var(--horoscope-progress-background))',
+        'horoscope-progress-indicator': 'hsl(var(--horoscope-progress-indicator))',
       },
       borderRadius: {
-        lg: 'var(--radius)',
+        lg: 'var(--radius)', // Default is 0.5rem
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        '3xl': '1.5rem', // Added for new card style
+        // Removed '3xl'
       },
       keyframes: {
         'accordion-down': {
@@ -89,19 +94,14 @@ export default {
             height: '0',
           },
         },
-        pulseHeart: { // Added new animation
-          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
-          '50%': { transform: 'scale(1.15)', opacity: '0.8' },
-        },
+        // Removed pulseHeart keyframe
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        pulseHeart: 'pulseHeart 1.8s ease-in-out infinite', // Added new animation utility
+        // Removed pulseHeart animation utility
       },
-      backgroundImage: { // Added for radial background
-        'radial-purple-gradient': 'radial-gradient(circle at top center, hsl(var(--primary) / 0.5), hsl(var(--background)))',
-      }
+      // Removed backgroundImage radial-purple-gradient
     },
   },
   plugins: [require('tailwindcss-animate')],

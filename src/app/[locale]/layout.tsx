@@ -9,7 +9,7 @@ import BottomNavigationBar from '@/components/shared/BottomNavigationBar';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { useEffect, useState, use, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import '../globals.css'; // globals.css now imports fonts
+import '../globals.css'; // globals.css now imports Alegreya font
 
 interface LocaleLayoutParams {
   locale: Locale;
@@ -117,7 +117,7 @@ export default function LocaleLayout({
       <head>
          {/* Font links are now in globals.css via @import */}
       </head>
-      <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark"> {/* Ensure font-body is applied */}
+      <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark"> {/* Ensure font-body is applied which will be Alegreya */}
         <AuthProvider>
           <AppStructure locale={currentLocale} dictionary={dictionary}>
             {children}
