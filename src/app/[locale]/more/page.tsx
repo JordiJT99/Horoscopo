@@ -7,8 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, ArrowUpRight as AscendantIcon,
-  Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages
+  Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
+  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Users as CompatibilityIcon, Workflow, Hand, Sparkles, BookOpen, MessageSquare, Heart
 } from 'lucide-react';
+import { MayanAstrologyIcon } from '@/lib/constants';
 
 interface MorePageProps {
   params: { locale: Locale };
@@ -21,7 +23,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder 
     <>
       <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary mb-1.5 sm:mb-2" />
       <CardTitle className="text-xs sm:text-sm font-headline text-foreground leading-tight">{title}</CardTitle>
-      {newBadge && <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">NUEVO</Badge>}
+      {newBadge && <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{dictionary['MorePage.newBadge'] || 'NUEVO'}</Badge>}
     </>
   );
 
@@ -41,6 +43,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder 
     </Link>
   );
 };
+let dictionary: any = {}; // Placeholder for dictionary object
 
 // Helper component for account/settings items
 const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:string; icon: React.ElementType; title: string; locale: Locale, isPlaceholder?: boolean }) => {
@@ -74,18 +77,25 @@ const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:
 
 
 export default async function MorePage({ params }: MorePageProps) {
-  const dictionary = await getDictionary(params.locale);
+  dictionary = await getDictionary(params.locale);
 
   const allFeatures = [
-    { href: "/premium", icon: Award, titleKey: "MorePage.premi", newBadge: false, isPlaceholder: true },
+    { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/tarot-personality-test", icon: Sparkles, titleKey: "TarotPersonalityPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/compatibility", icon: CompatibilityIcon, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/lucky-numbers", icon: LuckyNumbersIcon, titleKey: "LuckyNumbersPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/lunar-ascendant", icon: LunarIcon, titleKey: "LunarAscendantPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/chinese-horoscope", icon: ChineseIcon, titleKey: "ChineseHoroscopePage.title", newBadge: false, isPlaceholder: false },
+    { href: "/mayan-horoscope", icon: MayanAstrologyIcon, titleKey: "MayanHoroscopePage.title", newBadge: false, isPlaceholder: false },
+    { href: "/palm-reading", icon: Hand, titleKey: "FeatureCards.palmReading", newBadge: true, isPlaceholder: true }, // Placeholder
+    { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
+    { href: "/meditation", icon: Brain, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
+    { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: true },
     { href: "/fortune-cookie", icon: Cookie, titleKey: "MorePage.fortuneCookie", newBadge: false, isPlaceholder: true },
     { href: "/celebrity-compatibility", icon: CelebrityIcon, titleKey: "MorePage.celebrityCompatibility", newBadge: false, isPlaceholder: true },
-    { href: "/chinese-horoscope", icon: ChineseIcon, titleKey: "MorePage.chineseHoroscope", newBadge: false, isPlaceholder: false },
     { href: "/druid-horoscope", icon: DruidIcon, titleKey: "MorePage.druidHoroscope", newBadge: false, isPlaceholder: true },
-    { href: "/lunar-ascendant", icon: AscendantIcon, titleKey: "MorePage.risingSign", newBadge: false, isPlaceholder: false },
-    { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
-    { href: "/dream-reading", icon: DreamIcon, titleKey: "MorePage.dreamInterpretation", newBadge: false, isPlaceholder: false },
-    { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
   ];
 
   const accountItems = [
@@ -111,7 +121,7 @@ export default async function MorePage({ params }: MorePageProps) {
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
           {dictionary['MorePage.allFunctionsTitle'] || "Todas las Funciones"}
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-3.5">
           {allFeatures.map(feature => (
             <FeatureCard
               key={feature.href}
@@ -182,4 +192,3 @@ export default async function MorePage({ params }: MorePageProps) {
     </main>
   );
 }
-
