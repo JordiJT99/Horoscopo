@@ -4,8 +4,9 @@
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
-import { Heart, Hand, ChevronRight } from 'lucide-react'; // Using Hand for "Lectura de Manos"
+import { Heart, Hand, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface FeatureLinkCardsProps {
   dictionary: Dictionary;
@@ -26,16 +27,22 @@ const FeatureCard = ({
   dictionary: Dictionary;
 }) => {
   return (
-    <Link href={`/${locale}${href}`} passHref>
-      <Card className="bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-md hover:opacity-90 transition-opacity">
-        <CardContent className="flex items-center justify-between p-0">
-          <div className="flex items-center gap-3">
-            <Icon className="w-7 h-7" />
-            <span className="font-semibold font-body text-sm">{title}</span>
-          </div>
-          <ChevronRight className="w-5 h-5 opacity-70" />
-        </CardContent>
-      </Card>
+    <Link href={`/${locale}${href}`} passHref legacyBehavior>
+      <motion.a
+        className="block"
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      >
+        <Card className="bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-md transition-opacity">
+          <CardContent className="flex items-center justify-between p-0">
+            <div className="flex items-center gap-3">
+              <Icon className="w-7 h-7" />
+              <span className="font-semibold font-body text-sm">{title}</span>
+            </div>
+            <ChevronRight className="w-5 h-5 opacity-70" />
+          </CardContent>
+        </Card>
+      </motion.a>
     </Link>
   );
 };
@@ -45,17 +52,22 @@ export default function FeatureLinkCards({ dictionary, locale }: FeatureLinkCard
     {
       titleKey: "FeatureCards.compatibilityReading",
       icon: Heart,
-      href: "/compatibility", // Ensure this page exists or is a placeholder
+      href: "/compatibility",
     },
     {
       titleKey: "FeatureCards.palmReading",
-      icon: Hand, // Using Hand icon
+      icon: Hand,
       href: "/palm-reading", // Placeholder page
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:gap-4 my-4">
+    <motion.div 
+      className="grid grid-cols-2 gap-3 sm:gap-4 my-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
       {features.map((feature) => (
         <FeatureCard
           key={feature.titleKey}
@@ -66,6 +78,6 @@ export default function FeatureLinkCards({ dictionary, locale }: FeatureLinkCard
           dictionary={dictionary}
         />
       ))}
-    </div>
+    </motion.div>
   );
 }

@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, SelectedProfileType, ZodiacSignName, HoroscopeFlowOutput } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
+import { motion } from 'framer-motion';
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
 import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
@@ -17,13 +18,16 @@ import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesS
 import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard';
 import PromotionCard from '@/components/shared/PromotionCard';
 import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays } from 'lucide-react';
+import UserZodiacDetailCard from '../shared/UserZodiacDetailCard'; // Ajustado para la nueva ubicación
+import ProfileSelector from '../shared/ProfileSelector'; // Ajustado para la nueva ubicación
+
 
 interface AstroVibesPageContentProps {
   dictionary: Dictionary;
   locale: Locale;
-  displayPeriod: 'daily' | 'weekly' | 'monthly';
-  targetDate?: string;
-  activeHoroscopePeriodForTitles: HoroscopePeriod;
+  displayPeriod: 'daily' | 'weekly' | 'monthly'; // determines which data (daily, weekly, monthly) to fetch and show in detailed cards
+  targetDate?: string; // YYYY-MM-DD format, optional, for daily period (e.g. yesterday)
+  activeHoroscopePeriodForTitles: HoroscopePeriod; // determines titles for summary and detailed cards (today, tomorrow, yesterday, weekly, monthly)
 }
 
 export default function AstroVibesHomePageContent({
@@ -40,20 +44,26 @@ export default function AstroVibesHomePageContent({
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
+  
+  const [selectedProfile, setSelectedProfile] = useState<SelectedProfileType>('generic');
 
-  const [selectedDisplaySign, setSelectedDisplaySign] = useState<ZodiacSign>(() => {
+  const [selectedDisplaySignName, setSelectedDisplaySignName] = useState<ZodiacSignName>(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
-    const validSignFromUrl = ZODIAC_SIGNS.find(s => s.name === signFromUrl);
-    if (validSignFromUrl) {
-      return validSignFromUrl;
+    if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
+      return signFromUrl;
     }
-    // userSunSign will be determined in useEffect after authLoading
-    return ZODIAC_SIGNS.find(s => s.name === "Capricorn")!;
+    // User sun sign will be determined later
+    return "Capricorn"; // Default fallback
   });
+
+  const selectedDisplaySign = useMemo(() => {
+    return ZODIAC_SIGNS.find(s => s.name === selectedDisplaySignName) || ZODIAC_SIGNS.find(s => s.name === "Capricorn")!;
+  }, [selectedDisplaySignName]);
+
 
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
   const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
-  const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true); // Start with loading true
+  const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true);
 
   useEffect(() => {
     if (user?.uid) {
@@ -61,66 +71,88 @@ export default function AstroVibesHomePageContent({
       if (storedData) {
         const parsedData = JSON.parse(storedData) as OnboardingFormData;
         if (parsedData.dateOfBirth) {
-          parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
+          parsedData.dateOfBirth = new Date(parsedData.dateOfBirth); // Ensure it's a Date object
         }
         setOnboardingData(parsedData);
         const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
         setUserSunSign(sunSign);
+        if (sunSign && !searchParams.get('sign')) { // If no sign in URL, default to user's sign
+           setSelectedDisplaySignName(sunSign.name);
+           setSelectedProfile('user');
+        } else {
+          // If there's a sign in URL, or user has no sun sign, keep current logic
+          const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
+          if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
+            setSelectedDisplaySignName(signFromUrl);
+            setSelectedProfile('generic'); // Or 'user' if signFromUrl matches userSunSign
+          } else {
+            setSelectedDisplaySignName(sunSign?.name || "Capricorn");
+            setSelectedProfile(sunSign ? 'user' : 'generic');
+          }
+        }
       } else {
-        setUserSunSign(null); // No onboarding data
+        setUserSunSign(null);
+        const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
+        setSelectedDisplaySignName(signFromUrl || "Capricorn");
+        setSelectedProfile('generic');
       }
-    } else {
+    } else { // No user
       setOnboardingData(null);
       setUserSunSign(null);
+      const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
+      setSelectedDisplaySignName(signFromUrl || "Capricorn");
+      setSelectedProfile('generic');
     }
-  }, [user]);
-
-  // Effect to initialize or update selectedDisplaySign based on URL or userSunSign
-  useEffect(() => {
-    if (authLoading) return; // Wait for auth state to settle
-
-    const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
-    const validSignFromUrl = ZODIAC_SIGNS.find(s => s.name === signFromUrl);
-
-    let newSign = selectedDisplaySign; // Keep current as default
-
-    if (validSignFromUrl) {
-      newSign = validSignFromUrl;
-    } else if (userSunSign) { // If no valid sign from URL, try user's sign
-      newSign = userSunSign;
-    } else { // Fallback if no URL sign and no user sign
-      newSign = ZODIAC_SIGNS.find(s => s.name === "Capricorn")!;
-    }
-    
-    if (selectedDisplaySign.name !== newSign.name) {
-      setSelectedDisplaySign(newSign);
-    }
-    // This effect should run when searchParams or userSunSign changes, or authLoading status changes
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, userSunSign, authLoading]);
+  }, [user, authLoading]); // Removed searchParams from here to avoid loops, handled in its own effect
+
+  useEffect(() => {
+    const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
+    if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
+      if (signFromUrl !== selectedDisplaySignName) {
+        setSelectedDisplaySignName(signFromUrl);
+        // Determine if this sign matches the user's sign to set profile type
+        if (userSunSign && signFromUrl === userSunSign.name) {
+          setSelectedProfile('user');
+        } else {
+          setSelectedProfile('generic');
+        }
+      }
+    } else if (!userSunSign && !signFromUrl) { // No user sign and no URL sign, default to Capricorn generic
+        if (selectedDisplaySignName !== "Capricorn") {
+          setSelectedDisplaySignName("Capricorn");
+          setSelectedProfile('generic');
+        }
+    } else if (userSunSign && !signFromUrl) { // User sign exists but no URL sign, set to user's sign
+        if(selectedDisplaySignName !== userSunSign.name) {
+          setSelectedDisplaySignName(userSunSign.name);
+          setSelectedProfile('user');
+        }
+    }
+    // This effect specifically handles URL changes for the sign
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, userSunSign, selectedDisplaySignName]);
+
 
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySign || authLoading) {
-        // If auth is still loading, we might not have the correct userSunSign yet,
-        // so wait before fetching to avoid fetching for Capricorn then immediately for user's sign.
-        // However, if selectedDisplaySign is already set (e.g., from URL), we can proceed.
+      if (!selectedDisplaySignName || authLoading) {
         if (authLoading && !searchParams.get('sign')) {
-            setIsHoroscopeLoading(true); // Ensure loading is true if we are waiting for auth
-            return;
+          setIsHoroscopeLoading(true);
+          return;
         }
       }
       setIsHoroscopeLoading(true);
       try {
         const input: HoroscopeFlowInput = {
-          sign: selectedDisplaySign.name,
+          sign: selectedDisplaySignName,
           locale,
-          targetDate: targetDate,
+          targetDate: targetDate, // Used for 'daily' when it's 'yesterday'
         };
         const result = await getHoroscopeFlow(input);
         setFullHoroscopeData(result);
-        
+
         if (displayPeriod === 'daily') {
           setCurrentDisplayHoroscope(result.daily);
         } else if (displayPeriod === 'weekly') {
@@ -139,36 +171,61 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySign, locale, authLoading, displayPeriod, targetDate, searchParams]);
+  }, [selectedDisplaySignName, locale, authLoading, displayPeriod, targetDate, searchParams]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
-    const currentSignName = selectedDisplaySign.name;
+    const currentSignParam = selectedDisplaySignName;
     let newPath = '';
-  
+
     if (tab === 'yesterday') {
-      newPath = `/${locale}/yesterday-horoscope?sign=${currentSignName}`;
+      newPath = `/${locale}/yesterday-horoscope?sign=${currentSignParam}`;
     } else if (tab === 'weekly') {
-      newPath = `/${locale}/weekly-horoscope?sign=${currentSignName}`;
+      newPath = `/${locale}/weekly-horoscope?sign=${currentSignParam}`;
     } else if (tab === 'monthly') {
-      newPath = `/${locale}/monthly-horoscope?sign=${currentSignName}`;
+      newPath = `/${locale}/monthly-horoscope?sign=${currentSignParam}`;
     } else { // today or tomorrow
-      newPath = `/${locale}?sign=${currentSignName}`;
+      newPath = `/${locale}?sign=${currentSignParam}`;
       if (tab === 'tomorrow') {
-        newPath += '&period=tomorrow'; // 'period' for tomorrow is a separate param for page.tsx logic
+        newPath += '&period=tomorrow';
       }
     }
     router.push(newPath, { scroll: false });
   };
-  
 
-  const handleSignSelected = (sign: ZodiacSign) => {
-    setSelectedDisplaySign(sign);
-    // Preserve existing query params like 'period' if navigating on the same base path (e.g. main page /)
+  const handleSignSelectedFromScroll = (sign: ZodiacSign) => {
+    setSelectedDisplaySignName(sign.name);
+    // If the selected sign is the user's sun sign, switch to user profile
+    if (userSunSign && sign.name === userSunSign.name) {
+      setSelectedProfile('user');
+    } else {
+      setSelectedProfile('generic');
+    }
+
     const currentQueryParams = new URLSearchParams(searchParams.toString());
     currentQueryParams.set('sign', sign.name);
     const newPath = `${pathname}?${currentQueryParams.toString()}`;
     router.push(newPath, { scroll: false });
+  };
+  
+  const handleProfileTypeSelected = (profileType: SelectedProfileType) => {
+    setSelectedProfile(profileType);
+    if (profileType === 'user' && userSunSign) {
+        if (selectedDisplaySignName !== userSunSign.name) {
+             setSelectedDisplaySignName(userSunSign.name);
+             // Update URL if sign changes due to profile type switch
+             const currentQueryParams = new URLSearchParams(searchParams.toString());
+             currentQueryParams.set('sign', userSunSign.name);
+             const newPath = `${pathname}?${currentQueryParams.toString()}`;
+             router.push(newPath, { scroll: false });
+        }
+    } else if (profileType === 'generic' && selectedDisplaySignName === userSunSign?.name) {
+        // If switching to generic and current sign is user's, pick a default (e.g. first in list or Capricorn)
+        // Or let it stay if that's desired behavior. For now, let it stay on user's sign but under 'generic' profile context.
+        // If you want it to change to a non-user sign:
+        // const defaultGenericSign = ZODIAC_SIGNS.find(s => s.name !== userSunSign?.name)?.name || "Capricorn";
+        // setSelectedDisplaySignName(defaultGenericSign);
+    }
   };
 
 
@@ -190,29 +247,28 @@ export default function AstroVibesHomePageContent({
 
   switch (activeHoroscopePeriodForTitles) {
     case 'today':
-      pageTitleKey = "HomePage.yourHoroscopeToday";
+      pageTitleKey = "HomePage.horoscopeTitleToday";
       summaryTitleKey = "HoroscopeSummary.essentialToday";
       break;
     case 'tomorrow':
-      pageTitleKey = "HomePage.yourHoroscopeTomorrow";
+      pageTitleKey = "HomePage.horoscopeTitleTomorrow";
       summaryTitleKey = "HoroscopeSummary.essentialTomorrow";
       break;
     case 'yesterday':
-      pageTitleKey = "HomePage.yourHoroscopeYesterday";
+      pageTitleKey = "HomePage.horoscopeTitleYesterday";
       summaryTitleKey = "HoroscopeSummary.essentialYesterday";
       break;
     case 'weekly':
-      pageTitleKey = "WeeklyHoroscopePage.title";
+      pageTitleKey = "HomePage.horoscopeTitleWeekly";
       summaryTitleKey = "HoroscopeSummary.essentialWeekly";
       break;
     case 'monthly':
-      pageTitleKey = "MonthlyHoroscopePage.title";
+      pageTitleKey = "HomePage.horoscopeTitleMonthly";
       summaryTitleKey = "HoroscopeSummary.essentialMonthly";
       break;
   }
 
-
-  if (authLoading && !user && !searchParams.get('sign')) { // Show loader if not logged in and no sign from URL yet
+  if (authLoading && !user && !searchParams.get('sign')) {
     return (
       <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-var(--top-bar-height)-var(--bottom-nav-height))]">
         <ContentSparklesIcon className="h-12 w-12 animate-pulse text-primary mx-auto" />
@@ -228,35 +284,71 @@ export default function AstroVibesHomePageContent({
           dictionary={dictionary}
           locale={locale}
           signs={ZODIAC_SIGNS}
-          selectedSignName={selectedDisplaySign.name}
-          onSignSelect={handleSignSelected}
+          selectedSignName={selectedDisplaySignName}
+          onSignSelect={handleSignSelectedFromScroll}
           user={user}
         />
 
-        <SelectedSignDisplay
-          dictionary={dictionary}
-          locale={locale}
-          selectedSign={selectedDisplaySign}
-        />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+          <SelectedSignDisplay
+            dictionary={dictionary}
+            locale={locale}
+            selectedSign={selectedDisplaySign}
+          />
+        </motion.div>
 
         <SubHeaderTabs
           dictionary={dictionary}
           activeTab={activeHoroscopePeriodForTitles}
           onTabChange={handleSubHeaderTabSelect}
         />
+        
+        {/* This ProfileSelector and UserZodiacDetailCard block is specific to the old design.
+            The new design integrates profile/sign display differently.
+            Keeping UserZodiacDetailCard for potential use if 'More Details' button is implemented
+            to show a modal or dedicated view with it.
+        */}
+        {/* <ProfileSelector 
+            dictionary={dictionary} 
+            locale={locale}
+            selectedProfile={selectedProfile}
+            setSelectedProfile={handleProfileTypeSelected}
+            user={user}
+            onboardingData={onboardingData}
+        />
+        <UserZodiacDetailCard 
+            dictionary={dictionary} 
+            locale={locale}
+            selectedProfile={selectedProfile}
+            userSunSign={userSunSign}
+            onboardingData={onboardingData}
+            user={user}
+            authLoading={authLoading}
+            activeHoroscopePeriod={displayPeriod}
+        /> */}
 
         <FeatureLinkCards dictionary={dictionary} locale={locale} />
 
-        <HoroscopeCategoriesSummary
-          dictionary={dictionary}
-          titleKey={summaryTitleKey}
-          subtitleKey="HoroscopeSummary.relations" 
-          categories={summaryCategories}
-          isLoading={isHoroscopeLoading}
-          horoscopeDetail={currentDisplayHoroscope}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <HoroscopeCategoriesSummary
+            dictionary={dictionary}
+            titleKey={summaryTitleKey}
+            subtitleKey="HoroscopeSummary.relations"
+            categories={summaryCategories}
+            isLoading={isHoroscopeLoading}
+            horoscopeDetail={currentDisplayHoroscope}
+          />
+        </motion.div>
 
-        <div>
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+        >
           <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
             <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
               <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
@@ -264,25 +356,37 @@ export default function AstroVibesHomePageContent({
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
-            {detailedHoroscopeCategories.map(cat => (
-              <HoroscopeCategoryCard
+            {detailedHoroscopeCategories.map((cat, index) => (
+              <motion.div
                 key={cat.id}
-                dictionary={dictionary}
-                titleKey={cat.titleKey}
-                icon={cat.icon}
-                content={cat.content}
-                isLoading={isHoroscopeLoading}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+              >
+                <HoroscopeCategoryCard
+                  dictionary={dictionary}
+                  titleKey={cat.titleKey}
+                  icon={cat.icon}
+                  content={cat.content}
+                  isLoading={isHoroscopeLoading}
+                />
+              </motion.div>
             ))}
             {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
-              <HoroscopeCategoryCard
+               <motion.div
                 key={`skeleton-${index}`}
-                dictionary={dictionary}
-                titleKey="Loading..."
-                icon={ContentSparklesIcon}
-                content=""
-                isLoading={true}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+              >
+                <HoroscopeCategoryCard
+                  dictionary={dictionary}
+                  titleKey="Loading..."
+                  icon={ContentSparklesIcon}
+                  content=""
+                  isLoading={true}
+                />
+              </motion.div>
             ))}
             {!isHoroscopeLoading && !currentDisplayHoroscope && (
                <div className="sm:col-span-2 text-center py-10">
@@ -290,11 +394,16 @@ export default function AstroVibesHomePageContent({
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
 
-        <PromotionCard dictionary={dictionary} />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
+        >
+          <PromotionCard dictionary={dictionary} />
+        </motion.div>
       </main>
     </div>
   );
 }
-
