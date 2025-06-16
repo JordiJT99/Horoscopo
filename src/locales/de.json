@@ -539,7 +539,7 @@
   "OnboardingPage.loadingOnboarding": "Lade Onboarding...",
   "MorePage.allFunctionsTitle": "Alle Funktionen",
   "MorePage.accountTitle": "Konto",
-  "MorePage.settingsTitle": "Einstellungen",
+  "MorePage.settingsTitle": "Ajustes",
   "MorePage.premium": "Premium",
   "MorePage.fortuneCookie": "Glückskeks",
   "MorePage.celebrityCompatibility": "Promi-Kompatibilität",
@@ -565,6 +565,10 @@
   "MoonPhase.full": "Vollmond",
   "MoonPhase.waningGibbous": "Abnehmender Buckelmond",
   "MoonPhase.lastQuarter": "Letztes Viertel",
-  "MoonPhase.waningCrescent": "Abnehmender Halbmond"
+  "MoonPhase.waningCrescent": "Abnehmender Halbmond",
+  "UpcomingPhase.sampleDate1": "Beispiel 1",
+  "UpcomingPhase.sampleDate2": "Beispiel 2",
+  "UpcomingPhase.sampleDate3": "Beispiel 3",
+  "UpcomingPhase.sampleDate4": "Beispiel 4"
 }
 

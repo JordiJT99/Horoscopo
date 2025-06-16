@@ -565,6 +565,10 @@
   "MoonPhase.full": "Pleine Lune",
   "MoonPhase.waningGibbous": "Gibbeuse Décroissante",
   "MoonPhase.lastQuarter": "Dernier Quartier",
-  "MoonPhase.waningCrescent": "Dernier Croissant"
+  "MoonPhase.waningCrescent": "Dernier Croissant",
+  "UpcomingPhase.sampleDate1": "Échantillon 1",
+  "UpcomingPhase.sampleDate2": "Échantillon 2",
+  "UpcomingPhase.sampleDate3": "Échantillon 3",
+  "UpcomingPhase.sampleDate4": "Échantillon 4"
 }
 

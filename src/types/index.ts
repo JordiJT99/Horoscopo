@@ -69,7 +69,7 @@ export interface LuckyNumbersData {
   motivationalPhrase: string;
 }
 
-export type MoonPhaseKey = 'new' | 'firstQuarter' | 'full' | 'lastQuarter' | 'waningGibbous' | 'waxingCrescent' | 'waningCrescent' | 'waxingGibbous';
+export type MoonPhaseKey = 'new' | 'waxingCrescent' | 'firstQuarter' | 'waxingGibbous' | 'full' | 'waningGibbous' | 'lastQuarter' | 'waningCrescent' | 'unknown';
 
 
 export interface UpcomingPhase {
@@ -82,12 +82,13 @@ export interface LunarData {
   phase: string; // e.g., "Full Moon", "New Moon", "Waxing Crescent" (translated)
   phaseKey: MoonPhaseKey; // Key for the main current phase
   illumination: number; // Percentage
-  nextFullMoon: string;
-  nextNewMoon: string;
+  nextFullMoon?: string; // Made optional as Open-Meteo basic doesn't provide this
+  nextNewMoon?: string; // Made optional
   currentMoonImage: string; // URL for the large moon image
-  moonInSign: string; // e.g., "Acuario" (translated)
-  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius"
-  upcomingPhases: UpcomingPhase[];
+  moonInSign?: string; // e.g., "Acuario" (translated) - Made optional
+  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius" - Made optional
+  upcomingPhases: UpcomingPhase[]; // Will be mocked or simplified
+  error?: string; // To indicate if data fetching failed
 }
 
 
@@ -217,5 +218,4 @@ export interface OnboardingFormData {
 
 // Profile selector type
 export type SelectedProfileType = 'user' | 'generic';
-
 

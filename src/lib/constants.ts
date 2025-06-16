@@ -1,7 +1,7 @@
 
 
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
-import type { Locale } from '@/lib/dictionaries';
+import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
 
 
@@ -401,97 +401,132 @@ export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): Lu
 };
 
 
-export const getCurrentLunarData = (locale: string = 'es-ES'): LunarData => {
-  const today = new Date();
-  const dayOfMonth = today.getDate();
+// --- Lunar Phase Logic ---
 
-  let phaseName: string;
-  let phaseKey: MoonPhaseKey;
-  let illumination: number;
+const mapOpenMeteoPhaseToApp = (phaseValue: number, dictionary: Dictionary, locale: Locale): { name: string, key: MoonPhaseKey, illuminationPercent: number } => {
+  let name = dictionary['MoonPhase.Unknown'] || "Unknown Phase";
+  let key: MoonPhaseKey = 'unknown';
+  let illuminationPercent = Math.round(phaseValue * 100); // API gives fraction, convert to percent
 
-  // Simplified mock logic for current phase based on day of month
-  if (dayOfMonth <= 4) {
-    phaseName = "Luna Nueva";
-    phaseKey = 'new';
-    illumination = Math.round((dayOfMonth / 4) * 15);
-  } else if (dayOfMonth <= 7) {
-    phaseName = "Luna Creciente";
-    phaseKey = 'waxingCrescent';
-    illumination = 15 + Math.round(((dayOfMonth - 4) / 3) * 35);
-  } else if (dayOfMonth <= 11) {
-    phaseName = "Cuarto Creciente";
-    phaseKey = 'firstQuarter';
-    illumination = 50 + Math.round(((dayOfMonth - 7) / 4) * 25); // Should reach 50%
-  } else if (dayOfMonth <= 14) {
-    phaseName = "Gibosa Creciente";
-    phaseKey = 'waxingGibbous';
-    illumination = 50 + Math.round(((dayOfMonth - 11) / 3) * 35);
-  } else if (dayOfMonth <= 18) {
-    phaseName = "Luna Llena";
-    phaseKey = 'full';
-    illumination = 85 + Math.round(((dayOfMonth - 14) / 4) * 15); // Should reach 100%
-  } else if (dayOfMonth <= 21) {
-    phaseName = "Gibosa Menguante"; // As in example
-    phaseKey = 'waningGibbous';
-    illumination = 100 - Math.round(((dayOfMonth - 18) / 3) * 25); // Example had 75%
-  } else if (dayOfMonth <= 25) {
-    phaseName = "Cuarto Menguante";
-    phaseKey = 'lastQuarter';
-    illumination = 75 - Math.round(((dayOfMonth - 21) / 4) * 25); // Should reach 50%
-  } else {
-    phaseName = "Luna Menguante";
-    phaseKey = 'waningCrescent';
-    illumination = 50 - Math.round(((dayOfMonth - 25) / (31-25)) * 50);
+  // Mapping based on Open-Meteo's definition:
+  // 0.0: New Moon
+  // 0.0 - 0.25: Waxing Crescent
+  // 0.25: First Quarter
+  // 0.25 - 0.5: Waxing Gibbous
+  // 0.5: Full Moon
+  // 0.5 - 0.75: Waning Gibbous
+  // 0.75: Last Quarter
+  // 0.75 - 1.0: Waning Crescent
+  // Note: Values around 0.0 and 1.0 are New Moon.
+
+  if (phaseValue >= 0 && phaseValue < 0.03) { // New Moon threshold
+    name = dictionary['MoonPhase.new'] || "New Moon";
+    key = 'new';
+    illuminationPercent = 0;
+  } else if (phaseValue < 0.24) { // Strictly less than First Quarter
+    name = dictionary['MoonPhase.waxingCrescent'] || "Waxing Crescent";
+    key = 'waxingCrescent';
+  } else if (phaseValue < 0.26) { // First Quarter threshold
+    name = dictionary['MoonPhase.firstQuarter'] || "First Quarter";
+    key = 'firstQuarter';
+    illuminationPercent = 50;
+  } else if (phaseValue < 0.49) { // Strictly less than Full Moon
+    name = dictionary['MoonPhase.waxingGibbous'] || "Waxing Gibbous";
+    key = 'waxingGibbous';
+  } else if (phaseValue < 0.51) { // Full Moon threshold
+    name = dictionary['MoonPhase.full'] || "Full Moon";
+    key = 'full';
+    illuminationPercent = 100;
+  } else if (phaseValue < 0.74) { // Strictly less than Last Quarter
+    name = dictionary['MoonPhase.waningGibbous'] || "Waning Gibbous";
+    key = 'waningGibbous';
+  } else if (phaseValue < 0.76) { // Last Quarter threshold
+    name = dictionary['MoonPhase.lastQuarter'] || "Last Quarter";
+    key = 'lastQuarter';
+    illuminationPercent = 50;
+  } else if (phaseValue < 0.97) { // Strictly less than New Moon (approaching from waning)
+    name = dictionary['MoonPhase.waningCrescent'] || "Waning Crescent";
+    key = 'waningCrescent';
+  } else if (phaseValue >= 0.97) { // New Moon threshold (from waning end)
+    name = dictionary['MoonPhase.new'] || "New Moon";
+    key = 'new';
+    illuminationPercent = 0;
   }
   
-  illumination = Math.max(0, Math.min(100, illumination));
-  if (phaseKey === 'full') illumination = 100;
-  if (phaseKey === 'new') illumination = 0;
+  // Ensure illumination is within 0-100
+  illuminationPercent = Math.max(0, Math.min(100, illuminationPercent));
 
+  return { name, key, illuminationPercent };
+};
 
-  const nextFullMoonDate = new Date(today);
-  if (today.getDate() > 15 && phaseKey !== "full") {
-    nextFullMoonDate.setMonth(today.getMonth() + 1);
+const getMoonImageUrl = (phaseKey: MoonPhaseKey): string => {
+  switch (phaseKey) {
+    case 'new': return "https://placehold.co/80x80/2D3748/1E293B.png?text=NM";
+    case 'waxingCrescent': return "https://placehold.co/80x80/A0AEC0/1E293B.png?text=WC";
+    case 'firstQuarter': return "https://placehold.co/80x80/E2E8F0/1E293B.png?text=FQ";
+    case 'waxingGibbous': return "https://placehold.co/80x80/F7FAFC/1E293B.png?text=WG";
+    case 'full': return "https://placehold.co/80x80/FFFFFF/1E293B.png?text=FM";
+    case 'waningGibbous': return "https://placehold.co/80x80/F7FAFC/1E293B.png?text=WgG"; // Note: WgG for Waning Gibbous
+    case 'lastQuarter': return "https://placehold.co/80x80/E2E8F0/1E293B.png?text=LQ";
+    case 'waningCrescent': return "https://placehold.co/80x80/A0AEC0/1E293B.png?text=WnC"; // Note: WnC for Waning Crescent
+    default: return "https://placehold.co/80x80/CBD5E0/1E293B.png?text=)";
   }
-  nextFullMoonDate.setDate(15);
+};
 
-  const nextNewMoonDate = new Date(today);
-  if (today.getDate() > 1 && phaseKey !== "new") {
-    nextNewMoonDate.setMonth(today.getMonth() + 1);
-  }
-  nextNewMoonDate.setDate(1);
-
-  // Mock upcoming phases based on example image
-  const upcomingPhases: UpcomingPhase[] = [
-    { nameKey: "MoonPhase.FirstQuarter", date: "Jun 2", iconUrl: "https://placehold.co/48x48/E2E8F0/1E293B.png?text=FQ", phaseKey: "firstQuarter" },
-    { nameKey: "MoonPhase.FullMoon", date: "Jun 11", iconUrl: "https://placehold.co/48x48/FFFFFF/1E293B.png?text=FM", phaseKey: "full" },
-    { nameKey: "MoonPhase.LastQuarter", date: "Jun 18", iconUrl: "https://placehold.co/48x48/A0AEC0/1E293B.png?text=LQ", phaseKey: "lastQuarter" },
-    { nameKey: "MoonPhase.NewMoon", date: "Jun 25", iconUrl: "https://placehold.co/48x48/2D3748/1E293B.png?text=NM", phaseKey: "new" },
+const getMockUpcomingPhases = (dictionary: Dictionary): UpcomingPhase[] => {
+  // These remain mocked as the basic API doesn't give specific dates for these named phases.
+  return [
+    { nameKey: "MoonPhase.firstQuarter", date: dictionary['UpcomingPhase.sampleDate1'] || "Sample 1", iconUrl: getMoonImageUrl('firstQuarter').replace('80x80','48x48'), phaseKey: "firstQuarter" },
+    { nameKey: "MoonPhase.full", date: dictionary['UpcomingPhase.sampleDate2'] || "Sample 2", iconUrl: getMoonImageUrl('full').replace('80x80','48x48'), phaseKey: "full" },
+    { nameKey: "MoonPhase.lastQuarter", date: dictionary['UpcomingPhase.sampleDate3'] || "Sample 3", iconUrl: getMoonImageUrl('lastQuarter').replace('80x80','48x48'), phaseKey: "lastQuarter" },
+    { nameKey: "MoonPhase.new", date: dictionary['UpcomingPhase.sampleDate4'] || "Sample 4", iconUrl: getMoonImageUrl('new').replace('80x80','48x48'), phaseKey: "new" },
   ];
-  
-  // For current large moon image, use a generic one based on the current phase from example
-  // If the current mocked phase is "Gibosa Menguante", use that kind of image.
-  // Otherwise, a general placeholder.
-  let currentMoonImageUrl = "https://placehold.co/80x80/E2E8F0/1E293B.png?text=)"; // Default placeholder
+};
 
-  if (phaseKey === 'waningGibbous') {
-      currentMoonImageUrl = "https://placehold.co/80x80/cccccc/1E293B.png?text=WG"; // Placeholder for Waning Gibbous
-  } else if (phaseKey === 'full') {
-      currentMoonImageUrl = "https://placehold.co/80x80/FFFFFF/1E293B.png?text=FM";
-  } // Add more specific placeholders if needed
+// Default latitude and longitude (Buenos Aires, Argentina)
+const DEFAULT_LATITUDE = -34.61;
+const DEFAULT_LONGITUDE = -58.38;
 
+export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${DEFAULT_LATITUDE}&longitude=${DEFAULT_LONGITUDE}&daily=moon_phase&timezone=auto`;
 
-  return {
-    phase: phaseName, // This is already translated if dictionary["MoonPhase.WaningGibbous"] exists
-    phaseKey,
-    illumination: (phaseKey === 'waningGibbous' && dayOfMonth > 18 && dayOfMonth <= 21) ? 75 : illumination, // Override for example
-    nextFullMoon: nextFullMoonDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric'}),
-    nextNewMoon: nextNewMoonDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric'}),
-    currentMoonImage: currentMoonImageUrl,
-    moonInSign: "Acuario", // Mocked as per image
-    moonSignIcon: "Aquarius", // Mocked
-    upcomingPhases: upcomingPhases
-  };
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      console.error("Open-Meteo API request failed:", response.status, response.statusText);
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (data && data.daily && data.daily.moon_phase && data.daily.moon_phase.length > 0) {
+      const currentPhaseValue = data.daily.moon_phase[0]; // Phase for today
+      const { name: phaseName, key: phaseKey, illuminationPercent } = mapOpenMeteoPhaseToApp(currentPhaseValue, dictionary, locale);
+      
+      return {
+        phase: phaseName,
+        phaseKey: phaseKey,
+        illumination: illuminationPercent,
+        currentMoonImage: getMoonImageUrl(phaseKey),
+        // moonInSign and moonSignIcon are not provided by this API endpoint
+        upcomingPhases: getMockUpcomingPhases(dictionary), // Keep upcoming phases mocked
+        // nextFullMoon and nextNewMoon would require more complex logic to derive from daily data
+      };
+    } else {
+      console.error("Open-Meteo API response format unexpected or missing moon_phase data:", data);
+      throw new Error("Invalid API response format");
+    }
+  } catch (error) {
+    console.error("Error fetching lunar data from Open-Meteo:", error);
+    // Fallback to a simple mock/error state
+    return {
+      phase: dictionary['MoonPhase.Unknown'] || "Unknown Phase",
+      phaseKey: 'unknown',
+      illumination: 0,
+      currentMoonImage: getMoonImageUrl('unknown'),
+      upcomingPhases: getMockUpcomingPhases(dictionary),
+      error: (error instanceof Error ? error.message : "Failed to fetch lunar data"),
+    };
+  }
 };
 
 

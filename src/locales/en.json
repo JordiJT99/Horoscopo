@@ -565,6 +565,10 @@
   "MoonPhase.full": "Full Moon",
   "MoonPhase.waningGibbous": "Waning Gibbous",
   "MoonPhase.lastQuarter": "Last Quarter",
-  "MoonPhase.waningCrescent": "Waning Crescent"
+  "MoonPhase.waningCrescent": "Waning Crescent",
+  "UpcomingPhase.sampleDate1": "Sample 1",
+  "UpcomingPhase.sampleDate2": "Sample 2",
+  "UpcomingPhase.sampleDate3": "Sample 3",
+  "UpcomingPhase.sampleDate4": "Sample 4"
 }
 

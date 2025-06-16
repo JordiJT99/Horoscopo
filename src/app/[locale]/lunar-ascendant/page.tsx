@@ -37,14 +37,13 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
 function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1)); // Initialized
+  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1));
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
   const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
-
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
 
@@ -53,22 +52,30 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
   }, []);
 
   useEffect(() => {
-    if (!hasMounted) return;
-    setIsLoadingLunar(true);
-    const lunarTimer = setTimeout(() => {
-      // Pass the dictionary to translate phase name inside getCurrentLunarData
-      const rawLunarData = getCurrentLunarData(locale);
-      const translatedPhaseName = dictionary[rawLunarData.phaseKey ? `MoonPhase.${rawLunarData.phaseKey}` : 'MoonPhase.Unknown'] || rawLunarData.phase;
-      const translatedMoonInSign = dictionary[rawLunarData.moonInSign] || rawLunarData.moonInSign;
-
-      setLunarData({
-        ...rawLunarData,
-        phase: translatedPhaseName,
-        moonInSign: translatedMoonInSign,
-      });
-      setIsLoadingLunar(false);
-    }, 400);
-    return () => clearTimeout(lunarTimer);
+    if (!hasMounted || !dictionary) return;
+    
+    const fetchLunar = async () => {
+      setIsLoadingLunar(true);
+      try {
+        // Pass dictionary and locale to getCurrentLunarData for translations
+        const data = await getCurrentLunarData(dictionary, locale);
+        setLunarData(data);
+      } catch (error) {
+        console.error("Failed to fetch lunar data in component:", error);
+        setLunarData({
+            phase: dictionary['MoonPhase.Unknown'] || "Unknown Phase",
+            phaseKey: 'unknown',
+            illumination: 0,
+            currentMoonImage: "https://placehold.co/80x80/CBD5E0/1E293B.png?text=?",
+            upcomingPhases: [],
+            error: dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."
+        });
+      } finally {
+        setIsLoadingLunar(false);
+      }
+    };
+    
+    fetchLunar();
   }, [locale, hasMounted, dictionary]);
 
   const handleCalculateAscendant = () => {
@@ -95,7 +102,7 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
         <Card className="w-full shadow-xl bg-card/70 backdrop-blur-sm border border-white/10">
           <CardHeader className="text-center">
             <CardTitle className="font-headline text-2xl flex items-center justify-center gap-2 text-primary">
-              <MoonIconLucide className="w-7 h-7" /> {dictionary['LunarAscendantPage.lunarCalendarTitle'] || "Calendario Lunar"}
+              <MoonIconLucide className="w-7 h-7" /> {dictionary['LunarAscendantPage.lunarCalendarTitle'] || "Lunar Calendar"}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 px-3 py-4 sm:px-4">
@@ -105,6 +112,9 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                 <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
               </div>
             ) : lunarData && hasMounted ? (
+              lunarData.error ? (
+                <p className="text-center font-body text-destructive py-10">{lunarData.error}</p>
+              ) : (
               <div className="space-y-4">
                 <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
                   <Image
@@ -121,8 +131,6 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                       <p className="text-sm text-muted-foreground flex items-center">
                         {(dictionary['LunarAscendantPage.moonInSignText'] || "in {signName}").replace('{signName}', lunarData.moonInSign)}
                         <ZodiacSignIcon signName={lunarData.moonSignIcon} className="w-4 h-4 ml-1.5 text-primary" />
-                        {/* Simple degree display, refine if needed */}
-                        <span className="ml-1 text-xs">({Math.floor(Math.random()*29)}°{Math.floor(Math.random()*59)}&apos;)</span>
                       </p>
                     )}
                     <p className="text-sm text-muted-foreground">
@@ -150,10 +158,11 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                   {dictionary['LunarAscendantPage.easternTimeNote'] || "Nota: Todos los horarios ET"}
                 </p>
               </div>
+              )
             ) : hasMounted ? (
               <p className="text-center font-body text-destructive py-10">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
             ) : (
-              <div className="text-center py-10 h-[200px]"></div> // Placeholder for height consistency before mount
+              <div className="text-center py-10 h-[200px]"></div> 
             )}
           </CardContent>
         </Card>
@@ -242,7 +251,14 @@ export default function LunarAscendantPage({ params: paramsPromise }: LunarAscen
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
 
-  if (Object.keys(dictionary).length === 0) {
+  // To prevent hydration mismatch for client-side only logic like `hasMounted`
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+
+  if (!isClient || Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
