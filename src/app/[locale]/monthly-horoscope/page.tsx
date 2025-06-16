@@ -1,4 +1,3 @@
-
 "use client"; 
 
 import { use, useEffect, useMemo, useState } from 'react'; 
@@ -51,18 +50,22 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
         if (sunSign) {
           setCurrentSelectedSignName(sunSign.name); // Default to user's sign
         } else {
-          setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default to Aries if no user sign
+          // If user has no sun sign, default to Aries or what's currently selected
+          setCurrentSelectedSignName(currentSelectedSignName || ZODIAC_SIGNS[0].name); 
         }
       } else {
         setUserSunSign(null);
-        setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default to Aries
+         // If no onboarding data, default to Aries or what's currently selected for generic
+        setCurrentSelectedSignName(currentSelectedSignName || ZODIAC_SIGNS[0].name);
       }
     } else {
       setOnboardingData(null);
       setUserSunSign(null);
       setSelectedProfile('generic');
-      setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default to Aries for generic
+      // For guest or if user logs out, default to Aries or what's currently selected for generic
+      setCurrentSelectedSignName(currentSelectedSignName || ZODIAC_SIGNS[0].name); 
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
@@ -71,12 +74,12 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
 
       if (selectedProfile === 'user' && userSunSign) {
         signToFetch = userSunSign.name;
-      } else if (selectedProfile === 'generic' && currentSelectedSignName) {
-        signToFetch = currentSelectedSignName;
-      } else if (selectedProfile === 'user' && !userSunSign) { // User profile selected, but no sun sign data
+      } else if (selectedProfile === 'generic') {
         signToFetch = currentSelectedSignName || ZODIAC_SIGNS[0].name;
-      } else { // Default to currentSelectedSignName if available, or Aries
-         signToFetch = currentSelectedSignName || ZODIAC_SIGNS[0].name;
+      } else if (selectedProfile === 'user' && !userSunSign) { 
+        signToFetch = currentSelectedSignName || ZODIAC_SIGNS[0].name;
+      } else { 
+         signToFetch = ZODIAC_SIGNS[0].name;
       }
 
 
@@ -141,10 +144,13 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
             dictionary={dictionary}
             locale={locale}
             selectedProfile={selectedProfile}
-            setSelectedProfile={(profile) => {
+             setSelectedProfile={(profile) => {
               setSelectedProfile(profile);
               if (profile === 'generic') {
                 setCurrentSelectedSignName(userSunSign?.name || ZODIAC_SIGNS[0].name);
+              } else {
+                 // When switching to user, if user has a sign, set that as current
+                 if (userSunSign) setCurrentSelectedSignName(userSunSign.name);
               }
             }}
             user={user}
@@ -154,7 +160,7 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
             dictionary={dictionary}
             locale={locale}
             selectedProfile={selectedProfile}
-            userSunSign={displayedSignDetails} // Pass the sign to display
+            userSunSign={displayedSignDetails} 
             onboardingData={onboardingData}
             user={user}
             authLoading={authLoading}
@@ -221,5 +227,3 @@ export default function MonthlyHoroscopePageWrapper({ params: paramsPromise }: {
   
   return <MonthlyHoroscopeContent dictionary={dictionary} locale={params.locale} />;
 }
-
-    
