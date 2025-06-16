@@ -20,12 +20,11 @@ export default function SelectedSignDisplay({
   locale,
   selectedSign,
 }: SelectedSignDisplayProps) {
-  // Construct the path to your custom image/GIF
-  // Assumes images are named like 'aries_display.gif', 'taurus_display.gif', etc.
-  // and placed in 'public/custom_assets/'
-  const customImagePath = selectedSign 
-    ? `/custom_assets/${selectedSign.name.toLowerCase()}_display.gif` 
-    : "/custom_assets/default_display.gif"; // Fallback if no sign selected
+  // Prioritize customIconPath if available (like for Aquarius .png)
+  // Otherwise, fall back to the {sign_name}_display.gif convention
+  const imagePath = selectedSign.customIconPath 
+    ? selectedSign.customIconPath 
+    : `/custom_assets/${selectedSign.name.toLowerCase()}_display.gif`;
 
   return (
     <div className="flex flex-col items-center text-center py-4">
@@ -37,18 +36,18 @@ export default function SelectedSignDisplay({
       </p>
       <div className="relative w-32 h-32 sm:w-36 sm:h-36 mb-4">
         <Image 
-            src={customImagePath}
+            src={imagePath} // Use the determined imagePath
             alt={dictionary[selectedSign.name] || selectedSign.name} 
-            width={144} // Provide the actual width of your image/GIF
-            height={144} // Provide the actual height of your image/GIF
+            width={144} 
+            height={144} 
             className="rounded-full object-cover border-4 border-primary shadow-lg"
-            // Add a hint for AI image generation if this were a placeholder we intended to replace
-            // For your custom images, this hint is less critical unless you plan for AI to alter/replace them later.
-            // For now, it describes the intent if the image were missing and a placeholder was shown.
-            data-ai-hint={`${selectedSign.name.toLowerCase()} zodiac symbol animation`}
-            // If your custom image fails to load, Next.js will show the alt text.
-            // You can also add an onError handler if you want to display a fallback placeholder image.
-            // onError={(e) => { e.currentTarget.src = `https://placehold.co/144x144/7c3aed/ffffff.png?text=${selectedSign.name.substring(0,1)}` }}
+            data-ai-hint={`${selectedSign.name.toLowerCase()} zodiac symbol illustration`} // General hint
+            // Fallback for missing images (optional, but good for robustness)
+            onError={(e) => { 
+              const target = e.target as HTMLImageElement;
+              target.onerror = null; // Prevent infinite loop if placeholder also fails
+              target.src = `https://placehold.co/144x144/7c3aed/ffffff.png?text=${selectedSign.name.substring(0,1)}`;
+            }}
         />
       </div>
       <Button variant="default" size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6">

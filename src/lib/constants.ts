@@ -1,5 +1,4 @@
 
-
 import type { ZodiacSignName, ZodiacSign, HoroscopeData, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Activity, CircleDollarSign, Users, Moon, Sun, Leaf, Scale, Zap, ArrowUpRight, Mountain, Waves, Fish, SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Squirrel, VenetianMask, Bird, Crown, Shell, PawPrint, Bone, Dog as DogIcon, Type as TypeIcon, Heart, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase } from 'lucide-react';
@@ -16,7 +15,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Scorpio", icon: Zap, dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
   { name: "Sagittarius", icon: ArrowUpRight, dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
   { name: "Capricorn", icon: Mountain, dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
-  { name: "Aquarius", customIconPath: "/custom_assets/aquarius_display.gif", dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
+  { name: "Aquarius", customIconPath: "/custom_assets/aquarius_display.png", dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
   { name: "Pisces", icon: Fish, dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
 ];
 
@@ -400,38 +399,30 @@ export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): Lu
   };
 };
 
-// --- Lunar Phase Logic (Mock Data) ---
-const getMoonImageUrl = (phaseKey: MoonPhaseKey): string => {
+// --- Lunar Phase Logic (Mock Data before API integration) ---
+export const getMoonImageUrl = (phaseKey: MoonPhaseKey, size: string = '80x80'): string => {
   const base = 'https://placehold.co';
-  const size = '80x80';
   const colors = '2D3748/E2E8F0'; // Dark background, light text/shape
   let text = phaseKey.substring(0, 2).toUpperCase();
   if (phaseKey === 'firstQuarter') text = 'FQ';
   if (phaseKey === 'lastQuarter') text = 'LQ';
   if (phaseKey === 'new') text = 'NM';
   if (phaseKey === 'full') text = 'FM';
+  if (phaseKey === 'unknown') text = '??';
   
   return `${base}/${size}/${colors}.png?text=${text}`;
 };
 
-const getMockUpcomingPhases = (dictionary: Dictionary): UpcomingPhase[] => {
+export const getMockUpcomingPhases = (dictionary: Dictionary): UpcomingPhase[] => {
   return [
-    { nameKey: "MoonPhase.firstQuarter", date: dictionary['UpcomingPhase.sampleDate1'] || "Jun 2", iconUrl: getMoonImageUrl('firstQuarter').replace('80x80','48x48'), phaseKey: "firstQuarter" },
-    { nameKey: "MoonPhase.full", date: dictionary['UpcomingPhase.sampleDate2'] || "Jun 9", iconUrl: getMoonImageUrl('full').replace('80x80','48x48'), phaseKey: "full" },
-    { nameKey: "MoonPhase.lastQuarter", date: dictionary['UpcomingPhase.sampleDate3'] || "Jun 16", iconUrl: getMoonImageUrl('lastQuarter').replace('80x80','48x48'), phaseKey: "lastQuarter" },
-    { nameKey: "MoonPhase.new", date: dictionary['UpcomingPhase.sampleDate4'] || "Jun 23", iconUrl: getMoonImageUrl('new').replace('80x80','48x48'), phaseKey: "new" },
+    { nameKey: "MoonPhase.firstQuarter", date: dictionary['UpcomingPhase.sampleDate1'] || "Jun 2", iconUrl: getMoonImageUrl('firstQuarter', '48x48'), phaseKey: "firstQuarter" },
+    { nameKey: "MoonPhase.full", date: dictionary['UpcomingPhase.sampleDate2'] || "Jun 9", iconUrl: getMoonImageUrl('full', '48x48'), phaseKey: "full" },
+    { nameKey: "MoonPhase.lastQuarter", date: dictionary['UpcomingPhase.sampleDate3'] || "Jun 16", iconUrl: getMoonImageUrl('lastQuarter', '48x48'), phaseKey: "lastQuarter" },
+    { nameKey: "MoonPhase.new", date: dictionary['UpcomingPhase.sampleDate4'] || "Jun 23", iconUrl: getMoonImageUrl('new', '48x48'), phaseKey: "new" },
   ];
 };
 
-export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es'): LunarData => {
-  const phases: MoonPhaseKey[] = ['new', 'waxingCrescent', 'firstQuarter', 'waxingGibbous', 'full', 'waningGibbous', 'lastQuarter', 'waningCrescent'];
-  const currentPhaseKey = phases[Math.floor(Math.random() * phases.length)];
-  const illumination = Math.floor(Math.random() * 101);
-  
-  const zodiacSignNames = ZODIAC_SIGNS.map(s => s.name);
-  const randomMoonSignName = zodiacSignNames[Math.floor(Math.random() * zodiacSignNames.length)];
-
-  const getPhaseName = (key: MoonPhaseKey): string => {
+const getPhaseNameFromKey = (key: MoonPhaseKey, dictionary: Dictionary): string => {
     const nameMap: Record<MoonPhaseKey, string> = {
       new: dictionary['MoonPhase.new'] || "New Moon",
       waxingCrescent: dictionary['MoonPhase.waxingCrescent'] || "Waxing Crescent",
@@ -444,17 +435,84 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
       unknown: dictionary['MoonPhase.unknown'] || "Unknown Phase",
     };
     return nameMap[key] || nameMap.unknown;
-  };
-  
+};
+
+
+// --- Lunar Phase Logic (API integration) ---
+const mapOpenMeteoPhaseToApp = (value: number, dictionary: Dictionary): { phase: string, phaseKey: MoonPhaseKey, illumination: number } => {
+  let phaseKey: MoonPhaseKey;
+  let illumination: number;
+
+  // Mapping based on Open-Meteo documentation: Phase (0-1)
+  // 0.0-0.02 & 0.98-1.0: New Moon
+  // 0.02-0.23: Waxing Crescent
+  // 0.23-0.27: First Quarter
+  // 0.27-0.48: Waxing Gibbous
+  // 0.48-0.52: Full Moon
+  // 0.52-0.73: Waning Gibbous
+  // 0.73-0.77: Last Quarter
+  // 0.77-0.98: Waning Crescent
+
+  if (value >= 0 && value < 0.02) { phaseKey = 'new'; illumination = Math.round(value / 0.02 * 2); } // Approximation
+  else if (value < 0.23) { phaseKey = 'waxingCrescent'; illumination = Math.round(2 + (value - 0.02) / 0.21 * 48); } // 2 to 50
+  else if (value < 0.27) { phaseKey = 'firstQuarter'; illumination = 50; }
+  else if (value < 0.48) { phaseKey = 'waxingGibbous'; illumination = Math.round(50 + (value - 0.27) / 0.21 * 48); } // 50 to 98
+  else if (value < 0.52) { phaseKey = 'full'; illumination = 100; }
+  else if (value < 0.73) { phaseKey = 'waningGibbous'; illumination = Math.round(98 - (value - 0.52) / 0.21 * 48); } // 98 to 50
+  else if (value < 0.77) { phaseKey = 'lastQuarter'; illumination = 50; }
+  else if (value < 0.98) { phaseKey = 'waningCrescent'; illumination = Math.round(48 - (value - 0.77) / 0.21 * 48); } // 48 to 2
+  else if (value <= 1.0) { phaseKey = 'new'; illumination = Math.round(2 - (value - 0.98) / 0.02 * 2); }
+  else { phaseKey = 'unknown'; illumination = 0; }
+
   return {
-    phase: getPhaseName(currentPhaseKey),
-    phaseKey: currentPhaseKey,
-    illumination: illumination,
-    currentMoonImage: getMoonImageUrl(currentPhaseKey),
-    moonInSign: dictionary[randomMoonSignName] || randomMoonSignName, // Translated sign name
-    moonSignIcon: randomMoonSignName, // Key for the icon
-    upcomingPhases: getMockUpcomingPhases(dictionary),
+    phase: getPhaseNameFromKey(phaseKey, dictionary),
+    phaseKey,
+    illumination
   };
+};
+
+export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
+  const today = new Date().toISOString().split('T')[0];
+  // Using Buenos Aires as default. Consider making this configurable or using geolocation if allowed.
+  const lat = -34.61;
+  const lon = -58.38;
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=moon_phase&timezone=GMT&start_date=${today}&end_date=${today}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      console.error("Open-Meteo API request failed:", response.status, response.statusText);
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (data && data.daily && data.daily.moon_phase && data.daily.moon_phase.length > 0) {
+      const phaseValue = data.daily.moon_phase[0]; // Value between 0 and 1
+      const { phase, phaseKey, illumination } = mapOpenMeteoPhaseToApp(phaseValue, dictionary);
+      
+      return {
+        phase: phase,
+        phaseKey: phaseKey,
+        illumination: illumination,
+        currentMoonImage: getMoonImageUrl(phaseKey),
+        // moonInSign and moonSignIcon are not provided by this basic Open-Meteo endpoint
+        upcomingPhases: getMockUpcomingPhases(dictionary), // Keep mock upcoming phases for now
+      };
+    } else {
+      console.error("Open-Meteo API response format unexpected:", data);
+      throw new Error("Unexpected API response format");
+    }
+  } catch (error) {
+    console.error("Error fetching lunar data from Open-Meteo:", error);
+    return {
+      phase: getPhaseNameFromKey('unknown', dictionary),
+      phaseKey: 'unknown',
+      illumination: 0,
+      currentMoonImage: getMoonImageUrl('unknown'),
+      upcomingPhases: getMockUpcomingPhases(dictionary),
+      error: (error as Error).message || "Failed to fetch lunar data",
+    };
+  }
 };
 
 
