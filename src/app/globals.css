@@ -7,50 +7,50 @@
 
 @layer base {
   :root {
-    /* Tema Lila Claro con Acentos Magenta Vibrantes */
-    --background: 260 70% 92%; /* Lila muy claro */
-    --foreground: 260 30% 20%; /* Púrpura oscuro para texto */
+    /* Tema Púrpura Oscuro con Acentos Magenta Vibrantes (según imagen) */
+    --background: 270 30% 12%; /* Púrpura muy oscuro, casi negro */
+    --foreground: 0 0% 95%; /* Blanco / Gris muy claro para texto */
 
-    --card: 0 0% 100%; /* Blanco para tarjetas */
-    --card-foreground: 260 30% 25%; /* Púrpura oscuro para texto en tarjetas */
+    --card: 270 30% 15%; /* Púrpura oscuro ligeramente más claro para tarjetas */
+    --card-foreground: 0 0% 90%; /* Texto claro en tarjetas */
 
-    --popover: 0 0% 100%; /* Blanco para popovers */
-    --popover-foreground: 260 30% 20%;
+    --popover: 270 30% 10%; /* Popovers aún más oscuros */
+    --popover-foreground: 0 0% 95%;
 
     /* Primario: Magenta Vibrante (de la imagen) */
-    --primary: 335 90% 58%; 
+    --primary: 330 90% 60%; 
     --primary-foreground: 0 0% 100%; /* Blanco */
     
-    /* Acento: Mismo que primario */
-    --accent: 335 90% 58%; 
+    /* Acento: Mismo que primario para consistencia, o un púrpura vibrante secundario */
+    --accent: 330 90% 60%; 
     --accent-foreground: 0 0% 100%;
 
-    --secondary: 260 60% 85%; /* Lila más suave para elementos secundarios */
-    --secondary-foreground: 260 30% 20%; /* Texto oscuro sobre secundario */
+    --secondary: 270 25% 20%; /* Púrpura oscuro para elementos secundarios */
+    --secondary-foreground: 0 0% 85%; /* Texto claro sobre secundario */
 
-    --muted: 260 60% 90%; /* Lila aún más pálido para fondos sutiles */
-    --muted-foreground: 260 30% 45%; /* Púrpura medio para texto muted */
+    --muted: 270 20% 25%; /* Púrpura aún más desaturado/oscuro para fondos sutiles */
+    --muted-foreground: 270 15% 65%; /* Púrpura/gris medio para texto muted */
 
-    --destructive: 0 70% 50%; /* Rojo estándar para destructivo */
+    --destructive: 0 70% 55%; /* Rojo estándar para destructivo */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 50% 80%; /* Borde lila medio-claro */
-    --input: 0 0% 100%; /* Fondo de input blanco */
-    --ring: 335 90% 62%; /* Color de anillo, primario con ligero ajuste */
+    --border: 270 20% 30%; /* Borde púrpura oscuro */
+    --input: 270 20% 18%; /* Fondo de input púrpura muy oscuro */
+    --ring: 330 90% 65%; /* Color de anillo, primario con ligero ajuste */
 
     --radius: 0.75rem; /* Radio de borde de la imagen (más grande) */
 
     --chart-1: hsl(var(--primary));
-    --chart-2: 340 80% 65%; 
-    --chart-3: 330 70% 70%; 
-    --chart-4: 345 85% 60%; 
-    --chart-5: 325 75% 62%; 
+    --chart-2: 335 80% 65%; 
+    --chart-3: 325 70% 70%; 
+    --chart-4: 340 85% 60%; 
+    --chart-5: 320 75% 62%; 
 
-    /* Variables específicas del tema adaptadas */
+    /* Variables específicas del tema adaptadas al tema oscuro */
     --top-bar-background: hsl(var(--background) / 0.85); 
     --top-bar-foreground: hsl(var(--foreground));
 
-    --bottom-nav-background: hsl(var(--card) / 0.9); /* Fondo de tarjeta para nav inferior */
+    --bottom-nav-background: hsl(var(--background) / 0.9); /* Fondo de tarjeta para nav inferior */
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
 
@@ -66,31 +66,30 @@
   }
 
   .dark {
-    /* Si se usa la clase .dark, aplicará este mismo tema lila claro. */
-    /* Para un tema oscuro real, estas variables necesitarían valores oscuros. */
-    --background: 260 70% 92%;
-    --foreground: 260 30% 20%;
-    --card: 0 0% 100%;
-    --card-foreground: 260 30% 25%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 260 30% 20%;
-    --primary: 335 90% 58%;
+    /* Este tema es oscuro por defecto, así que .dark usará las mismas variables */
+    --background: 270 30% 12%;
+    --foreground: 0 0% 95%;
+    --card: 270 30% 15%;
+    --card-foreground: 0 0% 90%;
+    --popover: 270 30% 10%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 330 90% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 260 60% 85%;
-    --secondary-foreground: 260 30% 20%;
-    --muted: 260 60% 90%;
-    --muted-foreground: 260 30% 45%;
-    --accent: 335 90% 58%;
+    --secondary: 270 25% 20%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 270 20% 25%;
+    --muted-foreground: 270 15% 65%;
+    --accent: 330 90% 60%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 70% 50%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 50% 80%;
-    --input: 0 0% 100%;
-    --ring: 335 90% 62%;
+    --border: 270 20% 30%;
+    --input: 270 20% 18%;
+    --ring: 330 90% 65%;
 
     --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
-    --bottom-nav-background: hsl(var(--card) / 0.9);
+    --bottom-nav-background: hsl(var(--background) / 0.9);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
     --sign-selector-active-border: hsl(var(--primary));
@@ -146,8 +145,9 @@
   }
 }
 
-/* Clase para fondo degradado radial - opcional si se quiere aplicar a páginas específicas además del fondo lila base */
+/* Clase para fondo degradado radial - opcional si se quiere aplicar a páginas específicas además del fondo púrpura oscuro base */
 .bg-radial-gradient-purple {
-  background-image: radial-gradient(circle at top right, hsl(var(--primary) / 0.2), transparent 60%), 
-                    radial-gradient(circle at bottom left, hsl(280 50% 40% / 0.3), transparent 70%);
+  background-image: radial-gradient(circle at top right, hsl(var(--primary) / 0.1), transparent 60%), 
+                    radial-gradient(circle at bottom left, hsl(280 50% 20% / 0.15), transparent 70%);
 }
+
