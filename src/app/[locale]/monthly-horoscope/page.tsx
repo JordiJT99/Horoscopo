@@ -14,7 +14,7 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHeaderTabs'; 
 import ProfileSelector from '@/components/shared/ProfileSelector';
 import UserZodiacDetailCard from '@/components/shared/UserZodiacDetailCard';
-import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard'; // Import for detailed text
+import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard';
 
 import { Calendar, Sparkles, Heart, CircleDollarSign, Activity } from 'lucide-react'; 
 
@@ -32,6 +32,8 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
   const [selectedProfile, setSelectedProfile] = useState<SelectedProfileType>('user');
   const [horoscopeData, setHoroscopeData] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(false);
+
+  // This state will hold the sign name to fetch for, especially for generic profile
   const [currentSelectedSignName, setCurrentSelectedSignName] = useState<ZodiacSignName | null>(null);
 
 
@@ -46,29 +48,37 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
         setOnboardingData(parsedData);
         const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
         setUserSunSign(sunSign);
-        if (sunSign) setCurrentSelectedSignName(sunSign.name);
+        if (sunSign) {
+          setCurrentSelectedSignName(sunSign.name); // Default to user's sign
+        } else {
+          setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default to Aries if no user sign
+        }
       } else {
         setUserSunSign(null);
-        setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default if no onboarding data
+        setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default to Aries
       }
     } else {
       setOnboardingData(null);
       setUserSunSign(null);
       setSelectedProfile('generic');
-      setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default for generic
+      setCurrentSelectedSignName(ZODIAC_SIGNS[0].name); // Default to Aries for generic
     }
   }, [user]);
 
   useEffect(() => {
     const fetchMonthlyHoroscope = async () => {
       let signToFetch: ZodiacSignName | null = null;
+
       if (selectedProfile === 'user' && userSunSign) {
         signToFetch = userSunSign.name;
       } else if (selectedProfile === 'generic' && currentSelectedSignName) {
         signToFetch = currentSelectedSignName;
-      } else if (selectedProfile === 'generic') {
-         signToFetch = ZODIAC_SIGNS[0].name; // Fallback for generic
+      } else if (selectedProfile === 'user' && !userSunSign) { // User profile selected, but no sun sign data
+        signToFetch = currentSelectedSignName || ZODIAC_SIGNS[0].name;
+      } else { // Default to currentSelectedSignName if available, or Aries
+         signToFetch = currentSelectedSignName || ZODIAC_SIGNS[0].name;
       }
+
 
       if (signToFetch) {
         setIsHoroscopeLoading(true);
@@ -115,6 +125,10 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
     { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: horoscopeData?.health },
   ] : [];
   
+  const displayedSignDetails = selectedProfile === 'user' && userSunSign 
+    ? userSunSign 
+    : (currentSelectedSignName ? ZODIAC_SIGNS.find(s => s.name === currentSelectedSignName) ?? ZODIAC_SIGNS[0] : ZODIAC_SIGNS[0]);
+
   return (
     <main className="flex-grow container mx-auto px-3 sm:px-4 py-3 sm:py-4 space-y-4 sm:space-y-6">
       <SubHeaderTabs 
@@ -129,10 +143,8 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
             selectedProfile={selectedProfile}
             setSelectedProfile={(profile) => {
               setSelectedProfile(profile);
-              if (profile === 'generic' && ZODIAC_SIGNS[0]) {
-                setCurrentSelectedSignName(ZODIAC_SIGNS[0].name);
-              } else if (profile === 'user' && userSunSign) {
-                setCurrentSelectedSignName(userSunSign.name);
+              if (profile === 'generic') {
+                setCurrentSelectedSignName(userSunSign?.name || ZODIAC_SIGNS[0].name);
               }
             }}
             user={user}
@@ -142,7 +154,7 @@ function MonthlyHoroscopeContent({ dictionary, locale }: { dictionary: Dictionar
             dictionary={dictionary}
             locale={locale}
             selectedProfile={selectedProfile}
-            userSunSign={selectedProfile === 'user' ? userSunSign : (currentSelectedSignName ? ZODIAC_SIGNS.find(s => s.name === currentSelectedSignName) ?? null : null) }
+            userSunSign={displayedSignDetails} // Pass the sign to display
             onboardingData={onboardingData}
             user={user}
             authLoading={authLoading}
@@ -202,10 +214,12 @@ export default function MonthlyHoroscopePageWrapper({ params: paramsPromise }: {
     return (
       <div className="flex-grow flex items-center justify-center min-h-screen bg-background text-foreground">
         <Sparkles className="h-12 w-12 animate-pulse text-primary mx-auto" />
-        <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>
+         {Object.keys(dictionary).length > 0 && <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>}
       </div>
     );
   }
   
   return <MonthlyHoroscopeContent dictionary={dictionary} locale={params.locale} />;
 }
+
+    
