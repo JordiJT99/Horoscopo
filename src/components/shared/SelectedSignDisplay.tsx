@@ -20,7 +20,7 @@ export default function SelectedSignDisplay({
   locale,
   selectedSign,
 }: SelectedSignDisplayProps) {
-  // Prioritize customIconPath. If not available, use a generic placeholder.
+  
   const imagePath = selectedSign.customIconPath
     ? selectedSign.customIconPath
     : `https://placehold.co/144x144/7c3aed/ffffff.png?text=${selectedSign.name.substring(0,2).toUpperCase()}`;
@@ -35,21 +35,22 @@ export default function SelectedSignDisplay({
       <p className="text-sm text-muted-foreground mb-4">
         {selectedSign.dateRange}
       </p>
-      <div className="relative w-32 h-32 sm:w-36 sm:h-36 mb-4">
+      {/* Aplicar borde, redondeo y overflow al div contenedor */}
+      <div className="relative w-32 h-32 sm:w-36 sm:h-36 mb-4 rounded-full border-4 border-primary shadow-lg overflow-hidden">
         <Image
             src={imagePath}
             alt={dictionary[selectedSign.name] || selectedSign.name}
-            width={144}
-            height={144}
-            className="rounded-full object-cover border-4 border-primary shadow-lg"
-            data-ai-hint={isCustomImage ? `${selectedSign.name.toLowerCase()} zodiac symbol illustration` : "zodiac placeholder"}
-            priority={true} // Indicar a Next.js que esta imagen es importante
-            key={imagePath} // Añadir una key basada en imagePath para ayudar a React a detectar cambios
+            layout="fill" // Para que la imagen llene el contenedor
+            objectFit="cover" // Similar a object-cover de Tailwind
+            priority={true}
+            key={imagePath} 
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.onerror = null; // Prevenir bucles infinitos si el placeholder también falla
-              target.src = `https://placehold.co/144x144/CCCCCC/999999.png?text=Err`; // Placeholder de error muy distintivo
+              target.onerror = null; 
+              target.src = `https://placehold.co/144x144/CCCCCC/999999.png?text=Err`;
             }}
+            data-ai-hint={isCustomImage ? `${selectedSign.name.toLowerCase()} zodiac symbol illustration` : "zodiac placeholder"}
+            // Quitar className de aquí si solo tenía borde y redondeo
         />
       </div>
       <Button variant="default" size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6">
