@@ -16,7 +16,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
   { name: "Scorpio", icon: Zap, dateRange: "Oct 23 - Nov 21", element: "Water", polarity: "Feminine", modality: "Fixed" },
   { name: "Sagittarius", icon: ArrowUpRight, dateRange: "Nov 22 - Dic 21", element: "Fire", polarity: "Masculine", modality: "Mutable" },
   { name: "Capricorn", icon: Mountain, dateRange: "Dic 22 - Ene 19", element: "Earth", polarity: "Feminine", modality: "Cardinal" },
-  { name: "Aquarius", icon: Waves, dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
+  { name: "Aquarius", customIconPath: "/custom_assets/aquarius_display.gif", dateRange: "Ene 20 - Feb 18", element: "Air", polarity: "Masculine", modality: "Fixed" },
   { name: "Pisces", icon: Fish, dateRange: "Feb 19 - Mar 20", element: "Water", polarity: "Feminine", modality: "Mutable" },
 ];
 
@@ -400,29 +400,26 @@ export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): Lu
   };
 };
 
-
-// --- Lunar Phase Logic (Reverted to Mock) ---
-
+// --- Lunar Phase Logic (Mock Data) ---
 const getMoonImageUrl = (phaseKey: MoonPhaseKey): string => {
-  switch (phaseKey) {
-    case 'new': return "https://placehold.co/80x80/2D3748/1E293B.png?text=NM";
-    case 'waxingCrescent': return "https://placehold.co/80x80/A0AEC0/1E293B.png?text=WC";
-    case 'firstQuarter': return "https://placehold.co/80x80/E2E8F0/1E293B.png?text=FQ";
-    case 'waxingGibbous': return "https://placehold.co/80x80/F7FAFC/1E293B.png?text=WG";
-    case 'full': return "https://placehold.co/80x80/FFFFFF/1E293B.png?text=FM";
-    case 'waningGibbous': return "https://placehold.co/80x80/F7FAFC/1E293B.png?text=WgG";
-    case 'lastQuarter': return "https://placehold.co/80x80/E2E8F0/1E293B.png?text=LQ";
-    case 'waningCrescent': return "https://placehold.co/80x80/A0AEC0/1E293B.png?text=WnC";
-    default: return "https://placehold.co/80x80/CBD5E0/1E293B.png?text=)";
-  }
+  const base = 'https://placehold.co';
+  const size = '80x80';
+  const colors = '2D3748/E2E8F0'; // Dark background, light text/shape
+  let text = phaseKey.substring(0, 2).toUpperCase();
+  if (phaseKey === 'firstQuarter') text = 'FQ';
+  if (phaseKey === 'lastQuarter') text = 'LQ';
+  if (phaseKey === 'new') text = 'NM';
+  if (phaseKey === 'full') text = 'FM';
+  
+  return `${base}/${size}/${colors}.png?text=${text}`;
 };
 
 const getMockUpcomingPhases = (dictionary: Dictionary): UpcomingPhase[] => {
   return [
-    { nameKey: "MoonPhase.firstQuarter", date: dictionary['UpcomingPhase.sampleDate1'] || "Sample 1", iconUrl: getMoonImageUrl('firstQuarter').replace('80x80','48x48'), phaseKey: "firstQuarter" },
-    { nameKey: "MoonPhase.full", date: dictionary['UpcomingPhase.sampleDate2'] || "Sample 2", iconUrl: getMoonImageUrl('full').replace('80x80','48x48'), phaseKey: "full" },
-    { nameKey: "MoonPhase.lastQuarter", date: dictionary['UpcomingPhase.sampleDate3'] || "Sample 3", iconUrl: getMoonImageUrl('lastQuarter').replace('80x80','48x48'), phaseKey: "lastQuarter" },
-    { nameKey: "MoonPhase.new", date: dictionary['UpcomingPhase.sampleDate4'] || "Sample 4", iconUrl: getMoonImageUrl('new').replace('80x80','48x48'), phaseKey: "new" },
+    { nameKey: "MoonPhase.firstQuarter", date: dictionary['UpcomingPhase.sampleDate1'] || "Jun 2", iconUrl: getMoonImageUrl('firstQuarter').replace('80x80','48x48'), phaseKey: "firstQuarter" },
+    { nameKey: "MoonPhase.full", date: dictionary['UpcomingPhase.sampleDate2'] || "Jun 9", iconUrl: getMoonImageUrl('full').replace('80x80','48x48'), phaseKey: "full" },
+    { nameKey: "MoonPhase.lastQuarter", date: dictionary['UpcomingPhase.sampleDate3'] || "Jun 16", iconUrl: getMoonImageUrl('lastQuarter').replace('80x80','48x48'), phaseKey: "lastQuarter" },
+    { nameKey: "MoonPhase.new", date: dictionary['UpcomingPhase.sampleDate4'] || "Jun 23", iconUrl: getMoonImageUrl('new').replace('80x80','48x48'), phaseKey: "new" },
   ];
 };
 
@@ -444,7 +441,7 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
       waningGibbous: dictionary['MoonPhase.waningGibbous'] || "Waning Gibbous",
       lastQuarter: dictionary['MoonPhase.lastQuarter'] || "Last Quarter",
       waningCrescent: dictionary['MoonPhase.waningCrescent'] || "Waning Crescent",
-      unknown: dictionary['MoonPhase.Unknown'] || "Unknown Phase",
+      unknown: dictionary['MoonPhase.unknown'] || "Unknown Phase",
     };
     return nameMap[key] || nameMap.unknown;
   };

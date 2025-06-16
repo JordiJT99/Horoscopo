@@ -21,6 +21,7 @@ export type AstrologicalModality = "Cardinal" | "Fixed" | "Mutable";
 export interface ZodiacSign {
   name: ZodiacSignName;
   icon?: React.ElementType; // For Lucide icons or custom components
+  customIconPath?: string; // Path for custom image icons
   dateRange: string;
   element: AstrologicalElement;
   polarity: AstrologicalPolarity;
@@ -83,9 +84,10 @@ export interface LunarData {
   phaseKey: MoonPhaseKey; // Key for the main current phase
   illumination: number; // Percentage
   currentMoonImage: string; // URL for the large moon image
-  moonInSign: string; // e.g., "Acuario" (translated) - No longer optional
-  moonSignIcon: ZodiacSignName; // e.g., "Aquarius" - No longer optional
+  moonInSign?: string; // e.g., "Acuario" (translated) - No longer optional
+  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius" - No longer optional
   upcomingPhases: UpcomingPhase[];
+  error?: string; // Optional error message for API failures
 }
 
 
