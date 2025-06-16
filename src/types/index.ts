@@ -82,13 +82,10 @@ export interface LunarData {
   phase: string; // e.g., "Full Moon", "New Moon", "Waxing Crescent" (translated)
   phaseKey: MoonPhaseKey; // Key for the main current phase
   illumination: number; // Percentage
-  nextFullMoon?: string; // Made optional as Open-Meteo basic doesn't provide this
-  nextNewMoon?: string; // Made optional
   currentMoonImage: string; // URL for the large moon image
-  moonInSign?: string; // e.g., "Acuario" (translated) - Made optional
-  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius" - Made optional
-  upcomingPhases: UpcomingPhase[]; // Will be mocked or simplified
-  error?: string; // To indicate if data fetching failed
+  moonInSign: string; // e.g., "Acuario" (translated) - No longer optional
+  moonSignIcon: ZodiacSignName; // e.g., "Aquarius" - No longer optional
+  upcomingPhases: UpcomingPhase[];
 }
 
 

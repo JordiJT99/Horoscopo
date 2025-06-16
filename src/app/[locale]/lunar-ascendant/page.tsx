@@ -40,7 +40,6 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
   const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1));
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
-  const [isLoadingLunar, setIsLoadingLunar] = useState(true);
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
@@ -54,28 +53,10 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
   useEffect(() => {
     if (!hasMounted || !dictionary) return;
     
-    const fetchLunar = async () => {
-      setIsLoadingLunar(true);
-      try {
-        // Pass dictionary and locale to getCurrentLunarData for translations
-        const data = await getCurrentLunarData(dictionary, locale);
-        setLunarData(data);
-      } catch (error) {
-        console.error("Failed to fetch lunar data in component:", error);
-        setLunarData({
-            phase: dictionary['MoonPhase.Unknown'] || "Unknown Phase",
-            phaseKey: 'unknown',
-            illumination: 0,
-            currentMoonImage: "https://placehold.co/80x80/CBD5E0/1E293B.png?text=?",
-            upcomingPhases: [],
-            error: dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."
-        });
-      } finally {
-        setIsLoadingLunar(false);
-      }
-    };
+    // getCurrentLunarData is now synchronous and mock-based
+    const data = getCurrentLunarData(dictionary, locale);
+    setLunarData(data);
     
-    fetchLunar();
   }, [locale, hasMounted, dictionary]);
 
   const handleCalculateAscendant = () => {
@@ -106,15 +87,7 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 px-3 py-4 sm:px-4">
-            {isLoadingLunar && hasMounted ? (
-              <div className="text-center py-10">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
-              </div>
-            ) : lunarData && hasMounted ? (
-              lunarData.error ? (
-                <p className="text-center font-body text-destructive py-10">{lunarData.error}</p>
-              ) : (
+            {lunarData && hasMounted ? (
               <div className="space-y-4">
                 <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
                   <Image
@@ -158,11 +131,13 @@ function LunarAscendantContent({ dictionary, locale }: { dictionary: Dictionary,
                   {dictionary['LunarAscendantPage.easternTimeNote'] || "Nota: Todos los horarios ET"}
                 </p>
               </div>
-              )
             ) : hasMounted ? (
               <p className="text-center font-body text-destructive py-10">{dictionary['LunarAscendantSection.errorLunar'] || "Could not load lunar data."}</p>
             ) : (
-              <div className="text-center py-10 h-[200px]"></div> 
+              <div className="text-center py-10 h-[200px]">
+                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
+                 <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
+              </div> 
             )}
           </CardContent>
         </Card>
