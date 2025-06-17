@@ -26,13 +26,15 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   return (
     <div className="sticky top-14 z-30 bg-background/90 backdrop-blur-sm shadow-sm"> {/* h-14 is default TopBar height */}
       <div className="container mx-auto px-0 sm:px-1">
-        <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2">
+        <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
               <Button
                 key={tab.id}
                 variant="ghost"
+                role="tab"
+                aria-selected={isActive.toString()}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
                   "rounded-none py-2 px-4 sm:px-5 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1 relative",

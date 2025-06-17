@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 interface Category {
   nameKey: string; // e.g., "HoroscopeSummary.love"
@@ -31,6 +32,33 @@ export default function HoroscopeCategoriesSummary({
   isLoading,
   horoscopeDetail,
 }: HoroscopeCategoriesSummaryProps) {
+  const [animatedProgressValues, setAnimatedProgressValues] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    if (!isLoading && categories.length > 0) {
+      // Initial state for animation (e.g., start from 0 or a small value)
+      const initialValues: Record<string, number> = {};
+      categories.forEach(category => {
+        initialValues[category.nameKey] = 5; // Start animation from 5%
+      });
+      setAnimatedProgressValues(initialValues);
+
+      // Trigger actual values after a short delay to allow CSS transition
+      const timer = setTimeout(() => {
+        const finalValues: Record<string, number> = {};
+        categories.forEach(category => {
+          finalValues[category.nameKey] = category.percentage;
+        });
+        setAnimatedProgressValues(finalValues);
+      }, 100); // Small delay for animation to kick in
+
+      return () => clearTimeout(timer);
+    } else if (isLoading) {
+      // Reset when loading starts
+      setAnimatedProgressValues({});
+    }
+  }, [isLoading, categories]);
+
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg my-4">
       <CardHeader className="p-4 pb-2">
@@ -54,15 +82,11 @@ export default function HoroscopeCategoriesSummary({
                 {dictionary[category.nameKey] || category.nameKey.split('.').pop()}
               </h4>
               <Progress
-                value={category.percentage}
+                value={animatedProgressValues[category.nameKey] || category.percentage}
                 className="h-1.5 bg-horoscope-progress-background"
-                indicatorClassName="bg-horoscope-progress-indicator"
+                indicatorClassName="bg-horoscope-progress-indicator progress-indicator-animate"
               />
               <p className="text-xs text-muted-foreground">{category.percentage}%</p>
-              {/* 
-                Optionally, display a snippet from horoscopeDetail if dataKey is provided
-                Example: horoscopeDetail && category.dataKey ? horoscopeDetail[category.dataKey]?.substring(0, 50) + "..." : "" 
-              */}
             </div>
           ))
         )}

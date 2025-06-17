@@ -172,3 +172,9 @@
   animation: pulseOrbHalo 4s infinite ease-in-out;
   /* El box-shadow inicial se define en el estado 0%/100% del keyframe */
 }
+
+/* Animación para la barra de progreso */
+.progress-indicator-animate {
+  transition: transform 0.5s ease-out;
+}
+
