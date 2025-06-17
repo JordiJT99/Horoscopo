@@ -216,15 +216,30 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="basic" id="rb-basic" />
-                    <Label htmlFor="rb-basic" className="font-body text-sm md:text-base">{dictionary['CrystalBallPage.precisionBasic'] || "Basic"}</Label>
+                    <Label 
+                      htmlFor="rb-basic" 
+                      className="font-body text-sm md:text-base cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors"
+                    >
+                      {dictionary['CrystalBallPage.precisionBasic'] || "Basic"}
+                    </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="deep" id="rb-deep" />
-                    <Label htmlFor="rb-deep" className="font-body text-sm md:text-base">{dictionary['CrystalBallPage.precisionDeep'] || "Deep"}</Label>
+                    <Label 
+                      htmlFor="rb-deep" 
+                      className="font-body text-sm md:text-base cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors"
+                    >
+                      {dictionary['CrystalBallPage.precisionDeep'] || "Deep"}
+                    </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="mystic" id="rb-mystic" />
-                    <Label htmlFor="rb-mystic" className="font-body text-sm md:text-base">{dictionary['CrystalBallPage.precisionMystic'] || "Mystic"}</Label>
+                    <Label 
+                      htmlFor="rb-mystic" 
+                      className="font-body text-sm md:text-base cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors"
+                    >
+                      {dictionary['CrystalBallPage.precisionMystic'] || "Mystic"}
+                    </Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -295,3 +310,4 @@ export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPa
 
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
+
