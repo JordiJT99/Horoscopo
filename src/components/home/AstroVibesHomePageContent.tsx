@@ -229,7 +229,7 @@ export default function AstroVibesHomePageContent({
     const baseSeed = `${selectedDisplaySignName}-${displayPeriod}-${targetDate || activeHoroscopePeriodForTitles}`;
     return [
       { nameKey: "HoroscopeSummary.love", percentage: getDeterministicRandom(`${baseSeed}-love`, 40, 95), dataKey: "love" as keyof HoroscopeDetail },
-      { nameKey: "HoroscopeSummary.career", percentage: getDeterministicRandom(`${baseSeed}-career`, 40, 95), dataKey: "main" as keyof HoroscopeDetail },
+      { nameKey: "HoroscopeSummary.work", percentage: getDeterministicRandom(`${baseSeed}-work`, 40, 95), dataKey: "main" as keyof HoroscopeDetail }, // Changed from career to work
       { nameKey: "HoroscopeSummary.health", percentage: getDeterministicRandom(`${baseSeed}-health`, 40, 95), dataKey: "health" as keyof HoroscopeDetail },
     ];
   }, [selectedDisplaySignName, displayPeriod, targetDate, activeHoroscopePeriodForTitles]);

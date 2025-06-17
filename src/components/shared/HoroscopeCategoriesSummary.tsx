@@ -24,30 +24,29 @@ interface HoroscopeCategoriesSummaryProps {
   horoscopeDetail: HoroscopeDetail | null; 
 }
 
-const chartColors = [
-  'hsl(var(--chart-1))',
-  'hsl(var(--chart-2))',
-  'hsl(var(--chart-3))',
-];
+// Using a single primary color for all progress bars as per the image
+const primaryChartColor = 'hsl(var(--primary))';
+const progressTrackColor = 'hsl(var(--horoscope-progress-background))';
+
 
 const SingleRadialChart = ({ percentage, label, color, isLoading }: { percentage: number, label: string, color: string, isLoading: boolean }) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
 
   useEffect(() => {
     if (!isLoading) {
-      const timer = setTimeout(() => setAnimatedPercentage(percentage), 100);
+      const timer = setTimeout(() => setAnimatedPercentage(percentage), 100); // Small delay for animation to be visible
       return () => clearTimeout(timer);
     } else {
-      setAnimatedPercentage(0);
+      setAnimatedPercentage(0); // Reset on load
     }
   }, [isLoading, percentage]);
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center space-y-1">
-        <Skeleton className="h-16 w-16 rounded-full bg-muted/50" />
+      <div className="flex flex-col items-center space-y-1.5">
+        <Skeleton className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-muted/50" />
         <Skeleton className="h-4 w-12 bg-muted/50" />
-        <Skeleton className="h-3 w-8 bg-muted/50" />
+        <Skeleton className="h-5 w-8 bg-muted/50" />
       </div>
     );
   }
@@ -55,13 +54,13 @@ const SingleRadialChart = ({ percentage, label, color, isLoading }: { percentage
   const chartData = [{ name: label, value: animatedPercentage, fill: color }];
 
   return (
-    <div className="flex flex-col items-center text-center w-full max-w-[100px] sm:max-w-[120px] mx-auto">
-      <div className="w-16 h-16 sm:w-20 sm:h-20">
+    <div className="flex flex-col items-center text-center w-full mx-auto">
+      <div className="w-20 h-20 sm:w-24 sm:h-24"> {/* Increased size */}
         <ResponsiveContainer width="100%" height="100%">
           <RadialBarChart
             innerRadius="70%"
             outerRadius="100%"
-            barSize={8}
+            barSize={7} // Adjusted bar size
             data={chartData}
             startAngle={90}
             endAngle={-270}
@@ -73,20 +72,17 @@ const SingleRadialChart = ({ percentage, label, color, isLoading }: { percentage
               tick={false}
             />
             <RadialBar
-              background={{ fill: 'hsl(var(--horoscope-progress-background))' }}
+              background={{ fill: progressTrackColor }}
               dataKey="value"
               angleAxisId={0}
               cornerRadius={10}
-              className="transition-all duration-1000 ease-out"
+              className="transition-all duration-1000 ease-out" // For value animation
             />
-             {/* Text in the middle - Recharts doesn't make this super easy without custom components or workarounds.
-                 A simple way is to position text absolutely or use a library extension if available.
-                 For simplicity here, we'll put text below. */}
           </RadialBarChart>
         </ResponsiveContainer>
       </div>
-      <p className="text-xs font-semibold text-horoscope-category-text mt-1">{label}</p>
-      <p className="text-sm font-bold text-primary">{animatedPercentage}%</p>
+      <p className="text-sm font-semibold text-foreground mt-1.5">{label}</p> {/* Text in foreground color, bold */}
+      <p className="text-base font-bold text-primary">{animatedPercentage}%</p> {/* Percentage in primary color, bold */}
     </div>
   );
 };
@@ -111,10 +107,10 @@ export default function HoroscopeCategoriesSummary({
         {isLoading && !horoscopeDetail ? (
           <div className="grid grid-cols-1 min-[380px]:grid-cols-3 gap-3 sm:gap-4">
             {Array.from({ length: 3 }).map((_, index) => (
-              <div key={`skeleton-radial-${index}`} className="flex flex-col items-center space-y-1">
-                <Skeleton className="h-16 w-16 sm:h-20 sm:h-20 rounded-full bg-muted/50" />
-                <Skeleton className="h-4 w-12 bg-muted/50 mt-1" />
-                <Skeleton className="h-3 w-8 bg-muted/50" />
+              <div key={`skeleton-radial-${index}`} className="flex flex-col items-center space-y-1.5">
+                <Skeleton className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-muted/50" />
+                <Skeleton className="h-4 w-12 bg-muted/50 mt-1.5" />
+                <Skeleton className="h-5 w-8 bg-muted/50" />
               </div>
             ))}
           </div>
@@ -125,7 +121,7 @@ export default function HoroscopeCategoriesSummary({
                 key={`${category.nameKey}-${index}`}
                 percentage={category.percentage}
                 label={dictionary[category.nameKey] || category.nameKey.split('.').pop() || "Category"}
-                color={chartColors[index % chartColors.length]}
+                color={primaryChartColor} // Use the same primary color for all bars
                 isLoading={isLoading}
               />
             ))}

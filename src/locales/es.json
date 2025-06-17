@@ -1,4 +1,3 @@
-
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -34,7 +33,7 @@
   "HoroscopeSummary.essentialMonthly": "Esencial (Mensual)",
   "HoroscopeSummary.relations": "Relaciones",
   "HoroscopeSummary.love": "Amor",
-  "HoroscopeSummary.career": "Carrera",
+  "HoroscopeSummary.work": "Trabajo",
   "HoroscopeSummary.health": "Salud",
   "PromotionCard.tarotNebulaTitle": "TAROT Nebula",
   "PromotionCard.tarotNebulaAlt": "Icono de TAROT Nebula",
@@ -140,6 +139,9 @@
   "CompatibilitySection.selectSecondSign": "Selecciona el Segundo Signo",
   "CompatibilitySection.checkingCosmicConnection": "Verificando conexión cósmica...",
   "CompatibilitySection.reportTitle": "{sign1} y {sign2}",
+  "CompatibilitySection.selectSignsPrompt": "Selecciona dos signos para ver su informe de compatibilidad.",
+  "CompatibilitySection.refreshReportButton": "Actualizar Reporte",
+  "CompatibilitySection.loading": "Cargando...",
   "LuckyNumbersSection.title": "Amuletos de la Suerte",
   "LuckyNumbersSection.description": "Selecciona tu signo para descubrir sus atributos de la suerte.",
   "LuckyNumbersSection.loading": "Revelando tus fortunas...",
