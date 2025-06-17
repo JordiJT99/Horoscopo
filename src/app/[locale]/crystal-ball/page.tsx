@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, Sparkles, Share2, RotateCcw } from 'lucide-react';
 import { crystalBallFlow, type CrystalBallInput, type CrystalBallOutput } from '@/ai/flows/crystal-ball-flow';
 import { useToast } from "@/hooks/use-toast";
+import Image from 'next/image'; // Importar Image de next/image
 
 type PrecisionLevel = 'basic' | 'deep' | 'mystic';
 
@@ -31,6 +32,9 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
   const [error, setError] = useState<string | null>(null);
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   const { toast } = useToast();
+
+  // Ruta del GIF. Indicar al usuario que la ajuste si es necesario.
+  const crystalBallGifPath = "/gifs/crystal-ball.gif"; // Asume que está en public/gifs/crystal-ball.gif
 
   useEffect(() => {
     const sharedAnswer = searchParams.get('answer');
@@ -81,7 +85,6 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     
     const pageUrl = new URL(window.location.href);
     pageUrl.searchParams.set('answer', encodeURIComponent(answer));
-    // pageUrl.searchParams.set('level', precisionLevel); // Optionally share precision level
     const shareableUrl = pageUrl.toString();
 
     if (shareableUrl.length > 2000) {
@@ -140,11 +143,9 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
 
   const handleNewQuery = () => {
     const newPath = `/${locale}/crystal-ball`;
-    // Check if router.push can accept an URL object or if it needs a string
     if (typeof router.push === 'function') {
-       router.push(newPath); // Keep it simple if it works
+       router.push(newPath);
     } else {
-       // Fallback or ensure you're using a version of Next.js router that supports this
        window.location.href = newPath;
     }
     setAnswer(null);
@@ -176,6 +177,18 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
           )}
         </CardHeader>
         <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
+          <div className="flex justify-center my-4">
+            <Image
+              src={crystalBallGifPath}
+              alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
+              width={180} // Ajusta el tamaño según tu GIF
+              height={180} // Ajusta el tamaño según tu GIF
+              className="rounded-lg shadow-md"
+              unoptimized={true} // Para GIFs animados, a menudo es mejor desactivar la optimización de Next/Image
+              data-ai-hint="crystal ball animation"
+            />
+          </div>
+
           {!isShowingSharedContent && (
             <>
               <div>
@@ -278,3 +291,5 @@ export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPa
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
 
+
+    
