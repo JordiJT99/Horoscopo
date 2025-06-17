@@ -1,12 +1,12 @@
 
-"use client"; // This directive at the top of CrystalBallContent is correct
+"use client"; 
 
 import { useState, use, useMemo, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -22,7 +22,6 @@ interface CrystalBallPageProps {
   params: { locale: Locale };
 }
 
-// This is the Client Component that handles UI interaction and state
 function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -36,14 +35,13 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
 
   const crystalBallGifPath = "/gifs/crystal-ball.gif"; 
 
-  // This `isClient` state and effect is fine within this Client Component
   const [isClientForContent, setIsClientForContent] = useState(false);
   useEffect(() => {
     setIsClientForContent(true);
   }, []);
 
   useEffect(() => {
-    if (!isClientForContent) return; // Ensure this runs only on the client after mount
+    if (!isClientForContent) return; 
 
     const sharedAnswer = searchParams.get('answer');
     if (sharedAnswer) {
@@ -163,11 +161,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     setPrecisionLevel('basic');
   };
 
-  // Loading state for dictionary passed as prop is handled by Suspense in the parent.
-  // The isClientForContent check here is for browser-specific APIs or effects in this component.
   if (!isClientForContent) {
-    // Render a minimal skeleton or null during server render / initial hydration if needed
-    // Or, rely on Suspense for data fetching parts if this component also fetches data
     return (
         <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -175,7 +169,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         </div>
       );
   }
-  if (Object.keys(dictionary).length === 0) { // Safeguard if dictionary is empty
+  if (Object.keys(dictionary).length === 0) { 
      return (
         <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -183,7 +177,6 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         </div>
       );
   }
-
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -193,7 +186,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         icon={Eye}
         className="mb-12"
       />
-      <Card className="w-full max-w-xl mx-auto shadow-xl">
+      <Card className="w-full max-w-xl mx-auto shadow-xl bg-card/70 backdrop-blur-sm border border-white/20 flex flex-col">
         <CardHeader className="px-4 py-4 md:px-6 md:py-5">
           <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
             {isShowingSharedContent 
@@ -206,7 +199,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
             </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6 flex-grow">
           
           <div className="flex justify-center my-6 md:my-8">
             <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44"> 
@@ -224,7 +217,6 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
             </div>
           </div>
 
-
           {!isShowingSharedContent && (
             <>
               <div>
@@ -240,13 +232,19 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
 
               <div className="space-y-2">
                 <Label className="font-body text-sm md:text-base text-muted-foreground">{dictionary['CrystalBallPage.precisionLevelLabel'] || "Select Precision Level:"}</Label>
+                <p id="levelHint" className="sr-only">{dictionary['CrystalBallPage.precisionLevelHint'] || "Choose how detailed you want the crystal ball's answer to be."}</p>
                 <RadioGroup
                   value={precisionLevel}
                   onValueChange={(value) => setPrecisionLevel(value as PrecisionLevel)}
                   className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+                  aria-describedby="levelHint"
                 >
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="basic" id="rb-basic" />
+                    <RadioGroupItem 
+                      value="basic" 
+                      id="rb-basic" 
+                      aria-label={dictionary['CrystalBallPage.precisionBasic.ariaLabel'] || "Basic precision level"}
+                    />
                     <Label 
                       htmlFor="rb-basic" 
                       className="font-body text-sm md:text-base cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors"
@@ -255,7 +253,11 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="deep" id="rb-deep" />
+                    <RadioGroupItem 
+                      value="deep" 
+                      id="rb-deep" 
+                      aria-label={dictionary['CrystalBallPage.precisionDeep.ariaLabel'] || "Deep precision level"}
+                    />
                     <Label 
                       htmlFor="rb-deep" 
                       className="font-body text-sm md:text-base cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors"
@@ -264,7 +266,11 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="mystic" id="rb-mystic" />
+                    <RadioGroupItem 
+                      value="mystic" 
+                      id="rb-mystic" 
+                      aria-label={dictionary['CrystalBallPage.precisionMystic.ariaLabel'] || "Mystic precision level"}
+                    />
                     <Label 
                       htmlFor="rb-mystic" 
                       className="font-body text-sm md:text-base cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors"
@@ -274,17 +280,6 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
                   </div>
                 </RadioGroup>
               </div>
-
-              <Button onClick={handleConsultCrystalBall} disabled={isLoading} className="w-full font-body text-sm md:text-base">
-                {isLoading ? (
-                  <>
-                    <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
-                    {dictionary['CrystalBallPage.consultingButton'] || "Consulting the Mists..."}
-                  </>
-                ) : (
-                  dictionary['CrystalBallPage.consultButton'] || "Consult the Crystal Ball"
-                )}
-              </Button>
             </>
           )}
 
@@ -308,29 +303,38 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
               </CardContent>
             </Card>
           )}
-          {isShowingSharedContent && (
-            <Button onClick={handleNewQuery} variant="ghost" className="w-full font-body mt-4 text-xs md:text-sm">
+        </CardContent>
+        {!isShowingSharedContent && (
+          <CardFooter className="border-t border-border/20 pt-4 px-4 pb-4 md:px-6 md:pb-6">
+            <Button onClick={handleConsultCrystalBall} disabled={isLoading} className="w-full font-body text-sm md:text-base">
+              {isLoading ? (
+                <>
+                  <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
+                  {dictionary['CrystalBallPage.consultingButton'] || "Consulting the Mists..."}
+                </>
+              ) : (
+                dictionary['CrystalBallPage.consultButton'] || "Consult the Crystal Ball"
+              )}
+            </Button>
+          </CardFooter>
+        )}
+        {isShowingSharedContent && (
+           <CardFooter className="border-t border-border/20 pt-4 px-4 pb-4 md:px-6 md:pb-6">
+            <Button onClick={handleNewQuery} variant="ghost" className="w-full font-body text-xs md:text-sm">
               <RotateCcw className="mr-2 h-4 w-4" />
               {dictionary['CrystalBallPage.newQueryButton'] || "Ask a New Question"}
             </Button>
-          )}
-        </CardContent>
+          </CardFooter>
+        )}
       </Card>
     </main>
   );
 }
 
-// This is the default export, which should act as a Server Component or be compatible with `use(promise)`
 export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPageProps) {
-  // Resolve promises for params and dictionary.
-  // `use` will suspend if the promises are not yet resolved.
   const params = use(paramsPromise); 
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
-
-  // Removed useState, useEffect, and conditional loading for isClient and dictionary here.
-  // `use(dictionaryPromise)` handles suspense for dictionary loading.
-  // `CrystalBallContent` will handle its own client-side specifics.
 
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
