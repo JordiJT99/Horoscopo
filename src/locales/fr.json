@@ -23,6 +23,8 @@
   "BottomNav.more": "Plus",
   "SignSelector.addFriend": "Ajouter",
   "SelectedSign.moreDetails": "Plus de détails",
+  "SelectedSign.scrollToDetails": "Faire défiler jusqu'aux détails de {signName}",
+  "SelectedSign.moreDetailsAria": "Plus de détails pour {signName}",
   "FeatureCards.compatibilityReading": "Lecture de Compatibilité",
   "FeatureCards.palmReading": "Chiromancie",
   "HoroscopeSummary.essentialToday": "Essentiel (Aujourd'hui)",

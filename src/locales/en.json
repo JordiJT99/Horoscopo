@@ -23,6 +23,8 @@
   "BottomNav.more": "More",
   "SignSelector.addFriend": "Add",
   "SelectedSign.moreDetails": "More details",
+  "SelectedSign.scrollToDetails": "Scroll to {signName} details",
+  "SelectedSign.moreDetailsAria": "More details for {signName}",
   "FeatureCards.compatibilityReading": "Compatibility Reading",
   "FeatureCards.palmReading": "Palm Reading",
   "HoroscopeSummary.essentialToday": "Essential (Today)",

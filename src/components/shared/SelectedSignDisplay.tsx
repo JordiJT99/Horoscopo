@@ -34,10 +34,15 @@ export default function SelectedSignDisplay({
     }
   };
 
+  const translatedSignName = dictionary[selectedSign.name] || selectedSign.name;
+  const scrollToDetailsAriaLabel = (dictionary['SelectedSign.scrollToDetails'] || "Scroll to {signName} details").replace('{signName}', translatedSignName);
+  const moreDetailsAriaLabel = (dictionary['SelectedSign.moreDetailsAria'] || "More details for {signName}").replace('{signName}', translatedSignName);
+
+
   return (
     <div className="flex flex-col items-center text-center py-4">
       <h2 className="text-3xl font-bold font-headline text-foreground">
-        {dictionary[selectedSign.name] || selectedSign.name}
+        {translatedSignName}
       </h2>
       <p className="text-sm text-muted-foreground mb-4">
         {selectedSign.dateRange}
@@ -50,13 +55,13 @@ export default function SelectedSignDisplay({
         onClick={handleBannerClick}
         role="button"
         tabIndex={0}
-        aria-label={(dictionary['SelectedSign.scrollToDetails'] || "Scroll to {signName} details").replace('{signName}', dictionary[selectedSign.name] || selectedSign.name)}
+        aria-label={scrollToDetailsAriaLabel}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBannerClick(); }}
       >
         <div className="w-full h-full bg-card rounded-full overflow-hidden">
           <Image
               src={imagePath}
-              alt={dictionary[selectedSign.name] || selectedSign.name}
+              alt={translatedSignName}
               layout="fill" 
               objectFit="cover"
               priority={true}
@@ -77,7 +82,7 @@ export default function SelectedSignDisplay({
         size="sm" 
         className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs mt-1 px-6 rounded-md"
         onClick={handleBannerClick}
-        aria-label={(dictionary['SelectedSign.moreDetailsAria'] || "More details for {signName}").replace('{signName}', dictionary[selectedSign.name] || selectedSign.name)}
+        aria-label={moreDetailsAriaLabel}
       >
         {dictionary['SelectedSign.moreDetails'] || "Más detalles"}
       </Button>

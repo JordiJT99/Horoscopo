@@ -23,6 +23,8 @@
   "BottomNav.more": "Mehr",
   "SignSelector.addFriend": "Hinzufügen",
   "SelectedSign.moreDetails": "Mehr Details",
+  "SelectedSign.scrollToDetails": "Zu den Details von {signName} scrollen",
+  "SelectedSign.moreDetailsAria": "Weitere Details für {signName}",
   "FeatureCards.compatibilityReading": "Kompatibilitätsdeutung",
   "FeatureCards.palmReading": "Handlesung",
   "HoroscopeSummary.essentialToday": "Wesentlich (Heute)",
