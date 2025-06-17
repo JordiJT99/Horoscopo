@@ -95,7 +95,7 @@ export default {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.3)' }, 
         },
-        pulseOrbHalo: { /* Definido en globals.css */
+        pulseOrbHalo: { 
           '0%, 100%': {
             boxShadow: '0 0 10px 2px hsla(var(--primary), 0.3), 0 0 20px 5px hsla(var(--primary), 0.15), 0 0 35px 10px hsla(var(--primary), 0.08)',
             opacity: '0.8',
