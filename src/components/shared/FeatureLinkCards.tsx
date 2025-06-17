@@ -29,11 +29,15 @@ const FeatureCard = ({
   return (
     <motion.div
       className="block"
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.03, y: -2 }} // Subtle scale and lift
+      whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
       <Link href={`/${locale}${href}`} className="block">
-        <Card className="bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-md transition-opacity">
+        <Card className={cn(
+            "bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-md transition-all duration-200",
+            "hover:shadow-xl hover:border-primary/50 focus-visible:shadow-xl focus-visible:border-primary/50 border-2 border-transparent"
+        )}>
           <CardContent className="flex items-center justify-between p-0">
             <div className="flex items-center gap-3">
               <Icon className="w-7 h-7" />
@@ -57,13 +61,13 @@ export default function FeatureLinkCards({ dictionary, locale }: FeatureLinkCard
     {
       titleKey: "FeatureCards.palmReading",
       icon: Hand,
-      href: "/palm-reading", // Placeholder page
+      href: "/palm-reading", 
     },
   ];
 
   return (
     <motion.div 
-      className="grid grid-cols-2 gap-3 sm:gap-4 my-4"
+      className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-3 sm:gap-4 my-4" // Using arbitrary variant for 420px
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}

@@ -27,6 +27,13 @@ export default function SelectedSignDisplay({
     aiHint = `${selectedSign.name.toLowerCase()} zodiac symbol illustration`;
   }
 
+  const handleBannerClick = () => {
+    const detailsSection = document.getElementById('horoscope-details-section');
+    if (detailsSection) {
+      detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className="flex flex-col items-center text-center py-4">
       <h2 className="text-3xl font-bold font-headline text-foreground">
@@ -35,31 +42,43 @@ export default function SelectedSignDisplay({
       <p className="text-sm text-muted-foreground mb-4">
         {selectedSign.dateRange}
       </p>
-      {/* Container mimicking the image style: Outer vibrant ring, inner dark bg for image */}
-      <div className={cn(
-        "relative w-32 h-32 sm:w-36 sm:h-36 mb-4 rounded-full shadow-lg",
-        "p-1 bg-primary" // This creates the outer vibrant ring
-      )}>
-        <div className="w-full h-full bg-card rounded-full overflow-hidden"> {/* Inner container for the image with dark bg */}
+      <div
+        className={cn(
+          "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer",
+          "p-1 bg-primary" 
+        )}
+        onClick={handleBannerClick}
+        role="button"
+        tabIndex={0}
+        aria-label={(dictionary['SelectedSign.scrollToDetails'] || "Scroll to {signName} details").replace('{signName}', dictionary[selectedSign.name] || selectedSign.name)}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBannerClick(); }}
+      >
+        <div className="w-full h-full bg-card rounded-full overflow-hidden">
           <Image
               src={imagePath}
               alt={dictionary[selectedSign.name] || selectedSign.name}
               layout="fill" 
-              objectFit="cover" // Changed to cover to better fill the circle
+              objectFit="cover"
               priority={true}
               key={imagePath} 
               className="rounded-full" 
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null; 
-                target.src = `https://placehold.co/144x144/2A0A2A/FFFFFF.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`; // Darker placeholder BG
+                target.src = `https://placehold.co/144x144/2A0A2A/FFFFFF.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`;
                 target.setAttribute("data-ai-hint", "letter placeholder");
               }}
               data-ai-hint={aiHint}
           />
         </div>
       </div>
-      <Button variant="default" size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-md"> {/* Ensure button uses primary and has rounded corners */}
+      <Button 
+        variant="outline" 
+        size="sm" 
+        className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs mt-1 px-6 rounded-md"
+        onClick={handleBannerClick}
+        aria-label={(dictionary['SelectedSign.moreDetailsAria'] || "More details for {signName}").replace('{signName}', dictionary[selectedSign.name] || selectedSign.name)}
+      >
         {dictionary['SelectedSign.moreDetails'] || "Más detalles"}
       </Button>
     </div>

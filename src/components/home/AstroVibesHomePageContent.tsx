@@ -25,24 +25,22 @@ import { useIsMobile } from '@/hooks/use-mobile';
 interface AstroVibesPageContentProps {
   dictionary: Dictionary;
   locale: Locale;
-  displayPeriod: 'daily' | 'weekly' | 'monthly'; // What data to fetch/show in details
-  targetDate?: string; // For daily, if not today
-  activeHoroscopePeriodForTitles: HoroscopePeriod; // For titles and active tab
+  displayPeriod: 'daily' | 'weekly' | 'monthly'; 
+  targetDate?: string; 
+  activeHoroscopePeriodForTitles: HoroscopePeriod; 
 }
 
 const orderedTabs: HoroscopePeriod[] = ['yesterday', 'today', 'tomorrow', 'weekly', 'monthly'];
 const SWIPE_CONFIDENCE_THRESHOLD = 8000;
 const SWIPE_OFFSET_THRESHOLD = 50;
 
-// Helper function to generate a deterministic "random" number based on a seed string
 function getDeterministicRandom(seedString: string, min: number, max: number): number {
   let hash = 0;
   for (let i = 0; i < seedString.length; i++) {
     const char = seedString.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
-    hash |= 0; // Convert to 32bit integer
+    hash |= 0; 
   }
-  // Convert the hash to a number between 0 and 1 (approx)
   const random = (hash & 0x7fffffff) / 0x7fffffff;
   return Math.floor(random * (max - min + 1)) + min;
 }
@@ -199,7 +197,7 @@ export default function AstroVibesHomePageContent({
     } else {
       basePath = `/${locale}`; 
       if (currentQueryParams.has('period')) {
-        currentQueryParams.delete('period');
+        currentQueryParams.delete('period'); // For 'today'/'tomorrow' which resolve to root
       }
     }
     const newPath = `${basePath}?${currentQueryParams.toString()}`;
@@ -231,7 +229,7 @@ export default function AstroVibesHomePageContent({
     const baseSeed = `${selectedDisplaySignName}-${displayPeriod}-${targetDate || activeHoroscopePeriodForTitles}`;
     return [
       { nameKey: "HoroscopeSummary.love", percentage: getDeterministicRandom(`${baseSeed}-love`, 40, 95), dataKey: "love" as keyof HoroscopeDetail },
-      { nameKey: "HoroscopeSummary.career", percentage: getDeterministicRandom(`${baseSeed}-career`, 40, 95), dataKey: "main" as keyof HoroscopeDetail }, // Assuming 'main' relates to career/work for summary
+      { nameKey: "HoroscopeSummary.career", percentage: getDeterministicRandom(`${baseSeed}-career`, 40, 95), dataKey: "main" as keyof HoroscopeDetail },
       { nameKey: "HoroscopeSummary.health", percentage: getDeterministicRandom(`${baseSeed}-health`, 40, 95), dataKey: "health" as keyof HoroscopeDetail },
     ];
   }, [selectedDisplaySignName, displayPeriod, targetDate, activeHoroscopePeriodForTitles]);
@@ -284,6 +282,7 @@ export default function AstroVibesHomePageContent({
   return (
     <div className="flex flex-col">
       <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden">
+        {/* SignSelector and SubHeaderTabs are outside the draggable motion.div */}
         <SignSelectorHorizontalScroll
           dictionary={dictionary}
           locale={locale}
@@ -293,6 +292,13 @@ export default function AstroVibesHomePageContent({
           user={user}
         />
 
+        <SubHeaderTabs
+          dictionary={dictionary}
+          activeTab={activeHoroscopePeriodForTitles}
+          onTabChange={handleSubHeaderTabSelect}
+        />
+        
+        {/* Content that will be animated and potentially dragged */}
         <motion.div
             key={motionDivKey} 
             drag={isMobile ? "x" : false}
@@ -312,12 +318,6 @@ export default function AstroVibesHomePageContent({
               selectedSign={selectedDisplaySign}
             />
           </motion.div>
-
-          <SubHeaderTabs
-            dictionary={dictionary}
-            activeTab={activeHoroscopePeriodForTitles}
-            onTabChange={handleSubHeaderTabSelect}
-          />
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -343,6 +343,7 @@ export default function AstroVibesHomePageContent({
           </motion.div>
 
           <motion.div
+            id="horoscope-details-section" // Added ID for scroll target
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -356,7 +357,7 @@ export default function AstroVibesHomePageContent({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
               {detailedHoroscopeCategories.map((cat) => (
                 <HoroscopeCategoryCard
-                    key={`${cat.id}-${motionDivKey}-detail`} // Ensure unique key for re-animation
+                    key={`${cat.id}-${motionDivKey}-detail`} 
                     dictionary={dictionary}
                     titleKey={cat.titleKey}
                     icon={cat.icon}
@@ -393,4 +394,3 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
-
