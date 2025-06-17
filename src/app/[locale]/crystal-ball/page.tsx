@@ -1,5 +1,5 @@
 
-"use client";
+"use client"; // This directive at the top of CrystalBallContent is correct
 
 import { useState, use, useMemo, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -22,6 +22,7 @@ interface CrystalBallPageProps {
   params: { locale: Locale };
 }
 
+// This is the Client Component that handles UI interaction and state
 function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,7 +36,15 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
 
   const crystalBallGifPath = "/gifs/crystal-ball.gif"; 
 
+  // This `isClient` state and effect is fine within this Client Component
+  const [isClientForContent, setIsClientForContent] = useState(false);
   useEffect(() => {
+    setIsClientForContent(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClientForContent) return; // Ensure this runs only on the client after mount
+
     const sharedAnswer = searchParams.get('answer');
     if (sharedAnswer) {
       try {
@@ -48,7 +57,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         setError(dictionary['CrystalBallPage.errorDecoding'] || "Could not display the shared revelation. It might be corrupted.");
       }
     }
-  }, [searchParams, dictionary]);
+  }, [searchParams, dictionary, isClientForContent]);
 
   const handleConsultCrystalBall = async () => {
     if (!question.trim()) {
@@ -154,6 +163,28 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
     setPrecisionLevel('basic');
   };
 
+  // Loading state for dictionary passed as prop is handled by Suspense in the parent.
+  // The isClientForContent check here is for browser-specific APIs or effects in this component.
+  if (!isClientForContent) {
+    // Render a minimal skeleton or null during server render / initial hydration if needed
+    // Or, rely on Suspense for data fetching parts if this component also fetches data
+    return (
+        <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4">Loading Crystal Ball...</p>
+        </div>
+      );
+  }
+  if (Object.keys(dictionary).length === 0) { // Safeguard if dictionary is empty
+     return (
+        <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4">Loading dictionary for Crystal Ball...</p>
+        </div>
+      );
+  }
+
+
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
       <SectionTitle
@@ -178,8 +209,8 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
         <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
           
           <div className="flex justify-center my-6 md:my-8">
-            <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44"> {/* Contenedor para el orbe y el halo */}
-              <div className="w-full h-full rounded-full overflow-hidden shadow-inner bg-background"> {/* Div interior para asegurar que el GIF se recorte circularmente */}
+            <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44"> 
+              <div className="w-full h-full rounded-full overflow-hidden shadow-inner bg-background"> 
                 <Image
                   src={crystalBallGifPath}
                   alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
@@ -289,24 +320,17 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
   );
 }
 
+// This is the default export, which should act as a Server Component or be compatible with `use(promise)`
 export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPageProps) {
-  const params = use(paramsPromise);
+  // Resolve promises for params and dictionary.
+  // `use` will suspend if the promises are not yet resolved.
+  const params = use(paramsPromise); 
   const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
   const dictionary = use(dictionaryPromise);
 
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient || Object.keys(dictionary).length === 0) {
-    return (
-      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-        <p className="mt-4">Loading dictionary...</p>
-      </div>
-    );
-  }
+  // Removed useState, useEffect, and conditional loading for isClient and dictionary here.
+  // `use(dictionaryPromise)` handles suspense for dictionary loading.
+  // `CrystalBallContent` will handle its own client-side specifics.
 
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
