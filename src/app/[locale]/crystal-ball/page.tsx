@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, Sparkles, Share2, RotateCcw } from 'lucide-react';
 import { crystalBallFlow, type CrystalBallInput, type CrystalBallOutput } from '@/ai/flows/crystal-ball-flow';
 import { useToast } from "@/hooks/use-toast";
-import Image from 'next/image'; // Importar Image de next/image
+import Image from 'next/image'; 
 
 type PrecisionLevel = 'basic' | 'deep' | 'mystic';
 
@@ -33,8 +33,7 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   const { toast } = useToast();
 
-  // Ruta del GIF. Indicar al usuario que la ajuste si es necesario.
-  const crystalBallGifPath = "/gifs/crystal-ball.gif"; // Asume que está en public/gifs/crystal-ball.gif
+  const crystalBallGifPath = "/gifs/crystal-ball.gif"; 
 
   useEffect(() => {
     const sharedAnswer = searchParams.get('answer');
@@ -177,17 +176,23 @@ function CrystalBallContent({ dictionary, locale }: { dictionary: Dictionary, lo
           )}
         </CardHeader>
         <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
-          <div className="flex justify-center my-4">
-            <Image
-              src={crystalBallGifPath}
-              alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
-              width={180} // Ajusta el tamaño según tu GIF
-              height={180} // Ajusta el tamaño según tu GIF
-              className="rounded-lg shadow-md"
-              unoptimized={true} // Para GIFs animados, a menudo es mejor desactivar la optimización de Next/Image
-              data-ai-hint="crystal ball animation"
-            />
+          
+          <div className="flex justify-center my-6 md:my-8">
+            <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44"> {/* Contenedor para el orbe y el halo */}
+              <div className="w-full h-full rounded-full overflow-hidden shadow-inner bg-background"> {/* Div interior para asegurar que el GIF se recorte circularmente */}
+                <Image
+                  src={crystalBallGifPath}
+                  alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
+                  width={180} 
+                  height={180} 
+                  className="object-cover w-full h-full"
+                  unoptimized={true} 
+                  data-ai-hint="crystal ball animation"
+                />
+              </div>
+            </div>
           </div>
+
 
           {!isShowingSharedContent && (
             <>
@@ -290,6 +295,3 @@ export default function CrystalBallPage({ params: paramsPromise }: CrystalBallPa
 
   return <CrystalBallContent dictionary={dictionary} locale={params.locale} />;
 }
-
-
-    

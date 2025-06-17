@@ -70,7 +70,7 @@ export default {
         'horoscope-progress-indicator': 'hsl(var(--horoscope-progress-indicator))',
       },
       borderRadius: { 
-        lg: 'var(--radius)', // Original: uses CSS variable
+        lg: 'var(--radius)', 
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
@@ -91,15 +91,26 @@ export default {
             height: '0',
           },
         },
-        pulseHeart: { /* Keyframes defined in globals.css */
+        pulseHeart: { 
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.3)' }, 
+        },
+        pulseOrbHalo: { /* Definido en globals.css */
+          '0%, 100%': {
+            boxShadow: '0 0 10px 2px hsla(var(--primary), 0.3), 0 0 20px 5px hsla(var(--primary), 0.15), 0 0 35px 10px hsla(var(--primary), 0.08)',
+            opacity: '0.8',
+          },
+          '50%': {
+            boxShadow: '0 0 15px 4px hsla(var(--primary), 0.45), 0 0 30px 8px hsla(var(--primary), 0.25), 0 0 50px 15px hsla(var(--primary), 0.12)',
+            opacity: '1',
+          },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        pulseHeart: 'pulseHeart 5s infinite ease-in-out', /* Slower duration */
+        pulseHeart: 'pulseHeart 5s infinite ease-in-out', 
+        pulseOrbHalo: 'pulseOrbHalo 4s infinite ease-in-out',
       },
     },
   },
