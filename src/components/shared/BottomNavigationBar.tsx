@@ -33,7 +33,10 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
   ];
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 w-full border-t border-border/40 bg-bottom-nav-background shadow-top">
+    <footer className={cn(
+      "fixed bottom-0 left-0 right-0 z-50 w-full border-t border-border/40 bg-bottom-nav-background shadow-top",
+      "backdrop-blur-md" // Added for glassmorphism effect
+    )}>
       <div className="container flex h-16 items-center justify-around px-1 sm:px-2 md:px-4 max-w-screen-2xl">
         {navItems.map(item => {
           const DisplayIcon = item.icon; 
