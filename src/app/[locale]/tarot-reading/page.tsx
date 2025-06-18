@@ -13,10 +13,21 @@ import { Wand, Sparkles, Loader2, Share2, RotateCcw } from 'lucide-react';
 import { tarotReadingFlow, type TarotReadingInput, type TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface TarotReadingPageProps {
   params: { locale: Locale };
 }
+
+// Nebula Haze Theme Colors:
+const nebulaBaseBg = "#0B0B16";
+const nebulaCardBg = "#161625";
+const nebulaInputBorder = "#282848"; // Also for card border
+const nebulaTextPrimary = "#E5E5FF";
+const nebulaTextSecondary = "#9E9EB3";
+const nebulaAccent1 = "#FF3DAE"; // Magenta Neon
+const nebulaAccent2 = "#4BE0FF"; // Cyan
+const nebulaErrorText = "#FF6262";
 
 function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const router = useRouter();
@@ -28,7 +39,6 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
   const { toast } = useToast();
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
-  // State for shared content, to preserve it if user navigates away and back via history
   const [sharedCardName, setSharedCardName] = useState<string | null>(null);
   const [sharedCardMeaning, setSharedCardMeaning] = useState<string | null>(null);
   const [sharedAdvice, setSharedAdvice] = useState<string | null>(null);
@@ -53,7 +63,6 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
         setSharedAdvice(decodedAdvice);
         setSharedImagePlaceholderUrl(decodedImage);
         
-        // Display this shared content as the current reading
         setReading({
             cardName: decodedName,
             cardMeaning: decodedMeaning,
@@ -61,7 +70,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             imagePlaceholderUrl: decodedImage
         });
         setIsShowingSharedContent(true);
-        setQuestion(''); // Clear question field when showing shared content
+        setQuestion(''); 
       } catch (e) {
         console.error("Error decoding shared tarot reading:", e);
         setError(dictionary['TarotReadingPage.errorDecoding'] || "Could not display the shared reading. It might be corrupted.");
@@ -77,7 +86,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
     setIsLoading(true);
     setError(null);
     setReading(null);
-    setIsShowingSharedContent(false); // Reset shared content flag
+    setIsShowingSharedContent(false); 
     try {
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
@@ -183,22 +192,48 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
 
 
   return (
-    <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
+    <main 
+      className={cn(
+        "flex-grow container mx-auto px-4 py-8 md:py-12",
+        `bg-[${nebulaBaseBg}] text-[${nebulaTextPrimary}]`
+      )}
+    >
       <SectionTitle
         title={dictionary['TarotReadingPage.title'] || "Tarot Reading"}
         subtitle={dictionary['TarotReadingPage.subtitle'] || "Ask a question and draw a card for guidance."}
         icon={Wand}
-        className="mb-12"
+        className={cn(
+          "mb-12",
+          "[&>div>h2]:!text-[" + nebulaAccent1 + "]",
+          "[&>div>svg]:!text-[" + nebulaAccent1 + "]",
+          "[&_hr]:!border-[" + nebulaInputBorder + "]",
+          "[&>p]:!text-[" + nebulaTextSecondary + "]"
+        )}
       />
-      <Card className="w-full max-w-xl mx-auto shadow-xl">
+      <Card 
+        className={cn(
+          "w-full max-w-xl mx-auto shadow-xl",
+          `bg-[${nebulaCardBg}] border-[${nebulaInputBorder}] text-[${nebulaTextPrimary}]`
+        )}
+      >
         <CardHeader className="px-4 py-4 md:px-6 md:py-5">
-          <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
+          <CardTitle 
+            className={cn(
+              "font-headline text-xl md:text-2xl text-center",
+              `text-[${nebulaAccent1}]`
+            )}
+          >
             {isShowingSharedContent
               ? (dictionary['TarotReadingPage.sharedReadingTitle'] || "A Shared Tarot Reading")
               : (dictionary['TarotReadingPage.askTitle'] || "Ask Your Question")}
           </CardTitle>
           {!isShowingSharedContent && (
-            <CardDescription className="text-center font-body text-sm md:text-base">
+            <CardDescription 
+              className={cn(
+                "text-center font-body text-sm md:text-base",
+                `text-[${nebulaTextSecondary}]`
+              )}
+            >
               {dictionary['TarotReadingPage.askDescription'] || "Focus on your question and let the cards guide you. Draw one card for insight."}
             </CardDescription>
           )}
@@ -212,15 +247,25 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder={dictionary['TarotReadingPage.questionPlaceholder'] || "Type your question here..."}
-                  className="min-h-[100px] font-body"
+                  className={cn(
+                    "min-h-[100px] font-body",
+                    `bg-[#0f0f1c] border-[${nebulaInputBorder}] text-[${nebulaTextPrimary}] placeholder:text-[${nebulaTextSecondary}] focus-visible:ring-[${nebulaAccent1}]`
+                  )}
                   aria-label={dictionary['TarotReadingPage.questionLabel'] || "Your question for the tarot reading"}
                 />
               </div>
 
-              <Button onClick={handleDrawCard} disabled={isLoading} className="w-full font-body text-sm md:text-base">
+              <Button 
+                onClick={handleDrawCard} 
+                disabled={isLoading} 
+                className={cn(
+                  "w-full font-body text-sm md:text-base",
+                  `bg-[${nebulaAccent1}] text-[${nebulaBaseBg}] hover:bg-[${nebulaAccent1}]/90 focus-visible:ring-[${nebulaAccent1}]`
+                )}
+              >
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className={cn("mr-2 h-4 w-4 animate-spin", `text-[${nebulaBaseBg}]`)} />
                     {dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card..."}
                   </>
                 ) : (
@@ -233,12 +278,31 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             </>
           )}
 
-          {error && <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>}
+          {error && 
+            <p 
+              className={cn(
+                "text-center font-body text-sm md:text-base",
+                `text-[${nebulaErrorText}]`
+              )}
+            >
+              {error}
+            </p>
+          }
 
           {reading && !isLoading && (
-            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
+            <Card 
+              className={cn(
+                "mt-6 p-4 md:p-6 rounded-lg shadow",
+                `bg-[${nebulaCardBg}] border-[${nebulaInputBorder}]`
+              )}
+            >
               <CardHeader className="p-0 pb-3 md:pb-4 text-center">
-                 <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
+                 <CardTitle 
+                   className={cn(
+                     "font-headline text-lg md:text-xl",
+                     `text-[${nebulaAccent2}]`
+                    )}
+                  >
                     {isShowingSharedContent 
                         ? (dictionary['TarotReadingPage.sharedCardTitle']?.replace('{cardName}', reading.cardName) || reading.cardName)
                         : reading.cardName
@@ -252,19 +316,58 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                     alt={reading.cardName} 
                     width={100}  
                     height={175} 
-                    className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[134px] sm:h-[235px]"
+                    className={cn(
+                      "rounded-md shadow-lg border-2 sm:w-[134px] sm:h-[235px]",
+                      `border-[${nebulaAccent2}]/50`
+                    )}
                     data-ai-hint="tarot card"
                   />
                 </div>
                 <div>
-                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotReadingPage.meaningTitle'] || "Meaning:"}</h4>
-                  <p className="font-body text-card-foreground leading-relaxed text-xs sm:text-sm">{reading.cardMeaning}</p>
+                  <h4 
+                    className={cn(
+                      "font-headline text-md md:text-lg font-semibold mb-1",
+                      `text-[${nebulaTextPrimary}]`
+                    )}
+                  >
+                    {dictionary['TarotReadingPage.meaningTitle'] || "Meaning:"}
+                  </h4>
+                  <p 
+                    className={cn(
+                      "font-body leading-relaxed text-xs sm:text-sm",
+                      `text-[${nebulaTextSecondary}]`
+                    )}
+                  >
+                    {reading.cardMeaning}
+                  </p>
                 </div>
                 <div>
-                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotReadingPage.adviceTitle'] || "Advice for Your Question:"}</h4>
-                  <p className="font-body text-card-foreground leading-relaxed text-xs sm:text-sm">{reading.advice}</p>
+                  <h4 
+                    className={cn(
+                      "font-headline text-md md:text-lg font-semibold mb-1",
+                      `text-[${nebulaTextPrimary}]`
+                    )}
+                  >
+                    {dictionary['TarotReadingPage.adviceTitle'] || "Advice for Your Question:"}
+                  </h4>
+                  <p 
+                    className={cn(
+                      "font-body leading-relaxed text-xs sm:text-sm",
+                      `text-[${nebulaTextSecondary}]`
+                    )}
+                  >
+                    {reading.advice}
+                  </p>
                 </div>
-                <Button onClick={handleShare} variant="outline" size="sm" className="mt-4 w-full font-body text-xs md:text-sm">
+                <Button 
+                  onClick={handleShare} 
+                  variant="outline" 
+                  size="sm" 
+                  className={cn(
+                    "mt-4 w-full font-body text-xs md:text-sm",
+                    `border-[${nebulaAccent1}] text-[${nebulaAccent1}] hover:bg-[${nebulaAccent1}]/10 hover:text-[${nebulaAccent1}] focus-visible:ring-[${nebulaAccent1}]`
+                  )}
+                >
                   <Share2 className="mr-2 h-4 w-4" />
                   {dictionary['Share.buttonLabelTarotReadingLinkContent'] || "Share This Reading"}
                 </Button>
@@ -272,7 +375,14 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             </Card>
           )}
           {isShowingSharedContent && (
-            <Button onClick={handleNewReading} variant="ghost" className="w-full font-body mt-4 text-xs md:text-sm">
+            <Button 
+              onClick={handleNewReading} 
+              variant="ghost" 
+              className={cn(
+                "w-full font-body mt-4 text-xs md:text-sm",
+                `text-[${nebulaAccent1}] hover:bg-[${nebulaAccent1}]/10 hover:text-[${nebulaAccent1}]`
+              )}
+            >
               <RotateCcw className="mr-2 h-4 w-4" />
               {dictionary['TarotReadingPage.newReadingButton'] || "Get a New Reading"}
             </Button>
@@ -295,8 +405,11 @@ export default function TarotReadingPage({ params: paramsPromise }: TarotReading
 
   if (!isClient || Object.keys(dictionary).length === 0) {
     return (
-      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+      <div 
+        className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center"
+        style={{ backgroundColor: nebulaBaseBg, color: nebulaTextPrimary }}
+      >
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-current mx-auto" style={{ borderColor: nebulaAccent1 }}></div>
         <p className="mt-4">Loading dictionary...</p>
       </div>
     );
@@ -304,6 +417,3 @@ export default function TarotReadingPage({ params: paramsPromise }: TarotReading
 
   return <TarotReadingContent dictionary={dictionary} locale={params.locale} />;
 }
-
-
-    
