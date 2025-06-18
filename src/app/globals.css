@@ -112,16 +112,14 @@
     @apply text-foreground font-body antialiased; 
     font-size: 18px; /* Increased base font size */
     line-height: 1.625; /* Increased line height */
-    /* data-ai-hint: soft nebula space */
-    /* Gradiente más suave para permitir que la imagen se vea más */
     /* El primer gradiente es el que está más arriba */
     background-image:
-      radial-gradient(ellipse at center, hsla(var(--background), 0.2) 0%, hsla(var(--background), 0.7) 70%, hsla(var(--background), 0.95) 100%),
-      url('/custom_assets/nebula-background.png');
+      radial-gradient(ellipse at center, hsla(var(--background), 0.1) 0%, hsla(var(--background), 0.4) 70%, hsla(var(--background), 0.8) 100%), /* Gradiente más translúcido */
+      url('/custom_assets/nebula-background.png'); /* data-ai-hint: soft nebula space */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    /* background-blend-mode: overlay; Se quita temporalmente para depurar */
+    background-blend-mode: overlay; /* RESTAURADO */
     position: relative; 
   }
 
@@ -268,5 +266,4 @@
   pointer-events: none; 
 }
     
-
     
