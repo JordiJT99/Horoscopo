@@ -33,7 +33,7 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
   ];
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 w-full border-t border-border/40 bg-bottom-nav-background shadow-top">
+    <footer className="fixed bottom-0 left-0 right-0 z-50 w-full border-t border-border/40 bg-bottom-nav-background backdrop-blur-md shadow-top">
       <div className="container flex h-16 items-center justify-around px-1 sm:px-2 md:px-4 max-w-screen-2xl">
         {navItems.map(item => {
           const DisplayIcon = item.icon; 
@@ -68,3 +68,4 @@ export default BottomNavigationBar;
 // Add shadow-top utility if it doesn't exist in your globals or tailwind config
 // Example for tailwind.config.ts if needed:
 // theme: { extend: { boxShadow: { top: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -2px rgba(0, 0, 0, 0.1)' } } }
+
