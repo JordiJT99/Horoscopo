@@ -22,7 +22,7 @@ const HoroscopeCategoryCard = ({
   content,
   isLoading,
 }: HoroscopeCategoryCardProps) => (
-  <Card className="shadow-lg bg-card/85 hover:shadow-primary/30 transition-shadow duration-300 backdrop-blur-sm rounded-xl">
+  <Card className="shadow-lg bg-card/70 hover:shadow-primary/30 transition-shadow duration-300 backdrop-blur-sm rounded-xl">
     <CardContent className="p-3 sm:p-4">
       <div className="flex items-center mb-1.5 sm:mb-2">
         <div className="bg-primary/10 p-1.5 rounded-full mr-2 sm:mr-3">
@@ -49,3 +49,4 @@ const HoroscopeCategoryCard = ({
 );
 
 export default HoroscopeCategoryCard;
+
