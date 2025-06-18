@@ -108,15 +108,20 @@
     background-color: hsl(var(--background)); /* Color de fondo base para HTML */
   }
   body {
-    @apply bg-background text-foreground font-body antialiased; 
+    /* @apply bg-background text-foreground font-body antialiased; QUITAMOS bg-background */
+    @apply text-foreground font-body antialiased; 
     font-size: 18px; /* Increased base font size */
     line-height: 1.625; /* Increased line height */
     /* data-ai-hint: soft nebula space */
-    background-image: radial-gradient(ellipse at center, hsla(var(--background), 0.1) 25%, hsla(var(--background), 0.75) 85%), url('/custom_assets/nebula-background.png');
+    /* Gradiente más suave para permitir que la imagen se vea más */
+    /* El primer gradiente es el que está más arriba */
+    background-image:
+      radial-gradient(ellipse at center, hsla(var(--background), 0.2) 0%, hsla(var(--background), 0.7) 70%, hsla(var(--background), 0.95) 100%),
+      url('/custom_assets/nebula-background.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-blend-mode: overlay; 
+    /* background-blend-mode: overlay; Se quita temporalmente para depurar */
     position: relative; 
   }
 
@@ -262,4 +267,6 @@
   opacity: 0.08; 
   pointer-events: none; 
 }
+    
+
     
