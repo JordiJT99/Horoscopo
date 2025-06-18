@@ -38,8 +38,8 @@ const HoroscopeCategoryCard = ({
         </div>
       ) : (
         <p className={cn(
-            "text-sm font-body text-primary/60 leading-relaxed line-clamp-none tracking-tight",
-            "sm:text-sm" // ensures sm overrides text-sm if needed, but text-sm is fine.
+            "text-sm font-poppins text-primary/60 leading-relaxed line-clamp-none tracking-tight", // Changed font-body to font-poppins
+            "sm:text-sm" 
           )}>
             {content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
         </p>

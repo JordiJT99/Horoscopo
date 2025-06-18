@@ -13,6 +13,7 @@ export default {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
         headline: ['Alegreya', 'serif'],
+        poppins: ['Poppins', 'sans-serif'], // Added Poppins
         code: ['monospace'],
       },
       colors: {
