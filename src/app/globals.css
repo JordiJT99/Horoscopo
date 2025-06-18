@@ -46,10 +46,10 @@
     --chart-4: 340 85% 60%;
     --chart-5: 320 75% 62%;
 
-    --top-bar-background: hsl(var(--background) / 0.70);
+    --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
 
-    --bottom-nav-background: hsl(var(--background) / 0.75);
+    --bottom-nav-background: hsl(var(--background) / 0.9);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
 
@@ -85,9 +85,9 @@
     --input: 270 20% 18%;
     --ring: 330 90% 65%;
 
-    --top-bar-background: hsl(var(--background) / 0.70);
+    --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
-    --bottom-nav-background: hsl(var(--background) / 0.75);
+    --bottom-nav-background: hsl(var(--background) / 0.9);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
     --sign-selector-active-border: hsl(var(--primary));

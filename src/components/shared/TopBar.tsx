@@ -21,7 +21,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-top-bar-background backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-top-bar-background">
       <div className="container flex h-14 items-center justify-between px-4 max-w-screen-2xl">
         <Link href={`/${currentLocale}/`} passHref className="flex items-center group">
           <Wand2 className={cn("h-7 w-7 text-primary-foreground animated-header-logo group-hover:opacity-80 transition-opacity", "sm:h-8 sm:w-8")} />
@@ -43,4 +43,3 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
 };
 
 export default TopBar;
-
