@@ -29,14 +29,14 @@ const FeatureCard = ({
   return (
     <motion.div
       className="block"
-      whileHover={{ scale: 1.03, y: -2 }} // Subtle scale and lift
+      whileHover={{ scale: 1.03, y: -3 }} // Slightly more lift
       whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }} // Adjusted spring for a bit more bounce
     >
       <Link href={`/${locale}${href}`} className="block">
         <Card className={cn(
-            "bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-md transition-all duration-200",
-            "hover:shadow-xl hover:border-primary/50 focus-visible:shadow-xl focus-visible:border-primary/50 border-2 border-transparent"
+            "bg-feature-card-background text-feature-card-foreground p-4 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform", // Base shadow is now shadow-lg
+            "hover:shadow-2xl hover:shadow-primary/30 hover:border-primary focus-visible:shadow-2xl focus-visible:shadow-primary/30 focus-visible:border-primary border-2 border-transparent" // Enhanced hover shadow, glow, and border
         )}>
           <CardContent className="flex items-center justify-between p-0">
             <div className="flex items-center gap-3">
@@ -85,3 +85,4 @@ export default function FeatureLinkCards({ dictionary, locale }: FeatureLinkCard
     </motion.div>
   );
 }
+
