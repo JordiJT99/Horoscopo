@@ -49,8 +49,8 @@ export default function SelectedSignDisplay({
       </p>
       <div
         className={cn(
-          "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer",
-          "p-1 bg-primary"
+          "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer"
+          // Eliminadas: "p-1 bg-primary" 
         )}
         onClick={handleBannerClick}
         role="button"
@@ -58,7 +58,7 @@ export default function SelectedSignDisplay({
         aria-label={scrollToDetailsAriaLabel}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBannerClick(); }}
       >
-        <div className="w-full h-full bg-card rounded-full overflow-hidden">
+        <div className="w-full h-full bg-card rounded-full overflow-hidden border-2 border-primary/30"> {/* Se puede ajustar el color del borde si se desea o quitarlo */}
           <Image
               src={imagePath}
               alt={translatedSignName}
@@ -89,3 +89,4 @@ export default function SelectedSignDisplay({
     </div>
   );
 }
+
