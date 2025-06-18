@@ -38,8 +38,8 @@ const HoroscopeCategoryCard = ({
         </div>
       ) : (
         <p className={cn(
-            "text-sm font-nunito text-primary/60 leading-relaxed line-clamp-none tracking-tight", // Changed font-poppins to font-nunito
-            "sm:text-sm" 
+            "text-sm font-nunito font-semibold text-primary/60 leading-relaxed line-clamp-none tracking-tight", // Added font-semibold
+            "sm:text-sm"
           )}>
             {content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
         </p>
@@ -49,3 +49,4 @@ const HoroscopeCategoryCard = ({
 );
 
 export default HoroscopeCategoryCard;
+
