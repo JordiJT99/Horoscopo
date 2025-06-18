@@ -387,6 +387,7 @@
   "TarotReadingPage.sharedCardTitle": "Shared Card: {cardName}",
   "TarotReadingPage.newReadingButton": "Get a New Reading",
   "TarotReadingPage.errorDecoding": "Could not display the shared reading. It might be corrupted.",
+  "TarotReadingPage.tarotTableAlt": "Mystical tarot reading table background",
   "Share.buttonLabelRevelationLinkContent": "Share This Revelation",
   "Share.buttonLabelInterpretationLinkContent": "Share This Interpretation",
   "Share.buttonLabelTarotReadingLinkContent": "Share This Reading",

@@ -387,6 +387,7 @@
   "TarotReadingPage.sharedCardTitle": "Carte Partagée : {cardName}",
   "TarotReadingPage.newReadingButton": "Obtenir une Nouvelle Lecture",
   "TarotReadingPage.errorDecoding": "Impossible d'afficher la lecture partagée. Elle pourrait être corrompue.",
+  "TarotReadingPage.tarotTableAlt": "Fond de table de lecture de tarot mystique",
   "Share.buttonLabelRevelationLinkContent": "Partager Cette Révélation",
   "Share.buttonLabelInterpretationLinkContent": "Partager Cette Interprétation",
   "Share.buttonLabelTarotReadingLinkContent": "Partager Cette Lecture",

@@ -387,6 +387,7 @@
   "TarotReadingPage.sharedCardTitle": "Geteilte Karte: {cardName}",
   "TarotReadingPage.newReadingButton": "Neue Legung erhalten",
   "TarotReadingPage.errorDecoding": "Die geteilte Legung konnte nicht angezeigt werden. Sie könnte beschädigt sein.",
+  "TarotReadingPage.tarotTableAlt": "Mystischer Tarot-Lesetisch Hintergrund",
   "Share.buttonLabelRevelationLinkContent": "Diese Offenbarung teilen",
   "Share.buttonLabelInterpretationLinkContent": "Diese Deutung teilen",
   "Share.buttonLabelTarotReadingLinkContent": "Diese Legung teilen",

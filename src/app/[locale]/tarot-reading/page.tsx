@@ -202,11 +202,19 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6 relative"> {/* Added position: relative */}
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6 relative">
+          <div className="tarot-question-area-bg-container">
+            <Image
+              src="/custom_assets/tarot-card-back.png" 
+              alt={dictionary['TarotReadingPage.tarotTableAlt'] || "Mystical tarot reading table background"}
+              layout="fill"
+              className="tarot-question-area-bg"
+              data-ai-hint="tarot card back illustration ornate"
+            />
+          </div>
           {!isShowingSharedContent && (
             <>
-              <div className="absolute inset-0 z-0 tarot-question-area-bg" data-ai-hint="tarot card back illustration"></div>
-              <div className="relative z-10"> {/* Contenido sobre el fondo */}
+              <div className="relative z-10"> 
                 <Textarea
                   id="tarot-question"
                   value={question}
@@ -220,7 +228,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
               <Button 
                 onClick={handleDrawCard} 
                 disabled={isLoading} 
-                className={cn("w-full font-body text-sm md:text-base relative z-10 tarot-cta-button")} // Added tarot-cta-button
+                className={cn("w-full font-body text-sm md:text-base relative z-10 tarot-cta-button")}
               >
                 {isLoading ? (
                   <>
@@ -261,8 +269,8 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
                       alt={reading.cardName} 
                       width={150}  
                       height={262} 
-                      className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[180px] sm:h-[315px]" // Aumentado tamaño
-                      data-ai-hint="tarot card vintage art-nouveau" // Pista AI actualizada
+                      className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[180px] sm:h-[315px]"
+                      data-ai-hint="tarot card vintage art-nouveau"
                     />
                   </div>
                 </div>

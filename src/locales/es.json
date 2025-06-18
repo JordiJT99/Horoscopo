@@ -1,3 +1,4 @@
+
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -386,6 +387,7 @@
   "TarotReadingPage.sharedCardTitle": "Carta Compartida: {cardName}",
   "TarotReadingPage.newReadingButton": "Obtener Nueva Lectura",
   "TarotReadingPage.errorDecoding": "No se pudo mostrar la lectura compartida. Podría estar corrupta.",
+  "TarotReadingPage.tarotTableAlt": "Fondo místico de mesa de lectura de tarot",
   "Share.buttonLabelRevelationLinkContent": "Compartir Esta Revelación",
   "Share.buttonLabelInterpretationLinkContent": "Compartir Esta Interpretación",
   "Share.buttonLabelTarotReadingLinkContent": "Compartir Esta Lectura",
