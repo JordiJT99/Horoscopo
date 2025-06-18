@@ -189,7 +189,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
         icon={Wand}
         className="mb-12"
       />
-      <Card className="w-full max-w-xl mx-auto shadow-xl">
+      <Card className="w-full max-w-xl mx-auto shadow-xl bg-card/70 backdrop-blur-sm border border-white/10">
         <CardHeader className="px-4 py-4 md:px-6 md:py-5">
           <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
             {isShowingSharedContent
@@ -202,16 +202,17 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6 relative"> {/* Added position: relative */}
           {!isShowingSharedContent && (
             <>
-              <div>
+              <div className="absolute inset-0 z-0 tarot-question-area-bg" data-ai-hint="tarot card back illustration"></div>
+              <div className="relative z-10"> {/* Contenido sobre el fondo */}
                 <Textarea
                   id="tarot-question"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder={dictionary['TarotReadingPage.questionPlaceholder'] || "Type your question here..."}
-                  className="min-h-[100px] font-body"
+                  className="min-h-[100px] font-body bg-input/80 border-border/50"
                   aria-label={dictionary['TarotReadingPage.questionLabel'] || "Your question for the tarot reading"}
                 />
               </div>
@@ -219,7 +220,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
               <Button 
                 onClick={handleDrawCard} 
                 disabled={isLoading} 
-                className="w-full font-body text-sm md:text-base"
+                className={cn("w-full font-body text-sm md:text-base relative z-10 tarot-cta-button")} // Added tarot-cta-button
               >
                 {isLoading ? (
                   <>
@@ -237,13 +238,13 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
           )}
 
           {error && 
-            <p className="text-destructive text-center font-body text-sm md:text-base">
+            <p className="text-destructive text-center font-body text-sm md:text-base relative z-10">
               {error}
             </p>
           }
 
           {reading && !isLoading && (
-            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
+            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow relative z-10">
               <CardHeader className="p-0 pb-3 md:pb-4 text-center">
                  <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
                     {isShowingSharedContent 
@@ -254,14 +255,16 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
               </CardHeader>
               <CardContent className="p-0 space-y-3 md:space-y-4">
                 <div className="flex justify-center mb-3 md:mb-4">
-                  <Image 
-                    src={reading.imagePlaceholderUrl} 
-                    alt={reading.cardName} 
-                    width={100}  
-                    height={175} 
-                    className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[134px] sm:h-[235px]"
-                    data-ai-hint="tarot card"
-                  />
+                  <div className="tarot-card-aura rounded-lg">
+                    <Image 
+                      src={reading.imagePlaceholderUrl} 
+                      alt={reading.cardName} 
+                      width={150}  
+                      height={262} 
+                      className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[180px] sm:h-[315px]" // Aumentado tamaño
+                      data-ai-hint="tarot card vintage art-nouveau" // Pista AI actualizada
+                    />
+                  </div>
                 </div>
                 <div>
                   <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">
@@ -295,7 +298,7 @@ function TarotReadingContent({ dictionary, locale }: { dictionary: Dictionary, l
             <Button 
               onClick={handleNewReading} 
               variant="ghost" 
-              className="w-full font-body mt-4 text-xs md:text-sm"
+              className="w-full font-body mt-4 text-xs md:text-sm relative z-10"
             >
               <RotateCcw className="mr-2 h-4 w-4" />
               {dictionary['TarotReadingPage.newReadingButton'] || "Get a New Reading"}
@@ -328,5 +331,3 @@ export default function TarotReadingPage({ params: paramsPromise }: TarotReading
 
   return <TarotReadingContent dictionary={dictionary} locale={params.locale} />;
 }
-
-    
