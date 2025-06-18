@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Alegreya', 'sans-serif'], 
-        headline: ['Alegreya', 'serif'], 
+        body: ['Inter', 'sans-serif'],
+        headline: ['Alegreya', 'serif'],
         code: ['monospace'],
       },
       colors: {
@@ -69,8 +69,8 @@ export default {
         'horoscope-progress-background': 'hsl(var(--horoscope-progress-background))',
         'horoscope-progress-indicator': 'hsl(var(--horoscope-progress-indicator))',
       },
-      borderRadius: { 
-        lg: 'var(--radius)', 
+      borderRadius: {
+        lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
@@ -91,11 +91,11 @@ export default {
             height: '0',
           },
         },
-        pulseHeart: { 
+        pulseHeart: {
           '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.3)' }, 
+          '50%': { transform: 'scale(1.3)' },
         },
-        pulseOrbHalo: { 
+        pulseOrbHalo: {
           '0%, 100%': {
             boxShadow: '0 0 10px 2px hsla(var(--primary), 0.3), 0 0 20px 5px hsla(var(--primary), 0.15), 0 0 35px 10px hsla(var(--primary), 0.08)',
             opacity: '0.8',
@@ -109,9 +109,13 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        pulseHeart: 'pulseHeart 5s infinite ease-in-out', 
+        pulseHeart: 'pulseHeart 5s infinite ease-in-out',
         pulseOrbHalo: 'pulseOrbHalo 4s infinite ease-in-out',
       },
+      boxShadow: { // Added for the halo effect
+        'primary-glow-lg': '0 0 15px 0px hsl(var(--primary) / 0.7)',
+        'primary-glow-xl': '0 0 25px 0px hsl(var(--primary) / 0.5)',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],

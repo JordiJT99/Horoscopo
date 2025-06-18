@@ -18,7 +18,7 @@ export default function SelectedSignDisplay({
   locale,
   selectedSign,
 }: SelectedSignDisplayProps) {
-  
+
   let imagePath = `https://placehold.co/144x144/7c3aed/ffffff.png?text=${selectedSign.name.substring(0, 2).toUpperCase()}`;
   let aiHint = "zodiac placeholder";
 
@@ -44,13 +44,13 @@ export default function SelectedSignDisplay({
       <h2 className="text-3xl font-bold font-headline text-foreground">
         {translatedSignName}
       </h2>
-      <p className="text-sm text-muted-foreground mb-4">
+      <p className="text-sm text-muted-foreground mb-4 font-body">
         {selectedSign.dateRange}
       </p>
       <div
         className={cn(
           "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer",
-          "p-1 bg-primary" 
+          "p-1 bg-primary"
         )}
         onClick={handleBannerClick}
         role="button"
@@ -62,14 +62,14 @@ export default function SelectedSignDisplay({
           <Image
               src={imagePath}
               alt={translatedSignName}
-              layout="fill" 
+              layout="fill"
               objectFit="cover"
               priority={true}
-              key={imagePath} 
-              className="rounded-full" 
+              key={imagePath}
+              className="rounded-full"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.onerror = null; 
+                target.onerror = null;
                 target.src = `https://placehold.co/144x144/2A0A2A/FFFFFF.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`;
                 target.setAttribute("data-ai-hint", "letter placeholder");
               }}
@@ -77,10 +77,10 @@ export default function SelectedSignDisplay({
           />
         </div>
       </div>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs mt-1 px-6 rounded-md"
+      <Button
+        variant="outline"
+        size="sm"
+        className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs mt-1 px-6 rounded-md font-body"
         onClick={handleBannerClick}
         aria-label={moreDetailsAriaLabel}
       >

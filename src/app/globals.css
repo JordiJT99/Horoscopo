@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -111,7 +111,6 @@
     @apply text-foreground font-body antialiased;
     font-size: 18px; /* Increased base font size */
     line-height: 1.625; /* Increased line height */
-    /* data-ai-hint: soft nebula space (for the image) */
     background-image: url('/custom_assets/nebula-background.png');
     background-size: cover;
     background-position: center;
@@ -261,5 +260,3 @@
   opacity: 0.08;
   pointer-events: none;
 }
-    
-    
