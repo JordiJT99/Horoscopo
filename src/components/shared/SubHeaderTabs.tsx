@@ -37,7 +37,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                 aria-selected={isActive.toString()}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "rounded-md py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1 relative", // Added rounded-md, adjusted padding
+                  "rounded-md py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative", // Increased horizontal margin (mx-1.5 sm:mx-2)
                   "bg-transparent", // Common background for all
                   isActive
                     ? "text-primary-foreground" // Active tab text color
