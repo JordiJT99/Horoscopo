@@ -24,7 +24,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   ];
 
   return (
-    <div className="sticky top-14 z-30 bg-background/90 backdrop-blur-sm shadow-sm"> {/* h-14 is default TopBar height */}
+    <div className="sticky top-14 z-30 bg-background/80 backdrop-blur-md shadow-lg shadow-primary/20 border-b-2 border-primary/40">
       <div className="container mx-auto px-0 sm:px-1">
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
@@ -37,22 +37,21 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                 aria-selected={isActive.toString()}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "rounded-md py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative", // Increased horizontal margin (mx-1.5 sm:mx-2)
-                  "bg-transparent", // Common background for all
+                  "rounded-md py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative",
+                  "bg-transparent", 
                   isActive
-                    ? "text-primary-foreground" // Active tab text color
+                    ? "text-primary-foreground" 
                     : "text-muted-foreground hover:text-primary/80" 
                 )}
               >
                 {isActive && (
                   <motion.div
-                    className="absolute inset-0 bg-primary rounded-md" // Pill background
+                    className="absolute inset-0 bg-primary rounded-md shadow-[0_0_15px_2px_hsl(var(--primary)/0.6)]" 
                     layoutId="activeTabPill"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                    style={{ zIndex: 0 }} // Ensure it's behind the text
+                    style={{ zIndex: 0 }} 
                   />
                 )}
-                {/* Text content needs to be above the pill */}
                 <span style={{ position: 'relative', zIndex: 1 }}>
                   {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}
                 </span>
