@@ -18,11 +18,11 @@
     --popover-foreground: 0 0% 95%;
 
     /* Primario: Magenta Vibrante (de la imagen) */
-    --primary: 330 90% 60%; 
+    --primary: 330 90% 60%;
     --primary-foreground: 0 0% 100%; /* Blanco */
-    
+
     /* Acento: Mismo que primario para consistencia, o un púrpura vibrante secundario */
-    --accent: 330 90% 60%; 
+    --accent: 330 90% 60%;
     --accent-foreground: 0 0% 100%;
 
     --secondary: 270 25% 20%; /* Púrpura oscuro para elementos secundarios */
@@ -38,24 +38,24 @@
     --input: 270 20% 18%; /* Fondo de input púrpura muy oscuro */
     --ring: 330 90% 65%; /* Color de anillo, primario con ligero ajuste */
 
-    --radius: 0.75rem; 
+    --radius: 0.75rem;
 
     --chart-1: hsl(var(--primary));
-    --chart-2: 335 80% 65%; 
-    --chart-3: 325 70% 70%; 
-    --chart-4: 340 85% 60%; 
-    --chart-5: 320 75% 62%; 
+    --chart-2: 335 80% 65%;
+    --chart-3: 325 70% 70%;
+    --chart-4: 340 85% 60%;
+    --chart-5: 320 75% 62%;
 
-    --top-bar-background: hsl(var(--background) / 0.85); 
+    --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
 
-    --bottom-nav-background: hsl(var(--background) / 0.9); 
+    --bottom-nav-background: hsl(var(--background) / 0.9);
     --bottom-nav-foreground: hsl(var(--muted-foreground));
     --bottom-nav-active-foreground: hsl(var(--primary));
 
     --sign-selector-active-border: hsl(var(--primary));
 
-    --feature-card-background: hsl(var(--secondary)); 
+    --feature-card-background: hsl(var(--secondary));
     --feature-card-foreground: hsl(var(--secondary-foreground));
 
     --horoscope-summary-title: hsl(var(--foreground));
@@ -108,15 +108,24 @@
     background-color: hsl(var(--background)); /* Color de fondo base para HTML */
   }
   body {
-    @apply text-foreground font-body antialiased; 
+    @apply text-foreground font-body antialiased;
     font-size: 18px; /* Increased base font size */
     line-height: 1.625; /* Increased line height */
     /* data-ai-hint: soft nebula space (for the image) */
-    background-image: url('/custom_assets/nebula-background.png'); 
+    background-image: url('/custom_assets/nebula-background.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    position: relative; 
+    position: relative;
+  }
+
+  @media (max-width: 767px) {
+    body {
+      /* Apply a semi-transparent white overlay on top of the nebula image for mobile */
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)), /* Adjust 0.15 (15% white) as needed */
+        url('/custom_assets/nebula-background.png');
+    }
   }
 
   ::-webkit-scrollbar {
@@ -124,11 +133,11 @@
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: hsl(var(--muted) / 0.5); 
+    background: hsl(var(--muted) / 0.5);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.6); 
+    background: hsl(var(--primary) / 0.6);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
@@ -149,12 +158,12 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.3); 
+    transform: scale(1.3);
   }
 }
 
 .bg-radial-gradient-purple {
-  background-image: radial-gradient(circle at top right, hsl(var(--primary) / 0.1), transparent 60%), 
+  background-image: radial-gradient(circle at top right, hsl(var(--primary) / 0.1), transparent 60%),
                     radial-gradient(circle at bottom left, hsl(280 50% 20% / 0.15), transparent 70%);
 }
 
@@ -199,12 +208,12 @@
 
 .animated-header-logo {
   animation: slowPulseGlow 3s infinite ease-in-out;
-  color: hsl(var(--primary-foreground)); 
+  color: hsl(var(--primary-foreground));
 }
 
 .tarot-cta-button {
   position: relative;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .tarot-cta-button::after {
@@ -212,35 +221,35 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 150%; 
-  padding-bottom: 150%; 
+  width: 150%;
+  padding-bottom: 150%;
   background: radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
   opacity: 0;
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .tarot-cta-button:hover::after,
-.tarot-cta-button:focus::after { 
+.tarot-cta-button:focus::after {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
 }
 .tarot-cta-button:active::after {
-  transform: translate(-50%, -50%) scale(1.2); 
+  transform: translate(-50%, -50%) scale(1.2);
   opacity: 0.8;
 }
 
 .tarot-card-aura {
-  box-shadow: 0 0 15px 5px hsl(var(--primary) / 0.5), 
+  box-shadow: 0 0 15px 5px hsl(var(--primary) / 0.5),
               0 0 30px 10px hsl(var(--primary) / 0.3),
               0 0 45px 15px hsl(var(--primary) / 0.15);
   transition: box-shadow 0.3s ease-in-out;
 }
 
 .tarot-card-aura:hover {
-   box-shadow: 0 0 20px 8px hsl(var(--primary) / 0.7), 
+   box-shadow: 0 0 20px 8px hsl(var(--primary) / 0.7),
               0 0 40px 15px hsl(var(--primary) / 0.4),
               0 0 60px 20px hsl(var(--primary) / 0.25);
 }
@@ -258,9 +267,8 @@
   height: 100%;
   object-fit: contain; /* O 'cover', ajusta según tu imagen */
   object-position: center;
-  opacity: 0.08; 
-  pointer-events: none; 
+  opacity: 0.08;
+  pointer-events: none;
 }
     
     
-
