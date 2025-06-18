@@ -37,21 +37,25 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                 aria-selected={isActive.toString()}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "rounded-none py-2 px-4 sm:px-5 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1 relative",
+                  "rounded-md py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1 relative", // Added rounded-md, adjusted padding
                   "bg-transparent", // Common background for all
                   isActive
-                    ? "text-primary" // Active tab text color
+                    ? "text-primary-foreground" // Active tab text color
                     : "text-muted-foreground hover:text-primary/80" 
                 )}
               >
-                {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}
                 {isActive && (
                   <motion.div
-                    className="absolute bottom-[-2px] left-0 right-0 h-0.5 bg-primary" // Adjust bottom to align with button padding if needed
-                    layoutId="activeTabIndicator"
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    className="absolute inset-0 bg-primary rounded-md" // Pill background
+                    layoutId="activeTabPill"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    style={{ zIndex: 0 }} // Ensure it's behind the text
                   />
                 )}
+                {/* Text content needs to be above the pill */}
+                <span style={{ position: 'relative', zIndex: 1 }}>
+                  {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}
+                </span>
               </Button>
             );
           })}
@@ -62,3 +66,4 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
 };
 
 export default SubHeaderTabs;
+
