@@ -65,7 +65,7 @@ export default function SignSelectorHorizontalScroll({
               className={cn(
                 "w-12 h-12 sm:w-14 sm:h-14 mb-1 border-2 transition-all duration-200 ease-in-out overflow-hidden",
                 isActive 
-                  ? "bg-primary border-primary shadow-lg shadow-primary/40 scale-105" // Added shadow-primary/40 for halo
+                  ? "bg-primary border-primary shadow-xl shadow-primary/50 scale-105" 
                   : "bg-transparent border-transparent group-hover:border-muted/50"
               )}
             >
