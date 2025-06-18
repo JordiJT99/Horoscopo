@@ -63,15 +63,17 @@ export default function SignSelectorHorizontalScroll({
           >
             <Avatar
               className={cn(
-                "w-12 h-12 sm:w-14 sm:h-14 mb-1 border-2 transition-all duration-200 ease-in-out overflow-hidden", // Aumentado tamaño
-                isActive ? "bg-primary border-primary shadow-lg scale-105" : "bg-transparent border-transparent group-hover:border-muted/50"
+                "w-12 h-12 sm:w-14 sm:h-14 mb-1 border-2 transition-all duration-200 ease-in-out overflow-hidden",
+                isActive 
+                  ? "bg-primary border-primary shadow-lg shadow-primary/40 scale-105" // Added shadow-primary/40 for halo
+                  : "bg-transparent border-transparent group-hover:border-muted/50"
               )}
             >
               {isActive && sign.customIconPath ? (
                 <Image src={imagePath} alt={dictionary[sign.name] || sign.name} layout="fill" objectFit="cover" data-ai-hint={aiHint} className="rounded-full" />
               ) : (
                  <AvatarFallback className={cn("bg-transparent flex items-center justify-center", isActive && "bg-primary")}>
-                  <ZodiacSignIcon signName={sign.name} className={cn("w-7 h-7 sm:w-8 sm:h-8", isActive ? "text-primary-foreground" : inactiveIconColorClass)} /> {/* Aumentado tamaño */}
+                  <ZodiacSignIcon signName={sign.name} className={cn("w-7 h-7 sm:w-8 sm:h-8", isActive ? "text-primary-foreground" : inactiveIconColorClass)} />
                 </AvatarFallback>
               )}
             </Avatar>
