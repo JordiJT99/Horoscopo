@@ -49,8 +49,8 @@ export default function SelectedSignDisplay({
       </p>
       <div
         className={cn(
-          "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer",
-          "p-1 bg-primary" 
+          "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer"
+          // p-1 bg-primary ha sido eliminado
         )}
         onClick={handleBannerClick}
         role="button"
@@ -58,8 +58,7 @@ export default function SelectedSignDisplay({
         aria-label={scrollToDetailsAriaLabel}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBannerClick(); }}
       >
-        {/* El div interno ahora no tiene bg-card ni borde, solo maneja el redondeo y overflow */}
-        <div className="w-full h-full rounded-full overflow-hidden">
+        <div className="w-full h-full rounded-full overflow-hidden border-2 border-primary"> {/* Borde añadido aquí */}
           <Image
               src={imagePath}
               alt={translatedSignName}
@@ -67,7 +66,6 @@ export default function SelectedSignDisplay({
               objectFit="cover"
               priority={true}
               key={imagePath}
-              // className="rounded-full" // No es estrictamente necesario si el contenedor tiene overflow-hidden
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null;
@@ -90,4 +88,3 @@ export default function SelectedSignDisplay({
     </div>
   );
 }
-
