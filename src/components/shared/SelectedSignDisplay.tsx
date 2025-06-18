@@ -58,6 +58,7 @@ export default function SelectedSignDisplay({
         aria-label={scrollToDetailsAriaLabel}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBannerClick(); }}
       >
+        {/* El div interno ahora no tiene bg-card ni borde, solo maneja el redondeo y overflow */}
         <div className="w-full h-full rounded-full overflow-hidden">
           <Image
               src={imagePath}
@@ -66,7 +67,7 @@ export default function SelectedSignDisplay({
               objectFit="cover"
               priority={true}
               key={imagePath}
-              className="rounded-full"
+              // className="rounded-full" // No es estrictamente necesario si el contenedor tiene overflow-hidden
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null;
