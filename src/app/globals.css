@@ -108,18 +108,14 @@
     background-color: hsl(var(--background)); /* Color de fondo base para HTML */
   }
   body {
-    /* @apply bg-background text-foreground font-body antialiased; QUITAMOS bg-background */
     @apply text-foreground font-body antialiased; 
     font-size: 18px; /* Increased base font size */
     line-height: 1.625; /* Increased line height */
-    /* El primer gradiente es el que está más arriba */
-    background-image:
-      radial-gradient(ellipse at center, hsla(var(--background), 0.1) 0%, hsla(var(--background), 0.4) 70%, hsla(var(--background), 0.8) 100%), /* Gradiente más translúcido */
-      url('/custom_assets/nebula-background.png'); /* data-ai-hint: soft nebula space */
+    /* data-ai-hint: soft nebula space (for the image) */
+    background-image: url('/custom_assets/nebula-background.png'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-blend-mode: overlay; /* RESTAURADO */
     position: relative; 
   }
 
@@ -267,3 +263,4 @@
 }
     
     
+
