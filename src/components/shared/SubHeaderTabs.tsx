@@ -24,7 +24,10 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   ];
 
   return (
-    <div className="sticky top-14 z-30 bg-background/20 backdrop-blur-md border-b border-primary/30">
+    <div className={cn(
+      "sticky top-14 z-30 bg-background/10 backdrop-blur-md border-b border-primary/30",
+      "shadow-[0_0_15px_0px_hsl(var(--primary)/0.2)]" // Efecto de halo/resplandor
+    )}>
       <div className="container mx-auto px-0 sm:px-1">
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
