@@ -40,7 +40,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                 aria-selected={isActive.toString()}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "rounded-md py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative",
+                  "rounded-full py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative",
                   "bg-transparent", 
                   isActive
                     ? "text-primary-foreground" 
@@ -49,7 +49,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
               >
                 {isActive && (
                   <motion.div
-                    className="absolute inset-0 bg-primary rounded-md shadow-[0_0_15px_2px_hsl(var(--primary)/0.6)]" 
+                    className="absolute inset-0 bg-primary rounded-full shadow-[0_0_15px_2px_hsl(var(--primary)/0.6)]" 
                     layoutId="activeTabPill"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     style={{ zIndex: 0 }} 
