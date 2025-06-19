@@ -68,7 +68,6 @@ export default function AstroVibesHomePageContent({
     if (initialSignFromUrl && ZODIAC_SIGNS.find(s => s.name === initialSignFromUrl)) {
       return initialSignFromUrl;
     }
-    // Default to Capricorn or user's sign if available later in useEffect
     return "Capricorn"; 
   });
 
@@ -83,14 +82,14 @@ export default function AstroVibesHomePageContent({
 
   useEffect(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
-    let determinedInitialSign = "Capricorn" as ZodiacSignName; // Fallback default
+    let determinedInitialSign = "Capricorn" as ZodiacSignName; 
 
     if (user?.uid && !authLoading) {
       const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
       if (storedData) {
         try {
             const parsedData = JSON.parse(storedData) as OnboardingFormData;
-            if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') { // Ensure dateOfBirth is properly parsed
+            if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') { 
                 parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
             }
             setOnboardingData(parsedData);
@@ -105,21 +104,17 @@ export default function AstroVibesHomePageContent({
             setUserSunSign(null);
         }
       } else {
-         // No onboarding data found for user
          setOnboardingData(null);
          setUserSunSign(null);
       }
     } else if (!user && !authLoading) {
-        // User is not logged in
         setOnboardingData(null);
         setUserSunSign(null);
     }
 
-    // URL sign parameter takes precedence if valid
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
     }
-    // If no URL sign, and userSunSign was determined, use that. Otherwise, stick to Capricorn or previous value.
     else if (userSunSign && !signFromUrl) { 
         determinedInitialSign = userSunSign.name;
     }
@@ -143,8 +138,7 @@ export default function AstroVibesHomePageContent({
           sign: selectedDisplaySignName,
           locale,
           targetDate: targetDate,
-          // Potentially pass more onboardingData fields here for deeper personalization in the future
-          // e.g., gender: onboardingData?.gender, relationshipStatus: onboardingData?.relationshipStatus
+          // onboardingData is no longer passed here
         };
 
         const result: HoroscopeFlowOutput | null | undefined = await getHoroscopeFlow(input);
@@ -181,7 +175,8 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, onboardingData]); // Added onboardingData
+  // Removed onboardingData from dependency array as it's no longer directly used in this effect's input
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast]); 
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -211,16 +206,12 @@ export default function AstroVibesHomePageContent({
     currentQueryParams.set('sign', sign.name);
 
     let basePath = pathname.split('?')[0];
-     // Ensure basePath correctly reflects the current page type for linking
     if (basePath === `/${locale}/yesterday-horoscope` || basePath === `/${locale}/weekly-horoscope` || basePath === `/${locale}/monthly-horoscope` ) {
-        // Stay on the current period page type
     } else if (activeHoroscopePeriodForTitles === 'tomorrow' && basePath === `/${locale}`) {
-        // Stays on home but 'tomorrow' period param will be handled if it's already there or added by tab selection
          currentQueryParams.set('period', 'tomorrow');
     }
-     else { // Default to today's horoscope page (root with locale)
+     else { 
       basePath = `/${locale}`;
-      // Remove 'period' param if it was for 'tomorrow' and we are navigating to a different sign on the "today" view implicitly
       if(currentQueryParams.get('period') === 'tomorrow' && activeHoroscopePeriodForTitles !== 'tomorrow'){
           currentQueryParams.delete('period');
       }
@@ -307,7 +298,6 @@ export default function AstroVibesHomePageContent({
   return (
     <div className="flex flex-col">
       <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden">
-        {/* SignSelector and SubHeaderTabs are outside the draggable motion.div */}
         <SignSelectorHorizontalScroll
           dictionary={dictionary}
           locale={locale}
@@ -325,7 +315,6 @@ export default function AstroVibesHomePageContent({
           onTabChange={handleSubHeaderTabSelect}
         />
 
-        {/* Content that will be animated and potentially dragged */}
         <motion.div
             key={motionDivKey}
             drag={isMobile ? "x" : false}
@@ -370,7 +359,7 @@ export default function AstroVibesHomePageContent({
           </motion.div>
 
           <motion.div
-            id="horoscope-details-section" // Added ID for scroll target
+            id="horoscope-details-section" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -421,4 +410,3 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
-

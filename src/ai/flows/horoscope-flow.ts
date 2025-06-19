@@ -12,8 +12,8 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import type { ZodiacSignName, HoroscopeFlowInput as PublicHoroscopeFlowInput, OnboardingFormData } from '@/types'; // Renamed to avoid conflict
-import { ALL_SIGN_NAMES } from '@/lib/constants'; // ZODIAC_SIGNS removed as it's not used directly here anymore
+import type { ZodiacSignName, HoroscopeFlowInput as PublicHoroscopeFlowInput } from '@/types'; // Renamed to avoid conflict
+import { ALL_SIGN_NAMES } from '@/lib/constants';
 import { format, getISOWeekYear, getMonth, getYear, subDays } from 'date-fns';
 import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 
@@ -37,30 +37,18 @@ const HoroscopeFlowOutputSchema = z.object({
 });
 export type HoroscopeFlowOutput = z.infer<typeof HoroscopeFlowOutputSchema>;
 
-
-// Schema for optional onboarding data to be passed to the flow for personalization
-const OnboardingDataSchemaOptional = z.object({
-  name: z.string().optional().describe("User's name for personalization."),
-  gender: z.string().optional().describe("User's gender for personalization."),
-  relationshipStatus: z.string().optional().describe("User's relationship status."),
-  employmentStatus: z.string().optional().describe("User's employment status."),
-}).optional();
-
-
 // Input schema for the flow itself (internal, matches public but with Zod enum)
+// Removed onboardingData from here
 const HoroscopeFlowInputSchemaInternal = z.object({
   sign: zodSignEnum.describe('The zodiac sign for which to generate the horoscope.'),
   locale: z.string().describe('The locale (e.g., "en", "es") for the horoscope language.'),
   targetDate: z.string().optional().describe('Target date for the daily horoscope in YYYY-MM-DD format. If not provided, defaults to today. For weekly/monthly, this is ignored and current period is used.'),
-  onboardingData: OnboardingDataSchemaOptional, // Add optional onboarding data
 });
 type HoroscopeFlowInputInternal = z.infer<typeof HoroscopeFlowInputSchemaInternal>;
 
 
 const PromptInputSchema = HoroscopeFlowInputSchemaInternal.extend({
   dateDescriptor: z.string().describe('Descriptor for the date, e.g., "HOY", "AYER", "para la fecha YYYY-MM-DD"'),
-  // Onboarding data fields are already part of HoroscopeFlowInputSchemaInternal and thus PromptInputSchema
-  // No need to redefine them here if they are optional and directly usable in the prompt like {{onboardingData.name}}
 });
 type PromptInput = z.infer<typeof PromptInputSchema>;
 
@@ -82,14 +70,10 @@ const formatDateForMonthlyCache = (date: Date): string => format(date, 'yyyy-MM'
 // Daily Horoscope Prompt
 const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
-  input: { schema: PromptInputSchema },
-  output: { schema: HoroscopeDetailSchema }, // Use Zod schema
+  input: { schema: PromptInputSchema }, // Uses the simplified PromptInputSchema
+  output: { schema: HoroscopeDetailSchema },
   prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
-  {{#if onboardingData.name}}
-Genera ÚNICAMENTE el horóscopo DIARIO para {{dateDescriptor}} para {{onboardingData.name}} del signo zodiacal {{sign}} en el idioma {{locale}}.
-  {{else}}
 Genera ÚNICAMENTE el horóscopo DIARIO para {{dateDescriptor}} para el signo zodiacal {{sign}} en el idioma {{locale}}.
-  {{/if}}
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 Busca una profundidad y un tono similares en tus respuestas.
@@ -97,40 +81,11 @@ Busca una profundidad y un tono similares en tus respuestas.
 IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health". El contenido de estas secciones debe ser la predicción para el día indicado por {{dateDescriptor}}, pero sin mencionar explícitamente la fecha dentro del texto de la predicción.
 
 Para la sección 'main', profundiza en cómo las energías diarias actuales o tránsitos menores (puedes inferirlos arquetípicamente si no tienes datos específicos del día) podrían influir en {{sign}}. Céntrate en la introspección, el manejo de las emociones y las oportunidades de claridad o sanación para el día. Evita consejos demasiado genéricos.
-{{#if onboardingData.relationshipStatus}}
-  {{#if (eq onboardingData.relationshipStatus "single")}}
-Para 'love', ofrece consejos reflexivos para las conexiones, la comprensión y la expresión emocional en el día, especialmente para alguien soltero. Considera cómo {{sign}} podría abordar los desafíos o alegrías en sus relaciones.
-  {{else if (eq onboardingData.relationshipStatus "in-relationship")}}
-Para 'love', ofrece consejos reflexivos para las conexiones, la comprensión y la expresión emocional en el día, especialmente para alguien en una relación. Considera cómo {{sign}} podría abordar los desafíos o alegrías en sus relaciones.
-  {{else}}
 Para 'love', ofrece consejos reflexivos para las conexiones, la comprensión y la expresión emocional en el día. Considera cómo {{sign}} podría abordar los desafíos o alegrías en sus relaciones.
-  {{/if}}
-{{else}}
-Para 'love', ofrece consejos reflexivos para las conexiones, la comprensión y la expresión emocional en el día. Considera cómo {{sign}} podría abordar los desafíos o alegrías en sus relaciones.
-{{/if}}
-
-{{#if onboardingData.employmentStatus}}
-  {{#if (eq onboardingData.employmentStatus "unemployed")}}
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales, enfocándote en la búsqueda de oportunidades y la perseverancia para {{sign}}.
-  {{else if (eq onboardingData.employmentStatus "student")}}
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales, considerando el desarrollo de habilidades y la planificación futura para un estudiante de signo {{sign}}.
-  {{else}}
 Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales, quizás vinculándolos con el enfoque, la claridad o nuevas perspectivas que las energías del día podrían traer a {{sign}}.
-  {{/if}}
-{{else}}
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales, quizás vinculándolos con el enfoque, la claridad o nuevas perspectivas que las energías del día podrían traer a {{sign}}.
-{{/if}}
 Para 'health', sugiere cómo mantener el bienestar conectando con la paz interior, gestionando los factores de estrés diarios o aprovechando la energía del día para actividades restauradoras.
 
-{{#if onboardingData.name}}
-  {{#if (eq onboardingData.gender "female")}}
-Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea apropiado.
-  {{else if (eq onboardingData.gender "male")}}
-Considera dirigirte a {{onboardingData.name}} de forma masculina cuando sea apropiado.
-  {{/if}}
-{{/if}}
-
-IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). Cualquier personalización basada en los datos del usuario (como nombre, género, estado civil, etc.) debe reflejarse DENTRO del contenido de estas cadenas, no alterando la estructura JSON ni añadiendo nuevas claves.
+IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto).
 Ejemplo de estructura de salida para {{sign}} (Aries) en {{locale}} (es) (CONTENIDO EJEMPLO, GENERA EL TUYO PROPIO):
 {
   "main": "Aries, podrías sentir un eco de decepciones pasadas que dificultan la confianza. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad. Quizás es momento de sanar alguna herida y mirar hacia adelante con nueva determinación.",
@@ -145,29 +100,18 @@ Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescrip
 // Weekly Horoscope Prompt
 const weeklyHoroscopePrompt = ai.definePrompt({
   name: 'weeklyHoroscopePrompt',
-  input: { schema: HoroscopeFlowInputSchemaInternal }, // Now includes onboardingData
+  input: { schema: HoroscopeFlowInputSchemaInternal }, // Uses simplified internal schema
   output: { schema: HoroscopeDetailSchema },
   prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
-  {{#if onboardingData.name}}
-Genera ÚNICAMENTE el horóscopo SEMANAL para ESTA SEMANA ACTUAL para {{onboardingData.name}} del signo zodiacal {{sign}} en el idioma {{locale}}.
-  {{else}}
 Genera ÚNICAMENTE el horóscopo SEMANAL para ESTA SEMANA ACTUAL para el signo zodiacal {{sign}} en el idioma {{locale}}.
-  {{/if}}
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para la semana, como el ingreso de un planeta en un nuevo sector o signo) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 Busca una profundidad y un tono similares en tus respuestas, adaptados a una perspectiva semanal.
 
 Para la sección 'main', proporciona una visión general completa para LA SEMANA ACTUAL. Comienza con un tema general para la semana para {{sign}}, posiblemente mencionando cómo un tránsito planetario clave (ej. "Marte en Virgo") podría influir en su perspectiva o metas. Si es apropiado, divide la semana en fases (por ejemplo, inicio, mediados, fin de semana) discutiendo cómo las diferentes energías podrían influir en ellos. Aborda temas como el crecimiento personal, los desafíos como oportunidades, y cómo los rasgos centrales del signo interactúan con estas energías semanales.
 Para 'love', 'money', y 'health', proporciona perspectivas elaboradas, consejos y posibles desarrollos para TODA LA SEMANA. Estas secciones también deben ser de varios párrafos y detalladas, conectando con el tema principal de la semana si es posible. Por ejemplo, si Marte en Virgo sugiere organización, ¿cómo se aplica esto al amor, dinero o salud de {{sign}} esta semana?
-{{#if onboardingData.name}}
-  {{#if (eq onboardingData.gender "female")}}
-Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea apropiado en el horóscopo.
-  {{else if (eq onboardingData.gender "male")}}
-Considera dirigirte a {{onboardingData.name}} de forma masculina cuando sea apropiado en el horóscopo.
-  {{/if}}
-{{/if}}
 
-IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). Cualquier personalización basada en los datos del usuario (como nombre, género, estado civil, etc.) debe reflejarse DENTRO del contenido de estas cadenas, no alterando la estructura JSON ni añadiendo nuevas claves.
+IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto).
 Ejemplo de estructura de salida para {{sign}} (Virgo) en {{locale}} (es) - ESTO ES SOLO UN EJEMPLO DE ESTRUCTURA, HAZ EL CONTENIDO REAL MUCHO MÁS DETALLADO Y CON EL NUEVO ESTILO:
 {
   "main": "Virgo, esta semana, con el ingreso de Mercurio en un sector de comunicación profunda, te invita a reflexionar sobre cómo expresas tus verdades. Podrías sentir la necesidad de aclarar malentendidos pasados, sanando viejas heridas en tus relaciones. Es un tiempo para la introspección y para reorganizar tus ideas, permitiéndote avanzar con mayor claridad hacia tus metas. La primera parte de la semana favorece la planificación meticulosa, mientras que hacia el final, podrías encontrar apoyo en personas confiables que resuenan con tu nueva dirección.\\n\\nConsidera esta semana como una oportunidad para pulir tu forma de interactuar, buscando la autenticidad. Las dificultades del pasado en la comunicación pueden transformarse en lecciones valiosas si te permites abordarlas con la paciencia y el análisis que te caracterizan. No temas explorar nuevas formas de conectar, tanto contigo mismo como con los demás.",
@@ -182,14 +126,10 @@ Ahora genera el horóscopo SEMANAL MUY DETALLADO para {{sign}} en {{locale}} par
 // Monthly Horoscope Prompt
 const monthlyHoroscopePrompt = ai.definePrompt({
   name: 'monthlyHoroscopePrompt',
-  input: { schema: HoroscopeFlowInputSchemaInternal }, // Now includes onboardingData
+  input: { schema: HoroscopeFlowInputSchemaInternal }, // Uses simplified internal schema
   output: { schema: HoroscopeDetailSchema },
   prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
-  {{#if onboardingData.name}}
-Genera ÚNICAMENTE el horóscopo MENSUAL para ESTE MES ACTUAL para {{onboardingData.name}} del signo zodiacal {{sign}} en el idioma {{locale}}.
-  {{else}}
 Genera ÚNICAMENTE el horóscopo MENSUAL para ESTE MES ACTUAL para el signo zodiacal {{sign}} en el idioma {{locale}}.
-  {{/if}}
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (puedes mencionar tránsitos planetarios importantes del mes, ya sean reales o arquetípicos, y cómo impactan a {{sign}}) con el crecimiento personal, las emociones y las metas a largo plazo.
 Evita marcadores de posición como "[Insertar mes actual]" o similares; el horóscopo es para el mes actual, así que refiérete a él como "este mes" o "el mes actual" si es necesario.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica, adaptado a una perspectiva mensual: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Este mes, con el Sol iluminando un área clave de tu carta, obtendrás mayor claridad sobre tus aspiraciones más profundas. Es un período para sanar heridas del pasado relacionadas con tu autoestima y avanzar con una renovada sensación de propósito. Las relaciones se tornan más significativas, atrayendo personas confiables que te apoyan incondicionalmente."
@@ -197,15 +137,8 @@ Busca una profundidad y un tono similares en tus respuestas.
 
 Para la sección 'main', proporciona una visión general completa para EL MES ACTUAL. Comienza estableciendo las energías o temas generales que afectarán a {{sign}} durante este período. Si es apropiado, divide el mes en fases (por ejemplo, primera quincena, segunda quincena, o por semanas clave) discutiendo cómo diferentes influencias podrían desarrollarse. Aborda temas como el crecimiento personal, el hogar, las aspiraciones profesionales, las relaciones, la creatividad y cómo los rasgos centrales del signo interactúan con estas energías mensuales.
 Para 'love', 'money', y 'health', proporciona perspectivas elaboradas, consejos y posibles desarrollos para TODO EL MES. Estas secciones también deben ser de varios párrafos y muy detalladas, ofreciendo una guía que ayude a {{sign}} a navegar el mes con mayor conciencia y bienestar.
-{{#if onboardingData.name}}
-  {{#if (eq onboardingData.gender "female")}}
-Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea apropiado en el horóscopo.
-  {{else if (eq onboardingData.gender "male")}}
-Considera dirigirte a {{onboardingData.name}} de forma masculina cuando sea apropiado en el horóscopo.
-  {{/if}}
-{{/if}}
 
-IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). Cualquier personalización basada en los datos del usuario (como nombre, género, estado civil, etc.) debe reflejarse DENTRO del contenido de estas cadenas, no alterando la estructura JSON ni añadiendo nuevas claves.
+IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto).
 Ejemplo de estructura de salida para {{sign}} (Capricornio) en {{locale}} (es) - ESTO ES SOLO UN EJEMPLO DE ESTRUCTURA, HAZ EL CONTENIDO REAL MUCHO MÁS DETALLADO, LARGO Y CON EL NUEVO ESTILO:
 {
   "main": "Capricornio, este mes se perfila como un período de profunda introspección y redefinición de tus metas a largo plazo. Con Saturno, tu regente, aspectando un punto sensible de tu carta, podrías sentir la necesidad de soltar viejas estructuras que ya no sirven a tu crecimiento. Las decepciones del pasado, especialmente aquellas relacionadas con la confianza, pueden resurgir para ser sanadas. No te resistas a este proceso; es una oportunidad para construir bases más sólidas y auténticas para tu futuro. La primera mitad del mes te invita a la reflexión y a la planificación cuidadosa. Durante la segunda quincena, una nueva claridad emergerá, impulsándote a tomar decisiones valientes que reflejen tu verdadera esencia y te alineen con personas más confiables y motivadoras.\\n\\nEste no es un mes para la acción impulsiva, sino para la sabiduría que nace de la experiencia. Observa tus patrones, reconoce tus fortalezas y permítete ser vulnerable para conectar genuinamente. El universo te apoya en este viaje de transformación, ofreciéndote las herramientas para construir una vida más significativa y alineada con quien realmente eres.",
@@ -234,12 +167,12 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
     const parsed = HoroscopeDetailSchema.safeParse(cachedValue);
     if (parsed.success) return parsed.data;
     console.warn(`Invalid daily horoscope data in cache for ${cacheKey}. Fetching anew.`);
-    dailyCache.delete(cacheKey); // Remove invalid data
+    dailyCache.delete(cacheKey); 
   }
 
   let dateDescriptor = `para la fecha ${dateStr}`;
   const today = new Date();
-  today.setHours(0,0,0,0); // Normalize today for comparison
+  today.setHours(0,0,0,0); 
   const yesterday = subDays(today, 1);
 
   const targetDateNormalized = new Date(targetDateObj);
@@ -253,7 +186,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   }
 
   const promptPayload: PromptInput = {
-      ...input, // This now includes input.onboardingData
+      ...input,
       dateDescriptor: dateDescriptor
   };
 
@@ -318,8 +251,7 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
     weeklyCache.delete(cacheKey);
   }
   try {
-    // Input already contains onboardingData if provided
-    const {output} = await weeklyHoroscopePrompt(input);
+    const {output} = await weeklyHoroscopePrompt(input); // Removed onboardingData
      if (output) {
         const parsedOutput = HoroscopeDetailSchema.safeParse(output);
         if (parsedOutput.success) {
@@ -379,8 +311,7 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
     monthlyCache.delete(cacheKey);
   }
   try {
-    // Input already contains onboardingData if provided
-    const {output} = await monthlyHoroscopePrompt(input);
+    const {output} = await monthlyHoroscopePrompt(input); // Removed onboardingData
     if (output) {
         const parsedOutput = HoroscopeDetailSchema.safeParse(output);
         if (parsedOutput.success) {
@@ -467,7 +398,6 @@ const horoscopeFlowInternal = ai.defineFlow(
     const parsedResult = HoroscopeFlowOutputSchema.safeParse(result);
     if (!parsedResult.success) {
         console.error("HoroscopeFlowInternal: Final constructed output does not match HoroscopeFlowOutputSchema.", parsedResult.error.flatten());
-        // Fallback to mocks if the final assembled object is somehow invalid
         return {
             daily: getRandomMockHoroscope('daily'),
             weekly: getRandomMockHoroscope('weekly'),
@@ -484,8 +414,7 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
     sign: input.sign,
     locale: input.locale,
     targetDate: input.targetDate,
-    onboardingData: input.onboardingData
+    // onboardingData is no longer part of internalInput
   };
   return horoscopeFlowInternal(internalInput);
 }
-

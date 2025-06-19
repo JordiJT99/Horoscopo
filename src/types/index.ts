@@ -56,7 +56,7 @@ export interface HoroscopeFlowInput {
   sign: ZodiacSignName;
   locale: string;
   targetDate?: string; // YYYY-MM-DD format, optional
-  onboardingData?: HoroscopePersonalizationData; // Optional data for personalization
+  // onboardingData?: HoroscopePersonalizationData; // Removed for now to ensure core functionality
 }
 
 export interface HoroscopeFlowOutput {
@@ -228,4 +228,3 @@ export interface OnboardingFormData {
 
 // Profile selector type
 export type SelectedProfileType = 'user' | 'generic';
-
