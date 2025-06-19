@@ -65,7 +65,7 @@
   "HomePage.yourHoroscopeToday": "Your Horoscope for Today",
   "HomePage.yourHoroscopeTomorrow": "Your Horoscope for Tomorrow",
   "HomePage.yourHoroscopeYesterday": "Your Horoscope for Yesterday",
-  "HomePage.horoscopeTitleToday": "Today's Horoscope",
+  "HomePage.horoscopeTitleToday": "Your Horoscope for Today",
   "HomePage.horoscopeTitleTomorrow": "Tomorrow's Horoscope",
   "HomePage.horoscopeTitleYesterday": "Yesterday's Horoscope",
   "HomePage.horoscopeTitleWeekly": "Weekly Horoscope",
@@ -591,3 +591,5 @@
   "UpcomingPhase.sampleDate4": "Sample 4",
   "Data.notAvailable": "N/A"
 }
+
+    
