@@ -264,13 +264,13 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
             dailyCache.set(cacheKey, parsedOutput.data);
             return parsedOutput.data;
         } else {
-             console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) failed Zod validation. Error: ${JSON.stringify(parsedOutput.error.flatten())}. Using mock data.`);
+             console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) failed Zod validation. Error details: ${JSON.stringify(parsedOutput.error.flatten())}. AI Output was: ${JSON.stringify(output)}. Using mock data.`);
         }
     } else {
-      console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) was null (likely schema validation failure by Genkit). Using mock data.`);
+      console.warn(`AI response for daily horoscope (${input.sign}, ${input.locale}, ${dateStr}) was null (likely schema validation failure by Genkit or empty response from model). Using mock data.`);
     }
 
-    let mockData = getRandomMockHoroscope('daily', input.sign, input.locale);
+    let mockData = getRandomMockHoroscope('daily');
     const parsedMock = HoroscopeDetailSchema.safeParse(mockData);
     if(parsedMock.success) {
         dailyCache.set(cacheKey, parsedMock.data);
@@ -285,7 +285,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
     console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}, ${dateStr}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
     
-    let mockDataOnError = getRandomMockHoroscope('daily', input.sign, input.locale); 
+    let mockDataOnError = getRandomMockHoroscope('daily'); 
     const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
@@ -325,13 +325,13 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
             weeklyCache.set(cacheKey, parsedOutput.data);
             return parsedOutput.data;
         } else {
-            console.warn(`AI response for weekly horoscope (${input.sign}, ${input.locale}) failed Zod validation. Error: ${JSON.stringify(parsedOutput.error.flatten())}. Using mock data.`);
+            console.warn(`AI response for weekly horoscope (${input.sign}, ${input.locale}) failed Zod validation. Error details: ${JSON.stringify(parsedOutput.error.flatten())}. AI Output was: ${JSON.stringify(output)}. Using mock data.`);
         }
     } else {
       console.warn(`AI response for weekly horoscope (${input.sign}, ${input.locale}) was null. Using mock data.`);
     }
 
-    let mockData = getRandomMockHoroscope('weekly', input.sign, input.locale);
+    let mockData = getRandomMockHoroscope('weekly');
     const parsedMock = HoroscopeDetailSchema.safeParse(mockData);
     if(parsedMock.success) {
         weeklyCache.set(cacheKey, parsedMock.data);
@@ -346,7 +346,7 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
     console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
     
-    let mockDataOnError = getRandomMockHoroscope('weekly', input.sign, input.locale); 
+    let mockDataOnError = getRandomMockHoroscope('weekly'); 
     const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
      if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
@@ -386,13 +386,13 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
             monthlyCache.set(cacheKey, parsedOutput.data);
             return parsedOutput.data;
         } else {
-            console.warn(`AI response for monthly horoscope (${input.sign}, ${input.locale}) failed Zod validation. Error: ${JSON.stringify(parsedOutput.error.flatten())}. Using mock data.`);
+            console.warn(`AI response for monthly horoscope (${input.sign}, ${input.locale}) failed Zod validation. Error details: ${JSON.stringify(parsedOutput.error.flatten())}. AI Output was: ${JSON.stringify(output)}. Using mock data.`);
         }
     } else {
       console.warn(`AI response for monthly horoscope (${input.sign}, ${input.locale}) was null. Using mock data.`);
     }
 
-    let mockData = getRandomMockHoroscope('monthly', input.sign, input.locale);
+    let mockData = getRandomMockHoroscope('monthly');
     const parsedMock = HoroscopeDetailSchema.safeParse(mockData);
      if(parsedMock.success) {
         monthlyCache.set(cacheKey, parsedMock.data);
@@ -407,7 +407,7 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
     console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
     
-    let mockDataOnError = getRandomMockHoroscope('monthly', input.sign, input.locale); 
+    let mockDataOnError = getRandomMockHoroscope('monthly'); 
     const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
@@ -447,7 +447,6 @@ const horoscopeFlowInternal = ai.defineFlow(
         }
     }
     
-    // All three get...Details functions will now receive the full input, including onboardingData
     const [dailyDetails, weeklyDetails, monthlyDetails] = await Promise.all([
         getDailyHoroscopeDetails(input, dailyTargetDate),
         getWeeklyHoroscopeDetails(input, currentDate),
@@ -467,10 +466,11 @@ const horoscopeFlowInternal = ai.defineFlow(
     const parsedResult = HoroscopeFlowOutputSchema.safeParse(result);
     if (!parsedResult.success) {
         console.error("HoroscopeFlowInternal: Final constructed output does not match HoroscopeFlowOutputSchema.", parsedResult.error.flatten());
+        // Fallback to mocks if the final assembled object is somehow invalid
         return {
-            daily: getRandomMockHoroscope('daily', input.sign, input.locale), 
-            weekly: getRandomMockHoroscope('weekly', input.sign, input.locale),
-            monthly: getRandomMockHoroscope('monthly', input.sign, input.locale),
+            daily: getRandomMockHoroscope('daily'), 
+            weekly: getRandomMockHoroscope('weekly'),
+            monthly: getRandomMockHoroscope('monthly'),
         };
     }
     return parsedResult.data;
@@ -479,12 +479,11 @@ const horoscopeFlowInternal = ai.defineFlow(
 
 
 export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise<HoroscopeFlowOutput> {
-  // Map public input to internal input, ensuring onboardingData is included
   const internalInput: HoroscopeFlowInputInternal = {
     sign: input.sign,
     locale: input.locale,
     targetDate: input.targetDate,
-    onboardingData: input.onboardingData // Pass through onboardingData
+    onboardingData: input.onboardingData
   };
   return horoscopeFlowInternal(internalInput);
 }
