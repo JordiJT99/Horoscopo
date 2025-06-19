@@ -38,8 +38,11 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     if (!user && !isLoginPage && !isOnboardingPage) {
       // If not logged in and not on login/onboarding, let them stay or handle as per specific page logic
       // Some public pages might be accessible.
-      // If strict auth is needed for all pages except login/onboarding, redirect here.
       // For now, we assume some pages are public.
+      // However, if no user is present and they are trying to access a protected route implicitly by not being on login/onboarding,
+      // it's safer to redirect to login.
+      // For simplicity, we'll let individual pages handle auth checks if they are not login/onboarding
+      // This effect primarily handles post-login onboarding checks.
       return; 
     }
     
@@ -47,12 +50,15 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
       const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
       if (!onboardingComplete && !isOnboardingPage && !isLoginPage) {
         router.push(onboardingPath);
+      } else if (onboardingComplete && (isLoginPage || isOnboardingPage)) {
+        // If onboarding is complete and user is on login/onboarding, redirect to profile or home
+        router.push(`/${locale}/`); 
       }
     }
   }, [user, authLoading, pathname, locale, router, hasMountedContext, onboardingPath, loginPath, isLoginPage, isOnboardingPage]);
 
 
-  if (!hasMountedContext || authLoading && !user && !isOnboardingPage && !isLoginPage) {
+  if (!hasMountedContext || (authLoading && !isLoginPage && !isOnboardingPage)) {
      return (
       <div className="flex-grow flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -60,10 +66,10 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
     );
   }
   
-  // For onboarding or login pages, we might want a simpler layout (no top/bottom bars)
+  // For onboarding or login pages, we want a simpler layout (no top/bottom bars)
   if (isOnboardingPage || isLoginPage) {
     return (
-      <div className="flex-grow bg-background text-foreground font-body"> {/* Apply font-body here too */}
+      <div className="flex-grow bg-background text-foreground font-body min-h-screen flex flex-col"> {/* Apply font-body here too */}
         {children}
       </div>
     );
@@ -96,7 +102,8 @@ export default function LocaleLayout({
   const dictionaryPromise = useMemo(() => getDictionary(currentLocale), [currentLocale]);
   const dictionary = use(dictionaryPromise);
 
-  if (Object.keys(dictionary).length === 0) { 
+  if (Object.keys(dictionary).length === 0 && typeof window !== 'undefined') { 
+    // Added window check for client-side only rendering of loader
     return (
       <html lang={currentLocale} suppressHydrationWarning>
         <head>
@@ -111,6 +118,8 @@ export default function LocaleLayout({
       </html>
     );
   }
+  // If dictionary is empty on server (e.g. during build), render children directly to avoid FOUC or hydration issues
+  // The client-side AuthProvider and AppStructure will handle their own loading states.
 
   return (
     <html lang={currentLocale} suppressHydrationWarning>
@@ -128,3 +137,4 @@ export default function LocaleLayout({
     </html>
   );
 }
+
