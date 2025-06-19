@@ -1,24 +1,43 @@
+// NO "use client" directive at the top. This is a Server Component.
 
-"use client";
-
-import { useState, useEffect, use, useMemo } from 'react';
+// Imports used by LoginContent (Client Component part)
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import SectionTitle from '@/components/shared/SectionTitle';
 import { LogIn, UserPlus, Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
-interface LoginPageProps {
+// Imports used by LoginPage (Server Component part)
+import type { Dictionary, Locale } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
+import SectionTitle from '@/components/shared/SectionTitle';
+
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
+
+// Interface for Page props (Server Component)
+interface LoginPageParams {
   params: { locale: Locale };
 }
 
-function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
+// Interface for LoginContent props (Client Component part)
+interface LoginContentProps {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+// LoginContent is a standard function that uses client hooks.
+// When rendered by the Server Component LoginPage, Next.js treats it as a client boundary.
+function LoginContent({ dictionary, locale }: LoginContentProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState(''); // For signup
@@ -30,9 +49,6 @@ function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: 
 
   useEffect(() => {
     if (!authIsLoading && user) {
-      // User is logged in, redirect to profile or home
-      // AuthContext usually handles redirection to onboarding if needed.
-      // If onboarding is complete, go to profile.
       const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
       if (onboardingComplete) {
         router.push(`/${locale}/profile`);
@@ -166,27 +182,11 @@ function LoginContent({ dictionary, locale }: { dictionary: Dictionary, locale: 
   );
 }
 
-export default function LoginPage({ params: paramsPromise }: { params: Promise<LoginPageProps["params"]> }) {
-  // It's generally safe to `use` paramsPromise directly, Next.js handles this.
-  const params = use(paramsPromise);
-  // The dictionaryPromise should also be resolved here.
-  const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
-  const dictionary = use(dictionaryPromise);
+// LoginPage is the default export and an async Server Component.
+export default async function LoginPage({ params }: LoginPageParams) {
+  const dictionary = await getDictionary(params.locale);
 
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient || Object.keys(dictionary).length === 0) {
-    // This loading state is good for when the dictionary is still being fetched.
-    return (
-      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-[calc(100vh-100px)] flex items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
-      </div>
-    );
-  }
-  
+  // It fetches server-side data (dictionary) and passes it to LoginContent.
+  // LoginContent will be treated as a client component boundary by Next.js.
   return <LoginContent dictionary={dictionary} locale={params.locale} />;
 }
-
