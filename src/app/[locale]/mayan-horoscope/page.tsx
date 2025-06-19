@@ -1,18 +1,26 @@
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { MayanAstrologyIcon } from '@/lib/constants';
 import MayanHoroscopeInteractive from '@/components/mayan-horoscope/MayanHoroscopeInteractive';
 
-interface MayanHoroscopePageProps {
-  params: Promise<{ // Updated type
-    locale: Locale;
-  }>;
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
 }
 
-export default async function MayanHoroscopePage({ params: paramsPromise }: MayanHoroscopePageProps) { // Renamed and will await
-  const params = await paramsPromise; // Await params
+interface MayanHoroscopePageProps {
+  params: { // Params are directly available in Server Components
+    locale: Locale;
+  };
+}
+
+export default async function MayanHoroscopePage({ params }: MayanHoroscopePageProps) {
+  // params.locale is directly available now
   const dictionary = await getDictionary(params.locale);
 
   return (
