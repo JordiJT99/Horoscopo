@@ -1,27 +1,43 @@
 
-"use client";
+// Note: Top-level "use client"; has been removed.
+// This page is now primarily a Server Component.
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary, type Dictionary } from '@/lib/dictionaries';
+import { getDictionary, type Dictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'; 
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input'; 
-import { Label } from '@/components/ui/label'; 
-import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn, Settings, Award, ShieldQuestion } from 'lucide-react'; // Added Settings, Award, ShieldQuestion
-import { useAuth } from '@/context/AuthContext';
-import { useEffect, use, useMemo, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn, Settings, Award, ShieldQuestion, Loader2 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext'; // This will be used by ProfileClientContent
+import React, { useEffect, useState } from 'react'; // For ProfileClientContent
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 
-interface ProfilePageProps {
-  params: { locale: Locale };
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
 }
 
-function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
+interface ProfilePageParams {
+  locale: Locale;
+}
+
+// This is the Client Component part, containing client-side hooks and logic
+"use client";
+function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading, logout } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Component has mounted on the client
+  }, []);
 
   const handleLogout = async () => {
     await logout(locale);
@@ -35,12 +51,12 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
 
   const cardClasses = "bg-card/70 backdrop-blur-sm border border-white/10 shadow-xl";
 
-  if (isLoading) {
+  if (!isClient || isLoading) { // Show loader until client has mounted and auth state is determined
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
         <SectionTitle
-          title={dictionary['ProfilePage.title']}
-          subtitle={dictionary['ProfilePage.subtitle']}
+          title={dictionary['ProfilePage.title'] || "User Profile"}
+          subtitle={dictionary['ProfilePage.subtitle'] || "Manage your celestial identity."}
           icon={UserCircle}
           className="mb-12"
         />
@@ -102,7 +118,6 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
         className="mb-12"
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        {/* Columna Izquierda - Tarjeta Principal de Usuario */}
         <div className="md:col-span-1 space-y-6 md:space-y-8">
           <Card className={cardClasses}>
             <CardHeader className="items-center text-center p-4 md:p-6">
@@ -155,7 +170,6 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
           </Card>
         </div>
 
-        {/* Columna Derecha - Más Detalles y Configuraciones */}
         <div className="md:col-span-2 space-y-6 md:space-y-8">
           <Card className={cardClasses}>
             <CardHeader className="p-4 md:p-6">
@@ -216,26 +230,11 @@ function ProfileContent({ dictionary, locale }: { dictionary: Dictionary, locale
 }
 
 
-export default function ProfilePage({ params: paramsPromise }: ProfilePageProps) {
-  const params = use(paramsPromise);
-  const dictionaryPromise = useMemo(() => getDictionary(params.locale), [params.locale]);
-  const dictionary = use(dictionaryPromise);
+// This is the Server Component wrapper
+export default async function ProfilePage({ params }: { params: ProfilePageParams }) {
+  const dictionary = await getDictionary(params.locale);
 
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient || Object.keys(dictionary).length === 0) {
-    return (
-      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-        <p className="mt-4">Loading dictionary...</p>
-      </div>
-    );
-  }
-
-  return <ProfileContent dictionary={dictionary} locale={params.locale} />;
+  // In a true Server Component setup where ProfileClientContent might suspend for data,
+  // you could wrap it in <Suspense>. Here, ProfileClientContent handles its own loading.
+  return <ProfileClientContent dictionary={dictionary} locale={params.locale} />;
 }
-
-    
