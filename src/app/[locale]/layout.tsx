@@ -67,9 +67,10 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
   }
   
   // For onboarding or login pages, we want a simpler layout (no top/bottom bars)
+  // The background is inherited from the body, which has the nebula image.
   if (isOnboardingPage || isLoginPage) {
     return (
-      <div className="flex-grow bg-background text-foreground font-body min-h-screen flex flex-col"> {/* Apply font-body here too */}
+      <div className="flex-grow min-h-screen flex flex-col"> {/* Removed bg-background, text-foreground, font-body as they are on body */}
         {children}
       </div>
     );
