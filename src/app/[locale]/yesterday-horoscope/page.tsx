@@ -1,20 +1,28 @@
 
 // AstroVibesYesterdayPageWrapper is the async Server Component (default export)
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries'; // Added getSupportedLocales
 import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
 import { format, subDays } from 'date-fns';
 
 // Import the client component that contains all UI logic and animations
 import AstroVibesHomePageContent from '@/components/home/AstroVibesHomePageContent';
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
+
 interface YesterdayHoroscopePageProps {
-  params: Promise<{ locale: Locale }>;
+  params: { locale: Locale }; // Changed from Promise<{ locale: Locale }>
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function YesterdayHoroscopePageWrapper({ params: paramsPromise, searchParams }: YesterdayHoroscopePageProps) {
-  const params = await paramsPromise;
+export default async function YesterdayHoroscopePageWrapper({ params, searchParams }: YesterdayHoroscopePageProps) {
+  // const params = await paramsPromise; // Removed this line, params is now direct
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {
@@ -40,3 +48,4 @@ export default async function YesterdayHoroscopePageWrapper({ params: paramsProm
     />
   );
 }
+
