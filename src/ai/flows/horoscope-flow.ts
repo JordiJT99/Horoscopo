@@ -122,7 +122,6 @@ Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos la
 {{/if}}
 Para 'health', sugiere cómo mantener el bienestar conectando con la paz interior, gestionando los factores de estrés diarios o aprovechando la energía del día para actividades restauradoras.
 
-La salida debe ser un objeto JSON con las siguientes claves: "main", "love", "money", "health". Todas las cadenas de texto deben ser elaboradas y ofrecer consejos significativos y personalizados para {{sign}}.
 {{#if onboardingData.name}}
   {{#if (eq onboardingData.gender "female")}}
 Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea apropiado.
@@ -130,6 +129,8 @@ Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea aprop
 Considera dirigirte a {{onboardingData.name}} de forma masculina cuando sea apropiado.
   {{/if}}
 {{/if}}
+
+IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). Cualquier personalización basada en los datos del usuario (como nombre, género, estado civil, etc.) debe reflejarse DENTRO del contenido de estas cadenas, no alterando la estructura JSON ni añadiendo nuevas claves.
 Ejemplo de estructura de salida para {{sign}} (Aries) en {{locale}} (es) (CONTENIDO EJEMPLO, GENERA EL TUYO PROPIO):
 {
   "main": "Aries, podrías sentir un eco de decepciones pasadas que dificultan la confianza. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad. Quizás es momento de sanar alguna herida y mirar hacia adelante con nueva determinación.",
@@ -145,14 +146,14 @@ Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescrip
 const weeklyHoroscopePrompt = ai.definePrompt({
   name: 'weeklyHoroscopePrompt',
   input: { schema: HoroscopeFlowInputSchemaInternal }, // Now includes onboardingData
-  output: { schema: HoroscopeDetailSchema }, 
+  output: { schema: HoroscopeDetailSchema },
   prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
   {{#if onboardingData.name}}
 Genera ÚNICAMENTE el horóscopo SEMANAL para ESTA SEMANA ACTUAL para {{onboardingData.name}} del signo zodiacal {{sign}} en el idioma {{locale}}.
   {{else}}
 Genera ÚNICAMENTE el horóscopo SEMANAL para ESTA SEMANA ACTUAL para el signo zodiacal {{sign}} en el idioma {{locale}}.
   {{/if}}
-Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípics para la semana, como el ingreso de un planeta en un nuevo sector o signo) con el crecimiento personal y el bienestar emocional.
+Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para la semana, como el ingreso de un planeta en un nuevo sector o signo) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 Busca una profundidad y un tono similares en tus respuestas, adaptados a una perspectiva semanal.
 
@@ -165,8 +166,8 @@ Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea aprop
 Considera dirigirte a {{onboardingData.name}} de forma masculina cuando sea apropiado en el horóscopo.
   {{/if}}
 {{/if}}
-La salida debe ser un objeto JSON con las siguientes claves: "main", "love", "money", "health". Todos los valores de cadena deben ser ricos, largos, contener múltiples párrafos y ofrecer consejos significativos y personalizados para {{sign}}.
 
+IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). Cualquier personalización basada en los datos del usuario (como nombre, género, estado civil, etc.) debe reflejarse DENTRO del contenido de estas cadenas, no alterando la estructura JSON ni añadiendo nuevas claves.
 Ejemplo de estructura de salida para {{sign}} (Virgo) en {{locale}} (es) - ESTO ES SOLO UN EJEMPLO DE ESTRUCTURA, HAZ EL CONTENIDO REAL MUCHO MÁS DETALLADO Y CON EL NUEVO ESTILO:
 {
   "main": "Virgo, esta semana, con el ingreso de Mercurio en un sector de comunicación profunda, te invita a reflexionar sobre cómo expresas tus verdades. Podrías sentir la necesidad de aclarar malentendidos pasados, sanando viejas heridas en tus relaciones. Es un tiempo para la introspección y para reorganizar tus ideas, permitiéndote avanzar con mayor claridad hacia tus metas. La primera parte de la semana favorece la planificación meticulosa, mientras que hacia el final, podrías encontrar apoyo en personas confiables que resuenan con tu nueva dirección.\\n\\nConsidera esta semana como una oportunidad para pulir tu forma de interactuar, buscando la autenticidad. Las dificultades del pasado en la comunicación pueden transformarse en lecciones valiosas si te permites abordarlas con la paciencia y el análisis que te caracterizan. No temas explorar nuevas formas de conectar, tanto contigo mismo como con los demás.",
@@ -203,8 +204,8 @@ Considera dirigirte a {{onboardingData.name}} de forma femenina cuando sea aprop
 Considera dirigirte a {{onboardingData.name}} de forma masculina cuando sea apropiado en el horóscopo.
   {{/if}}
 {{/if}}
-La salida debe ser un objeto JSON con las siguientes claves: "main", "love", "money", "health". Todos los valores de cadena deben ser ricos, largos, contener múltiples párrafos y ofrecer consejos significativos y personalizados para {{sign}}.
 
+IMPORTANTE: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). Cualquier personalización basada en los datos del usuario (como nombre, género, estado civil, etc.) debe reflejarse DENTRO del contenido de estas cadenas, no alterando la estructura JSON ni añadiendo nuevas claves.
 Ejemplo de estructura de salida para {{sign}} (Capricornio) en {{locale}} (es) - ESTO ES SOLO UN EJEMPLO DE ESTRUCTURA, HAZ EL CONTENIDO REAL MUCHO MÁS DETALLADO, LARGO Y CON EL NUEVO ESTILO:
 {
   "main": "Capricornio, este mes se perfila como un período de profunda introspección y redefinición de tus metas a largo plazo. Con Saturno, tu regente, aspectando un punto sensible de tu carta, podrías sentir la necesidad de soltar viejas estructuras que ya no sirven a tu crecimiento. Las decepciones del pasado, especialmente aquellas relacionadas con la confianza, pueden resurgir para ser sanadas. No te resistas a este proceso; es una oportunidad para construir bases más sólidas y auténticas para tu futuro. La primera mitad del mes te invita a la reflexión y a la planificación cuidadosa. Durante la segunda quincena, una nueva claridad emergerá, impulsándote a tomar decisiones valientes que reflejen tu verdadera esencia y te alineen con personas más confiables y motivadoras.\\n\\nEste no es un mes para la acción impulsiva, sino para la sabiduría que nace de la experiencia. Observa tus patrones, reconoce tus fortalezas y permítete ser vulnerable para conectar genuinamente. El universo te apoya en este viaje de transformación, ofreciéndote las herramientas para construir una vida más significativa y alineada con quien realmente eres.",
@@ -240,7 +241,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   const today = new Date();
   today.setHours(0,0,0,0); // Normalize today for comparison
   const yesterday = subDays(today, 1);
-  
+
   const targetDateNormalized = new Date(targetDateObj);
   targetDateNormalized.setHours(0,0,0,0);
 
@@ -250,7 +251,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   } else if (targetDateNormalized.getTime() === yesterday.getTime()) {
     dateDescriptor = "AYER";
   }
-  
+
   const promptPayload: PromptInput = {
       ...input, // This now includes input.onboardingData
       dateDescriptor: dateDescriptor
@@ -258,7 +259,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
 
   try {
     const {output} = await dailyHoroscopePrompt(promptPayload);
-    if (output) { 
+    if (output) {
         const parsedOutput = HoroscopeDetailSchema.safeParse(output);
         if (parsedOutput.success) {
             dailyCache.set(cacheKey, parsedOutput.data);
@@ -284,8 +285,8 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   } catch (err: any) {
     console.error(`Error in getDailyHoroscopeDetails for ${input.sign} (${input.locale}, ${dateStr}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    
-    let mockDataOnError = getRandomMockHoroscope('daily'); 
+
+    let mockDataOnError = getRandomMockHoroscope('daily');
     const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
@@ -318,7 +319,7 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
   }
   try {
     // Input already contains onboardingData if provided
-    const {output} = await weeklyHoroscopePrompt(input); 
+    const {output} = await weeklyHoroscopePrompt(input);
      if (output) {
         const parsedOutput = HoroscopeDetailSchema.safeParse(output);
         if (parsedOutput.success) {
@@ -345,8 +346,8 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
   } catch (err: any) {
     console.error(`Error in getWeeklyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    
-    let mockDataOnError = getRandomMockHoroscope('weekly'); 
+
+    let mockDataOnError = getRandomMockHoroscope('weekly');
     const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
      if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
@@ -354,7 +355,7 @@ async function getWeeklyHoroscopeDetails(input: HoroscopeFlowInputInternal, curr
     } else {
       console.error(`Unexpected error fetching weekly horoscope (${input.sign}, ${input.locale}, ${weekStr}). Using mock data. Error: ${errorMessage}`);
     }
-    
+
     if(parsedMockOnError.success) {
         weeklyCache.set(cacheKey, parsedMockOnError.data);
         return parsedMockOnError.data;
@@ -406,8 +407,8 @@ async function getMonthlyHoroscopeDetails(input: HoroscopeFlowInputInternal, cur
   } catch (err: any) {
     console.error(`Error in getMonthlyHoroscopeDetails for ${input.sign} (${input.locale}):`, err);
     const errorMessage = err.message || JSON.stringify(err) || 'Unknown error';
-    
-    let mockDataOnError = getRandomMockHoroscope('monthly'); 
+
+    let mockDataOnError = getRandomMockHoroscope('monthly');
     const parsedMockOnError = HoroscopeDetailSchema.safeParse(mockDataOnError);
 
     if (errorMessage.includes('503') || errorMessage.toLowerCase().includes('overloaded') || errorMessage.toLowerCase().includes('service unavailable') || errorMessage.toLowerCase().includes('googlegenerativeai error') || errorMessage.toLowerCase().includes('failed to fetch')) {
@@ -431,7 +432,7 @@ const horoscopeFlowInternal = ai.defineFlow(
   {
     name: 'horoscopeFlowInternal',
     inputSchema: HoroscopeFlowInputSchemaInternal,
-    outputSchema: HoroscopeFlowOutputSchema, 
+    outputSchema: HoroscopeFlowOutputSchema,
   },
   async (input): Promise<HoroscopeFlowOutput> => {
     const currentDate = new Date();
@@ -439,36 +440,36 @@ const horoscopeFlowInternal = ai.defineFlow(
 
     if (input.targetDate) {
         const [year, month, day] = input.targetDate.split('-').map(Number);
-        const parsedDate = new Date(Date.UTC(year, month - 1, day)); 
+        const parsedDate = new Date(Date.UTC(year, month - 1, day));
         if (!isNaN(parsedDate.getTime())) {
             dailyTargetDate = parsedDate;
         } else {
             console.warn(`Invalid targetDate format: ${input.targetDate}. Defaulting to current date for daily horoscope.`);
         }
     }
-    
+
     const [dailyDetails, weeklyDetails, monthlyDetails] = await Promise.all([
         getDailyHoroscopeDetails(input, dailyTargetDate),
         getWeeklyHoroscopeDetails(input, currentDate),
         getMonthlyHoroscopeDetails(input, currentDate),
     ]);
-    
+
     const finalDaily = dailyDetails && typeof dailyDetails === 'object' ? dailyDetails : fallbackHoroscopeDetail;
     const finalWeekly = weeklyDetails && typeof weeklyDetails === 'object' ? weeklyDetails : fallbackHoroscopeDetail;
     const finalMonthly = monthlyDetails && typeof monthlyDetails === 'object' ? monthlyDetails : fallbackHoroscopeDetail;
-    
+
     const result: HoroscopeFlowOutput = {
       daily: finalDaily,
       weekly: finalWeekly,
       monthly: finalMonthly,
     };
-    
+
     const parsedResult = HoroscopeFlowOutputSchema.safeParse(result);
     if (!parsedResult.success) {
         console.error("HoroscopeFlowInternal: Final constructed output does not match HoroscopeFlowOutputSchema.", parsedResult.error.flatten());
         // Fallback to mocks if the final assembled object is somehow invalid
         return {
-            daily: getRandomMockHoroscope('daily'), 
+            daily: getRandomMockHoroscope('daily'),
             weekly: getRandomMockHoroscope('weekly'),
             monthly: getRandomMockHoroscope('monthly'),
         };
