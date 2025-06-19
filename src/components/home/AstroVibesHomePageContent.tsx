@@ -18,7 +18,8 @@ import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
 import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard';
 import PromotionCard from '@/components/shared/PromotionCard';
-import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays, Share2 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 
@@ -63,6 +64,7 @@ export default function AstroVibesHomePageContent({
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
   const initialSignFromUrl = useMemo(() => searchParams.get('sign') as ZodiacSignName | null, [searchParams]);
+  
   const [isPersonalizedRequestActive, setIsPersonalizedRequestActive] = useState(false);
 
   const [selectedDisplaySignName, setSelectedDisplaySignName] = useState<ZodiacSignName>(() => {
@@ -99,8 +101,7 @@ export default function AstroVibesHomePageContent({
             setUserSunSign(sunSign);
             if (sunSign) {
               determinedInitialSign = sunSign.name;
-              // If no sign in URL, and user's sign is determined, default to personalized view for their sign
-              if (!signFromUrl) {
+              if (!signFromUrl) { // Default to user's sign if no sign in URL
                 initiallyPersonalized = true;
               }
             }
@@ -120,14 +121,16 @@ export default function AstroVibesHomePageContent({
 
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
-      // If a sign is specified in the URL, it's a generic request, not personalized by default
-      initiallyPersonalized = false;
+      // If a sign is specified in the URL, it's a generic request unless it matches user's sign
+      // and onboardingData is present (which is handled by isPersonalizedRequestActive logic later)
+      initiallyPersonalized = (userSunSign?.name === signFromUrl && !!onboardingData);
     }
     
     setSelectedDisplaySignName(determinedInitialSign);
+    // Set personalized active if conditions met (mainly if defaulting to user's sign page)
     setIsPersonalizedRequestActive(initiallyPersonalized);
 
-  }, [user, authLoading, searchParams]);
+  }, [user, authLoading, searchParams]); // Removed userSunSign and onboardingData from deps as they are set within this effect.
 
 
   useEffect(() => {
@@ -144,9 +147,7 @@ export default function AstroVibesHomePageContent({
           locale,
           targetDate: targetDate,
         };
-
-        // Add onboardingData for personalization ONLY if it's an active personalized request
-        // AND it's the user's own sign AND onboardingData is available
+        
         if (isPersonalizedRequestActive && userSunSign && selectedDisplaySignName === userSunSign.name && onboardingData) {
           input.onboardingData = {
             name: onboardingData.name,
@@ -194,10 +195,20 @@ export default function AstroVibesHomePageContent({
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
-    const currentSignParam = searchParams.get('sign') || selectedDisplaySignName || (userSunSign?.name) || "Capricorn";
+    let currentSignParam = searchParams.get('sign');
+    if (!currentSignParam && isPersonalizedRequestActive && userSunSign) {
+      currentSignParam = userSunSign.name;
+    } else if (!currentSignParam) {
+      currentSignParam = selectedDisplaySignName;
+    }
+
     let newPath = '';
     const queryParams = new URLSearchParams();
-    queryParams.set('sign', currentSignParam);
+    
+    if (currentSignParam) {
+        queryParams.set('sign', currentSignParam);
+    }
+
 
     if (tab === 'yesterday') {
       newPath = `/${locale}/yesterday-horoscope`;
@@ -211,15 +222,12 @@ export default function AstroVibesHomePageContent({
         queryParams.set('period', 'tomorrow');
       }
     }
-    // When changing tabs, if the current view was personalized, keep it personalized for the new period.
-    // Otherwise, it remains generic. The 'sign' parameter ensures the correct sign is loaded.
-    // setIsPersonalizedRequestActive is NOT changed here directly; it's tied to explicit profile selection.
     router.push(`${newPath}?${queryParams.toString()}`, { scroll: false });
   };
 
-  const handleSignSelectedFromScroll = (sign: ZodiacSign, isUserProfileClick: boolean = false) => {
+  const handleSignSelectedFromScroll = (sign: ZodiacSign, isItAUserProfileClick: boolean = false) => {
     setSelectedDisplaySignName(sign.name);
-    setIsPersonalizedRequestActive(isUserProfileClick); // Update based on how the sign was clicked
+    setIsPersonalizedRequestActive(isItAUserProfileClick); 
 
     const currentQueryParams = new URLSearchParams(searchParams.toString());
     currentQueryParams.set('sign', sign.name);
@@ -238,6 +246,83 @@ export default function AstroVibesHomePageContent({
     const newPath = `${basePath}?${currentQueryParams.toString()}`;
     router.push(newPath, { scroll: false });
   };
+  
+  const handleShareHoroscope = async () => {
+    if (!currentDisplayHoroscope || !currentDisplayHoroscope.main) return;
+
+    const signNameToShare = dictionary[selectedDisplaySignName] || selectedDisplaySignName;
+    const userNameToShare = (isPersonalizedRequestActive && onboardingData?.name) ? onboardingData.name : null;
+
+    const shareTitle = userNameToShare
+      ? (dictionary['Share.personalizedHoroscopeTitle'] || "Mi Horóscopo Personalizado de AstroVibes para {signName}")
+          .replace('{signName}', signNameToShare)
+          .replace('{userName}', userNameToShare)
+      : (dictionary['Share.horoscopeTitle'] || "Horóscopo de {signName} de AstroVibes")
+          .replace('{signName}', signNameToShare);
+
+    let horoscopeText = `${currentDisplayHoroscope.main}`;
+    if (userNameToShare) {
+        horoscopeText = (dictionary['Share.personalizedHoroscopePrefix'] || "Para {userName} ({signName}):").replace('{userName}', userNameToShare).replace('{signName}', signNameToShare) + `\n${horoscopeText}`;
+    }
+
+
+    const appInvite = dictionary['Share.downloadAppPrompt'] || "¡Descubre AstroVibes para más insights!";
+    const appStoreLink = dictionary['Share.appStoreLinkPlaceholder'] || "https://apps.apple.com/app/your-app-id-here";
+    const googlePlayLink = dictionary['Share.googlePlayLinkPlaceholder'] || "https://play.google.com/store/apps/details?id=your.package.name.here";
+    
+    const fullShareText = `${shareTitle}\n\n${horoscopeText}\n\n${appInvite}\nApp Store: ${appStoreLink}\nGoogle Play: ${googlePlayLink}`;
+
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('sign', selectedDisplaySignName);
+    if (userNameToShare) {
+        currentUrl.searchParams.set('userName', userNameToShare);
+    }
+    // Remove mainText from URL to keep it clean; text is shared directly
+    currentUrl.searchParams.delete('mainText');
+    currentUrl.searchParams.delete('sharedPeriod');
+
+
+    const shareableUrl = currentUrl.toString();
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: fullShareText,
+          url: shareableUrl,
+        });
+        toast({
+          title: dictionary['Share.successTitle'] || "Success!",
+          description: dictionary['Share.horoscopeSharedSuccess'] || "Horoscope shared successfully.",
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+        if ((err as Error).name !== 'AbortError') {
+          toast({
+            title: dictionary['Share.errorTitle'] || "Sharing Error",
+            description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
+            variant: "destructive",
+          });
+        }
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(`${fullShareText}\n\n${dictionary['Share.viewOnline'] || "View online:"} ${shareableUrl}`);
+        toast({
+          title: dictionary['Share.copiedTitle'] || "Copied!",
+          description: dictionary['Share.horoscopeCopiedSuccess'] || "Horoscope and link copied to clipboard.",
+        });
+      } catch (copyError) {
+        console.error('Error copying to clipboard:', copyError);
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessageClipboard'] || "Could not copy. Please try sharing manually.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
 
   const paginate = (newDirection: number) => {
     const currentIndex = orderedTabs.indexOf(activeHoroscopePeriodForTitles);
@@ -391,6 +476,17 @@ export default function AstroVibesHomePageContent({
                   <span className="text-sm text-primary ml-1.5">({onboardingData.name})</span>
                 )}
               </h2>
+              {currentDisplayHoroscope && !isHoroscopeLoading && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleShareHoroscope}
+                  className="text-muted-foreground hover:text-primary"
+                  aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
+                >
+                  <Share2 className="h-4 w-4 sm:h-5 sm:h-5" />
+                </Button>
+              )}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
               {detailedHoroscopeCategories.map((cat) => (
@@ -432,3 +528,4 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
+
