@@ -10,18 +10,31 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { MAJOR_ARCANA_TAROT_CARDS } from '@/lib/constants'; // Import the list
+import { MAJOR_ARCANA_TAROT_CARDS } from '@/lib/constants';
 
 // Helper function to generate image path from card name
-const getTarotCardImagePath = (cardName: string): string => {
+const getTarotCardImagePath = (cardNameFromAI: string): string => {
   const basePath = '/custom_assets/tarot_cards/';
-  const normalizedName = cardName.toLowerCase().replace(/\s+/g, '_');
-  // Check if the normalized name is one of the known major arcana
-  const knownMajorArcanaFileNames = MAJOR_ARCANA_TAROT_CARDS.map(name => name.toLowerCase().replace(/\s+/g, '_'));
-  if (knownMajorArcanaFileNames.includes(normalizedName)) {
-    return `${basePath}${normalizedName}.png`;
+
+  // 1. Normalize the name from AI for searching (trim, lowercase).
+  const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
+
+  // 2. Find a matching canonical name from MAJOR_ARCANA_TAROT_CARDS.
+  const matchedCanonicalName = MAJOR_ARCANA_TAROT_CARDS.find(
+    (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
+  );
+
+  if (matchedCanonicalName) {
+    // 3. If a match is found, normalize the CANONICAL name for the filename.
+    const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
+    return `${basePath}${fileName}`;
   }
-  // Fallback if card name is not recognized or for other cases
+
+  // Fallback if no exact match is found after normalization.
+  // This logs to the server console where Genkit flows run.
+  console.warn(
+    `[AstroVibes - TarotReadingFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in MAJOR_ARCANA_TAROT_CARDS. Using placeholder image.`
+  );
   return "https://placehold.co/267x470.png";
 };
 
@@ -42,14 +55,15 @@ export type TarotReadingOutput = z.infer<typeof TarotReadingOutputSchema>;
 const tarotReadingPrompt = ai.definePrompt({
   name: 'tarotReadingPrompt',
   input: {schema: TarotReadingInputSchema},
-  output: {schema: TarotReadingOutputSchema.omit({ imagePlaceholderUrl: true })}, // AI doesn't need to provide the URL directly
+  output: {schema: TarotReadingOutputSchema.omit({ imagePlaceholderUrl: true })},
   prompt: `You are a wise and insightful Tarot reader. The user will ask you a question.
 Your task is to:
 1. Select ONE Tarot card from the Major Arcana that you feel is most relevant to the user's question.
    The Major Arcana includes: ${MAJOR_ARCANA_TAROT_CARDS.join(", ")}.
-2. Provide the name of the card.
-3. Give a general meaning of this card (2-3 sentences).
-4. Offer specific advice or insight related to the user's question, based on the drawn card (2-3 sentences).
+   CRITICAL: Your "cardName" output MUST EXACTLY match one of these names, including capitalization and "The " prefix where applicable (e.g., "The Fool", "Strength").
+2. Provide the name of the card in the "cardName" field.
+3. Give a general meaning of this card (2-3 sentences) in the "cardMeaning" field.
+4. Offer specific advice or insight related to the user's question, based on the drawn card (2-3 sentences) in the "advice" field.
 
 Respond in the {{locale}} language.
 
@@ -63,6 +77,7 @@ Example for question "Should I change my career?" and you (AI) choose "The Fool"
 }
 
 Now, provide a reading for the user's question: "{{question}}"
+Ensure your "cardName" is an exact match from the provided Major Arcana list.
 `,
 });
 
@@ -74,15 +89,17 @@ const tarotReadingFlowInternal = ai.defineFlow(
   },
   async (input) => {
     const {output: aiOutput} = await tarotReadingPrompt(input);
-    if (!aiOutput || !aiOutput.cardName) {
-      throw new Error('Tarot reader provided no insights or card name.');
+    if (!aiOutput || !aiOutput.cardName || aiOutput.cardName.trim() === "") {
+      // Log the problematic output for easier debugging
+      console.error('[AstroVibes - TarotReadingFlow] AI output missing cardName or cardName is empty. AI Output:', JSON.stringify(aiOutput));
+      throw new Error('Tarot reader provided no insights or an invalid card name.');
     }
     
     const cardImagePath = getTarotCardImagePath(aiOutput.cardName);
 
     return {
       ...aiOutput,
-      imagePlaceholderUrl: cardImagePath, // Overwrite/set the image URL
+      imagePlaceholderUrl: cardImagePath,
     };
   }
 );

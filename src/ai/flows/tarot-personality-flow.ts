@@ -10,20 +10,33 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import type { TarotPersonalityInputType as PublicTarotPersonalityInputType } from '@/types'; // Renamed to avoid conflict
+import type { TarotPersonalityInputType as PublicTarotPersonalityInputType } from '@/types';
 import { MAJOR_ARCANA_TAROT_CARDS } from '@/lib/constants';
 
 // Helper function to generate image path from card name
-const getTarotCardImagePath = (cardName: string): string => {
+const getTarotCardImagePath = (cardNameFromAI: string): string => {
   const basePath = '/custom_assets/tarot_cards/';
-  const normalizedName = cardName.toLowerCase().replace(/\s+/g, '_');
-  // Check if the normalized name is one of the known major arcana
-  const knownMajorArcanaFileNames = MAJOR_ARCANA_TAROT_CARDS.map(name => name.toLowerCase().replace(/\s+/g, '_'));
-  if (knownMajorArcanaFileNames.includes(normalizedName)) {
-    return `${basePath}${normalizedName}.png`;
+
+  // 1. Normalize the name from AI for searching (trim, lowercase).
+  const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
+
+  // 2. Find a matching canonical name from MAJOR_ARCANA_TAROT_CARDS.
+  const matchedCanonicalName = MAJOR_ARCANA_TAROT_CARDS.find(
+    (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
+  );
+
+  if (matchedCanonicalName) {
+    // 3. If a match is found, normalize the CANONICAL name for the filename.
+    const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
+    return `${basePath}${fileName}`;
   }
-  // Fallback if card name is not recognized or for other cases
-  return "https://placehold.co/267x470.png"; 
+
+  // Fallback if no exact match is found after normalization.
+   // This logs to the server console where Genkit flows run.
+  console.warn(
+    `[AstroVibes - TarotPersonalityFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in MAJOR_ARCANA_TAROT_CARDS. Using placeholder image.`
+  );
+  return "https://placehold.co/267x470.png";
 };
 
 
@@ -34,7 +47,6 @@ const TarotPersonalityInputSchema = z.object({
   })).length(3, "Please answer all three questions."),
   locale: z.string().describe('The locale (e.g., "en", "es") for the result language.'),
 });
-// Exporting the Zod schema inferred type for internal use if needed
 export type TarotPersonalityInput = z.infer<typeof TarotPersonalityInputSchema>;
 
 
@@ -49,11 +61,12 @@ export type TarotPersonalityOutput = z.infer<typeof TarotPersonalityOutputSchema
 const tarotPersonalityPrompt = ai.definePrompt({
   name: 'tarotPersonalityPrompt',
   input: {schema: TarotPersonalityInputSchema},
-  output: {schema: TarotPersonalityOutputSchema.omit({ cardImagePlaceholderUrl: true })}, // AI doesn't need to provide the URL
+  output: {schema: TarotPersonalityOutputSchema.omit({ cardImagePlaceholderUrl: true })},
   prompt: `You are an insightful psychologist and tarot expert.
 Based on the user's answers to the following three questions, determine which Major Arcana tarot card best represents their core personality, current life theme, or the energy they are embodying.
 
 Available Major Arcana cards for selection: ${MAJOR_ARCANA_TAROT_CARDS.join(", ")}.
+CRITICAL: Your "cardName" output MUST EXACTLY match one of these names, including capitalization and "The " prefix where applicable (e.g., "The Fool", "Strength").
 
 User's Answers:
 1. Question: "{{answers.[0].question}}"
@@ -65,7 +78,7 @@ User's Answers:
 
 Your task:
 1. Select ONE Tarot card from the Major Arcana list that you feel is most relevant to the user's collective answers.
-2. Provide the name of the card.
+2. Provide the name of the card in the "cardName" field.
 3. Provide a detailed, insightful, and empathetic "cardDescription" (2-3 paragraphs) explaining *why* this card was chosen for the user. Connect specific aspects of their answers to the symbolism and meaning of the chosen card. Avoid generic card meanings; personalize the description based on their input.
 
 Respond in the {{locale}} language.
@@ -77,6 +90,7 @@ Example output structure for locale 'en' if user's answers led to "The Hermit":
 }
 
 Now, analyze the user's answers provided above and generate the JSON output in the {{locale}} language.
+Ensure your "cardName" is an exact match from the provided Major Arcana list.
 `,
 });
 
@@ -86,25 +100,24 @@ const tarotPersonalityFlowInternal = ai.defineFlow(
     inputSchema: TarotPersonalityInputSchema,
     outputSchema: TarotPersonalityOutputSchema,
   },
-  async (input) => { // Type input as TarotPersonalityInput if using Zod inferred type
+  async (input) => {
     const {output: aiOutput} = await tarotPersonalityPrompt(input);
-    if (!aiOutput || !aiOutput.cardName) {
-      throw new Error('Tarot personality expert provided no insights or card name.');
+    if (!aiOutput || !aiOutput.cardName || aiOutput.cardName.trim() === "") {
+      // Log the problematic output for easier debugging
+      console.error('[AstroVibes - TarotPersonalityFlow] AI output missing cardName or cardName is empty. AI Output:', JSON.stringify(aiOutput));
+      throw new Error('Tarot personality expert provided no insights or an invalid card name.');
     }
     
     const cardImagePath = getTarotCardImagePath(aiOutput.cardName);
 
     return {
       ...aiOutput,
-      imagePlaceholderUrl: cardImagePath,
+      imagePlaceholderUrl: cardImagePath, // Changed from imagePlaceholderUrl to cardImagePlaceholderUrl to match schema
     };
   }
 );
 
-// The public function uses the type from '@/types'
 export async function tarotPersonalityFlow(input: PublicTarotPersonalityInputType): Promise<TarotPersonalityOutput> {
-  // Validate public input against Zod schema before calling internal flow
   const validatedInput = TarotPersonalityInputSchema.parse(input);
   return tarotPersonalityFlowInternal(validatedInput);
 }
-
