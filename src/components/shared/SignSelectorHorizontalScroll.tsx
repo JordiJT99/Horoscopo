@@ -36,8 +36,8 @@ export default function SignSelectorHorizontalScroll({
   const userProfileName = onboardingData?.name || user?.displayName || (dictionary['Auth.userLabel'] || "User");
   const userInitial = userProfileName?.charAt(0).toUpperCase();
   
-  // Determine if the user's own profile should be treated as "active"
-  const isUserSignSelected = userSunSign ? selectedSignName === userSunSign.name : false;
+  // Determine if the user's own profile button is the one currently selected based on the active sign
+  const isUserSignSelectedViaProfileButton = userSunSign ? selectedSignName === userSunSign.name : false;
 
   return (
     <div className="flex items-center space-x-2 sm:space-x-3 overflow-x-auto py-2 px-1 no-scrollbar">
@@ -49,23 +49,23 @@ export default function SignSelectorHorizontalScroll({
           aria-label={userProfileName}
           className={cn(
             "flex flex-col items-center justify-center h-auto p-1.5 min-w-[60px] sm:min-w-[68px] text-center transition-all duration-200 ease-in-out group",
-            isUserSignSelected ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+            isUserSignSelectedViaProfileButton ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
           )}
         >
           <Avatar
             className={cn(
               "w-12 h-12 sm:w-14 sm:h-14 mb-1 border-2 transition-all duration-200 ease-in-out overflow-hidden",
-              isUserSignSelected
+              isUserSignSelectedViaProfileButton
                 ? "bg-primary border-primary shadow-lg shadow-primary/70"
                 : "bg-card/60 border-border group-hover:border-muted/50"
             )}
           >
             <AvatarImage src={user.photoURL || `https://placehold.co/80x80.png`} alt={userProfileName} data-ai-hint="user modern avatar digital art" />
-            <AvatarFallback className={cn("text-lg", isUserSignSelected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>
+            <AvatarFallback className={cn("text-lg", isUserSignSelectedViaProfileButton ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>
               {userInitial || <UserCircle />}
             </AvatarFallback>
           </Avatar>
-          <span className={cn("text-[0.65rem] sm:text-xs mt-0.5 whitespace-nowrap truncate max-w-[50px] sm:max-w-[60px]", isUserSignSelected ? "font-semibold text-primary-foreground" : "group-hover:text-foreground")}>
+          <span className={cn("text-[0.65rem] sm:text-xs mt-0.5 whitespace-nowrap truncate max-w-[50px] sm:max-w-[60px]", isUserSignSelectedViaProfileButton ? "font-semibold text-primary-foreground" : "group-hover:text-foreground")}>
             {userProfileName}
           </span>
         </Button>
@@ -89,10 +89,11 @@ export default function SignSelectorHorizontalScroll({
       )}
 
       {signs.map((sign) => {
-        // Do not render the user's sun sign again if it's already shown as the personalized profile button
-        if (userSunSign && sign.name === userSunSign.name && user && onboardingData) {
-          return null;
-        }
+        // // Do not render the user's sun sign again if it's already shown as the personalized profile button
+        // // REMOVED THIS CONDITION TO FIX THE BUG
+        // if (userSunSign && sign.name === userSunSign.name && user && onboardingData) {
+        //   return null;
+        // }
 
         const isActive = sign.name === selectedSignName;
         let imagePath = sign.customIconPath || `https://placehold.co/80x80.png`;
