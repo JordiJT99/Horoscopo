@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState, useMemo } from 'react';
@@ -8,7 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
-import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
+import { motion, type PanInfo } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
@@ -16,11 +15,13 @@ import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
 import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
 import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
-import HoroscopeCategoryCard from '@/components/shared/HoroscopeCategoryCard';
+// HoroscopeCategoryCard is removed as its logic is integrated here now.
 import PromotionCard from '@/components/shared/PromotionCard';
 import { Button } from '@/components/ui/button';
 import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays, Share2 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 interface AstroVibesPageContentProps {
@@ -101,7 +102,7 @@ export default function AstroVibesHomePageContent({
             setUserSunSign(sunSign);
             if (sunSign) {
               determinedInitialSign = sunSign.name;
-              if (!signFromUrl) { // Default to user's sign if no sign in URL
+              if (!signFromUrl) { 
                 initiallyPersonalized = true;
               }
             }
@@ -121,16 +122,18 @@ export default function AstroVibesHomePageContent({
 
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
-      // If a sign is specified in the URL, it's a generic request unless it matches user's sign
-      // and onboardingData is present (which is handled by isPersonalizedRequestActive logic later)
-      initiallyPersonalized = (userSunSign?.name === signFromUrl && !!onboardingData);
+      initiallyPersonalized = (userSunSign?.name === signFromUrl && !!onboardingData && isPersonalizedRequestActive);
+    } else if (!signFromUrl && userSunSign) {
+        // If no sign in URL, and user has a sun sign, default to personalized.
+        // This condition is hit when page loads on `/` and user is logged in.
+        initiallyPersonalized = true; 
     }
     
     setSelectedDisplaySignName(determinedInitialSign);
-    // Set personalized active if conditions met (mainly if defaulting to user's sign page)
     setIsPersonalizedRequestActive(initiallyPersonalized);
 
-  }, [user, authLoading, searchParams]); // Removed userSunSign and onboardingData from deps as they are set within this effect.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading, searchParams]); 
 
 
   useEffect(() => {
@@ -149,12 +152,13 @@ export default function AstroVibesHomePageContent({
         };
         
         if (isPersonalizedRequestActive && userSunSign && selectedDisplaySignName === userSunSign.name && onboardingData) {
-          input.onboardingData = {
+           const personalizationData: HoroscopePersonalizationData = {
             name: onboardingData.name,
             gender: onboardingData.gender,
             relationshipStatus: onboardingData.relationshipStatus,
             employmentStatus: onboardingData.employmentStatus,
           };
+          input.onboardingData = personalizationData;
         }
 
         const result: HoroscopeFlowOutput | null | undefined = await getHoroscopeFlow(input);
@@ -196,9 +200,10 @@ export default function AstroVibesHomePageContent({
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
     let currentSignParam = searchParams.get('sign');
-    if (!currentSignParam && isPersonalizedRequestActive && userSunSign) {
+     // If current request is personalized, use user's sun sign for navigation. Otherwise, use selected display sign.
+    if (isPersonalizedRequestActive && userSunSign) {
       currentSignParam = userSunSign.name;
-    } else if (!currentSignParam) {
+    } else {
       currentSignParam = selectedDisplaySignName;
     }
 
@@ -208,7 +213,6 @@ export default function AstroVibesHomePageContent({
     if (currentSignParam) {
         queryParams.set('sign', currentSignParam);
     }
-
 
     if (tab === 'yesterday') {
       newPath = `/${locale}/yesterday-horoscope`;
@@ -265,7 +269,6 @@ export default function AstroVibesHomePageContent({
         horoscopeText = (dictionary['Share.personalizedHoroscopePrefix'] || "Para {userName} ({signName}):").replace('{userName}', userNameToShare).replace('{signName}', signNameToShare) + `\n${horoscopeText}`;
     }
 
-
     const appInvite = dictionary['Share.downloadAppPrompt'] || "¡Descubre AstroVibes para más insights!";
     const appStoreLink = dictionary['Share.appStoreLinkPlaceholder'] || "https://apps.apple.com/app/your-app-id-here";
     const googlePlayLink = dictionary['Share.googlePlayLinkPlaceholder'] || "https://play.google.com/store/apps/details?id=your.package.name.here";
@@ -277,10 +280,8 @@ export default function AstroVibesHomePageContent({
     if (userNameToShare) {
         currentUrl.searchParams.set('userName', userNameToShare);
     }
-    // Remove mainText from URL to keep it clean; text is shared directly
     currentUrl.searchParams.delete('mainText');
     currentUrl.searchParams.delete('sharedPeriod');
-
 
     const shareableUrl = currentUrl.toString();
 
@@ -352,7 +353,8 @@ export default function AstroVibesHomePageContent({
       { nameKey: "HoroscopeSummary.work", percentage: getDeterministicRandom(`${baseSeed}-work`, 40, 95), dataKey: "main" as keyof HoroscopeDetail, icon: WorkIcon },
       { nameKey: "HoroscopeSummary.health", percentage: getDeterministicRandom(`${baseSeed}-health`, 40, 95), dataKey: "health" as keyof HoroscopeDetail, icon: Activity },
     ];
-  }, [selectedDisplaySignName, displayPeriod, targetDate, activeHoroscopePeriodForTitles]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDisplaySignName, displayPeriod, targetDate, activeHoroscopePeriodForTitles, dictionary]);
 
 
   const detailedHoroscopeCategories = currentDisplayHoroscope ? [
@@ -398,6 +400,7 @@ export default function AstroVibesHomePageContent({
   }
 
   const motionDivKey = `${selectedDisplaySignName}-${activeHoroscopePeriodForTitles}-${targetDate || 'no-date'}-${isPersonalizedRequestActive}`;
+  const isTomorrowView = activeHoroscopePeriodForTitles === 'tomorrow';
 
   return (
     <div className="flex flex-col">
@@ -468,15 +471,21 @@ export default function AstroVibesHomePageContent({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <div className="flex justify-between items-center mb-2 sm:mb-3 px-1">
-              <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
-                <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
+            <div className={cn(
+              "flex justify-between items-center mb-2 sm:mb-3 px-1",
+              isTomorrowView && "justify-center" // Center title only for tomorrow view
+            )}>
+              <h2 className={cn(
+                "text-base sm:text-lg font-semibold font-headline text-foreground flex items-center",
+                isTomorrowView && "text-center uppercase font-bold text-3xl sm:text-4xl md:text-5xl bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 text-transparent bg-clip-text py-2"
+              )}>
+                {!isTomorrowView && <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />}
                 {dictionary[pageTitleKey] || "Horoscope Details"}
                  {isPersonalizedRequestActive && userSunSign?.name === selectedDisplaySignName && onboardingData?.name && (
-                  <span className="text-sm text-primary ml-1.5">({onboardingData.name})</span>
+                  <span className={cn("text-sm text-primary ml-1.5", isTomorrowView && "text-xl sm:text-2xl text-primary")}>({onboardingData.name})</span>
                 )}
               </h2>
-              {currentDisplayHoroscope && !isHoroscopeLoading && (
+              {!isTomorrowView && currentDisplayHoroscope && !isHoroscopeLoading && (
                 <Button
                   variant="ghost"
                   size="sm"
@@ -488,26 +497,54 @@ export default function AstroVibesHomePageContent({
                 </Button>
               )}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
+            {isTomorrowView && currentDisplayHoroscope && !isHoroscopeLoading && (
+                 <div className="flex justify-center mt-1 mb-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleShareHoroscope}
+                        className="text-primary hover:text-primary border-primary/50 hover:bg-primary/10"
+                        aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
+                    >
+                        <Share2 className="h-4 w-4 sm:h-5 sm:h-5 mr-2" /> {dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}
+                    </Button>
+                 </div>
+            )}
+            <div className="space-y-3 sm:space-y-4">
               {detailedHoroscopeCategories.map((cat) => (
-                <HoroscopeCategoryCard
-                    key={`${cat.id}-${motionDivKey}-detail`}
-                    dictionary={dictionary}
-                    titleKey={cat.titleKey}
-                    icon={cat.icon}
-                    content={cat.content}
-                    isLoading={isHoroscopeLoading}
-                  />
+                <div key={`${cat.id}-${motionDivKey}-detail`} className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4", isTomorrowView && "text-center")}>
+                  <h3 className={cn(
+                    "text-base sm:text-lg font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center",
+                    isTomorrowView && "text-xl sm:text-2xl font-bold justify-center"
+                  )}>
+                    <cat.icon className={cn("h-4 w-4 sm:h-5 sm:h-5 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
+                    {dictionary[cat.titleKey]}
+                  </h3>
+                  {isHoroscopeLoading ? (
+                    <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
+                      <Skeleton className="h-4 w-3/4" />
+                    </div>
+                  ) : (
+                    <p className={cn("text-sm text-foreground/80 leading-relaxed", isTomorrowView && "text-base")}>
+                      {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
+                    </p>
+                  )}
+                </div>
               ))}
               {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
-                  <HoroscopeCategoryCard
-                    key={`skeleton-${index}`}
-                    dictionary={dictionary}
-                    titleKey={dictionary['HoroscopeSection.loading'] || "Loading..."}
-                    icon={ContentSparklesIcon}
-                    content=""
-                    isLoading={true}
-                  />
+                  <div key={`skeleton-cat-${index}`} className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4">
+                    <h3 className={cn("text-base sm:text-lg font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center", isTomorrowView && "text-xl sm:text-2xl font-bold justify-center")}>
+                        <ContentSparklesIcon className={cn("h-4 w-4 sm:h-5 sm:h-5 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
+                        {dictionary['HoroscopeSection.loading'] || "Loading..."}
+                    </h3>
+                    <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
+                      <Skeleton className="h-4 w-3/4" />
+                    </div>
+                  </div>
               ))}
               {!isHoroscopeLoading && !currentDisplayHoroscope && (
                  <div className="sm:col-span-2 text-center py-10">
