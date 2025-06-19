@@ -25,7 +25,7 @@ const ZodiacSignIcon: React.FC<ZodiacSignIconProps> = ({ signName, className }) 
         width={24} // Default width, can be overridden by className
         height={24} // Default height, can be overridden by className
         className={className || "w-6 h-6"}
-        unoptimized={false} // Ensure Next.js optimization is active (default is false)
+        // unoptimized={false} // Removed this line
         priority={false} // Icons are usually not LCP, so false is fine
       />
     );
