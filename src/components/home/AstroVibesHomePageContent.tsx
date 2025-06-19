@@ -122,7 +122,10 @@ export default function AstroVibesHomePageContent({
 
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
-      initiallyPersonalized = (userSunSign?.name === signFromUrl && !!onboardingData && isPersonalizedRequestActive);
+      // Do not set initiallyPersonalized to true here if loaded from URL,
+      // it means the user explicitly wants to see the generic version for that sign.
+      // isPersonalizedRequestActive will be set by handleSignSelectedFromScroll if they click their profile button.
+      initiallyPersonalized = false;
     } else if (!signFromUrl && userSunSign) {
         initiallyPersonalized = true; 
     }
@@ -198,6 +201,7 @@ export default function AstroVibesHomePageContent({
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
     let currentSignParam = searchParams.get('sign');
+    // If personalized view is active, use user's sun sign for URL, otherwise the selected display sign
     if (isPersonalizedRequestActive && userSunSign) {
       currentSignParam = userSunSign.name;
     } else {
@@ -207,7 +211,7 @@ export default function AstroVibesHomePageContent({
     let newPath = '';
     const queryParams = new URLSearchParams();
     
-    if (currentSignParam) {
+    if (currentSignParam) { // Always set the sign param if available
         queryParams.set('sign', currentSignParam);
     }
 
@@ -217,8 +221,8 @@ export default function AstroVibesHomePageContent({
       newPath = `/${locale}/weekly-horoscope`;
     } else if (tab === 'monthly') {
       newPath = `/${locale}/monthly-horoscope`;
-    } else {
-      newPath = `/${locale}`;
+    } else { // 'today' or 'tomorrow'
+      newPath = `/${locale}`; // Base path for today and tomorrow
       if (tab === 'tomorrow') {
         queryParams.set('period', 'tomorrow');
       }
@@ -277,8 +281,8 @@ export default function AstroVibesHomePageContent({
     if (userNameToShare) {
         currentUrl.searchParams.set('userName', userNameToShare);
     }
-    currentUrl.searchParams.delete('mainText');
-    currentUrl.searchParams.delete('sharedPeriod');
+    currentUrl.searchParams.delete('mainText'); // Ensure old params are cleared
+    currentUrl.searchParams.delete('sharedPeriod'); // Ensure old params are cleared
 
     const shareableUrl = currentUrl.toString();
 
@@ -287,7 +291,7 @@ export default function AstroVibesHomePageContent({
         await navigator.share({
           title: shareTitle,
           text: fullShareText,
-          url: shareableUrl,
+          url: shareableUrl, // Share the URL that can reconstruct the view
         });
         toast({
           title: dictionary['Share.successTitle'] || "Success!",
@@ -467,14 +471,17 @@ export default function AstroVibesHomePageContent({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            className="space-y-3 sm:space-y-4"
           >
             <div className={cn(
-              "flex justify-between items-center mb-2 sm:mb-3 px-1",
-              isTomorrowView && "justify-center" // Center title only for tomorrow view
+              "mb-2 sm:mb-3 px-1",
+              isTomorrowView ? "text-center" : "flex justify-between items-center"
             )}>
               <h2 className={cn(
-                "text-base sm:text-lg font-semibold font-headline text-foreground flex items-center",
-                isTomorrowView && "text-center uppercase font-bold text-3xl sm:text-4xl md:text-5xl bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 text-transparent bg-clip-text py-2"
+                "font-semibold font-headline text-foreground flex items-center",
+                isTomorrowView 
+                  ? "text-center uppercase font-bold text-3xl sm:text-4xl md:text-5xl bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 text-transparent bg-clip-text py-2 mx-auto" 
+                  : "text-base sm:text-lg"
               )}>
                 {!isTomorrowView && <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />}
                 {dictionary[pageTitleKey] || "Horoscope Details"}
@@ -482,31 +489,24 @@ export default function AstroVibesHomePageContent({
                   <span className={cn("text-sm text-primary ml-1.5", isTomorrowView && "text-xl sm:text-2xl text-primary")}>({onboardingData.name})</span>
                 )}
               </h2>
-              {!isTomorrowView && currentDisplayHoroscope && !isHoroscopeLoading && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleShareHoroscope}
-                  className="text-muted-foreground hover:text-primary"
-                  aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
-                >
-                  <Share2 className="h-4 w-4 sm:h-5 sm:h-5" />
-                </Button>
-              )}
+              {/* Share button for non-tomorrow views was here, now moved below title */}
             </div>
-            {isTomorrowView && currentDisplayHoroscope && !isHoroscopeLoading && (
-                 <div className="flex justify-center mt-1 mb-4">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleShareHoroscope}
-                        className="text-primary hover:text-primary border-primary/50 hover:bg-primary/10"
-                        aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
-                    >
-                        <Share2 className="h-4 w-4 sm:h-5 sm:h-5 mr-2" /> {dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}
-                    </Button>
-                 </div>
+            
+            {/* Share Button - Consistent Placement */}
+            {currentDisplayHoroscope && !isHoroscopeLoading && (
+              <div className="flex justify-center mt-1 mb-4">
+                <Button
+                    variant="outline"
+                    size="default" // Increased size
+                    onClick={handleShareHoroscope}
+                    className="text-primary hover:text-primary border-primary/50 hover:bg-primary/10"
+                    aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
+                >
+                    <Share2 className="h-5 w-5 mr-2" /> {dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}
+                </Button>
+              </div>
             )}
+
             <div className="space-y-3 sm:space-y-4">
               {detailedHoroscopeCategories.map((cat) => (
                 <div key={`${cat.id}-${motionDivKey}-detail`} className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4", isTomorrowView && "text-center")}>
