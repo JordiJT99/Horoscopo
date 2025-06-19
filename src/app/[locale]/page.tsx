@@ -1,23 +1,27 @@
-
 // AstroVibesHomePageWrapper is the async Server Component (default export)
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
-// Removed: import { useMemo } from 'react'; 
-import { use } from 'react'; 
 
 // Import the new client component
 import AstroVibesHomePageContent from '@/components/home/AstroVibesHomePageContent';
 import type { HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
 
 interface AstroVibesHomePageProps {
-  params: Promise<{ locale: Locale }>;
+  params: { locale: Locale }; // Corrected type for server component params
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function AstroVibesHomePageWrapper({ params: paramsPromise, searchParams }: AstroVibesHomePageProps) {
-  const params = await paramsPromise;
+export default async function AstroVibesHomePageWrapper({ params, searchParams }: AstroVibesHomePageProps) {
+  // params.locale is directly available
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {
