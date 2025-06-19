@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState, useMemo } from 'react';
@@ -15,7 +16,6 @@ import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
 import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
 import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
-// HoroscopeCategoryCard is removed as its logic is integrated here now.
 import PromotionCard from '@/components/shared/PromotionCard';
 import { Button } from '@/components/ui/button';
 import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays, Share2 } from 'lucide-react';
@@ -200,7 +200,6 @@ export default function AstroVibesHomePageContent({
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
     let currentSignParam = searchParams.get('sign');
-     // If current request is personalized, use user's sun sign for navigation. Otherwise, use selected display sign.
     if (isPersonalizedRequestActive && userSunSign) {
       currentSignParam = userSunSign.name;
     } else {
@@ -258,18 +257,18 @@ export default function AstroVibesHomePageContent({
     const userNameToShare = (isPersonalizedRequestActive && onboardingData?.name) ? onboardingData.name : null;
 
     const shareTitle = userNameToShare
-      ? (dictionary['Share.personalizedHoroscopeTitle'] || "Mi Horóscopo Personalizado de AstroVibes para {signName}")
+      ? (dictionary['Share.personalizedHoroscopeTitle'] || "My Personalized AstroVibes Horoscope for {signName}")
           .replace('{signName}', signNameToShare)
           .replace('{userName}', userNameToShare)
-      : (dictionary['Share.horoscopeTitle'] || "Horóscopo de {signName} de AstroVibes")
+      : (dictionary['Share.horoscopeTitle'] || "Horoscope for {signName} from AstroVibes")
           .replace('{signName}', signNameToShare);
 
     let horoscopeText = `${currentDisplayHoroscope.main}`;
     if (userNameToShare) {
-        horoscopeText = (dictionary['Share.personalizedHoroscopePrefix'] || "Para {userName} ({signName}):").replace('{userName}', userNameToShare).replace('{signName}', signNameToShare) + `\n${horoscopeText}`;
+        horoscopeText = (dictionary['Share.personalizedHoroscopePrefix'] || "For {userName} ({signName}):").replace('{userName}', userNameToShare).replace('{signName}', signNameToShare) + `\n${horoscopeText}`;
     }
 
-    const appInvite = dictionary['Share.downloadAppPrompt'] || "¡Descubre AstroVibes para más insights!";
+    const appInvite = dictionary['Share.downloadAppPrompt'] || "Discover AstroVibes for more insights!";
     const appStoreLink = dictionary['Share.appStoreLinkPlaceholder'] || "https://apps.apple.com/app/your-app-id-here";
     const googlePlayLink = dictionary['Share.googlePlayLinkPlaceholder'] || "https://play.google.com/store/apps/details?id=your.package.name.here";
     
@@ -522,12 +521,12 @@ export default function AstroVibesHomePageContent({
                   </h3>
                   {isHoroscopeLoading ? (
                     <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-5/6" />
-                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-full font-body" />
+                      <Skeleton className="h-4 w-5/6 font-body" />
+                      <Skeleton className="h-4 w-3/4 font-body" />
                     </div>
                   ) : (
-                    <p className={cn("text-sm text-foreground/80 leading-relaxed", isTomorrowView && "text-base")}>
+                    <p className={cn("font-body text-sm text-foreground/80 leading-relaxed", isTomorrowView && "text-base")}>
                       {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
                     </p>
                   )}
@@ -540,15 +539,15 @@ export default function AstroVibesHomePageContent({
                         {dictionary['HoroscopeSection.loading'] || "Loading..."}
                     </h3>
                     <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-5/6" />
-                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-full font-body" />
+                      <Skeleton className="h-4 w-5/6 font-body" />
+                      <Skeleton className="h-4 w-3/4 font-body" />
                     </div>
                   </div>
               ))}
               {!isHoroscopeLoading && !currentDisplayHoroscope && (
                  <div className="sm:col-span-2 text-center py-10">
-                   <p className="text-muted-foreground font-body">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
+                   <p className="font-body text-muted-foreground">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
                 </div>
               )}
             </div>
