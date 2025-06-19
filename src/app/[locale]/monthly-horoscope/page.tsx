@@ -1,19 +1,27 @@
 
 // AstroVibesMonthlyPageWrapper is the async Server Component (default export)
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
 
 // Import the client component that contains all UI logic and animations
 import AstroVibesHomePageContent from '@/components/home/AstroVibesHomePageContent';
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
+
 interface MonthlyHoroscopePageProps {
-  params: Promise<{ locale: Locale }>;
+  params: { locale: Locale }; // Changed from Promise<{ locale: Locale }>
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function MonthlyHoroscopePageWrapper({ params: paramsPromise, searchParams }: MonthlyHoroscopePageProps) {
-  const params = await paramsPromise;
+export default async function MonthlyHoroscopePageWrapper({ params, searchParams }: MonthlyHoroscopePageProps) {
+  // params.locale is directly available now
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {
@@ -36,3 +44,4 @@ export default async function MonthlyHoroscopePageWrapper({ params: paramsPromis
     />
   );
 }
+
