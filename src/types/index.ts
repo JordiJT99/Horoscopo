@@ -42,10 +42,21 @@ export interface HoroscopeDetail {
   health: string;
 }
 
+// Interface for onboarding data that might be passed to the horoscope flow
+// Make fields optional as not all might be available or relevant for every call
+export interface HoroscopePersonalizationData {
+  name?: string;
+  gender?: Gender; // Using Gender type from below
+  relationshipStatus?: RelationshipStatus; // Using RelationshipStatus type from below
+  employmentStatus?: EmploymentStatus; // Using EmploymentStatus type from below
+}
+
+
 export interface HoroscopeFlowInput {
   sign: ZodiacSignName;
   locale: string;
   targetDate?: string; // YYYY-MM-DD format, optional
+  onboardingData?: HoroscopePersonalizationData; // Optional data for personalization
 }
 
 export interface HoroscopeFlowOutput {
@@ -207,7 +218,7 @@ export type EmploymentStatus = "employed-full-time" | "employed-part-time" | "se
 export interface OnboardingFormData {
   name: string;
   gender: Gender;
-  dateOfBirth: Date | undefined;
+  dateOfBirth: Date | undefined; // Stored as Date object after parsing
   timeOfBirth?: string; // HH:mm, optional
   cityOfBirth?: string; // optional
   relationshipStatus: RelationshipStatus;
