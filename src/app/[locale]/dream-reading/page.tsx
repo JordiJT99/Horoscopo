@@ -1,19 +1,26 @@
 
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { BedDouble } from 'lucide-react'; // Icon used by SectionTitle in this Server Component
 import DreamReadingClient from '@/components/dream-reading/DreamReadingClient'; // Import the new client component
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
+
 interface DreamReadingPageProps {
-  params: Promise<{
+  params: { // Params are directly available in Server Components
     locale: Locale;
-  }>;
+  };
 }
 
 // Page component (default export) - now an async Server Component
-export default async function DreamReadingPage({ params: paramsPromise }: DreamReadingPageProps) {
-  const params = await paramsPromise; // Resolve the params promise
+export default async function DreamReadingPage({ params }: DreamReadingPageProps) {
   const dictionary = await getDictionary(params.locale); // Resolve the dictionary promise
 
   return (
@@ -29,4 +36,3 @@ export default async function DreamReadingPage({ params: paramsPromise }: DreamR
     </main>
   );
 }
-

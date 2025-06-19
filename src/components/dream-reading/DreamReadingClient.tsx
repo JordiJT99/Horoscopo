@@ -106,7 +106,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
         });
         if (navigator.share) {
             try {
-                await navigator.share({ title: shareTitle, text: `${inviteMessage}\n\n"${interpretation}"`, url: window.location.pathname.split('?')[0] });
+                await navigator.share({ title: shareTitle, text: `${inviteMessage}\\n\\n"${interpretation}"`, url: window.location.pathname.split('?')[0] });
             } catch (err) { /* handled below */ }
         }
         return;
@@ -134,7 +134,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
         }
       }
     } else {
-      const textToCopy = `${inviteMessage}\n${shareableUrl}`;
+      const textToCopy = `${inviteMessage}\\n${shareableUrl}`;
       try {
         await navigator.clipboard.writeText(textToCopy);
         toast({
@@ -267,7 +267,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             </CardHeader>
             <CardContent className="p-0">
               <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm md:text-base">
-                {interpretation.split('\n').map((paragraph, index) => (
+                {interpretation.split('\\n').map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
               </div>
