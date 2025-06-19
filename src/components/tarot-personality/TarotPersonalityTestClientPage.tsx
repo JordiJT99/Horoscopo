@@ -1,9 +1,8 @@
 
 "use client";
 
-import { useState, useEffect, useMemo } from 'react'; // Removed 'use' as dictionary is now a prop
+import { useState, useEffect, useMemo } from 'react'; 
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-// SectionTitle is now rendered by the server component
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -31,7 +30,6 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Update questions if dictionary changes (e.g., locale change)
   useEffect(() => {
     setQuestions(initialQuestions(dictionary));
   }, [dictionary]);
@@ -43,7 +41,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   };
 
   const handleSubmitTest = async () => {
-    const allAnswered = questions.every(q => q.answer.trim().length >= 10); // Basic validation
+    const allAnswered = questions.every(q => q.answer.trim().length >= 10); 
     if (!allAnswered) {
       setError(dictionary['TarotPersonalityPage.errorAllAnswers'] || "Please provide a thoughtful answer (at least 10 characters) for all questions.");
       toast({
@@ -78,12 +76,11 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
 
   const handleTryAgain = () => {
     setResult(null);
-    setQuestions(initialQuestions(dictionary)); // Reset answers
+    setQuestions(initialQuestions(dictionary)); 
     setError(null);
   };
 
   if (Object.keys(dictionary).length === 0) {
-    // This loading state is good for when the dictionary is still being fetched.
     return (
       <div className="text-center py-10">
         <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
@@ -93,7 +90,6 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   }
 
   return (
-    // SectionTitle is now rendered by the parent server component
     <Card className="w-full max-w-xl mx-auto shadow-xl">
       <CardHeader className="px-4 py-4 md:px-6 md:py-5">
         <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
@@ -146,12 +142,19 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
             <CardContent className="p-0 space-y-3 md:space-y-4">
               <div className="flex justify-center mb-3 md:mb-4">
                 <Image
-                  src={result.cardImagePlaceholderUrl}
+                  src={result.cardImagePlaceholderUrl} // This will now be the actual image path
                   alt={result.cardName}
-                  width={100} 
-                  height={175}
-                  className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[134px] sm:h-[235px]"
-                  data-ai-hint="tarot card"
+                  width={134} 
+                  height={235} // Adjusted to maintain aspect ratio of 267x470 used in placeholder
+                  className="rounded-md shadow-lg border-2 border-primary/50"
+                  data-ai-hint={`${result.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
+                  unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")} // only unoptimize placeholders
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null; 
+                    target.src = "https://placehold.co/134x235.png?text=Error";
+                    target.setAttribute("data-ai-hint", "tarot placeholder error");
+                  }}
                 />
               </div>
               <div>

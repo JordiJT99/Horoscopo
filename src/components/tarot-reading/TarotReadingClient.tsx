@@ -7,7 +7,7 @@ import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Wand, Sparkles, Loader2, Share2, RotateCcw } from 'lucide-react'; // Wand might be duplicated if SectionTitle also uses it, but fine for now
+import { Wand, Sparkles, Loader2, Share2, RotateCcw } from 'lucide-react'; 
 import { tarotReadingFlow, type TarotReadingInput, type TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
@@ -28,12 +28,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const { toast } = useToast();
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
-  // Removed shared state variables as they are derived from 'reading' now
-  //   const [sharedCardName, setSharedCardName] = useState<string | null>(null);
-  //   const [sharedCardMeaning, setSharedCardMeaning] = useState<string | null>(null);
-  //   const [sharedAdvice, setSharedAdvice] = useState<string | null>(null);
-  //   const [sharedImagePlaceholderUrl, setSharedImagePlaceholderUrl] = useState<string | null>(null);
-
+  
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
@@ -58,7 +53,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
             cardName: decodedName,
             cardMeaning: decodedMeaning,
             advice: decodedAdvice,
-            imagePlaceholderUrl: decodedImage
+            imagePlaceholderUrl: decodedImage // This will now be the actual image path
         });
         setIsShowingSharedContent(true);
         setQuestion(''); 
@@ -105,7 +100,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
     pageUrl.searchParams.set('cardName', encodeURIComponent(reading.cardName));
     pageUrl.searchParams.set('cardMeaning', encodeURIComponent(reading.cardMeaning));
     pageUrl.searchParams.set('advice', encodeURIComponent(reading.advice));
-    pageUrl.searchParams.set('image', encodeURIComponent(reading.imagePlaceholderUrl));
+    pageUrl.searchParams.set('image', encodeURIComponent(reading.imagePlaceholderUrl)); // Share the actual image path
     const shareableUrl = pageUrl.toString();
     
     const fullShareText = `${shareTitle}\\n\\nCard: ${reading.cardName}\\nMeaning: ${reading.cardMeaning}\\nAdvice: ${reading.advice}`;
@@ -268,7 +263,14 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
                       width={150}  
                       height={262} 
                       className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[180px] sm:h-[315px]"
-                      data-ai-hint="tarot card vintage art-nouveau"
+                      data-ai-hint={`${reading.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
+                      unoptimized={reading.imagePlaceholderUrl.startsWith("https://placehold.co")} // only unoptimize placeholders
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null; 
+                        target.src = "https://placehold.co/180x315.png?text=Error";
+                        target.setAttribute("data-ai-hint", "tarot placeholder error");
+                      }}
                     />
                   </div>
                 </div>
