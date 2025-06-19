@@ -46,9 +46,9 @@ export interface HoroscopeDetail {
 // Make fields optional as not all might be available or relevant for every call
 export interface HoroscopePersonalizationData {
   name?: string;
-  gender?: Gender; // Using Gender type from below
-  relationshipStatus?: RelationshipStatus; // Using RelationshipStatus type from below
-  employmentStatus?: EmploymentStatus; // Using EmploymentStatus type from below
+  gender?: Gender;
+  relationshipStatus?: RelationshipStatus;
+  employmentStatus?: EmploymentStatus;
 }
 
 
@@ -56,7 +56,7 @@ export interface HoroscopeFlowInput {
   sign: ZodiacSignName;
   locale: string;
   targetDate?: string; // YYYY-MM-DD format, optional
-  // onboardingData?: HoroscopePersonalizationData; // Removed for now to ensure core functionality
+  onboardingData?: HoroscopePersonalizationData; // Re-added for personalized horoscopes
 }
 
 export interface HoroscopeFlowOutput {

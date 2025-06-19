@@ -5,7 +5,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput } from '@/types';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
@@ -68,7 +68,7 @@ export default function AstroVibesHomePageContent({
     if (initialSignFromUrl && ZODIAC_SIGNS.find(s => s.name === initialSignFromUrl)) {
       return initialSignFromUrl;
     }
-    return "Capricorn"; 
+    return "Capricorn";
   });
 
   const selectedDisplaySign = useMemo(() => {
@@ -82,14 +82,14 @@ export default function AstroVibesHomePageContent({
 
   useEffect(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
-    let determinedInitialSign = "Capricorn" as ZodiacSignName; 
+    let determinedInitialSign = "Capricorn" as ZodiacSignName;
 
     if (user?.uid && !authLoading) {
       const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
       if (storedData) {
         try {
             const parsedData = JSON.parse(storedData) as OnboardingFormData;
-            if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') { 
+            if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') {
                 parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
             }
             setOnboardingData(parsedData);
@@ -115,14 +115,14 @@ export default function AstroVibesHomePageContent({
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
     }
-    else if (userSunSign && !signFromUrl) { 
+    else if (userSunSign && !signFromUrl) {
         determinedInitialSign = userSunSign.name;
     }
 
 
     setSelectedDisplaySignName(determinedInitialSign);
 
-  }, [user, authLoading, searchParams]);
+  }, [user, authLoading, searchParams, userSunSign]);
 
 
   useEffect(() => {
@@ -138,8 +138,17 @@ export default function AstroVibesHomePageContent({
           sign: selectedDisplaySignName,
           locale,
           targetDate: targetDate,
-          // onboardingData is no longer passed here
         };
+
+        // Add onboardingData for personalization if it's the user's own sign
+        if (userSunSign && selectedDisplaySignName === userSunSign.name && onboardingData) {
+          input.onboardingData = {
+            name: onboardingData.name,
+            gender: onboardingData.gender,
+            relationshipStatus: onboardingData.relationshipStatus,
+            employmentStatus: onboardingData.employmentStatus,
+          };
+        }
 
         const result: HoroscopeFlowOutput | null | undefined = await getHoroscopeFlow(input);
 
@@ -175,8 +184,7 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  // Removed onboardingData from dependency array as it's no longer directly used in this effect's input
-  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast]); 
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -210,7 +218,7 @@ export default function AstroVibesHomePageContent({
     } else if (activeHoroscopePeriodForTitles === 'tomorrow' && basePath === `/${locale}`) {
          currentQueryParams.set('period', 'tomorrow');
     }
-     else { 
+     else {
       basePath = `/${locale}`;
       if(currentQueryParams.get('period') === 'tomorrow' && activeHoroscopePeriodForTitles !== 'tomorrow'){
           currentQueryParams.delete('period');
@@ -359,7 +367,7 @@ export default function AstroVibesHomePageContent({
           </motion.div>
 
           <motion.div
-            id="horoscope-details-section" 
+            id="horoscope-details-section"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
