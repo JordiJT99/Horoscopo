@@ -1,6 +1,6 @@
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,18 +12,26 @@ import {
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
+
 interface MorePageProps {
   params: { locale: Locale };
 }
 
 // Helper component for feature cards
-const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean }) => {
+const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder, currentDictionary }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean, currentDictionary: Record<string, string> }) => {
   const cardClasses = "bg-card/90 hover:bg-primary/20 transition-colors duration-200 p-3 sm:p-4 flex flex-col items-center justify-center text-center aspect-[4/3] sm:aspect-square shadow-lg rounded-xl";
   const content = (
     <>
       <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary mb-1.5 sm:mb-2" />
       <CardTitle className="text-xs sm:text-sm font-headline text-foreground leading-tight">{title}</CardTitle>
-      {newBadge && <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{dictionary['MorePage.newBadge'] || 'NUEVO'}</Badge>}
+      {newBadge && <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.newBadge'] || 'NUEVO'}</Badge>}
     </>
   );
 
@@ -43,7 +51,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder 
     </Link>
   );
 };
-let dictionary: any = {}; // Placeholder for dictionary object
+
 
 // Helper component for account/settings items
 const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:string; icon: React.ElementType; title: string; locale: Locale, isPlaceholder?: boolean }) => {
@@ -77,7 +85,7 @@ const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:
 
 
 export default async function MorePage({ params }: MorePageProps) {
-  dictionary = await getDictionary(params.locale);
+  const dictionary = await getDictionary(params.locale);
 
   const allFeatures = [
     { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
@@ -131,6 +139,7 @@ export default async function MorePage({ params }: MorePageProps) {
               locale={params.locale}
               newBadge={feature.newBadge}
               isPlaceholder={feature.isPlaceholder}
+              currentDictionary={dictionary}
             />
           ))}
         </div>
@@ -192,4 +201,3 @@ export default async function MorePage({ params }: MorePageProps) {
     </main>
   );
 }
-
