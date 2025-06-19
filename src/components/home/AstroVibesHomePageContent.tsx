@@ -124,8 +124,6 @@ export default function AstroVibesHomePageContent({
       determinedInitialSign = signFromUrl;
       initiallyPersonalized = (userSunSign?.name === signFromUrl && !!onboardingData && isPersonalizedRequestActive);
     } else if (!signFromUrl && userSunSign) {
-        // If no sign in URL, and user has a sun sign, default to personalized.
-        // This condition is hit when page loads on `/` and user is logged in.
         initiallyPersonalized = true; 
     }
     
@@ -513,10 +511,10 @@ export default function AstroVibesHomePageContent({
               {detailedHoroscopeCategories.map((cat) => (
                 <div key={`${cat.id}-${motionDivKey}-detail`} className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4", isTomorrowView && "text-center")}>
                   <h3 className={cn(
-                    "text-base sm:text-lg font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center",
-                    isTomorrowView && "text-xl sm:text-2xl font-bold justify-center"
+                    "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center",
+                    isTomorrowView ? "text-2xl sm:text-3xl font-bold justify-center" : "text-lg sm:text-xl"
                   )}>
-                    <cat.icon className={cn("h-4 w-4 sm:h-5 sm:h-5 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
+                    <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
                     {dictionary[cat.titleKey]}
                   </h3>
                   {isHoroscopeLoading ? (
@@ -534,8 +532,11 @@ export default function AstroVibesHomePageContent({
               ))}
               {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
                   <div key={`skeleton-cat-${index}`} className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4">
-                    <h3 className={cn("text-base sm:text-lg font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center", isTomorrowView && "text-xl sm:text-2xl font-bold justify-center")}>
-                        <ContentSparklesIcon className={cn("h-4 w-4 sm:h-5 sm:h-5 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
+                    <h3 className={cn(
+                      "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center", 
+                      isTomorrowView ? "text-2xl sm:text-3xl font-bold justify-center" : "text-lg sm:text-xl"
+                    )}>
+                        <ContentSparklesIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
                         {dictionary['HoroscopeSection.loading'] || "Loading..."}
                     </h3>
                     <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
