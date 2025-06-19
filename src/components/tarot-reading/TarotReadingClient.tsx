@@ -1,0 +1,316 @@
+
+"use client"; // THIS IS THE NEW CLIENT COMPONENT
+
+import { useState, useEffect, useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Wand, Sparkles, Loader2, Share2, RotateCcw } from 'lucide-react'; // Wand might be duplicated if SectionTitle also uses it, but fine for now
+import { tarotReadingFlow, type TarotReadingInput, type TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
+import { useToast } from "@/hooks/use-toast";
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+
+interface TarotReadingClientProps {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+export default function TarotReadingClient({ dictionary, locale }: TarotReadingClientProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [question, setQuestion] = useState('');
+  const [reading, setReading] = useState<TarotReadingOutput | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
+  // Removed shared state variables as they are derived from 'reading' now
+  //   const [sharedCardName, setSharedCardName] = useState<string | null>(null);
+  //   const [sharedCardMeaning, setSharedCardMeaning] = useState<string | null>(null);
+  //   const [sharedAdvice, setSharedAdvice] = useState<string | null>(null);
+  //   const [sharedImagePlaceholderUrl, setSharedImagePlaceholderUrl] = useState<string | null>(null);
+
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    const cardNameParam = searchParams.get('cardName');
+    const cardMeaningParam = searchParams.get('cardMeaning');
+    const adviceParam = searchParams.get('advice');
+    const imageParam = searchParams.get('image');
+
+    if (cardNameParam && cardMeaningParam && adviceParam && imageParam) {
+      try {
+        const decodedName = decodeURIComponent(cardNameParam);
+        const decodedMeaning = decodeURIComponent(cardMeaningParam);
+        const decodedAdvice = decodeURIComponent(adviceParam);
+        const decodedImage = decodeURIComponent(imageParam);
+        
+        setReading({
+            cardName: decodedName,
+            cardMeaning: decodedMeaning,
+            advice: decodedAdvice,
+            imagePlaceholderUrl: decodedImage
+        });
+        setIsShowingSharedContent(true);
+        setQuestion(''); 
+      } catch (e) {
+        console.error("Error decoding shared tarot reading:", e);
+        setError(dictionary['TarotReadingPage.errorDecoding'] || "Could not display the shared reading. It might be corrupted.");
+      }
+    }
+  }, [searchParams, dictionary, isClient]);
+
+  const handleDrawCard = async () => {
+    if (!question.trim()) {
+      setError(dictionary['TarotReadingPage.enterQuestionPrompt'] || "Please enter a question for your reading.");
+      return;
+    }
+    setIsLoading(true);
+    setError(null);
+    setReading(null);
+    setIsShowingSharedContent(false); 
+    try {
+      const input: TarotReadingInput = { question, locale };
+      const result: TarotReadingOutput = await tarotReadingFlow(input);
+      setReading(result);
+    } catch (err) {
+      console.error("Error getting tarot reading:", err);
+      setError(dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.");
+      toast({
+        title: dictionary['Error.genericTitle'] || "Error",
+        description: dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!reading) return;
+
+    const shareTitle = dictionary['Share.tarotReadingTitle'] || "A Tarot Reading from AstroVibes";
+    const inviteMessage = dictionary['Share.tarotReadingInviteTextLink'] || "I received a Tarot reading on AstroVibes! See it here:";
+    
+    const pageUrl = new URL(window.location.href);
+    pageUrl.searchParams.set('cardName', encodeURIComponent(reading.cardName));
+    pageUrl.searchParams.set('cardMeaning', encodeURIComponent(reading.cardMeaning));
+    pageUrl.searchParams.set('advice', encodeURIComponent(reading.advice));
+    pageUrl.searchParams.set('image', encodeURIComponent(reading.imagePlaceholderUrl));
+    const shareableUrl = pageUrl.toString();
+    
+    const fullShareText = `${shareTitle}\\n\\nCard: ${reading.cardName}\\nMeaning: ${reading.cardMeaning}\\nAdvice: ${reading.advice}`;
+
+    if (shareableUrl.length > 2000) {
+        toast({
+            title: dictionary['Share.errorTitle'] || "Sharing Error",
+            description: dictionary['Share.urlTooLongContent'] || "The reading is too long to be shared as a link with all content. Try sharing the text directly.",
+            variant: "destructive",
+        });
+        if (navigator.share) {
+            try {
+                await navigator.share({ title: shareTitle, text: `${inviteMessage}\\n\\n${fullShareText}`, url: window.location.pathname.split('?')[0] });
+            } catch (err) { /* handled below */ }
+        }
+        return;
+    }
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: inviteMessage,
+          url: shareableUrl,
+        });
+        toast({
+          title: dictionary['Share.successTitle'] || "Success!",
+          description: dictionary['Share.successLinkMessage'] || "Link to the reading shared successfully.",
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+         if ((err as Error).name !== 'AbortError') {
+          toast({
+            title: dictionary['Share.errorTitle'] || "Sharing Error",
+            description: dictionary['Share.errorMessage'] || "Could not share the content. Please try again.",
+            variant: "destructive",
+          });
+        }
+      }
+    } else {
+      const textToCopy = `${inviteMessage}\\n${shareableUrl}`;
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        toast({
+          title: dictionary['Share.copiedTitle'] || "Copied!",
+          description: dictionary['Share.copiedLinkMessage'] || "A link to the reading has been copied to your clipboard.",
+        });
+      } catch (copyError) {
+        console.error('Error copying to clipboard:', copyError);
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessageClipboard'] || "Could not copy. Please try sharing manually.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
+  const handleNewReading = () => {
+    const newPath = `/${locale}/tarot-reading`;
+    if (typeof router.push === 'function') {
+       router.push(newPath); 
+    } else {
+       window.location.href = newPath;
+    }
+    setReading(null);
+    setQuestion('');
+    setError(null);
+    setIsShowingSharedContent(false);
+  };
+
+  if (!isClient || Object.keys(dictionary).length === 0) {
+    return (
+      <div className="text-center py-10">
+        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <p className="mt-4 font-body">Loading Tarot Reading experience...</p>
+      </div>
+    );
+  }
+
+  return (
+      <Card className="w-full max-w-xl mx-auto shadow-xl bg-card/70 backdrop-blur-sm border border-white/10">
+        <CardHeader className="px-4 py-4 md:px-6 md:py-5">
+          <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
+            {isShowingSharedContent
+              ? (dictionary['TarotReadingPage.sharedReadingTitle'] || "A Shared Tarot Reading")
+              : (dictionary['TarotReadingPage.askTitle'] || "Ask Your Question")}
+          </CardTitle>
+          {!isShowingSharedContent && (
+            <CardDescription className="text-center font-body text-sm md:text-base">
+              {dictionary['TarotReadingPage.askDescription'] || "Focus on your question and let the cards guide you. Draw one card for insight."}
+            </CardDescription>
+          )}
+        </CardHeader>
+        <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6 relative">
+          <div className="tarot-question-area-bg-container">
+            <Image
+              src="/custom_assets/tarot-card-back.png" 
+              alt={dictionary['TarotReadingPage.tarotTableAlt'] || "Mystical tarot reading table background"}
+              layout="fill"
+              className="tarot-question-area-bg"
+              data-ai-hint="tarot card back illustration ornate"
+            />
+          </div>
+          {!isShowingSharedContent && (
+            <>
+              <div className="relative z-10"> 
+                <Textarea
+                  id="tarot-question"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  placeholder={dictionary['TarotReadingPage.questionPlaceholder'] || "Type your question here..."}
+                  className="min-h-[100px] font-body bg-input/80 border-border/50"
+                  aria-label={dictionary['TarotReadingPage.questionLabel'] || "Your question for the tarot reading"}
+                />
+              </div>
+
+              <Button 
+                onClick={handleDrawCard} 
+                disabled={isLoading} 
+                className={cn("w-full font-body text-sm md:text-base relative z-10 tarot-cta-button")}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card..."}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    {dictionary['TarotReadingPage.drawCardButton'] || "Draw a Card"}
+                  </>
+                )}
+              </Button>
+            </>
+          )}
+
+          {error && 
+            <p className="text-destructive text-center font-body text-sm md:text-base relative z-10">
+              {error}
+            </p>
+          }
+
+          {reading && !isLoading && (
+            <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow relative z-10">
+              <CardHeader className="p-0 pb-3 md:pb-4 text-center">
+                 <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
+                    {isShowingSharedContent 
+                        ? (dictionary['TarotReadingPage.sharedCardTitle']?.replace('{cardName}', reading.cardName) || reading.cardName)
+                        : reading.cardName
+                    }
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 space-y-3 md:space-y-4">
+                <div className="flex justify-center mb-3 md:mb-4">
+                  <div className="tarot-card-aura rounded-lg">
+                    <Image 
+                      src={reading.imagePlaceholderUrl} 
+                      alt={reading.cardName} 
+                      width={150}  
+                      height={262} 
+                      className="rounded-md shadow-lg border-2 border-primary/50 sm:w-[180px] sm:h-[315px]"
+                      data-ai-hint="tarot card vintage art-nouveau"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">
+                    {dictionary['TarotReadingPage.meaningTitle'] || "Meaning:"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-xs sm:text-sm">
+                    {reading.cardMeaning}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">
+                    {dictionary['TarotReadingPage.adviceTitle'] || "Advice for Your Question:"}
+                  </h4>
+                  <p className="font-body text-card-foreground leading-relaxed text-xs sm:text-sm">
+                    {reading.advice}
+                  </p>
+                </div>
+                <Button 
+                  onClick={handleShare} 
+                  variant="outline" 
+                  size="sm" 
+                  className="mt-4 w-full font-body text-xs md:text-sm"
+                >
+                  <Share2 className="mr-2 h-4 w-4" />
+                  {dictionary['Share.buttonLabelTarotReadingLinkContent'] || "Share This Reading"}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+          {isShowingSharedContent && (
+            <Button 
+              onClick={handleNewReading} 
+              variant="ghost" 
+              className="w-full font-body mt-4 text-xs md:text-sm relative z-10"
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              {dictionary['TarotReadingPage.newReadingButton'] || "Get a New Reading"}
+            </Button>
+          )}
+        </CardContent>
+      </Card>
+  );
+}
