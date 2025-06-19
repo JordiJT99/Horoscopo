@@ -4,7 +4,7 @@
 import { useState, use, useMemo, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +14,13 @@ import { tarotReadingFlow, type TarotReadingInput, type TarotReadingOutput } fro
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale,
+  }));
+}
 
 interface TarotReadingPageProps {
   params: { locale: Locale };
