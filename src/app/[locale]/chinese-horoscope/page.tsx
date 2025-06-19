@@ -1,18 +1,26 @@
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { ChineseAstrologyIcon } from '@/lib/constants';
 import ChineseHoroscopeInteractive from '@/components/chinese-horoscope/ChineseHoroscopeInteractive';
 
-interface ChineseHoroscopePageProps {
-  params: Promise<{ // Updated type
-    locale: Locale;
-  }>;
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  return locales.map((locale) => ({
+    locale: locale.toString(), // Ensure it's a string
+  }));
 }
 
-export default async function ChineseHoroscopePage({ params: paramsPromise }: ChineseHoroscopePageProps) { // Renamed and will await
-  const params = await paramsPromise; // Await params
+interface ChineseHoroscopePageProps {
+  params: { // Standard params object for page components
+    locale: Locale;
+  };
+}
+
+export default async function ChineseHoroscopePage({ params }: ChineseHoroscopePageProps) {
+  // params.locale is directly available now
   const dictionary = await getDictionary(params.locale);
 
   return (
