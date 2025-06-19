@@ -63,6 +63,7 @@ export default function AstroVibesHomePageContent({
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
   const initialSignFromUrl = useMemo(() => searchParams.get('sign') as ZodiacSignName | null, [searchParams]);
+  const [isPersonalizedRequestActive, setIsPersonalizedRequestActive] = useState(false);
 
   const [selectedDisplaySignName, setSelectedDisplaySignName] = useState<ZodiacSignName>(() => {
     if (initialSignFromUrl && ZODIAC_SIGNS.find(s => s.name === initialSignFromUrl)) {
@@ -83,6 +84,7 @@ export default function AstroVibesHomePageContent({
   useEffect(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
     let determinedInitialSign = "Capricorn" as ZodiacSignName;
+    let initiallyPersonalized = false;
 
     if (user?.uid && !authLoading) {
       const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
@@ -97,6 +99,10 @@ export default function AstroVibesHomePageContent({
             setUserSunSign(sunSign);
             if (sunSign) {
               determinedInitialSign = sunSign.name;
+              // If no sign in URL, and user's sign is determined, default to personalized view for their sign
+              if (!signFromUrl) {
+                initiallyPersonalized = true;
+              }
             }
         } catch (e) {
             console.error("Failed to parse onboarding data:", e);
@@ -114,15 +120,14 @@ export default function AstroVibesHomePageContent({
 
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
       determinedInitialSign = signFromUrl;
+      // If a sign is specified in the URL, it's a generic request, not personalized by default
+      initiallyPersonalized = false;
     }
-    else if (userSunSign && !signFromUrl) {
-        determinedInitialSign = userSunSign.name;
-    }
-
-
+    
     setSelectedDisplaySignName(determinedInitialSign);
+    setIsPersonalizedRequestActive(initiallyPersonalized);
 
-  }, [user, authLoading, searchParams, userSunSign]);
+  }, [user, authLoading, searchParams]);
 
 
   useEffect(() => {
@@ -140,8 +145,9 @@ export default function AstroVibesHomePageContent({
           targetDate: targetDate,
         };
 
-        // Add onboardingData for personalization if it's the user's own sign
-        if (userSunSign && selectedDisplaySignName === userSunSign.name && onboardingData) {
+        // Add onboardingData for personalization ONLY if it's an active personalized request
+        // AND it's the user's own sign AND onboardingData is available
+        if (isPersonalizedRequestActive && userSunSign && selectedDisplaySignName === userSunSign.name && onboardingData) {
           input.onboardingData = {
             name: onboardingData.name,
             gender: onboardingData.gender,
@@ -184,7 +190,7 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData]);
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -205,20 +211,25 @@ export default function AstroVibesHomePageContent({
         queryParams.set('period', 'tomorrow');
       }
     }
+    // When changing tabs, if the current view was personalized, keep it personalized for the new period.
+    // Otherwise, it remains generic. The 'sign' parameter ensures the correct sign is loaded.
+    // setIsPersonalizedRequestActive is NOT changed here directly; it's tied to explicit profile selection.
     router.push(`${newPath}?${queryParams.toString()}`, { scroll: false });
   };
 
-  const handleSignSelectedFromScroll = (sign: ZodiacSign) => {
+  const handleSignSelectedFromScroll = (sign: ZodiacSign, isUserProfileClick: boolean = false) => {
     setSelectedDisplaySignName(sign.name);
+    setIsPersonalizedRequestActive(isUserProfileClick); // Update based on how the sign was clicked
+
     const currentQueryParams = new URLSearchParams(searchParams.toString());
     currentQueryParams.set('sign', sign.name);
 
     let basePath = pathname.split('?')[0];
-    if (basePath === `/${locale}/yesterday-horoscope` || basePath === `/${locale}/weekly-horoscope` || basePath === `/${locale}/monthly-horoscope` ) {
+     if (basePath === `/${locale}/yesterday-horoscope` || basePath === `/${locale}/weekly-horoscope` || basePath === `/${locale}/monthly-horoscope` ) {
+      // Keep current base path
     } else if (activeHoroscopePeriodForTitles === 'tomorrow' && basePath === `/${locale}`) {
          currentQueryParams.set('period', 'tomorrow');
-    }
-     else {
+    } else {
       basePath = `/${locale}`;
       if(currentQueryParams.get('period') === 'tomorrow' && activeHoroscopePeriodForTitles !== 'tomorrow'){
           currentQueryParams.delete('period');
@@ -301,7 +312,7 @@ export default function AstroVibesHomePageContent({
     );
   }
 
-  const motionDivKey = `${selectedDisplaySignName}-${activeHoroscopePeriodForTitles}-${targetDate || 'no-date'}`;
+  const motionDivKey = `${selectedDisplaySignName}-${activeHoroscopePeriodForTitles}-${targetDate || 'no-date'}-${isPersonalizedRequestActive}`;
 
   return (
     <div className="flex flex-col">
@@ -376,6 +387,9 @@ export default function AstroVibesHomePageContent({
               <h2 className="text-base sm:text-lg font-semibold font-headline text-foreground flex items-center">
                 <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 text-muted-foreground" />
                 {dictionary[pageTitleKey] || "Horoscope Details"}
+                 {isPersonalizedRequestActive && userSunSign?.name === selectedDisplaySignName && onboardingData?.name && (
+                  <span className="text-sm text-primary ml-1.5">({onboardingData.name})</span>
+                )}
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">

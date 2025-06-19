@@ -16,7 +16,7 @@ interface SignSelectorHorizontalScrollProps {
   locale: Locale;
   signs: ZodiacSign[];
   selectedSignName: ZodiacSignName;
-  onSignSelect: (sign: ZodiacSign) => void;
+  onSignSelect: (sign: ZodiacSign, isUserProfileClick?: boolean) => void; // Modified signature
   user: AuthUser | null;
   onboardingData: OnboardingFormData | null;
   userSunSign: ZodiacSign | null;
@@ -36,7 +36,6 @@ export default function SignSelectorHorizontalScroll({
   const userProfileName = onboardingData?.name || user?.displayName || (dictionary['Auth.userLabel'] || "User");
   const userInitial = userProfileName?.charAt(0).toUpperCase();
   
-  // Determine if the user's own profile button is the one currently selected based on the active sign
   const isUserSignSelectedViaProfileButton = userSunSign ? selectedSignName === userSunSign.name : false;
 
   return (
@@ -45,7 +44,7 @@ export default function SignSelectorHorizontalScroll({
         // User is logged in and has completed onboarding
         <Button
           variant="ghost"
-          onClick={() => onSignSelect(userSunSign)}
+          onClick={() => onSignSelect(userSunSign, true)} // Pass true for user profile click
           aria-label={userProfileName}
           className={cn(
             "flex flex-col items-center justify-center h-auto p-1.5 min-w-[60px] sm:min-w-[68px] text-center transition-all duration-200 ease-in-out group",
@@ -55,7 +54,7 @@ export default function SignSelectorHorizontalScroll({
           <Avatar
             className={cn(
               "w-12 h-12 sm:w-14 sm:h-14 mb-1 border-2 transition-all duration-200 ease-in-out overflow-hidden",
-              isUserSignSelectedViaProfileButton
+              isUserSignSelectedViaProfileButton // Style based on if this profile button corresponds to the active sign
                 ? "bg-primary border-primary shadow-lg shadow-primary/70"
                 : "bg-card/60 border-border group-hover:border-muted/50"
             )}
@@ -89,12 +88,6 @@ export default function SignSelectorHorizontalScroll({
       )}
 
       {signs.map((sign) => {
-        // // Do not render the user's sun sign again if it's already shown as the personalized profile button
-        // // REMOVED THIS CONDITION TO FIX THE BUG
-        // if (userSunSign && sign.name === userSunSign.name && user && onboardingData) {
-        //   return null;
-        // }
-
         const isActive = sign.name === selectedSignName;
         let imagePath = sign.customIconPath || `https://placehold.co/80x80.png`;
         let aiHint = sign.customIconPath ? `${sign.name.toLowerCase()} zodiac symbol illustration` : "zodiac placeholder";
@@ -105,7 +98,7 @@ export default function SignSelectorHorizontalScroll({
           <Button
             key={sign.name}
             variant="ghost"
-            onClick={() => onSignSelect(sign)}
+            onClick={() => onSignSelect(sign, false)} // Pass false for generic sign click
             aria-label={dictionary[sign.name] || sign.name}
             className={cn(
               "flex flex-col items-center justify-center h-auto p-1.5 min-w-[60px] sm:min-w-[68px] text-center transition-all duration-200 ease-in-out group",
