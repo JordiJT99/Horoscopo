@@ -27,22 +27,22 @@ interface TypeCardProps {
 const TypeCard = ({ title, description, icon: Icon, type, locale }: TypeCardProps) => {
   return (
     <motion.div
-      whileHover={{ y: -8, boxShadow: "0 15px 30px -10px hsl(var(--primary)/0.5)" }} // Enhanced hover effect
-      transition={{ type: "spring", stiffness: 280, damping: 18 }}
+      whileHover={{ y: -10, boxShadow: "0 20px 35px -10px hsl(var(--primary)/0.6)" }} // Enhanced hover effect
+      transition={{ type: "spring", stiffness: 260, damping: 15 }}
       className="h-full"
     >
       <Link href={`/${locale}/compatibility/calculator?type=${type}`} passHref className="h-full block">
         <Card className={cn(
           "flex flex-col h-full cursor-pointer text-center shadow-xl hover:border-primary focus-visible:border-primary border-2 border-transparent",
-          "bg-card/80 backdrop-blur-sm items-center justify-center p-4 sm:p-6" 
+          "bg-card/80 backdrop-blur-sm items-center justify-center p-4 sm:p-6"
           )}>
           <div className="p-3 sm:p-4 bg-primary/20 rounded-full mb-3 sm:mb-4">
-            <Icon className="w-10 h-10 sm:w-12 sm:h-12 text-primary" /> 
+            <Icon className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-primary" />
           </div>
-          <CardTitle className="font-headline text-xl sm:text-2xl md:text-3xl text-primary mb-1 sm:mb-2"> 
+          <CardTitle className="font-headline text-xl sm:text-2xl md:text-3xl text-primary mb-1 sm:mb-2">
             {title}
           </CardTitle>
-          <CardContent className="p-0 text-sm sm:text-base text-card-foreground flex-grow-0"> {/* Changed text-muted-foreground to text-card-foreground */}
+          <CardContent className="p-0 text-sm sm:text-base text-secondary-foreground flex-grow-0"> {/* Changed to text-secondary-foreground */}
             <p>{description}</p>
           </CardContent>
         </Card>
