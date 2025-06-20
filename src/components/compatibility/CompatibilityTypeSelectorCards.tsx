@@ -27,22 +27,22 @@ interface TypeCardProps {
 const TypeCard = ({ title, description, icon: Icon, type, locale }: TypeCardProps) => {
   return (
     <motion.div
-      whileHover={{ y: -6, boxShadow: "0 12px 25px -8px hsl(var(--primary)/0.4)" }} // Slightly increased hover effect
-      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      whileHover={{ y: -8, boxShadow: "0 15px 30px -10px hsl(var(--primary)/0.5)" }} // Enhanced hover effect
+      transition={{ type: "spring", stiffness: 280, damping: 18 }}
       className="h-full"
     >
       <Link href={`/${locale}/compatibility/calculator?type=${type}`} passHref className="h-full block">
         <Card className={cn(
           "flex flex-col h-full cursor-pointer text-center shadow-xl hover:border-primary focus-visible:border-primary border-2 border-transparent",
-          "bg-card/80 backdrop-blur-sm items-center justify-center p-4 sm:p-6" // Increased padding and centering content
+          "bg-card/80 backdrop-blur-sm items-center justify-center p-4 sm:p-6" 
           )}>
           <div className="p-3 sm:p-4 bg-primary/20 rounded-full mb-3 sm:mb-4">
-            <Icon className="w-10 h-10 sm:w-12 sm:h-12 text-primary" /> {/* Slightly larger icon */}
+            <Icon className="w-10 h-10 sm:w-12 sm:h-12 text-primary" /> 
           </div>
-          <CardTitle className="font-headline text-xl sm:text-2xl md:text-3xl text-primary mb-1 sm:mb-2"> {/* Larger title */}
+          <CardTitle className="font-headline text-xl sm:text-2xl md:text-3xl text-primary mb-1 sm:mb-2"> 
             {title}
           </CardTitle>
-          <CardContent className="p-0 text-sm sm:text-base text-muted-foreground flex-grow-0"> {/* Removed flex-grow */}
+          <CardContent className="p-0 text-sm sm:text-base text-card-foreground flex-grow-0"> {/* Changed text-muted-foreground to text-card-foreground */}
             <p>{description}</p>
           </CardContent>
         </Card>
@@ -84,3 +84,4 @@ export default function CompatibilityTypeSelectorCards({ dictionary, locale }: C
     </div>
   );
 }
+
