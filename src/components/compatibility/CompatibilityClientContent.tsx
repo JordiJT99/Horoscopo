@@ -1,19 +1,19 @@
 
 "use client";
 
-import { useState, useEffect }_from 'react'; // Removed use, useMemo for dictionary
-import type { ZodiacSignName, CompatibilityData } _from '@/types';
-import type { Dictionary, Locale } _from '@/lib/dictionaries';
+import { useState, useEffect } from 'react'; // Removed use, useMemo for dictionary
+import type { ZodiacSignName, CompatibilityData } from '@/types';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 // getDictionary is not needed here as dictionary is passed as a prop
-import { ZODIAC_SIGNS, getCompatibility } _from '@/lib/constants';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } _from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } _from '@/components/ui/select';
-import ZodiacSignIcon _from '@/components/shared/ZodiacSignIcon';
-import SectionTitle _from '@/components/shared/SectionTitle';
-import { Users, Heart as HeartLucide, Loader2, Search } _from 'lucide-react';
-import { useToast } _from "@/hooks/use-toast";
-import { Button } _from '@/components/ui/button'; // Import Button
-import { cn } _from "@/lib/utils";
+import { ZODIAC_SIGNS, getCompatibility } from '@/lib/constants';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
+import SectionTitle from '@/components/shared/SectionTitle';
+import { Users, Heart as HeartLucide, Loader2, Search } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button'; // Import Button
+import { cn } from "@/lib/utils";
 
 // AnimatedHeart SVG component for animated hearts
 const AnimatedHeart = ({ filled, animated }: { filled: boolean, animated?: boolean }) => (
