@@ -2,29 +2,30 @@
 "use client";
 
 import { useState } from 'react';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants'; // Added ChineseAstrologyIcon
+import { CHINESE_ZODIAC_SIGNS, RabbitIcon, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants';
 import type { ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import SectionTitle from '@/components/shared/SectionTitle'; 
+import SectionTitle from '@/components/shared/SectionTitle';
+import Image from 'next/image'; // Importar Image de Next.js
 
 interface ChineseHoroscopeInteractiveProps {
   dictionary: Dictionary;
+  locale: Locale; // Added locale to props
 }
 
-// Helper StarIcon if not globally available or to ensure styling
 const StarIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
   </svg>
 );
 
-export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoroscopeInteractiveProps) {
+export default function ChineseHoroscopeInteractive({ dictionary, locale }: ChineseHoroscopeInteractiveProps) {
   const [birthYear, setBirthYear] = useState<string>('');
   const [calculatedSign, setCalculatedSign] = useState<ChineseZodiacResult | null>(null);
   const [yearError, setYearError] = useState<string | null>(null);
@@ -36,7 +37,7 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
 
   const handleCalculateSign = () => {
     const year = parseInt(birthYear);
-    if (isNaN(year) || year < 1900 || year > new Date().getFullYear() + 10) { // Basic validation
+    if (isNaN(year) || year < 1900 || year > new Date().getFullYear() + 10) {
       setYearError(dictionary['ChineseHoroscopePage.invalidYear'] || "Please enter a valid year (e.g., 1990).");
       setCalculatedSign(null);
       return;
@@ -49,9 +50,8 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
   const handleCheckCompatibility = () => {
     if (!animal1 || !animal2) return;
     setIsCheckingCompatibility(true);
-    // Simulate API call
     setTimeout(() => {
-      const result = getChineseCompatibility(animal1, animal2);
+      const result = getChineseCompatibility(animal1, animal2, locale); // Pass locale
       setCompatibilityResult(result);
       setIsCheckingCompatibility(false);
     }, 500);
@@ -64,7 +64,6 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
   };
 
   if (Object.keys(dictionary).length === 0) {
-    // This initial loading state might not be hit as dictionary is passed as prop
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -75,7 +74,6 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
 
   return (
     <>
-      {/* Find Your Sign Section */}
       <Card className="mb-12 shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-2xl text-primary">{dictionary['ChineseHoroscopePage.findYourSignTitle']}</CardTitle>
@@ -95,7 +93,18 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
           {calculatedSign && (
             <div className="p-4 bg-secondary/30 rounded-md">
               <div className="flex items-center gap-3 mb-2">
-                <calculatedSign.icon className="w-10 h-10 text-primary" />
+                {calculatedSign.animal === "Rabbit" ? (
+                    <RabbitIcon className="w-10 h-10 text-primary" />
+                ) : (
+                    <Image 
+                        src={`https://placehold.co/40x40.png`} 
+                        alt={dictionary[calculatedSign.animal] || calculatedSign.animal} 
+                        width={40} 
+                        height={40} 
+                        className="rounded-sm"
+                        data-ai-hint={calculatedSign.animal.toLowerCase()}
+                    />
+                )}
                 <div>
                   <p className="text-lg font-semibold">
                     {dictionary['ChineseHoroscopePage.yourSignIs']}{' '}
@@ -116,7 +125,6 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
 
       <Separator className="my-12" />
 
-      {/* Chinese Zodiac Compatibility Section */}
       <Card className="mb-12 shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-2xl text-primary flex items-center gap-2">
@@ -132,7 +140,19 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
                 {CHINESE_ZODIAC_SIGNS.map(sign => (
                   <SelectItem key={sign.name} value={sign.name}>
                     <div className="flex items-center gap-2">
-                      <sign.icon className="w-5 h-5" /> {dictionary[sign.name] || sign.name}
+                      {sign.name === "Rabbit" ? (
+                        <RabbitIcon className="w-5 h-5" />
+                      ) : (
+                        <Image 
+                            src={`https://placehold.co/20x20.png`} 
+                            alt={dictionary[sign.name] || sign.name} 
+                            width={20} 
+                            height={20} 
+                            className="rounded-sm"
+                            data-ai-hint={sign.name.toLowerCase()}
+                        />
+                      )}
+                      {dictionary[sign.name] || sign.name}
                     </div>
                   </SelectItem>
                 ))}
@@ -144,7 +164,19 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
                 {CHINESE_ZODIAC_SIGNS.filter(sign => sign.name !== animal1).map(sign => (
                   <SelectItem key={sign.name} value={sign.name}>
                     <div className="flex items-center gap-2">
-                      <sign.icon className="w-5 h-5" /> {dictionary[sign.name] || sign.name}
+                      {sign.name === "Rabbit" ? (
+                        <RabbitIcon className="w-5 h-5" />
+                      ) : (
+                        <Image 
+                            src={`https://placehold.co/20x20.png`} 
+                            alt={dictionary[sign.name] || sign.name} 
+                            width={20} 
+                            height={20} 
+                            className="rounded-sm"
+                            data-ai-hint={sign.name.toLowerCase()}
+                        />
+                      )}
+                      {dictionary[sign.name] || sign.name}
                     </div>
                   </SelectItem>
                 ))}
@@ -179,7 +211,6 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
       
       <Separator className="my-12" />
 
-      {/* Sign Information Section (Existing Cards) */}
        <SectionTitle
         title={dictionary['ChineseHoroscopePage.signInfoTitle'] || "Sign Information"}
         icon={ChineseAstrologyIcon}
@@ -187,13 +218,23 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {CHINESE_ZODIAC_SIGNS.map((sign) => {
-          const SignIcon = sign.icon;
           const translatedSignName = dictionary[sign.name] || sign.name;
           const translatedElement = dictionary[sign.element] || sign.element;
           return (
             <Card key={sign.name} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="items-center text-center">
-                <SignIcon className="w-16 h-16 text-primary mb-3" />
+                {sign.name === "Rabbit" ? (
+                    <RabbitIcon className="w-16 h-16 text-primary mb-3" />
+                ) : (
+                    <Image 
+                        src={`https://placehold.co/64x64.png`} 
+                        alt={translatedSignName} 
+                        width={64} 
+                        height={64} 
+                        className="rounded-md mb-3"
+                        data-ai-hint={sign.name.toLowerCase()}
+                    />
+                )}
                 <CardTitle className="font-headline text-2xl text-primary">{translatedSignName}</CardTitle>
               </CardHeader>
               <CardContent className="flex-grow">
@@ -209,7 +250,7 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
                   {sign.description && (
                     <div>
                       <p className="font-semibold text-sm text-muted-foreground">{dictionary['ChineseHoroscopePage.description']}</p>
-                      <p className="text-sm font-body text-card-foreground/90">{sign.description}</p>
+                      <p className="text-sm font-body text-card-foreground/90">{dictionary[`ChineseHoroscopePage.descriptions.${sign.name}`] || sign.description}</p>
                     </div>
                   )}
                 </div>
@@ -224,7 +265,3 @@ export default function ChineseHoroscopeInteractive({ dictionary }: ChineseHoros
           {dictionary['ChineseHoroscopePage.comingSoon']}
         </p>
       </div>
-    </>
-  );
-}
-

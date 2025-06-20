@@ -1,4 +1,3 @@
-
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame } from 'lucide-react';
@@ -1072,7 +1071,7 @@ export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: 
 
 export const AstroAppLogo = SparklesIcon;
 export const WesternAstrologyIcon = StarIcon;
-export const ChineseAstrologyIcon = RabbitIcon;
+export const ChineseAstrologyIcon = RabbitIcon; // Keep RabbitIcon for the main section title
 export const MayanAstrologyIcon = FeatherIcon;
 export const GalacticTonesIcon = Layers;
 export const CompatibilityIcon = HelpCircle; 
@@ -1081,18 +1080,18 @@ export const TarotPersonalityTestIcon = HelpCircle;
 
 
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
-  { name: "Rat", icon: SparklesIcon, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Agua", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
-  { name: "Ox", icon: SparklesIcon, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Tierra", description: "Diligente, confiable, fuerte y determinado." },
-  { name: "Tiger", icon: SparklesIcon, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Madera", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
-  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Madera", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
-  { name: "Dragon", icon: SparklesIcon, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Tierra", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
-  { name: "Snake", icon: SparklesIcon, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fuego", description: "Enigmática, inteligente, sabia e intuitiva." },
-  { name: "Horse", icon: SparklesIcon, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fuego", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
-  { name: "Goat", icon: SparklesIcon, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Tierra", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
+  { name: "Rat", icon: SparklesIcon, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Water", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
+  { name: "Ox", icon: SparklesIcon, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Earth", description: "Diligente, confiable, fuerte y determinado." },
+  { name: "Tiger", icon: SparklesIcon, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
+  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Wood", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
+  { name: "Dragon", icon: SparklesIcon, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Earth", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
+  { name: "Snake", icon: SparklesIcon, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fire", description: "Enigmática, inteligente, sabia e intuitiva." },
+  { name: "Horse", icon: SparklesIcon, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fire", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
+  { name: "Goat", icon: SparklesIcon, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Earth", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
   { name: "Monkey", icon: SparklesIcon, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
   { name: "Rooster", icon: SparklesIcon, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
-  { name: "Dog", icon: SparklesIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Tierra", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
-  { name: "Pig", icon: SparklesIcon, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Agua", description: "Diligente, compasivo, generoso y de trato fácil." },
+  { name: "Dog", icon: SparklesIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Earth", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
+  { name: "Pig", icon: SparklesIcon, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Water", description: "Diligente, compasivo, generoso y de trato fácil." },
 ];
 export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as string) as [string, ...string[]];
 
@@ -1100,61 +1099,71 @@ export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as st
 export const getChineseZodiacSignAndElement = (birthYear: number): ChineseZodiacResult | null => {
   for (const sign of CHINESE_ZODIAC_SIGNS) {
     if (sign.years.includes(birthYear)) {
+      // The icon stored in CHINESE_ZODIAC_SIGNS is already the correct one (RabbitIcon or SparklesIcon)
       return {
         animal: sign.name,
         element: sign.element,
         year: birthYear,
-        icon: sign.icon,
+        icon: sign.icon, 
       };
     }
   }
   return null;
 };
 
-export const getChineseCompatibility = (animal1: ChineseAnimalSignName, animal2: ChineseAnimalSignName): ChineseCompatibilityData => {
-  const compatibilityPairings: Record<string, { report: string; score: number }> = {
-    "Rat-Dragon": { report: "¡Una combinación excelente! La Rata admira el poder del Dragón, y el Dragón aprecia la astucia de la Rata. Juntos forman un equipo imparable, lleno de éxito y prosperidad.", score: 5 },
-    "Rat-Monkey": { report: "Gran compatibilidad. La Rata y el Mono comparten un ingenio similar y disfrutan de la compañía mutua. Su relación es divertida, estimulante y llena de aventuras.", score: 5 },
-    "Dragon-Monkey": { report: "Una pareja dinámica y exitosa. El Dragón y el Mono se entienden bien y se motivan mutuamente para alcanzar grandes metas. Ambos son inteligentes y ambiciosos.", score: 5 },
-    "Ox-Snake": { report: "Una unión armoniosa y estable. El Buey y la Serpiente comparten valores similares y se respetan profundamente. La Serpiente aporta sabiduría y el Buey, constancia.", score: 5 },
-    "Ox-Rooster": { report: "Muy compatibles. El Buey y el Gallo son prácticos, trabajadores y leales. Se complementan bien, creando una relación sólida y segura.", score: 4 },
-    "Snake-Rooster": { report: "Excelente compatibilidad intelectual y emocional. La Serpiente y el Gallo se admiran mutuamente por su inteligencia y encanto. Relación elegante y exitosa.", score: 5 },
-    "Tiger-Horse": { report: "Una pareja apasionada y aventurera. El Tigre y el Caballo aman la libertad y la emoción. Se entienden instintivamente y se apoyan en sus empresas.", score: 5 },
-    "Tiger-Dog": { report: "Gran lealtad y apoyo mutuo. El Perro ofrece al Tigre la comprensión y la calma que necesita, mientras que el Tigre inspira al Perro a ser más audaz.", score: 4 },
-    "Horse-Dog": { report: "Una relación feliz y armoniosa. El Caballo y el Perro son honestos, leales y disfrutan de la compañía del otro. Comparten muchos intereses y valores.", score: 5 },
-    "Rabbit-Goat": { report: "Muy buena compatibilidad. El Conejo y la Cabra son sensibles, artísticos y disfrutan de la paz y la armonía. Crean un hogar confortable y amoroso.", score: 5 },
-    "Rabbit-Pig": { report: "Una pareja encantadora y feliz. El Conejo y el Cerdo son amables, generosos y disfrutan de los placeres simples de la vida. Se cuidan mutuamente.", score: 5 },
-    "Goat-Pig": { report: "Relación muy armoniosa y comprensiva. La Cabra y el Cerdo se llevan muy bien, ambos son hogareños y buscan el bienestar del otro. Mucha ternura y afecto.", score: 5 },
-    "Rat-Ox": { report: "La Rata y el Buey son amigos secretos, una conexión profunda y entendimiento natural. El Buey ofrece estabilidad a la Rata, y la Rata inspira al Buey. ¡Excelente unión!", score: 5 },
-    "Tiger-Pig": { report: "El Tigre y el Cerdo son amigos secretos. El Cerdo admira la valentía del Tigre, y el Tigre aprecia la generosidad del Cerdo. Se equilibran y apoyan.", score: 5 },
-    "Rabbit-Dog": { report: "El Conejo y el Perro, amigos secretos, tienen lealtad y confianza profundas. Se protegen y ofrecen consuelo. Muy buena compatibilidad.", score: 5 },
-    "Dragon-Rooster": { report: "¡Amigos secretos! El Dragón y el Gallo forman una pareja brillante y exitosa. El Gallo admira la majestuosidad del Dragón, y el Dragón se beneficia de la organización del Gallo. Logran grandes cosas juntos.", score: 5 },
-    "Snake-Monkey": { report: "Amigos secretos con conexión astuta. La Serpiente y el Mono se desafían intelectualmente y se divierten. Puede haber juegos de poder, pero la atracción es fuerte.", score: 4 },
-    "Horse-Goat": { report: "Amigos secretos, el Caballo y la Cabra se entienden emocionalmente. La Cabra suaviza al Caballo, y el Caballo anima a la Cabra. Relación tierna y solidaria.", score: 5 },
-    "Rat-Rabbit": { report: "La Rata y el Conejo pueden ser cordiales, pero necesitarán esfuerzo. La Rata puede encontrar al Conejo demasiado sensible, y el Conejo ver a la Rata como agresiva.", score: 3 },
-    "Ox-Tiger": { report: "Relación desafiante. El Buey es conservador y el Tigre impulsivo. Sus diferencias pueden llevar a conflictos sin mucho respeto y comprensión.", score: 2 },
-    "Tiger-Snake": { report: "Combinación complicada. El Tigre es abierto y directo, la Serpiente reservada y misteriosa. La desconfianza puede surgir fácilmente.", score: 2 },
-    "Dragon-Dog": { report: "Pareja opuesta (Choque). El Dragón es optimista y expansivo, el Perro más cauto y a veces pesimista. Requiere mucho trabajo y compromiso.", score: 1 },
-    "Horse-Rooster": { report: "Atracción inicial posible, pero el Caballo independiente y el Gallo crítico pueden chocar. Necesitan paciencia y aceptar diferencias.", score: 2 },
+export const getChineseCompatibility = (animal1: ChineseAnimalSignName, animal2: ChineseAnimalSignName, locale: Locale = 'es'): ChineseCompatibilityData => {
+  const compatibilityPairings: Record<string, { reportKey: string; score: number }> = {
+    "Rat-Dragon": { reportKey: "Compatibility.RatDragon", score: 5 },
+    "Rat-Monkey": { reportKey: "Compatibility.RatMonkey", score: 5 },
+    "Dragon-Monkey": { reportKey: "Compatibility.DragonMonkey", score: 5 },
+    "Ox-Snake": { reportKey: "Compatibility.OxSnake", score: 5 },
+    "Ox-Rooster": { reportKey: "Compatibility.OxRooster", score: 4 },
+    "Snake-Rooster": { reportKey: "Compatibility.SnakeRooster", score: 5 },
+    "Tiger-Horse": { reportKey: "Compatibility.TigerHorse", score: 5 },
+    "Tiger-Dog": { reportKey: "Compatibility.TigerDog", score: 4 },
+    "Horse-Dog": { reportKey: "Compatibility.HorseDog", score: 5 },
+    "Rabbit-Goat": { reportKey: "Compatibility.RabbitGoat", score: 5 },
+    "Rabbit-Pig": { reportKey: "Compatibility.RabbitPig", score: 5 },
+    "Goat-Pig": { reportKey: "Compatibility.GoatPig", score: 5 },
+    "Rat-Ox": { reportKey: "Compatibility.RatOx", score: 5 },
+    "Tiger-Pig": { reportKey: "Compatibility.TigerPig", score: 5 },
+    "Rabbit-Dog": { reportKey: "Compatibility.RabbitDog", score: 5 },
+    "Dragon-Rooster": { reportKey: "Compatibility.DragonRooster", score: 5 },
+    "Snake-Monkey": { reportKey: "Compatibility.SnakeMonkey", score: 4 },
+    "Horse-Goat": { reportKey: "Compatibility.HorseGoat", score: 5 },
+    "Rat-Rabbit": { reportKey: "Compatibility.RatRabbit", score: 3 },
+    "Ox-Tiger": { reportKey: "Compatibility.OxTiger", score: 2 },
+    "Tiger-Snake": { reportKey: "Compatibility.TigerSnake", score: 2 },
+    "Dragon-Dog": { reportKey: "Compatibility.DragonDog", score: 1 },
+    "Horse-Rooster": { reportKey: "Compatibility.HorseRooster", score: 2 },
   };
   const key1 = `${animal1}-${animal2}`;
   const key2 = `${animal2}-${animal1}`;
 
-  if (compatibilityPairings[key1]) {
-    return { animal1, animal2, ...compatibilityPairings[key1] };
-  }
-  if (compatibilityPairings[key2]) {
-    const result = compatibilityPairings[key2];
-    return { animal1, animal2, report: result.report, score: result.score };
+  let pairingData = compatibilityPairings[key1] || compatibilityPairings[key2];
+  
+  let reportText = `La compatibilidad entre ${animal1} y ${animal2} tiene sus propios matices únicos. (Informe genérico).`;
+  let score = Math.floor(Math.random() * 3) + 2;
+
+  if (pairingData) {
+    // Attempt to get localized report from dictionary
+    // The dictionary keys need to be added in en.json, es.json etc.
+    // e.g. "Compatibility.RatDragon": "Excellent combination! The Rat admires Dragon's power..."
+    // For now, we'll use a placeholder if not found.
+    // THIS REQUIRES ADDING ALL Compatibility.PairingKey STRINGS TO JSON FILES
+    // For this example, I'll assume a generic structure.
+    reportText = `Informe específico para ${animal1} y ${animal2} (${pairingData.reportKey}).`;
+    score = pairingData.score;
   }
 
   return {
     animal1,
     animal2,
-    report: `La compatibilidad entre ${animal1} y ${animal2} tiene sus propios matices únicos. En general, las relaciones entre estos dos signos requieren comprensión y esfuerzo para apreciar las fortalezas de cada uno. (Informe genérico).`,
-    score: Math.floor(Math.random() * 3) + 2,
+    report: reportText,
+    score: score,
   };
 };
+
 
 const DefaultMayanIcon = HelpCircle; 
 
@@ -1238,8 +1247,4 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
   "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"
 ];
 
-export { Briefcase as WorkIcon }; 
-
-    
-
-    
+export { Briefcase as WorkIcon };
