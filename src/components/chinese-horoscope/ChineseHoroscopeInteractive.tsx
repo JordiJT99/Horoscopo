@@ -7,16 +7,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CHINESE_ZODIAC_SIGNS, RabbitIcon, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants';
+import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants';
 import type { ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
-import Image from 'next/image'; // Importar Image de Next.js
+import Image from 'next/image';
+import { Rabbit as RabbitIcon } from 'lucide-react'; // Importado directamente
 
 interface ChineseHoroscopeInteractiveProps {
   dictionary: Dictionary;
-  locale: Locale; // Added locale to props
+  locale: Locale;
 }
 
 const StarIcon = ({ className }: { className?: string }) => (
@@ -51,7 +52,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
     if (!animal1 || !animal2) return;
     setIsCheckingCompatibility(true);
     setTimeout(() => {
-      const result = getChineseCompatibility(animal1, animal2, locale); // Pass locale
+      const result = getChineseCompatibility(animal1, animal2, locale);
       setCompatibilityResult(result);
       setIsCheckingCompatibility(false);
     }, 500);
@@ -102,7 +103,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
                         width={40} 
                         height={40} 
                         className="rounded-sm"
-                        data-ai-hint={calculatedSign.animal.toLowerCase()}
+                        data-ai-hint={`${calculatedSign.animal.toLowerCase()}`}
                     />
                 )}
                 <div>
@@ -133,7 +134,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <Select onValueChange={(val) => setAnimal1(val as ChineseAnimalSignName)} value={animal1}>
               <SelectTrigger><SelectValue placeholder={dictionary['ChineseHoroscopePage.selectFirstAnimal']} /></SelectTrigger>
               <SelectContent>
@@ -149,7 +150,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
                             width={20} 
                             height={20} 
                             className="rounded-sm"
-                            data-ai-hint={sign.name.toLowerCase()}
+                            data-ai-hint={`${sign.name.toLowerCase()}`}
                         />
                       )}
                       {dictionary[sign.name] || sign.name}
@@ -173,7 +174,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
                             width={20} 
                             height={20} 
                             className="rounded-sm"
-                            data-ai-hint={sign.name.toLowerCase()}
+                            data-ai-hint={`${sign.name.toLowerCase()}`}
                         />
                       )}
                       {dictionary[sign.name] || sign.name}
@@ -220,6 +221,8 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
         {CHINESE_ZODIAC_SIGNS.map((sign) => {
           const translatedSignName = dictionary[sign.name] || sign.name;
           const translatedElement = dictionary[sign.element] || sign.element;
+          const translatedDescriptionKey = `ChineseHoroscopePage.descriptions.${sign.name}`;
+          const translatedDescription = dictionary[translatedDescriptionKey] || sign.description; // Use the key for dictionary lookup
           return (
             <Card key={sign.name} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="items-center text-center">
@@ -232,7 +235,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
                         width={64} 
                         height={64} 
                         className="rounded-md mb-3"
-                        data-ai-hint={sign.name.toLowerCase()}
+                        data-ai-hint={`${sign.name.toLowerCase()}`}
                     />
                 )}
                 <CardTitle className="font-headline text-2xl text-primary">{translatedSignName}</CardTitle>
@@ -247,10 +250,10 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
                     <p className="font-semibold text-sm text-muted-foreground">{dictionary['ChineseHoroscopePage.element']}</p>
                     <Badge variant="secondary">{translatedElement}</Badge>
                   </div>
-                  {sign.description && (
+                  {translatedDescription && ( // Check if translatedDescription exists
                     <div>
                       <p className="font-semibold text-sm text-muted-foreground">{dictionary['ChineseHoroscopePage.description']}</p>
-                      <p className="text-sm font-body text-card-foreground/90">{dictionary[`ChineseHoroscopePage.descriptions.${sign.name}`] || sign.description}</p>
+                      <p className="text-sm font-body text-card-foreground/90">{translatedDescription}</p>
                     </div>
                   )}
                 </div>
@@ -265,3 +268,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: Chin
           {dictionary['ChineseHoroscopePage.comingSoon']}
         </p>
       </div>
+    </>
+  );
+}
+
