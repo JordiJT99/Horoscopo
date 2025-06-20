@@ -46,8 +46,12 @@ const TypeCard = ({ title, description, icon: Icon, type, locale }: TypeCardProp
             <p>{description}</p>
           </CardContent>
           <div className="p-4 sm:p-6 pt-0">
-            <Button variant="outline" className="w-full font-body group border-primary/50 text-primary hover:bg-primary/10 hover:text-primary">
-              {title} <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            <Button
+              variant="outline"
+              className="w-full font-body group border-primary/50 text-primary hover:bg-primary/10 hover:text-primary flex items-center justify-between px-3 text-sm" // Modified classes
+            >
+              <span className="truncate text-left">{title}</span>
+              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Button>
           </div>
         </Card>
