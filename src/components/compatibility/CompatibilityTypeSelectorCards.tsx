@@ -5,7 +5,7 @@ import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Heart, Handshake, Briefcase, ChevronRight } from 'lucide-react';
+import { Heart, Handshake, Briefcase } from 'lucide-react'; // Removed ChevronRight
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -45,15 +45,14 @@ const TypeCard = ({ title, description, icon: Icon, type, locale }: TypeCardProp
           <CardContent className="p-4 sm:p-6 pt-0 text-sm sm:text-base text-muted-foreground flex-grow">
             <p>{description}</p>
           </CardContent>
-          {/* Reduced padding in this div to give button more width */}
+          {/* div container for button with reduced padding */}
           <div className="p-2 sm:p-4 pt-0"> 
             <Button
               variant="outline"
-              // Adjusted button classes for single-line text
-              className="w-full font-body group border-primary/50 text-primary hover:bg-primary/10 hover:text-primary flex items-center justify-between gap-2 px-2 text-sm whitespace-nowrap h-10 py-2"
+              // Centered text by default, ensured single line, and proper height
+              className="w-full font-body border-primary/50 text-primary hover:bg-primary/10 hover:text-primary px-4 py-2.5 text-sm whitespace-nowrap h-10"
             >
-              <span className="text-left flex-1 min-w-0">{title}</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+              {title}
             </Button>
           </div>
         </Card>
@@ -95,3 +94,4 @@ export default function CompatibilityTypeSelectorCards({ dictionary, locale }: C
     </div>
   );
 }
+
