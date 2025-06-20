@@ -1,20 +1,20 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import type { ZodiacSignName, CompatibilityData } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { ZODIAC_SIGNS, getCompatibility } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
-import SectionTitle from '@/components/shared/SectionTitle';
-import { Users, Heart as HeartLucide, Loader2, Search, Briefcase, Handshake } from 'lucide-react';
+// SectionTitle es ahora manejado por la página servidora
+import { Users, Heart as HeartLucide, Loader2, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
+// RadioGroup y Label para seleccionar tipo ya no son necesarios aquí
 import { cn } from "@/lib/utils";
+import { useSearchParams, useRouter } from 'next/navigation'; // Para leer type de searchParams si es necesario
 
 const AnimatedHeart = ({ filled, animated }: { filled: boolean, animated?: boolean }) => (
   <svg
@@ -35,17 +35,17 @@ const AnimatedHeart = ({ filled, animated }: { filled: boolean, animated?: boole
   </svg>
 );
 
+export type CompatibilityType = 'love' | 'friendship' | 'work';
+
 interface CompatibilityClientContentProps {
   dictionary: Dictionary;
   locale: Locale;
+  compatibilityTypeFromPage: CompatibilityType; // Tipo de compatibilidad recibido de la página
 }
 
-type CompatibilityType = 'love' | 'friendship' | 'work';
-
-export default function CompatibilityClientContent({ dictionary, locale }: CompatibilityClientContentProps) {
+function CompatibilityClientContentInternal({ dictionary, locale, compatibilityTypeFromPage }: CompatibilityClientContentProps) {
   const [sign1, setSign1] = useState<ZodiacSignName>(ZODIAC_SIGNS[0].name);
   const [sign2, setSign2] = useState<ZodiacSignName>(ZODIAC_SIGNS[1].name);
-  const [selectedCompatibilityType, setSelectedCompatibilityType] = useState<CompatibilityType | undefined>(undefined);
   const [compatibility, setCompatibility] = useState<CompatibilityData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -59,21 +59,14 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
       });
       return;
     }
-    if (!selectedCompatibilityType) {
-      toast({
-        title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['CompatibilitySection.selectCompatibilityTypeError'] || "Please select a relationship type.",
-        variant: "destructive",
-      });
-      return;
-    }
+    // El tipo de compatibilidad ya está fijado por compatibilityTypeFromPage
 
     setIsLoading(true);
     setCompatibility(null);
 
     setTimeout(() => {
       try {
-        const result = getCompatibility(sign1, sign2, selectedCompatibilityType, locale);
+        const result = getCompatibility(sign1, sign2, compatibilityTypeFromPage, locale);
         setCompatibility(result);
       } catch (error) {
         console.error("Error fetching compatibility (mock data):", error);
@@ -108,143 +101,128 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
       </div>
     );
   }
-
-  const compatibilityTypes: { value: CompatibilityType; labelKey: string, icon: React.ElementType }[] = [
-    { value: 'love', labelKey: 'CompatibilitySection.typeLove', icon: HeartLucide },
-    { value: 'friendship', labelKey: 'CompatibilitySection.typeFriendship', icon: Handshake },
-    { value: 'work', labelKey: 'CompatibilitySection.typeWork', icon: Briefcase },
-  ];
+  
+  const typeSpecificTitleKey = `CompatibilitySection.reportTitle.${compatibilityTypeFromPage}`;
+  const typeSpecificTitleDefault = `Compatibility Report: ${compatibilityTypeFromPage.charAt(0).toUpperCase() + compatibilityTypeFromPage.slice(1)}`;
 
   return (
-    <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
-      <SectionTitle
-        title={dictionary['CompatibilityPage.title'] || "Zodiac Compatibility"}
-        subtitle={dictionary['CompatibilityPage.subtitle'] || "Discover how well different zodiac signs match."}
-        icon={HeartLucide}
-        className="mb-10 sm:mb-12"
-      />
-      <Card className="w-full shadow-xl max-w-2xl mx-auto rounded-lg">
-        <CardHeader className="text-center p-6 sm:p-8">
-          <CardTitle className="text-3xl sm:text-4xl font-headline flex items-center justify-center gap-2 sm:gap-3 text-primary">
-            <Users className="w-8 h-8 sm:w-10 sm:h-10" /> {dictionary['CompatibilitySection.title'] || "Compatibility Check"}
-          </CardTitle>
-          <CardDescription className="mt-2 text-sm sm:text-base font-body text-muted-foreground">
-            {dictionary['CompatibilitySection.description'] || "Select two signs to see their compatibility report."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 sm:p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
-            <div>
-              <Label htmlFor="sign1-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectFirstSign'] || "Select First Sign"}</Label>
-              <Select value={sign1} onValueChange={(val) => setSign1(val as ZodiacSignName)}>
-                <SelectTrigger id="sign1-select" className="h-12 text-base">
-                  <SelectValue placeholder={dictionary['CompatibilitySection.selectSignPlaceholder'] || "Select Sign"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {ZODIAC_SIGNS.map((sign) => (
-                    <SelectItem key={sign.name} value={sign.name} className="py-2.5 text-base">
-                      <div className="flex items-center">
-                        <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
-                        {dictionary[sign.name] || sign.name}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="sign2-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectSecondSign'] || "Select Second Sign"}</Label>
-              <Select value={sign2} onValueChange={(val) => setSign2(val as ZodiacSignName)}>
-                <SelectTrigger id="sign2-select" className="h-12 text-base">
-                  <SelectValue placeholder={dictionary['CompatibilitySection.selectSignPlaceholder'] || "Select Sign"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {ZODIAC_SIGNS.map((sign) => (
-                    <SelectItem key={sign.name} value={sign.name} className="py-2.5 text-base">
-                       <div className="flex items-center">
-                        <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
-                        {dictionary[sign.name] || sign.name}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+    // El SectionTitle general ahora se maneja en la página servidora (calculator/page.tsx)
+    <Card className="w-full shadow-xl max-w-2xl mx-auto rounded-lg">
+      <CardHeader className="text-center p-6 sm:p-8">
+        <CardTitle className="text-3xl sm:text-4xl font-headline flex items-center justify-center gap-2 sm:gap-3 text-primary">
+          <Users className="w-8 h-8 sm:w-10 sm:h-10" /> {dictionary['CompatibilitySection.title'] || "Compatibility Check"}
+        </CardTitle>
+        <CardDescription className="mt-2 text-sm sm:text-base font-body text-muted-foreground">
+          {dictionary['CompatibilitySection.descriptionSignSelection'] || "Select two signs to see their compatibility report for the chosen relationship type."}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-6 sm:p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+          <div>
+            <label htmlFor="sign1-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectFirstSign'] || "Select First Sign"}</label>
+            <Select value={sign1} onValueChange={(val) => setSign1(val as ZodiacSignName)}>
+              <SelectTrigger id="sign1-select" className="h-12 text-base">
+                <SelectValue placeholder={dictionary['CompatibilitySection.selectSignPlaceholder'] || "Select Sign"} />
+              </SelectTrigger>
+              <SelectContent>
+                {ZODIAC_SIGNS.map((sign) => (
+                  <SelectItem key={sign.name} value={sign.name} className="py-2.5 text-base">
+                    <div className="flex items-center">
+                      <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
+                      {dictionary[sign.name] || sign.name}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-
-          <div className="mb-6">
-            <Label className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectCompatibilityTypeLabel'] || "Select Relationship Type"}</Label>
-            <RadioGroup
-              value={selectedCompatibilityType}
-              onValueChange={(value) => setSelectedCompatibilityType(value as CompatibilityType)}
-              className="flex flex-col sm:flex-row gap-2 sm:gap-4"
-            >
-              {compatibilityTypes.map((type) => {
-                const TypeIcon = type.icon;
-                return (
-                  <div key={type.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={type.value} id={`comp-type-${type.value}`} />
-                    <Label htmlFor={`comp-type-${type.value}`} className="font-body font-normal text-sm md:text-base flex items-center gap-1.5 cursor-pointer hover:bg-muted/50 rounded-md p-2 transition-colors">
-                      <TypeIcon className="w-4 h-4 text-primary"/>
-                      {dictionary[type.labelKey] || type.value}
-                    </Label>
-                  </div>
-                );
-              })}
-            </RadioGroup>
+          <div>
+            <label htmlFor="sign2-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectSecondSign'] || "Select Second Sign"}</label>
+            <Select value={sign2} onValueChange={(val) => setSign2(val as ZodiacSignName)}>
+              <SelectTrigger id="sign2-select" className="h-12 text-base">
+                <SelectValue placeholder={dictionary['CompatibilitySection.selectSignPlaceholder'] || "Select Sign"} />
+              </SelectTrigger>
+              <SelectContent>
+                {ZODIAC_SIGNS.map((sign) => (
+                  <SelectItem key={sign.name} value={sign.name} className="py-2.5 text-base">
+                     <div className="flex items-center">
+                      <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
+                      {dictionary[sign.name] || sign.name}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
+        </div>
 
-          <Button
-            onClick={handleFetchCompatibility}
-            disabled={isLoading || !sign1 || !sign2 || !selectedCompatibilityType}
-            className="w-full font-body text-base py-3 mb-6"
-          >
-            {isLoading ? (
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            ) : (
-              <Search className="mr-2 h-5 w-5" />
+        {/* RadioGroup para seleccionar tipo de compatibilidad ELIMINADO */}
+
+        <Button
+          onClick={handleFetchCompatibility}
+          disabled={isLoading || !sign1 || !sign2} // Ya no depende de selectedCompatibilityType
+          className="w-full font-body text-base py-3 mb-6"
+        >
+          {isLoading ? (
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+          ) : (
+            <Search className="mr-2 h-5 w-5" />
+          )}
+          {isLoading ? (dictionary['CompatibilitySection.checkingButton'] || "Checking...") : (dictionary['CompatibilitySection.viewCompatibilityButton'] || "View Compatibility")}
+        </Button>
+
+        {isLoading && (
+            <div className="text-center p-8 min-h-[200px] flex flex-col justify-center items-center">
+                <Loader2 className="h-12 w-12 sm:h-14 sm:h-14 text-primary animate-spin" />
+                <p className="mt-4 text-muted-foreground text-sm sm:text-base">{dictionary['CompatibilitySection.checkingCosmicConnection'] || "Checking cosmic connection..."}</p>
+            </div>
+        )}
+
+        {!isLoading && compatibility && (
+          <div className="mt-0 p-4 sm:p-6 bg-secondary/30 rounded-lg shadow-md text-center min-h-[200px]">
+            <div className="flex justify-center items-center gap-4 mb-4">
+              <ZodiacSignIcon signName={compatibility.sign1} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
+              <HeartLucide className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+              <ZodiacSignIcon signName={compatibility.sign2} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-semibold font-headline text-primary">
+              {(dictionary[typeSpecificTitleKey] || typeSpecificTitleDefault)
+                .replace('{sign1}', dictionary[compatibility.sign1] || compatibility.sign1)
+                .replace('{sign2}', dictionary[compatibility.sign2] || compatibility.sign2)}
+            </h3>
+             {/* Mostrar el tipo de compatibilidad actual */}
+            <p className="text-sm text-muted-foreground mb-2">
+              ({dictionary[`CompatibilitySection.type.${compatibilityTypeFromPage}`] || compatibilityTypeFromPage})
+            </p>
+            {compatibility.score > 0 && (
+              <div className="flex justify-center my-3 sm:my-4">
+                  {renderStars(compatibility.score)}
+              </div>
             )}
-            {isLoading ? (dictionary['CompatibilitySection.checkingButton'] || "Checking...") : (dictionary['CompatibilitySection.viewCompatibilityButton'] || "View Compatibility")}
-          </Button>
-
-          {isLoading && (
-              <div className="text-center p-8 min-h-[200px] flex flex-col justify-center items-center">
-                  <Loader2 className="h-12 w-12 sm:h-14 sm:h-14 text-primary animate-spin" />
-                  <p className="mt-4 text-muted-foreground text-sm sm:text-base">{dictionary['CompatibilitySection.checkingCosmicConnection'] || "Checking cosmic connection..."}</p>
-              </div>
-          )}
-
-          {!isLoading && compatibility && (
-            <div className="mt-0 p-4 sm:p-6 bg-secondary/30 rounded-lg shadow-md text-center min-h-[200px]">
-              <div className="flex justify-center items-center gap-4 mb-4">
-                <ZodiacSignIcon signName={compatibility.sign1} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
-                <HeartLucide className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-                <ZodiacSignIcon signName={compatibility.sign2} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-semibold font-headline text-primary">
-                {(dictionary['CompatibilitySection.reportTitle'] || "{sign1} & {sign2}")
-                  .replace('{sign1}', dictionary[compatibility.sign1] || compatibility.sign1)
-                  .replace('{sign2}', dictionary[compatibility.sign2] || compatibility.sign2)}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-2">({dictionary[`CompatibilitySection.type${selectedCompatibilityType?.charAt(0).toUpperCase()}${selectedCompatibilityType?.slice(1)}`] || selectedCompatibilityType})</p>
-              {compatibility.score > 0 && (
-                <div className="flex justify-center my-3 sm:my-4">
-                    {renderStars(compatibility.score)}
-                </div>
-              )}
-              <p className="leading-relaxed whitespace-pre-line text-sm sm:text-base text-card-foreground">{compatibility.report}</p>
-            </div>
-          )}
-          {!isLoading && !compatibility && sign1 && sign2 && selectedCompatibilityType && (
-             <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.clickPromptAfterSelection'] || "Click 'View Compatibility' to see their report."}</p>
-          )}
-          {!isLoading && !compatibility && (!sign1 || !sign2 || !selectedCompatibilityType) && (
-            <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsAndTypePrompt'] || "Select two signs and a relationship type, then click 'View Compatibility'."}</p>
-          )}
-        </CardContent>
-      </Card>
-    </main>
+            <p className="leading-relaxed whitespace-pre-line text-sm sm:text-base text-card-foreground">{compatibility.report}</p>
+          </div>
+        )}
+        {!isLoading && !compatibility && sign1 && sign2 && (
+           <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.clickPromptAfterSelection'] || "Click 'View Compatibility' to see their report."}</p>
+        )}
+        {!isLoading && !compatibility && (!sign1 || !sign2) && (
+          <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsOnlyPrompt'] || "Select two signs, then click 'View Compatibility'."}</p>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
-    
+// Wrapper para Suspense si es necesario por useSearchParams
+export default function CompatibilityClientContentWrapper(props: CompatibilityClientContentProps) {
+  return (
+    <Suspense fallback={
+      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
+        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <p className="mt-4">Loading compatibility calculator...</p>
+      </div>
+    }>
+      <CompatibilityClientContentInternal {...props} />
+    </Suspense>
+  );
+}

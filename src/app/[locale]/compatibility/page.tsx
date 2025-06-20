@@ -1,9 +1,10 @@
 
-// Server Component
+// Server Component - Ahora es la página de SELECCIÓN DE TIPO DE COMPATIBILIDAD
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
-import CompatibilityClientContent from '@/components/compatibility/CompatibilityClientContent';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Users } from 'lucide-react';
+import SectionTitle from '@/components/shared/SectionTitle';
+import CompatibilityTypeSelectorCards from '@/components/compatibility/CompatibilityTypeSelectorCards'; // Nuevo componente cliente
 
 export async function generateStaticParams() {
   const locales = getSupportedLocales();
@@ -18,7 +19,7 @@ interface CompatibilityPageProps {
   };
 }
 
-export default async function CompatibilityPage({ params }: CompatibilityPageProps) {
+export default async function CompatibilityTypeSelectionPage({ params }: CompatibilityPageProps) {
   const dictionary = await getDictionary(params.locale);
 
   if (Object.keys(dictionary).length === 0) {
@@ -30,5 +31,15 @@ export default async function CompatibilityPage({ params }: CompatibilityPagePro
     );
   }
 
-  return <CompatibilityClientContent dictionary={dictionary} locale={params.locale} />;
+  return (
+    <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
+      <SectionTitle
+        title={dictionary['CompatibilityPage.selectTypeTitle'] || "Explore Connections"}
+        subtitle={dictionary['CompatibilityPage.selectTypeSubtitle'] || "Choose a relationship type to explore zodiac compatibility."}
+        icon={Users} 
+        className="mb-10 sm:mb-12"
+      />
+      <CompatibilityTypeSelectorCards dictionary={dictionary} locale={params.locale} />
+    </main>
+  );
 }
