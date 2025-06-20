@@ -146,8 +146,14 @@
   "CompatibilitySection.loading": "Loading...",
   "CompatibilitySection.viewCompatibilityButton": "View Compatibility",
   "CompatibilitySection.checkingButton": "Checking...",
-  "CompatibilitySection.selectSignsAndClickPrompt": "Select two signs and click 'View Compatibility' to see their report.",
+  "CompatibilitySection.selectSignsAndClickPrompt": "Select two signs and a relationship type, then click 'View Compatibility'.",
+  "CompatibilitySection.clickPromptAfterSelection": "Click 'View Compatibility' to see their report.",
   "CompatibilitySection.selectBothSignsError": "Please select both signs to check compatibility.",
+  "CompatibilitySection.selectCompatibilityTypeLabel": "Select Relationship Type",
+  "CompatibilitySection.typeLove": "Love",
+  "CompatibilitySection.typeFriendship": "Friendship",
+  "CompatibilitySection.typeWork": "Work",
+  "CompatibilitySection.selectCompatibilityTypeError": "Please select a relationship type.",
   "LuckyNumbersSection.title": "Lucky Charms",
   "LuckyNumbersSection.description": "Select your sign to discover its lucky attributes.",
   "LuckyNumbersSection.loading": "Unveiling your fortunes...",
@@ -595,3 +601,5 @@
   "UpcomingPhase.sampleDate4": "Sample 4",
   "Data.notAvailable": "N/A"
 }
+
+    

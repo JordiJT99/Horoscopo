@@ -146,8 +146,14 @@
   "CompatibilitySection.loading": "Cargando...",
   "CompatibilitySection.viewCompatibilityButton": "Ver Compatibilidad",
   "CompatibilitySection.checkingButton": "Verificando...",
-  "CompatibilitySection.selectSignsAndClickPrompt": "Selecciona dos signos y haz clic en 'Ver Compatibilidad' para ver su informe.",
+  "CompatibilitySection.selectSignsAndClickPrompt": "Selecciona dos signos y un tipo de relación, luego haz clic en 'Ver Compatibilidad'.",
+  "CompatibilitySection.clickPromptAfterSelection": "Haz clic en 'Ver Compatibilidad' para ver su informe.",
   "CompatibilitySection.selectBothSignsError": "Por favor, selecciona ambos signos para verificar la compatibilidad.",
+  "CompatibilitySection.selectCompatibilityTypeLabel": "Selecciona el Tipo de Relación",
+  "CompatibilitySection.typeLove": "Amor",
+  "CompatibilitySection.typeFriendship": "Amistad",
+  "CompatibilitySection.typeWork": "Trabajo",
+  "CompatibilitySection.selectCompatibilityTypeError": "Por favor, selecciona un tipo de relación.",
   "LuckyNumbersSection.title": "Amuletos de la Suerte",
   "LuckyNumbersSection.description": "Selecciona tu signo para descubrir sus atributos de la suerte.",
   "LuckyNumbersSection.loading": "Revelando tus fortunas...",
@@ -595,3 +601,5 @@
   "UpcomingPhase.sampleDate4": "Muestra 4",
   "Data.notAvailable": "N/D"
 }
+
+    

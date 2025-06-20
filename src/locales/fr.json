@@ -146,8 +146,14 @@
   "CompatibilitySection.loading": "Chargement...",
   "CompatibilitySection.viewCompatibilityButton": "Voir la Compatibilité",
   "CompatibilitySection.checkingButton": "Vérification...",
-  "CompatibilitySection.selectSignsAndClickPrompt": "Sélectionnez deux signes et cliquez sur 'Voir la Compatibilité' pour afficher leur rapport.",
+  "CompatibilitySection.selectSignsAndClickPrompt": "Sélectionnez deux signes et un type de relation, puis cliquez sur 'Voir la Compatibilité'.",
+  "CompatibilitySection.clickPromptAfterSelection": "Cliquez sur 'Voir la Compatibilité' pour afficher leur rapport.",
   "CompatibilitySection.selectBothSignsError": "Veuillez sélectionner les deux signes pour vérifier la compatibilité.",
+  "CompatibilitySection.selectCompatibilityTypeLabel": "Sélectionner le Type de Relation",
+  "CompatibilitySection.typeLove": "Amour",
+  "CompatibilitySection.typeFriendship": "Amitié",
+  "CompatibilitySection.typeWork": "Travail",
+  "CompatibilitySection.selectCompatibilityTypeError": "Veuillez sélectionner un type de relation.",
   "LuckyNumbersSection.title": "Porte-Bonheurs",
   "LuckyNumbersSection.description": "Sélectionnez votre signe pour découvrir ses attributs porte-bonheur.",
   "LuckyNumbersSection.loading": "Dévoilement de vos fortunes...",
@@ -595,3 +601,5 @@
   "UpcomingPhase.sampleDate4": "Échantillon 4",
   "Data.notAvailable": "N/D"
 }
+
+    
