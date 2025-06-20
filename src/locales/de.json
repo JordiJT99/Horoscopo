@@ -144,6 +144,10 @@
   "CompatibilitySection.selectSignsPrompt": "Wählen Sie zwei Zeichen aus, um deren Kompatibilitätsbericht anzuzeigen.",
   "CompatibilitySection.refreshReportButton": "Bericht Aktualisieren",
   "CompatibilitySection.loading": "Laden...",
+  "CompatibilitySection.viewCompatibilityButton": "Kompatibilität anzeigen",
+  "CompatibilitySection.checkingButton": "Überprüfe...",
+  "CompatibilitySection.selectSignsAndClickPrompt": "Wählen Sie zwei Zeichen aus und klicken Sie auf 'Kompatibilität anzeigen', um ihren Bericht zu sehen.",
+  "CompatibilitySection.selectBothSignsError": "Bitte wählen Sie beide Zeichen aus, um die Kompatibilität zu überprüfen.",
   "LuckyNumbersSection.title": "Glücksbringer",
   "LuckyNumbersSection.description": "Wählen Sie Ihr Zeichen, um seine Glücksattribute zu entdecken.",
   "LuckyNumbersSection.loading": "Enthülle deine Glücksattribute...",
@@ -591,5 +595,3 @@
   "UpcomingPhase.sampleDate4": "Beispiel 4",
   "Data.notAvailable": "k.A."
 }
-
-    

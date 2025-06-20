@@ -144,6 +144,10 @@
   "CompatibilitySection.selectSignsPrompt": "Select two signs to view their compatibility report.",
   "CompatibilitySection.refreshReportButton": "Refresh Report",
   "CompatibilitySection.loading": "Loading...",
+  "CompatibilitySection.viewCompatibilityButton": "View Compatibility",
+  "CompatibilitySection.checkingButton": "Checking...",
+  "CompatibilitySection.selectSignsAndClickPrompt": "Select two signs and click 'View Compatibility' to see their report.",
+  "CompatibilitySection.selectBothSignsError": "Please select both signs to check compatibility.",
   "LuckyNumbersSection.title": "Lucky Charms",
   "LuckyNumbersSection.description": "Select your sign to discover its lucky attributes.",
   "LuckyNumbersSection.loading": "Unveiling your fortunes...",
@@ -591,5 +595,3 @@
   "UpcomingPhase.sampleDate4": "Sample 4",
   "Data.notAvailable": "N/A"
 }
-
-    

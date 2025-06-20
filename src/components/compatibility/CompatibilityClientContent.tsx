@@ -1,19 +1,19 @@
 
 "use client";
 
-import { useState, useEffect } from 'react'; // Removed use, useMemo for dictionary
-import type { ZodiacSignName, CompatibilityData } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import { useState, useEffect }_from 'react'; // Removed use, useMemo for dictionary
+import type { ZodiacSignName, CompatibilityData } _from '@/types';
+import type { Dictionary, Locale } _from '@/lib/dictionaries';
 // getDictionary is not needed here as dictionary is passed as a prop
-import { ZODIAC_SIGNS, getCompatibility } from '@/lib/constants';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
-import SectionTitle from '@/components/shared/SectionTitle';
-import { Users, Heart as HeartLucide, Loader2 } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast";
-// Removed: import { Button } from '@/components/ui/button';
-import { cn } from "@/lib/utils";
+import { ZODIAC_SIGNS, getCompatibility } _from '@/lib/constants';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } _from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } _from '@/components/ui/select';
+import ZodiacSignIcon _from '@/components/shared/ZodiacSignIcon';
+import SectionTitle _from '@/components/shared/SectionTitle';
+import { Users, Heart as HeartLucide, Loader2, Search } _from 'lucide-react';
+import { useToast } _from "@/hooks/use-toast";
+import { Button } _from '@/components/ui/button'; // Import Button
+import { cn } _from "@/lib/utils";
 
 // AnimatedHeart SVG component for animated hearts
 const AnimatedHeart = ({ filled, animated }: { filled: boolean, animated?: boolean }) => (
@@ -48,9 +48,16 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
   const { toast } = useToast();
 
   const handleFetchCompatibility = () => {
-    if (!sign1 || !sign2) return;
+    if (!sign1 || !sign2) {
+         toast({
+          title: dictionary['Error.genericTitle'] || "Error",
+          description: dictionary['CompatibilitySection.selectBothSignsError'] || "Please select both signs to check compatibility.",
+          variant: "destructive",
+        });
+        return;
+    }
     setIsLoading(true);
-    setCompatibility(null);
+    setCompatibility(null); // Clear previous result while loading
 
     setTimeout(() => {
       try {
@@ -63,7 +70,7 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
           description: dictionary['HoroscopeSection.error'] || "Could not load compatibility data.",
           variant: "destructive",
         });
-        setCompatibility({
+        setCompatibility({ // Set a minimal error state for compatibility
           sign1,
           sign2,
           report: dictionary['HoroscopeSection.error'] || "Could not load compatibility data. Please try again.",
@@ -75,10 +82,7 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
     }, 300);
   };
 
-  useEffect(() => {
-    handleFetchCompatibility();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sign1, sign2, locale]); // dictionary is not a direct dependency for fetching logic if passed locale is used.
+  // useEffect removed, compatibility will now be fetched on button click
 
   const renderStars = (score: number) => {
     return Array(5).fill(null).map((_, i) => (
@@ -113,7 +117,7 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 sm:p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div>
               <label htmlFor="sign1-select" className="block text-sm font-medium text-muted-foreground mb-1.5">{dictionary['CompatibilitySection.selectFirstSign'] || "Select First Sign"}</label>
               <Select value={sign1} onValueChange={(val) => setSign1(val as ZodiacSignName)}>
@@ -152,6 +156,19 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
             </div>
           </div>
 
+          <Button 
+            onClick={handleFetchCompatibility} 
+            disabled={isLoading || !sign1 || !sign2}
+            className="w-full font-body text-base py-3 mb-6"
+          >
+            {isLoading ? (
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            ) : (
+              <Search className="mr-2 h-5 w-5" />
+            )}
+            {isLoading ? (dictionary['CompatibilitySection.checkingButton'] || "Checking...") : (dictionary['CompatibilitySection.viewCompatibilityButton'] || "View Compatibility")}
+          </Button>
+
           {isLoading && (
               <div className="text-center p-8 min-h-[200px] flex flex-col justify-center items-center">
                   <Loader2 className="h-12 w-12 sm:h-14 sm:h-14 text-primary animate-spin" />
@@ -160,7 +177,7 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
           )}
 
           {!isLoading && compatibility && (
-            <div className="mt-6 p-4 sm:p-6 bg-secondary/30 rounded-lg shadow-md text-center min-h-[200px]">
+            <div className="mt-0 p-4 sm:p-6 bg-secondary/30 rounded-lg shadow-md text-center min-h-[200px]">
               <div className="flex justify-center items-center gap-4 mb-4">
                 <ZodiacSignIcon signName={compatibility.sign1} className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
                 <HeartLucide className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
@@ -180,9 +197,8 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
             </div>
           )}
           {!isLoading && !compatibility && sign1 && sign2 && (
-            <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsPrompt'] || "Select two signs to view their compatibility report."}</p>
+            <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsAndClickPrompt'] || "Select two signs and click 'View Compatibility' to see their report."}</p>
           )}
-          {/* Refresh Button Removed */}
         </CardContent>
       </Card>
     </main>

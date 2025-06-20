@@ -62,10 +62,10 @@
   "HomePage.promptPersonalInfo": "Veuillez saisir vos informations personnelles",
   "HomePage.moreDetailsButton": "Plus de Détails",
   "HomePage.editProfileButton": "Modifier Profil",
-  "HomePage.yourHoroscopeToday": "Ton Horoscope du Jour",
-  "HomePage.yourHoroscopeTomorrow": "Ton Horoscope pour Demain",
-  "HomePage.yourHoroscopeYesterday": "Ton Horoscope d'Hier",
-  "HomePage.horoscopeTitleToday": "Ton Horoscope du Jour",
+  "HomePage.yourHoroscopeToday": "Votre horoscope du jour",
+  "HomePage.yourHoroscopeTomorrow": "Votre horoscope pour Demain",
+  "HomePage.yourHoroscopeYesterday": "Votre horoscope d'Hier",
+  "HomePage.horoscopeTitleToday": "Horoscope du Jour",
   "HomePage.horoscopeTitleTomorrow": "Horoscope de Demain",
   "HomePage.horoscopeTitleYesterday": "Horoscope d'Hier",
   "HomePage.horoscopeTitleWeekly": "Horoscope Hebdomadaire",
@@ -144,6 +144,10 @@
   "CompatibilitySection.selectSignsPrompt": "Sélectionnez deux signes pour afficher leur rapport de compatibilité.",
   "CompatibilitySection.refreshReportButton": "Actualiser le Rapport",
   "CompatibilitySection.loading": "Chargement...",
+  "CompatibilitySection.viewCompatibilityButton": "Voir la Compatibilité",
+  "CompatibilitySection.checkingButton": "Vérification...",
+  "CompatibilitySection.selectSignsAndClickPrompt": "Sélectionnez deux signes et cliquez sur 'Voir la Compatibilité' pour afficher leur rapport.",
+  "CompatibilitySection.selectBothSignsError": "Veuillez sélectionner les deux signes pour vérifier la compatibilité.",
   "LuckyNumbersSection.title": "Porte-Bonheurs",
   "LuckyNumbersSection.description": "Sélectionnez votre signe pour découvrir ses attributs porte-bonheur.",
   "LuckyNumbersSection.loading": "Dévoilement de vos fortunes...",
@@ -591,5 +595,3 @@
   "UpcomingPhase.sampleDate4": "Échantillon 4",
   "Data.notAvailable": "N/D"
 }
-
-    
