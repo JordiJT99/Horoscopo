@@ -12,7 +12,7 @@ import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Users, Heart as HeartLucide, Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { Button } from '@/components/ui/button';
+// Removed: import { Button } from '@/components/ui/button';
 import { cn } from "@/lib/utils";
 
 // AnimatedHeart SVG component for animated hearts
@@ -182,15 +182,10 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
           {!isLoading && !compatibility && sign1 && sign2 && (
             <p className="text-center text-muted-foreground mt-6 min-h-[200px] flex items-center justify-center">{dictionary['CompatibilitySection.selectSignsPrompt'] || "Select two signs to view their compatibility report."}</p>
           )}
-          <Button
-            onClick={handleFetchCompatibility}
-            className="w-full mt-8 py-3 text-base sm:text-lg"
-            disabled={isLoading}
-          >
-            {isLoading ? (dictionary['CompatibilitySection.loading'] || "Loading...") : (dictionary['CompatibilitySection.refreshReportButton'] || "Refresh Report")}
-          </Button>
+          {/* Refresh Button Removed */}
         </CardContent>
       </Card>
     </main>
   );
 }
+
