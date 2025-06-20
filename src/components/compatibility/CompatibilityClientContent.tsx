@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react'; // Removed use, useMemo for dictionary
+import { useState, useEffect } from 'react'; 
 import type { ZodiacSignName, CompatibilityData } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 // getDictionary is not needed here as dictionary is passed as a prop
@@ -12,7 +12,7 @@ import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Users, Heart as HeartLucide, Loader2, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { Button } from '@/components/ui/button'; // Import Button
+import { Button } from '@/components/ui/button'; 
 import { cn } from "@/lib/utils";
 
 // AnimatedHeart SVG component for animated hearts
@@ -144,7 +144,7 @@ export default function CompatibilityClientContent({ dictionary, locale }: Compa
                 </SelectTrigger>
                 <SelectContent>
                   {ZODIAC_SIGNS.map((sign) => (
-                    <SelectItem key={sign.name} value={sign.name} disabled={sign.name === sign1} className="py-2.5 text-base">
+                    <SelectItem key={sign.name} value={sign.name} className="py-2.5 text-base">
                        <div className="flex items-center">
                         <ZodiacSignIcon signName={sign.name} className="w-5 h-5 mr-2.5" />
                         {dictionary[sign.name] || sign.name}

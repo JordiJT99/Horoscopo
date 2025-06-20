@@ -59,6 +59,54 @@ interface CompatibilityReport {
 
 // Extended compatibility pairings based on previous interactions
 const compatibilityPairings: Record<string, CompatibilityReport> = {
+  "Aries-Aries": {
+    report: "Cuando dos Aries se unen, la energía y la pasión son explosivas. Ambos son pioneros, llenos de entusiasmo y aman la acción. Esta relación puede ser increíblemente dinámica y divertida, siempre en busca de nuevas aventuras. Sin embargo, la naturaleza competitiva de Aries y su deseo de liderar pueden generar choques y luchas de poder. Necesitan aprender a ceder el uno al otro y a darse espacio para sus iniciativas individuales. La clave es canalizar su energía conjunta hacia metas compartidas en lugar de competir entre sí. Con respeto y comprensión, pueden ser una pareja imparable.",
+    score: 4
+  },
+  "Taurus-Taurus": {
+    report: "Dos Tauro juntos crean una relación de profunda estabilidad, sensualidad y aprecio por los placeres de la vida. Ambos valoran la seguridad, el confort y la lealtad, lo que puede generar un vínculo muy sólido y duradero. Disfrutan de la buena comida, los ambientes acogedores y la tranquilidad. El principal desafío es que ambos pueden ser muy tercos y resistentes al cambio, lo que podría llevar a la rutina o al estancamiento si no se esfuerzan por introducir novedad y flexibilidad. Si aprenden a ceder en sus posturas y a estimularse mutuamente, su amor será un refugio de paz y placer.",
+    score: 4
+  },
+  "Gemini-Gemini": {
+    report: "Una pareja de Géminis es sinónimo de diversión, comunicación constante y una mente ágil multiplicada por dos. Ambos son curiosos, versátiles y disfrutan de la variedad y el estímulo intelectual. La relación estará llena de conversaciones interesantes, humor y una vida social activa. Sin embargo, esta misma necesidad de cambio y novedad puede llevar a la inconstancia o a una falta de profundidad emocional si no se cultiva. Pueden tener dificultades para tomar decisiones o para comprometerse a largo plazo. Si logran encontrar un ancla emocional y se apoyan en su mutua inteligencia, pueden ser compañeros de vida increíblemente estimulantes.",
+    score: 3
+  },
+  "Cancer-Cancer": {
+    report: "Cuando dos Cáncer se encuentran, la conexión emocional es inmediata y profunda. Ambos son sensibles, cariñosos, protectores y valoran el hogar y la familia por encima de todo. Esta relación puede ser un nido de amor, comprensión y apoyo mutuo. Sin embargo, la extrema sensibilidad de ambos puede llevar a que se hieran fácilmente o a que se encierren en sus caparazones si se sienten amenazados. Pueden volverse demasiado dependientes el uno del otro o caer en estados de ánimo fluctuantes. Necesitan aprender a comunicar sus necesidades abiertamente y a darse espacio para respirar. Si lo logran, su hogar será un verdadero santuario.",
+    score: 4
+  },
+  "Leo-Leo": {
+    report: "Una pareja de Leo es un espectáculo de carisma, pasión y generosidad. Ambos son extrovertidos, creativos y aman ser el centro de atención y admiración. La relación estará llena de drama (en el buen sentido), romance y grandes gestos. Se entienden en su necesidad de brillar. El mayor desafío son sus egos: las luchas por el protagonismo y el orgullo herido pueden ser frecuentes. Necesitan aprender a compartir el escenario y a aplaudirse mutuamente. Si logran manejar sus egos con humildad y respeto, su amor será una celebración constante, digna de la realeza.",
+    score: 4
+  },
+  "Virgo-Virgo": {
+    report: "Dos Virgo juntos forman una pareja práctica, organizada y mentalmente estimulante. Ambos son inteligentes, analíticos y tienen altos estándares. Se entienden en su necesidad de orden y eficiencia. Pueden ser muy buenos compañeros de trabajo y de vida, apoyándose en sus metas y disfrutando de conversaciones detalladas. Sin embargo, la tendencia de Virgo a la crítica puede volverse en su contra, con ambos analizándose y criticándose mutuamente en exceso. Necesitan cultivar la tolerancia, la calidez emocional y aprender a relajarse y disfrutar sin buscar la perfección en todo. Si lo hacen, su relación será estable y de apoyo.",
+    score: 3
+  },
+  "Libra-Libra": {
+    report: "Una relación entre dos Libra está llena de encanto, diplomacia, belleza y un profundo deseo de armonía. Ambos son sociables, amantes del arte y buscan el equilibrio en todo. Disfrutarán creando un entorno estético y de una vida social refinada. Se entienden en su aversión al conflicto. El problema surge cuando ambos evitan tomar decisiones difíciles o confrontar problemas por miedo a alterar la paz. La indecisión puede ser un gran obstáculo. Si aprenden a ser más asertivos y a enfrentar los desacuerdos de manera constructiva, pueden crear una unión verdaderamente hermosa y equitativa.",
+    score: 4
+  },
+  "Scorpio-Scorpio": {
+    report: "Cuando dos Escorpio se unen, la intensidad, la pasión y la conexión emocional son profundas y transformadoras. Ambos son leales, magnéticos y buscan una fusión total con su pareja. La comprensión intuitiva es muy fuerte. Sin embargo, esta misma intensidad puede llevar a luchas de poder, celos y una posesividad extrema. Ambos necesitan tener el control y pueden ser muy reservados con sus secretos. La confianza absoluta es fundamental, pero difícil de alcanzar si hay sospechas. Si logran trascender sus miedos y canalizar su poderosa energía hacia la creación y la sanación mutua, su vínculo será indestructible y profundamente espiritual.",
+    score: 3
+  },
+  "Sagittarius-Sagittarius": {
+    report: "Una pareja de Sagitario es una aventura constante, llena de optimismo, humor y un insaciable deseo de explorar el mundo y el conocimiento. Ambos son independientes, honestos y aman la libertad. Su relación será espontánea, divertida y llena de risas. Se entienden en su necesidad de espacio y crecimiento personal. El desafío es el compromiso a largo plazo y la atención a los detalles de la vida cotidiana. Pueden ser reacios a establecerse o a enfrentar responsabilidades. Si encuentran un propósito común que los inspire y aprenden a valorar la estabilidad junto con la aventura, su viaje juntos será inolvidable.",
+    score: 4
+  },
+  "Capricorn-Capricorn": {
+    report: "Dos Capricornio juntos forman una pareja poderosa, ambiciosa y muy enfocada en construir un futuro sólido y seguro. Ambos son trabajadores, disciplinados, prácticos y valoran la tradición y el estatus. Se respetan mutuamente por su determinación y su capacidad para alcanzar metas. Pueden ser un equipo formidable en los negocios y en la vida. Sin embargo, la relación puede volverse demasiado seria, competitiva o centrada en el trabajo, descuidando la parte emocional y la diversión. Necesitan aprender a relajarse, a expresar su afecto y a disfrutar de los logros juntos, no solo a planificarlos.",
+    score: 3
+  },
+  "Aquarius-Aquarius": {
+    report: "Una relación entre dos Acuario es intelectualmente estimulante, poco convencional y basada en una fuerte amistad y respeto por la individualidad. Ambos son progresistas, humanitarios, originales y valoran la libertad por encima de todo. Disfrutarán de conversaciones fascinantes, proyectos innovadores y una vida social llena de personas interesantes. La conexión emocional puede ser un desafío, ya que ambos tienden a ser algo desapegados y a racionalizar sus sentimientos. Necesitan hacer un esfuerzo consciente por cultivar la intimidad y la calidez. Si lo logran, su unión será única, libre y llena de inspiración mutua.",
+    score: 4
+  },
+  "Pisces-Pisces": {
+    report: "Cuando dos Piscis se unen, se crea un mundo de ensueño, compasión y una profunda conexión espiritual. Ambos son sensibles, intuitivos, románticos y artísticos. Se entienden a un nivel anímico y disfrutan escapando juntos de la dureza de la realidad. Su amor puede ser increíblemente tierno y sanador. El principal desafío es que ambos pueden ser demasiado idealistas, evasivos o perderse en sus emociones, descuidando los aspectos prácticos de la vida. Necesitan encontrar un ancla que los mantenga con los pies en la tierra y aprender a enfrentar los problemas en lugar de huir de ellos. Si lo hacen, su relación será un refugio mágico de amor incondicional.",
+    score: 4
+  },
   "Aries-Taurus": {
     report: "Aries, signo de fuego cardinal, y Tauro, signo de tierra fijo, representan dos energías muy distintas que, no obstante, pueden complementarse. Aries aporta la chispa inicial, la iniciativa y el dinamismo, mientras que Tauro ofrece estabilidad, paciencia y una visión práctica. En un entorno profesional, esta combinación puede ser poderosa. Aries puede generar ideas innovadoras y Tauro se encarga de darles forma y llevarlas a la práctica de manera organizada y persistente. El desafío reside en que Aries aprenda a valorar la meticulosidad de Tauro, y Tauro se abra a la espontaneidad de Aries. Si logran encontrar un punto medio, su colaboración será exitosa. La clave es la comunicación y el respeto mutuo por sus diferencias.\n\nEn el ámbito amoroso, la compatibilidad entre Aries y Tauro puede ser compleja pero gratificante. Aries se siente atraído por la solidez y la sensualidad de Tauro, mientras que Tauro admira la pasión y la energía de Aries. Sin embargo, sus diferentes ritmos y necesidades pueden generar conflictos. Aries busca la aventura y la novedad, mientras que Tauro anhela la seguridad y la rutina. Para que la relación funcione, Aries debe aprender a ser más paciente y considerado con las necesidades de Tauro, y Tauro debe esforzarse por ser más flexible y abierto a las experiencias que propone Aries. Si ambos están dispuestos a ceder y a comprender al otro, su relación puede ser duradera y profundamente enriquecedora. La clave está en encontrar un equilibrio entre la pasión y la estabilidad, la aventura y la seguridad.",
     score: 3
@@ -327,6 +375,19 @@ const compatibilityPairings: Record<string, CompatibilityReport> = {
 
 
 function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, locale: Locale): CompatibilityReport {
+  // Check if it's a self-comparison
+  if (sign1 === sign2) {
+    const selfPairingKey = `${sign1}-${sign1}`;
+    if (compatibilityPairings[selfPairingKey]) {
+      return compatibilityPairings[selfPairingKey];
+    }
+    // Fallback generic self-comparison if specific one not found (should not happen if all are added)
+    return {
+        report: `Cuando ${sign1} se relaciona con otro ${sign1}, se duplican tanto las fortalezas como los desafíos inherentes al signo. La comprensión mutua es alta, pero también la posibilidad de reforzar patrones menos constructivos. Es una oportunidad para el autoconocimiento a través del reflejo en el otro. (Informe genérico de auto-compatibilidad).`,
+        score: 3 
+    };
+  }
+
   const reportText = `La conexión entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente.\n\nEn el ámbito profesional, la colaboración puede ser productiva si logran alinear sus talentos. Para que su sinergia florezca, es crucial apreciar las virtudes del otro y comunicarse abiertamente. En el amor, la relación se presenta como un viaje de descubrimiento. El respeto por las diferencias y la voluntad de adaptarse serán fundamentales para una unión duradera. (Este es un informe de compatibilidad general. Los detalles específicos pueden variar.)`;
   return {
     report: reportText,
@@ -345,6 +406,7 @@ export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, l
     reportData = compatibilityPairings[key2];
   } else {
     console.warn(`No specific compatibility report found for ${sign1}-${sign2}. Using generic report.`);
+    // The generic report function now handles self-comparison internally if needed
     reportData = getGenericCompatibilityReport(sign1, sign2, locale);
   }
 
@@ -686,6 +748,7 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { Briefcase as WorkIcon }; // Exporting with a clearer name if used specifically for work category
+
 
 
 
