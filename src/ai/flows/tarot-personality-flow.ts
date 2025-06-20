@@ -112,7 +112,7 @@ const tarotPersonalityFlowInternal = ai.defineFlow(
 
     return {
       ...aiOutput,
-      imagePlaceholderUrl: cardImagePath, // Changed from imagePlaceholderUrl to cardImagePlaceholderUrl to match schema
+      cardImagePlaceholderUrl: cardImagePath, // Corrected property name
     };
   }
 );
