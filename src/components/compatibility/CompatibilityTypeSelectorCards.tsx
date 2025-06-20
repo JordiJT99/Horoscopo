@@ -48,9 +48,9 @@ const TypeCard = ({ title, description, icon: Icon, type, locale }: TypeCardProp
           <div className="p-4 sm:p-6 pt-0">
             <Button
               variant="outline"
-              className="w-full font-body group border-primary/50 text-primary hover:bg-primary/10 hover:text-primary flex items-center justify-between gap-2 px-4 text-sm" // Añadido gap-2
+              className="w-full font-body group border-primary/50 text-primary hover:bg-primary/10 hover:text-primary flex items-center justify-between gap-2 px-3 text-sm whitespace-normal h-auto py-2.5" // Allow wrapping, adjust height and padding
             >
-              <span className="text-left flex-1 min-w-0">{title}</span> {/* Añadido min-w-0 */}
+              <span className="text-left flex-1 min-w-0">{title}</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Button>
           </div>
