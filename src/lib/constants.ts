@@ -441,7 +441,7 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
       score: 4
     },
     work: {
-      report: "En el trabajo, la colaboración entre Tauro y Libra puede ser productiva si se enfocan en la calidad y la presentación. Tauro es excelente para materializar ideas y asegurar la solidez de los proyectos, mientras que Libra aporta diplomacia, habilidades de negociación y un gran sentido estético, ideal para el trato con clientes o el diseño. Pueden tener dificultades si Tauro se muestra demasiado obstinado en sus métodos o si Libra tarda demasiado en tomar decisiones. La búsqueda de un terreno común y el respeto por las diferentes fortalezas de cada uno es esencial para su éxito conjunto en el ámbito profesional.",
+      report: "En el trabajo, la colaboración entre Tauro y Libra puede ser productiva si se enfocan en la calidad y la presentación. Tauro es excelente para materializar ideas y asegurar la solidez de los proyectos, mientras que Libra aporta diplomacia, habilidades de negociación y un gran sentido estético, ideal para el trato con clientes o el diseño. Pueden tener dificultades si Tauro se muestra demasiado obstinado en sus métodos o si Libra tarda demasiado en tomar decisiones por buscar el consenso. La búsqueda de un terreno común y el respeto por las diferentes fortalezas de cada uno es esencial para su éxito conjunto en el ámbito profesional.",
       score: 3
     }
   },
@@ -759,7 +759,7 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
       score: 3
     },
     friendship: {
-      report: "La amistad entre Leo y Virgo es una combinación de apoyo práctico y admiración mutua, aunque con estilos diferentes. Leo aporta entusiasmo, generosidad y un toque de dramatismo, mientras que Virgo ofrece análisis sensato, ayuda organizada y una lealtad discreta pero firme. Virgo puede ayudar a Leo a mantener los pies en la tierra y a cuidar los detalles, mientras que Leo puede animar a Virgo a relajarse, a divertirse más y a reconocer sus propios talentos. Necesitan paciencia con sus diferentes enfojos: Leo más extrovertido, Virgo más reservado, pero pueden complementarse bien.",
+      report: "La amistad entre Leo y Virgo es una combinación de apoyo práctico y admiración mutua, aunque con estilos diferentes. Leo aporta entusiasmo, generosidad y un toque de dramatismo, mientras que Virgo ofrece análisis sensato, ayuda organizada y una lealtad discreta pero firme. Virgo puede ayudar a Leo a mantener los pies en la tierra y a cuidar los detalles, mientras que Leo puede animar a Virgo a relajarse, a divertirse más y a reconocer sus propios talentos. Necesitan paciencia con sus diferentes enfoques: Leo más extrovertido, Virgo más reservado, pero pueden complementarse bien.",
       score: 3
     },
     work: {
@@ -787,291 +787,7 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
       score: 3
     },
     friendship: {
-      report: "La amistad entre Leo y Escorpio es intensa, poderosa y a menudo muy protectora. Ambos son leales hasta la médula con sus amigos cercanos. Leo admira la fuerza interior, la perspicacia y la determinación de Escorpio, mientras que Escorpio se siente atraído por la generosidad, la confianza y la vitalidad de Leo. Pueden surgir luchas de poder o celos si no hay un respeto mutuo claro, pero su vínculo, una vez establecido, es fuerte y capaz de superar grandes desafíos. Es una amistad de 'todo o nada', donde la lealtad es primordial.",
-      score: 3
-    },
-    work: {
-      report: "En el trabajo, Leo y Escorpio son invencibles si logran no competir por el control absoluto. Leo aporta liderazgo carismático, visión y la capacidad de inspirar, mientras que Escorpio ofrece estrategia profunda, una mente investigadora y una determinación implacable. Deben definir roles claros para evitar conflictos de poder, ya que ambos son naturalmente dominantes. Su ambición conjunta y su capacidad para superar obstáculos pueden llevarlos muy lejos y lograr resultados impactantes. Es un equipo con mucha fuerza, pasión y determinación.",
-      score: 3
-    }
-  },
-  "Leo-Sagittarius": {
-    love: {
-      report: "La relación amorosa entre Leo y Sagitario, ambos signos de fuego, es apasionada, alegre, aventurera y llena de optimismo. Se admiran mutuamente: Leo ama la franqueza, el humor y el espíritu libre de Sagitario, mientras que Sagitario se siente atraído por la confianza, la generosidad y la calidez de Leo. Disfrutan explorando el mundo juntos, aprendiendo cosas nuevas y compartiendo una visión positiva de la vida. Ambos valoran su independencia. Si cultivan su amistad, mantienen viva la pasión y se apoyan en sus sueños, su unión será una aventura emocionante, inspiradora y duradera.",
-      score: 5
-    },
-    friendship: {
-      report: "Como amigos, Leo y Sagitario son pura diversión, optimismo y aventura. Les encanta explorar, reír, debatir ideas y apoyarse mutuamente en sus hazañas y proyectos. Son generosos, honestos (Sagitario a veces de forma brutal) y leales. Leo disfruta del entusiasmo de Sagitario, y Sagitario de la magnanimidad de Leo. Es una amistad llena de risas, energía positiva, exploración constante y un entendimiento natural de la necesidad de libertad del otro.",
-      score: 5
-    },
-    work: {
-      report: "Profesionalmente, Leo y Sagitario forman un equipo inspirador, dinámico y muy motivador. Leo aporta liderazgo carismático, creatividad y la capacidad de generar entusiasmo, mientras que Sagitario ofrece una visión expansiva, optimismo y un espíritu emprendedor. Juntos pueden motivar a otros y lanzar proyectos audaces con gran energía. La comunicación es abierta y directa. Necesitan cuidar los detalles prácticos y el seguimiento, pero su energía combinada y su visión de futuro son contagiosas y pueden llevar al éxito.",
-      score: 4
-    }
-  },
-  "Leo-Capricorn": {
-    love: {
-      report: "Leo, el exuberante rey, y Capricornio, el ambicioso constructor, sienten un respeto inicial por la fortaleza y la determinación del otro, pero sus estilos de vida y necesidades emocionales son muy diferentes. La necesidad de Leo de afecto constante, admiración y diversión puede no ser satisfecha por el reservado, práctico y a veces austero Capricornio. Capricornio puede ver a Leo como demasiado dramático o superficial, mientras que Leo puede percibir a Capricornio como frío o aburrido. Si Leo valora la lealtad, la ambición y la estabilidad que Capricornio ofrece, y Capricornio aprende a disfrutar de la calidez, la generosidad y la alegría de Leo, y a expresar más su afecto, pueden construir una relación sólida basada en metas compartidas y un respeto maduro.",
-      score: 3
-    },
-    friendship: {
-      report: "La amistad entre Leo y Capricornio se basa en una admiración mutua por la ambición, la fuerza y la capacidad de liderazgo del otro, aunque sus enfoques sean diferentes. Capricornio, pragmático y sabio, puede ofrecer a Leo consejos prácticos y una perspectiva realista, mientras que Leo puede animar a Capricornio a celebrar sus éxitos, a relajarse y a disfrutar más de la vida. Pueden parecer una pareja improbable, pero su respeto mutuo por la autoridad y el logro puede forjar una amistad duradera y de apoyo, especialmente si comparten metas profesionales o un interés en el estatus.",
-      score: 3
-    },
-    work: {
-      report: "En el trabajo, Leo y Capricornio pueden ser un equipo formidable y muy exitoso si Leo acepta la guía estratégica y la planificación de Capricornio, y Capricornio valora el carisma, la creatividad y la capacidad de Leo para inspirar y representar. Leo es a menudo el rostro público y el motivador, mientras que Capricornio es el cerebro estratégico y el ejecutor disciplinado. Deben respetar sus diferentes ritmos y estilos de liderazgo para evitar conflictos. Juntos, pueden alcanzar la cima en cualquier campo que se propongan, combinando visión con pragmatismo.",
-      score: 4
-    }
-  },
-  "Leo-Aquarius": {
-    love: {
-      report: "La relación amorosa entre Leo, el rey individualista, y Acuario, el aguador humanitario y libre, es estimulante, poco convencional y a menudo sorprendente. Leo se siente atraído por la inteligencia, la originalidad y el espíritu independiente de Acuario, mientras que Acuario admira la confianza, la calidez y la creatividad de Leo. La necesidad de Leo de atención personal y admiración puede chocar a veces con el enfoque más grupal y desapegado de Acuario. Sin embargo, ambos son signos fijos y leales a su manera. Si aprecian sus diferencias, se dan espacio mutuamente y celebran su individualidad, su relación será vibrante, socialmente activa y llena de ideas innovadoras.",
-      score: 4
-    },
-    friendship: {
-      report: "Como amigos, Leo y Acuario forman una pareja original, divertida e intelectualmente estimulante. Leo aporta la calidez, el entusiasmo y la generosidad, mientras que Acuario ofrece ideas innovadoras, una perspectiva única y un espíritu humanitario. Disfrutan de debates intelectuales, proyectos creativos y de socializar con grupos diversos. Se respetan mutuamente por su individualidad y se dan la libertad que ambos necesitan. Es una amistad llena de estímulo, originalidad y una visión compartida de un mundo mejor, aunque con enfoques diferentes.",
-      score: 4
-    },
-    work: {
-      report: "Profesionalmente, Leo y Acuario son un dúo innovador, carismático y con una gran capacidad para generar impacto. Leo aporta liderazgo inspirador, creatividad y la habilidad de motivar al equipo, mientras que Acuario ofrece originalidad, una visión de futuro y soluciones no convencionales. Juntos pueden liderar proyectos vanguardistas y desafiar el status quo. El desafío principal es que Leo no se sienta ignorado por el enfoque más grupal y a veces impersonal de Acuario, y que Acuario no se sienta limitado por la necesidad de reconocimiento de Leo. Gran potencial creativo si se alinean.",
-      score: 4
-    }
-  },
-  "Leo-Pisces": {
-    love: {
-      report: "Leo, el radiante Sol, y Piscis, el soñador pez, en el amor pueden crear una relación mágica y romántica si logran entender y satisfacer las necesidades del otro. Leo se siente atraído por la gentileza, la compasión y la naturaleza esquiva de Piscis, mientras que Piscis admira la fuerza, la confianza y la calidez protectora de Leo. Leo ofrece protección y un escenario para que Piscis brille, y Piscis ofrece devoción, admiración y un escape a un mundo de ensueño. Si Leo es tierno y paciente con la sensibilidad de Piscis, y Piscis es expresivo con su admiración y no se retrae demasiado, pueden crear una relación llena de romance, creatividad y un apoyo mutuo muy especial.",
-      score: 3
-    },
-    friendship: {
-      report: "La amistad entre Leo y Piscis es una combinación de contrastes que pueden complementarse de forma hermosa. Leo es el protector extrovertido y generoso, mientras que Piscis es el soñador compasivo y empático. Leo puede ayudar a Piscis a ganar confianza y a mostrar sus talentos al mundo, y Piscis puede suavizar el ego de Leo con su gentileza y ofrecerle un refugio emocional. Es una amistad que, si se cuida, puede ser muy cariñosa, inspiradora y llena de creatividad compartida, aunque Leo necesite entender la necesidad de Piscis de soledad y Piscis la necesidad de Leo de reconocimiento.",
-      score: 3
-    },
-    work: {
-      report: "En el trabajo, los estilos de Leo y Piscis son bastante diferentes, pero pueden encontrar sinergias si se enfocan en sus fortalezas. Leo lidera con carisma, visión y entusiasmo, mientras que Piscis inspira con empatía, creatividad y una perspectiva intuitiva. Leo puede ayudar a Piscis a ser más visible y a tener más confianza en sus ideas, mientras que Piscis puede aportar una visión artística y un toque humano a los proyectos de Leo. Necesitan apreciar sus diferentes enfoques y comunicarse claramente para colaborar eficazmente, especialmente en campos creativos, artísticos o de ayuda social.",
-      score: 3
-    }
-  },
-  "Virgo-Libra": {
-    love: {
-      report: "Virgo, el analítico perfeccionista, y Libra, el diplomático buscador de armonía, pueden construir una relación amorosa agradable y estéticamente placentera si ambos se esfuerzan por comprender las necesidades del otro. Virgo se siente atraído por el encanto, la gracia y el buen gusto de Libra, mientras que Libra admira la inteligencia, la dedicación y la naturaleza servicial de Virgo. Ambos aprecian la belleza y la tranquilidad. Si Virgo aprende a relajarse, a ser menos crítico y a disfrutar del romance que Libra ofrece, y Libra se vuelve un poco más práctico, decidido y ofrece a Virgo la seguridad de un compromiso claro, pueden construir una relación armoniosa, basada en el respeto mutuo y una compañía agradable y refinada.",
-      score: 4
-    },
-    friendship: {
-      report: "Como amigos, Virgo y Libra disfrutan de conversaciones refinadas, actividades culturales y un ambiente de armonía y respeto mutuo. Virgo ofrece apoyo práctico, consejos sensatos y una lealtad discreta, mientras que Libra aporta encanto social, una perspectiva equilibrada y la capacidad de suavizar cualquier situación. Libra puede ayudar a Virgo a socializar más y a ser menos autocrítico, y Virgo puede ofrecer a Libra una base de realidad y ayudarle a tomar decisiones. Es una amistad equilibrada, agradable y a menudo centrada en intereses intelectuales o artísticos compartidos.",
-      score: 4
-    },
-    work: {
-      report: "Profesionalmente, Virgo y Libra pueden colaborar muy bien, especialmente en campos que requieran atención al detalle, estética y habilidades de comunicación. Virgo aporta organización, análisis meticuloso y eficiencia, mientras que Libra ofrece diplomacia, habilidades de negociación y un excelente sentido estético. Virgo debe cuidar no ser excesivamente crítico con las ideas de Libra, y Libra debe esforzarse por ser más decidido y no evitar los problemas por mantener la armonía a toda costa. Juntos pueden crear productos, servicios o presentaciones de alta calidad y muy bien presentados.",
-      score: 4
-    }
-  },
-  "Virgo-Scorpio": {
-    love: {
-      report: "Virgo, el analítico, y Escorpio, el intenso, pueden desarrollar una conexión amorosa sorprendentemente profunda y duradera. Virgo se siente atraído por la intensidad, la pasión y la profundidad emocional de Escorpio, mientras que Escorpio valora la inteligencia, la lealtad, la dedicación y la naturaleza práctica de Virgo. Ambos son signos que buscan la verdad y pueden ser muy comprometidos. La comunicación honesta y la construcción de una confianza sólida son claves para superar la tendencia crítica de Virgo y los posibles celos o la reserva de Escorpio. Si lo logran, su unión será fuerte, leal y muy satisfactoria a nivel intelectual y emocional.",
-      score: 4
-    },
-    friendship: {
-      report: "La amistad entre Virgo y Escorpio es analítica, leal y a menudo muy profunda, aunque no siempre sea evidente para los demás. Ambos son inteligentes, observadores, reservados y valoran la honestidad y la confianza. Se respetan mutuamente por su capacidad de análisis y su compromiso. Virgo ofrece consejos prácticos y un apoyo constante, mientras que Escorpio aporta una perspectiva profunda, una lealtad feroz y la capacidad de entender los misterios de la vida. Es una amistad sólida, discreta y de gran confianza mutua.",
-      score: 4
-    },
-    work: {
-      report: "En el trabajo, Virgo y Escorpio forman un equipo formidable, casi invencible cuando se trata de análisis, investigación y estrategia. Virgo aporta meticulosidad, organización y una atención al detalle insuperable, mientras que Escorpio ofrece una mente investigadora aguda, una determinación implacable y la capacidad de ver más allá de la superficie. Juntos pueden desentrañar los problemas más complejos y lograr resultados de alta calidad con una eficiencia asombrosa. Se respetan mutuamente por su inteligencia, su dedicación y su compromiso con la excelencia.",
-      score: 5
-    }
-  },
-  "Virgo-Sagittarius": {
-    love: {
-      report: "Virgo, el meticuloso, y Sagitario, el aventurero, necesitan una gran dosis de adaptación y comprensión para que su relación amorosa funcione. Virgo busca orden, planificación y seguridad, mientras que Sagitario anhela libertad, espontaneidad y exploración. La franqueza directa y a veces descuidada de Sagitario puede herir la sensibilidad de Virgo, quien a su vez puede parecer demasiado crítico o restrictivo para Sagitario. Para que esta unión prospere, Virgo debe aprender a ser más flexible y a disfrutar de la aventura, y Sagitario debe ser más considerado, atento a los detalles y ofrecer un mayor compromiso. Su relación puede ser un constante aprendizaje y un desafío para ambos.",
-      score: 2
-    },
-    friendship: {
-      report: "Como amigos, Virgo y Sagitario son muy diferentes en sus enfoques de la vida, lo que puede llevar a una amistad estimulante o frustrante. Virgo es práctico, organizado y a veces preocupado, mientras que Sagitario es optimista, aventurero y a veces descuidado. Sagitario puede sacar a Virgo de su rutina y mostrarle nuevas perspectivas, mientras que Virgo puede ayudar a Sagitario a ser más organizado y a prestar atención a los detalles. Si logran respetar y valorar sus diferencias, pueden ofrecerse mutuamente una visión del mundo muy distinta y enriquecedora.",
-      score: 2
-    },
-    work: {
-      report: "Profesionalmente, Virgo y Sagitario pueden chocar debido a sus diferentes estilos de trabajo y prioridades. Virgo se enfoca en los detalles, la planificación y la eficiencia, mientras que Sagitario se centra en la visión general, la innovación y la expansión. Sagitario puede encontrar a Virgo demasiado quisquilloso o lento, y Virgo puede percibir a Sagitario como descuidado, poco realista o desorganizado. Sin embargo, si logran valorar las fortalezas del otro, Virgo puede ayudar a organizar y concretar las ideas visionarias de Sagitario, y Sagitario puede inspirar a Virgo a pensar más en grande y a ser menos rígido.",
-      score: 2
-    }
-  },
-  "Virgo-Capricorn": {
-    love: {
-      report: "La relación amorosa entre Virgo y Capricornio es una de las más sólidas, leales y armoniosas del zodiaco, basada en un profundo entendimiento mutuo, valores compartidos y un enfoque práctico de la vida. Ambos son signos de tierra, realistas, trabajadores, ambiciosos y buscan un compañero confiable y comprometido con quien construir un futuro seguro y estable. Virgo admira la fortaleza, la disciplina y la ambición de Capricornio, mientras que Capricornio valora la inteligencia, la dedicación, el cuidado y la atención al detalle de Virgo. Su conexión es profunda, duradera y muy satisfactoria, con una comunicación fluida y un apoyo incondicional.",
-      score: 5
-    },
-    friendship: {
-      report: "Virgo y Capricornio como amigos son prácticamente inseparables, formando un lazo de lealtad y apoyo práctico inquebrantable. Comparten valores similares sobre el trabajo duro, la ambición, la honestidad y la importancia de construir una vida segura y con propósito. Se entienden bien, se ofrecen consejos sensatos y prácticos, y se ayudan mutuamente a alcanzar sus metas. Aunque pueden parecer serios o reservados para otros, entre ellos existe un humor sutil y un profundo aprecio. Es una amistad muy confiable, estable, enriquecedora y que a menudo perdura toda la vida, basada en el respeto, la comprensión y una visión similar del mundo.",
-      score: 5
-    },
-    work: {
-      report: "En el trabajo, Virgo y Capricornio son un equipo invencible, destinado al éxito y a la excelencia. Virgo aporta organización impecable, análisis meticuloso y una atención al detalle insuperable, mientras que Capricornio ofrece estructura, disciplina, planificación estratégica y una ambición implacable. Juntos, pueden construir y gestionar cualquier proyecto con una eficiencia y dedicación asombrosas. Se respetan profundamente por su ética de trabajo, su profesionalismo y su compromiso con la calidad, formando una alianza poderosa y altamente productiva.",
-      score: 5
-    }
-  },
-  "Virgo-Aquarius": {
-    love: {
-      report: "Virgo, el pragmático, y Acuario, el idealista, pueden encontrar serias dificultades para conectar emocionalmente en una relación amorosa. Virgo busca demostraciones prácticas de afecto, orden y una rutina estable, mientras que Acuario es más desapegado, valora la libertad intelectual y tiene un enfoque más universal del amor. Acuario puede encontrar a Virgo demasiado convencional, crítico o centrado en los detalles, mientras que Virgo puede percibir a Acuario como errático, impredecible o emocionalmente distante. Si Virgo logra apreciar la originalidad y la mente brillante de Acuario, y Acuario valora la dedicación, la inteligencia y el apoyo práctico de Virgo, pueden construir una relación basada en el respeto intelectual y la amistad, aunque la conexión romántica profunda requerirá mucho esfuerzo.",
-      score: 2
-    },
-    friendship: {
-      report: "La amistad entre Virgo y Acuario es principalmente intelectual y basada en el respeto por la mente del otro, aunque sus enfoques de la vida sean muy diferentes. Virgo es práctico, analítico y a veces convencional, mientras que Acuario es idealista, innovador y a menudo excéntrico. Disfrutan de conversaciones estimulantes sobre temas sociales, científicos o filosóficos. Acuario puede encontrar a Virgo demasiado crítico o rígido, y Virgo puede percibir a Acuario como poco práctico o demasiado utópico. Si logran aceptar y valorar sus diferencias, su amistad puede ser mentalmente enriquecedora y ofrecer perspectivas únicas.",
-      score: 3
-    },
-    work: {
-      report: "Profesionalmente, Virgo y Acuario pueden complementarse de manera interesante si logran superar sus diferencias de estilo y enfoque. Virgo es excelente para la organización, el análisis de detalles y la implementación práctica de ideas. Acuario es un visionario, lleno de ideas innovadoras y un enfoque humanitario. Virgo puede ayudar a estructurar y hacer realidad las ideas vanguardistas de Acuario, mientras que Acuario puede inspirar a Virgo a pensar más ampliamente y a ser menos reacio al cambio. La comunicación clara, el respeto por las diferentes metodologías y la definición de roles son esenciales para que su colaboración sea fructífera.",
-      score: 3
-    }
-  },
-  "Virgo-Pisces": {
-    love: {
-      report: "La relación amorosa entre Virgo, el práctico, y Piscis, el soñador, siendo signos opuestos, puede ser profundamente sanadora, romántica y complementaria. Virgo se siente atraído por la sensibilidad, la compasión y la naturaleza imaginativa de Piscis, mientras que Piscis encuentra en Virgo la estabilidad, el cuidado y el anclaje a la realidad que a menudo necesita. Virgo ayuda a Piscis a ser más práctico y a organizar sus sueños, mientras que Piscis enseña a Virgo sobre la empatía, la intuición y la belleza de lo intangible. Con amor, comprensión y un deseo genuino de apoyarse mutuamente, su unión puede ser mágica, equilibrada y muy satisfactoria.",
-      score: 4
-    },
-    friendship: {
-      report: "Como amigos, Virgo y Piscis se ofrecen un apoyo mutuo maravilloso y una comprensión profunda. Virgo, práctico y servicial, ayuda a Piscis a mantenerse con los pies en la tierra, a organizar sus ideas y a cuidar de sí mismo. Piscis, compasivo e intuitivo, enseña a Virgo sobre la empatía, la aceptación y la importancia de conectar con las emociones. Se entienden bien, se cuidan mutuamente y pueden compartir intereses artísticos o espirituales. Es una amistad tierna, leal y llena de una comprensión que va más allá de las palabras.",
-      score: 4
-    },
-    work: {
-      report: "En el trabajo, Virgo y Piscis pueden formar un excelente equipo, especialmente en campos que requieran tanto pragmatismo como creatividad. Virgo aporta organización, atención al detalle y eficiencia, mientras que Piscis ofrece visión creativa, intuición y una gran empatía con clientes o compañeros. Virgo puede ayudar a Piscis a materializar sus ideas y a mantenerse enfocado, mientras que Piscis puede inspirar a Virgo y aportar un toque de humanidad y originalidad a los proyectos. Juntos combinan lo práctico con lo imaginativo de manera armoniosa y productiva.",
-      score: 4
-    }
-  },
-  "Libra-Scorpio": {
-    love: {
-      report: "La atracción entre Libra, el sociable, y Escorpio, el intenso, suele ser fuerte y magnética, aunque la relación puede ser compleja. La necesidad de Escorpio de control, profundidad emocional y fusión total puede chocar con la naturaleza más ligera, sociable y a veces indecisa de Libra. Libra busca armonía y equilibrio, mientras que Escorpio no teme a la confrontación y busca la verdad a toda costa. Si Libra está dispuesto a explorar las profundidades emocionales con Escorpio y a ofrecerle la lealtad que demanda, y Escorpio aprende a confiar, a ser menos posesivo y a apreciar la necesidad de Libra de interacción social, su relación puede ser transformadora, muy apasionada y profundamente conectada.",
-      score: 3
-    },
-    friendship: {
-      report: "La amistad entre Libra y Escorpio es intrigante y puede ser muy profunda si se construye sobre la confianza. Libra aprecia la lealtad, la perspicacia y la fuerza interior de Escorpio, mientras que Escorpio se siente atraído por la diplomacia, el encanto y el sentido de la justicia de Libra. Pueden tener una conexión intelectual y emocional fuerte si superan la desconfianza inicial que Escorpio a veces proyecta. Libra puede ayudar a suavizar la intensidad de Escorpio, y Escorpio puede ofrecer a Libra una perspectiva más profunda y una lealtad inquebrantable.",
-      score: 3
-    },
-    work: {
-      report: "Profesionalmente, Libra y Escorpio pueden ser un equipo poderoso y estratégico si logran alinear sus objetivos. Libra aporta diplomacia, habilidades de negociación, un gran sentido estético y la capacidad de crear consenso. Escorpio ofrece estrategia profunda, una mente investigadora, determinación y la habilidad de descubrir información oculta. Libra puede ayudar a presentar las ideas de Escorpio de manera más aceptable, y Escorpio puede ayudar a Libra a ser más decidido y a profundizar en los problemas. Deben cuidar las luchas de poder sutiles para tener éxito y canalizar su considerable influencia conjunta.",
-      score: 3
-    }
-  },
-  "Libra-Sagittarius": {
-    love: {
-      report: "La relación amorosa entre Libra, el armonioso, y Sagitario, el aventurero, suele ser alegre, optimista, socialmente activa y llena de estímulos intelectuales. Ambos valoran la libertad, la honestidad y el aprendizaje constante. Disfrutan de viajar, explorar nuevas culturas, debatir ideas y compartir un círculo de amigos diverso. Sagitario se siente atraído por el encanto y la inteligencia de Libra, mientras que Libra admira el optimismo y el espíritu libre de Sagitario. Si ambos cultivan la confianza, respetan la independencia del otro y mantienen viva la llama de la aventura y la comunicación, su unión será una fuente constante de felicidad, crecimiento y diversión.",
-      score: 4
-    },
-    friendship: {
-      report: "Como amigos, Libra y Sagitario forman una pareja divertida, optimista y muy sociable. Aman la aventura, las conversaciones interesantes, los eventos culturales y la vida social en general. Sagitario aporta entusiasmo y un espíritu explorador, mientras que Libra ofrece encanto, diplomacia y una perspectiva equilibrada. Se dan mucho espacio, se admiran mutuamente por su inteligencia y su visión del mundo, y rara vez hay conflictos serios entre ellos. Es una amistad llena de risas, exploración, aprendizaje y una energía positiva contagiosa.",
-      score: 5
-    },
-    work: {
-      report: "En el trabajo, Libra y Sagitario son un dúo creativo, entusiasta y con una gran capacidad para las relaciones públicas y la comunicación. Libra aporta diplomacia, estrategia, un buen sentido estético y la habilidad para negociar, mientras que Sagitario ofrece visión, optimismo, un espíritu emprendedor y la capacidad de inspirar a otros. Juntos son persuasivos y pueden generar un ambiente de trabajo positivo. La honestidad directa de Sagitario puede chocar a veces con el deseo de Libra de evitar conflictos, pero suelen resolverlo con inteligencia y humor.",
-      score: 4
-    }
-  },
-  "Libra-Capricorn": {
-    love: {
-      report: "Libra, el amante de la armonía, y Capricornio, el constructor ambicioso, pueden encontrar dificultades para conectar a nivel romántico debido a sus diferentes prioridades y estilos de vida. Libra necesita romance, interacción social y equilibrio, mientras que Capricornio es más reservado, práctico y enfocado en sus metas profesionales y la seguridad material. Libra puede encontrar a Capricornio demasiado serio o frío, y Capricornio puede percibir a Libra como indeciso o superficial. Si Libra aprecia la lealtad, la dedicación y la estabilidad que Capricornio ofrece, y Capricornio aprende a ser más expresivo afectivamente y a valorar los placeres sociales y estéticos que Libra disfruta, pueden construir una relación sólida basada en el respeto mutuo y metas compartidas, aunque requerirá esfuerzo y compromiso.",
-      score: 3
-    },
-    friendship: {
-      report: "La amistad entre Libra y Capricornio requiere un esfuerzo consciente para encontrar un terreno común, ya que sus naturalezas son bastante diferentes. Libra es social, diplomático y busca la armonía, mientras que Capricornio es más reservado, pragmático y ambicioso. Capricornio puede ofrecer a Libra estabilidad, consejos prácticos y una lealtad sólida, mientras que Libra puede aportar a Capricornio encanto social, una perspectiva más relajada y ayudarle a apreciar la belleza y el arte. Si logran encontrar un equilibrio y respetar sus diferencias, pueden tener una amistad respetuosa y de apoyo, aunque quizás no muy efusiva o espontánea.",
-      score: 2
-    },
-    work: {
-      report: "Profesionalmente, Libra y Capricornio pueden complementarse de manera efectiva si logran armonizar sus estilos. Libra aporta habilidades sociales, diplomacia, un buen sentido estético y la capacidad de negociación, ideal para el trato con clientes o la creación de un ambiente de trabajo armonioso. Capricornio ofrece disciplina, estrategia, organización y una fuerte ética de trabajo, enfocado en lograr resultados y construir estructuras sólidas. Libra puede ayudar a Capricornio a ser más sociable y a considerar el factor humano, mientras que Capricornio puede ayudar a Libra a ser más decidido y a enfocarse en los objetivos. Sus diferentes estilos de trabajo requieren una comunicación clara y respeto mutuo para ser un equipo productivo.",
-      score: 3
-    }
-  },
-  "Libra-Aquarius": {
-    love: {
-      report: "La relación amorosa entre Libra y Acuario, ambos signos de aire, es excepcionalmente armoniosa, intelectualmente estimulante y basada en una profunda amistad y respeto mutuo. Se entienden casi sin palabras, valoran la libertad individual del otro y comparten un amor por la justicia social, las ideas innovadoras y la comunicación abierta. Su amor es más cerebral y de compañerismo que intensamente pasional, pero la admiración mutua es fuerte y constante. Disfrutan de una vida social activa, debates intelectuales y proyectos creativos conjuntos. Es una unión duradera, equitativa, libre de celos innecesarios y llena de descubrimientos intelectuales y crecimiento personal.",
-      score: 5
-    },
-    friendship: {
-      report: "Como amigos, Libra y Acuario son almas gemelas intelectuales, formando una de las combinaciones más compatibles del zodiaco. Comparten un amor por la justicia, la originalidad, las conversaciones profundas y las causas humanitarias. Se dan mucha libertad, se respetan mutuamente y se admiran por su inteligencia y visión del mundo. Suelen tener muchos amigos en común y disfrutan de actividades grupales. Es una amistad muy estimulante, duradera y basada en una comprensión intuitiva y un fuerte lazo mental.",
-      score: 5
-    },
-    work: {
-      report: "En el trabajo, Libra y Acuario forman un equipo brillante, innovador y altamente colaborativo. Libra aporta diplomacia, habilidades de negociación, un gran sentido estético y la capacidad de crear armonía, mientras que Acuario ofrece una visión de futuro, ideas originales, un enfoque humanitario y la habilidad de pensar fuera de lo común. Disfrutan colaborando en proyectos creativos, sociales o tecnológicos. Su comunicación es fluida y se inspiran mutuamente, generando un ambiente de trabajo estimulante y progresista.",
-      score: 5
-    }
-  },
-  "Libra-Pisces": {
-    love: {
-      report: "Libra, el buscador de equilibrio, y Piscis, el soñador compasivo, se sienten atraídos por la sensibilidad, la amabilidad y el idealismo del otro, lo que puede crear una relación tierna y romántica. La necesidad de Piscis de una fusión emocional profunda y una conexión espiritual puede ser a veces abrumadora para el más racional y social Libra, quien busca armonía pero también interacción con el mundo exterior. Si Libra logra conectar con la profundidad emocional de Piscis y ofrecerle la seguridad que necesita, y Piscis aprende a comunicar sus necesidades de forma más clara y a apreciar la necesidad de Libra de equilibrio social, pueden disfrutar de una unión inspiradora, artística y llena de afecto.",
-      score: 3
-    },
-    friendship: {
-      report: "La amistad entre Libra y Piscis es artística, compasiva y a menudo muy empática. Libra aprecia la imaginación, la gentileza y la naturaleza intuitiva de Piscis, mientras que Piscis se siente atraído por la amabilidad, el encanto y el sentido de la justicia de Libra. Disfrutan de actividades creativas, conversaciones sobre arte, música o espiritualidad, y de apoyarse mutuamente en sus sueños. Necesitan claridad en la comunicación para evitar malentendidos debido a la sensibilidad de Piscis y la tendencia de Libra a evitar la confrontación. Si lo logran, es una amistad tierna y de apoyo.",
-      score: 3
-    },
-    work: {
-      report: "Profesionalmente, Libra y Piscis pueden colaborar bien en campos creativos, artísticos o de ayuda social, donde la empatía y la estética son importantes. Libra aporta un buen sentido del diseño, habilidades de comunicación y la capacidad de crear armonía, mientras que Piscis ofrece imaginación, intuición y una profunda sensibilidad hacia las necesidades de los demás. El principal desafío es que ambos pueden ser indecisos o evitar la confrontación, lo que puede dificultar la toma de decisiones prácticas o la gestión de proyectos con plazos ajustados. Necesitan estructura y quizás un líder más pragmático para ser más efectivos.",
-      score: 3
-    }
-  },
-  "Scorpio-Sagittarius": {
-    love: {
-      report: "La atracción entre Escorpio, el intenso, y Sagitario, el aventurero, puede ser fuerte y llena de chispas, pero sus naturalezas son muy diferentes. La necesidad de Escorpio de intimidad profunda, control y fusión emocional choca con el deseo innato de Sagitario de libertad, exploración y honestidad a veces brutal. Escorpio puede encontrar a Sagitario demasiado superficial o poco comprometido, mientras que Sagitario puede percibir a Escorpio como demasiado posesivo, celoso o secreto. Si Escorpio aprende a confiar y a dar espacio, y Sagitario está dispuesto a profundizar en la conexión emocional y a ser más considerado, pueden tener una relación apasionante y llena de crecimiento, aunque siempre será un desafío.",
-      score: 3
-    },
-    friendship: {
-      report: "Como amigos, Escorpio y Sagitario forman una mezcla de intensidad y aventura que puede ser fascinante. Escorpio es profundo, leal y perceptivo, mientras que Sagitario es optimista, extrovertido y siempre en busca de nuevas experiencias. Sagitario puede animar a Escorpio a salir de su zona de confort y a ver el lado más ligero de la vida, mientras que Escorpio puede ofrecer a Sagitario una perspectiva más profunda y una lealtad inquebrantable. Necesitan respetar sus diferentes naturalezas y niveles de privacidad para que la amistad prospere sin malentendidos.",
-      score: 3
-    },
-    work: {
-      report: "En el trabajo, Escorpio y Sagitario pueden ser un dúo poderoso y dinámico si logran canalizar sus energías de forma constructiva. Escorpio aporta estrategia, una mente investigadora y una determinación implacable, mientras que Sagitario ofrece visión, optimismo y la capacidad de inspirar y explorar nuevas oportunidades. La franqueza de Sagitario puede chocar con la naturaleza más reservada y a veces desconfiada de Escorpio. Necesitan confianza mutua, una comunicación clara sobre los objetivos y quizás roles definidos para evitar luchas de poder y aprovechar su considerable energía conjunta.",
-      score: 3
-    }
-  },
-  "Scorpio-Capricorn": {
-    love: {
-      report: "Escorpio, el apasionado, y Capricornio, el ambicioso, pueden desarrollar una conexión amorosa sorprendentemente profunda, sólida y duradera. Ambos son signos reservados pero muy leales, determinados y valoran la fuerza interior y el compromiso. Escorpio admira la fortaleza, la disciplina y la ambición de Capricornio, mientras que Capricornio se siente atraído por la pasión, la intensidad y la lealtad incondicional de Escorpio. El principal desafío es que ambos pueden ser reacios a expresar sus emociones abiertamente. Si logran construir una confianza total, comunicarse sobre sus sentimientos y apoyarse mutuamente en sus metas, su unión será inquebrantable, poderosa y muy satisfactoria.",
-      score: 4
-    },
-    friendship: {
-      report: "La amistad entre Escorpio y Capricornio es sólida, discreta y se basa en un profundo respeto mutuo y una comprensión tácita. Ambos son serios, ambiciosos, leales y no les gustan las superficialidades. Se apoyan en sus metas profesionales y personales, ofrecen consejos prácticos y pueden confiar plenamente el uno en el otro. No necesitan demostraciones constantes de afecto, ya que su lealtad se demuestra con hechos. Es una amistad poderosa, de confianza y que a menudo perdura toda la vida, construida sobre cimientos de respeto y ambición compartida.",
-      score: 4
-    },
-    work: {
-      report: "Profesionalmente, Escorpio y Capricornio forman un equipo formidable, destinado a lograr grandes cosas. Escorpio aporta profundidad de análisis, estrategia, una mente investigadora y una determinación implacable, mientras que Capricornio ofrece estructura, disciplina, planificación a largo plazo y una ética de trabajo intachable. Juntos pueden abordar los proyectos más complejos y ambiciosos con una eficiencia y una visión estratégica impresionantes. Se respetan mutuamente por su inteligencia y su capacidad de trabajo, y pueden construir un verdadero imperio basado en la confianza, la ambición y la excelencia.",
-      score: 5
-    }
-  },
-  "Scorpio-Aquarius": {
-    love: {
-      report: "Escorpio, el intenso y emocional, y Acuario, el independiente e intelectual, suelen encontrar su relación amorosa llena de desafíos y contrastes. La necesidad de Escorpio de fusión emocional profunda, control y lealtad exclusiva choca frontalmente con el deseo de Acuario de libertad, independencia, exploración intelectual y un enfoque más universal del amor. Escorpio puede encontrar a Acuario demasiado desapegado, errático o evasivo emocionalmente, mientras que Acuario puede percibir a Escorpio como demasiado posesivo, celoso o demandante. Para que esta relación funcione, se requiere una enorme comprensión, mucha tolerancia, comunicación constante y una aceptación genuina de las diferencias fundamentales del otro. Es una combinación astrológicamente difícil.",
-      score: 2
-    },
-    friendship: {
-      report: "Como amigos, Escorpio y Acuario forman una combinación inusual y a menudo desconcertante. Escorpio es intenso, emocional y valora la lealtad profunda, mientras que Acuario es más desapegado, intelectual y valora la libertad y la originalidad. Pueden fascinarse mutuamente por sus diferencias (Escorpio por la mente brillante de Acuario, Acuario por la profundidad de Escorpio), pero también pueden chocar con frecuencia. Si logran respetar sus diferentes enfoques de la vida y las relaciones, Acuario puede ofrecer a Escorpio una perspectiva más amplia y objetiva, y Escorpio puede enseñar a Acuario sobre la importancia de la conexión emocional y la profundidad.",
-      score: 2
-    },
-    work: {
-      report: "En el trabajo, los enfoques de Escorpio y Acuario son casi opuestos, lo que puede generar tensión o, con mucho esfuerzo, una sinergia innovadora. Escorpio profundiza en los problemas, investiga a fondo y es muy estratégico, mientras que Acuario innova, piensa fuera de lo común y valora la colaboración en equipo. Acuario puede encontrar a Escorpio demasiado controlador o secreto, y Escorpio puede percibir a Acuario como poco práctico o demasiado disperso. Si logran respetar sus diferencias y encontrar un objetivo común que los apasione, pueden lograr resultados únicos, pero la colaboración suele ser un desafío constante que requiere mucha comunicación y flexibilidad.",
-      score: 2
-    }
-  },
-  "Scorpio-Pisces": {
-    love: {
-      report: "La compatibilidad amorosa entre Escorpio y Piscis, ambos signos de agua, es excepcionalmente profunda, intuitiva y emocionalmente satisfactoria. Se entienden a un nivel anímico casi telepático y comparten una necesidad de conexión espiritual y fusión emocional. Escorpio, intenso y protector, ofrece a Piscis la fuerza y la seguridad que necesita. Piscis, compasivo y soñador, brinda a Escorpio un amor incondicional, comprensión y un refugio de ternura. Su pasión es profunda y su lealtad, inquebrantable. Si logran mantener un cable a tierra para no perderse en sus emociones y comunicarse abiertamente, su amor será una fuente de felicidad transformadora y duradera.",
-      score: 5
-    },
-    friendship: {
-      report: "La amistad entre Escorpio y Piscis es una de las más profundas, empáticas y espiritualmente conectadas del zodiaco. Se entienden a un nivel intuitivo que va más allá de las palabras y se ofrecen un apoyo incondicional en todos los aspectos de la vida. Comparten un mundo interior rico, una gran sensibilidad y una comprensión de las complejidades emocionales. Piscis suaviza la intensidad de Escorpio con su compasión, y Escorpio ofrece a Piscis protección y una fuerza en la que apoyarse. Es una amistad mágica, transformadora y llena de una lealtad inquebrantable.",
-      score: 5
-    },
-    work: {
-      report: "Profesionalmente, Escorpio y Piscis pueden ser un equipo increíblemente creativo, intuitivo e inspirador, especialmente en campos artísticos, de sanación, investigación o cualquier área que requiera una profunda sensibilidad y percepción. Escorpio aporta determinación, estrategia y la capacidad de profundizar en los problemas, mientras que Piscis ofrece imaginación, visión y una gran empatía con las necesidades de los demás. Se entienden casi telepáticamente y se apoyan mutuamente. Pueden necesitar un poco de estructura externa o un enfoque más práctico para la gestión de proyectos, pero su capacidad para conectar emocionalmente y su creatividad conjunta son una gran fortaleza.",
-      score: 4
-    }
-  },
-  "Sagittarius-Capricorn": {
-    love: {
-      report: "Sagitario, el optimista aventurero, y Capricornio, el pragmático constructor, deben trabajar arduamente para encontrar un terreno común en el amor, ya que sus prioridades y estilos de vida son muy diferentes. Sagitario busca libertad, exploración y espontaneidad, mientras que Capricornio valora la estabilidad, la seguridad y la planificación a largo plazo. Sagitario puede enseñar a Capricornio a relajarse, a disfrutar más de la vida y a ser más optimista, mientras que Capricornio puede ofrecer a Sagitario una base sólida, disciplina y un enfoque más realista de sus metas. Si ambos están dispuestos a ceder, a aprender del otro y a respetar sus diferencias, pueden construir una relación equilibrada y mutuamente enriquecedora.",
-      score: 3
-    },
-    friendship: {
-      report: "Como amigos, Sagitario y Capricornio son muy diferentes, pero pueden ofrecerse perspectivas valiosas. Sagitario es optimista, extrovertido y siempre en busca de nuevas aventuras, mientras que Capricornio es más práctico, reservado y enfocado en sus responsabilidades. Capricornio puede ayudar a Sagitario a ser más realista y a planificar mejor, mientras que Sagitario puede animar a Capricornio a ser más aventurero, a tomarse descansos y a ver el lado divertido de la vida. Si logran respetar sus diferentes enfoques y ritmos, su amistad puede ser sorprendentemente enriquecedora y ofrecer un equilibrio entre la diversión y la seriedad.",
-      score: 3
-    },
-    work: {
-      report: "En el trabajo, Sagitario y Capricornio pueden complementarse de manera efectiva si logran armonizar sus diferentes estilos y objetivos. Sagitario aporta visión, optimismo, entusiasmo y la capacidad de explorar nuevas oportunidades, mientras que Capricornio ofrece estructura, disciplina, planificación estratégica y una fuerte ética de trabajo. La impaciencia de Sagitario puede chocar con la cautela y el enfoque metódico de Capricornio. Necesitan respetar los métodos del otro; Sagitario puede inspirar y generar ideas, mientras Capricornio las organiza y ejecuta con eficiencia. Con buena comunicación, pueden ser un equipo muy productivo.",
+      report: "La amistad entre Leo y Escorpio es intensa, poderosa y a menudo muy protectora. Ambos son leales hasta la médula con sus amigos cercanos. Leo admira la fuerza interior, la perspicacia y la determinación de Escorpio, mientras que Escorpio se siente atraído por la generosidad, la confianza y la vitalidad de Leo. Pueden surgir luchas de poder o celos si no hay un respeto mutuo claro,armonicen sus diferentes estilos y objetivos. Sagitario aporta visión, optimismo, entusiasmo y la capacidad de explorar nuevas oportunidades, mientras que Capricornio ofrece estructura, disciplina, planificación estratégica y una fuerte ética de trabajo. La impaciencia de Sagitario puede chocar con la cautela y el enfoque metódico de Capricornio. Necesitan respetar los métodos del otro; Sagitario puede inspirar y generar ideas, mientras Capricornio las organiza y ejecuta con eficiencia. Con buena comunicación, pueden ser un equipo muy productivo.",
       score: 3
     }
   },
@@ -1148,14 +864,23 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
 };
 
 function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, type: 'love' | 'friendship' | 'work', locale: Locale): CompatibilityReportDetail {
-  // Fallback for any unhandled specific pair or if called directly
-  const typeText = type === 'love' ? 'amorosa' : (type === 'friendship' ? 'de amistad' : 'laboral');
-  const generalNote = `La conexión ${typeText} entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante para este tipo de relación. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente. (Este es un informe de compatibilidad general para ${type}. Los detalles específicos pueden variar.)`;
+  const typeText = type === 'love' ? (locale === 'es' ? 'amorosa' : 'romantic') : (type === 'friendship' ? (locale === 'es' ? 'de amistad' : 'friendship') : (locale === 'es' ? 'laboral' : 'work'));
+  let generalNote = `La conexión ${typeText} entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante para este tipo de relación. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente. (Este es un informe de compatibilidad general para ${type}. Los detalles específicos pueden variar.)`;
   
-  let baseScore = 3; // Default neutral score
-  if (sign1 === sign2 && type === 'love') baseScore = compatibilityPairings[`${sign1}-${sign1}`]?.love.score || 3;
-  else if (sign1 === sign2 && type === 'friendship') baseScore = compatibilityPairings[`${sign1}-${sign1}`]?.friendship.score || 4;
-  else if (sign1 === sign2 && type === 'work') baseScore = compatibilityPairings[`${sign1}-${sign1}`]?.work.score || 3;
+  if (locale === 'en') {
+    generalNote = `The ${typeText} connection between ${sign1} and ${sign2} is unique, woven with the threads of their distinct elements and modalities. ${sign1}, with its inherent energy, interacts with ${sign2}, who brings their characteristic distinctiveness, creating a dynamic that can be both complementary and challenging for this type of relationship. It's an encounter of two worlds that, with understanding, can enrich each other. (This is a general compatibility report for ${type}. Specific details may vary.)`;
+  } else if (locale === 'de') {
+    generalNote = `Die ${typeText} Verbindung zwischen ${sign1} und ${sign2} ist einzigartig, gewebt aus den Fäden ihrer unterschiedlichen Elemente und Modalitäten. ${sign1}, mit seiner inhärenten Energie, interagiert mit ${sign2}, der seine charakteristische Besonderheit einbringt, und schafft eine Dynamik, die für diese Art von Beziehung sowohl ergänzend als auch herausfordernd sein kann. Es ist eine Begegnung zweier Welten, die sich mit Verständnis gegenseitig bereichern können. (Dies ist ein allgemeiner Kompatibilitätsbericht für ${type}. Spezifische Details können variieren.)`;
+  } else if (locale === 'fr') {
+    generalNote = `La connexion ${typeText} entre ${sign1} et ${sign2} est unique, tissée avec les fils de leurs éléments et modalités distincts. ${sign1}, avec son énergie inhérente, interagit avec ${sign2}, qui apporte sa particularité caractéristique, créant une dynamique qui peut être à la fois complémentaire et stimulante pour ce type de relation. C'est une rencontre de deux mondes qui, avec compréhension, peuvent s'enrichir mutuellement. (Ceci est un rapport de compatibilité général pour ${type}. Les détails spécifiques могут varier.)`;
+  }
+
+
+  let baseScore = 3; 
+  const selfPairKey = `${sign1}-${sign1}`;
+  if (sign1 === sign2 && compatibilityPairings[selfPairKey] && compatibilityPairings[selfPairKey][type]) {
+    baseScore = compatibilityPairings[selfPairKey][type].score;
+  }
 
   return {
     report: generalNote,
@@ -1168,12 +893,17 @@ export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, t
   const key2 = `${sign2}-${sign1}`;
   let reportData: CompatibilityReportDetail | undefined;
 
-  if (compatibilityPairings[key1] && compatibilityPairings[key1][type]) {
-    reportData = compatibilityPairings[key1][type];
-  } else if (compatibilityPairings[key2] && compatibilityPairings[key2][type]) {
-    reportData = compatibilityPairings[key2][type];
+  const pairingTypeData1 = compatibilityPairings[key1];
+  if (pairingTypeData1 && pairingTypeData1[type]) {
+    reportData = pairingTypeData1[type];
   } else {
-    // This case should ideally not be hit if all pairings (including self) have entries for all types
+    const pairingTypeData2 = compatibilityPairings[key2];
+    if (pairingTypeData2 && pairingTypeData2[type]) {
+      reportData = pairingTypeData2[type];
+    }
+  }
+  
+  if (!reportData) {
     console.warn(`No specific compatibility report found for ${sign1}-${sign2} of type ${type}. Using generic report.`);
     reportData = getGenericCompatibilityReport(sign1, sign2, type, locale);
   }
@@ -1509,5 +1239,7 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { Briefcase as WorkIcon }; 
+
+    
 
     
