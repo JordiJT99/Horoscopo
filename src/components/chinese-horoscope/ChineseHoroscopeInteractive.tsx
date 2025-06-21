@@ -7,13 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants';
+import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, ChineseAstrologyIcon } from '@/lib/constants';
 import type { ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, ChineseZodiacSign } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import Image from 'next/image';
-import { Star } from 'lucide-react';
+import { Star, JapaneseYen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Helper component to render the correct icon or a placeholder image
@@ -142,7 +142,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: { di
       <Card className="mb-12 shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-2xl text-primary flex items-center gap-2">
-            <CompatibilityIcon className="w-7 h-7" />
+            <JapaneseYen className="w-7 h-7" />
             {dictionary['ChineseHoroscopePage.compatibilityTitle']}
           </CardTitle>
         </CardHeader>
