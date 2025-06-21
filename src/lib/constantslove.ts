@@ -142,7 +142,32 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Scorpio-Aquarius": {
     report: "Una combinación de dos signos fijos increíblemente poderosos y tercos, pero con enfoques de vida radicalmente diferentes. Escorpio es profundo y emocional, mientras que Acuario es mental y desapegado. Es una relación magnética pero altamente desafiante. Fortalezas: Ambos son inteligentes y curiosos. Pueden tener conversaciones fascinantes sobre los misterios de la vida. Si logran unirse, pueden ser una fuerza formidable para el cambio. Desafíos: La necesidad de fusión emocional de Escorpio choca con la necesidad de independencia de Acuario. Escorpio puede ver a Acuario como frío, y Acuario puede sentirse sofocado. Clave del éxito: Un respeto radical por la individualidad del otro. Deben encontrar un propósito común más grande que ellos mismos. Escorpio debe aprender a confiar, y Acuario a conectarse emocionalmente.",
     score: 2
+  },
+  "Aries-Gemini": {
+    report: "Fuego y Aire se combinan en una relación llena de energía, diversión y estímulo intelectual. La curiosidad insaciable de Géminis mantiene entretenido al aventurero Aries. Nunca se aburren y su vida social es vibrante. Fortalezas: Comunicación constante, amor por la novedad, y una energía juvenil que mantiene la relación fresca. Ambos son independientes y respetan el espacio del otro. Desafíos: La falta de profundidad emocional puede ser un problema. Aries es pasional, mientras que Géminis es más mental. La inconstancia de Géminis puede chocar con la necesidad de Aries de ser el centro de atención. Clave del éxito: Canalizar su energía en proyectos creativos juntos. Aries debe aprender a no tomarse la naturaleza coqueta de Géminis como algo personal, y Géminis debe ofrecerle a Aries la atención y la emoción que necesita.",
+    score: 4
+  },
+  "Aries-Cancer": {
+    report: "Una combinación desafiante de Fuego y Agua. La naturaleza directa y a veces brusca de Aries puede herir fácilmente al sensible Cáncer. Sin embargo, si logran entenderse, pueden protegerse mutuamente con ferocidad. Fortalezas: Aries aporta pasión y empuje, sacando a Cáncer de su caparazón. Cáncer ofrece un cuidado y una lealtad que pueden calmar el alma inquieta de Aries, creando un hogar al que siempre querrá volver. Desafíos: Sus necesidades son opuestas. Aries necesita acción y libertad; Cáncer necesita seguridad y conexión emocional. Los estados de ánimo de Cáncer pueden confundir a Aries, y la impulsividad de Aries puede hacer que Cáncer se sienta inseguro. Clave del éxito: Aries debe aprender a ser increíblemente paciente y sensible, ofreciendo seguridad constante. Cáncer debe aprender a comunicar sus necesidades directamente y a no depender emocionalmente en exceso. Es un baile delicado.",
+    score: 2
+  },
+  "Aries-Scorpio": {
+    report: "Dos signos regidos por Marte. La pasión aquí es volcánica, magnética e intensa. Ambos son guerreros, lo que puede llevar a una lealtad inquebrantable o a batallas épicas por el poder. Fortalezas: Una conexión física y emocional increíblemente profunda. Ambos son valientes, decididos y se admiran mutuamente por su fuerza. Cuando están unidos, son una fuerza imparable. Desafíos: El control es el gran tema. Ambos quieren liderar y son extremadamente posesivos. Los celos y la desconfianza pueden envenenar la relación si no se manejan con cuidado. Clave del éxito: Transparencia total y confianza absoluta. Deben aprender a luchar juntos contra el mundo, no entre ellos. Canalizar su intensidad compartida en metas comunes es esencial para su supervivencia.",
+    score: 3
+  },
+  "Aries-Capricorn": {
+    report: "El impulso contra la estrategia. Aries corre hacia adelante, mientras que Capricornio construye pacientemente. Esta es una relación de 'maestro y aprendiz' en ambos sentidos, pero puede generar mucha fricción. Fortalezas: Si logran alinear sus metas, son imparables. Aries proporciona la chispa y la energía, y Capricornio la estructura y la disciplina para triunfar. Ambos son ambiciosos y respetan el éxito. Desafíos: Sus ritmos son opuestos. Aries puede ver a Capricornio como lento y aburrido, mientras que Capricornio puede ver a Aries como imprudente e inmaduro. La necesidad de Aries de gratificación instantánea choca con la visión a largo plazo de Capricornio. Clave del éxito: Aprender a valorar las fortalezas del otro. Aries debe respetar la sabiduría y la planificación de Capricornio, y Capricornio debe admirar el coraje y la iniciativa de Aries. La paciencia es una virtud que ambos deben cultivar.",
+    score: 2
+  },
+  "Aries-Aquarius": {
+    report: "Una combinación emocionante y poco convencional. El espíritu pionero de Aries se siente atraído por la originalidad y la visión de futuro de Acuario. Ambos son independientes y aman la libertad. Fortalezas: Son grandes amigos además de amantes. Se dan mutuamente el espacio que necesitan para prosperar. Su relación está llena de ideas nuevas, proyectos sociales y aventuras espontáneas. Desafíos: La conexión emocional puede ser un punto débil. Aries es pasional y personal, mientras que Acuario tiende a ser más desapegado y mental, enfocado en el colectivo. Aries puede sentirse poco especial. Clave del éxito: Celebrar su individualidad y trabajar juntos en causas que les apasionen. Aries debe entender que el amor de Acuario es menos demostrativo pero genuino, y Acuario debe hacer un esfuerzo por conectar con el lado más cálido y personal de Aries.",
+    score: 4
+  },
+  "Aries-Pisces": {
+    report: "Fuego y Agua en una unión delicada y a menudo confusa. La fuerza y la franqueza de Aries pueden abrumar al soñador y sensible Piscis. Sin embargo, hay una fascinación mutua: el guerrero y el místico. Fortalezas: Aries puede proteger a Piscis e inspirarle a actuar sobre sus sueños. Piscis puede enseñar a Aries sobre la compasión, la empatía y la belleza de rendirse al flujo de la vida. La conexión puede ser muy romántica y creativa. Desafíos: La impulsividad de Aries puede herir a Piscis sin quererlo. La tendencia de Piscis al escapismo puede frustrar al realista Aries. Pueden operar en frecuencias completamente diferentes. Clave del éxito: Aries debe cultivar la gentileza y la protección, convirtiéndose en el caballero de brillante armadura de Piscis. Piscis debe aprender a establecer límites saludables y a no tomar la naturaleza de Aries como un ataque personal. La empatía es la clave.",
+    score: 2
   }
 };
     
+
 
