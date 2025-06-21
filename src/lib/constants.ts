@@ -2,6 +2,10 @@
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Cat, PawPrint, Gitlab, Shell } from 'lucide-react';
+import { loveCompatibilityPairings } from './constantslove';
+import { friendshipCompatibilityPairings } from './constantsfriendship';
+import { workCompatibilityPairings } from './constantswork';
+import type { CompatibilityReportDetail } from './constantslove'; // Re-use the type
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -42,18 +46,6 @@ export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
 
 export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name) as [ZodiacSignName, ...ZodiacSignName[]];
 
-interface CompatibilityReportDetail {
-  report: string;
-  score: number;
-}
-interface CompatibilityReportsByType {
-  love: CompatibilityReportDetail;
-  friendship: CompatibilityReportDetail;
-  work: CompatibilityReportDetail;
-}
-
-const compatibilityPairings: Record<string, CompatibilityReportsByType> = {};
-
 function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, type: 'love' | 'friendship' | 'work', locale: Locale): CompatibilityReportDetail {
   const typeText = type === 'love' ? (locale === 'es' ? 'amorosa' : 'romantic') : (type === 'friendship' ? (locale === 'es' ? 'de amistad' : 'friendship') : (locale === 'es' ? 'laboral' : 'work'));
   let generalNote = `La conexión ${typeText} entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante para este tipo de relación. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente. (Este es un informe de compatibilidad general para ${type}. Los detalles específicos pueden variar.)`;
@@ -66,12 +58,7 @@ function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignN
     generalNote = `La connexion ${typeText} entre ${sign1} et ${sign2} est unique, tissée avec les fils de leurs éléments et modalités distincts. ${sign1}, avec son énergie inhérente, interagit avec ${sign2}, qui apporte sa particularité caractéristique, créant une dynamique qui peut être à la fois complémentaire et stimulante pour ce type de relation. C'est une rencontre de deux mondes qui, avec compréhension, peuvent s'enrichir mutuellement. (Ceci est un rapport de compatibilité général pour ${type}. Les détails spécifiques peuvent varier.)`;
   }
 
-
   let baseScore = 3; 
-  const selfPairKey = `${sign1}-${sign1}`;
-  if (sign1 === sign2 && compatibilityPairings[selfPairKey] && compatibilityPairings[selfPairKey][type]) {
-    baseScore = compatibilityPairings[selfPairKey][type].score;
-  }
 
   return {
     report: generalNote,
@@ -80,22 +67,26 @@ function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignN
 }
 
 export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, type: 'love' | 'friendship' | 'work', locale: Locale): CompatibilityData {
+  let pairings: Record<string, CompatibilityReportDetail>;
+  switch(type) {
+    case 'love':
+      pairings = loveCompatibilityPairings;
+      break;
+    case 'friendship':
+      pairings = friendshipCompatibilityPairings;
+      break;
+    case 'work':
+      pairings = workCompatibilityPairings;
+      break;
+    default:
+      pairings = {};
+  }
+
   const key1 = `${sign1}-${sign2}`;
   const key2 = `${sign2}-${sign1}`;
-  let reportData: CompatibilityReportDetail | undefined;
-
-  const pairingTypeData1 = compatibilityPairings[key1];
-  if (pairingTypeData1 && pairingTypeData1[type]) {
-    reportData = pairingTypeData1[type];
-  } else {
-    const pairingTypeData2 = compatibilityPairings[key2];
-    if (pairingTypeData2 && pairingTypeData2[type]) {
-      reportData = pairingTypeData2[type];
-    }
-  }
+  let reportData = pairings[key1] || pairings[key2];
   
   if (!reportData) {
-    console.warn(`No specific compatibility report found for ${sign1}-${sign2} of type ${type}. Using generic report.`);
     reportData = getGenericCompatibilityReport(sign1, sign2, type, locale);
   }
 
