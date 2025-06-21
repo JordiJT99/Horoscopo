@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import Image from 'next/image';
-import { Rabbit, Mouse, Horse, Sheep, Dog, Bird } from 'lucide-react';
+import { Rabbit, Mouse, Dog, Bird } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ChineseHoroscopeInteractiveProps {
@@ -28,8 +28,6 @@ const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSig
   const iconMap: Partial<Record<ChineseAnimalSignName, React.ElementType>> = {
     Rabbit,
     Rat: Mouse,
-    Horse,
-    Goat: Sheep,
     Dog,
     Rooster: Bird,
   };
