@@ -82,5 +82,27 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Aquarius-Taurus": {
     report: "El innovador y el tradicionalista. Ambos son signos fijos, por lo que son tercos y resistentes al cambio, pero de maneras muy diferentes. Fortalezas: Si logran superar sus diferencias, pueden construir una relación increíblemente estable y leal. Tauro puede ofrecer a Acuario un hogar seguro al que volver, y Acuario puede abrir la mente de Tauro a nuevas ideas y posibilidades. Desafíos: Es una cuadratura desafiante. Acuario vive en el futuro y las ideas, mientras que Tauro se aferra a lo tangible y probado. Sus valores fundamentales pueden chocar constantemente. Clave del éxito: Un inmenso respeto por los valores y el espacio del otro. La paciencia es fundamental. Deben encontrar proyectos en común donde puedan combinar sus talentos únicos.",
     score: 2
+  },
+  "Aries-Sagittarius": {
+    report: "Dos almas de fuego unidas por la aventura y el optimismo. Esta pareja comparte un amor insaciable por la libertad, los viajes y las nuevas experiencias. La energía es alta, la risa es constante y rara vez hay un momento aburrido. Fortalezas: Se inspiran mutuamente a ser más audaces y a vivir la vida al máximo. La honestidad brutal de ambos signos crea una base de transparencia, y su energía combinada es magnética y contagiosa. Desafíos: Ambos pueden ser impulsivos y poco tactful, lo que lleva a discusiones explosivas pero generalmente breves. El compromiso a largo plazo puede ser un desafío si no sienten que están creciendo y explorando juntos. Clave del éxito: Canalizar su energía en aventuras compartidas, darse mutuamente el espacio que necesitan para ser independientes y aprender a comunicarse con un poco más de suavidad.",
+    score: 5
+  },
+  "Taurus-Virgo": {
+    report: "Una unión terrenal basada en la lealtad, la practicidad y un profundo respeto mutuo. Ambos anhelan seguridad y estabilidad, y trabajan juntos de manera eficiente para construir una vida cómoda y bien organizada. Es una relación que se siente segura y predecible de la mejor manera posible. Fortalezas: Son increíblemente fiables y devotos el uno al otro. Virgo aprecia la sensualidad y la calma de Tauro, mientras que Tauro admira la inteligencia y la dedicación de Virgo. Juntos, crean un santuario de paz. Desafíos: La relación puede volverse demasiado rutinaria o predecible, olvidando el romance. Virgo puede ser demasiado crítico con el hedonista Tauro, y Tauro puede ver a Virgo como demasiado ansioso. Clave del éxito: Hacer un esfuerzo consciente por incorporar el romance y la espontaneidad. Virgo debe suavizar sus críticas y Tauro debe apreciar el deseo de Virgo de mejorar las cosas.",
+    score: 5
+  },
+  "Gemini-Aquarius": {
+    report: "Una conexión mental instantánea y electrizante. Como dos signos de aire, su relación se basa en la comunicación, las ideas innovadoras y una necesidad compartida de libertad e independencia. Son mejores amigos y amantes, explorando el mundo de las ideas juntos. Fortalezas: Complicidad intelectual inigualable. Nunca se quedan sin cosas de qué hablar. Ambos son sociales, curiosos y abiertos a probar cosas nuevas, lo que mantiene la relación fresca y emocionante. Desafíos: Pueden tener dificultades para conectar a un nivel emocional profundo, prefiriendo racionalizar los sentimientos. Su naturaleza impredecible puede hacer que la estabilidad a largo plazo sea un desafío si no se trabaja conscientemente. Clave del éxito: Fomentar la intimidad emocional además de la intelectual. Apoyar la individualidad del otro mientras se construyen metas compartidas que los unan.",
+    score: 5
+  },
+  "Cancer-Scorpio": {
+    report: "Una de las conexiones más profundas e intensas del zodíaco. Ambos signos de agua operan a un nivel emocional e intuitivo que otros raramente comprenden. Es una relación de 'todo o nada', llena de pasión, lealtad y un vínculo casi psíquico. Fortalezas: Lealtad y devoción feroces. Crean un espacio emocional increíblemente seguro donde ambos pueden ser vulnerables. La comprensión mutua es profunda y a menudo no necesita palabras. Desafíos: La intensidad combinada puede llevar a estados de ánimo turbulentos y celos. Ambos pueden ser posesivos y manipuladores si se sienten inseguros. Tienden a guardar rencor. Clave del éxito: La confianza total y la honestidad son cruciales. Deben aprender a perdonar y a comunicar sus miedos en lugar de actuar sobre ellos. Su profunda conexión puede ser transformadora si se usa para sanar.",
+    score: 5
+  },
+  "Libra-Sagittarius": {
+    report: "Una pareja optimista, social y amante de la diversión. La diplomacia y el encanto de Libra se combinan con el espíritu aventurero y filosófico de Sagitario. Disfrutan de una vida social activa, viajes y conversaciones estimulantes. Fortalezas: Se lo pasan genial juntos. Mantienen una perspectiva positiva de la vida y se animan mutuamente a crecer. Sagitario ayuda a Libra a ser más decidido, y Libra ayuda a Sagitario a ser un poco más refinado. Desafíos: La franqueza de Sagitario puede herir la sensibilidad de Libra, que evita el conflicto. La indecisión de Libra puede frustrar al impaciente Sagitario. El compromiso puede ser un tema delicado para ambos. Clave del éxito: Comunicación abierta sobre las expectativas. Libra debe aprender a no tomarse la honestidad de Sagitario como algo personal, y Sagitario debe desarrollar un poco más de tacto.",
+    score: 4
   }
 };
+
+    
