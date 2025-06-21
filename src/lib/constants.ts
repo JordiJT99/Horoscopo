@@ -1,6 +1,7 @@
+
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Panda, Cat, PawPrint, Gitlab } from 'lucide-react';
+import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Cat, PawPrint, Gitlab, Shell } from 'lucide-react';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -282,7 +283,7 @@ export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
   { name: "Monkey", icon: Banana, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
   { name: "Rooster", icon: BirdIcon, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
   { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Earth", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
-  { name: "Pig", icon: Panda, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Water", description: "Diligente, compasivo, generoso y de trato fácil." },
+  { name: "Pig", icon: Shell, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Water", description: "Diligente, compasivo, generoso y de trato fácil." },
 ];
 export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as string) as [string, ...string[]];
 
