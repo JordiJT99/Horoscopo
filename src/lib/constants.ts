@@ -1,7 +1,7 @@
 
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Mouse, Dog, Bird, Tiger, Banana } from 'lucide-react';
+import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Rat, Dog, Bird, Banana } from 'lucide-react';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -272,7 +272,7 @@ export const TarotPersonalityTestIcon = HelpCircle;
 
 
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
-  { name: "Rat", icon: Mouse, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Water", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
+  { name: "Rat", icon: Rat, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Water", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
   { name: "Ox", icon: SparklesIcon, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Earth", description: "Diligente, confiable, fuerte y determinado." },
   { name: "Tiger", icon: SparklesIcon, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
   { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Wood", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
