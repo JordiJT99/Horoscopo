@@ -21,7 +21,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className,
       {subtitle && (
         <>
           <hr className="my-2 sm:my-3 border-border/30 w-1/4 sm:w-1/5 mx-auto" />
-          <p className="text-base sm:text-lg text-muted-foreground mt-1 font-body px-2">{subtitle}</p>
+          <p className="text-base sm:text-lg text-foreground/90 mt-1 font-body px-2">{subtitle}</p>
         </>
       )}
     </div>
