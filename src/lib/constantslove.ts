@@ -282,6 +282,18 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Scorpio-Capricorn": {
     report: "Una verdadera 'power couple'. La intensidad emocional y la perspicacia de Escorpio se unen a la ambición y la disciplina de Capricornio. Ambos son signos serios, leales y orientados a objetivos, lo que crea una base sólida para una relación duradera. Fortalezas: Un equipo formidable. Escorpio ayuda a Capricornio a conectar con sus emociones y a navegar por las complejidades humanas, mientras que Capricornio proporciona la estructura y la seguridad que Escorpio anhela. Se respetan profundamente y juntos pueden construir un imperio. Desafíos: La expresión emocional. Capricornio puede parecer demasiado frío o distante para el apasionado Escorpio, quien puede ver la practicidad de Capricornio como una falta de amor. A su vez, Capricornio puede ver la intensidad de Escorpio como un drama innecesario. Clave del éxito: Capricornio debe hacer un esfuerzo por ser más demostrativo emocionalmente. Escorpio debe aprender a apreciar los actos de servicio y la lealtad de Capricornio como su lenguaje de amor. La comunicación abierta sobre las necesidades de cada uno es fundamental.",
     score: 5
+  },
+  "Leo-Sagittarius": {
+    report: "Compañeros de aventura y optimismo. Dos signos de Fuego que se entienden instintivamente en su amor por la vida, la diversión y la exploración. Su energía combinada es magnética y su relación está llena de risas, generosidad y grandes planes. Fortalezas: Se inspiran mutuamente para ser más valientes, creativos y vivir la vida al máximo. Leo admira la sabiduría y el espíritu libre de Sagitario, mientras que Sagitario se siente atraído por la calidez, la confianza y el gran corazón de Leo. Desafíos: Ambos pueden ser un poco egocéntricos y descuidados con los detalles prácticos de la vida. La honestidad brutal de Sagitario puede herir el orgullo de Leo si no se expresa con cuidado. Pueden competir por ser el líder de la aventura. Clave del éxito: Canalizar su energía en metas y viajes compartidos. Leo debe dar a Sagitario la libertad que necesita, y Sagitario debe recordar ofrecer a Leo la admiración y la atención que anhela.",
+    score: 5
+  },
+  "Sagittarius-Sagittarius": {
+    report: "Dos arqueros apuntando a las estrellas juntos. Esta es una relación de alta energía, optimismo sin fin y una sed insaciable de conocimiento y aventura. Se entienden perfectamente en su necesidad de libertad y espacio personal. Su vida juntos es un viaje constante, tanto literal como filosóficamente. Fortalezas: Una comprensión innata de la necesidad de independencia del otro. Nunca se sentirán atrapados. Su hogar es más una base de operaciones para sus aventuras que una jaula. Comparten un gran sentido del humor y una perspectiva filosófica de la vida. Desafíos: El compromiso puede ser un tema delicado. Ambos pueden tener miedo de perder su libertad. La planificación a largo plazo y los detalles prácticos de la vida cotidiana pueden ser ignorados en favor de la próxima gran aventura. Clave del éxito: Deben asegurarse de que sus caminos, aunque independientes, converjan en metas y valores compartidos. Es crucial que hagan un esfuerzo consciente por atender las responsabilidades del día a día y que su relación sea una aventura en sí misma, no solo una serie de viajes.",
+    score: 4
+  },
+  "Sagittarius-Aquarius": {
+    report: "El explorador se encuentra con el visionario. Esta pareja de Fuego y Aire es una combinación intelectual, independiente y orientada al futuro. Ambos son signos muy sociales que valoran la amistad y la libertad por encima de todo. Su relación se basa en un profundo respeto mutuo por sus mentes y sus ideales. Fortalezas: Son mejores amigos y amantes. Disfrutan de conversaciones estimulantes sobre temas humanitarios, sociales y filosóficos. Ambos respetan la necesidad de espacio del otro y no hay lugar para los celos o la posesividad. Juntos, pueden trabajar para hacer del mundo un lugar mejor. Desafíos: La conexión emocional puede ser un desafío. Ambos pueden ser un poco distantes y prefieren racionalizar los sentimientos. Sagitario es más pasional y directo, mientras que Acuario es más desapegado y mental. Clave del éxito: Fomentar la amistad como la base de su amor. Deben encontrar causas y proyectos comunes que los apasionen. Sagitario puede enseñar a Acuario a ser más cálido, y Acuario puede ayudar a Sagitario a canalizar su energía hacia ideales más grandes.",
+    score: 4
   }
 };
     
@@ -298,3 +310,6 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
 
   
 
+
+
+    
