@@ -1,8 +1,10 @@
-
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon } from 'lucide-react';
 import PigIcon from '@/components/icons/PigIcon';
+import OxIcon from '@/components/icons/OxIcon';
+import TigerIcon from '@/components/icons/TigerIcon';
+import HorseIcon from '@/components/icons/HorseIcon';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -64,7 +66,7 @@ function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignN
   } else if (locale === 'de') {
     generalNote = `Die ${typeText} Verbindung zwischen ${sign1} und ${sign2} ist einzigartig, gewebt aus den Fäden ihrer unterschiedlichen Elemente und Modalitäten. ${sign1}, mit seiner inhärenten Energie, interagiert mit ${sign2}, der seine charakteristische Besonderheit einbringt, und schafft eine Dynamik, die für diese Art von Beziehung sowohl ergänzend als auch herausfordernd sein kann. Es ist eine Begegnung zweier Welten, die sich mit Verständnis gegenseitig bereichern können. (Dies ist ein allgemeiner Kompatibilitätsbericht für ${type}. Spezifische Details können variieren.)`;
   } else if (locale === 'fr') {
-    generalNote = `La connexion ${typeText} entre ${sign1} et ${sign2} est unique, tissée avec les fils de leurs éléments et modalités distincts. ${sign1}, avec son énergie inhérente, interagit avec ${sign2}, qui apporte sa particularité caractéristique, créant une dynamique qui peut être à la fois complémentaire et stimulante pour ce type de relation. C'est une rencontre de deux mondes qui, avec compréhension, peuvent s'enrichir mutuellement. (Ceci est un rapport de compatibilité général pour ${type}. Les détails spécifiques могут varier.)`;
+    generalNote = `La connexion ${typeText} entre ${sign1} et ${sign2} est unique, tissée avec les fils de leurs éléments et modalités distincts. ${sign1}, avec son énergie inhérente, interagit avec ${sign2}, qui apporte sa particularité caractéristique, créant une dynamique qui peut être à la fois complémentaire et stimulante pour ce type de relation. C'est une rencontre de deux mondes qui, avec compréhension, peuvent s'enrichir mutuellement. (Ceci est un rapport de compatibilité général pour ${type}. Les détails spécifiques peuvent varier.)`;
   }
 
 
@@ -274,12 +276,12 @@ export const TarotPersonalityTestIcon = HelpCircle;
 
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
   { name: "Rat", icon: RatIcon, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Water", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
-  { name: "Ox", icon: null, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Earth", description: "Diligente, confiable, fuerte y determinado." },
-  { name: "Tiger", icon: null, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
+  { name: "Ox", icon: OxIcon, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Earth", description: "Diligente, confiable, fuerte y determinado." },
+  { name: "Tiger", icon: TigerIcon, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
   { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Wood", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
   { name: "Dragon", icon: Flame, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Earth", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
   { name: "Snake", icon: Worm, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fire", description: "Enigmática, inteligente, sabia e intuitiva." },
-  { name: "Horse", icon: null, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fire", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
+  { name: "Horse", icon: HorseIcon, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fire", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
   { name: "Goat", icon: MountainIcon, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Earth", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
   { name: "Monkey", icon: Banana, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
   { name: "Rooster", icon: BirdIcon, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
@@ -434,5 +436,3 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { Briefcase as WorkIcon };
-
-
