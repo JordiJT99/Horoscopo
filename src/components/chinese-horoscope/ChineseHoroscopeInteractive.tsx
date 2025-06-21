@@ -13,13 +13,8 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import Image from 'next/image';
-import { Rabbit, Mouse, Dog, Bird, Tiger, Cow, Fire, Banana, Ram } from 'lucide-react';
+import { Rabbit, Mouse, Dog, Bird, Tiger, Flame, Banana, Ram } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface ChineseHoroscopeInteractiveProps {
-  dictionary: Dictionary;
-  locale: Locale;
-}
 
 // Helper component to render the correct icon or a placeholder image
 const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSignName, size: number, dictionary: Dictionary }) => {
@@ -31,8 +26,7 @@ const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSig
     Dog,
     Rooster: Bird,
     Tiger,
-    Ox: Cow,
-    Dragon: Fire,
+    Dragon: Flame,
     Monkey: Banana,
     Goat: Ram,
   };
@@ -63,7 +57,7 @@ const StarIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export default function ChineseHoroscopeInteractive({ dictionary, locale }: ChineseHoroscopeInteractiveProps) {
+export default function ChineseHoroscopeInteractive({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const [birthYear, setBirthYear] = useState<string>('');
   const [calculatedSign, setCalculatedSign] = useState<ChineseZodiacResult | null>(null);
   const [yearError, setYearError] = useState<string | null>(null);
