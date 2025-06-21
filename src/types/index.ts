@@ -122,7 +122,7 @@ export type ChineseAnimalSignName =
 
 export interface ChineseZodiacSign {
   name: ChineseAnimalSignName;
-  icon: React.ElementType;
+  icon: React.ElementType | null;
   years: number[];
   element: string;
   description?: string;
@@ -132,7 +132,7 @@ export interface ChineseZodiacResult {
   animal: ChineseAnimalSignName;
   element: string;
   year: number;
-  icon: React.ElementType;
+  icon: React.ElementType | null;
 }
 
 export interface ChineseCompatibilityData {

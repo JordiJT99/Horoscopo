@@ -8,42 +8,33 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CHINESE_ZODIAC_SIGNS, getChineseZodiacSignAndElement, getChineseCompatibility, CompatibilityIcon, ChineseAstrologyIcon } from '@/lib/constants';
-import type { ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData } from '@/types';
+import type { ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, ChineseZodiacSign } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import Image from 'next/image';
-import { Rabbit, Rat, Dog, Bird, Flame, Banana } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Helper component to render the correct icon or a placeholder image
-const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSignName, size: number, dictionary: Dictionary }) => {
+const AnimalIcon = ({ sign, size, dictionary }: { sign: ChineseZodiacSign, size: number, dictionary: Dictionary }) => {
   const iconProps = { className: "w-full h-full" };
 
-  const iconMap: Partial<Record<ChineseAnimalSignName, React.ElementType>> = {
-    Rabbit: Rabbit,
-    Rat: Rat,
-    Dog: Dog,
-    Rooster: Bird,
-    Dragon: Flame,
-    Monkey: Banana,
-  };
-
-  const IconComponent = iconMap[signName];
+  const IconComponent = sign.icon;
 
   if (IconComponent) {
     return <IconComponent {...iconProps} />;
   }
 
-  // Fallback to placeholder image for other animals (Ox, Snake, Horse, Pig)
+  // Fallback to placeholder image for other animals
   return (
     <Image
       src={`https://placehold.co/${size}x${size}.png`}
-      alt={dictionary[signName] || signName}
+      alt={dictionary[sign.name] || sign.name}
       width={size}
       height={size}
       className="rounded-sm"
-      data-ai-hint={`${signName.toLowerCase()}`}
+      data-ai-hint={`${sign.name.toLowerCase()}`}
     />
   );
 };
@@ -101,6 +92,8 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: { di
       </div>
     );
   }
+  
+  const calculatedSignObject = calculatedSign ? CHINESE_ZODIAC_SIGNS.find(s => s.name === calculatedSign.animal) : null;
 
   return (
     <>
@@ -120,11 +113,11 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: { di
             <Button onClick={handleCalculateSign}>{dictionary['ChineseHoroscopePage.calculateButton']}</Button>
           </div>
           {yearError && <p className="text-destructive text-sm mb-4">{yearError}</p>}
-          {calculatedSign && (
+          {calculatedSign && calculatedSignObject && (
             <div className="p-4 bg-secondary/30 rounded-md">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 text-primary">
-                  <AnimalIcon signName={calculatedSign.animal} size={40} dictionary={dictionary} />
+                  <AnimalIcon sign={calculatedSignObject} size={40} dictionary={dictionary} />
                 </div>
                 <div>
                   <p className="text-lg font-semibold">
@@ -162,7 +155,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: { di
                   <SelectItem key={sign.name} value={sign.name}>
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5">
-                        <AnimalIcon signName={sign.name} size={20} dictionary={dictionary} />
+                        <AnimalIcon sign={sign} size={20} dictionary={dictionary} />
                       </div>
                       {dictionary[sign.name] || sign.name}
                     </div>
@@ -177,7 +170,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: { di
                   <SelectItem key={sign.name} value={sign.name}>
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5">
-                        <AnimalIcon signName={sign.name} size={20} dictionary={dictionary} />
+                        <AnimalIcon sign={sign} size={20} dictionary={dictionary} />
                       </div>
                       {dictionary[sign.name] || sign.name}
                     </div>
@@ -229,7 +222,7 @@ export default function ChineseHoroscopeInteractive({ dictionary, locale }: { di
             <Card key={sign.name} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="items-center text-center">
                 <div className="w-16 h-16 text-primary mb-3">
-                  <AnimalIcon signName={sign.name} size={64} dictionary={dictionary} />
+                  <AnimalIcon sign={sign} size={64} dictionary={dictionary} />
                 </div>
                 <CardTitle className="font-headline text-2xl text-primary">{translatedSignName}</CardTitle>
               </CardHeader>
