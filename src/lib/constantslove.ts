@@ -274,6 +274,14 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Libra-Pisces": {
     report: "El artista y el soñador. Esta es una unión increíblemente romántica, idealista y a menudo poco práctica. Libra se siente atraído por la naturaleza compasiva y mística de Piscis, y Piscis se siente cautivado por el encanto, la belleza y el sentido de la justicia de Libra. Fortalezas: Su relación está llena de arte, música, romance y una profunda sensibilidad compartida. Ambos son almas gentiles que buscan la paz y la belleza en el mundo. Se entienden a un nivel emocional y creativo. Desafíos: Ambos tienden a evadir el conflicto y la dura realidad. La indecisión es un problema importante. Pueden perderse en un mundo de ensueño y descuidar las responsabilidades prácticas. La necesidad de Libra de equilibrio puede chocar con la naturaleza caótica y emocionalmente fluida de Piscis. Clave del éxito: Uno de los dos, o ambos, deben comprometerse a ser el ancla práctica de la relación. Necesitan comunicarse abierta y honestamente sobre sus sentimientos para evitar malentendidos. Encontrar una salida creativa conjunta, como pintar o hacer música, puede fortalecer enormemente su vínculo.",
     score: 3
+  },
+  "Scorpio-Scorpio": {
+    report: "Dos escorpiones juntos son como dos reactores nucleares en la misma habitación: una fuente de poder inmenso o un desastre inminente. La atracción es instantánea, magnética y profunda. Se reconocen mutuamente en su intensidad, pasión y necesidad de profundidad. Fortalezas: Una lealtad y comprensión inigualables. Nadie entiende a un Escorpio como otro Escorpio. Su conexión emocional y física es de otro mundo. Juntos, son una fortaleza impenetrable, capaces de superar cualquier adversidad. Desafíos: Las luchas de poder pueden ser épicas y destructivas. Ambos quieren el control, son posesivos y extremadamente celosos. La desconfianza puede envenenar la relación, y si se traicionan, la guerra es total y sin prisioneros. Clave del éxito: La confianza y la honestidad deben ser absolutas. Deben aprender a ser vulnerables el uno con el otro, no a usar sus secretos como armas. Canalizar su inmensa energía combinada hacia metas externas y aprender el arte del perdón es vital para su supervivencia.",
+    score: 4
+  },
+  "Scorpio-Capricorn": {
+    report: "Una verdadera 'power couple'. La intensidad emocional y la perspicacia de Escorpio se unen a la ambición y la disciplina de Capricornio. Ambos son signos serios, leales y orientados a objetivos, lo que crea una base sólida para una relación duradera. Fortalezas: Un equipo formidable. Escorpio ayuda a Capricornio a conectar con sus emociones y a navegar por las complejidades humanas, mientras que Capricornio proporciona la estructura y la seguridad que Escorpio anhela. Se respetan profundamente y juntos pueden construir un imperio. Desafíos: La expresión emocional. Capricornio puede parecer demasiado frío o distante para el apasionado Escorpio, quien puede ver la practicidad de Capricornio como una falta de amor. A su vez, Capricornio puede ver la intensidad de Escorpio como un drama innecesario. Clave del éxito: Capricornio debe hacer un esfuerzo por ser más demostrativo emocionalmente. Escorpio debe aprender a apreciar los actos de servicio y la lealtad de Capricornio como su lenguaje de amor. La comunicación abierta sobre las necesidades de cada uno es fundamental.",
+    score: 5
   }
 };
     
@@ -289,3 +297,4 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
 
 
   
+
