@@ -122,6 +122,27 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Sagittarius-Pisces": {
     report: "El filósofo se encuentra con el místico. Ambos regidos tradicionalmente por Júpiter, comparten una búsqueda de significado más allá de lo mundano. Sagitario busca la verdad a través de la aventura y el conocimiento, mientras que Piscis la busca a través de la conexión espiritual y la empatía. Fortalezas: Su conexión puede ser profundamente espiritual y expansiva. Ambos son compasivos y de mente abierta, lo que les permite aceptar sus excentricidades. Pueden inspirarse mutuamente a soñar en grande. Desafíos: La honestidad directa de Sagitario puede herir profundamente al sensible Piscis. Piscis necesita intimidad emocional, mientras que Sagitario necesita libertad sin ataduras, lo que puede generar malentendidos. Sagitario vive en el mundo, Piscis en sus sueños. Clave del éxito: Sagitario debe aprender a ser más delicado con sus palabras, y Piscis debe desarrollar una piel un poco más gruesa y respetar la necesidad de independencia de Sagitario. Conectar a través de sus intereses espirituales y filosóficos puede ser su mayor fortaleza.",
     score: 3
+  },
+  "Aries-Virgo": {
+    report: "El impulso de Aries se encuentra con el análisis de Virgo. Es una combinación de 'actuar ahora' versus 'planificar primero'. Pueden aprender mucho el uno del otro si logran superar sus diferencias fundamentales de ritmo y enfoque. Fortalezas: Aries aporta la energía para iniciar proyectos, mientras que Virgo aporta la habilidad para perfeccionarlos y llevarlos a buen término. Juntos, pueden ser increíblemente productivos. Desafíos: La impaciencia de Aries puede estresar al meticuloso Virgo, quien puede parecer demasiado crítico y lento para el carnero. Virgo necesita orden y rutina, mientras que Aries vive de la espontaneidad. Clave del éxito: La paciencia y la comunicación son fundamentales. Aries debe aprender a valorar la planificación, y Virgo debe aprender a relajarse y no tomar el impulso de Aries como una falta de cuidado.",
+    score: 2
+  },
+  "Taurus-Sagittarius": {
+    report: "El hogareño y amante del confort Tauro se encuentra con el aventurero y errante Sagitario. Sus valores y estilos de vida son casi opuestos, lo que hace de esta una relación desafiante que requiere un gran compromiso. Fortalezas: Sagitario puede sacar a Tauro de su zona de confort y mostrarle el mundo, mientras que Tauro puede ofrecer a Sagitario un puerto seguro. Desafíos: La necesidad de libertad de Sagitario choca directamente con la necesidad de seguridad y posesividad de Tauro. Pueden surgir problemas de dinero y compromiso. Clave del éxito: Encontrar un equilibrio entre la aventura y la vida hogareña. Deben tener intereses comunes y un profundo respeto por las necesidades del otro. Tauro debe dar espacio, y Sagitario debe demostrar fiabilidad.",
+    score: 2
+  },
+  "Gemini-Leo": {
+    report: "Una pareja social, carismática y llena de diversión. La mente brillante de Géminis se combina a la perfección con la calidez y el deseo de ser el centro de atención de Leo. Juntos, son el alma de la fiesta. Fortalezas: La admiración es mutua. Su vida social es vibrante y su comunicación es excelente, llena de risas y juegos. Desafíos: El ego de Leo puede chocar con la necesidad de Géminis de flirtear con todo el mundo. Leo puede sentirse herido por la naturaleza a veces distante de Géminis. Clave del éxito: Géminis debe asegurarse de que Leo se sienta especial. Leo debe comprender la necesidad de Géminis de estímulo mental y variedad social sin tomarlo como algo personal.",
+    score: 4
+  },
+  "Cancer-Leo": {
+    report: "El rey/reina se encuentra con el cuidador del reino. Cáncer anhela seguridad emocional, mientras que Leo desea admiración y un escenario para brillar. Pueden ofrecerse mutuamente lo que más desean si superan sus diferencias. Fortalezas: Leo ofrece una lealtad feroz que hace que Cáncer se sienta seguro. Cáncer, a su vez, adora y cuida a Leo, satisfaciendo su necesidad de atención. Desafíos: El orgullo de Leo puede chocar con la sensibilidad de Cáncer. Un comentario descuidado de Leo puede herir profundamente a Cáncer. Clave del éxito: Leo debe aprender a ser sensible a los estados de ánimo de Cáncer. Cáncer debe aprender a expresar sus necesidades directamente y a compartir a su rey/reina con el mundo.",
+    score: 4
+  },
+  "Scorpio-Aquarius": {
+    report: "Una combinación de dos signos fijos increíblemente poderosos y tercos, pero con enfoques de vida radicalmente diferentes. Escorpio es profundo y emocional, mientras que Acuario es mental y desapegado. Es una relación magnética pero altamente desafiante. Fortalezas: Ambos son inteligentes y curiosos. Pueden tener conversaciones fascinantes sobre los misterios de la vida. Si logran unirse, pueden ser una fuerza formidable para el cambio. Desafíos: La necesidad de fusión emocional de Escorpio choca con la necesidad de independencia de Acuario. Escorpio puede ver a Acuario como frío, y Acuario puede sentirse sofocado. Clave del éxito: Un respeto radical por la individualidad del otro. Deben encontrar un propósito común más grande que ellos mismos. Escorpio debe aprender a confiar, y Acuario a conectarse emocionalmente.",
+    score: 2
   }
 };
     
+
