@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import Image from 'next/image';
-import { Rabbit, Mouse, Dog, Bird, Tiger, Flame, Banana, Ram } from 'lucide-react';
+import { Rabbit, Mouse, Dog, Bird, Flame, Banana } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Helper component to render the correct icon or a placeholder image
@@ -25,10 +25,8 @@ const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSig
     Rat: Mouse,
     Dog,
     Rooster: Bird,
-    Tiger,
     Dragon: Flame,
     Monkey: Banana,
-    Goat: Ram,
   };
 
   const IconComponent = iconMap[signName];
