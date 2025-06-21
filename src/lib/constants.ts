@@ -1,3 +1,4 @@
+
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame } from 'lucide-react';
@@ -544,7 +545,7 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
   },
   "Gemini-Virgo": {
     love: {
-      report: "La conexión amorosa entre Géminis y Virgo, ambos regidos por Mercurio, es primordialmente mental e intelectual. Ambos son inteligentes, comunicativos y disfrutan del análisis y el debate. Géminis puede encontrar a Virgo demasiado crítico, perfeccionista o rutinario, mientras que Virgo puede percibir a Géminis como inconstante, superficial o poco fiable. Sin embargo, si ambos aprecian la inteligencia aguda del otro, Géminis ofrece la constancia y el compromiso que Virgo necesita, y Virgo aprende a ser más flexible y menos crítico, pueden construir una relación basada en una estimulante compañía intelectual, humor ingenioso y un deseo compartido de aprender y mejorar.",
+      report: "La conexión amorosa entre Géminis y Virgo, ambos regidos por Mercurio, es primordialmente mental e intelectual. Ambos son inteligentes, comunicativos y disfrutan del análisis y el debate. Géminis puede encontrar a Virgo como demasiado crítico, perfeccionista o rutinario, mientras que Virgo puede percibir a Géminis como inconstante, superficial o poco fiable. Sin embargo, si ambos aprecian la inteligencia aguda del otro, Géminis ofrece la constancia y el compromiso que Virgo necesita, y Virgo aprende a ser más flexible y menos crítico, pueden construir una relación basada en una estimulante compañía intelectual, humor ingenioso y un deseo compartido de aprender y mejorar.",
       score: 3
     },
     friendship: {
@@ -608,7 +609,7 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
       score: 2
     },
     work: {
-      report: "Profesionalmente, Géminis y Capricornio pueden encontrar difícil trabajar juntos al principio debido a sus estilos contrastantes. Géminis puede ver a Capricornio como demasiado rígido, lento o controlador, mientras que Capricornio puede percibir a Géminis como poco fiable, disperso o carente de seriedad. Sin embargo, si logran superar estas diferencias y se asignan roles claros, pueden ser un equipo sorprendentemente efectivo. Géminis puede aportar ideas frescas, habilidades de comunicación y adaptabilidad, mientras que Capricornio ofrece la estructura, la planificación y la disciplina para implementar esas ideas y asegurar resultados de calidad.",
+      report: "Profesionalmente, Géminis y Capricornio pueden tener difícil trabajar juntos al principio debido a sus estilos contrastantes. Géminis puede ver a Capricornio como demasiado rígido, lento o controlador, mientras que Capricornio puede percibir a Géminis como poco fiable, disperso o carente de seriedad. Sin embargo, si logran superar estas diferencias y se asignan roles claros, pueden ser un equipo sorprendentemente efectivo. Géminis puede aportar ideas frescas, habilidades de comunicación y adaptabilidad, mientras que Capricornio ofrece la estructura, la planificación y la disciplina para implementar esas ideas y asegurar resultados de calidad.",
       score: 3
     }
   },
