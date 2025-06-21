@@ -1,7 +1,7 @@
 
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Rat, Dog, Bird, Banana } from 'lucide-react';
+import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Mountain, Droplets, Flame, Rat, Dog, Bird, Banana, Worm } from 'lucide-react';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -277,7 +277,7 @@ export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
   { name: "Tiger", icon: null, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
   { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Wood", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
   { name: "Dragon", icon: Flame, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Earth", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
-  { name: "Snake", icon: null, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fire", description: "Enigmática, inteligente, sabia e intuitiva." },
+  { name: "Snake", icon: Worm, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fire", description: "Enigmática, inteligente, sabia e intuitiva." },
   { name: "Horse", icon: null, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fire", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
   { name: "Goat", icon: Mountain, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Earth", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
   { name: "Monkey", icon: Banana, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
@@ -433,3 +433,4 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { Briefcase as WorkIcon };
+
