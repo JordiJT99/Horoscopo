@@ -140,7 +140,7 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
     score: 4
   },
   "Scorpio-Aquarius": {
-    report: "Una combinación de dos signos fijos increíblemente poderosos y tercos, pero con enfoques de vida radicalmente diferentes. Escorpio es profundo y emocional, mientras que Acuario es mental y desapegado. Es una relación magnética pero altamente desafiante. Fortalezas: Ambos son inteligentes y curiosos. Pueden tener conversaciones fascinantes sobre los misterios de la vida. Si logran unirse, pueden ser una fuerza formidable para el cambio. Desafíos: La necesidad de fusión emocional de Escorpio choca con la necesidad de independencia de Acuario. Escorpio puede ver a Acuario como frío, y Acuario puede sentirse sofocado. Clave del éxito: Un respeto radical por la individualidad del otro. Deben encontrar un propósito común más grande que ellos mismos. Escorpio debe aprender a confiar, y Acuario a conectarse emocionalmente.",
+    report: "Una combinación de dos signos fijos increíblemente poderosos y tercos, pero con enfoques de vida radicalmente diferentes. Escorpio es profundo y emocional, mientras que Acuario es mental y desapegado. Es una relación magnética pero altamente desafiante. Fortalezas: Ambos son inteligentes y curiosos. Pueden tener conversaciones fascinantes sobre los misterios de la vida. Si logran unirse, pueden ser una fuerza formidable para el cambio. Desafíos: La necesidad de fusión emocional de Escorpio choca con la necesidad de independencia de Acuario. Escorpio puede ver a Acuario como frío, y Acuario puede sentirse sofocado por las demandas emocionales de Escorpio. Clave del éxito: Un respeto radical por la individualidad del otro. Deben encontrar un propósito común más grande que ellos mismos. Escorpio debe aprender a confiar, y Acuario a conectarse emocionalmente.",
     score: 2
   },
   "Aries-Gemini": {
@@ -222,9 +222,23 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Cancer-Pisces": {
     report: "Un sueño romántico hecho realidad. Dos signos de Agua que se fusionan en un océano de empatía, creatividad y conexión espiritual. Se entienden a un nivel profundo e intuitivo, creando un vínculo que se siente predestinado. Es una de las combinaciones más compasivas y tiernas del zodíaco. Fortalezas: Una comprensión emocional casi telepática. Ambos son increíblemente románticos, cariñosos y solidarios. Crean un mundo mágico propio, lleno de arte, música y sueños compartidos. Desafíos: El mayor riesgo es perderse en su propio mar de emociones y evadir las responsabilidades prácticas de la vida. Ambos pueden ser propensos al mal humor y a la pasividad, esperando que el otro resuelva los problemas. Clave del éxito: Deben ayudarse mutuamente a mantener al menos un pie en la tierra. Establecer rutinas prácticas y fomentar la comunicación directa (en lugar de suposiciones) les ayudará a construir un amor que no solo es mágico, sino también duradero.",
     score: 5
+  },
+  "Leo-Leo": {
+    report: "La realeza se encuentra con la realeza. Cuando dos Leo se unen, el resultado es una explosión de carisma, generosidad y drama. Esta es una pareja que ama ser el centro de atención, vivir a lo grande y colmarse mutuamente de afecto y regalos. Fortalezas: Una lealtad y protección feroces. Se admiran y entienden mutuamente su necesidad de reconocimiento. Juntos, son una pareja poderosa, glamurosa y socialmente magnética. Desafíos: La batalla de egos es su mayor obstáculo. ¿Quién tiene la razón? ¿Quién brilla más? La competencia por el protagonismo puede ser agotadora y llevar a conflictos dramáticos. Ambos son orgullosos y les cuesta pedir perdón. Clave del éxito: Aprender a compartir el trono. Deben funcionar como una 'power couple', celebrando los éxitos del otro como si fueran propios. Canalizar su energía creativa en proyectos conjuntos y aprender a reírse de su propio drama es esencial.",
+    score: 4
+  },
+  "Leo-Capricorn": {
+    report: "El artista se encuentra con el director general. Leo, extravagante y expresivo, se siente atraído por la solidez y la ambición de Capricornio. Capricornio, a su vez, puede sentirse fascinado por la calidez y la vitalidad de Leo. Es una unión desafiante pero potencialmente muy exitosa. Fortalezas: Leo puede enseñar a Capricornio a disfrutar más de la vida, a relajarse y a conectar con su lado más lúdico. Capricornio puede proporcionar a Leo la estructura, el enfoque y el apoyo práctico para convertir sus sueños en realidad. Ambos son extremadamente leales. Desafíos: Sus prioridades chocan. Leo busca placer y reconocimiento en el presente, mientras que Capricornio se enfoca en el trabajo y las metas a largo plazo. Leo puede ver a Capricornio como aburrido o pesimista, y Capricornio puede ver a Leo como superficial o derrochador. Clave del éxito: Un profundo respeto por sus diferentes estilos de vida. Deben valorar lo que el otro aporta. Leo debe admirar la disciplina de Capricornio, y Capricornio debe aprender a expresar su aprecio por la generosidad y el corazón de Leo.",
+    score: 3
+  },
+  "Leo-Pisces": {
+    report: "Una combinación de cuento de hadas: el rey y el soñador. Leo, el león protector, se siente atraído por la naturaleza mística, gentil y compasiva de Piscis. Piscis, a su vez, admira la fuerza, la confianza y la calidez de Leo. Fortalezas: Es una relación increíblemente romántica y creativa. Leo se convierte en el protector de los sueños de Piscis, dándole la confianza para brillar. Piscis ofrece a Leo una adoración y una conexión emocional profunda que satisface su corazón. Desafíos: La franqueza de Leo puede herir sin querer al ultra sensible Piscis. La tendencia de Piscis a evadir la realidad puede frustrar al directo Leo. Leo necesita ser el centro de atención, mientras que Piscis necesita retirarse a su mundo interior. Clave del éxito: La comunicación delicada es vital. Leo debe aprender a ser un líder gentil y protector, no un dictador. Piscis debe aprender a comunicar sus sentimientos claramente en lugar de retirarse. Juntos, pueden inspirarse mutuamente a un nivel artístico y espiritual muy profundo.",
+    score: 3
   }
 };
     
+
+
 
 
 
