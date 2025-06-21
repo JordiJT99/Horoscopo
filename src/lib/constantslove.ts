@@ -182,9 +182,31 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Taurus-Pisces": {
     report: "Una unión tierna, romántica y profundamente compasiva. La naturaleza práctica y protectora de Tauro ofrece el ancla segura que el soñador Piscis necesita para navegar por el mundo. A su vez, Piscis aporta magia, creatividad y una profunda conexión espiritual a la vida de Tauro. Fortalezas: Tauro ayuda a Piscis a materializar sus sueños, mientras que Piscis ayuda a Tauro a conectar con su lado más suave e intuitivo. Ambos valoran la belleza, el arte y la tranquilidad, creando un hogar lleno de amor y creatividad. Desafíos: El pragmatismo de Tauro a veces puede chocar con la tendencia de Piscis a evadir la realidad. Tauro puede frustrarse si Piscis no es práctico, y Piscis puede sentirse herido si Tauro no valida sus sentimientos y su mundo de ensueño. Clave del éxito: Tauro debe aprender a ser el protector de los sueños de Piscis, ofreciendo apoyo sin juzgar. Piscis debe apreciar los esfuerzos prácticos de Tauro como una forma de amor. Juntos, pueden crear un equilibrio perfecto entre el mundo material y el espiritual.",
     score: 4
+  },
+  "Gemini-Gemini": {
+    report: "Dos Géminis juntos son sinónimo de diversión, conversación incesante y una vida social vibrante. Se entienden perfectamente en su necesidad de cambio, estímulo mental y variedad. La relación es como una fiesta interminable de ideas y risas. Fortalezas: Una conexión intelectual brillante. Nunca se aburren y siempre están aprendiendo algo nuevo. Ambos son flexibles y adaptables, lo que facilita la superación de pequeños obstáculos. Desafíos: La estabilidad emocional es el gran reto. Ambos pueden ser inconsistentes y evitar las conversaciones emocionales profundas. La falta de un ancla puede hacer que la relación se sienta superficial o que se desvíe sin rumbo. Clave del éxito: Hacer un esfuerzo consciente por construir una base emocional sólida. Deben crear rutinas juntos (sin que se sientan como una cárcel) y comprometerse a hablar de sus sentimientos, no solo de sus ideas. La honestidad sobre su necesidad de espacio es crucial.",
+    score: 4
+  },
+  "Gemini-Scorpio": {
+    report: "Una combinación magnética pero muy desafiante. La ligereza y curiosidad de Géminis se enfrentan a la intensidad y profundidad emocional de Escorpio. Géminis quiere explorar la superficie de muchos temas, mientras que Escorpio quiere sumergirse hasta el fondo de uno solo. Fortalezas: La atracción inicial es poderosa. Géminis se siente fascinado por el misterio de Escorpio, y Escorpio se siente intrigado por la agilidad mental de Géminis. Pueden aprender mucho el uno del otro si superan sus diferencias. Desafíos: La desconfianza. La naturaleza social y coqueta de Géminis puede activar los celos de Escorpio. Géminis puede ver a Escorpio como demasiado posesivo y controlador, mientras que Escorpio puede ver a Géminis como superficial e poco fiable. Clave del éxito: Una comunicación brutalmente honesta y el establecimiento de límites claros. Géminis debe entender la necesidad de seguridad de Escorpio, y Escorpio debe dar a Géminis el espacio y la libertad mental que necesita.",
+    score: 2
+  },
+  "Gemini-Sagittarius": {
+    report: "La pareja de los opuestos complementarios. Ambos son los viajeros y filósofos del zodíaco, amantes de la libertad, el conocimiento y la aventura. Su conexión es instantánea, llena de optimismo, humor y una sed compartida por la experiencia. Fortalezas: Son los mejores amigos y amantes. Se entienden en su necesidad mutua de independencia y espacio. Su vida juntos es una aventura constante, llena de viajes, aprendizaje y risas. Desafíos: El compromiso puede ser un tema complicado. Ambos temen sentirse atrapados. La comunicación, aunque abundante, puede carecer de profundidad emocional. La honestidad brutal de Sagitario a veces puede chocar con la tendencia de Géminis a jugar con las palabras. Clave del éxito: Encontrar un equilibrio entre la libertad individual y las metas compartidas. Deben asegurarse de que su aventura tenga un propósito común. Trabajar en la intimidad emocional fortalecerá su vínculo más allá de la amistad.",
+    score: 4
+  },
+  "Gemini-Capricorn": {
+    report: "El mariposón social se encuentra con la roca sólida. Géminis (Aire) es adaptable, curioso y juguetón, mientras que Capricornio (Tierra) es estructurado, ambicioso y serio. Es una combinación que requiere mucho trabajo y paciencia. Fortalezas: Capricornio puede proporcionar la estabilidad y el enfoque que a menudo le faltan a Géminis, ayudándole a materializar sus ideas. Géminis, a su vez, puede ayudar a Capricornio a relajarse, a socializar y a ver la vida con más ligereza y humor. Desafíos: Sus ritmos y prioridades son muy diferentes. Capricornio puede ver a Géminis como inmaduro y poco fiable, mientras que Géminis puede encontrar a Capricornio aburrido y restrictivo. Clave del éxito: El respeto mutuo por sus diferentes estilos de vida. Deben aprender a valorar lo que el otro aporta. Géminis debe apreciar la seguridad que ofrece Capricornio, y Capricornio debe aprender a disfrutar de la espontaneidad que Géminis trae a su vida.",
+    score: 2
+  },
+  "Gemini-Pisces": {
+    report: "Dos almas mutables y adaptables, pero que operan en dimensiones diferentes. Géminis (Aire) es lógico y comunicativo, mientras que Piscis (Agua) es intuitivo y emocional. Esta es una relación de espejos y humo, donde la realidad puede ser difícil de definir. Fortalezas: Ambos son increíblemente creativos, imaginativos y de mente abierta. Pueden construir un mundo de ensueño juntos, lleno de arte, música y fantasía. Su conexión puede ser muy espiritual. Desafíos: La comunicación es un campo minado. Géminis procesa todo con la mente, Piscis con el corazón. Los malentendidos son frecuentes. La necesidad de claridad de Géminis choca con la naturaleza evasiva de Piscis. Clave del éxito: La compasión y la empatía son esenciales. Géminis debe aprender a ser sensible a los sentimientos de Piscis y a no invalidarlos con lógica. Piscis debe esforzarse por comunicar sus emociones de manera más clara. Encontrar un proyecto creativo común puede ser su mejor punto de unión.",
+    score: 2
   }
 };
     
+
+
 
 
 
