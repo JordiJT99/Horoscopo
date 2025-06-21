@@ -786,8 +786,26 @@ const compatibilityPairings: Record<string, CompatibilityReportsByType> = {
       score: 3
     },
     friendship: {
-      report: "La amistad entre Leo y Escorpio es intensa, poderosa y a menudo muy protectora. Ambos son leales hasta la médula con sus amigos cercanos. Leo admira la fuerza interior, la perspicacia y la determinación de Escorpio, mientras que Escorpio se siente atraído por la generosidad, la confianza y la vitalidad de Leo. Pueden surgir luchas de poder o celos si no hay un respeto mutuo claro,armonicen sus diferentes estilos y objetivos. Sagitario aporta visión, optimismo, entusiasmo y la capacidad de explorar nuevas oportunidades, mientras que Capricornio ofrece estructura, disciplina, planificación estratégica y una fuerte ética de trabajo. La impaciencia de Sagitario puede chocar con la cautela y el enfoque metódico de Capricornio. Necesitan respetar los métodos del otro; Sagitario puede inspirar y generar ideas, mientras Capricornio las organiza y ejecuta con eficiencia. Con buena comunicación, pueden ser un equipo muy productivo.",
+      report: "La amistad entre Leo y Escorpio es intensa, poderosa y muy protectora. Ambos son leales hasta la médula con sus amigos cercanos. Leo admira la fuerza interior y la determinación de Escorpio, mientras que Escorpio se siente atraído por la generosidad y la vitalidad de Leo. Pueden surgir luchas de poder si no hay un respeto mutuo claro. Si logran admirarse sin competir, forman una alianza de poder y lealtad inquebrantable.",
+      score: 4
+    },
+    work: {
+      report: "En el trabajo, Leo y Escorpio son dos potencias que chocan o colaboran magníficamente. Ambos quieren el control. Leo lidera con carisma y visión, mientras que Escorpio usa la estrategia y la profundidad. Si se respetan, son imparables, especialmente en roles de poder o en la resolución de crisis. Sin embargo, las luchas de poder son su mayor riesgo y pueden socavar cualquier proyecto.",
       score: 3
+    }
+  },
+  "Sagittarius-Capricorn": {
+    love: {
+      report: "Sagitario, el aventurero libre, y Capricornio, el planificador ambicioso, encuentran un desafío en el amor debido a sus diferentes enfoques de la vida. Sagitario busca la expansión y la espontaneidad, mientras que Capricornio valora la seguridad y la estructura. Para que funcione, Sagitario debe apreciar la dedicación de Capricornio, y Capricornio debe aprender a relajarse y disfrutar de la aventura. Requiere mucho compromiso de ambos.",
+      score: 2
+    },
+    friendship: {
+      report: "Como amigos, Sagitario y Capricornio pueden ofrecerse perspectivas valiosas. Sagitario puede ayudar a Capricornio a ver el lado más ligero de la vida, mientras que Capricornio puede dar a Sagitario consejos prácticos y un sentido de la dirección. Se respetan mutuamente por su inteligencia y empuje, aunque sus estilos son opuestos. Una amistad que se basa en el aprendizaje mutuo.",
+      score: 3
+    },
+    work: {
+      report: "Profesionalmente, esta es una combinación poderosa si logran armonizar sus estilos. Sagitario aporta visión, optimismo y la capacidad de explorar nuevas oportunidades, mientras que Capricornio ofrece estructura, disciplina y planificación estratégica. Sagitario puede generar las ideas, y Capricornio las convierte en un plan de acción concreto y exitoso. Es una excelente combinación para el crecimiento empresarial.",
+      score: 4
     }
   },
   "Sagittarius-Aquarius": {
@@ -1204,7 +1222,7 @@ export const GALACTIC_TONES: GalacticTone[] = [
   { id: 10, nameKey: "Planetary", keywordKey: "Manifestation", questionKey: "HowDoIPerfectWhatIDo", detailedInterpretation: "El Tono Planetario perfecciona la manifestación. Produce lo que has intencionado, haciendo tangible tu visión. Hoy enfócate en: ¿Cómo puedo mejorar y perfeccionar mi creación? ¿Qué se está manifestando a través de mí?" },
   { id: 11, nameKey: "Spectral", keywordKey: "Liberation", questionKey: "HowDoIReleaseAndLetGo", detailedInterpretation: "El Tono Espectral disuelve y libera. Te ayuda a soltar lo que ya no sirve, a desintegrar viejas estructuras y a abrir espacio para lo nuevo. Hoy considera: ¿Qué necesito liberar en mi vida? ¿Cómo puedo dejar ir las ataduras y limitaciones?" },
   { id: 12, nameKey: "Crystal", keywordKey: "Cooperation", questionKey: "HowCanIDedicateToCooperation", detailedInterpretation: "El Tono Cristal dedica a la cooperación y la universalización. Te enseña a compartir tus dones y a trabajar en conjunto por un bien mayor. Hoy reflexiona: ¿Cómo puedo colaborar con otros? ¿De qué manera mis acciones contribuyen a la comunidad?" },
-  { id: 13, nameKey: "Cosmic", keywordKey: "Presence", questionKey: "HowCanIExpandMyJoyAndLove", detailedInterpretation: "El Tono Cósmico trasciende con presencia y perdurabilidad. Es el retorno al origen y la expansión de la conciencia. Te invita a vivir plenamente en el presente y a irradiar amor y alegría. Hoy experimenta: ¿Cómo puedo estar más presente? ¿Cómo expando mi amor y mi alegría sin límites?" },
+  { id: 13, nameKey: "Cosmic", keywordKey: "Presence", questionKey: "HowCanIExpandMyJoyAndLove", detailedInterpretation: "El Tono Cósmico trasciende con presencia y perdurabilidad. Es el retorno al origen y la expansión de la conciencia. Te invita a vivir plenamente en el presente y a irradiar amor y alegría. Hoy experimenta: ¿Cómo puedo estar más presente? ¿Cómo expando mi alegría y mi amor sin límites?" },
 ];
 
 
