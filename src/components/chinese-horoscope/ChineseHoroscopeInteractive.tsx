@@ -21,9 +21,9 @@ const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSig
   const iconProps = { className: "w-full h-full" };
 
   const iconMap: Partial<Record<ChineseAnimalSignName, React.ElementType>> = {
-    Rabbit,
+    Rabbit: Rabbit,
     Rat: Mouse,
-    Dog,
+    Dog: Dog,
     Rooster: Bird,
     Dragon: Flame,
     Monkey: Banana,
@@ -35,7 +35,7 @@ const AnimalIcon = ({ signName, size, dictionary }: { signName: ChineseAnimalSig
     return <IconComponent {...iconProps} />;
   }
 
-  // Fallback to placeholder image for other animals
+  // Fallback to placeholder image for other animals (Ox, Snake, Horse, Pig)
   return (
     <Image
       src={`https://placehold.co/${size}x${size}.png`}
