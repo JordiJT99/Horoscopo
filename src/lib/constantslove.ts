@@ -202,9 +202,31 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Gemini-Pisces": {
     report: "Dos almas mutables y adaptables, pero que operan en dimensiones diferentes. Géminis (Aire) es lógico y comunicativo, mientras que Piscis (Agua) es intuitivo y emocional. Esta es una relación de espejos y humo, donde la realidad puede ser difícil de definir. Fortalezas: Ambos son increíblemente creativos, imaginativos y de mente abierta. Pueden construir un mundo de ensueño juntos, lleno de arte, música y fantasía. Su conexión puede ser muy espiritual. Desafíos: La comunicación es un campo minado. Géminis procesa todo con la mente, Piscis con el corazón. Los malentendidos son frecuentes. La necesidad de claridad de Géminis choca con la naturaleza evasiva de Piscis. Clave del éxito: La compasión y la empatía son esenciales. Géminis debe aprender a ser sensible a los sentimientos de Piscis y a no invalidarlos con lógica. Piscis debe esforzarse por comunicar sus emociones de manera más clara. Encontrar un proyecto creativo común puede ser su mejor punto de unión.",
     score: 2
+  },
+  "Cancer-Cancer": {
+    report: "Dos Cáncer juntos crean un océano de emociones, un hogar increíblemente seguro y un profundo entendimiento mutuo. Es una relación basada en el cuidado, la nutrición y la necesidad compartida de seguridad. Se sienten 'en casa' el uno con el otro de una manera que pocos otros signos pueden ofrecer. Fortalezas: Una conexión empática y casi telepática. Se entienden sin palabras y saben instintivamente cómo cuidarse mutuamente. Comparten un amor profundo por la familia, el hogar y las tradiciones. Desafíos: El principal peligro es ahogarse en sus propias emociones. Cuando uno está de mal humor, puede arrastrar al otro. Pueden volverse demasiado introvertidos, aislándose del mundo exterior, y la codependencia es un riesgo real. Clave del éxito: Deben aprender a darse espacio para procesar sus emociones individualmente y a no tomar los estados de ánimo del otro como algo personal. Fomentar amistades y actividades fuera de la pareja es vital para mantener un equilibrio saludable.",
+    score: 4
+  },
+  "Cancer-Virgo": {
+    report: "Una unión de cuidado y devoción. La naturaleza práctica y servicial de Virgo encuentra un propósito en cuidar del sensible Cáncer. A su vez, la calidez y el afecto de Cáncer ayudan a Virgo a relajarse y a ser menos autocrítico. Es una relación que se siente segura, estable y llena de actos de amor cotidianos. Fortalezas: Son un equipo increíblemente solidario. Cáncer ofrece el apoyo emocional que Virgo necesita para calmar su ansiedad, y Virgo proporciona la estabilidad y el orden que Cáncer anhela. Ambos son leales y comprometidos. Desafíos: La crítica de Virgo, aunque bien intencionada, puede herir profundamente al susceptible Cáncer. Los cambios de humor de Cáncer pueden desconcertar al lógico Virgo, que intenta 'arreglar' los sentimientos en lugar de simplemente sentirlos. Clave del éxito: Virgo debe aprender a expresar sus observaciones con más tacto y aprecio. Cáncer debe entender que los actos de servicio de Virgo son su lenguaje de amor. La comunicación abierta sobre las necesidades emocionales es fundamental.",
+    score: 4
+  },
+  "Cancer-Sagittarius": {
+    report: "El hogareño se encuentra con el explorador. Cáncer anhela la seguridad de un nido, mientras que Sagitario necesita la libertad de los cielos abiertos. Esta es una combinación desafiante que requiere una enorme cantidad de comprensión y compromiso. Fortalezas: Sagitario puede sacar a Cáncer de su caparazón y mostrarle un mundo de aventuras y optimismo. Cáncer puede ofrecer a Sagitario un puerto seguro y un amor incondicional al que siempre puede volver. Desafíos: Sus necesidades fundamentales chocan. La franqueza brutal de Sagitario puede herir profundamente a Cáncer. La necesidad de seguridad de Cáncer puede sentirse como una jaula para el independiente Sagitario. Clave del éxito: Un respeto profundo por sus diferencias. Deben encontrar un equilibrio entre la aventura y el hogar. Cáncer necesita confiar y dar espacio, y Sagitario debe aprender a ser más sensible y a demostrar su compromiso de manera tangible.",
+    score: 2
+  },
+  "Cancer-Aquarius": {
+    report: "El corazón y la mente. Cáncer es todo emoción, intuición y conexión personal. Acuario es todo lógica, innovación y conexión universal. Su forma de ver el mundo es tan diferente que la fascinación inicial puede convertirse rápidamente en confusión. Fortalezas: Ambos tienen un lado humanitario, aunque lo expresen de forma diferente. Acuario puede ayudar a Cáncer a ver las cosas desde una perspectiva más objetiva, y Cáncer puede enseñar a Acuario a conectar con sus propias emociones. Desafíos: La necesidad de intimidad emocional de Cáncer choca con el desapego natural de Acuario. Cáncer puede sentirse desatendido emocionalmente, mientras que Acuario puede sentirse sofocado por las demandas emocionales de Cáncer. Clave del éxito: Paciencia y traducción emocional. Acuario debe hacer un esfuerzo consciente por ofrecer calidez y seguridad, mientras que Cáncer debe respetar la necesidad de Acuario de libertad, espacio y amistades diversas. Deben encontrar proyectos comunes donde puedan combinar el corazón y la mente.",
+    score: 2
+  },
+  "Cancer-Pisces": {
+    report: "Un sueño romántico hecho realidad. Dos signos de Agua que se fusionan en un océano de empatía, creatividad y conexión espiritual. Se entienden a un nivel profundo e intuitivo, creando un vínculo que se siente predestinado. Es una de las combinaciones más compasivas y tiernas del zodíaco. Fortalezas: Una comprensión emocional casi telepática. Ambos son increíblemente románticos, cariñosos y solidarios. Crean un mundo mágico propio, lleno de arte, música y sueños compartidos. Desafíos: El mayor riesgo es perderse en su propio mar de emociones y evadir las responsabilidades prácticas de la vida. Ambos pueden ser propensos al mal humor y a la pasividad, esperando que el otro resuelva los problemas. Clave del éxito: Deben ayudarse mutuamente a mantener al menos un pie en la tierra. Establecer rutinas prácticas y fomentar la comunicación directa (en lugar de suposiciones) les ayudará a construir un amor que no solo es mágico, sino también duradero.",
+    score: 5
   }
 };
     
+
+
 
 
 
