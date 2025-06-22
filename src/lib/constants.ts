@@ -6,6 +6,7 @@ import { loveCompatibilityPairings } from './constantslove';
 import { friendshipCompatibilityPairings } from './constantsfriendship';
 import { workCompatibilityPairings } from './constantswork';
 import type { CompatibilityReportDetail } from './constantslove'; // Re-use the type
+import { chineseCompatibilityPairings, type ChineseCompatibilityReportDetail } from './constantshoroscopochino';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -293,52 +294,39 @@ export const getChineseZodiacSignAndElement = (birthYear: number): ChineseZodiac
   return null;
 };
 
-export const getChineseCompatibility = (animal1: ChineseAnimalSignName, animal2: ChineseAnimalSignName, locale: Locale = 'es'): ChineseCompatibilityData => {
-  const compatibilityPairings: Record<string, { reportKey: string; score: number }> = {
-    "Rat-Dragon": { reportKey: "Compatibility.RatDragon", score: 5 },
-    "Rat-Monkey": { reportKey: "Compatibility.RatMonkey", score: 5 },
-    "Dragon-Monkey": { reportKey: "Compatibility.DragonMonkey", score: 5 },
-    "Ox-Snake": { reportKey: "Compatibility.OxSnake", score: 5 },
-    "Ox-Rooster": { reportKey: "Compatibility.OxRooster", score: 4 },
-    "Snake-Rooster": { reportKey: "Compatibility.SnakeRooster", score: 5 },
-    "Tiger-Horse": { reportKey: "Compatibility.TigerHorse", score: 5 },
-    "Tiger-Dog": { reportKey: "Compatibility.TigerDog", score: 4 },
-    "Horse-Dog": { reportKey: "Compatibility.HorseDog", score: 5 },
-    "Rabbit-Goat": { reportKey: "Compatibility.RabbitGoat", score: 5 },
-    "Rabbit-Pig": { reportKey: "Compatibility.RabbitPig", score: 5 },
-    "Goat-Pig": { reportKey: "Compatibility.GoatPig", score: 5 },
-    "Rat-Ox": { reportKey: "Compatibility.RatOx", score: 5 },
-    "Tiger-Pig": { reportKey: "Compatibility.TigerPig", score: 5 },
-    "Rabbit-Dog": { reportKey: "Compatibility.RabbitDog", score: 5 },
-    "Dragon-Rooster": { reportKey: "Compatibility.DragonRooster", score: 5 },
-    "Snake-Monkey": { reportKey: "Compatibility.SnakeMonkey", score: 4 },
-    "Horse-Goat": { reportKey: "Compatibility.HorseGoat", score: 5 },
-    "Rat-Rabbit": { reportKey: "Compatibility.RatRabbit", score: 3 },
-    "Ox-Tiger": { reportKey: "Compatibility.OxTiger", score: 2 },
-    "Tiger-Snake": { reportKey: "Compatibility.TigerSnake", score: 2 },
-    "Dragon-Dog": { reportKey: "Compatibility.DragonDog", score: 1 },
-    "Horse-Rooster": { reportKey: "Compatibility.HorseRooster", score: 2 },
-  };
+export function getChineseCompatibility(animal1: ChineseAnimalSignName, animal2: ChineseAnimalSignName, locale: Locale = 'es'): ChineseCompatibilityData {
   const key1 = `${animal1}-${animal2}`;
   const key2 = `${animal2}-${animal1}`;
-
-  let pairingData = compatibilityPairings[key1] || compatibilityPairings[key2];
   
-  let reportText = `La compatibilidad entre ${animal1} y ${animal2} tiene sus propios matices únicos. (Informe genérico).`;
-  let score = Math.floor(Math.random() * 3) + 2;
-
+  // Use the detailed pairings from the new file
+  let pairingData: ChineseCompatibilityReportDetail | undefined = chineseCompatibilityPairings[key1] || chineseCompatibilityPairings[key2];
+  
   if (pairingData) {
-    reportText = `Informe específico para ${animal1} y ${animal2} (${pairingData.reportKey}).`;
-    score = pairingData.score;
+    return {
+      animal1,
+      animal2,
+      report: pairingData.report,
+      score: pairingData.score,
+    };
+  }
+  
+  // Generic fallback if no specific pairing is found
+  let genericReportText = `La conexión entre ${animal1} y ${animal2} es única. No hay una regla fija, pero su dinámica se basa en el respeto mutuo y la comprensión de sus diferencias. (Informe genérico).`;
+  if (locale === 'en') {
+    genericReportText = `The connection between ${animal1} and ${animal2} is unique. There's no fixed rule, but their dynamic relies on mutual respect and understanding their differences. (Generic report).`;
+  } else if (locale === 'de') {
+     genericReportText = `Die Verbindung zwischen ${animal1} und ${animal2} ist einzigartig. Es gibt keine feste Regel, aber ihre Dynamik beruht auf gegenseitigem Respekt und dem Verständnis ihrer Unterschiede. (Allgemeiner Bericht).`;
+  } else if (locale === 'fr') {
+     genericReportText = `La connexion entre ${animal1} et ${animal2} est unique. Il n'y a pas de règle fixe, mais leur dynamique repose sur le respect mutuel et la compréhension de leurs différences. (Rapport générique).`;
   }
 
   return {
     animal1,
     animal2,
-    report: reportText,
-    score: score,
+    report: genericReportText,
+    score: Math.floor(Math.random() * 3) + 2, // Random score between 2 and 4 for generic cases
   };
-};
+}
 
 
 const DefaultMayanIcon = HelpCircle; 
