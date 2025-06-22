@@ -238,5 +238,29 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Virgo-Pisces": {
     report: "El sanador y el soñador, aplicados al trabajo. Virgo aporta la estructura y el orden, mientras que Piscis aporta la creatividad, la intuición y la empatía. Son excelentes en campos creativos, de sanación o de servicio social. Virgo mantiene el proyecto en marcha y Piscis le da alma.",
     score: 4
+  },
+  "Libra-Libra": {
+    report: "El equipo de la diplomacia y la estética. Son excelentes en roles que requieren negociación, mediación y un alto sentido del estilo. Su principal desafío es la toma de decisiones; pueden pasar demasiado tiempo deliberando para mantener la armonía. Necesitan un líder claro o plazos estrictos.",
+    score: 4
+  },
+  "Libra-Scorpio": {
+    report: "El diplomático y el estratega. Libra puede manejar las relaciones públicas mientras Escorpio profundiza en la investigación y la estrategia. Una combinación potente en derecho o consultoría, aunque Libra puede sentirse incómodo con la intensidad de Escorpio.",
+    score: 3
+  },
+  "Libra-Sagittarius": {
+    report: "Una dupla expansiva y optimista. Ideal para roles en relaciones públicas, marketing internacional o educación. Libra aporta la estrategia social y Sagitario la visión y el entusiasmo. Juntos, pueden encantar y convencer a cualquiera.",
+    score: 4
+  },
+  "Libra-Capricorn": {
+    report: "Una pareja de poder social y corporativo. Libra es la cara pública y el negociador, mientras que Capricornio es el arquitecto del negocio. Se respetan mutuamente y pueden alcanzar un alto estatus, siempre que Capricornio no vea a Libra como indeciso y Libra no vea a Capricornio como demasiado rígido.",
+    score: 4
+  },
+  "Libra-Aquarius": {
+    report: "El equipo de los idealistas. Dos signos de Aire que conectan a nivel intelectual. Son excelentes para trabajar en organizaciones sin fines de lucro, causas sociales o proyectos tecnológicos innovadores. Valoran la justicia y la comunicación por encima de todo.",
+    score: 5
+  },
+  "Libra-Pisces": {
+    report: "El equipo creativo y compasivo. Perfectos para las artes, el diseño, la moda o campos de sanación. Libra aporta el sentido estético y el equilibrio, mientras que Piscis aporta la imaginación y la empatía. Su desafío es mantenerse organizados y enfocados en los objetivos prácticos.",
+    score: 3
   }
 };
