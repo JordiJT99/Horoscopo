@@ -99,6 +99,10 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "Un dúo laboral muy nutritivo y de apoyo. Ambos valoran la seguridad y trabajan para crear un ambiente estable. Tauro se encarga de la parte práctica y financiera, mientras que Cáncer cuida del bienestar del equipo. Ideales para negocios familiares o proyectos a largo plazo.",
     score: 4
   },
+  "Taurus-Leo": {
+    report: "Una dupla de poder, pero con voluntades de hierro. Tauro se enfoca en la calidad y la sustancia, mientras que Leo busca el reconocimiento y el brillo. Pueden chocar por el presupuesto y los métodos, pero si se respetan, crean un producto final de lujo. Leo es el frontman, Tauro el productor ejecutivo.",
+    score: 3
+  },
   "Taurus-Virgo": {
     report: "El equipo de tierra perfecto. Ambos son prácticos, detallistas y trabajadores. Su ética de trabajo combinada es insuperable. Se entienden sin palabras y se centran en producir resultados de alta calidad. Una de las mejores combinaciones para cualquier proyecto.",
     score: 5
@@ -210,5 +214,29 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Leo-Pisces": {
     report: "El líder inspirador y el visionario creativo. Leo puede dar a Piscis la confianza y la estructura para brillar, mientras que Piscis aporta una intuición y una creatividad que pueden llevar los proyectos a otro nivel. Leo debe ser cuidadoso con las críticas para no herir la sensibilidad de Piscis.",
     score: 3
+  },
+  "Virgo-Virgo": {
+    report: "El equipo de los perfeccionistas. Juntos, no se les escapa ni un solo detalle. Son increíblemente eficientes, organizados y fiables. Su principal desafío es evitar la parálisis por análisis o ser demasiado críticos el uno con el otro. Crean sistemas y procesos impecables.",
+    score: 5
+  },
+  "Virgo-Libra": {
+    report: "Una combinación de servicio y diplomacia. Virgo se encarga de la logística y la calidad, mientras que Libra gestiona las relaciones con clientes y el equipo. Libra aporta una visión estética que Virgo puede ejecutar a la perfección. Una dupla muy profesional y agradable.",
+    score: 4
+  },
+  "Virgo-Sagittarius": {
+    report: "El planificador meticuloso frente al visionario expansivo. Virgo puede frustrarse con la falta de atención al detalle de Sagitario, y Sagitario puede sentirse limitado por la cautela de Virgo. Sin embargo, si aprenden a respetar sus roles, Virgo puede dar estructura a las grandes ideas de Sagitario.",
+    score: 2
+  },
+  "Virgo-Capricorn": {
+    report: "Una de las combinaciones más productivas y eficientes del zodíaco. Ambos son signos de Tierra, trabajadores, prácticos y orientados a objetivos. Se respetan mutuamente y forman un equipo que garantiza la máxima calidad y fiabilidad. Juntos, construyen imperios.",
+    score: 5
+  },
+  "Virgo-Aquarius": {
+    report: "El analista y el innovador. Virgo puede ayudar a Acuario a aterrizar sus ideas futuristas con planes realistas, mientras que Acuario puede enseñar a Virgo a pensar fuera de la caja. La comunicación es clave para que Virgo no vea a Acuario como caótico, y Acuario no vea a Virgo como demasiado rígido.",
+    score: 3
+  },
+  "Virgo-Pisces": {
+    report: "El sanador y el soñador, aplicados al trabajo. Virgo aporta la estructura y el orden, mientras que Piscis aporta la creatividad, la intuición y la empatía. Son excelentes en campos creativos, de sanación o de servicio social. Virgo mantiene el proyecto en marcha y Piscis le da alma.",
+    score: 4
   }
 };
