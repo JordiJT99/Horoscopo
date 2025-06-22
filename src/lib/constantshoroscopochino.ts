@@ -44,6 +44,10 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     report: "Una unión de lealtad y respeto inquebrantables. El Perro, con su naturaleza ansiosa pero profundamente leal, encuentra en el valiente Tigre un protector y un líder en quien confiar. El Tigre, a su vez, valora la honestidad, el idealismo y el apoyo incondicional del Perro, encontrando un refugio seguro para su a veces turbulento corazón. El Perro es capaz de calmar los impulsos del Tigre, y el Tigre defiende al Perro contra cualquier injusticia. Juntos, forman un equipo basado en la confianza mutua y un profundo sentido de la justicia.",
     score: 4
   },
+  "Tiger-Dragon": {
+    report: "Una combinación de dos de los signos más poderosos y carismáticos del zodiaco. La relación entre el Tigre y el Dragón es una alianza de titanes, llena de energía, ambición y un profundo respeto mutuo por su fuerza. El Dragón admira el coraje y la audacia del Tigre, mientras que el Tigre se siente atraído por el liderazgo natural y la visión del Dragón. Juntos, son una pareja magnética y socialmente dominante, capaces de inspirar a otros y de embarcarse en grandes proyectos. El principal desafío es el choque de egos; ambos quieren liderar y pueden competir por el control. Si aprenden a colaborar como un equipo, donde el Dragón traza la estrategia y el Tigre ejecuta con pasión, su potencial es ilimitado. Es una relación dinámica y emocionante, pero requiere que ambos aprendan a compartir el trono.",
+    score: 4
+  },
   "Horse-Dog": {
     report: "Una pareja feliz, honesta y llena de calidez. El Caballo, siempre en movimiento, encuentra en el Perro un compañero leal que entiende su necesidad de libertad pero que siempre estará ahí a su regreso. El Perro, por su parte, se siente inspirado por el optimismo y la energía del Caballo, lo que le ayuda a superar sus propias ansiedades. Comparten una visión de la vida honesta y directa, y su comunicación es excelente. Es una relación basada en la amistad, el apoyo mutuo y una profunda lealtad.",
     score: 5
