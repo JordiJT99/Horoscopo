@@ -183,11 +183,71 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     score: 5
   },
 
-  // Other existing combinations
+  // Leo Combinations
+  "Leo-Leo": {
+    report: "Una amistad cálida, generosa y muy divertida. Ambos son leales y se entienden en su necesidad de brillar. El principal desafío es la competencia por ser el centro de atención. Si lo convierten en un juego, serán los mejores animadores del otro.",
+    score: 4
+  },
+  "Leo-Virgo": {
+    report: "El showman y el mánager. Virgo admira en secreto la confianza de Leo, y Leo valora la ayuda práctica de Virgo. La amistad funciona si Leo acepta la crítica constructiva y Virgo no apaga el brillo de Leo con demasiada preocupación.",
+    score: 3
+  },
+  "Leo-Libra": {
+    report: "El dúo más glamuroso y social del zodíaco. A ambos les encanta la fiesta, el arte y la buena vida. Libra sabe cómo halagar a Leo, y Leo admira el estilo de Libra. Juntos, son irresistibles y siempre están rodeados de gente.",
+    score: 4
+  },
+  "Leo-Scorpio": {
+    report: "Dos voluntades de hierro. Es una amistad de todo o nada, basada en una lealtad y un respeto extremos. Si se hacen amigos, se defenderán a muerte. Pero si chocan, la lucha de poder puede ser épica. Ambos son fijos y orgullosos.",
+    score: 3
+  },
   "Leo-Sagittarius": {
     report: "Compañeros de fiesta y aventura por excelencia. Ambos son optimistas, extrovertidos y aman la vida. Se animan mutuamente a ser más audaces y a explorar el mundo. Su energía combinada es contagiosa.",
     score: 5
   },
+  "Leo-Capricorn": {
+    report: "Una amistad basada en la admiración mutua por el poder y el estatus. Leo admira la ambición de Capricornio, y Capricornio respeta el liderazgo de Leo. Pueden chocar en sus estilos: Leo es extravagante, Capricornio es conservador.",
+    score: 2
+  },
+  "Leo-Aquarius": {
+    report: "Opuestos que se atraen. Leo es el rey, Acuario es el pueblo. Leo es personal, Acuario es universal. Se fascinan mutuamente por sus diferencias. Juntos pueden ser una fuerza creativa e influyente, si respetan sus distintos enfoques.",
+    score: 4
+  },
+  "Leo-Pisces": {
+    report: "El protector y el protegido. Leo se siente atraído por la naturaleza soñadora y gentil de Piscis, y a menudo adopta un papel de guardián. Piscis, a su vez, ofrece a Leo una audiencia devota y una profunda comprensión emocional.",
+    score: 3
+  },
+
+  // Virgo Combinations
+  "Virgo-Virgo": {
+    report: "Una amistad de mutua comprensión y perfeccionismo. Se entienden en su necesidad de orden y eficiencia. Pueden ser los mejores consejeros el uno del otro. El único riesgo es caer en un ciclo de crítica o preocupación mutua.",
+    score: 4
+  },
+  "Virgo-Libra": {
+    report: "Una amistad refinada. Virgo aprecia el buen gusto y la diplomacia de Libra. Libra valora la inteligencia y la fiabilidad de Virgo. Libra puede ayudar a Virgo a socializar, y Virgo puede ayudar a Libra a ser más decidido.",
+    score: 3
+  },
+  "Virgo-Scorpio": {
+    report: "Una amistad de profunda confianza y análisis. Ambos son signos observadores e inteligentes. Virgo se siente seguro con la lealtad de Escorpio, y Escorpio respeta la mente aguda de Virgo. Son excelentes para resolver problemas juntos.",
+    score: 5
+  },
+  "Virgo-Sagittarius": {
+    report: "El planificador y el aventurero. Virgo se estresa con la falta de planificación de Sagitario, y Sagitario se siente limitado por la cautela de Virgo. Pueden aprender mucho el uno del otro si están dispuestos a salir de su zona de confort.",
+    score: 2
+  },
+  "Virgo-Capricorn": {
+    report: "La amistad de tierra perfecta. Se entienden en su ética de trabajo, sus valores prácticos y su lealtad. Es una amistad sólida, de apoyo y sin dramas. Son el tipo de amigos que siempre están ahí, pase lo que pase.",
+    score: 5
+  },
+  "Virgo-Aquarius": {
+    report: "Una amistad cerebral. Ambos son inteligentes y disfrutan de un buen debate. Virgo puede ayudar a Acuario a poner en práctica sus ideas, y Acuario puede ayudar a Virgo a pensar de forma más amplia. Respetan la mente del otro.",
+    score: 3
+  },
+  "Virgo-Pisces": {
+    report: "Opuestos que se complementan. Virgo ancla al soñador Piscis a la realidad, y Piscis ayuda al ansioso Virgo a relajarse y a confiar en la intuición. Es una amistad de servicio y sanación mutua. Muy especial.",
+    score: 4
+  },
+  
+  // Other existing combinations
   "Libra-Aquarius": {
     report: "Una amistad basada en ideales compartidos y una gran estimulación intelectual. Disfrutan de largas conversaciones sobre temas sociales y humanitarios. Se respetan mutuamente y valoran su independencia.",
     score: 5
@@ -197,3 +257,5 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     score: 4
   }
 };
+
+    
