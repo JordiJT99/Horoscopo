@@ -282,5 +282,22 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Scorpio-Pisces": {
     report: "Una conexión increíblemente intuitiva y creativa. Escorpio proporciona la estrategia y el enfoque, mientras que Piscis aporta la imaginación y la empatía. Juntos son un dúo increíble en campos artísticos, de sanación o de investigación, donde la intuición es clave. Se entienden sin palabras.",
     score: 5
+  },
+  "Sagittarius-Sagittarius": {
+    report: "Un equipo lleno de optimismo, energía y grandes ideas. Son excelentes para roles de marketing, ventas y cualquier proyecto que requiera una visión expansiva y entusiasmo. Su principal desafío es la falta de atención a los detalles y la tendencia a empezar muchos proyectos sin terminarlos. Necesitan a alguien que los ancle a la realidad.",
+    score: 4
+  },
+  "Sagittarius-Capricorn": {
+    report: "El visionario y el arquitecto. Sagitario aporta las ideas audaces y la visión a futuro, mientras que Capricornio crea el plan y la estructura para hacerlas realidad. Pueden chocar por el ritmo y la aversión al riesgo, pero si se respetan, son un dúo de éxito garantizado.",
+    score: 3
+  },
+  "Sagittarius-Aquarius": {
+    report: "Un dúo intelectual, innovador y con visión de futuro. Ambos aman la libertad y las ideas no convencionales. Son perfectos para startups, proyectos de I+D o causas sociales. Su colaboración es estimulante y siempre está mirando hacia el futuro.",
+    score: 4
+  },
+  "Sagittarius-Pisces": {
+    report: "El filósofo y el soñador. Ambos regidos por Júpiter, comparten un deseo de expansión. Sagitario aporta la energía y la visión optimista, mientras que Piscis aporta la creatividad y la intuición. Juntos, son excelentes en campos creativos o espirituales, aunque deben tener cuidado con la falta de enfoque práctico.",
+    score: 3
   }
 };
+
