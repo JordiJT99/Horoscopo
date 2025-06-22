@@ -57,6 +57,44 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     score: 2
   },
   
+  // Taurus Combinations
+  "Taurus-Taurus": {
+    report: "Una amistad sólida como una roca. Comparten el amor por la comodidad, la buena comida y la lealtad. Son amigos fiables y constantes, aunque su terquedad combinada puede llevar a algún que otro punto muerto.",
+    score: 4
+  },
+  "Taurus-Gemini": {
+    report: "Una mezcla de tierra y aire. Tauro ofrece estabilidad, mientras que Géminis aporta diversión y novedad. Tauro puede encontrar a Géminis un poco inconsistente, y Géminis a Tauro un poco lento, pero pueden aprender mucho el uno del otro.",
+    score: 3
+  },
+  "Taurus-Leo": {
+    report: "Dos signos fijos que aprecian el lujo y la lealtad. Su amistad puede ser fuerte si superan la terquedad. Leo disfruta de la generosidad de Tauro, y Tauro de la calidez de Leo, pero pueden chocar por el control.",
+    score: 3
+  },
+  "Taurus-Libra": {
+    report: "Ambos regidos por Venus, comparten un amor por la belleza y la armonía. Disfrutan de salidas culturales y una vida social tranquila. Libra ayuda a Tauro a socializar y Tauro ofrece a Libra una estabilidad reconfortante.",
+    score: 4
+  },
+  "Taurus-Scorpio": {
+    report: "Una amistad de opuestos magnéticos: intensa y profundamente leal. Ambos valoran la confianza por encima de todo. Si se ganan el respeto mutuo, serán amigos para toda la vida, protectores y posesivos el uno con el otro.",
+    score: 4
+  },
+  "Taurus-Sagittarius": {
+    report: "El hogareño se encuentra con el aventurero. Sus estilos de vida son muy diferentes. Sagitario puede ver a Tauro como aburrido, y Tauro puede ver a Sagitario como poco fiable. La amistad requiere un gran esfuerzo para encontrar un terreno común.",
+    score: 2
+  },
+  "Taurus-Capricorn": {
+    report: "Una de las amistades más sólidas y fiables del zodíaco. Ambos son signos de Tierra, prácticos, leales y ambiciosos. Se entienden y se apoyan mutuamente en sus metas a largo plazo. Una amistad para toda la vida.",
+    score: 5
+  },
+  "Taurus-Aquarius": {
+    report: "Una combinación difícil. El tradicional Tauro choca con el poco convencional Acuario. Ambos son tercos y les cuesta ceder. Si logran respetar sus diferencias, Acuario puede abrir la mente de Tauro, y Tauro puede ofrecer a Acuario un ancla a la realidad.",
+    score: 2
+  },
+  "Taurus-Pisces": {
+    report: "Una amistad dulce y reconfortante. Tauro ofrece la estabilidad y la protección que el sensible Piscis necesita. Piscis, a su vez, aporta imaginación, empatía y una profunda comprensión emocional que Tauro valora enormemente.",
+    score: 4
+  },
+
   // Other existing combinations
   "Taurus-Virgo": {
     report: "Amigos leales y prácticos que siempre pueden contar el uno con el otro. Comparten un enfoque sensato de la vida y disfrutan de actividades tranquilas. Es una amistad sólida, basada en la confianza y el apoyo mutuo.",
