@@ -114,5 +114,41 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Taurus-Pisces": {
     report: "El ancla y el soñador. Tauro puede ayudar a Piscis a dar forma práctica a sus ideas creativas y a mantenerse enfocado. Piscis, a su vez, inspira a Tauro y aporta una visión y empatía que pueden ser clave en el trato con clientes y el equipo. Se complementan muy bien.",
     score: 4
+  },
+  "Gemini-Gemini": {
+    report: "Una usina de ideas y comunicación. Juntos son excelentes para brainstorming y roles de cara al público. El desafío es mantener el enfoque y llevar las ideas a la práctica. Pueden dispersarse fácilmente.",
+    score: 4
+  },
+  "Gemini-Cancer": {
+    report: "Géminis aporta las ideas y Cáncer la intuición sobre el equipo o los clientes. Puede ser una buena dupla creativa, pero Géminis debe ser sensible con la comunicación y Cáncer debe aprender a no tomarse las cosas de manera personal.",
+    score: 3
+  },
+  "Gemini-Leo": {
+    report: "El equipo perfecto para marketing y relaciones públicas. Géminis escribe el discurso y Leo lo presenta con carisma. Se llevan bien si Leo recibe suficiente reconocimiento y Géminis tiene libertad para explorar nuevas ideas.",
+    score: 4
+  },
+  "Gemini-Virgo": {
+    report: "Ambos regidos por Mercurio, pero con enfoques opuestos. Géminis es macro, Virgo es micro. Virgo se frustra con la falta de atención al detalle de Géminis, y Géminis se siente limitado por el perfeccionismo de Virgo. Pueden complementarse si respetan sus roles.",
+    score: 3
+  },
+  "Gemini-Libra": {
+    report: "Una colaboración intelectualmente estimulante. Son excelentes negociadores, abogados o creativos. Ambos son sociables y buenos comunicadores. Su principal desafío es pasar de la deliberación a la acción concreta.",
+    score: 4
+  },
+  "Gemini-Scorpio": {
+    report: "El periodista y el detective. Géminis es bueno para recopilar información superficial, mientras que Escorpio es un maestro en la investigación profunda. Juntos son un equipo de investigación formidable, aunque la desconfianza de Escorpio puede chocar con la naturaleza abierta de Géminis.",
+    score: 3
+  },
+  "Gemini-Sagittarius": {
+    report: "La pareja de la expansión de ideas. Ambos aman aprender, comunicar y explorar. Son excelentes en roles de educación, viajes o medios de comunicación. El reto es la constancia y el seguimiento de los proyectos hasta el final.",
+    score: 4
+  },
+  "Gemini-Capricorn": {
+    report: "El innovador y el CEO. Géminis tiene las ideas nuevas y Capricornio tiene la disciplina para estructurarlas y hacerlas rentables. Capricornio debe tener paciencia con la naturaleza cambiante de Géminis, y Géminis debe respetar la necesidad de estructura de Capricornio.",
+    score: 3
+  },
+  "Gemini-Pisces": {
+    report: "Un dúo altamente creativo e imaginativo. Ideal para las artes, la publicidad o campos espirituales. El desafío está en la comunicación: Géminis es lógico y Piscis es intuitivo. Necesitan un terreno común para no perderse en malentendidos.",
+    score: 3
   }
 };
