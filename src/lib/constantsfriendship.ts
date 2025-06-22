@@ -295,7 +295,33 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     score: 5
   },
   
-  // Other existing combinations
+  // Sagittarius Combinations
+  "Sagittarius-Sagittarius": {
+    report: "El dúo de aventureros definitivo. Su amistad es un viaje sin fin, lleno de optimismo, risas y planes espontáneos. Se entienden perfectamente en su necesidad de libertad y espacio. El único riesgo es que ninguno de los dos se encargue de los detalles prácticos.",
+    score: 5
+  },
+  "Sagittarius-Capricorn": {
+    report: "El aventurero se encuentra con el estratega. Esta amistad es un caso de 'opuestos que se atraen'. Sagitario puede enseñar a Capricornio a relajarse y a disfrutar de la vida, mientras que Capricornio puede dar a Sagitario el enfoque que necesita para materializar sus grandes ideas. Respeto mutuo es la clave.",
+    score: 3
+  },
+  "Sagittarius-Aquarius": {
+    report: "Una amistad brillante, intelectual y llena de libertad. Ambos son idealistas y aman explorar nuevas ideas y lugares. Se entienden en su necesidad de independencia y su vida social es activa y diversa. Grandes compañeros de debate y aventura.",
+    score: 5
+  },
+  "Sagittarius-Pisces": {
+    report: "El filósofo y el místico. Ambos regidos por Júpiter, comparten una búsqueda de significado. La honestidad brutal de Sagitario puede herir al sensible Piscis, pero si logran superarlo, su amistad será expansiva y muy inspiradora. Requiere tacto por parte de Sagitario y comprensión por parte de Piscis.",
+    score: 3
+  },
+
+  // Capricorn Combinations
+  "Capricorn-Capricorn": {
+    report: "Una amistad sólida como una montaña, basada en el respeto, la lealtad y la ambición compartida. Se entienden en su necesidad de trabajar duro y alcanzar metas. Son el apoyo más fiable el uno para el otro. Su único riesgo es volverse demasiado serios.",
+    score: 4
+  },
+  "Capricorn-Aquarius": {
+    report: "El tradicionalista y el innovador. Capricornio se basa en las reglas, mientras que Acuario las rompe. Pueden tener debates fascinantes si Capricornio se abre a nuevas ideas y Acuario respeta la sabiduría de la experiencia. Una amistad basada en el respeto intelectual.",
+    score: 3
+  },
   "Capricorn-Pisces": {
     report: "Una amistad donde los sueños se encuentran con la realidad. Piscis inspira a Capricornio con su imaginación, y Capricornio ayuda a Piscis a poner los pies en la tierra. Se equilibran perfectamente.",
     score: 4
@@ -305,3 +331,4 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     
 
   
+
