@@ -78,5 +78,41 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Aries-Pisces": {
     report: "El líder y el soñador. Aries puede proporcionar la dirección y el impulso que Piscis necesita para concretar sus ideas creativas. Piscis, a su vez, puede aportar una perspectiva intuitiva que Aries a menudo pasa por alto.",
     score: 3
+  },
+  "Taurus-Taurus": {
+    report: "Un equipo increíblemente sólido y fiable. Juntos, son la definición de constancia y trabajo duro. Son excelentes para tareas que requieren paciencia y un enfoque metódico. Su principal desafío es la resistencia al cambio; pueden ser demasiado lentos para adaptarse a nuevas ideas.",
+    score: 4
+  },
+  "Taurus-Gemini": {
+    report: "El pragmático y el comunicador. Tauro aporta la estabilidad y el enfoque en la calidad, mientras que Géminis trae versatilidad y nuevas ideas. Tauro puede frustrarse con la falta de constancia de Géminis, y Géminis puede aburrirse con el ritmo lento de Tauro. Si se respetan, son un gran equipo.",
+    score: 3
+  },
+  "Taurus-Cancer": {
+    report: "Un dúo laboral muy nutritivo y de apoyo. Ambos valoran la seguridad y trabajan para crear un ambiente estable. Tauro se encarga de la parte práctica y financiera, mientras que Cáncer cuida del bienestar del equipo. Ideales para negocios familiares o proyectos a largo plazo.",
+    score: 4
+  },
+  "Taurus-Virgo": {
+    report: "El equipo de tierra perfecto. Ambos son prácticos, detallistas y trabajadores. Su ética de trabajo combinada es insuperable. Se entienden sin palabras y se centran en producir resultados de alta calidad. Una de las mejores combinaciones para cualquier proyecto.",
+    score: 5
+  },
+  "Taurus-Libra": {
+    report: "Ambos, regidos por Venus, aprecian un ambiente de trabajo armonioso y estético. Tauro se centra en el resultado tangible y la rentabilidad, mientras que Libra se enfoca en las relaciones públicas y la estrategia. Funcionan bien si Libra no pospone las decisiones y Tauro se abre a nuevas perspectivas.",
+    score: 3
+  },
+  "Taurus-Scorpio": {
+    report: "Una pareja poderosa y decidida. Tauro aporta la resistencia y la determinación, mientras que Escorpio ofrece la estrategia y la capacidad de ver lo que otros no ven. Son un dúo formidable en finanzas e investigación, pero deben tener cuidado con las luchas de poder por su naturaleza fija.",
+    score: 4
+  },
+  "Taurus-Sagittarius": {
+    report: "El conservador y el arriesgado. Tauro prefiere métodos probados y seguros, mientras que Sagitario está dispuesto a experimentar y tomar riesgos. Pueden chocar en sus enfoques, pero si se respetan, Sagitario puede abrir nuevos mercados y Tauro puede asegurar que sean rentables.",
+    score: 2
+  },
+  "Taurus-Aquarius": {
+    report: "Una combinación desafiante. Tauro es tradicionalista y resistente al cambio, mientras que Acuario es un innovador que busca romper las reglas. Ambos son tercos. Acuario puede ver a Tauro como anticuado, y Tauro a Acuario como poco práctico. El éxito requiere un gran respeto mutuo.",
+    score: 2
+  },
+  "Taurus-Pisces": {
+    report: "El ancla y el soñador. Tauro puede ayudar a Piscis a dar forma práctica a sus ideas creativas y a mantenerse enfocado. Piscis, a su vez, inspira a Tauro y aporta una visión y empatía que pueden ser clave en el trato con clientes y el equipo. Se complementan muy bien.",
+    score: 4
   }
 };
