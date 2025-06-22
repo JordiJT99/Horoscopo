@@ -182,5 +182,33 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Cancer-Aquarius": {
     report: "El tradicionalista y el innovador. Cáncer prefiere métodos probados y un ambiente seguro, mientras que Acuario busca constantemente nuevas formas de hacer las cosas. Acuario puede parecer demasiado desapegado para Cáncer, y Cáncer demasiado emocional para Acuario. Una colaboración difícil.",
     score: 2
+  },
+  "Leo-Leo": {
+    report: "Un dúo de pura realeza y carisma. Son excelentes para roles de liderazgo, ventas y relaciones públicas. Su energía combinada es magnética. El principal desafío es la lucha de egos; ambos quieren ser la estrella. Si aprenden a compartir el protagonismo, son imparables.",
+    score: 4
+  },
+  "Leo-Virgo": {
+    report: "El líder y el organizador. Leo aporta la visión y el carisma, mientras que Virgo se encarga de los detalles y la ejecución perfecta. Leo puede ver a Virgo como demasiado crítico, y Virgo a Leo como descuidado. Si respetan sus roles, son un equipo muy eficaz.",
+    score: 3
+  },
+  "Leo-Sagittarius": {
+    report: "El equipo de Fuego perfecto para la motivación. Ambos son optimistas, enérgicos e inspiradores. Ideales para startups, marketing y roles que requieran entusiasmo y visión de futuro. Mantienen la moral alta y no temen a los grandes desafíos.",
+    score: 5
+  },
+  "Leo-Scorpio": {
+    report: "Dos signos de voluntad de hierro. Su determinación combinada es inmensa. Son excelentes para proyectos de alto riesgo que requieren agallas. Sin embargo, las luchas de poder son casi inevitables. Ambos son fijos y quieren el control, lo que puede generar un ambiente de trabajo intenso.",
+    score: 3
+  },
+  "Leo-Capricorn": {
+    report: "El rey y el estratega. Ambos son ambiciosos y orientados al éxito. Leo aporta el carisma y la visión, mientras que Capricornio aporta la disciplina y la estructura para alcanzar la cima. Pueden chocar si Leo ve a Capricornio como demasiado restrictivo, o Capricornio ve a Leo como demasiado derrochador.",
+    score: 3
+  },
+  "Leo-Aquarius": {
+    report: "Una pareja creativa y poco convencional. Leo se enfoca en la expresión personal y el liderazgo, mientras que Acuario se enfoca en el equipo y la innovación. Juntos, pueden ser geniales para proyectos creativos o de impacto social. Deben respetar sus diferentes enfoques del trabajo en equipo.",
+    score: 4
+  },
+  "Leo-Pisces": {
+    report: "El líder inspirador y el visionario creativo. Leo puede dar a Piscis la confianza y la estructura para brillar, mientras que Piscis aporta una intuición y una creatividad que pueden llevar los proyectos a otro nivel. Leo debe ser cuidadoso con las críticas para no herir la sensibilidad de Piscis.",
+    score: 3
   }
 };
