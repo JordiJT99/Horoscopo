@@ -7,46 +7,6 @@ export interface CompatibilityReportDetail {
 }
 
 export const workCompatibilityPairings: Record<string, CompatibilityReportDetail> = {
-  "Taurus-Capricorn": {
-    report: "El equipo de trabajo soñado para cualquier empresa. Ambos son prácticos, disciplinados y orientados a resultados. Trabajan de manera constante y fiable, construyendo proyectos sólidos y duraderos. Respeto y profesionalismo definen su relación.",
-    score: 5
-  },
-  "Gemini-Aquarius": {
-    report: "Una dupla innovadora y llena de ideas revolucionarias. Ambos signos de Aire prosperan en entornos que requieren pensamiento original y comunicación. Son excelentes para brainstorming, estrategia y proyectos de vanguardia.",
-    score: 5
-  },
-  "Cancer-Pisces": {
-    report: "Compañeros de trabajo increíblemente intuitivos y empáticos. Crean un ambiente laboral de apoyo y colaboración. Son ideales para profesiones creativas o de cuidado, donde la sensibilidad es una fortaleza.",
-    score: 4
-  },
-  "Cancer-Scorpio": {
-    report: "Un equipo increíblemente intuitivo y poderoso. Se entienden a un nivel profundo y son ferozmente leales. Excelentes para roles que requieren estrategia, profundidad y confianza. Pueden ser un poco cerrados con los demás.",
-    score: 5
-  },
-  "Cancer-Capricorn": {
-    report: "El eje hogar-carrera del zodíaco. Se complementan a la perfección en un entorno de negocios. Cáncer gestiona el bienestar emocional del equipo, mientras que Capricornio impulsa los objetivos empresariales. Un equipo formidable.",
-    score: 5
-  },
-  "Leo-Libra": {
-    report: "Un equipo con gran carisma y habilidades sociales. Leo lidera con confianza y Libra aporta diplomacia y estrategia. Juntos son excelentes en roles de cara al público, ventas, marketing y relaciones públicas.",
-    score: 4
-  },
-  "Aries-Sagittarius": {
-    report: "Dinámicos, entusiastas y siempre listos para un nuevo desafío. Este par de Fuego no teme tomar riesgos y son pioneros en su campo. Se motivan mutuamente y mantienen la moral del equipo alta, aunque deben cuidar los detalles.",
-    score: 4
-  },
-  "Virgo-Scorpio": {
-    report: "Una combinación de precisión y profundidad. Virgo se enfoca en los detalles y la eficiencia, mientras que Escorpio investiga hasta encontrar la raíz del problema. Juntos son imbatibles en tareas de análisis, investigación y resolución de problemas complejos.",
-    score: 5
-  },
-  "Aries-Virgo": {
-    report: "El enfoque impulsivo de Aries puede frustrar al meticuloso Virgo. Aries quiere empezar ya, mientras que Virgo necesita planificar cada detalle. La paciencia y la delegación de tareas según las fortalezas de cada uno es crucial.",
-    score: 2
-  },
-  "Leo-Taurus": {
-    report: "Ambos son signos fijos y tercos, lo que puede llevar a luchas de poder. Leo busca reconocimiento, mientras que Tauro busca seguridad y resultados tangibles. Necesitan encontrar un terreno común y respetar los métodos del otro para tener éxito.",
-    score: 2
-  },
   "Aries-Aries": {
     report: "Un dúo de alta energía y competitividad. Pueden ser grandes motivadores si trabajan hacia un objetivo común, pero también pueden chocar por el liderazgo. La comunicación clara sobre roles es esencial.",
     score: 3
@@ -67,6 +27,10 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "Un dúo poderoso y carismático. Ambos son líderes natos y se admiran mutuamente. Si logran alinear sus egos y trabajar en equipo, son imparables en la consecución de objetivos ambiciosos.",
     score: 5
   },
+  "Aries-Virgo": {
+    report: "El enfoque impulsivo de Aries puede frustrar al meticuloso Virgo. Aries quiere empezar ya, mientras que Virgo necesita planificar cada detalle. La paciencia y la delegación de tareas según las fortalezas de cada uno es crucial.",
+    score: 2
+  },
   "Aries-Libra": {
     report: "Una excelente combinación de acción y diplomacia. Aries toma la iniciativa, mientras que Libra aporta equilibrio, estrategia y habilidades interpersonales. Juntos cubren todas las bases.",
     score: 4
@@ -74,6 +38,10 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Aries-Scorpio": {
     report: "Dos potencias regidas por Marte. Su intensidad combinada puede mover montañas o desatar conflictos. Son excelentes en situaciones de crisis, pero deben tener cuidado con las luchas de poder.",
     score: 3
+  },
+  "Aries-Sagittarius": {
+    report: "Dinámicos, entusiastas y siempre listos para un nuevo desafío. Este par de Fuego no teme tomar riesgos y son pioneros en su campo. Se motivan mutuamente y mantienen la moral del equipo alta, aunque deben cuidar los detalles.",
+    score: 4
   },
   "Aries-Capricorn": {
     report: "El velocista y el maratonista. Aries busca resultados rápidos, mientras que Capricornio construye un plan a largo plazo. Pueden tener éxito si Capricornio valora la iniciativa de Aries y Aries respeta la estrategia de Capricornio.",
@@ -119,6 +87,10 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "El conservador y el arriesgado. Tauro prefiere métodos probados y seguros, mientras que Sagitario está dispuesto a experimentar y tomar riesgos. Pueden chocar en sus enfoques, pero si se respetan, Sagitario puede abrir nuevos mercados y Tauro puede asegurar que sean rentables.",
     score: 2
   },
+  "Taurus-Capricorn": {
+    report: "El equipo de trabajo soñado para cualquier empresa. Ambos son prácticos, disciplinados y orientados a resultados. Trabajan de manera constante y fiable, construyendo proyectos sólidos y duraderos. Respeto y profesionalismo definen su relación.",
+    score: 5
+  },
   "Taurus-Aquarius": {
     report: "Una combinación desafiante. Tauro es tradicionalista y resistente al cambio, mientras que Acuario es un innovador que busca romper las reglas. Ambos son tercos. Acuario puede ver a Tauro como anticuado, y Tauro a Acuario como poco práctico. El éxito requiere un gran respeto mutuo.",
     score: 2
@@ -159,6 +131,10 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "El innovador y el CEO. Géminis tiene las ideas nuevas y Capricornio tiene la disciplina para estructurarlas y hacerlas rentables. Capricornio debe tener paciencia con la naturaleza cambiante de Géminis, y Géminis debe respetar la necesidad de estructura de Capricornio.",
     score: 3
   },
+  "Gemini-Aquarius": {
+    report: "Una dupla innovadora y llena de ideas revolucionarias. Ambos signos de Aire prosperan en entornos que requieren pensamiento original y comunicación. Son excelentes para brainstorming, estrategia y proyectos de vanguardia.",
+    score: 5
+  },
   "Gemini-Pisces": {
     report: "Un dúo altamente creativo e imaginativo. Ideal para las artes, la publicidad o campos espirituales. El desafío está en la comunicación: Géminis es lógico y Piscis es intuitivo. Necesitan un terreno común para no perderse en malentendidos.",
     score: 3
@@ -179,13 +155,25 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "Ambos buscan un ambiente de trabajo armonioso. Cáncer aporta la inteligencia emocional, mientras que Libra se destaca en la negociación y las relaciones públicas. Son un gran equipo para roles de servicio al cliente o gestión de equipos, aunque pueden evitar tomar decisiones difíciles.",
     score: 3
   },
+  "Cancer-Scorpio": {
+    report: "Un equipo increíblemente intuitivo y poderoso. Se entienden a un nivel profundo y son ferozmente leales. Excelentes para roles que requieren estrategia, profundidad y confianza. Pueden ser un poco cerrados con los demás.",
+    score: 5
+  },
   "Cancer-Sagittarius": {
     report: "Una mezcla desafiante. La necesidad de seguridad de Cáncer choca con el deseo de Sagitario de tomar riesgos y explorar. La comunicación directa de Sagitario puede herir la sensibilidad de Cáncer. Requiere mucho esfuerzo para alinear sus estilos de trabajo.",
     score: 2
   },
+  "Cancer-Capricorn": {
+    report: "El eje hogar-carrera del zodíaco. Se complementan a la perfección en un entorno de negocios. Cáncer gestiona el bienestar emocional del equipo, mientras que Capricornio impulsa los objetivos empresariales. Un equipo formidable.",
+    score: 5
+  },
   "Cancer-Aquarius": {
     report: "El tradicionalista y el innovador. Cáncer prefiere métodos probados y un ambiente seguro, mientras que Acuario busca constantemente nuevas formas de hacer las cosas. Acuario puede parecer demasiado desapegado para Cáncer, y Cáncer demasiado emocional para Acuario. Una colaboración difícil.",
     score: 2
+  },
+  "Cancer-Pisces": {
+    report: "Compañeros de trabajo increíblemente intuitivos y empáticos. Crean un ambiente laboral de apoyo y colaboración. Son ideales para profesiones creativas o de cuidado, donde la sensibilidad es una fortaleza.",
+    score: 4
   },
   "Leo-Leo": {
     report: "Un dúo de pura realeza y carisma. Son excelentes para roles de liderazgo, ventas y relaciones públicas. Su energía combinada es magnética. El principal desafío es la lucha de egos; ambos quieren ser la estrella. Si aprenden a compartir el protagonismo, son imparables.",
@@ -195,13 +183,17 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "El líder y el organizador. Leo aporta la visión y el carisma, mientras que Virgo se encarga de los detalles y la ejecución perfecta. Leo puede ver a Virgo como demasiado crítico, y Virgo a Leo como descuidado. Si respetan sus roles, son un equipo muy eficaz.",
     score: 3
   },
-  "Leo-Sagittarius": {
-    report: "El equipo de Fuego perfecto para la motivación. Ambos son optimistas, enérgicos e inspiradores. Ideales para startups, marketing y roles que requieran entusiasmo y visión de futuro. Mantienen la moral alta y no temen a los grandes desafíos.",
-    score: 5
+  "Leo-Libra": {
+    report: "Un equipo con gran carisma y habilidades sociales. Leo lidera con confianza y Libra aporta diplomacia y estrategia. Juntos son excelentes en roles de cara al público, ventas, marketing y relaciones públicas.",
+    score: 4
   },
   "Leo-Scorpio": {
     report: "Dos signos de voluntad de hierro. Su determinación combinada es inmensa. Son excelentes para proyectos de alto riesgo que requieren agallas. Sin embargo, las luchas de poder son casi inevitables. Ambos son fijos y quieren el control, lo que puede generar un ambiente de trabajo intenso.",
     score: 3
+  },
+  "Leo-Sagittarius": {
+    report: "El equipo de Fuego perfecto para la motivación. Ambos son optimistas, enérgicos e inspiradores. Ideales para startups, marketing y roles que requieran entusiasmo y visión de futuro. Mantienen la moral alta y no temen a los grandes desafíos.",
+    score: 5
   },
   "Leo-Capricorn": {
     report: "El rey y el estratega. Ambos son ambiciosos y orientados al éxito. Leo aporta el carisma y la visión, mientras que Capricornio aporta la disciplina y la estructura para alcanzar la cima. Pueden chocar si Leo ve a Capricornio como demasiado restrictivo, o Capricornio ve a Leo como demasiado derrochador.",
@@ -222,6 +214,10 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Virgo-Libra": {
     report: "Una combinación de servicio y diplomacia. Virgo se encarga de la logística y la calidad, mientras que Libra gestiona las relaciones con clientes y el equipo. Libra aporta una visión estética que Virgo puede ejecutar a la perfección. Una dupla muy profesional y agradable.",
     score: 4
+  },
+  "Virgo-Scorpio": {
+    report: "Una combinación de precisión y profundidad. Virgo se enfoca en los detalles y la eficiencia, mientras que Escorpio investiga hasta encontrar la raíz del problema. Juntos son imbatibles en tareas de análisis, investigación y resolución de problemas complejos.",
+    score: 5
   },
   "Virgo-Sagittarius": {
     report: "El planificador meticuloso frente al visionario expansivo. Virgo puede frustrarse con la falta de atención al detalle de Sagitario, y Sagitario puede sentirse limitado por la cautela de Virgo. Sin embargo, si aprenden a respetar sus roles, Virgo puede dar estructura a las grandes ideas de Sagitario.",
@@ -298,6 +294,29 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Sagittarius-Pisces": {
     report: "El filósofo y el soñador. Ambos regidos por Júpiter, comparten un deseo de expansión. Sagitario aporta la energía y la visión optimista, mientras que Piscis aporta la creatividad y la intuición. Juntos, son excelentes en campos creativos o espirituales, aunque deben tener cuidado con la falta de enfoque práctico.",
     score: 3
+  },
+  "Capricorn-Capricorn": {
+    report: "El equipo directivo definitivo. Dos Capricornio juntos son la definición de ambición y profesionalismo. Se respetan mutuamente y trabajan con una disciplina inquebrantable hacia metas compartidas. El único riesgo es que la competencia interna se vuelva demasiado seria o que se olviden de celebrar los éxitos.",
+    score: 4
+  },
+  "Capricorn-Aquarius": {
+    report: "El tradicionalista y el innovador. Capricornio aporta la estructura y Acuario las ideas rompedoras. Si Capricornio está abierto a nuevas formas de hacer las cosas y Acuario respeta la necesidad de un plan, pueden ser un equipo muy poderoso que combine lo mejor de ambos mundos.",
+    score: 3
+  },
+  "Capricorn-Pisces": {
+    report: "Una combinación sorprendentemente eficaz. Capricornio proporciona la estructura y la dirección que Piscis necesita para canalizar su inmensa creatividad. Piscis, a su vez, aporta una visión y una empatía que pueden suavizar el enfoque a veces rígido de Capricornio. Juntos, hacen que los sueños se hagan realidad.",
+    score: 4
+  },
+  "Aquarius-Aquarius": {
+    report: "Un laboratorio de ideas en constante ebullición. Dos Acuario juntos son brillantes, innovadores y siempre están pensando en el futuro. Son excelentes para proyectos de vanguardia, tecnología y causas sociales. Su desafío es asegurarse de que alguien se encargue de los detalles prácticos y la ejecución del día a día.",
+    score: 4
+  },
+  "Aquarius-Pisces": {
+    report: "El visionario y el soñador. Esta pareja puede concebir las ideas más humanitarias y creativas. Acuario aporta la lógica y la visión de futuro, mientras que Piscis aporta la compasión y la intuición. Necesitan un tercer compañero más práctico para ayudarles a materializar sus ideas.",
+    score: 3
+  },
+  "Pisces-Pisces": {
+    report: "Un equipo increíblemente creativo, empático e intuitivo. Son perfectos para trabajar en las artes, campos de sanación o cualquier rol que requiera una gran imaginación. Su principal desafío es mantenerse organizados, cumplir con los plazos y no dejarse llevar por las emociones del entorno laboral.",
+    score: 4
   }
 };
-
