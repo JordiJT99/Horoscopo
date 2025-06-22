@@ -145,11 +145,45 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     score: 2
   },
 
-  // Other existing combinations
+  // Cancer Combinations
+  "Cancer-Cancer": {
+    report: "Una amistad increíblemente intuitiva y nutritiva. Crean un espacio seguro donde ambos pueden ser vulnerables. Su principal desafío es evitar caer en un ciclo de negatividad o codependencia. Son el refugio del otro.",
+    score: 4
+  },
+  "Cancer-Leo": {
+    report: "El protector y el rey. Cáncer ofrece lealtad y apoyo incondicional, algo que Leo adora. Leo, a su vez, aporta calidez y diversión a la vida de Cáncer. La amistad es fuerte si Leo es cuidadoso con los sentimientos de Cáncer.",
+    score: 3
+  },
+  "Cancer-Virgo": {
+    report: "Grandes amigos que se cuidan mutuamente. Cáncer se siente seguro con la naturaleza práctica y servicial de Virgo, y Virgo aprecia la calidez emocional y la lealtad de Cáncer. Es una amistad sólida y de apoyo.",
+    score: 4
+  },
+  "Cancer-Libra": {
+    report: "Ambos buscan armonía, pero de maneras diferentes. Cáncer busca seguridad emocional, mientras que Libra busca equilibrio social. Libra puede encontrar a Cáncer demasiado temperamental, y Cáncer a Libra demasiado distante. La amistad requiere un esfuerzo por entender sus diferentes necesidades.",
+    score: 3
+  },
   "Cancer-Scorpio": {
     report: "Una conexión emocional profunda y protectora. Se entienden sin necesidad de palabras y guardan los secretos del otro como si fueran propios. Es una amistad 'hasta la muerte', llena de lealtad e intensidad.",
     score: 5
   },
+  "Cancer-Sagittarius": {
+    report: "El casero y el aventurero. Cáncer necesita un nido, Sagitario necesita el mundo. La honestidad brutal de Sagitario puede herir al sensible Cáncer. Es una amistad difícil que requiere mucho espacio y comprensión.",
+    score: 2
+  },
+  "Cancer-Capricorn": {
+    report: "Opuestos que se atraen y se respetan. Cáncer admira la fortaleza y la disciplina de Capricornio. Capricornio, a su vez, se siente cuidado y apreciado por la lealtad de Cáncer. Juntos, forman un vínculo sólido y protector.",
+    score: 4
+  },
+  "Cancer-Aquarius": {
+    report: "Una amistad complicada. Cáncer es personal y emocional, mientras que Acuario es más desapegado y orientado al grupo. Cáncer puede sentirse desatendido, y Acuario puede sentirse sofocado. La amistad funciona mejor en un contexto de grupo.",
+    score: 2
+  },
+  "Cancer-Pisces": {
+    report: "Una amistad de ensueño. Dos signos de agua que se entienden a un nivel casi psíquico. Su vínculo es empático, compasivo y muy creativo. Son el tipo de amigos que pueden llorar y reír juntos en la misma conversación.",
+    score: 5
+  },
+
+  // Other existing combinations
   "Leo-Sagittarius": {
     report: "Compañeros de fiesta y aventura por excelencia. Ambos son optimistas, extrovertidos y aman la vida. Se animan mutuamente a ser más audaces y a explorar el mundo. Su energía combinada es contagiosa.",
     score: 5
