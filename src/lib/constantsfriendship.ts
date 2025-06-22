@@ -246,12 +246,56 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     report: "Opuestos que se complementan. Virgo ancla al soñador Piscis a la realidad, y Piscis ayuda al ansioso Virgo a relajarse y a confiar en la intuición. Es una amistad de servicio y sanación mutua. Muy especial.",
     score: 4
   },
-  
-  // Other existing combinations
+
+  // Libra Combinations
+  "Libra-Libra": {
+    report: "Una amistad de espejo. Refinada, social y estéticamente agradable. Disfrutan de la cultura y la conversación. Su mayor desafío es la toma de decisiones y la tendencia a evitar conflictos, lo que puede llevar a una falta de profundidad.",
+    score: 4
+  },
+  "Libra-Scorpio": {
+    report: "Una amistad intrigante. Libra se siente atraído por el misterio de Escorpio, y Escorpio por el encanto de Libra. Si Escorpio no es demasiado posesivo y Libra no es demasiado superficial, pueden encontrar un equilibrio fascinante.",
+    score: 3
+  },
+  "Libra-Sagittarius": {
+    report: "Una pareja de amigos muy divertida y social. Ambos son optimistas y aman explorar. Libra aporta la diplomacia y Sagitario la aventura. Se equilibran bien y disfrutan de debates filosóficos y de una vida social activa.",
+    score: 4
+  },
+  "Libra-Capricorn": {
+    report: "El sociable y el trabajador. Libra puede ayudar a Capricornio a relajarse y disfrutar de la vida social, mientras que Capricornio puede dar a Libra el enfoque que necesita. La amistad funciona si respetan sus diferentes prioridades.",
+    score: 3
+  },
   "Libra-Aquarius": {
     report: "Una amistad basada en ideales compartidos y una gran estimulación intelectual. Disfrutan de largas conversaciones sobre temas sociales y humanitarios. Se respetan mutuamente y valoran su independencia.",
     score: 5
   },
+  "Libra-Pisces": {
+    report: "Dos almas artísticas y pacíficas. Libra aprecia la creatividad de Piscis, y Piscis admira el sentido de la justicia de Libra. Su amistad es amable y soñadora, pero pueden tener problemas con la toma de decisiones prácticas.",
+    score: 3
+  },
+
+  // Scorpio Combinations
+  "Scorpio-Scorpio": {
+    report: "Una amistad de 'todo o nada'. La lealtad es absoluta y la conexión es increíblemente profunda. Se entienden a un nivel que nadie más puede. El único peligro son las luchas de poder o los celos si la confianza se rompe.",
+    score: 5
+  },
+  "Scorpio-Sagittarius": {
+    report: "El detective y el explorador. Escorpio se siente fascinado por la honestidad de Sagitario, y Sagitario por la profundidad de Escorpio. La amistad puede ser muy divertida y reveladora si Escorpio no intenta controlar al libre Sagitario.",
+    score: 3
+  },
+  "Scorpio-Capricorn": {
+    report: "Una amistad de poder y estrategia. Ambos son ambiciosos y respetan la fuerza. Se apoyan mutuamente en sus metas y son extremadamente leales. Es una amistad sólida, basada en la confianza y el respeto mutuo.",
+    score: 5
+  },
+  "Scorpio-Aquarius": {
+    report: "Dos signos fijos con voluntades de hierro. Escorpio es emocionalmente intenso, mientras que Acuario es intelectualmente distante. Se fascinan y se frustran mutuamente. La amistad requiere un gran esfuerzo para respetar sus diferencias.",
+    score: 2
+  },
+  "Scorpio-Pisces": {
+    report: "Una de las amistades más profundas y empáticas del zodíaco. Ambos signos de agua se entienden a un nivel intuitivo. Escorpio protege a Piscis, y Piscis ofrece a Escorpio una comprensión incondicional. Amigos del alma.",
+    score: 5
+  },
+  
+  // Other existing combinations
   "Capricorn-Pisces": {
     report: "Una amistad donde los sueños se encuentran con la realidad. Piscis inspira a Capricornio con su imaginación, y Capricornio ayuda a Piscis a poner los pies en la tierra. Se equilibran perfectamente.",
     score: 4
@@ -259,3 +303,5 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
 };
 
     
+
+  
