@@ -249,67 +249,67 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
 
   // Libra Combinations
   "Libra-Libra": {
-    report: "Una amistad de espejo. Refinada, social y estéticamente agradable. Disfrutan de la cultura y la conversación. Su mayor desafío es la toma de decisiones y la tendencia a evitar conflictos, lo que puede llevar a una falta de profundidad.",
+    report: "Una amistad que es como mirarse en un espejo elegante. Dos Libra juntos crean un vínculo basado en la armonía, la belleza, la justicia y una vida social activa. Disfrutan de largas conversaciones, eventos culturales y de crear un entorno estéticamente agradable. Se entienden en su aversión al conflicto y en su búsqueda constante de equilibrio. Su mayor desafío es la toma de decisiones, ya que ambos pueden sopesar los pros y los contras hasta el infinito, y su tendencia a evitar los problemas puede llevar a que los resentimientos se acumulen bajo una superficie de cortesía.",
     score: 4
   },
   "Libra-Scorpio": {
-    report: "Una amistad intrigante. Libra se siente atraído por el misterio de Escorpio, y Escorpio por el encanto de Libra. Si Escorpio no es demasiado posesivo y Libra no es demasiado superficial, pueden encontrar un equilibrio fascinante.",
+    report: "El diplomático social se encuentra con el psicólogo intenso. Libra se siente atraído por la profundidad y el misterio de Escorpio, mientras que Escorpio se siente fascinado por el encanto y la gracia de Libra. Esta amistad puede ser increíblemente profunda si se establece la confianza. Escorpio ofrece a Libra una lealtad feroz y una conexión emocional que anhela en secreto, y Libra ofrece a Escorpio una perspectiva más ligera y equilibrada. El reto es que la naturaleza reservada de Escorpio puede chocar con la necesidad de Libra de compartir, y la intensidad de Escorpio puede asustar al amante de la paz que es Libra.",
     score: 3
   },
   "Libra-Sagittarius": {
-    report: "Una pareja de amigos muy divertida y social. Ambos son optimistas y aman explorar. Libra aporta la diplomacia y Sagitario la aventura. Se equilibran bien y disfrutan de debates filosóficos y de una vida social activa.",
+    report: "Una de las parejas de amigos más divertidas, optimistas y sociales. Ambos son extrovertidos, aman aprender y disfrutan de la compañía de otros. Sagitario aporta la aventura, el humor y la filosofía, mientras que Libra aporta la elegancia, la estrategia social y el equilibrio. Juntos, son excelentes compañeros de viaje, anfitriones de fiestas y compañeros de debate. Se dan mutuamente el espacio y la libertad que necesitan, creando una amistad fácil y estimulante.",
     score: 4
   },
   "Libra-Capricorn": {
-    report: "El sociable y el trabajador. Libra puede ayudar a Capricornio a relajarse y disfrutar de la vida social, mientras que Capricornio puede dar a Libra el enfoque que necesita. La amistad funciona si respetan sus diferentes prioridades.",
+    report: "El embajador y el CEO. Libra, con su enfoque en las relaciones y la armonía, y Capricornio, con su enfoque en la estructura y la ambición, pueden formar una amistad de respeto mutuo y apoyo práctico. Libra puede ayudar a Capricornio a relajarse y a mejorar sus habilidades sociales, mientras que Capricornio puede ofrecer a Libra la estabilidad y la determinación que a veces le falta. La amistad funciona mejor cuando se basa en el respeto por sus diferentes talentos y no en tratar de cambiar al otro. Capricornio puede ver a Libra como indeciso, y Libra a Capricornio como demasiado serio.",
     score: 3
   },
   "Libra-Aquarius": {
-    report: "Una amistad basada en ideales compartidos y una gran estimulación intelectual. Disfrutan de largas conversaciones sobre temas sociales y humanitarios. Se respetan mutuamente y valoran su independencia.",
+    report: "Una amistad de mentes gemelas. Como dos signos de Aire, su conexión es instantánea e intelectual. Ambos son idealistas, humanitarios y aman debatir sobre ideas que pueden cambiar el mundo. Valoran la justicia, la igualdad y la libertad por encima de todo. Es una amistad sin dramas, basada en el respeto mutuo, la comunicación fluida y la libertad para ser uno mismo. Son los mejores amigos para ir a una protesta, un museo o simplemente para tener una conversación que dure toda la noche.",
     score: 5
   },
   "Libra-Pisces": {
-    report: "Dos almas artísticas y pacíficas. Libra aprecia la creatividad de Piscis, y Piscis admira el sentido de la justicia de Libra. Su amistad es amable y soñadora, pero pueden tener problemas con la toma de decisiones prácticas.",
+    report: "El artista y el soñador. Esta es una amistad amable, compasiva y muy creativa. Ambos son románticos, idealistas y tienen un profundo aprecio por el arte y la belleza. Libra se siente atraído por la imaginación y la empatía de Piscis, y Piscis admira el sentido de la justicia y la gracia de Libra. Pueden pasar horas creando juntos o simplemente disfrutando de un ambiente tranquilo. Su principal desafío es la falta de practicidad y la tendencia a evitar la confrontación, lo que puede hacer que los problemas del mundo real sean difíciles de manejar.",
     score: 3
   },
 
   // Scorpio Combinations
   "Scorpio-Scorpio": {
-    report: "Una amistad de 'todo o nada'. La lealtad es absoluta y la conexión es increíblemente profunda. Se entienden a un nivel que nadie más puede. El único peligro son las luchas de poder o los celos si la confianza se rompe.",
+    report: "Una amistad de intensidad magnética. Dos Escorpio juntos es una conexión de 'todo o nada'. Cuando son amigos, son los más leales, protectores y comprensivos que existen, compartiendo un vínculo casi telepático. Se entienden en su necesidad de profundidad, verdad y privacidad. Sin embargo, si la confianza se rompe, pueden convertirse en los peores enemigos, usando sus conocimientos mutuos como armas. Es una amistad poderosa, transformadora y no apta para cardíacos. La confianza absoluta es la única regla.",
     score: 5
   },
   "Scorpio-Sagittarius": {
-    report: "El detective y el explorador. Escorpio se siente fascinado por la honestidad de Sagitario, y Sagitario por la profundidad de Escorpio. La amistad puede ser muy divertida y reveladora si Escorpio no intenta controlar al libre Sagitario.",
+    report: "El detective se encuentra con el filósofo. Escorpio se siente fascinado por la honestidad brutal y el espíritu libre de Sagitario, mientras que Sagitario se siente intrigado por la profundidad y el misterio de Escorpio. Esta amistad puede ser muy divertida y reveladora, llena de debates apasionados y aventuras. El desafío principal radica en que la necesidad de control y privacidad de Escorpio choca con el amor por la libertad y la franqueza de Sagitario. Si Escorpio aprende a soltar y Sagitario a respetar los límites, pueden aprender mucho el uno del otro.",
     score: 3
   },
   "Scorpio-Capricorn": {
-    report: "Una amistad de poder y estrategia. Ambos son ambiciosos y respetan la fuerza. Se apoyan mutuamente en sus metas y son extremadamente leales. Es una amistad sólida, basada en la confianza y el respeto mutuo.",
+    report: "Una alianza de poder. Esta es una de las amistades más sólidas y respetuosas del zodíaco. Ambos son signos ambiciosos, estratégicos y valoran la lealtad por encima de todo. Se admiran mutuamente por su fuerza y determinación. Capricornio aporta la estructura y la disciplina, mientras que Escorpio aporta la perspicacia y la pasión. Juntos, son un equipo formidable que puede lograr cualquier cosa que se proponga, ya sea en los negocios o en la vida personal. Su lealtad es silenciosa pero inquebrantable.",
     score: 5
   },
   "Scorpio-Aquarius": {
-    report: "Dos signos fijos con voluntades de hierro. Escorpio es emocionalmente intenso, mientras que Acuario es intelectualmente distante. Se fascinan y se frustran mutuamente. La amistad requiere un gran esfuerzo para respetar sus diferencias.",
+    report: "Una amistad de voluntades de hierro y perspectivas opuestas. Escorpio, el signo de la profundidad emocional, y Acuario, el signo del desapego intelectual, se fascinan y se frustran mutuamente a partes iguales. Ambos son signos fijos, obstinados en sus creencias. Su amistad requiere un inmenso respeto por sus diferencias. Si lo logran, pueden tener conversaciones increíblemente profundas y reveladoras, desafiando las perspectivas del otro. Sin embargo, es más común que sus diferentes enfoques de la vida (emocional vs. lógico) creen una distancia insalvable.",
     score: 2
   },
   "Scorpio-Pisces": {
-    report: "Una de las amistades más profundas y empáticas del zodíaco. Ambos signos de agua se entienden a un nivel intuitivo. Escorpio protege a Piscis, y Piscis ofrece a Escorpio una comprensión incondicional. Amigos del alma.",
+    report: "Una amistad de almas gemelas. Como dos signos de agua, se entienden a un nivel intuitivo y emocional que pocos pueden comprender. Escorpio se convierte en el protector feroz del sensible y soñador Piscis. Piscis, a su vez, ofrece a Escorpio un espacio de aceptación incondicional donde puede bajar la guardia y ser vulnerable. Su vínculo es profundo, empático y casi mágico. Son el tipo de amigos que pueden comunicarse sin palabras y que guardarían los secretos del otro hasta la tumba.",
     score: 5
   },
   
   // Sagittarius Combinations
   "Sagittarius-Sagittarius": {
-    report: "El dúo de aventureros definitivo. Su amistad es un viaje sin fin, lleno de optimismo, risas y planes espontáneos. Se entienden perfectamente en su necesidad de libertad y espacio. El único riesgo es que ninguno de los dos se encargue de los detalles prácticos.",
+    report: "Los compañeros de aventura definitivos. Dos Sagitario juntos son un torbellino de optimismo, risas, viajes espontáneos y debates filosóficos que duran hasta el amanecer. Se entienden a la perfección en su necesidad de libertad, honestidad y nuevas experiencias. Su amistad es expansiva y nunca aburrida. El único riesgo es que ambos pueden ser un poco irresponsables con los detalles prácticos de la vida, y su honestidad brutal mutua puede llevar a discusiones explosivas (aunque generalmente se olvidan rápidamente).",
     score: 5
   },
   "Sagittarius-Capricorn": {
-    report: "El aventurero se encuentra con el estratega. Esta amistad es un caso de 'opuestos que se atraen'. Sagitario puede enseñar a Capricornio a relajarse y a disfrutar de la vida, mientras que Capricornio puede dar a Sagitario el enfoque que necesita para materializar sus grandes ideas. Respeto mutuo es la clave.",
+    report: "El explorador se encuentra con el arquitecto. Esta es una amistad de respeto mutuo, aunque sus estilos de vida son muy diferentes. Sagitario admira la disciplina y la capacidad de logro de Capricornio, mientras que Capricornio admira en secreto el coraje y el optimismo de Sagitario. Sagitario puede enseñar a Capricornio a relajarse y a disfrutar más del viaje, y Capricornio puede dar a Sagitario el enfoque que a veces necesita para convertir sus grandes ideas en realidad. La clave es la paciencia y valorar sus fortalezas complementarias.",
     score: 3
   },
   "Sagittarius-Aquarius": {
-    report: "Una amistad brillante, intelectual y llena de libertad. Ambos son idealistas y aman explorar nuevas ideas y lugares. Se entienden en su necesidad de independencia y su vida social es activa y diversa. Grandes compañeros de debate y aventura.",
+    report: "Una amistad brillante, idealista y con visión de futuro. Ambos son signos intelectuales que aman la libertad y las ideas innovadoras. Disfrutan de conversaciones sobre temas sociales, políticos y filosóficos. Se entienden en su necesidad de independencia y no hay lugar para la posesividad. Juntos, son excelentes compañeros para proyectos humanitarios, viajes poco convencionales o simplemente para cambiar el mundo, una idea a la vez. Su vínculo es más cerebral que emocional, pero increíblemente estimulante.",
     score: 5
   },
   "Sagittarius-Pisces": {
-    report: "El filósofo y el místico. Ambos regidos por Júpiter, comparten una búsqueda de significado. La honestidad brutal de Sagitario puede herir al sensible Piscis, pero si logran superarlo, su amistad será expansiva y muy inspiradora. Requiere tacto por parte de Sagitario y comprensión por parte de Piscis.",
+    report: "El filósofo y el místico. Ambos regidos por Júpiter, comparten una búsqueda de un significado más profundo en la vida. Sagitario busca la verdad a través de la exploración del mundo exterior, mientras que Piscis la busca a través de la exploración del mundo interior. Su amistad puede ser increíblemente inspiradora y expansiva. Sin embargo, la honestidad directa de Sagitario puede herir fácilmente la sensibilidad de Piscis, y la naturaleza evasiva de Piscis puede frustrar al directo Sagitario. Si logran comunicarse con compasión, su amistad puede ser mágica.",
     score: 3
   },
 
@@ -347,6 +347,7 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     
 
   
+
 
 
 
