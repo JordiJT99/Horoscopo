@@ -19,6 +19,14 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "Compañeros de trabajo increíblemente intuitivos y empáticos. Crean un ambiente laboral de apoyo y colaboración. Son ideales para profesiones creativas o de cuidado, donde la sensibilidad es una fortaleza.",
     score: 4
   },
+  "Cancer-Scorpio": {
+    report: "Un equipo increíblemente intuitivo y poderoso. Se entienden a un nivel profundo y son ferozmente leales. Excelentes para roles que requieren estrategia, profundidad y confianza. Pueden ser un poco cerrados con los demás.",
+    score: 5
+  },
+  "Cancer-Capricorn": {
+    report: "El eje hogar-carrera del zodíaco. Se complementan a la perfección en un entorno de negocios. Cáncer gestiona el bienestar emocional del equipo, mientras que Capricornio impulsa los objetivos empresariales. Un equipo formidable.",
+    score: 5
+  },
   "Leo-Libra": {
     report: "Un equipo con gran carisma y habilidades sociales. Leo lidera con confianza y Libra aporta diplomacia y estrategia. Juntos son excelentes en roles de cara al público, ventas, marketing y relaciones públicas.",
     score: 4
@@ -150,5 +158,29 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Gemini-Pisces": {
     report: "Un dúo altamente creativo e imaginativo. Ideal para las artes, la publicidad o campos espirituales. El desafío está en la comunicación: Géminis es lógico y Piscis es intuitivo. Necesitan un terreno común para no perderse en malentendidos.",
     score: 3
+  },
+  "Cancer-Cancer": {
+    report: "Un equipo increíblemente unido e intuitivo. Crean un ambiente de trabajo que se siente como una familia. Son muy protectores entre sí y excelentes en roles que requieren empatía y cuidado. Su desafío es no volverse demasiado emocionales o cerrados a nuevas ideas.",
+    score: 4
+  },
+  "Cancer-Leo": {
+    report: "El protector y el líder carismático. Cáncer se asegura de que el equipo esté feliz y motivado, mientras que Leo inspira y da la cara por el proyecto. Funciona bien si Leo valora el apoyo de Cáncer y Cáncer no se siente eclipsado por el brillo de Leo.",
+    score: 3
+  },
+  "Cancer-Virgo": {
+    report: "Una combinación laboral casi perfecta. Ambos son dedicados, responsables y orientados al servicio. Cáncer aporta la intuición y el cuidado, mientras que Virgo aporta la organización y la atención al detalle. Juntos, crean un producto o servicio de alta calidad y con un toque humano.",
+    score: 5
+  },
+  "Cancer-Libra": {
+    report: "Ambos buscan un ambiente de trabajo armonioso. Cáncer aporta la inteligencia emocional, mientras que Libra se destaca en la negociación y las relaciones públicas. Son un gran equipo para roles de servicio al cliente o gestión de equipos, aunque pueden evitar tomar decisiones difíciles.",
+    score: 3
+  },
+  "Cancer-Sagittarius": {
+    report: "Una mezcla desafiante. La necesidad de seguridad de Cáncer choca con el deseo de Sagitario de tomar riesgos y explorar. La comunicación directa de Sagitario puede herir la sensibilidad de Cáncer. Requiere mucho esfuerzo para alinear sus estilos de trabajo.",
+    score: 2
+  },
+  "Cancer-Aquarius": {
+    report: "El tradicionalista y el innovador. Cáncer prefiere métodos probados y un ambiente seguro, mientras que Acuario busca constantemente nuevas formas de hacer las cosas. Acuario puede parecer demasiado desapegado para Cáncer, y Cáncer demasiado emocional para Acuario. Una colaboración difícil.",
+    score: 2
   }
 };
