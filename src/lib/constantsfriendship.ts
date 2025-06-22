@@ -66,9 +66,17 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     report: "Una mezcla de tierra y aire. Tauro ofrece estabilidad, mientras que Géminis aporta diversión y novedad. Tauro puede encontrar a Géminis un poco inconsistente, y Géminis a Tauro un poco lento, pero pueden aprender mucho el uno del otro.",
     score: 3
   },
+  "Taurus-Cancer": {
+    report: "Una amistad natural y reconfortante. Ambos valoran la seguridad y el confort. Disfrutan de noches tranquilas en casa, buena comida y conversaciones sinceras. Tauro ofrece una estabilidad que Cáncer aprecia enormemente.",
+    score: 5
+  },
   "Taurus-Leo": {
     report: "Dos signos fijos que aprecian el lujo y la lealtad. Su amistad puede ser fuerte si superan la terquedad. Leo disfruta de la generosidad de Tauro, y Tauro de la calidez de Leo, pero pueden chocar por el control.",
     score: 3
+  },
+  "Taurus-Virgo": {
+    report: "Amigos leales y prácticos que siempre pueden contar el uno con el otro. Comparten un enfoque sensato de la vida y disfrutan de actividades tranquilas. Es una amistad sólida, basada en la confianza y el apoyo mutuo.",
+    score: 5
   },
   "Taurus-Libra": {
     report: "Ambos regidos por Venus, comparten un amor por la belleza y la armonía. Disfrutan de salidas culturales y una vida social tranquila. Libra ayuda a Tauro a socializar y Tauro ofrece a Libra una estabilidad reconfortante.",
@@ -95,11 +103,49 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     score: 4
   },
 
-  // Other existing combinations
-  "Taurus-Virgo": {
-    report: "Amigos leales y prácticos que siempre pueden contar el uno con el otro. Comparten un enfoque sensato de la vida y disfrutan de actividades tranquilas. Es una amistad sólida, basada en la confianza y el apoyo mutuo.",
+  // Gemini Combinations
+  "Gemini-Gemini": {
+    report: "Una amistad de alta energía, llena de chistes internos y conversaciones que saltan de un tema a otro. Nunca se aburren, pero pueden tener dificultades para profundizar o llevar a cabo sus planes. Pura diversión.",
+    score: 4
+  },
+  "Gemini-Cancer": {
+    report: "El ingenio de Géminis puede chocar con la sensibilidad de Cáncer. Si Géminis aprende a ser más empático y Cáncer a no tomarse todo tan a pecho, pueden disfrutar de una amistad donde uno anima al otro a salir de su caparazón.",
+    score: 3
+  },
+  "Gemini-Leo": {
+    report: "La pareja social perfecta. A Leo le encanta tener a Géminis cerca por su ingenio y habilidades sociales, y Géminis disfruta del carisma y la generosidad de Leo. Juntos son el alma de cualquier fiesta.",
+    score: 4
+  },
+  "Gemini-Virgo": {
+    report: "Dos mentes regidas por Mercurio, pero con enfoques diferentes. Géminis ama la variedad y Virgo el detalle. Pueden tener grandes debates, pero Virgo puede ver a Géminis como poco fiable, y Géminis a Virgo como demasiado crítico.",
+    score: 3
+  },
+  "Gemini-Libra": {
+    report: "Una amistad de Aire excepcionalmente fluida. Se entienden a nivel intelectual, disfrutan de la vida social y de largas conversaciones sobre cualquier tema. Se equilibran y se divierten muchísimo juntos.",
     score: 5
   },
+  "Gemini-Scorpio": {
+    report: "Géminis es un libro abierto, mientras que Escorpio es un misterio. Esta diferencia puede generar fascinación o desconfianza. La amistad requiere un esfuerzo consciente por entender las diferentes formas de ser del otro.",
+    score: 2
+  },
+  "Gemini-Sagittarius": {
+    report: "Opuestos que se atraen y se complementan. Ambos son curiosos, amantes de la libertad y del aprendizaje. Su amistad está llena de aventuras, viajes y debates filosóficos. Se dan el espacio que necesitan.",
+    score: 5
+  },
+  "Gemini-Capricorn": {
+    report: "Una amistad poco probable pero interesante. La ligereza de Géminis choca con la seriedad de Capricornio. Si encuentran un terreno común, Capricornio puede dar a Géminis el enfoque que necesita, y Géminis puede enseñar a Capricornio a relajarse.",
+    score: 2
+  },
+  "Gemini-Aquarius": {
+    report: "Una amistad brillante. Dos mentes innovadoras que se entienden a la perfección. Valoran la independencia mutua, las ideas originales y las conversaciones poco convencionales. Son grandes compañeros para proyectos humanitarios o tecnológicos.",
+    score: 5
+  },
+  "Gemini-Pisces": {
+    report: "La mente y el corazón. La lógica de Géminis puede chocar con la intuición de Piscis. Géminis puede herir sin querer los sentimientos de Piscis, pero si se esfuerzan, pueden tener una amistad muy creativa y llena de imaginación.",
+    score: 2
+  },
+
+  // Other existing combinations
   "Cancer-Scorpio": {
     report: "Una conexión emocional profunda y protectora. Se entienden sin necesidad de palabras y guardan los secretos del otro como si fueran propios. Es una amistad 'hasta la muerte', llena de lealtad e intensidad.",
     score: 5
@@ -115,9 +161,5 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
   "Capricorn-Pisces": {
     report: "Una amistad donde los sueños se encuentran con la realidad. Piscis inspira a Capricornio con su imaginación, y Capricornio ayuda a Piscis a poner los pies en la tierra. Se equilibran perfectamente.",
     score: 4
-  },
-  "Gemini-Scorpio": {
-    report: "Géminis es un libro abierto, mientras que Escorpio es un misterio. Esta diferencia puede generar fascinación o desconfianza. La amistad requiere un esfuerzo consciente por entender las diferentes formas de ser del otro.",
-    score: 2
   }
 };
