@@ -262,5 +262,25 @@ export const workCompatibilityPairings: Record<string, CompatibilityReportDetail
   "Libra-Pisces": {
     report: "El equipo creativo y compasivo. Perfectos para las artes, el diseño, la moda o campos de sanación. Libra aporta el sentido estético y el equilibrio, mientras que Piscis aporta la imaginación y la empatía. Su desafío es mantenerse organizados y enfocados en los objetivos prácticos.",
     score: 3
+  },
+  "Scorpio-Scorpio": {
+    report: "Dos Escorpio juntos son una fuerza imparable de intensidad y enfoque. Son un equipo de investigación de élite, capaces de descubrir cualquier secreto o resolver los problemas más complejos. Su lealtad es absoluta, pero las luchas de poder pueden ser un gran problema. La confianza total es esencial.",
+    score: 4
+  },
+  "Scorpio-Sagittarius": {
+    report: "El detective y el explorador. Escorpio se sumerge en la profundidad, mientras que Sagitario busca la visión general. Pueden chocar, ya que Escorpio puede ver a Sagitario como superficial, y Sagitario puede sentirse agobiado por la intensidad de Escorpio. Funcionan si Sagitario respeta la necesidad de Escorpio de ir al fondo del asunto.",
+    score: 2
+  },
+  "Scorpio-Capricorn": {
+    report: "Una 'power couple' del mundo laboral. La perspicacia de Escorpio combinada con la ambición y la disciplina de Capricornio crea un equipo formidable para cualquier objetivo. Ambos son estratégicos y orientados a resultados, construyendo planes sólidos y ejecutándolos con precisión.",
+    score: 5
+  },
+  "Scorpio-Aquarius": {
+    report: "El psicólogo y el futurista. Ambos son signos fijos con fuertes convicciones. Escorpio opera desde la emoción y la profundidad, mientras que Acuario lo hace desde la lógica y el desapego. Pueden chocar fuertemente, pero si unen sus perspectivas, pueden lograr innovaciones con un profundo impacto.",
+    score: 2
+  },
+  "Scorpio-Pisces": {
+    report: "Una conexión increíblemente intuitiva y creativa. Escorpio proporciona la estrategia y el enfoque, mientras que Piscis aporta la imaginación y la empatía. Juntos son un dúo increíble en campos artísticos, de sanación o de investigación, donde la intuición es clave. Se entienden sin palabras.",
+    score: 5
   }
 };
