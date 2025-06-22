@@ -147,103 +147,103 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
 
   // Cancer Combinations
   "Cancer-Cancer": {
-    report: "Una amistad increíblemente intuitiva y nutritiva. Crean un espacio seguro donde ambos pueden ser vulnerables. Su principal desafío es evitar caer en un ciclo de negatividad o codependencia. Son el refugio del otro.",
+    report: "Dos Cáncer juntos crean un vínculo de amistad increíblemente intuitivo, empático y nutritivo. Se entienden a un nivel emocional profundo, creando un espacio seguro donde ambos pueden ser vulnerables sin temor a ser juzgados. Son el tipo de amigos que se cuidan mutuamente, a menudo actuando como una segunda familia. Su principal desafío es evitar caer en un ciclo de negatividad o codependencia. Si uno está de mal humor, puede arrastrar fácilmente al otro. Sin embargo, en sus mejores momentos, son el refugio perfecto el uno para el otro, compartiendo un amor por el hogar y la comodidad.",
     score: 4
   },
   "Cancer-Leo": {
-    report: "El protector y el rey. Cáncer ofrece lealtad y apoyo incondicional, algo que Leo adora. Leo, a su vez, aporta calidez y diversión a la vida de Cáncer. La amistad es fuerte si Leo es cuidadoso con los sentimientos de Cáncer.",
+    report: "El protector y el rey. Esta es una amistad de lealtad y calidez. Cáncer se siente seguro con la fuerza y la generosidad de Leo, y disfruta cuidando de su amigo real. Leo, a su vez, adora la lealtad incondicional y el apoyo emocional que Cáncer le brinda. Leo saca a Cáncer de su caparazón para divertirse, mientras que Cáncer ofrece a Leo un refugio seguro. La amistad es fuerte si Leo es consciente y cuidadoso con los sentimientos de Cáncer, ya que su franqueza puede herir sin querer.",
     score: 3
   },
   "Cancer-Virgo": {
-    report: "Grandes amigos que se cuidan mutuamente. Cáncer se siente seguro con la naturaleza práctica y servicial de Virgo, y Virgo aprecia la calidez emocional y la lealtad de Cáncer. Es una amistad sólida y de apoyo.",
+    report: "Una amistad maravillosa basada en el cuidado y el servicio mutuo. Cáncer se siente seguro y atendido por la naturaleza práctica y detallista de Virgo, quien siempre está dispuesto a ayudar de forma tangible. A su vez, Virgo se siente profundamente apreciado y valorado por la calidez emocional y la lealtad de Cáncer. Es una amistad sólida, de apoyo y sin mucho drama, ideal para construir una confianza duradera y ayudarse en los asuntos cotidianos de la vida.",
     score: 4
   },
   "Cancer-Libra": {
-    report: "Ambos buscan armonía, pero de maneras diferentes. Cáncer busca seguridad emocional, mientras que Libra busca equilibrio social. Libra puede encontrar a Cáncer demasiado temperamental, y Cáncer a Libra demasiado distante. La amistad requiere un esfuerzo por entender sus diferentes necesidades.",
+    report: "Ambos signos buscan la armonía, pero de maneras muy diferentes. Cáncer anhela la seguridad emocional de un vínculo profundo, mientras que Libra busca el equilibrio y la paz en sus interacciones sociales. Libra puede encontrar a Cáncer demasiado temperamental o posesivo, y Cáncer puede ver a Libra como demasiado distante o superficial en sus emociones. Para que la amistad funcione, Libra debe hacer un esfuerzo por ofrecer un apoyo emocional más profundo, y Cáncer debe entender la necesidad de Libra de socializar y mantener la ligereza.",
     score: 3
   },
   "Cancer-Scorpio": {
-    report: "Una conexión emocional profunda y protectora. Se entienden sin necesidad de palabras y guardan los secretos del otro como si fueran propios. Es una amistad 'hasta la muerte', llena de lealtad e intensidad.",
+    report: "Una conexión de almas gemelas. Como dos signos de agua, se entienden a un nivel casi psíquico. Su amistad es profunda, intensa y ferozmente protectora. Guardarán los secretos del otro hasta la tumba. Cáncer se siente seguro con la fuerza de Escorpio, y Escorpio se siente libre de ser vulnerable con Cáncer. Pueden pasar horas hablando de sus sentimientos más profundos, creando un vínculo indestructible. Son el tipo de amigos que se defenderían mutuamente sin dudarlo.",
     score: 5
   },
   "Cancer-Sagittarius": {
-    report: "El casero y el aventurero. Cáncer necesita un nido, Sagitario necesita el mundo. La honestidad brutal de Sagitario puede herir al sensible Cáncer. Es una amistad difícil que requiere mucho espacio y comprensión.",
+    report: "El casero se encuentra con el aventurero. Cáncer necesita un nido seguro y rutinas, mientras que Sagitario necesita libertad y exploración constante. La honestidad brutal y sin filtros de Sagitario puede herir profundamente al sensible Cáncer. Esta amistad es un desafío. Sagitario puede ver a Cáncer como demasiado pegajoso, y Cáncer puede ver a Sagitario como poco fiable. Requiere mucho espacio, paciencia y comprensión para funcionar.",
     score: 2
   },
   "Cancer-Capricorn": {
-    report: "Opuestos que se atraen y se respetan. Cáncer admira la fortaleza y la disciplina de Capricornio. Capricornio, a su vez, se siente cuidado y apreciado por la lealtad de Cáncer. Juntos, forman un vínculo sólido y protector.",
+    report: "Opuestos en el zodíaco que se atraen y se respetan profundamente. Cáncer admira la fortaleza, la disciplina y la fiabilidad de Capricornio. Capricornio, aunque más reservado, se siente cuidado y valorado por la lealtad incondicional y el apoyo emocional de Cáncer. Cáncer aporta calidez y hogar a la vida de Capricornio, mientras que Capricornio aporta estructura y seguridad a la de Cáncer. Juntos, forman un vínculo sólido y protector, como una familia.",
     score: 4
   },
   "Cancer-Aquarius": {
-    report: "Una amistad complicada. Cáncer es personal y emocional, mientras que Acuario es más desapegado y orientado al grupo. Cáncer puede sentirse desatendido, y Acuario puede sentirse sofocado. La amistad funciona mejor en un contexto de grupo.",
+    report: "Una amistad complicada debido a sus diferentes enfoques de la vida. Cáncer es personal, subjetivo y emocional. Acuario es más desapegado, objetivo y orientado al grupo. Cáncer puede sentirse desatendido o como 'uno más' en la amplia red social de Acuario. A su vez, Acuario puede sentirse sofocado por las necesidades emocionales de Cáncer. La amistad funciona mejor cuando se basa en un interés o causa común, en lugar de una conexión puramente personal.",
     score: 2
   },
   "Cancer-Pisces": {
-    report: "Una amistad de ensueño. Dos signos de agua que se entienden a un nivel casi psíquico. Su vínculo es empático, compasivo y muy creativo. Son el tipo de amigos que pueden llorar y reír juntos en la misma conversación.",
+    report: "Una amistad de ensueño, salida de un cuento de hadas. Dos signos de agua que nadan en las mismas profundidades emocionales. Se entienden a un nivel casi telepático, compartiendo una conexión empática, compasiva y muy creativa. Son el tipo de amigos que pueden llorar y reír juntos en la misma conversación, apoyándose en sus sueños y vulnerabilidades. Crean un espacio seguro y mágico donde ambos pueden ser auténticos. Una de las mejores combinaciones de amistad.",
     score: 5
   },
 
   // Leo Combinations
   "Leo-Leo": {
-    report: "Una amistad cálida, generosa y muy divertida. Ambos son leales y se entienden en su necesidad de brillar. El principal desafío es la competencia por ser el centro de atención. Si lo convierten en un juego, serán los mejores animadores del otro.",
+    report: "Dos soles brillando juntos. Esta amistad es una explosión de calidez, generosidad, diversión y drama. Ambos son leales, de gran corazón y se entienden perfectamente en su necesidad de ser vistos y apreciados. Son los mejores animadores del otro, celebrando los éxitos a lo grande. Su principal desafío es la competencia por ser el centro de atención. Si logran compartir el escenario y celebrar el brillo del otro, serán una pareja de amigos imparable y magnética, el alma de cualquier fiesta.",
     score: 4
   },
   "Leo-Virgo": {
-    report: "El showman y el mánager. Virgo admira en secreto la confianza de Leo, y Leo valora la ayuda práctica de Virgo. La amistad funciona si Leo acepta la crítica constructiva y Virgo no apaga el brillo de Leo con demasiada preocupación.",
+    report: "El rey y su consejero. Leo, con su gran visión y carisma, se beneficia enormemente de la mente analítica y la ayuda práctica de Virgo. A su vez, Virgo admira en secreto la confianza y la calidez de Leo. La amistad funciona si Leo está dispuesto a aceptar la crítica constructiva (y a veces quisquillosa) de Virgo, y si Virgo aprende a no apagar el brillo de Leo con demasiada preocupación y análisis. Virgo mantiene a Leo con los pies en la tierra, y Leo ayuda a Virgo a disfrutar más de la vida.",
     score: 3
   },
   "Leo-Libra": {
-    report: "El dúo más glamuroso y social del zodíaco. A ambos les encanta la fiesta, el arte y la buena vida. Libra sabe cómo halagar a Leo, y Leo admira el estilo de Libra. Juntos, son irresistibles y siempre están rodeados de gente.",
+    report: "El dúo más glamuroso y social del zodíaco. Ambos aman la fiesta, el arte, la belleza y una vida social activa. Libra sabe instintivamente cómo halagar el ego de Leo, y Leo admira profundamente el estilo, la gracia y la diplomacia de Libra. Juntos, son una pareja de amigos irresistible, siempre rodeados de gente y disfrutando de las cosas buenas de la vida. Su vínculo se basa en la admiración mutua y la búsqueda de la armonía y el placer.",
     score: 4
   },
   "Leo-Scorpio": {
-    report: "Dos voluntades de hierro. Es una amistad de todo o nada, basada en una lealtad y un respeto extremos. Si se hacen amigos, se defenderán a muerte. Pero si chocan, la lucha de poder puede ser épica. Ambos son fijos y orgullosos.",
+    report: "Dos voluntades de hierro y dos corazones leales. Esta es una amistad de 'todo o nada', basada en un respeto y una intensidad extremos. Si se hacen amigos, se defenderán a muerte, compartiendo una lealtad inquebrantable. Pero si chocan, la lucha de poder puede ser épica. Ambos son signos fijos y orgullosos, y ninguno cede fácilmente. Es una amistad poderosa, magnética y potencialmente transformadora, pero no para los débiles de corazón.",
     score: 3
   },
   "Leo-Sagittarius": {
-    report: "Compañeros de fiesta y aventura por excelencia. Ambos son optimistas, extrovertidos y aman la vida. Se animan mutuamente a ser más audaces y a explorar el mundo. Su energía combinada es contagiosa.",
+    report: "Compañeros de fiesta y aventura por excelencia. Dos signos de Fuego que se entienden a la perfección. Ambos son optimistas, extrovertidos, generosos y aman la vida. Se animan mutuamente a ser más audaces, a viajar, a aprender y a explorar el mundo. Su energía combinada es contagiosa y su amistad está llena de risas, honestidad y un apoyo incondicional. Nunca hay un momento aburrido entre ellos.",
     score: 5
   },
   "Leo-Capricorn": {
-    report: "Una amistad basada en la admiración mutua por el poder y el estatus. Leo admira la ambición de Capricornio, y Capricornio respeta el liderazgo de Leo. Pueden chocar en sus estilos: Leo es extravagante, Capricornio es conservador.",
+    report: "Una amistad basada en la admiración mutua por el poder, la ambición y el estatus. Leo admira la disciplina y la capacidad de logro de Capricornio, y Capricornio respeta el liderazgo natural y el carisma de Leo. Pueden chocar en sus estilos de vida: Leo es extravagante y busca el placer, mientras que Capricornio es más conservador y enfocado en el trabajo. Sin embargo, pueden ser un gran apoyo el uno para el otro en sus respectivas carreras, formando una alianza poderosa.",
     score: 2
   },
   "Leo-Aquarius": {
-    report: "Opuestos que se atraen. Leo es el rey, Acuario es el pueblo. Leo es personal, Acuario es universal. Se fascinan mutuamente por sus diferencias. Juntos pueden ser una fuerza creativa e influyente, si respetan sus distintos enfoques.",
+    report: "Opuestos polares que se atraen magnéticamente. Leo representa el 'yo' y el corazón, mientras que Acuario representa el 'nosotros' y la mente. Leo es el rey, Acuario es el pueblo. Se fascinan mutuamente por sus diferencias. Juntos pueden ser una fuerza creativa e influyente increíble, si respetan sus distintos enfoques. Leo enseña a Acuario a ser más cálido y personal, y Acuario enseña a Leo a pensar en el colectivo. Su amistad es estimulante y nunca aburrida.",
     score: 4
   },
   "Leo-Pisces": {
-    report: "El protector y el protegido. Leo se siente atraído por la naturaleza soñadora y gentil de Piscis, y a menudo adopta un papel de guardián. Piscis, a su vez, ofrece a Leo una audiencia devota y una profunda comprensión emocional.",
+    report: "El protector y el soñador. El fuerte y confiado Leo se siente instintivamente atraído por la naturaleza gentil, empática y a veces vulnerable de Piscis, y a menudo adopta un papel de guardián. Piscis, a su vez, ofrece a Leo una audiencia devota, una admiración genuina y una profunda comprensión emocional que calma el corazón del león. Es una amistad muy teatral y romántica, donde la compasión y la creatividad fluyen libremente.",
     score: 3
   },
 
   // Virgo Combinations
   "Virgo-Virgo": {
-    report: "Una amistad de mutua comprensión y perfeccionismo. Se entienden en su necesidad de orden y eficiencia. Pueden ser los mejores consejeros el uno del otro. El único riesgo es caer en un ciclo de crítica o preocupación mutua.",
+    report: "Una amistad basada en una profunda comprensión mutua y un perfeccionismo compartido. Se entienden en su necesidad de orden, eficiencia y mejora constante. Son los mejores consejeros el uno para el otro, ofreciendo consejos prácticos y un apoyo tangible. Juntos, pueden organizar cualquier cosa. El único riesgo es caer en un ciclo de crítica o preocupación mutua, donde ambos amplifican sus ansiedades. Si se enfocan en apoyarse en lugar de 'arreglarse', su vínculo es increíblemente sólido.",
     score: 4
   },
   "Virgo-Libra": {
-    report: "Una amistad refinada. Virgo aprecia el buen gusto y la diplomacia de Libra. Libra valora la inteligencia y la fiabilidad de Virgo. Libra puede ayudar a Virgo a socializar, y Virgo puede ayudar a Libra a ser más decidido.",
+    report: "Una amistad refinada y civilizada. El analítico Virgo aprecia el buen gusto, la diplomacia y el sentido de la justicia de Libra. Libra, a su vez, valora la inteligencia, la fiabilidad y la atención al detalle de Virgo. Libra puede ayudar a Virgo a socializar y a ver las cosas desde una perspectiva más equilibrada, mientras que Virgo puede ayudar a Libra a ser más decidido y a organizar sus ideas. Es una amistad agradable, aunque a veces la crítica de Virgo puede alterar la paz de Libra.",
     score: 3
   },
   "Virgo-Scorpio": {
-    report: "Una amistad de profunda confianza y análisis. Ambos son signos observadores e inteligentes. Virgo se siente seguro con la lealtad de Escorpio, y Escorpio respeta la mente aguda de Virgo. Son excelentes para resolver problemas juntos.",
+    report: "Una amistad de profunda confianza, análisis y lealtad. Ambos son signos observadores, inteligentes y prefieren la sustancia a la superficialidad. Virgo se siente seguro con la lealtad inquebrantable de Escorpio, y Escorpio respeta profundamente la mente aguda y la integridad de Virgo. Son excelentes para resolver problemas juntos, ya que Virgo analiza los detalles y Escorpio percibe las motivaciones ocultas. Un equipo de detectives formidable.",
     score: 5
   },
   "Virgo-Sagittarius": {
-    report: "El planificador y el aventurero. Virgo se estresa con la falta de planificación de Sagitario, y Sagitario se siente limitado por la cautela de Virgo. Pueden aprender mucho el uno del otro si están dispuestos a salir de su zona de confort.",
+    report: "El planificador meticuloso se encuentra con el aventurero filosófico. Esta es una amistad de cuadratura, lo que significa que hay tensión y mucho que aprender. Virgo se estresa con la falta de planificación y la imprudencia de Sagitario. Sagitario se siente limitado por la cautela y la preocupación por los detalles de Virgo. Para que funcione, deben valorar sus diferencias. Virgo puede enseñar a Sagitario a ser más organizado, y Sagitario puede enseñar a Virgo a tener una visión más amplia y a relajarse.",
     score: 2
   },
   "Virgo-Capricorn": {
-    report: "La amistad de tierra perfecta. Se entienden en su ética de trabajo, sus valores prácticos y su lealtad. Es una amistad sólida, de apoyo y sin dramas. Son el tipo de amigos que siempre están ahí, pase lo que pase.",
+    report: "La amistad de tierra por excelencia. Es una de las combinaciones más sólidas y fiables del zodíaco. Se entienden a la perfección en su ética de trabajo, sus valores prácticos y su lealtad. Es una amistad de bajo mantenimiento pero de alto rendimiento, basada en el apoyo mutuo, el respeto y la admiración. Son el tipo de amigos que siempre están ahí, pase lo que pase, ofreciendo consejos sensatos y ayuda práctica. Una amistad para toda la vida.",
     score: 5
   },
   "Virgo-Aquarius": {
-    report: "Una amistad cerebral. Ambos son inteligentes y disfrutan de un buen debate. Virgo puede ayudar a Acuario a poner en práctica sus ideas, y Acuario puede ayudar a Virgo a pensar de forma más amplia. Respetan la mente del otro.",
+    report: "Una amistad principalmente cerebral. Ambos son inteligentes, analíticos y disfrutan de un buen debate. Virgo puede ayudar a Acuario a poner en práctica sus ideas revolucionarias con planes concretos, y Acuario puede ayudar a Virgo a pensar de forma más abstracta y a ver el panorama general. Respetan la mente del otro, aunque Virgo puede encontrar a Acuario demasiado excéntrico y Acuario puede ver a Virgo como demasiado convencional.",
     score: 3
   },
   "Virgo-Pisces": {
-    report: "Opuestos que se complementan. Virgo ancla al soñador Piscis a la realidad, y Piscis ayuda al ansioso Virgo a relajarse y a confiar en la intuición. Es una amistad de servicio y sanación mutua. Muy especial.",
+    report: "Opuestos polares que se complementan de una manera casi mágica. El práctico Virgo ancla al soñador Piscis a la realidad, ofreciéndole la estructura y el apoyo que necesita. A su vez, el compasivo Piscis ayuda al ansioso y autocrítico Virgo a relajarse, a perdonarse y a confiar en la intuición. Es una amistad de servicio y sanación mutua. Virgo cuida de Piscis en lo práctico, y Piscis cuida del alma de Virgo. Un vínculo muy especial.",
     score: 4
   },
 
@@ -347,6 +347,7 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
     
 
   
+
 
 
 
