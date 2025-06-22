@@ -401,7 +401,6 @@ export default function AstroVibesHomePageContent({
   }
 
   const motionDivKey = `${selectedDisplaySignName}-${activeHoroscopePeriodForTitles}-${targetDate || 'no-date'}-${isPersonalizedRequestActive}`;
-  const isTomorrowView = activeHoroscopePeriodForTitles === 'tomorrow';
 
   return (
     <div className="flex flex-col">
@@ -475,15 +474,12 @@ export default function AstroVibesHomePageContent({
           >
             <div className={cn("mb-2 sm:mb-3 px-1")}>
               <h2 className={cn(
-                "font-semibold font-headline text-foreground flex items-center",
-                isTomorrowView 
-                  ? "text-center uppercase font-bold text-3xl sm:text-4xl md:text-5xl bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 text-transparent bg-clip-text py-2 mx-auto" 
-                  : "text-xl sm:text-2xl" 
+                "font-semibold font-headline text-foreground flex items-center text-xl sm:text-2xl"
               )}>
-                {!isTomorrowView && <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6 mr-1.5 sm:mr-2 text-muted-foreground" />}
+                <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6 mr-1.5 sm:mr-2 text-muted-foreground" />
                 {dictionary[pageTitleKey] || "Horoscope Details"}
                  {isPersonalizedRequestActive && userSunSign?.name === selectedDisplaySignName && onboardingData?.name && (
-                  <span className={cn("text-base sm:text-lg text-primary ml-1.5", isTomorrowView && "text-xl sm:text-2xl text-primary")}>({onboardingData.name})</span>
+                  <span className={cn("text-base sm:text-lg text-primary ml-1.5")}>({onboardingData.name})</span>
                 )}
               </h2>
             </div>
@@ -504,22 +500,21 @@ export default function AstroVibesHomePageContent({
 
             <div className="space-y-3 sm:space-y-4">
               {detailedHoroscopeCategories.map((cat) => (
-                <div key={`${cat.id}-${motionDivKey}-detail`} className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4", isTomorrowView && "text-center")}>
+                <div key={`${cat.id}-${motionDivKey}-detail`} className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4")}>
                   <h3 className={cn(
-                    "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center",
-                    isTomorrowView ? "text-2xl sm:text-3xl font-bold justify-center" : "text-lg sm:text-xl"
+                    "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl"
                   )}>
-                    <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
+                    <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2")} />
                     {dictionary[cat.titleKey]}
                   </h3>
                   {isHoroscopeLoading ? (
-                    <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
+                    <div className={cn("space-y-1.5")}>
                       <Skeleton className="h-4 w-full font-body" />
                       <Skeleton className="h-4 w-5/6 font-body" />
                       <Skeleton className="h-4 w-3/4 font-body" />
                     </div>
                   ) : (
-                    <p className={cn("font-body text-sm text-foreground/80 leading-relaxed", isTomorrowView && "text-base")}>
+                    <p className={cn("font-body text-sm text-foreground/80 leading-relaxed")}>
                       {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
                     </p>
                   )}
@@ -528,13 +523,12 @@ export default function AstroVibesHomePageContent({
               {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
                   <div key={`skeleton-cat-${index}`} className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4">
                     <h3 className={cn(
-                      "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center", 
-                      isTomorrowView ? "text-2xl sm:text-3xl font-bold justify-center" : "text-lg sm:text-xl"
+                      "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl" 
                     )}>
-                        <ContentSparklesIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2", isTomorrowView && "mr-2 sm:mr-2.5" )} />
+                        <ContentSparklesIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" )} />
                         {dictionary['HoroscopeSection.loading'] || "Loading..."}
                     </h3>
-                    <div className={cn("space-y-1.5", isTomorrowView && "mx-auto w-3/4")}>
+                    <div className={cn("space-y-1.5")}>
                       <Skeleton className="h-4 w-full font-body" />
                       <Skeleton className="h-4 w-5/6 font-body" />
                       <Skeleton className="h-4 w-3/4 font-body" />
