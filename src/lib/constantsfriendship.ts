@@ -315,31 +315,31 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
 
   // Capricorn Combinations
   "Capricorn-Capricorn": {
-    report: "Una amistad sólida como una montaña, basada en el respeto, la lealtad y la ambición compartida. Se entienden en su necesidad de trabajar duro y alcanzar metas. Son el apoyo más fiable el uno para el otro. Su único riesgo es volverse demasiado serios.",
+    report: "Una amistad sólida como una montaña, basada en el respeto, la lealtad y la ambición compartida. Dos Capricornio se entienden a un nivel profundo, apreciando la disciplina, la ética de trabajo y el humor seco del otro. Son el tipo de amigos que se apoyan en sus metas profesionales y personales, ofreciendo consejos prácticos y un apoyo inquebrantable. Su vínculo se construye lentamente pero está hecho para durar. Su único riesgo es volverse demasiado serios o competitivos entre sí. Si aprenden a relajarse y a disfrutar juntos de sus logros, su amistad es una fortaleza.",
     score: 4
   },
   "Capricorn-Aquarius": {
-    report: "El tradicionalista y el innovador. Capricornio se basa en las reglas, mientras que Acuario las rompe. Pueden tener debates fascinantes si Capricornio se abre a nuevas ideas y Acuario respeta la sabiduría de la experiencia. Una amistad basada en el respeto intelectual.",
+    report: "El tradicionalista y el innovador. Capricornio se basa en las reglas y la estructura, mientras que Acuario busca romperlas. Esta amistad se basa en un respeto intelectual mutuo, aunque sus enfoques de la vida son opuestos. Capricornio puede admirar la genialidad de Acuario, y Acuario puede respetar la capacidad de Capricornio para construir cosas duraderas. Pueden tener debates fascinantes si Capricornio se abre a nuevas ideas y Acuario valora la sabiduría de la experiencia. La clave es no intentar cambiarse el uno al otro.",
     score: 3
   },
   "Capricorn-Pisces": {
-    report: "Una amistad donde los sueños se encuentran con la realidad. Piscis inspira a Capricornio con su imaginación, y Capricornio ayuda a Piscis a poner los pies en la tierra. Se equilibran perfectamente.",
+    report: "Una amistad donde los sueños se encuentran con la realidad. Capricornio, el signo de tierra pragmático, ofrece la estabilidad y la estructura que el soñador Piscis necesita para sentirse seguro. A su vez, Piscis aporta imaginación, compasión y una profunda conexión emocional a la vida de Capricornio, ayudándole a suavizar sus bordes. Se equilibran perfectamente, con Capricornio anclando a Piscis y Piscis inspirando a Capricornio. Es un vínculo de apoyo y muy gratificante para ambos.",
     score: 4
   },
 
   // Aquarius Combinations
   "Aquarius-Aquarius": {
-    report: "Una amistad de mentes brillantes y espíritus libres. Son los mejores amigos para debatir sobre ideas revolucionarias y trabajar en proyectos humanitarios. Se entienden en su necesidad de independencia y no hay lugar para el drama. Su único riesgo es que la amistad sea más intelectual que emocional.",
+    report: "Una amistad de mentes brillantes y espíritus libres. Dos Acuario juntos son una fuerza de innovación y pensamiento no convencional. Se entienden en su necesidad de independencia, su amor por las causas humanitarias y su desdén por las normas sociales. Son los mejores amigos para debatir sobre ideas revolucionarias, ir a una protesta o simplemente observar a la gente. Su único riesgo es que la amistad sea tan cerebral y desapegada que carezca de una conexión emocional profunda. Si logran compartir sus vulnerabilidades, el vínculo se vuelve inquebrantable.",
     score: 4
   },
   "Aquarius-Pisces": {
-    report: "El visionario y el soñador. Acuario se siente atraído por la compasión y la creatividad de Piscis, y Piscis admira la mente brillante de Acuario. Pueden tener una amistad muy inspiradora si Acuario no hiere los sentimientos de Piscis con su desapego, y Piscis no agobia a Acuario con sus necesidades emocionales.",
+    report: "El visionario y el soñador. Acuario se siente atraído por la compasión, la creatividad y la naturaleza mística de Piscis. Piscis, a su vez, admira la mente brillante, los ideales humanitarios y la originalidad de Acuario. Juntos, pueden formar una amistad muy inspiradora y creativa. Acuario puede dar voz a las ideas de Piscis, y Piscis puede enseñar a Acuario sobre la empatía y el poder de la intuición. Si Acuario es cuidadoso con los sentimientos de Piscis y Piscis respeta la necesidad de espacio de Acuario, su amistad puede ser una hermosa mezcla de mente y alma.",
     score: 3
   },
 
   // Pisces Combinations
   "Pisces-Pisces": {
-    report: "Una amistad de almas gemelas. Se entienden a un nivel profundo, empático y casi telepático. Crean un espacio seguro para sus sueños y vulnerabilidades. El único peligro es que ambos se pierdan en un mundo de fantasía y eviten la realidad, o que se absorban mutuamente en sus estados de ánimo melancólicos.",
+    report: "Una amistad de almas gemelas que nadan en el mismo océano de emociones, sueños y compasión. Se entienden a un nivel profundo, empático y casi telepático, creando un espacio seguro donde ambos pueden ser completamente vulnerables. Es un vínculo lleno de creatividad, apoyo emocional y una profunda conexión espiritual. El único peligro es que ambos pueden perderse en un mundo de fantasía y evadir las responsabilidades de la vida real, o que pueden absorberse mutuamente en sus estados de ánimo melancólicos. Si se ayudan a mantener un pie en la realidad, su amistad es un refugio mágico y sanador.",
     score: 4
   }
 };
@@ -352,3 +352,6 @@ export const friendshipCompatibilityPairings: Record<string, CompatibilityReport
 
 
 
+
+
+  
