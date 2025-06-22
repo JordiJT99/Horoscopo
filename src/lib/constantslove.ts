@@ -291,6 +291,10 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
     report: "El explorador se encuentra con el visionario. Esta pareja de Fuego y Aire es una combinación intelectual, independiente y orientada al futuro. Ambos son signos muy sociales que valoran la amistad y la libertad por encima de todo. Su relación se basa en un profundo respeto mutuo por sus mentes y sus ideales. Fortalezas: Son mejores amigos y amantes. Disfrutan de conversaciones estimulantes sobre temas humanitarios, sociales y filosóficos. Ambos respetan la necesidad de espacio del otro y no hay lugar para los celos o la posesividad. Juntos, pueden trabajar para hacer del mundo un lugar mejor. Desafíos: La conexión emocional puede ser un desafío. Ambos pueden ser un poco distantes y prefieren racionalizar los sentimientos. Sagitario es más pasional y directo, mientras que Acuario es más desapegado y mental. Clave del éxito: Fomentar la amistad como la base de su amor. Deben encontrar causas y proyectos comunes que los apasionen. Sagitario puede enseñar a Acuario a ser más cálido, y Acuario puede ayudar a Sagitario a canalizar su energía hacia ideales más grandes.",
     score: 4
   },
+  "Sagittarius-Pisces": {
+    report: "El filósofo se encuentra con el místico. Ambos regidos tradicionalmente por Júpiter, comparten una búsqueda de significado más allá de lo mundano. Sagitario busca la verdad a través de la aventura y el conocimiento, mientras que Piscis la busca a través de la conexión espiritual y la empatía. Fortalezas: Su conexión puede ser profundamente espiritual y expansiva. Ambos son compasivos y de mente abierta, lo que les permite aceptar sus excentricidades. Pueden inspirarse mutuamente a soñar en grande. Desafíos: La honestidad directa de Sagitario puede herir profundamente al sensible Piscis. Piscis necesita intimidad emocional, mientras que Sagitario necesita libertad sin ataduras, lo que puede generar malentendidos. Sagitario vive en el mundo, Piscis en sus sueños. Clave del éxito: Sagitario debe aprender a ser más delicado con sus palabras, y Piscis debe desarrollar una piel un poco más gruesa y respetar la necesidad de independencia de Sagitario. Conectar a través de sus intereses espirituales y filosóficos puede ser su mayor fortaleza.",
+    score: 3
+  },
   "Capricorn-Taurus": {
     report: "Una 'power couple' de manual. Dos signos de Tierra que se entienden a un nivel profundo, práctico y sensual. Ambos valoran la seguridad, la lealtad y las cosas buenas de la vida, trabajando juntos para construir un futuro sólido y confortable. Fortalezas: Una lealtad inquebrantable y un profundo respeto mutuo. Tauro aporta calidez y sensualidad, mientras que Capricornio aporta estructura y ambición. Juntos, son un equipo imparable capaz de construir un imperio. Desafíos: La terquedad es su mayor enemigo, elevada al cuadrado. Ambos pueden ser increíblemente rígidos en sus opiniones, lo que puede llevar a estancamientos. También corren el riesgo de que la relación se vuelva demasiado predecible o materialista, olvidando la espontaneidad. Clave del éxito: Aprender a ser flexibles y a ceder. Deben hacer un esfuerzo consciente por inyectar romance y novedad en su vida, celebrando sus logros en lugar de simplemente planificar el siguiente. Su conexión física es un pilar fundamental.",
     score: 5
@@ -308,20 +312,4 @@ export const loveCompatibilityPairings: Record<string, CompatibilityReportDetail
     score: 4
   }
 };
-    
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
     
