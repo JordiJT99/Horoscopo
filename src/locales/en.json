@@ -646,13 +646,23 @@
   "UpcomingPhase.sampleDate3": "Sample 3",
   "UpcomingPhase.sampleDate4": "Sample 4",
   "Data.notAvailable": "N/A",
-  "NatalChartPage.title": "Natal Chart",
-  "NatalChartPage.underDevelopmentMessage": "This feature is currently under development. Please check back later!",
-  "NatalChartPage.detailLevel.label": "Select Detail Level",
-  "NatalChartPage.detailLevel.basic": "Basic",
-  "NatalChartPage.detailLevel.advanced": "Advanced",
-  "NatalChartPage.detailLevel.spiritual": "Spiritual",
-  "NatalChartPage.explanations": {
+  "NatalChartPage": {
+ "title": "Natal Chart",
+    "underDevelopmentMessage": "This feature is currently under development. Please check back later!",
+    "detailLevel": {
+ "label": "Select Detail Level",
+ "basic": "Basic",
+ "advanced": "Advanced",
+ "spiritual": "Spiritual"
+ },
+ "sunTitle": "The Sun in Your Natal Chart",
+    "moonTitle": "The Moon in Your Natal Chart",
+    "ascendantTitle": "The Ascendant in Your Natal Chart",
+    "personalPlanetsTitle": "Personal Planets",
+    "transpersonalPlanetsTitle": "Transpersonal Planets",
+    "housesTitle": "The Astrological Houses",
+    "aspectsTitle": "Important Aspects",
+    "explanations": {
     "sun": {
       "basic": "Your Sun sign represents your core identity, ego, and conscious will. It's your basic nature.",
       "advanced": "The Sun sign signifies your vital force, how you express your individuality, and your potential for growth and self-realization. It indicates the central themes and energies that drive you.",
@@ -689,7 +699,6 @@
       "spiritual": "Aspects represent the karmic patterns and divine connections influencing your soul's evolution. They show the opportunities and challenges you face in aligning with your higher purpose."
     }
   }
+  }
 }
-
-    
 

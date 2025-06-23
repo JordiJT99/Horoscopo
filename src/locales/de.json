@@ -619,7 +619,63 @@
   "UpcomingPhase.sampleDate2": "Beispiel 2",
   "UpcomingPhase.sampleDate3": "Beispiel 3",
   "UpcomingPhase.sampleDate4": "Beispiel 4",
-  "Data.notAvailable": "k.A."
+  "Data.notAvailable": "k.A.",
+  "NatalChartPage": {
+    "title": "Geburtshoroskop",
+    "underDevelopmentMessage": "Diese Funktion wird derzeit entwickelt. Bitte schauen Sie später wieder vorbei!",
+    "detailLevel": {
+      "label": "Detailstufe auswählen",
+      "basic": "Basis",
+      "advanced": "Erweitert",
+      "spiritual": "Spirituell"
+    },
+    "explanations": {
+      "sun": {
+        "basic": "Ihr Sonnenzeichen repräsentiert Ihre Kernidentität, Ihr Ego und Ihren bewussten Willen. Es ist Ihre grundlegende Natur.",
+        "advanced": "Das Sonnenzeichen symbolisiert Ihre Lebenskraft, wie Sie Ihre Individualität ausdrücken und Ihr Potenzial für Wachstum und Selbstverwirklichung. Es zeigt die zentralen Themen und Energien, die Sie antreiben.",
+        "spiritual": "Die Sonne repräsentiert das innere spirituelle Licht, Ihre wahre Essenz und den Weg zur Erfüllung Ihres Seelenzwecks. Es geht darum, Ihren bewussten Willen mit dem göttlichen Funken auszurichten."
+      },
+      "moon": {
+        "basic": "Ihr Mondzeichen spiegelt Ihre emotionale Natur, Instinkte und unterbewussten Gewohnheiten wider. Es ist, wie Sie innerlich reagieren und fühlen.",
+        "advanced": "Das Mondzeichen regiert Ihre emotionalen Reaktionen, Ihr Bedürfnis nach Sicherheit und Ihre unbewussten Verhaltensmuster. Es zeigt Ihre innere Welt und wie Sie Trost suchen.",
+        "spiritual": "Der Mond repräsentiert Ihre intuitive Weisheit, Ihre Verbindung zum göttlich Weiblichen und Ihre Fähigkeit zu Empathie und emotionaler Heilung. Es geht darum, Ihre Seele zu nähren und Ihrer inneren Führung zu vertrauen."
+      },
+      "ascendant": {
+        "basic": "Ihr Aszendent (aufsteigendes Zeichen) ist, wie andere Sie sehen und wie Sie sich der Welt präsentieren. Es ist Ihre äußere Persönlichkeit.",
+        "advanced": "Der Aszendent ist die Maske, die Sie tragen, Ihre erste Reaktion auf neue Situationen und Ihr physisches Erscheinungsbild. Er gibt den Ton für Ihre gesamte Horoskopkarte an und beeinflusst, wie Sie Dinge beginnen.",
+        "spiritual": "Der Aszendent repräsentiert die Lektionen, die Sie hier lernen sollen, und den Weg des persönlichen Wachstums in diesem Leben. Es geht darum, Ihre äußere Ausdrucksweise bewusst zu entwickeln, um sie mit Ihrer inneren Wahrheit in Einklang zu bringen."
+      },
+      "personalPlanets": {
+        "basic": "Persönliche Planeten (Merkur, Venus, Mars) zeigen Ihre Kommunikations-, Liebes- und Handlungsstile.",
+        "advanced": "Merkur (Verstand, Kommunikation), Venus (Liebe, Werte, Harmonie) und Mars (Energie, Handlung, Verlangen) repräsentieren Ihre Kerntriebe und wie Sie auf persönlicher Ebene mit der Welt interagieren.",
+        "spiritual": "Persönliche Planeten spiegeln wider, wie Sie Ihre Gedanken, Gefühle und Handlungen auf Ihrer spirituellen Reise integrieren. Sie sind Werkzeuge für bewusste Schöpfung und Selbstausdruck."
+      },
+      "transpersonalPlanets": {
+        "basic": "Transpersonale Planeten (Jupiter, Saturn, Uranus, Neptun, Pluto) repräsentieren breitere Themen wie Wachstum, Disziplin, Veränderung, Intuition und Transformation.",
+        "advanced": "Diese äußeren Planeten beeinflussen kollektive Trends und Ihr höheres Bewusstsein. Jupiter (Expansion), Saturn (Struktur, Herausforderungen), Uranus (Innovation), Neptun (Träume, Spiritualität) und Pluto (Transformation, Macht) prägen Ihre Entwicklung auf größerer Ebene.",
+        "spiritual": "Transpersonale Planeten sind Kanäle für göttliche Energie und Katalysatoren für spirituelles Erwachen. Sie fordern Sie heraus, Ihr Ego zu überwinden und sich mit universellen Kräften zu verbinden."
+      },
+      "houses": {
+        "basic": "Die 12 Häuser des Tierkreises repräsentieren verschiedene Lebensbereiche, in denen die Energien der Planeten zum Ausdruck kommen.",
+        "advanced": "Jedes Haus regiert spezifische Aspekte Ihres Lebens, wie z.B. das Selbst (1.), Finanzen (2.), Kommunikation (3.), Zuhause (4.), Kreativität (5.), Arbeit (6.), Beziehungen (7.), Transformation (8.), Philosophie (9.), Karriere (10.), Gemeinschaft (11.) und Spiritualität (12.).",
+        "spiritual": "Die Häuser sind die Bühnen der Reise Ihrer Seele, auf denen Sie Lektionen und Möglichkeiten für spirituelles Wachstum erfahren. Sie zeigen, wo und wie Sie kosmische Energien in Ihr irdisches Leben integrieren können."
+      },
+      "aspects": {
+        "basic": "Aspekte sind Winkel zwischen Planeten, die zeigen, wie ihre Energien interagieren (einfach oder herausfordernd).",
+        "advanced": "Wichtige Aspekte wie Konjunktion (Vereinigung), Opposition (Spannung), Trigon (Harmonie), Quadrat (Herausforderung) und Sextil (Gelegenheit) beschreiben die dynamischen Beziehungen zwischen planetarischen Energien und enthüllen Ihre Stärken und Wachstumsbereiche.",
+        "spiritual": "Aspekte repräsentieren die karmischen Muster und göttlichen Verbindungen, die die Evolution Ihrer Seele beeinflussen. Sie zeigen die Chancen und Herausforderungen, denen Sie bei der Ausrichtung auf Ihren höheren Zweck begegnen."
+      }
+    },
+    "sunTitle": "Die Sonne in Ihrem Geburtshoroskop",
+    "moonTitle": "Der Mond in Ihrem Geburtshoroskop",
+    "ascendantTitle": "Der Aszendent in Ihrem Geburtshoroskop",
+    "personalPlanetsTitle": "Persönliche Planeten",
+    "transpersonalPlanetsTitle": "Transpersonale Planeten",
+    "housesTitle": "Die Astrologischen Häuser",
+    "aspectsTitle": "Wichtige Aspekte"
+  }
 }
+
+
 
     
