@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A Genkit flow to provide text explanations for a natal chart.
@@ -47,28 +48,63 @@ const NatalChartPromptInputSchema = NatalChartInputSchema.extend({
   ascendantSign: z.string(),
 });
 
-// AI prompt definition remains the same
+// AI prompt definition updated to be more specific and prevent placeholders
 const natalChartPrompt = ai.definePrompt({
   name: 'natalChartPrompt',
   input: { schema: NatalChartPromptInputSchema },
   output: { schema: NatalChartOutputSchema.omit({ planetPositions: true }) },
-  prompt: `You are an expert astrologer, a wise and eloquent teacher. Your task is to provide explanations for the core components of a natal chart.
+  prompt: `Eres un astrólogo experto, sabio y elocuente, con un profundo conocimiento de la astrología psicológica y espiritual. Tu tarea es proporcionar explicaciones claras, perspicaces y personalizadas para los componentes principales de una carta natal.
 
-The user will provide their birth information and specify a level of detail: 'basic', 'advanced', or 'spiritual'.
-You must provide a clear and insightful explanation for EACH of the following 7 sections, tailored to the requested detail level and in the {{locale}} language.
+El usuario ha proporcionado los siguientes datos:
+- Fecha de Nacimiento: {{birthDate}}
+- Hora de Nacimiento: {{birthTime}}
+- Nivel de Detalle Solicitado: {{detailLevel}}
+- Idioma: {{locale}}
 
-SECTIONS TO EXPLAIN:
-1. The Sun
-2. The Moon
-3. The Ascendant
-4. Personal Planets (Mercury, Venus, Mars)
-5. Transpersonal Planets (Jupiter, Saturn, Uranus, Neptune, Pluto)
-6. The Astrological Houses (General explanation)
-7. Important Aspects (Conjunction, Opposition, Trine, Square, Sextile)
+He calculado los siguientes signos clave para el usuario:
+- Signo Solar: {{sunSign}}
+- Signo Lunar: {{moonSign}}
+- Signo Ascendente: {{ascendantSign}}
 
-Use the user's calculated Sun, Moon, and Ascendant signs to personalize the explanations for sections 1, 2, and 3.
+Tu respuesta DEBE ser un objeto JSON válido con las siguientes 7 claves: "sun", "moon", "ascendant", "personalPlanets", "transpersonalPlanets", "houses", "aspects".
+Debes escribir una explicación para CADA una de estas 7 secciones. Adapta la profundidad y el lenguaje de tus explicaciones al "{{detailLevel}}" solicitado.
 
-Now, generate the complete JSON object with explanations for all 7 sections.`
+--- INSTRUCCIONES DETALLADAS POR SECCIÓN ---
+
+1.  **Explicación del Sol (clave "sun"):**
+    - Escribe una explicación personalizada y detallada sobre el significado de tener el Sol en **{{sunSign}}**.
+    - Conecta las características de **{{sunSign}}** con la identidad central del usuario, su ego, vitalidad y propósito de vida.
+    - Ejemplo (para Sol en Leo, nivel básico): "Con tu Sol en Leo, tu identidad central es vibrante, creativa y magnética. Eres un líder natural al que le encanta brillar, expresar su singularidad e inspirar a los demás. Tu energía irradia calidez y generosidad."
+
+2.  **Explicación de la Luna (clave "moon"):**
+    - Escribe una explicación personalizada y detallada sobre el significado de tener la Luna en **{{moonSign}}**.
+    - Conecta las características de **{{moonSign}}** con el mundo emocional del usuario, sus instintos, su necesidad de seguridad y sus reacciones subconscientes.
+    - Ejemplo (para Luna en Tauro, nivel avanzado): "Tu Luna en Tauro revela un mundo emocional que anhela estabilidad, seguridad y confort sensorial. Tus reacciones son tranquilas y mesuradas, pero una vez que te sientes seguro, tu lealtad y afecto son inquebrantables. Encuentras seguridad en las rutinas, la belleza y los placeres tangibles de la vida."
+
+3.  **Explicación del Ascendente (clave "ascendant"):**
+    - Escribe una explicación personalizada y detallada sobre el significado de tener el Ascendente en **{{ascendantSign}}**.
+    - Explica que el Ascendente es la 'máscara' social, la primera impresión y el camino de vida del usuario.
+    - Conecta las características de **{{ascendantSign}}** con la forma en que el usuario se presenta al mundo.
+    - Ejemplo (para Ascendente en Géminis, nivel espiritual): "Tu Ascendente en Géminis es el vehículo a través del cual tu alma interactúa con el mundo. Proyectas una energía de curiosidad, comunicación y adaptabilidad. Tu camino de vida implica aprender a dominar la palabra, a sintetizar información diversa y a construir puentes entre diferentes ideas y personas, utilizando tu intelecto como una herramienta para la conexión espiritual."
+
+4.  **Planetas Personales (clave "personalPlanets"):**
+    - Ofrece una explicación general de lo que representan Mercurio (mente), Venus (amor y valores) y Marte (acción y deseo).
+    - Adapta la profundidad al "{{detailLevel}}" solicitado. No personalices con signos aquí, mantén la explicación general.
+
+5.  **Planetas Transpersonales (clave "transpersonalPlanets"):**
+    - Ofrece una explicación general de Júpiter (expansión), Saturno (estructura), Urano (innovación), Neptuno (espiritualidad) y Plutón (transformación).
+    - Explica cómo estos planetas influyen en las generaciones y en los temas de vida más amplios. Adapta la profundidad al "{{detailLevel}}".
+
+6.  **Las Casas Astrológicas (clave "houses"):**
+    - Explica de forma general qué son las 12 casas astrológicas y cómo representan diferentes áreas de la vida (ej. carrera, hogar, relaciones).
+    - Adapta la profundidad al "{{detailLevel}}".
+
+7.  **Aspectos Importantes (clave "aspects"):**
+    - Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura) y cómo describen las relaciones entre los planetas.
+    - Adapta la profundidad al "{{detailLevel}}".
+
+Ahora, genera el objeto JSON completo con las 7 explicaciones en el idioma {{locale}}, utilizando los signos calculados ({{sunSign}}, {{moonSign}}, {{ascendantSign}}) para personalizar las tres primeras secciones como se ha instruido.
+`
 });
 
 // Internal flow - This is where the logic changes
