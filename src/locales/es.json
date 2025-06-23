@@ -243,6 +243,10 @@
     "aspectsDetails": {
       "noAspectsFound": "No se encontraron aspectos significativos en esta carta."
     },
+    "detailsTab": "Detalles",
+    "detailsDetails": {
+      "noAspectsFound": "No se encontraron aspectos significativos en esta carta."
+    },
     "sun": { 
       "title": "El Sol en tu Carta Natal",
       "basic": "Tu signo solar representa tu identidad central, ego y voluntad consciente. Es tu naturaleza básica.",

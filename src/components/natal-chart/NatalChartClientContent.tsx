@@ -28,7 +28,7 @@ interface NatalChartClientContentProps {
 type DetailLevel = 'basic' | 'advanced' | 'spiritual';
 export type NatalChartTab = 'chart' | 'aspects' | 'details';
 
-const SectionExplanation = ({
+function SectionExplanation({
   title,
   content,
   isLoading,
@@ -36,20 +36,30 @@ const SectionExplanation = ({
   title: string;
   content?: string;
   isLoading: boolean;
-}) => (
-  <div>
-    <h3 className="text-2xl font-headline font-semibold text-primary mb-3">{title}</h3>
-    {isLoading ? (
-      <div className="space-y-2 mt-2">
-        <Skeleton className="h-4 w-full bg-muted/50" />
-        <Skeleton className="h-4 w-5/6 bg-muted/50" />
-        <Skeleton className="h-4 w-3/4 bg-muted/50" />
+}) {
+  return (
+    <div className="relative my-10 p-6 rounded-2xl bg-gradient-to-b from-background/70 to-background/30 border border-white/10 shadow-lg backdrop-blur-md transition-all">
+      <div className="absolute top-4 right-4 text-xl text-primary/50 pointer-events-none select-none">
+        ✦
       </div>
-    ) : (
-      <p className="mt-2 text-foreground/90 whitespace-pre-line leading-relaxed sm:text-lg">{content || ''}</p>
-    )}
-  </div>
-);
+      <h3 className="text-2xl sm:text-3xl font-semibold font-headline text-primary mb-4 tracking-tight">
+        {title}
+      </h3>
+      {isLoading ? (
+        <div className="space-y-3">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-5/6" />
+          <Skeleton className="h-4 w-3/4" />
+        </div>
+      ) : (
+        <p className="text-base sm:text-lg leading-relaxed text-foreground/90 whitespace-pre-line">
+          {content || ''}
+        </p>
+      )}
+    </div>
+  );
+}
+
 
 export default function NatalChartClientContent({
   dictionary,
@@ -66,6 +76,7 @@ export default function NatalChartClientContent({
     personalPlanetsTitle,
     transpersonalPlanetsTitle,
     housesTitle,
+    aspectsTitle,
   } = dictionary.NatalChartPage;
 
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
@@ -147,15 +158,6 @@ export default function NatalChartClientContent({
   }, [detailLevel, birthData, dictionary, toast, user]);
 
 
-  const explanationSections = [
-    { title: sunTitle, content: explanations?.sun },
-    { title: moonTitle, content: explanations?.moon },
-    { title: ascendantTitle, content: explanations?.ascendant },
-    { title: personalPlanetsTitle, content: explanations?.personalPlanets },
-    { title: transpersonalPlanetsTitle, content: explanations?.transpersonalPlanets },
-    { title: housesTitle, content: explanations?.houses },
-  ];
-  
   const handleDownload = () => {
     if (!imageUrl) return;
 
@@ -164,6 +166,16 @@ export default function NatalChartClientContent({
     link.href = imageUrl;
     link.click();
   };
+
+  const explanationSections = [
+    { title: sunTitle, content: explanations?.sun },
+    { title: moonTitle, content: explanations?.moon },
+    { title: ascendantTitle, content: explanations?.ascendant },
+    { title: personalPlanetsTitle, content: explanations?.personalPlanets },
+    { title: transpersonalPlanetsTitle, content: explanations?.transpersonalPlanets },
+    { title: housesTitle, content: explanations?.houses },
+    { title: aspectsTitle, content: explanations?.aspects },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -191,15 +203,15 @@ export default function NatalChartClientContent({
       </div>
       
       {/* Pestañas de Navegación */}
-      <div className="flex justify-center border-b border-border mb-4 space-x-2">
+      <div className="flex justify-center mb-6 space-x-4">
          <Button variant={activeTab === 'chart' ? 'default' : 'ghost'} onClick={() => setActiveTab('chart')}>
-          {dictionary.NatalChartPage?.chartTab || 'Chart'}
+          {dictionary.NatalChartPage?.chartTab}
         </Button>
         <Button variant={activeTab === 'aspects' ? 'default' : 'ghost'} onClick={() => setActiveTab('aspects')}>
-          {dictionary.NatalChartPage?.aspectsTab || 'Aspects'}
+          {dictionary.NatalChartPage?.aspectsTab}
         </Button>
         <Button variant={activeTab === 'details' ? 'default' : 'ghost'} onClick={() => setActiveTab('details')}>
-          {dictionary.NatalChartPage?.detailsTab || 'Details'}
+          {dictionary.NatalChartPage?.detailsTab}  
         </Button>
       </div>
 
@@ -232,7 +244,7 @@ export default function NatalChartClientContent({
 
       {/* Contenido de la Pestaña de Detalles */}
       {activeTab === 'details' && (
-        <div className="space-y-8 py-6">
+        <div className="space-y-6 py-4">
           {explanationSections.map((section, index) => (
             <SectionExplanation
               key={index}
