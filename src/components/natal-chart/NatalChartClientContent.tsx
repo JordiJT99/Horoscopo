@@ -1,13 +1,11 @@
 
 'use client';
-
+import NatalChartWheelCanvas from './NatalChartWheelCanvas';
 import type { Dictionary } from '@/lib/dictionaries';
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
-import { natalChartImageFlow } from '@/ai/flows/natal-chart-image-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
-import NatalChartWheel from './NatalChartWheel';
 import NatalChartAspectsView from './NatalChartAspectsView';
 import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -46,6 +44,7 @@ function SectionExplanation({
       'Planetas Personales': '☿',
       'Planetas Transpersonales': '♆',
       'Casas': '⌂',
+      'Aspectos': '△'
     };
 
     const clean = title.toLowerCase();
@@ -55,6 +54,7 @@ function SectionExplanation({
     if (clean.includes('personal')) return '☿';
     if (clean.includes('transpersonal')) return '♆';
     if (clean.includes('casa')) return '⌂';
+    if (clean.includes('aspectos')) return '△';
 
     return '✦';
   };
@@ -87,8 +87,6 @@ function SectionExplanation({
   );
 }
 
-
-
 export default function NatalChartClientContent({
   dictionary,
   birthData,
@@ -110,7 +108,6 @@ export default function NatalChartClientContent({
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
   const [activeTab, setActiveTab] = useState<NatalChartTab>('chart');
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -127,14 +124,13 @@ export default function NatalChartClientContent({
             if (cachedData) {
                 const parsedData = JSON.parse(cachedData);
                 setExplanations(parsedData);
-                setImageUrl(parsedData.imageUrl); // Assuming imageUrl is saved in the cached object
                 setIsLoading(false);
                 console.log("Loaded natal chart from cache.");
-                return; // Exit if loaded from cache
+                return;
             }
         } catch(e) {
             console.error("Failed to parse cached data, fetching new data.", e);
-            localStorage.removeItem(cacheKey); // Remove corrupted data
+            localStorage.removeItem(cacheKey);
         }
       }
   
@@ -149,20 +145,13 @@ export default function NatalChartClientContent({
           birthCountry: birthData.country,
         };
   
-        // Run both flows in parallel
-        const [textResult, imageResult] = await Promise.all([
-          natalChartFlow(commonInput),
-          natalChartImageFlow(commonInput),
-        ]);
+        const textResult = await natalChartFlow(commonInput);
   
-        if (textResult && imageResult?.imageUrl) {
-          const fullResult = { ...textResult, imageUrl: imageResult.imageUrl };
-  
-          setExplanations(fullResult);
-          setImageUrl(imageResult.imageUrl);
+        if (textResult) {
+          setExplanations(textResult);
   
           if (cacheKey) {
-            localStorage.setItem(cacheKey, JSON.stringify(fullResult));
+            localStorage.setItem(cacheKey, JSON.stringify(textResult));
             console.log("Saved natal chart to cache.");
           }
         } else {
@@ -176,7 +165,6 @@ export default function NatalChartClientContent({
           variant: 'destructive',
         });
         setExplanations(null);
-        setImageUrl(null);
       } finally {
         setIsLoading(false);
       }
@@ -184,16 +172,6 @@ export default function NatalChartClientContent({
   
     fetchExplanations();
   }, [detailLevel, birthData, dictionary, toast, user]);
-
-
-  const handleDownload = () => {
-    if (!imageUrl) return;
-
-    const link = document.createElement('a');
-    link.download = 'natal-chart.png';
-    link.href = imageUrl;
-    link.click();
-  };
 
   const explanationSections = [
     { title: sunTitle, content: explanations?.sun },
@@ -204,6 +182,14 @@ export default function NatalChartClientContent({
     { title: housesTitle, content: explanations?.houses },
     { title: aspectsTitle, content: explanations?.aspects },
   ];
+
+  const planetPositionsArray =
+    explanations?.planetPositions
+      ? Object.entries(explanations.planetPositions).map(([name, data]) => ({
+          name,
+          degree: data.degree,
+        }))
+      : [];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -246,20 +232,13 @@ export default function NatalChartClientContent({
       {/* Contenido de la Pestaña de la Carta */}
       {activeTab === 'chart' && (
          <div className="my-8 flex flex-col items-center">
-          {isLoading || !explanations || !imageUrl ? (
+          {isLoading || !explanations ? (
             <div className="w-[400px] h-[400px] flex items-center justify-center">
               <Skeleton className="w-full h-full rounded-full" />
             </div>
           ) : (
             explanations.planetPositions && (
-              <>
-                <NatalChartWheel planetPositions={explanations.planetPositions} imageDataUrl={imageUrl} />
-                {imageUrl && (
-                  <Button onClick={handleDownload} className="mt-4">
-                    Descargar imagen
-                  </Button>
-                )}
-              </>
+              <NatalChartWheelCanvas planetPositions={planetPositionsArray} />
             )
           )}
         </div>
