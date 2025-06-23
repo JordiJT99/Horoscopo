@@ -90,15 +90,14 @@ function AppStructure({ locale, dictionary, children }: { locale: Locale, dictio
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
-  params: Promise<LocaleLayoutParams>;
+  params: LocaleLayoutParams;
 }
 
 export default function LocaleLayout({
   children,
-  params: paramsPromise,
+  params,
 }: Readonly<LocaleLayoutProps>) {
-  const resolvedParams = use(paramsPromise); 
-  const currentLocale = resolvedParams.locale;
+  const currentLocale = params.locale;
 
   const dictionaryPromise = useMemo(() => getDictionary(currentLocale), [currentLocale]);
   const dictionary = use(dictionaryPromise);
@@ -138,4 +137,3 @@ export default function LocaleLayout({
     </html>
   );
 }
-
