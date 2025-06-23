@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview A Genkit flow to provide text explanations for a natal chart.
@@ -7,7 +6,6 @@
  * - NatalChartInput - The input type for the natalChartFlow function.
  * - NatalChartOutput - The return type for the natalChartFlow function.
  */
-import { defineFlow } from 'genkit';
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { getSunSignFromDate, ZODIAC_SIGNS } from '@/lib/constants'; // Import helpers
@@ -180,13 +178,11 @@ Ahora, genera el objeto JSON completo con las 7 explicaciones y el array "aspect
 });
 
 // Internal flow - This is where the logic changes
-const natalChartFlowInternal = defineFlow( // Use defineFlow from genkit import
+const natalChartFlowInternal = ai.defineFlow(
   {
     name: 'natalChartFlowInternal',
     inputSchema: NatalChartInputSchema,
-    outputSchema: NatalChartOutputSchema, // Output schema now includes aspectsDetails
-    // Assume natalChartImageFlow is imported if you added it before
-    // import { natalChartImageFlow } from './natal-chart-image-flow';
+    outputSchema: NatalChartOutputSchema,
   },
   async (input) => {
     // Parse user's birth data
@@ -223,17 +219,17 @@ const natalChartFlowInternal = defineFlow( // Use defineFlow from genkit import
       ascendantSign: ascendantSign,
     };
 
-    let aiOutput: Omit<NatalChartOutput, 'planetPositions' | 'aspectsDetails'> & { aspectsDetails: NatalChartOutput['aspectsDetails'] } = {
+    let aiOutput: Omit<NatalChartOutput, 'planetPositions'> = {
         sun: '', moon: '', ascendant: '', personalPlanets: '', transpersonalPlanets: '', houses: '', aspects: '', aspectsDetails: []
     };
 
     try {
-        const promptResult = await natalChartPrompt(promptInput);
-        if (!promptResult.output) {
+        const { output } = await natalChartPrompt(promptInput);
+        if (!output) {
             throw new Error("AI prompt returned no output.");
         }
         // Ensure the output matches the expected structure including aspectsDetails
-        aiOutput = promptResult.output;
+        aiOutput = output;
 
     } catch (error: any) {
         console.error(`Natal chart text generation failed for ${input.birthDate}. Error: ${error.message}`);
@@ -246,10 +242,7 @@ const natalChartFlowInternal = defineFlow( // Use defineFlow from genkit import
             transpersonalPlanets: "Ocurrió un error al generar la explicación de los planetas transpersonales. Por favor, inténtalo de nuevo más tarde.",
             houses: "Ocurrió un error al generar la explicación de las casas. Por favor, inténtalo de nuevo más tarde.",
             aspects: "Ocurrió un error al generar la explicación general de los aspectos. Por favor, inténtalo de nuevo más tarde.",
-            personalPlanets: "Los planetas personales como Mercurio, Venus y Marte dictan tus estilos de comunicación, amor y acción. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
-            transpersonalPlanets: "Los planetas exteriores influyen en los temas generacionales y en las lecciones de vida más amplias. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
-            houses: "Las 12 casas astrológicas representan diferentes áreas de tu vida. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
-            aspects: "Los aspectos son las relaciones geométricas entre los planetas, que indican cómo interactúan sus energías. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
+            aspectsDetails: [], // Return empty array on error
         };
     }
     
