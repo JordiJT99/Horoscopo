@@ -20,6 +20,9 @@ const NatalChartImageOutputSchema = z.object({
 
 export type NatalChartImageOutput = z.infer<typeof NatalChartImageOutputSchema>;
 
+// In-memory cache for the generated image URL
+let cachedImageUrl: string | null = null;
+
 export const natalChartImageFlow = ai.defineFlow(
   {
     name: 'natalChartImageFlow',
@@ -27,15 +30,15 @@ export const natalChartImageFlow = ai.defineFlow(
     outputSchema: NatalChartImageOutputSchema,
   },
   async (input) => {
-    const prompt = `Generate a high-resolution, square background image for an astrological natal chart wheel.
-**Theme:** Dark, mystical, cosmic. Use a deep purple and charcoal gray nebula texture.
-**Main Feature:** A large, perfect circle in the center.
-**Inside the Circle:** Place the 12 standard zodiac glyphs (Aries ♈, Taurus ♉, Gemini ♊, Cancer ♋, Leo ♌, Virgo ♍, Libra ♎, Scorpio ♏, Sagittarius ♐, Capricorn ♑, Aquarius ♒, Pisces ♓) arranged evenly around the edge of the circle.
-**Style:**
-- The glyphs and any lines should be thin, crisp, and white or light gray.
-- The overall aesthetic should be minimalist, modern, and a flat 2D graphic.
-- No shadows, gradients, or 3D effects.
-**IMPORTANT RESTRICTION:** Do NOT include any planet symbols (like Sun ☉, Moon ☽), numbers, or aspect lines. The image must be a clean, universal background.`;
+    // If we have a cached image, return it immediately to avoid API calls
+    if (cachedImageUrl) {
+      console.log("Returning cached natal chart image.");
+      return { imageUrl: cachedImageUrl };
+    }
+
+    console.log("No cached image found. Generating a new natal chart image...");
+
+    const prompt = `Generate a visually appealing background for a natal chart wheel. The image should feature a dark, cosmic, or nebula-like background. In the center, draw a large circle divided into 12 equal 30-degree segments, representing the zodiac. Along the outer edge of this circle, place the 12 standard astrological glyphs for the zodiac signs (Aries, Taurus, etc.), one in each segment. The style should be clean, modern, and mystical. Do not include any text, numbers, or planetary glyphs inside the wheel; only the outer zodiac glyphs.`;
 
     try {
       const { media } = await ai.generate({
@@ -50,10 +53,14 @@ export const natalChartImageFlow = ai.defineFlow(
         throw new Error('Generated media is not a valid image with a URL.');
       }
 
-      return { imageUrl: media.url };
+      // Cache the successfully generated image URL
+      cachedImageUrl = media.url;
+      console.log("Successfully generated and cached new natal chart image.");
+      return { imageUrl: cachedImageUrl };
+
     } catch (error: any) {
       console.error(`Natal chart image generation failed. Error: ${error.message}`);
-      // Fallback to a placeholder image URL
+      // Fallback to a placeholder image URL, but do NOT cache the error
       return { imageUrl: 'https://placehold.co/400x400/1a1a1a/ffffff.png?text=Chart+Unavailable' };
     }
   }

@@ -115,7 +115,15 @@ export default function NatalChartClientContent({
   const { toast } = useToast();
 
   useEffect(() => {
+    console.log('🧪 birthData en useEffect:', birthData);
+
     const fetchExplanations = async () => {
+      console.log('🧪 Ejecutando fetchExplanations con:', {
+        date: birthData?.date,
+        time: birthData?.time,
+        city: birthData?.city,
+        country: birthData?.country,
+      });
       setIsLoading(true);
   
       const birthDataString = JSON.stringify(birthData);
@@ -148,12 +156,16 @@ export default function NatalChartClientContent({
           birthCity: birthData.city,
           birthCountry: birthData.country,
         };
-  
+        console.log('🧪 Enviando a natalChartFlow:', commonInput);
+
         // Run both flows in parallel
         const [textResult, imageResult] = await Promise.all([
           natalChartFlow(commonInput),
           natalChartImageFlow(commonInput),
         ]);
+        console.log('✅ textResult:', textResult);
+        console.log('✅ imageResult:', imageResult);
+     
   
         if (textResult && imageResult?.imageUrl) {
           const fullResult = { ...textResult, imageUrl: imageResult.imageUrl };
