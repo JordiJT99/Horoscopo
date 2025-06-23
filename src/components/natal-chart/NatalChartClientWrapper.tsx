@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { Dictionary } from '@/lib/dictionaries';
 import BirthDataForm from './BirthDataForm';
 import NatalChartClientContent from './NatalChartClientContent';
+import { useAuth } from '@/context/AuthContext';
 
 interface BirthData {
   date: string;
@@ -13,6 +14,7 @@ interface BirthData {
 }
 
 const NatalChartClientWrapper: React.FC<{ dictionary: Dictionary }> = ({ dictionary }) => {
+  const { user } = useAuth();
   const [birthData, setBirthData] = useState<BirthData | null>(null);
 
   const handleFormSubmit = (data: BirthData) => {
@@ -24,7 +26,7 @@ const NatalChartClientWrapper: React.FC<{ dictionary: Dictionary }> = ({ diction
       {!birthData ? (
         <BirthDataForm onSubmit={handleFormSubmit} dictionary={dictionary.birthForm} />
       ) : (
-        <NatalChartClientContent birthData={birthData} dictionary={dictionary} />
+        <NatalChartClientContent birthData={birthData} dictionary={dictionary} user={user} />
       )}
     </div>
   );

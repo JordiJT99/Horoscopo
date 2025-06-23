@@ -8,18 +8,19 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
 import { Button } from '@/components/ui/button';
+import type { AuthUser } from '@/types';
 
 interface BirthData {
   date: string;
   time: string;
   city: string;
   country: string;
-  userId?: string; // Assuming userId is passed for registered users
 }
 
 interface NatalChartClientContentProps {
   dictionary: Dictionary;
   birthData: BirthData;
+  user: AuthUser | null;
 }
 
 type DetailLevel = 'basic' | 'advanced' | 'spiritual';
@@ -39,7 +40,7 @@ const SectionExplanation = ({ title, content, isLoading }: { title: string, cont
   </div>
 );
 
-export default function NatalChartClientContent({ dictionary, birthData }: NatalChartClientContentProps) {
+export default function NatalChartClientContent({ dictionary, birthData, user }: NatalChartClientContentProps) {
   const {
     title,
     underDevelopmentMessage,
@@ -65,6 +66,28 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
       }
       
       setIsLoading(true);
+      const cacheKey = user ? `natalChartCache_${user.uid}_${JSON.stringify(birthData)}` : null;
+
+      // 1. Check cache for registered users
+      if (cacheKey) {
+        const cachedRawData = localStorage.getItem(cacheKey);
+        if (cachedRawData) {
+          try {
+            const parsedData = JSON.parse(cachedRawData);
+            // Check if the cached data corresponds to the current detail level request
+            if(parsedData.detailLevel === detailLevel) {
+              setExplanations(parsedData.data);
+              setIsLoading(false);
+              return; // Cache hit, we are done
+            }
+          } catch (e) {
+            console.error("Failed to parse cached natal chart data, fetching fresh.", e);
+            localStorage.removeItem(cacheKey); // Remove corrupted data
+          }
+        }
+      }
+
+      // 2. Fetch from API if no cache hit
       try {
         const result = await natalChartFlow({
           detailLevel,
@@ -75,6 +98,17 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
           birthCountry: birthData.country,
         });
         setExplanations(result);
+
+        // 3. Save to cache if a user is logged in
+        if (user && cacheKey) {
+           const dataToCache = {
+            detailLevel: detailLevel,
+            birthData: birthData, // Store the birth data for future checks
+            data: result,
+          };
+          localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
+        }
+
       } catch (error) {
         console.error('Failed to fetch natal chart explanations:', error);
         toast({
@@ -90,7 +124,7 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
 
     fetchExplanations();
     
-  }, [detailLevel, birthData, dictionary, toast]);
+  }, [detailLevel, birthData, dictionary, toast, user]);
 
   const explanationSections = [
     { title: sunTitle, content: explanations?.sun },
@@ -115,7 +149,7 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
     <div className="container mx-auto px-4 py-8">
       <SectionTitle title={title} />
 
-      {/* Selector de nivel de detalle */}
+      {/* Detail Level Selector */}
       <div className="flex justify-center mt-4 mb-6">
         <label htmlFor="detailLevel" className="mr-2 self-center">
           {detailLevelDict?.label || 'Detail Level'}:
@@ -133,7 +167,7 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
         </select>
       </div>
 
-      {/* Rueda zodiacal y Imagen generada por IA */}
+      {/* Zodiac Wheel & AI Generated Image */}
       <div className="my-8 flex flex-col items-center">
         {isLoading ? (
           <div className="w-[400px] h-[400px] flex items-center justify-center">
@@ -156,7 +190,7 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
         )}
       </div>
       
-      {/* Explicaciones de cada sección */}
+      {/* Section Explanations */}
       {explanationSections.map((section, index) => (
         <SectionExplanation
           key={index}
