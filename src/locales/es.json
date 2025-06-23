@@ -237,7 +237,9 @@
     "transpersonalPlanetsTitle": "Planetas Transpersonales",
     "housesTitle": "Las Casas Astrológicas",
     "aspectsTitle": "Los Aspectos Importantes",
+    "generatingImage": "Generando imagen de la carta natal...",
     "sun": {
+      "title": "El Sol en tu Carta Natal",
       "basic": "Tu signo solar representa tu identidad central, ego y voluntad consciente. Es tu naturaleza básica.",
       "advanced": "El signo solar significa tu fuerza vital, cómo expresas tu individualidad y tu potencial de crecimiento y autorealización. Indica los temas centrales y las energías que te impulsan.",
       "spiritual": "El Sol representa la luz espiritual interior, tu verdadera esencia y el camino para cumplir el propósito de tu alma. Se trata de alinear tu voluntad consciente con la chispa divina."
@@ -248,7 +250,9 @@
       "spiritual": "La Luna representa tu sabiduría intuitiva, tu conexión con lo femenino divino y tu capacidad de empatía y sanación emocional. Se trata de nutrir tu alma y confiar en tu guía interior."
     },
     "ascendant": {
+      "title": "El Ascendente en tu Carta Natal",
       "basic": "Tu Ascendente (Signo Ascendente) es cómo te ven los demás y cómo te presentas al mundo. Es tu personalidad externa.",
+
       "advanced": "El Ascendente es la máscara que usas, tu reacción inicial a situaciones nuevas y tu apariencia física. Marca la pauta de toda tu carta e influye en cómo empiezas las cosas.",
       "spiritual": "El Ascendente representa las lecciones que estás aquí para aprender y el camino de crecimiento personal en esta vida. Se trata de evolucionar conscientemente tu expresión externa para alinearte con tu verdad interior."
     },

@@ -624,9 +624,15 @@
     "dateLabel": "Date de naissance",
     "timeLabel": "Heure exacte de naissance",
     "cityLabel": "Ville de naissance",
-    "countryLabel": "Pays de naissance",
-    "submitButton": "Générer le thème astral"
+ "countryLabel": "Pays de naissance",
+ "submitButton": "Générer le thème astral",
+ "validationErrors": {
+ "required": "Ce champ est obligatoire",
+ "invalidDate": "Format de date invalide",
+ "invalidTime": "Format d'heure invalide"
+ }
+ }
   }
-}
+
 
     

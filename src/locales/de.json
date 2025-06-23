@@ -673,6 +673,9 @@
     "transpersonalPlanetsTitle": "Transpersonale Planeten",
     "housesTitle": "Die Astrologischen Häuser",
     "aspectsTitle": "Wichtige Aspekte"
+  },
+  "NatalChartImage": {
+    "loadingImage": "Generiere Geburtshoroskop-Bild..."
   }
 }
 

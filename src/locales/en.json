@@ -663,6 +663,8 @@
     "housesTitle": "The Astrological Houses",
     "aspectsTitle": "Important Aspects",
     "explanations": {
+      "imageLoading": "Generating your cosmic chart image...",
+      "imageAltText": "Your personalized natal chart wheel",
     "sun": {
       "basic": "Your Sun sign represents your core identity, ego, and conscious will. It's your basic nature.",
       "advanced": "The Sun sign signifies your vital force, how you express your individuality, and your potential for growth and self-realization. It indicates the central themes and energies that drive you.",
