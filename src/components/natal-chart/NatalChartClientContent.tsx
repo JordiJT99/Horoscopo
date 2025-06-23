@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -63,15 +64,21 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
 
   useEffect(() => {
     const fetchExplanations = async () => {
-      if (!birthData.date || !birthData.time || !birthData.city || !birthData.country) {
-        return;
-      }
-      
       setIsLoading(true);
-      setExplanations(null);
-      setImageUrl(null);
+      
+      const birthDataString = JSON.stringify(birthData);
+      const cacheKey = user ? `natalChart_${user.uid}_${birthDataString}` : null;
 
-      // No caching logic for now to simplify the fix.
+      if (cacheKey) {
+        const cachedData = localStorage.getItem(cacheKey);
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          setExplanations(parsedData);
+          setImageUrl(parsedData.imageUrl);
+          setIsLoading(false);
+          return;
+        }
+      }
       
       try {
         const commonInput = {
@@ -83,20 +90,25 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
           birthCountry: birthData.country,
         };
 
-        // Call both flows in parallel from the client
         const [textResult, imageResult] = await Promise.all([
           natalChartFlow(commonInput),
           natalChartImageFlow(commonInput)
         ]);
+        
+        const fullResult = { ...textResult, imageUrl: imageResult.imageUrl };
 
-        setExplanations(textResult);
+        setExplanations(fullResult);
         setImageUrl(imageResult.imageUrl);
+        
+        if (cacheKey) {
+          localStorage.setItem(cacheKey, JSON.stringify(fullResult));
+        }
 
       } catch (error) {
-        console.error('Failed to fetch natal chart explanations:', error);
+        console.error('Failed to fetch natal chart data:', error);
         toast({
           title: dictionary['Error.genericTitle'] || 'Error',
-          description: 'Could not load astrological explanations. Please try again.',
+          description: 'Could not load astrological data. Please try again.',
           variant: 'destructive',
         });
         setExplanations(null);
@@ -105,7 +117,7 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
         setIsLoading(false);
       }
     };
-
+    
     fetchExplanations();
     
   }, [detailLevel, birthData, dictionary, toast, user]);
