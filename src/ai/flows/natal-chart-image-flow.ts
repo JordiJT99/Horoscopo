@@ -27,24 +27,15 @@ export const natalChartImageFlow = ai.defineFlow(
     outputSchema: NatalChartImageOutputSchema,
   },
   async (input) => {
-    // Note: This is a conceptual implementation.
-    // Calculating exact planet positions requires a dedicated astrology library.
-    // This prompt requests a stylized, consistent, but generic natal chart image.
-
-    const prompt = `Generate a visually clear and modern natal chart background image.
-
-**Style Guidelines:**
-- **Overall Background:** A very dark charcoal color, almost black (like #1a1a1a).
-- **Chart Area:** The chart is a perfect circle in the center. Its background should be a dark, muted purple-grey (like #4a4a5a).
-- **Style:** Clean, flat, minimalist, modern UI style. Use thin, crisp lines. NO shadows, gradients, or hand-drawn effects.
-
-**Structural Elements (CRITICAL):**
-1.  **Zodiac Ring:** An outer ring divided into 12 equal 30-degree segments for the zodiac signs. Use light grey lines.
-2.  **Zodiac Glyphs:** On the outer ring, place the standard glyph for each of the 12 zodiac signs (Aries, Taurus, etc.) in its segment. The glyphs must be simple and white or very light grey.
-3.  **House Cusps:** Inside the zodiac ring, draw 12 house cusp lines radiating from the center. The lines for the four angles (1st, 4th, 7th, 10th house cusps, representing Ascendant, IC, Descendant, MC) should be slightly thicker.
-4.  **House Numbers:** Place the numbers 1 through 12 inside each house segment, near the center, in a subtle, light grey, sans-serif font.
-
-**ABSOLUTELY NO Planets or Aspect Lines.** The image should only be the static background wheel with zodiac signs and house numbers. The final image must be a high-resolution, professional astrological diagram suitable for a modern app.`;
+    const prompt = `Generate a high-resolution, square background image for an astrological natal chart wheel.
+**Theme:** Dark, mystical, cosmic. Use a deep purple and charcoal gray nebula texture.
+**Main Feature:** A large, perfect circle in the center.
+**Inside the Circle:** Place the 12 standard zodiac glyphs (Aries ♈, Taurus ♉, Gemini ♊, Cancer ♋, Leo ♌, Virgo ♍, Libra ♎, Scorpio ♏, Sagittarius ♐, Capricorn ♑, Aquarius ♒, Pisces ♓) arranged evenly around the edge of the circle.
+**Style:**
+- The glyphs and any lines should be thin, crisp, and white or light gray.
+- The overall aesthetic should be minimalist, modern, and a flat 2D graphic.
+- No shadows, gradients, or 3D effects.
+**IMPORTANT RESTRICTION:** Do NOT include any planet symbols (like Sun ☉, Moon ☽), numbers, or aspect lines. The image must be a clean, universal background.`;
 
     try {
       const { media } = await ai.generate({
