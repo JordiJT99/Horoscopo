@@ -1,7 +1,6 @@
-
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
-import NatalChartClientContent from '@/components/natal-chart/NatalChartClientContent';
+import NatalChartClientWrapper from '@/components/natal-chart/NatalChartClientWrapper';
 import { Sparkles } from 'lucide-react';
 import { Suspense } from 'react';
 
@@ -22,12 +21,12 @@ export default async function NatalChartPage({ params }: NatalChartPageProps) {
 
   return (
     <Suspense fallback={
-        <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
-            <Sparkles className="h-12 w-12 text-primary animate-spin mx-auto" />
-            <p className="mt-4">Loading Natal Chart...</p>
-        </div>
+      <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
+        <Sparkles className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <p className="mt-4">Loading Natal Chart...</p>
+      </div>
     }>
-      <NatalChartClientContent dictionary={dictionary} />
+      <NatalChartClientWrapper dictionary={dictionary} />
     </Suspense>
   );
 }

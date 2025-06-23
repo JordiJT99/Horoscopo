@@ -619,7 +619,14 @@
   "UpcomingPhase.sampleDate2": "Échantillon 2",
   "UpcomingPhase.sampleDate3": "Échantillon 3",
   "UpcomingPhase.sampleDate4": "Échantillon 4",
-  "Data.notAvailable": "N/A"
+  "Data.notAvailable": "N/A",
+  "birthForm": {
+    "dateLabel": "Date de naissance",
+    "timeLabel": "Heure exacte de naissance",
+    "cityLabel": "Ville de naissance",
+    "countryLabel": "Pays de naissance",
+    "submitButton": "Générer le thème astral"
+  }
 }
 
     

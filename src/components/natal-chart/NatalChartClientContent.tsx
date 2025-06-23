@@ -6,11 +6,18 @@ import type { Dictionary } from '@/lib/dictionaries';
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+
+interface BirthData {
+  date: string;
+  time: string;
+  city: string;
+  country: string;
+}
 
 interface NatalChartClientContentProps {
   dictionary: Dictionary;
+  birthData: BirthData;
 }
 
 type DetailLevel = 'basic' | 'advanced' | 'spiritual';
@@ -32,7 +39,7 @@ const SectionExplanation = ({ title, content, isLoading }: { title: string, cont
   );
 };
 
-export default function NatalChartClientContent({ dictionary }: NatalChartClientContentProps) {
+export default function NatalChartClientContent({ dictionary, birthData }: NatalChartClientContentProps) {
   const {
     title,
     underDevelopmentMessage,
@@ -56,7 +63,14 @@ export default function NatalChartClientContent({ dictionary }: NatalChartClient
     const fetchExplanations = async () => {
       setIsLoading(true);
       try {
-        const result = await natalChartFlow({ detailLevel, locale: dictionary.locale || 'es' });
+        const result = await natalChartFlow({
+          detailLevel,
+          locale: dictionary.locale || 'es',
+          birthDate: birthData.date,
+          birthTime: birthData.time,
+          birthCity: birthData.city,
+          birthCountry: birthData.country
+        });
         setExplanations(result);
       } catch (error) {
         console.error("Failed to fetch natal chart explanations:", error);
@@ -72,7 +86,7 @@ export default function NatalChartClientContent({ dictionary }: NatalChartClient
     };
 
     fetchExplanations();
-  }, [detailLevel, dictionary, toast]);
+  }, [detailLevel, birthData, dictionary, toast]);
 
   const explanationSections = [
     { title: sunTitle, content: explanations?.sun },

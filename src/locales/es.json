@@ -672,7 +672,18 @@
   "UpcomingPhase.sampleDate2": "Muestra 2",
   "UpcomingPhase.sampleDate3": "Muestra 3",
   "UpcomingPhase.sampleDate4": "Muestra 4",
-  "Data.notAvailable": "N/D"
+  "Data.notAvailable": "N/A",
+  "birthForm": {
+    "dateLabel": "Date of Birth",
+    "timeLabel": "Time of Birth",
+    "cityLabel": "City of Birth",
+    "countryLabel": "Country of Birth",
+    "submitButton": "Generate Natal Chart",
+    "validationErrors": {
+      "required": "This field is required",
+      "invalidDate": "Invalid date format",
+      "invalidTime": "Invalid time format"    }
+  }
 }
 
     
