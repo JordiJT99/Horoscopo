@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview A Genkit flow to provide text explanations for a natal chart.
@@ -10,8 +9,9 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { getSunSignFromDate, ZODIAC_SIGNS } from '@/lib/constants'; // Import helpers
 
-// Input schema
+// Input schema remains the same
 const NatalChartInputSchema = z.object({
   detailLevel: z.enum(['basic', 'advanced', 'spiritual']).describe('The desired level of detail for the explanations.'),
   birthDate: z.string().describe("The user's birth date (YYYY-MM-DD)."),
@@ -22,7 +22,7 @@ const NatalChartInputSchema = z.object({
 });
 export type NatalChartInput = z.infer<typeof NatalChartInputSchema>;
 
-// Output schema (NO LONGER INCLUDES image)
+// Output schema remains the same
 const NatalChartOutputSchema = z.object({
   sun: z.string(),
   moon: z.string(),
@@ -40,14 +40,14 @@ const NatalChartOutputSchema = z.object({
 });
 export type NatalChartOutput = z.infer<typeof NatalChartOutputSchema>;
 
-// Schema for AI prompt
+// Schema for AI prompt remains the same
 const NatalChartPromptInputSchema = NatalChartInputSchema.extend({
   sunSign: z.string(),
   moonSign: z.string(),
   ascendantSign: z.string(),
 });
 
-// AI prompt definition
+// AI prompt definition remains the same
 const natalChartPrompt = ai.definePrompt({
   name: 'natalChartPrompt',
   input: { schema: NatalChartPromptInputSchema },
@@ -71,7 +71,7 @@ Use the user's calculated Sun, Moon, and Ascendant signs to personalize the expl
 Now, generate the complete JSON object with explanations for all 7 sections.`
 });
 
-// Internal flow
+// Internal flow - This is where the logic changes
 const natalChartFlowInternal = ai.defineFlow(
   {
     name: 'natalChartFlowInternal',
@@ -79,23 +79,37 @@ const natalChartFlowInternal = ai.defineFlow(
     outputSchema: NatalChartOutputSchema,
   },
   async (input) => {
-    // MOCK planet positions (replace with actual calculation in future)
+    // Parse user's birth data
+    const birthDateObj = new Date(input.birthDate + 'T' + input.birthTime);
+    const [birthHour] = input.birthTime.split(':').map(Number);
+
+    // --- Dynamic Sign Calculation (Simplified) ---
+    // Sun sign is accurate
+    const sunSign = getSunSignFromDate(birthDateObj)?.name || 'Leo';
+    
+    // Moon and Ascendant are pseudo-random but based on user input for a dynamic feel
+    // This is NOT astrologically correct but avoids using a complex library
+    const moonSign = ZODIAC_SIGNS[(birthDateObj.getDate() - 1) % 12].name;
+    const ascendantSign = ZODIAC_SIGNS[birthHour % 12].name;
+
+    // --- Dynamic Planet Positions for the Chart Wheel (Simplified & Deterministic) ---
+    // These positions will look varied and are consistent with the text.
     const chartData = {
-      sun: { sign: 'Leo', degree: 123.5 },
-      moon: { sign: 'Taurus', degree: 45.2 },
-      ascendant: { sign: 'Scorpio', degree: 210.0 },
-      mercury: { sign: 'Cancer', degree: 95.0 },
-      venus: { sign: 'Gemini', degree: 72.3 },
-      mars: { sign: 'Aries', degree: 15.0 },
-      jupiter: { sign: 'Pisces', degree: 330.5 },
-      saturn: { sign: 'Capricorn', degree: 270.0 },
+      sun: { sign: sunSign, degree: 15 + ((birthDateObj.getMonth() * 30 + birthDateObj.getDate()) % 360) },
+      moon: { sign: moonSign, degree: (birthDateObj.getDate() * 12) % 360 },
+      ascendant: { sign: ascendantSign, degree: (birthHour * 15) % 360 },
+      mercury: { sign: ZODIAC_SIGNS[(birthDateObj.getMonth() + 1) % 12].name, degree: (birthDateObj.getDate() * 5) % 360 },
+      venus: { sign: ZODIAC_SIGNS[(birthDateObj.getMonth() + 2) % 12].name, degree: (birthDateObj.getDate() * 15) % 360 },
+      mars: { sign: ZODIAC_SIGNS[(birthDateObj.getDate() + 3) % 12].name, degree: (birthDateObj.getDate() * 20) % 360 },
+      jupiter: { sign: ZODIAC_SIGNS[(birthDateObj.getFullYear()) % 12].name, degree: (birthDateObj.getMonth() * 30) % 360 },
+      saturn: { sign: ZODIAC_SIGNS[(birthDateObj.getFullYear() + 2) % 12].name, degree: (birthDateObj.getMonth() * 12) % 360 },
     };
 
     const promptInput = {
       ...input,
-      sunSign: chartData.sun.sign,
-      moonSign: chartData.moon.sign,
-      ascendantSign: chartData.ascendant.sign,
+      sunSign: sunSign,
+      moonSign: moonSign,
+      ascendantSign: ascendantSign,
     };
 
     const promptResult = await natalChartPrompt(promptInput);
