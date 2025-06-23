@@ -14,6 +14,7 @@ interface BirthData {
   time: string;
   city: string;
   country: string;
+  userId?: string; // Assuming userId is passed for registered users
 }
 
 interface NatalChartClientContentProps {
@@ -59,6 +60,10 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
 
   useEffect(() => {
     const fetchExplanations = async () => {
+      if (!birthData.date || !birthData.time || !birthData.city || !birthData.country) {
+        return;
+      }
+      
       setIsLoading(true);
       try {
         const result = await natalChartFlow({
@@ -83,9 +88,8 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
       }
     };
 
-    if (birthData.date && birthData.time && birthData.city && birthData.country) {
-      fetchExplanations();
-    }
+    fetchExplanations();
+    
   }, [detailLevel, birthData, dictionary, toast]);
 
   const explanationSections = [
