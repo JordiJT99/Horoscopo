@@ -1,9 +1,10 @@
 'use client';
 
-import SectionTitle from '@/components/shared/SectionTitle';
 import type { Dictionary } from '@/lib/dictionaries';
 import React, { useState, useEffect } from 'react';
+// Import both flows
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
+import { natalChartImageFlow } from '@/ai/flows/natal-chart-image-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
@@ -27,7 +28,7 @@ type DetailLevel = 'basic' | 'advanced' | 'spiritual';
 
 const SectionExplanation = ({ title, content, isLoading }: { title: string, content?: string, isLoading: boolean }) => (
   <div className="mt-8">
-    <SectionTitle title={title} />
+    <h3 className="text-2xl font-headline font-semibold text-primary mb-2">{title}</h3>
     {isLoading ? (
       <div className="space-y-2 mt-2">
         <Skeleton className="h-4 w-full" />
@@ -56,6 +57,7 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
 
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null); // State for the image
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -66,48 +68,29 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
       }
       
       setIsLoading(true);
-      const cacheKey = user ? `natalChartCache_${user.uid}_${JSON.stringify(birthData)}` : null;
+      setExplanations(null);
+      setImageUrl(null);
 
-      // 1. Check cache for registered users
-      if (cacheKey) {
-        const cachedRawData = localStorage.getItem(cacheKey);
-        if (cachedRawData) {
-          try {
-            const parsedData = JSON.parse(cachedRawData);
-            // Check if the cached data corresponds to the current detail level request
-            if(parsedData.detailLevel === detailLevel) {
-              setExplanations(parsedData.data);
-              setIsLoading(false);
-              return; // Cache hit, we are done
-            }
-          } catch (e) {
-            console.error("Failed to parse cached natal chart data, fetching fresh.", e);
-            localStorage.removeItem(cacheKey); // Remove corrupted data
-          }
-        }
-      }
-
-      // 2. Fetch from API if no cache hit
+      // No caching logic for now to simplify the fix.
+      
       try {
-        const result = await natalChartFlow({
+        const commonInput = {
           detailLevel,
           locale: dictionary.locale || 'es',
           birthDate: birthData.date,
           birthTime: birthData.time,
           birthCity: birthData.city,
           birthCountry: birthData.country,
-        });
-        setExplanations(result);
+        };
 
-        // 3. Save to cache if a user is logged in
-        if (user && cacheKey) {
-           const dataToCache = {
-            detailLevel: detailLevel,
-            birthData: birthData, // Store the birth data for future checks
-            data: result,
-          };
-          localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
-        }
+        // Call both flows in parallel from the client
+        const [textResult, imageResult] = await Promise.all([
+          natalChartFlow(commonInput),
+          natalChartImageFlow(commonInput)
+        ]);
+
+        setExplanations(textResult);
+        setImageUrl(imageResult.imageUrl);
 
       } catch (error) {
         console.error('Failed to fetch natal chart explanations:', error);
@@ -117,6 +100,7 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
           variant: 'destructive',
         });
         setExplanations(null);
+        setImageUrl(null);
       } finally {
         setIsLoading(false);
       }
@@ -137,20 +121,20 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
   ];
 
   const handleDownload = () => {
-    if (!explanations?.image?.url) return;
+    if (!imageUrl) return;
 
     const link = document.createElement('a');
     link.download = 'natal-chart.png';
-    link.href = explanations.image.url;
+    link.href = imageUrl;
     link.click();
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <SectionTitle title={title} />
+      <h2 className="text-3xl sm:text-4xl font-headline font-semibold text-primary text-center mb-4">{title}</h2>
 
       {/* Detail Level Selector */}
-      <div className="flex justify-center mt-4 mb-6">
+      <div className="flex justify-center mt-4 mb-8">
         <label htmlFor="detailLevel" className="mr-2 self-center">
           {detailLevelDict?.label || 'Detail Level'}:
         </label>
@@ -169,18 +153,18 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
 
       {/* Zodiac Wheel & AI Generated Image */}
       <div className="my-8 flex flex-col items-center">
-        {isLoading ? (
+        {isLoading || !explanations || !imageUrl ? (
           <div className="w-[400px] h-[400px] flex items-center justify-center">
             <Skeleton className="w-full h-full rounded-full" />
           </div>
         ) : (
-          explanations?.planetPositions && (
+          explanations.planetPositions && (
             <>
               <NatalChartWheel
                 planetPositions={explanations.planetPositions}
-                imageDataUrl={explanations.image?.url}
+                imageDataUrl={imageUrl}
               />
-              {explanations.image?.url && (
+              {imageUrl && (
                 <Button onClick={handleDownload} className="mt-4">
                   Descargar imagen
                 </Button>

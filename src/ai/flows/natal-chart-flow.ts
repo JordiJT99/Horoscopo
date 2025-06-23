@@ -1,10 +1,14 @@
 'use server';
+/**
+ * @fileOverview A Genkit flow to provide text explanations for a natal chart.
+ *
+ * - natalChartFlow - A function that handles natal chart text generation.
+ * - NatalChartInput - The input type for the natalChartFlow function.
+ * - NatalChartOutput - The return type for the natalChartFlow function.
+ */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-
-import { natalChartImageFlow } from './natal-chart-image-flow';
-import type { NatalChartImageOutput } from './natal-chart-image-flow';
 
 // Input schema
 const NatalChartInputSchema = z.object({
@@ -17,7 +21,7 @@ const NatalChartInputSchema = z.object({
 });
 export type NatalChartInput = z.infer<typeof NatalChartInputSchema>;
 
-// Output schema (💡 INCLUYE imagen y posiciones planetarias)
+// Output schema (NO LONGER INCLUDES image)
 const NatalChartOutputSchema = z.object({
   sun: z.string(),
   moon: z.string(),
@@ -32,10 +36,6 @@ const NatalChartOutputSchema = z.object({
       degree: z.number(),
     })
   ).describe('Planet positions for rendering the zodiac wheel.'),
-  image: z.object({
-    url: z.string(),
-    alt: z.string().optional(),
-  }).optional(),
 });
 export type NatalChartOutput = z.infer<typeof NatalChartOutputSchema>;
 
@@ -50,7 +50,7 @@ const NatalChartPromptInputSchema = NatalChartInputSchema.extend({
 const natalChartPrompt = ai.definePrompt({
   name: 'natalChartPrompt',
   input: { schema: NatalChartPromptInputSchema },
-  output: { schema: NatalChartOutputSchema.omit({ planetPositions: true, image: true }) },
+  output: { schema: NatalChartOutputSchema.omit({ planetPositions: true }) },
   prompt: `You are an expert astrologer, a wise and eloquent teacher. Your task is to provide explanations for the core components of a natal chart.
 
 The user will provide their birth information and specify a level of detail: 'basic', 'advanced', or 'spiritual'.
@@ -97,10 +97,7 @@ const natalChartFlowInternal = ai.defineFlow(
       ascendantSign: chartData.ascendant.sign,
     };
 
-    const [promptResult, imageResult] = await Promise.all([
-      natalChartPrompt(promptInput),
-      natalChartImageFlow(input),
-    ]);
+    const promptResult = await natalChartPrompt(promptInput);
     
     const textExplanations = promptResult.output;
 
@@ -111,12 +108,6 @@ const natalChartFlowInternal = ai.defineFlow(
     return {
       ...textExplanations,
       planetPositions: chartData,
-      image: imageResult?.imageUrl
-        ? {
-            url: imageResult.imageUrl,
-            alt: `Carta astral generada para ${input.birthDate}, ${input.birthTime}, ${input.birthCity}, ${input.birthCountry}`
-          }
-        : undefined,
     };
   }
 );
