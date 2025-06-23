@@ -37,16 +37,16 @@ const SectionExplanation = ({
   content?: string;
   isLoading: boolean;
 }) => (
-  <div className="mt-8">
-    <h3 className="text-2xl font-headline font-semibold text-primary mb-2">{title}</h3>
+  <div>
+    <h3 className="text-2xl font-headline font-semibold text-primary mb-3">{title}</h3>
     {isLoading ? (
       <div className="space-y-2 mt-2">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-5/6" />
-        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-full bg-muted/50" />
+        <Skeleton className="h-4 w-5/6 bg-muted/50" />
+        <Skeleton className="h-4 w-3/4 bg-muted/50" />
       </div>
     ) : (
-      <p className="mt-2 text-foreground/80 whitespace-pre-line">{content || ''}</p>
+      <p className="mt-2 text-foreground/90 whitespace-pre-line leading-relaxed sm:text-lg">{content || ''}</p>
     )}
   </div>
 );
@@ -129,7 +129,7 @@ export default function NatalChartClientContent({
         } else {
           throw new Error("Received null or undefined result from AI flow(s).");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to fetch natal chart data:', error);
         toast({
           title: dictionary['Error.genericTitle'] || 'Error',
@@ -232,7 +232,7 @@ export default function NatalChartClientContent({
 
       {/* Contenido de la Pestaña de Detalles */}
       {activeTab === 'details' && (
-        <>
+        <div className="space-y-8 py-6">
           {explanationSections.map((section, index) => (
             <SectionExplanation
               key={index}
@@ -241,7 +241,7 @@ export default function NatalChartClientContent({
               isLoading={isLoading}
             />
           ))}
-        </>
+        </div>
       )}
 
       {/* Mensaje de desarrollo */}
