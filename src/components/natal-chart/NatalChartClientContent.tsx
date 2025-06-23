@@ -7,11 +7,15 @@ import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import NatalChartWheel from './NatalChartWheel'; // crea este componente más abajo
+
 
 interface BirthData {
   date: string;
   time: string;
+  // Add this placeholder if it doesn't exist in NatalChartOutput
   city: string;
+  // Add this placeholder if it doesn't exist in NatalChartOutput
   country: string;
 }
 
@@ -21,6 +25,12 @@ interface NatalChartClientContentProps {
 }
 
 type DetailLevel = 'basic' | 'advanced' | 'spiritual';
+
+// Add this placeholder if it doesn't exist in NatalChartOutput
+// You'll need to define the actual type for planetPositions in your ai/flows/natal-chart-flow.ts
+interface NatalChartOutput {
+  planetPositions?: any; // Placeholder - replace with actual type
+}
 
 const SectionExplanation = ({ title, content, isLoading }: { title: string, content?: string, isLoading: boolean }) => {
   return (
@@ -101,6 +111,12 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
   return (
     <div className="container mx-auto px-4 py-8">
       <SectionTitle title={title} />
+
+      {explanations?.planetPositions && (
+        <div className="my-8 flex justify-center">
+          <NatalChartWheel planetPositions={explanations.planetPositions} />
+        </div>
+      )}
 
       <div className="flex justify-center mt-4">
         <label htmlFor="detailLevel" className="mr-2 self-center">{detailLevelDict?.label || 'Detail Level'}:</label>

@@ -12,11 +12,7 @@ interface BirthData {
   country: string;
 }
 
-interface NatalChartClientWrapperProps {
-  dictionary: Dictionary;
-}
-
-const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dictionary }) => {
+const NatalChartClientWrapper: React.FC<{ dictionary: Dictionary }> = ({ dictionary }) => {
   const [birthData, setBirthData] = useState<BirthData | null>(null);
 
   const handleFormSubmit = (data: BirthData) => {
