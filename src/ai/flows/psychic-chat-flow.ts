@@ -11,10 +11,10 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const PsychicChatInputSchema = z.string();
-export type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
+type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
 
 const PsychicChatOutputSchema = z.string();
-export type PsychicChatOutput = z.infer<typeof PsychicChatOutputSchema>;
+type PsychicChatOutput = z.infer<typeof PsychicChatOutputSchema>;
 
 // The exported function that the client component will call
 export async function psychicChat(prompt: PsychicChatInput): Promise<PsychicChatOutput> {
@@ -35,7 +35,6 @@ const psychicChatFlow = ai.defineFlow(
         temperature: 0.8,
         maxOutputTokens: 300,
       },
-      model: 'gemini-1.5-flash-latest',
     });
 
     return psychicResponse.text;
