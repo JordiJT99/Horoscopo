@@ -147,15 +147,30 @@ const natalChartFlowInternal = ai.defineFlow(
       moonSign: moonSign,
       ascendantSign: ascendantSign,
     };
-
-    const promptResult = await natalChartPrompt(promptInput);
     
-    const textExplanations = promptResult.output;
+    let textExplanations: Omit<NatalChartOutput, 'planetPositions'>;
 
-    if (!textExplanations) {
-      throw new Error('Natal chart expert provided no explanations.');
+    try {
+        const promptResult = await natalChartPrompt(promptInput);
+        if (!promptResult.output) {
+            throw new Error("AI prompt returned no output.");
+        }
+        textExplanations = promptResult.output;
+
+    } catch (error: any) {
+        console.error(`Natal chart text generation failed for ${input.birthDate}. Error: ${error.message}`);
+        // Fallback to generic explanations
+        textExplanations = {
+            sun: `Ocurrió un error al generar la explicación para tu Sol en ${sunSign}. Esto puede ser un problema temporal con el servicio de IA. Por favor, inténtalo de nuevo más tarde. Generalmente, el Sol representa tu identidad central y tu ego.`,
+            moon: `Ocurrió un error al generar la explicación para tu Luna en ${moonSign}. La Luna rige tu mundo emocional y tus instintos.`,
+            ascendant: `Ocurrió un error al generar la explicación para tu Ascendente en ${ascendantSign}. El Ascendente es la máscara que muestras al mundo.`,
+            personalPlanets: "Los planetas personales como Mercurio, Venus y Marte dictan tus estilos de comunicación, amor y acción. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
+            transpersonalPlanets: "Los planetas exteriores influyen en los temas generacionales y en las lecciones de vida más amplias. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
+            houses: "Las 12 casas astrológicas representan diferentes áreas de tu vida. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
+            aspects: "Los aspectos son las relaciones geométricas entre los planetas, que indican cómo interactúan sus energías. No pudimos generar detalles específicos en este momento debido a un problema temporal del servicio.",
+        };
     }
-
+    
     return {
       ...textExplanations,
       planetPositions: chartData,

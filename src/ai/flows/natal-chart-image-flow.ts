@@ -56,19 +56,24 @@ export const natalChartImageFlow = ai.defineFlow(
 
 The final image must be a high-resolution, professional-looking astrological diagram that looks like it belongs in a modern mobile app.`;
 
-    const { media } = await ai.generate({
-      model: 'googleai/gemini-2.0-flash-preview-image-generation',
-      prompt: prompt,
-      config: {
-        responseModalities: ['TEXT', 'IMAGE'],
-      },
-    });
+    try {
+      const { media } = await ai.generate({
+        model: 'googleai/gemini-2.0-flash-preview-image-generation',
+        prompt: prompt,
+        config: {
+          responseModalities: ['TEXT', 'IMAGE'],
+        },
+      });
 
-
-    if (!media || !media.url) {
+      if (!media || !media.url) {
         throw new Error('Generated media is not a valid image with a URL.');
-    }
+      }
 
-    return { imageUrl: media.url };
+      return { imageUrl: media.url };
+    } catch (error: any) {
+      console.error(`Natal chart image generation failed. Error: ${error.message}`);
+      // Fallback to a placeholder image URL
+      return { imageUrl: 'https://placehold.co/400x400/1a1a1a/ffffff.png?text=Chart+Unavailable' };
+    }
   }
 );
