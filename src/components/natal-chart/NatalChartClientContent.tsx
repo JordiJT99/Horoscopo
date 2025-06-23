@@ -11,6 +11,7 @@ import NatalChartWheel from './NatalChartWheel';
 import NatalChartAspectsView from './NatalChartAspectsView';
 import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 interface BirthData {
   date: string;
@@ -37,10 +38,36 @@ function SectionExplanation({
   content?: string;
   isLoading: boolean;
 }) {
+  const getZodiacSymbol = (title: string) => {
+    const symbols: Record<string, string> = {
+      'Sol': '☉',
+      'Luna': '☽',
+      'Ascendente': '↑',
+      'Planetas Personales': '☿',
+      'Planetas Transpersonales': '♆',
+      'Casas': '⌂',
+    };
+
+    const clean = title.toLowerCase();
+    if (clean.includes('sol')) return '☉';
+    if (clean.includes('luna')) return '☽';
+    if (clean.includes('ascendente')) return '↑';
+    if (clean.includes('personal')) return '☿';
+    if (clean.includes('transpersonal')) return '♆';
+    if (clean.includes('casa')) return '⌂';
+
+    return '✦';
+  };
+
   return (
-    <div className="relative my-10 p-6 rounded-2xl bg-gradient-to-b from-background/70 to-background/30 border border-white/10 shadow-lg backdrop-blur-md transition-all">
-      <div className="absolute top-4 right-4 text-xl text-primary/50 pointer-events-none select-none">
-        ✦
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="relative p-6 sm:p-8 my-8 rounded-2xl bg-gradient-to-b from-background/70 to-background/40 border border-primary/30 shadow-[0_0_20px_rgba(100,100,255,0.08)] backdrop-blur-xl"
+    >
+      <div className="absolute top-4 right-4 text-2xl sm:text-3xl text-primary/60 pointer-events-none select-none">
+        {getZodiacSymbol(title)}
       </div>
       <h3 className="text-2xl sm:text-3xl font-semibold font-headline text-primary mb-4 tracking-tight">
         {title}
@@ -56,9 +83,10 @@ function SectionExplanation({
           {content || ''}
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
+
 
 
 export default function NatalChartClientContent({
