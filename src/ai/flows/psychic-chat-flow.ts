@@ -10,10 +10,10 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-export const PsychicChatInputSchema = z.string();
+const PsychicChatInputSchema = z.string();
 export type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
 
-export const PsychicChatOutputSchema = z.string();
+const PsychicChatOutputSchema = z.string();
 export type PsychicChatOutput = z.infer<typeof PsychicChatOutputSchema>;
 
 // The exported function that the client component will call
