@@ -1,7 +1,8 @@
+
 'use server';
 
-import { ai } from '@genkit-ai/ai';
-import { defineFlow, z, run } from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const NatalChartImageInputSchema = z.object({
   birthDate: z.string().describe('The date of birth (YYYY-MM-DD).'),
@@ -19,7 +20,7 @@ const NatalChartImageOutputSchema = z.object({
 
 export type NatalChartImageOutput = z.infer<typeof NatalChartImageOutputSchema>;
 
-export const natalChartImageFlow = defineFlow(
+export const natalChartImageFlow = ai.defineFlow(
   {
     name: 'natalChartImageFlow',
     inputSchema: NatalChartImageInputSchema,
@@ -48,25 +49,19 @@ export const natalChartImageFlow = defineFlow(
     Ensure the image is clear and the astrological symbols are recognizable.
     The text labels (like sign names) should be in the ${input.locale} language if the model supports it, otherwise use English.`;
 
-    const mediaResponse = await ai.generate({
-      model: 'gemini-1.5-flash-latest', // Or your preferred Gemini model with vision
-      prompt: [{ text: prompt }],
-      output: { format: 'media' },
+    const { media } = await ai.generate({
+      model: 'googleai/gemini-2.0-flash-preview-image-generation',
+      prompt: prompt,
       config: {
-        maxOutputTokens: 2048, // Adjust as needed
-      }
+        responseModalities: ['TEXT', 'IMAGE'],
+      },
     });
 
-    if (!mediaResponse.candidates || mediaResponse.candidates.length === 0) {
-      throw new Error('Failed to generate natal chart image.');
-    }
 
-    const image = mediaResponse.candidates[0].output.media?.[0];
-
-    if (!image || !image.url) {
+    if (!media || !media.url) {
         throw new Error('Generated media is not a valid image with a URL.');
     }
 
-    return { imageUrl: image.url };
+    return { imageUrl: media.url };
   }
 );
