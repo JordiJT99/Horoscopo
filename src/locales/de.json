@@ -666,7 +666,7 @@
         "spiritual": "Aspekte repräsentieren die karmischen Muster und göttlichen Verbindungen, die die Evolution Ihrer Seele beeinflussen. Sie zeigen die Chancen und Herausforderungen, denen Sie bei der Ausrichtung auf Ihren höheren Zweck begegnen."
       }
     },
-    "sunTitle": "Die Sonne in Ihrem Geburtshoroskop",
+    "sunTitle": "Die Sonne in Ihrem Geburtshoroskop", 
     "moonTitle": "Der Mond in Ihrem Geburtshoroskop",
     "ascendantTitle": "Der Aszendent in Ihrem Geburtshoroskop",
     "personalPlanetsTitle": "Persönliche Planeten",
@@ -674,7 +674,12 @@
     "housesTitle": "Die Astrologischen Häuser",
     "aspectsTitle": "Wichtige Aspekte"
  ,
-    "aspectsTab": "Aspekte"  },
+ "chartTab": "Diagramm",
+    "aspectsTab": "Aspekte",
+ "detailsTab": "Details",
+    "aspectsDetails": {
+      "noAspectsFound": "Keine signifikanten Aspekte in diesem Horoskop gefunden."
+    }  },
   "NatalChartImage": {
     "loadingImage": "Generiere Geburtshoroskop-Bild..."
   }
