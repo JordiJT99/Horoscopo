@@ -219,7 +219,57 @@
   "LuckyNumbersPage.title": "Números de la Suerte",
   "LuckyNumbersPage.subtitle": "Descubre tus números de la suerte, color y gema para tu signo.",
   "ChineseHoroscopePage.title": "Horóscopo Chino",
-  "ChineseHoroscopePage.subtitle": "Explora la sabiduría del zodiaco chino. Descubre tu signo animal y sus características.",
+  "ChineseHoroscopePage.subtitle": "Explora la sabiduría del zodiaco chino. Descubre tu signo animal y sus características.", 
+  "NatalChartPage.title": "Tu Carta Natal",
+  "NatalChartPage.underDevelopmentMessage": "Esta función está actualmente en desarrollo. ¡Vuelve a consultar más tarde!",
+  "NatalChartPage.detailLevel.label": "Seleccionar Nivel de Detalle",
+  "NatalChartPage.detailLevel.basic": "Básico",
+  "NatalChartPage.detailLevel.advanced": "Avanzado",
+  "NatalChartPage.detailLevel.spiritual": "Espiritual",
+  "NatalChartPage.sunTitle": "El Sol en tu Carta Natal",
+  "NatalChartPage.moonTitle": "La Luna en tu Carta Natal",
+  "NatalChartPage.ascendantTitle": "El Ascendente en tu Carta Natal",
+  "NatalChartPage.personalPlanetsTitle": "Planetas Personales",
+  "NatalChartPage.transpersonalPlanetsTitle": "Planetas Transpersonales",
+  "NatalChartPage.housesTitle": "Las Casas Astrológicas",
+  "NatalChartPage.aspectsTitle": "Los Aspectos Importantes",
+  "NatalChartPage.explanations": {
+    "sun": {
+      "basic": "Tu signo solar representa tu identidad central, ego y voluntad consciente. Es tu naturaleza básica.",
+      "advanced": "El signo solar significa tu fuerza vital, cómo expresas tu individualidad y tu potencial de crecimiento y autorealización. Indica los temas centrales y las energías que te impulsan.",
+      "spiritual": "El Sol representa la luz espiritual interior, tu verdadera esencia y el camino para cumplir el propósito de tu alma. Se trata de alinear tu voluntad consciente con la chispa divina."
+    },
+    "moon": {
+      "basic": "Tu signo lunar refleja tu naturaleza emocional, instintos y hábitos subconscientes. Es cómo reaccionas y te sientes por dentro.",
+      "advanced": "El signo lunar rige tus respuestas emocionales, tu necesidad de seguridad y tus patrones de comportamiento inconscientes. Muestra tu mundo interior y cómo buscas consuelo.",
+      "spiritual": "La Luna representa tu sabiduría intuitiva, tu conexión con lo femenino divino y tu capacidad de empatía y sanación emocional. Se trata de nutrir tu alma y confiar en tu guía interior."
+    },
+    "ascendant": {
+      "basic": "Tu Ascendente (Signo Ascendente) es cómo te ven los demás y cómo te presentas al mundo. Es tu personalidad externa.",
+      "advanced": "El Ascendente es la máscara que usas, tu reacción inicial a situaciones nuevas y tu apariencia física. Marca la pauta de toda tu carta e influye en cómo empiezas las cosas.",
+      "spiritual": "El Ascendente representa las lecciones que estás aquí para aprender y el camino de crecimiento personal en esta vida. Se trata de evolucionar conscientemente tu expresión externa para alinearte con tu verdad interior."
+    },
+    "personalPlanets": {
+      "basic": "Los planetas personales (Mercurio, Venus, Marte) muestran tus estilos de comunicación, amor y acción.",
+      "advanced": "Mercurio (mente, comunicación), Venus (amor, valores, armonía) y Marte (energía, acción, deseo) representan tus impulsos centrales y cómo interactúas con el mundo a nivel personal.",
+      "spiritual": "Los planetas personales reflejan cómo integras tus pensamientos, sentimientos y acciones en tu viaje espiritual. Son herramientas para la creación consciente y la autoexpresión."
+    },
+    "transpersonalPlanets": {
+      "basic": "Los planetas transpersonales (Júpiter, Saturno, Urano, Neptuno, Plutón) representan temas más amplios como el crecimiento, la disciplina, el cambio, la intuición y la transformación.",
+      "advanced": "Estos planetas exteriores influyen en las tendencias colectivas y en tu conciencia superior. Júpiter (expansión), Saturno (estructura, desafíos), Urano (innovación), Neptuno (sueños, espiritualidad) y Plutón (transformación, poder) dan forma a tu evolución a mayor escala.",
+      "spiritual": "Los planetas transpersonales son conductos para la energía divina y catalizadores del despertar espiritual. Te desafían a trascender tu ego y conectar con las fuerzas universales."
+    },
+    "houses": {
+      "basic": "Las 12 casas del zodiaco representan diferentes áreas de la vida donde se expresan las energías de los planetas.",
+      "advanced": "Cada casa rige aspectos específicos de tu vida, como el yo (1ra), las finanzas (2da), la comunicación (3ra), el hogar (4ta), la creatividad (5ta), el trabajo (6ta), las relaciones (7ma), la transformación (8va), la filosofía (9na), la carrera (10ma), la comunidad (11va) y la espiritualidad (12va).",
+      "spiritual": "Las casas son las etapas del viaje de tu alma, donde experimentas lecciones y oportunidades de crecimiento espiritual. Muestran dónde y cómo puedes integrar las energías cósmicas en tu vida terrenal."
+    },
+    "aspects": {
+      "basic": "Los aspectos son ángulos entre planetas que muestran cómo interactúan sus energías (fácil o desafiante).",
+      "advanced": "Los aspectos principales como la conjunción (unión), la oposición (tensión), el trígono (armonía), la cuadratura (desafío) y el sextil (oportunidad) describen las relaciones dinámicas entre las energías planetarias, revelando tus fortalezas y áreas de crecimiento.",
+      "spiritual": "Los aspectos representan los patrones kármicos y las conexiones divinas que influyen en la evolución de tu alma. Muestran las oportunidades y desafíos que enfrentas al alinearte con tu propósito superior."
+    }
+  },
   "ChineseHoroscopePage.comingSoon": "¡Próximamente horóscopos detallados y más para la Astrología China!",
   "ChineseHoroscopePage.years": "Años:",
   "ChineseHoroscopePage.element": "Elemento:",

@@ -645,7 +645,50 @@
   "UpcomingPhase.sampleDate2": "Sample 2",
   "UpcomingPhase.sampleDate3": "Sample 3",
   "UpcomingPhase.sampleDate4": "Sample 4",
-  "Data.notAvailable": "N/A"
+  "Data.notAvailable": "N/A",
+  "NatalChartPage.title": "Natal Chart",
+  "NatalChartPage.underDevelopmentMessage": "This feature is currently under development. Please check back later!",
+  "NatalChartPage.detailLevel.label": "Select Detail Level",
+  "NatalChartPage.detailLevel.basic": "Basic",
+  "NatalChartPage.detailLevel.advanced": "Advanced",
+  "NatalChartPage.detailLevel.spiritual": "Spiritual",
+  "NatalChartPage.explanations": {
+    "sun": {
+      "basic": "Your Sun sign represents your core identity, ego, and conscious will. It's your basic nature.",
+      "advanced": "The Sun sign signifies your vital force, how you express your individuality, and your potential for growth and self-realization. It indicates the central themes and energies that drive you.",
+      "spiritual": "The Sun represents the spiritual light within, your true essence, and the path towards fulfilling your soul's purpose. It's about aligning your conscious will with the divine spark."
+    },
+    "moon": {
+      "basic": "Your Moon sign reflects your emotional nature, instincts, and subconscious habits. It's how you react and feel inside.",
+      "advanced": "The Moon sign governs your emotional responses, your need for security, and your unconscious patterns of behavior. It shows your inner world and how you seek comfort.",
+      "spiritual": "The Moon represents your intuitive wisdom, your connection to the divine feminine, and your capacity for empathy and emotional healing. It's about nurturing your soul and trusting your inner guidance."
+    },
+    "ascendant": {
+      "basic": "Your Ascendant (Rising Sign) is how others see you and how you present yourself to the world. It's your outer personality.",
+      "advanced": "The Ascendant is the mask you wear, your initial reaction to new situations, and your physical appearance. It sets the tone for your entire chart and influences how you begin things.",
+      "spiritual": "The Ascendant represents the lessons you are here to learn and the path of personal growth in this lifetime. It's about consciously evolving your outer expression to align with your inner truth."
+    },
+    "personalPlanets": {
+      "basic": "Personal planets (Mercury, Venus, Mars) show your communication, love, and action styles.",
+      "advanced": "Mercury (mind, communication), Venus (love, values, harmony), and Mars (energy, action, desire) represent your core drives and how you interact with the world on a personal level.",
+      "spiritual": "Personal planets reflect how you integrate your thoughts, feelings, and actions on your spiritual journey. They are tools for conscious creation and self-expression."
+    },
+    "transpersonalPlanets": {
+      "basic": "Transpersonal planets (Jupiter, Saturn, Uranus, Neptune, Pluto) represent broader themes like growth, discipline, change, intuition, and transformation.",
+      "advanced": "These outer planets influence collective trends and your higher consciousness. Jupiter (expansion), Saturn (structure, challenges), Uranus (innovation), Neptune (dreams, spirituality), and Pluto (transformation, power) shape your evolution on a larger scale.",
+      "spiritual": "Transpersonal planets are conduits for divine energy and catalysts for spiritual awakening. They challenge you to transcend your ego and connect with universal forces."
+    },
+    "houses": {
+      "basic": "The 12 houses of the zodiac represent different areas of life where the planets' energies are expressed.",
+      "advanced": "Each house governs specific aspects of your life, such as self (1st), finances (2nd), communication (3rd), home (4th), creativity (5th), work (6th), relationships (7th), transformation (8th), philosophy (9th), career (10th), community (11th), and spirituality (12th).",
+      "spiritual": "The houses are the stages of your soul's journey, where you experience lessons and opportunities for spiritual growth. They show where and how you can integrate cosmic energies into your earthly life."
+    },
+    "aspects": {
+      "basic": "Aspects are angles between planets that show how their energies interact (easy or challenging).",
+      "advanced": "Major aspects like conjunction (union), opposition (tension), trine (harmony), square (challenge), and sextile (opportunity) describe the dynamic relationships between planetary energies, revealing your strengths and areas for growth.",
+      "spiritual": "Aspects represent the karmic patterns and divine connections influencing your soul's evolution. They show the opportunities and challenges you face in aligning with your higher purpose."
+    }
+  }
 }
 
     
