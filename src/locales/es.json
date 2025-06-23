@@ -695,7 +695,14 @@
       "required": "This field is required",
       "invalidDate": "Invalid date format",
       "invalidTime": "Invalid time format"    }
-  }
+  },
+  
+  "PsychicChatPage.title": "Psychic Chat",
+  "PsychicChatPage.subtitle": "Connect with a psychic for guidance.",
+  "PsychicChatClient.inputPlaceholder": "Type your question here...",
+  "PsychicChatClient.sendButton": "Send"
+
 }
+
 
     

@@ -701,7 +701,11 @@
       "advanced": "Major aspects like conjunction (union), opposition (tension), trine (harmony), square (challenge), and sextile (opportunity) describe the dynamic relationships between planetary energies, revealing your strengths and areas for growth.",
       "spiritual": "Aspects represent the karmic patterns and divine connections influencing your soul's evolution. They show the opportunities and challenges you face in aligning with your higher purpose."
     }
-  }
+  },
+  "PsychicChatPage.title": "Psychic Chat",
+  "PsychicChatPage.subtitle": "Connect with a mystical guide for personalized insights.",
+  "PsychicChatPage.inputPlaceholder": "Ask your question...",
+  "PsychicChatPage.sendButton": "Send"
   }
 }
 
