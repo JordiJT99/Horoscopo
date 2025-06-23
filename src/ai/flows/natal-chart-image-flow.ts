@@ -1,4 +1,3 @@
-
 'use server';
 
 import { ai } from '@/ai/genkit';
@@ -28,26 +27,25 @@ export const natalChartImageFlow = ai.defineFlow(
   },
   async (input) => {
     // Note: This is a conceptual implementation.
-    // Calculating exact planet positions requires a dedicated astrology library
-    // which is not directly available within the Genkit flow environment by default.
-    // A real implementation would involve:
-    // 1. Using an external service or library to calculate positions based on input.
-    // 2. Passing these calculated positions to the image generation model
-    //    either as detailed instructions or by using a model capable of
-    //    rendering based on structured data.
-    // For this example, we'll create a prompt requesting a generic,
-    // aesthetically pleasing natal chart image based on the input data,
-    // without calculating precise positions.
+    // Calculating exact planet positions requires a dedicated astrology library.
+    // This prompt requests a stylized, consistent, but generic natal chart image.
 
-    const prompt = `Generate a detailed and visually appealing image of a natal chart.
-    The chart should include the circular zodiac wheel with the 12 signs clearly marked.
-    Depict the inner houses, lines representing aspects between planetary positions,
-    and symbols for the planets.
-    The overall style should be aesthetic and mystical.
-    Include the birth information subtly on the image if possible, for example:
-    Date: ${input.birthDate}, Time: ${input.birthTime}, Location: ${input.birthCity}, ${input.birthCountry}.
-    Ensure the image is clear and the astrological symbols are recognizable.
-    The text labels (like sign names) should be in the ${input.locale} language if the model supports it, otherwise use English.`;
+    const prompt = `Generate a visually clear and modern natal chart image with a consistent design.
+
+**Style Guidelines:**
+- **Background:** Solid, dark navy blue background, evoking a night sky (#0a0a23).
+- **Style:** Clean, minimalist, and modern. Use thin, crisp lines. Avoid vintage, ornate, or hand-drawn styles.
+- **Color Palette:** The primary elements of the chart (zodiac wheel, house lines, planet glyphs) should use a glowing, light-colored palette like white, light silver, or a very light cyan. Aspect lines should be thin and colored: red for hard aspects (conjunctions, squares, oppositions) and blue for soft aspects (trines, sextiles).
+- **Text:** **CRITICAL: Do NOT generate any text, numbers, or dates on the image.** The image should contain only graphical elements and symbols. No labels for signs, planets, or houses.
+
+**Structural Elements:**
+1.  **Outer Ring (Zodiac):** A perfect circle divided into 12 equal 30-degree segments for the zodiac signs.
+2.  **Zodiac Glyphs:** Place the standard, universally recognized glyph for each of the 12 zodiac signs (Aries, Taurus, Gemini, etc.) within its segment on the outer ring. The glyphs should be simple, white or light-colored, and easily identifiable.
+3.  **Inner Ring (Houses):** Inside the zodiac wheel, draw the 12 house cusps as lines radiating from the center. The lines for the four angles (Ascendant, IC, Descendant, MC) should be slightly thicker or more prominent.
+4.  **Planet Glyphs:** Place a few standard planet glyphs (e.g., Sun, Moon, Mars, Venus, Mercury) inside the chart, within different house segments. The glyphs should be clean and modern.
+5.  **Aspect Lines:** Draw a few clear aspect lines (red and blue) connecting some of the planet glyphs. The lines should be thin and not clutter the center.
+
+The final image must be a high-resolution, clean, and professional-looking astrological diagram, suitable for a modern web application. It must be simple and easy to understand at a glance.`;
 
     const { media } = await ai.generate({
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
