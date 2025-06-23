@@ -10,7 +10,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
 import NatalChartAspectsView from './NatalChartAspectsView';
 import type { AuthUser } from '@/types';
-import BirthDataForm from './BirthDataForm';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
@@ -41,12 +40,12 @@ function SectionExplanation({
 }) {
   const getZodiacSymbol = (title: string) => {
     const symbols: Record<string, string> = {
-      'sol': '☉',
-      'luna': '☽',
-      'ascendente': '↑',
-      'planetas personales': '☿',
-      'planetas transpersonales': '♆',
-      'casas': '⌂',
+      'Sol': '☉',
+      'Luna': '☽',
+      'Ascendente': '↑',
+      'Planetas Personales': '☿',
+      'Planetas Transpersonales': '♆',
+      'Casas': '⌂',
     };
 
     const clean = title.toLowerCase();
@@ -113,7 +112,6 @@ export default function NatalChartClientContent({
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [showBirthDataForm, setShowBirthDataForm] = useState(!birthData || Object.keys(birthData).length === 0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -129,16 +127,18 @@ export default function NatalChartClientContent({
             if (cachedData) {
                 const parsedData = JSON.parse(cachedData);
                 setExplanations(parsedData);
-                setImageUrl(parsedData.imageUrl);
+                setImageUrl(parsedData.imageUrl); // Assuming imageUrl is saved in the cached object
                 setIsLoading(false);
-                return;
+                console.log("Loaded natal chart from cache.");
+                return; // Exit if loaded from cache
             }
         } catch(e) {
             console.error("Failed to parse cached data, fetching new data.", e);
-            localStorage.removeItem(cacheKey);
+            localStorage.removeItem(cacheKey); // Remove corrupted data
         }
       }
   
+      console.log("Fetching new natal chart data...");
       try {
         const commonInput = {
           detailLevel,
@@ -149,6 +149,7 @@ export default function NatalChartClientContent({
           birthCountry: birthData.country,
         };
   
+        // Run both flows in parallel
         const [textResult, imageResult] = await Promise.all([
           natalChartFlow(commonInput),
           natalChartImageFlow(commonInput),
@@ -162,6 +163,7 @@ export default function NatalChartClientContent({
   
           if (cacheKey) {
             localStorage.setItem(cacheKey, JSON.stringify(fullResult));
+            console.log("Saved natal chart to cache.");
           }
         } else {
           throw new Error("Received null or undefined result from AI flow(s).");
@@ -179,15 +181,10 @@ export default function NatalChartClientContent({
         setIsLoading(false);
       }
     };
-
-    if (birthData && Object.keys(birthData).length > 0 && !showBirthDataForm) {
-      // Only fetch explanations if birthData exists AND the form is NOT shown
-      fetchExplanations(); 
-    } else {
-      setIsLoading(false);
-    }
   
-  }, [detailLevel, birthData, dictionary, toast, user, showBirthDataForm]);
+    fetchExplanations();
+  }, [detailLevel, birthData, dictionary, toast, user]);
+
 
   const handleDownload = () => {
     if (!imageUrl) return;
@@ -210,39 +207,12 @@ export default function NatalChartClientContent({
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Título principal */}
       <h2 className="text-3xl sm:text-4xl font-headline font-semibold text-primary text-center mb-4">
         {title}
       </h2>
 
-      {showBirthDataForm ? (
-        <BirthDataForm
-          dictionary={dictionary.birthForm} 
-          onSubmit={() => {
-            if (user) {
-              // Mark that a natal chart has been generated for this user
-              localStorage.setItem(`natalChart_generated_${user.uid}`, 'true');
-            }
-            setShowBirthDataForm(false);
-            // This component doesn't manage birthData state, the wrapper does.
-            // This logic is likely handled in the wrapper now.
-            // For now, just hide the form.
-          }}
-        />
-      ) : (
-        <div className="text-center my-8">
-          <Button
-            onClick={() => {
-              if (user) {
-                localStorage.removeItem(`natalChart_generated_${user?.uid}`);
-              }
-              setShowBirthDataForm(true);
-            }}
-          >
-            {dictionary.NatalChartPage?.regenerateButton || "Change Birth Data"}
-          </Button>
-        </div>
-      )}
-      
+      {/* Selector de nivel de detalle */}
       <div className="flex justify-center mt-4 mb-8">
         <label htmlFor="detailLevel" className="mr-2 self-center">
           {detailLevelDict?.label || 'Nivel de detalle'}:
@@ -260,6 +230,7 @@ export default function NatalChartClientContent({
         </select>
       </div>
       
+      {/* Pestañas de Navegación */}
       <div className="flex justify-center mb-6 space-x-4">
          <Button variant={activeTab === 'chart' ? 'default' : 'ghost'} onClick={() => setActiveTab('chart')}>
           {dictionary.NatalChartPage?.chartTab}
@@ -272,6 +243,7 @@ export default function NatalChartClientContent({
         </Button>
       </div>
 
+      {/* Contenido de la Pestaña de la Carta */}
       {activeTab === 'chart' && (
          <div className="my-8 flex flex-col items-center">
           {isLoading || !explanations || !imageUrl ? (
@@ -293,10 +265,12 @@ export default function NatalChartClientContent({
         </div>
       )}
 
+      {/* Contenido de la Pestaña de Aspectos */}
       {activeTab === 'aspects' && explanations?.aspectsDetails && (
         <NatalChartAspectsView aspectsDetails={explanations.aspectsDetails} dictionary={dictionary} />
       )}
 
+      {/* Contenido de la Pestaña de Detalles */}
       {activeTab === 'details' && (
         <div className="space-y-6 py-4">
           {explanationSections.map((section, index) => (
@@ -310,6 +284,7 @@ export default function NatalChartClientContent({
         </div>
       )}
 
+      {/* Mensaje de desarrollo */}
       <p className="text-center mt-8 text-sm text-muted-foreground">
         {underDevelopmentMessage}
       </p>
