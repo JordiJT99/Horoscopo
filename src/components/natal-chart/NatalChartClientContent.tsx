@@ -1,7 +1,7 @@
 
 "use client";
 
-import { SectionTitle } from '@/components/shared/SectionTitle';
+import SectionTitle from '@/components/shared/SectionTitle';
 import type { Dictionary } from '@/lib/dictionaries';
 import React, { useState } from 'react';
  
