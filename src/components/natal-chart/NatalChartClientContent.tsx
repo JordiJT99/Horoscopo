@@ -41,12 +41,12 @@ function SectionExplanation({
 }) {
   const getZodiacSymbol = (title: string) => {
     const symbols: Record<string, string> = {
-      'Sol': '☉',
-      'Luna': '☽',
-      'Ascendente': '↑',
-      'Planetas Personales': '☿',
-      'Planetas Transpersonales': '♆',
-      'Casas': '⌂',
+      'sol': '☉',
+      'luna': '☽',
+      'ascendente': '↑',
+      'planetas personales': '☿',
+      'planetas transpersonales': '♆',
+      'casas': '⌂',
     };
 
     const clean = title.toLowerCase();
@@ -113,11 +113,7 @@ export default function NatalChartClientContent({
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [showBirthDataForm, setShowBirthDataForm] = useState(() => {
-    if (typeof window === 'undefined') return true; 
-    const generated = user ? localStorage.getItem(`natalChart_generated_${user.uid}`) : null;
-    return !generated;
-  });
+  const [showBirthDataForm, setShowBirthDataForm] = useState(!birthData || Object.keys(birthData).length === 0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -185,7 +181,8 @@ export default function NatalChartClientContent({
     };
 
     if (birthData && Object.keys(birthData).length > 0 && !showBirthDataForm) {
-      fetchExplanations();
+      // Only fetch explanations if birthData exists AND the form is NOT shown
+      fetchExplanations(); 
     } else {
       setIsLoading(false);
     }
@@ -219,9 +216,10 @@ export default function NatalChartClientContent({
 
       {showBirthDataForm ? (
         <BirthDataForm
-          dictionary={dictionary.BirthDataForm}
-          onSubmit={(data) => {
+          dictionary={dictionary.birthForm} 
+          onSubmit={() => {
             if (user) {
+              // Mark that a natal chart has been generated for this user
               localStorage.setItem(`natalChart_generated_${user.uid}`, 'true');
             }
             setShowBirthDataForm(false);
