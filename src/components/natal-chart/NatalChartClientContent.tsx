@@ -99,13 +99,11 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
   ];
 
   const handleDownload = () => {
-    if (!explanations?.image) return;
+    if (!explanations?.image?.url) return;
 
     const link = document.createElement('a');
     link.download = 'natal-chart.png';
-    link.href = explanations.image.url
-      ? explanations.image.url
-      : `data:image/png;base64,${explanations.image.base64}`;
+    link.href = explanations.image.url;
     link.click();
   };
 
@@ -131,37 +129,29 @@ export default function NatalChartClientContent({ dictionary, birthData }: Natal
         </select>
       </div>
 
-      {/* Rueda zodiacal */}
-      {explanations?.planetPositions && (
-        <div className="my-8 flex justify-center">
-          <NatalChartWheel planetPositions={explanations.planetPositions} />
-        </div>
-      )}
-
-      {/* Imagen generada por IA */}
-      {isLoading && (
-        <div className="my-8 flex justify-center">
-          <Skeleton className="w-[400px] h-[400px] rounded-full" />
-        </div>
-      )}
-
-      {explanations?.image && !isLoading && (
-        <div className="my-8 flex flex-col items-center">
-          <img
-            src={
-              explanations.image.url
-                ? explanations.image.url
-                : `data:image/png;base64,${explanations.image.base64}`
-            }
-            alt={explanations.image.alt || 'Carta Natal Generada'}
-            className="max-w-full h-auto rounded-md border border-muted"
-          />
-          <Button onClick={handleDownload} className="mt-4">
-            Descargar imagen
-          </Button>
-        </div>
-      )}
-
+      {/* Rueda zodiacal y Imagen generada por IA */}
+      <div className="my-8 flex flex-col items-center">
+        {isLoading ? (
+          <div className="w-[400px] h-[400px] flex items-center justify-center">
+            <Skeleton className="w-full h-full rounded-full" />
+          </div>
+        ) : (
+          explanations?.planetPositions && (
+            <>
+              <NatalChartWheel
+                planetPositions={explanations.planetPositions}
+                imageDataUrl={explanations.image?.url}
+              />
+              {explanations.image?.url && (
+                <Button onClick={handleDownload} className="mt-4">
+                  Descargar imagen
+                </Button>
+              )}
+            </>
+          )
+        )}
+      </div>
+      
       {/* Explicaciones de cada sección */}
       {explanationSections.map((section, index) => (
         <SectionExplanation
