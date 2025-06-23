@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
 import { Button } from '@/components/ui/button';
+import NatalChartAspectsView from './NatalChartAspectsView'; // Import the new component
 import type { AuthUser } from '@/types';
 
 interface BirthData {
@@ -26,6 +27,7 @@ interface NatalChartClientContentProps {
 }
 
 type DetailLevel = 'basic' | 'advanced' | 'spiritual';
+type ActiveTab = 'chart' | 'aspects' | 'details'; // Define active tabs
 
 const SectionExplanation = ({ title, content, isLoading }: { title: string, content?: string, isLoading: boolean }) => (
   <div className="mt-8">
@@ -57,6 +59,7 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
   } = dictionary.NatalChartPage;
 
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('chart'); // State for active tab
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null); // State for the image
   const [isLoading, setIsLoading] = useState(true);
@@ -121,15 +124,15 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
     fetchExplanations();
     
   }, [detailLevel, birthData, dictionary, toast, user]);
-
+  
+  // Filter explanations based on the active tab
   const explanationSections = [
     { title: sunTitle, content: explanations?.sun },
     { title: moonTitle, content: explanations?.moon },
     { title: ascendantTitle, content: explanations?.ascendant },
     { title: personalPlanetsTitle, content: explanations?.personalPlanets },
     { title: transpersonalPlanetsTitle, content: explanations?.transpersonalPlanets },
-    { title: housesTitle, content: explanations?.houses },
-    { title: aspectsTitle, content: explanations?.aspects },
+    { title: housesTitle, content: explanations?.houses }, // Houses are part of 'Details'
   ];
 
   const handleDownload = () => {
@@ -143,8 +146,10 @@ export default function NatalChartClientContent({ dictionary, birthData, user }:
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Page Title */}
       <h2 className="text-3xl sm:text-4xl font-headline font-semibold text-primary text-center mb-4">{title}</h2>
 
+      {/* Tab Navigation */}
       {/* Detail Level Selector */}
       <div className="flex justify-center mt-4 mb-8">
         <label htmlFor="detailLevel" className="mr-2 self-center">

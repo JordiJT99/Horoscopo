@@ -662,6 +662,7 @@
     "transpersonalPlanetsTitle": "Transpersonal Planets",
     "housesTitle": "The Astrological Houses",
     "aspectsTitle": "Important Aspects",
+    "aspectsTab": "Aspects",
     "explanations": {
       "imageLoading": "Generating your cosmic chart image...",
       "imageAltText": "Your personalized natal chart wheel",
