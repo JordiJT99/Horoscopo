@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -36,6 +35,7 @@ const TopicSelector = ({ dictionary, onTopicSelect, psychic }: { dictionary: Dic
   ];
 
   return (
+    // This is now rendered without a Card wrapper, directly on the page.
     <div className="flex flex-col items-center justify-center h-full text-center p-4">
       <Avatar className="w-24 h-24 mb-4 border-4 border-primary/50 shadow-lg">
         <AvatarImage src={psychic.image} alt={psychic.name} />
@@ -76,7 +76,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   useEffect(() => {
     // A slight delay ensures the DOM has updated before scrolling
-    setTimeout(scrollToBottom, 10);
+    setTimeout(scrollToBottom, 100);
   }, [messages, isSending]);
 
   const handleSendMessage = async () => {
@@ -125,22 +125,14 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const psychicInitial = psychic.name.charAt(0);
 
   if (!selectedTopic) {
-    return (
-      <Card className="h-full flex flex-col bg-card/70 backdrop-blur-sm border-border/30 shadow-lg rounded-xl overflow-hidden">
-        <CardContent className="flex-1 flex items-center justify-center p-0">
-          <TopicSelector dictionary={dictionary} onTopicSelect={handleTopicSelect} psychic={psychic} />
-        </CardContent>
-      </Card>
-    );
+    return <TopicSelector dictionary={dictionary} onTopicSelect={handleTopicSelect} psychic={psychic} />;
   }
 
   return (
     <Card className="flex flex-col h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg rounded-xl overflow-hidden">
-      {/* This CardContent will grow to fill the card */}
-      <CardContent className="flex-1 p-0 relative">
-        {/* The ScrollArea is positioned absolutely to fill the CardContent */}
-        <ScrollArea className="absolute inset-0" viewportRef={scrollViewportRef}>
-          <div className="space-y-4 p-2 sm:p-4">
+      <CardContent className="flex-1 p-0 flex flex-col overflow-hidden">
+        <ScrollArea className="h-full w-full" viewportRef={scrollViewportRef}>
+          <div className="p-2 sm:p-4 space-y-4">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -188,7 +180,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
           </div>
         </ScrollArea>
       </CardContent>
-      {/* The input area is a sibling to the CardContent, so it's not part of the scroll area */}
       <div className="flex items-center p-2 sm:p-3 border-t border-border/30 bg-background/50">
         <Input
           className="flex-grow mr-2 bg-input/50"
