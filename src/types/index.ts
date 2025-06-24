@@ -228,3 +228,9 @@ export interface OnboardingFormData {
 
 // Profile selector type
 export type SelectedProfileType = 'user' | 'generic';
+
+// Type for conversational chat messages
+export interface ChatMessage {
+  role: 'user' | 'model';
+  content: string;
+}

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import type { Psychic } from '@/lib/psychics';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { psychicChat } from '@/ai/flows/psychic-chat-flow';
+import type { ChatMessage } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -35,7 +36,6 @@ const TopicSelector = ({ dictionary, onTopicSelect, psychic }: { dictionary: Dic
   ];
 
   return (
-    // This is now rendered without a Card wrapper, directly on the page.
     <div className="flex flex-col items-center justify-center h-full text-center p-4">
       <Avatar className="w-24 h-24 mb-4 border-4 border-primary/50 shadow-lg">
         <AvatarImage src={psychic.image} alt={psychic.name} />
@@ -75,7 +75,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   };
 
   useEffect(() => {
-    // A slight delay ensures the DOM has updated before scrolling
     setTimeout(scrollToBottom, 100);
   }, [messages, isSending]);
 
@@ -83,14 +82,19 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     if (!inputMessage.trim() || isSending || !selectedTopic) return;
 
     const newUserMessage: Message = { text: inputMessage, sender: 'user' };
-    setMessages(prev => [...prev, newUserMessage]);
-    const currentInput = inputMessage;
+    const updatedMessagesForUI = [...messages, newUserMessage];
+    setMessages(updatedMessagesForUI);
     setInputMessage('');
     setIsSending(true);
 
+    const flowMessages: ChatMessage[] = updatedMessagesForUI.map(msg => ({
+        role: msg.sender === 'user' ? ('user' as const) : ('model' as const),
+        content: msg.text,
+    }));
+
     try {
       const aiResponse = await psychicChat(
-        currentInput,
+        flowMessages,
         locale,
         psychic.id,
         selectedTopic.name, 
@@ -105,8 +109,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         description: dictionary['PsychicChatPage.sendMessageError'] || 'Error connecting to the psychic.',
         variant: 'destructive',
       });
-      const errorMessage: Message = { text: dictionary['PsychicChatPage.sendMessageError'] || 'Error connecting to the psychic.', sender: 'ai' };
-      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsSending(false);
     }
@@ -130,8 +132,8 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   return (
     <Card className="flex flex-col h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg rounded-xl overflow-hidden">
-      <CardContent className="flex-1 p-0 flex flex-col overflow-hidden">
-        <ScrollArea className="h-full w-full" viewportRef={scrollViewportRef}>
+      <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
+        <ScrollArea className="flex-1" viewportRef={scrollViewportRef}>
           <div className="p-2 sm:p-4 space-y-4">
             {messages.map((message, index) => (
               <div
