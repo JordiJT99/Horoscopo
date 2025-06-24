@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { psychicChat } from '@/ai/flows/psychic-chat-flow';
+import { psychicChat, type PsychicChatInput } from '@/ai/flows/psychic-chat-flow';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, Sparkles } from 'lucide-react';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 
 interface Message {
   type: 'user' | 'ai';
@@ -17,9 +17,10 @@ interface Message {
 
 interface PsychicChatClientProps {
   dictionary: Dictionary;
+  locale: Locale;
 }
 
-export default function PsychicChatClient({ dictionary }: PsychicChatClientProps) {
+export default function PsychicChatClient({ dictionary, locale }: PsychicChatClientProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,8 @@ export default function PsychicChatClient({ dictionary }: PsychicChatClientProps
     setPrompt('');
 
     try {
-      const aiResponse = await psychicChat(currentPrompt);
+      const input: PsychicChatInput = { prompt: currentPrompt, locale };
+      const aiResponse = await psychicChat(input);
       const aiMessage: Message = { type: 'ai', text: aiResponse };
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {

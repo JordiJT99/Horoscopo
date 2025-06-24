@@ -26,7 +26,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
         className="mb-8"
       />
       <div className="flex-grow">
-        <PsychicChatClient dictionary={dictionary} />
+        <PsychicChatClient dictionary={dictionary} locale={params.locale} />
       </div>
     </main>
   );

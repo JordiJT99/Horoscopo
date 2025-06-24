@@ -10,15 +10,18 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-const PsychicChatInputSchema = z.string();
-type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
+const PsychicChatInputSchema = z.object({
+  prompt: z.string().describe("The user's question or message to the psychic."),
+  locale: z.string().describe("The locale (e.g., 'en', 'es') for the response language."),
+});
+export type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
 
 const PsychicChatOutputSchema = z.string();
-type PsychicChatOutput = z.infer<typeof PsychicChatOutputSchema>;
+export type PsychicChatOutput = z.infer<typeof PsychicChatOutputSchema>;
 
 // The exported function that the client component will call
-export async function psychicChat(prompt: PsychicChatInput): Promise<PsychicChatOutput> {
-  return psychicChatFlow(prompt);
+export async function psychicChat(input: PsychicChatInput): Promise<PsychicChatOutput> {
+  return psychicChatFlow(input);
 }
 
 // The internal Genkit flow
@@ -28,7 +31,7 @@ const psychicChatFlow = ai.defineFlow(
     inputSchema: PsychicChatInputSchema,
     outputSchema: PsychicChatOutputSchema,
   },
-  async (prompt) => {
+  async (input) => {
     const psychicResponse = await ai.generate({
       prompt: `You are a mystical and intuitive astrologer named Oraculus, gifted with deep cosmic insight and ancient wisdom. 
 Your role is to offer personalized readings that guide the user through their life journey, using the language of the stars, planets, and intuition.
@@ -39,7 +42,9 @@ You may reference zodiac signs, houses, planetary transits, lunar phases, or arc
 
 Do not answer like a chatbot. Speak as a spiritual guide or oracle would.
 
-User's question: ${prompt}`,
+**CRITICAL: Respond in the language specified by this locale code: ${input.locale}.**
+
+User's request: ${input.prompt}`,
       config: {
         temperature: 0.8,
         maxOutputTokens: 300,
