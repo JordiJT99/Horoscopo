@@ -9,6 +9,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import type { Locale } from '@/lib/dictionaries';
 
 const PsychicChatInputSchema = z.object({
   prompt: z.string().describe("The user's question or message to the psychic."),
@@ -16,11 +17,12 @@ const PsychicChatInputSchema = z.object({
 });
 export type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
 
-const PsychicChatOutputSchema = z.string();
-export type PsychicChatOutput = z.infer<typeof PsychicChatOutputSchema>;
+export type PsychicChatOutput = string;
 
 // The exported function that the client component will call
-export async function psychicChat(input: PsychicChatInput): Promise<PsychicChatOutput> {
+// It now accepts primitive types to avoid serialization issues with objects in Server Actions.
+export async function psychicChat(prompt: string, locale: Locale): Promise<PsychicChatOutput> {
+  const input: PsychicChatInput = { prompt, locale };
   return psychicChatFlow(input);
 }
 
@@ -29,7 +31,7 @@ const psychicChatFlow = ai.defineFlow(
   {
     name: 'psychicChatFlow',
     inputSchema: PsychicChatInputSchema,
-    outputSchema: PsychicChatOutputSchema,
+    outputSchema: z.string(),
   },
   async (input) => {
     const psychicResponse = await ai.generate({

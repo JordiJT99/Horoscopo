@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { psychicChat, type PsychicChatInput } from '@/ai/flows/psychic-chat-flow';
+import { psychicChat } from '@/ai/flows/psychic-chat-flow';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -46,8 +46,8 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
     setPrompt('');
 
     try {
-      const input: PsychicChatInput = { prompt: currentPrompt, locale };
-      const aiResponse = await psychicChat(input);
+      // Pass prompt and locale as separate arguments
+      const aiResponse = await psychicChat(currentPrompt, locale);
       const aiMessage: Message = { type: 'ai', text: aiResponse };
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {
