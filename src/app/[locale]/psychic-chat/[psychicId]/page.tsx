@@ -1,12 +1,11 @@
-typescriptreact
 'use client';
 
 import { useParams } from 'next/navigation';
 import { psychics } from '@/lib/psychics';
 import { useState, useEffect } from 'react';
-import { useLocale } from 'next-intl';
-import { psychicChat } from '@/ai/flows/psychic-chat-flow'; // Assuming this is the correct import path
-import { Psychic } from '@/lib/psychics'; // Assuming Psychic type is exported
+import { psychicChat } from '@/ai/flows/psychic-chat-flow';
+import type { Locale } from '@/lib/dictionaries';
+import { useAuth } from '@/context/AuthContext';
 
 interface Message {
   text: string;
@@ -14,9 +13,9 @@ interface Message {
 }
 
 const PsychicChatPage = () => {
-  const params = useParams<{ psychicId: string }>();
-  const locale = useLocale();
-  const { psychicId } = params;
+  const params = useParams<{ psychicId: string; locale: Locale }>();
+  const { psychicId, locale } = params;
+  const { user } = useAuth();
 
   const psychic = psychics.find((p) => p.id === psychicId);
 
@@ -69,13 +68,13 @@ const PsychicChatPage = () => {
     setIsSending(true);
 
     try {
-      // Assuming psychicChat takes locale, psychicId, topic, and prompt
+      const userName = user?.displayName || undefined;
       const aiResponse = await psychicChat(
         inputMessage,
-        locale, // Use the actual locale
-        undefined, // Pass username if available
+        locale,
         psychicId,
-        selectedTopic // selectedTopic will not be null here
+        selectedTopic,
+        userName
       );
       const newAiMessage: Message = { text: aiResponse, sender: 'ai' };
       setMessages((prevMessages) => [...prevMessages, newAiMessage]);
