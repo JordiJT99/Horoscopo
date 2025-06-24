@@ -14,6 +14,8 @@ import { useAuth } from '@/context/AuthContext';
 interface Message {
   type: 'user' | 'ai';
   text: string;
+  psychicId?: string; // Add psychicId to the message interface
+  topic?: string; // Add topic to the message interface
 }
 
 interface PsychicChatClientProps {
@@ -22,6 +24,8 @@ interface PsychicChatClientProps {
 }
 
 export default function PsychicChatClient({ dictionary, locale }: PsychicChatClientProps) {
+  // State for the selected psychic and topic
+  const [selectedPsychicId, setSelectedPsychicId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,9 +35,9 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
   useEffect(() => {
     // Scroll to the bottom whenever messages change
     if (scrollAreaRef.current) {
-        const scrollEl = scrollAreaRef.current.querySelector('div'); // The viewport
-        if(scrollEl) {
-            scrollEl.scrollTop = scrollEl.scrollHeight;
+      const scrollEl = scrollAreaRef.current.querySelector('div'); // The viewport
+      if (scrollEl) {
+        scrollEl.scrollTop = scrollEl.scrollHeight;
         }
     }
   }, [messages]);
@@ -49,8 +53,12 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
 
     try {
       const userName = user?.displayName || undefined;
-      // Pass prompt, locale, and now userName as arguments
-      const aiResponse = await psychicChat(currentPrompt, locale, userName);
+      // Pass prompt, locale, userName, selectedPsychicId, and topic to the flow
+      const aiResponse = await psychicChat(currentPrompt, locale, userName, selectedPsychicId, undefined); // topic needs to be added here later
+
+      // For demonstration, let's assume the flow returns a simple string
+      // In a real scenario, the flow would return a more structured response
+
       const aiMessage: Message = { type: 'ai', text: aiResponse };
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {
@@ -65,6 +73,7 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
     }
   };
 
+  // Placeholder for psychic avatar - will be replaced with selected psychic's avatar
   const userInitial = user?.displayName?.charAt(0).toUpperCase() || <UserCircle size={18} />;
 
   return (
@@ -82,7 +91,7 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
                 {message.type === 'ai' && (
                   <Avatar className="w-8 h-8 border-2 border-primary/50">
                     <AvatarFallback className="bg-primary/20 text-primary">
-                      <Sparkles size={18} />
+                      <Sparkles size={18} /> {/* Replace with psychic's avatar or initial */}
                     </AvatarFallback>
                   </Avatar>
                 )}
@@ -96,14 +105,14 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
                   <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                 </div>
                 {message.type === 'user' && (
-                    <Avatar className="w-8 h-8">
-                        <AvatarFallback>{userInitial}</AvatarFallback>
-                    </Avatar>
+                  <Avatar className="w-8 h-8">
+                    <AvatarFallback>{userInitial}</AvatarFallback> {/* User's avatar */}
+                  </Avatar>
                 )}
               </div>
             ))}
             {loading && (
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3"> {/* Loading indicator */}
                  <Avatar className="w-8 h-8 border-2 border-primary/50">
                   <AvatarFallback className="bg-primary/20 text-primary">
                     <Sparkles size={18} />
@@ -124,7 +133,7 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
         <div className="flex mt-4 pt-4 border-t border-border/30">
           <Input
             className="flex-grow mr-2 bg-input/50"
-            placeholder={dictionary['PsychicChatClient.inputPlaceholder'] || "Ask me anything..."}
+            placeholder={dictionary['PsychicChatClient.inputPlaceholder'] || 'Ask me anything...'}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyPress={(e) => {
@@ -136,7 +145,7 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
           />
           <Button onClick={handleSendMessage} disabled={loading || !prompt.trim()}>
             <Send size={18} />
-            <span className="sr-only">{dictionary['PsychicChatClient.sendButton'] || "Send"}</span>
+            <span className="sr-only">{dictionary['PsychicChatClient.sendButton'] || 'Send'}</span>
           </Button>
         </div>
       </CardContent>
