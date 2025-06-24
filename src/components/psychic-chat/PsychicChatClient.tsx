@@ -7,8 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Send, Sparkles } from 'lucide-react';
+import { Send, Sparkles, UserCircle } from 'lucide-react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
+import { useAuth } from '@/context/AuthContext';
 
 interface Message {
   type: 'user' | 'ai';
@@ -25,6 +26,7 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     // Scroll to the bottom whenever messages change
@@ -46,8 +48,9 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
     setPrompt('');
 
     try {
-      // Pass prompt and locale as separate arguments
-      const aiResponse = await psychicChat(currentPrompt, locale);
+      const userName = user?.displayName || undefined;
+      // Pass prompt, locale, and now userName as arguments
+      const aiResponse = await psychicChat(currentPrompt, locale, userName);
       const aiMessage: Message = { type: 'ai', text: aiResponse };
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {
@@ -61,6 +64,8 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
       setLoading(false);
     }
   };
+
+  const userInitial = user?.displayName?.charAt(0).toUpperCase() || <UserCircle size={18} />;
 
   return (
     <Card className="flex flex-col h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg rounded-xl">
@@ -92,7 +97,7 @@ export default function PsychicChatClient({ dictionary, locale }: PsychicChatCli
                 </div>
                 {message.type === 'user' && (
                     <Avatar className="w-8 h-8">
-                        <AvatarFallback>U</AvatarFallback>
+                        <AvatarFallback>{userInitial}</AvatarFallback>
                     </Avatar>
                 )}
               </div>
