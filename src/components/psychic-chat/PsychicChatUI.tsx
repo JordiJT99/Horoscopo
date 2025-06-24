@@ -101,7 +101,13 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         user?.displayName || undefined
       );
       const newAiMessage: Message = { text: aiResponse, sender: 'ai' };
-      setMessages(prev => [...prev, newAiMessage]);
+      
+      // Artificial delay to simulate typing
+      setTimeout(() => {
+        setMessages(prev => [...prev, newAiMessage]);
+        setIsSending(false);
+      }, 1800);
+
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -109,7 +115,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         description: dictionary['PsychicChatPage.sendMessageError'] || 'Error connecting to the psychic.',
         variant: 'destructive',
       });
-    } finally {
       setIsSending(false);
     }
   };
