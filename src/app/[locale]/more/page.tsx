@@ -6,9 +6,9 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, ArrowUpRight as AscendantIcon,
+ Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare,
   Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
-  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Users as CompatibilityIcon, Workflow, Hand, Sparkles, BookOpen, MessageSquare, Heart
+  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Users as CompatibilityIcon, Hand, Sparkles
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 
@@ -98,6 +98,7 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/chinese-horoscope", icon: ChineseIcon, titleKey: "ChineseHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/mayan-horoscope", icon: MayanAstrologyIcon, titleKey: "MayanHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/natalchart", icon: Sparkles, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
+    { href: "/psychic-chat", icon: MessageSquare, titleKey: "MorePage.psychicChat", newBadge: true, isPlaceholder: false },
     { href: "/palm-reading", icon: Hand, titleKey: "FeatureCards.palmReading", newBadge: true, isPlaceholder: true }, // Placeholder
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
