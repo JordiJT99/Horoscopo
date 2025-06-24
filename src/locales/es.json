@@ -529,6 +529,7 @@
   "TarotPersonalityPage.errorAllAnswers": "Por favor, proporciona una respuesta reflexiva (mínimo 10 caracteres) para todas las preguntas.",
   "TarotPersonalityPage.errorFetching": "Los espíritus están reflexionando... No se pudo determinar tu carta. Por favor, inténtalo de nuevo.",
   "Auth.loginTitle": "Iniciar Sesión",
+  "PsychicGallery.title": "Selecciona Tu Guía Psíquico",
   "Auth.loginSubtitle": "Accede a tu cuenta de AstroVibes.",
   "Auth.loginFormTitle": "Ingresa tu Nombre de Usuario",
   "Auth.loginFormTitleNow": "Ingresa tus Credenciales",
