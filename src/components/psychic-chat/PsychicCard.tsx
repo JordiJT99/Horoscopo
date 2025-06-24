@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -10,7 +9,7 @@ interface PsychicCardProps {
   psychic: {
     id: string;
     name: string;
-    image: string; // Changed from StaticImageData
+    image: string;
     specialty: string;
     phrase: string;
     rating: number;
@@ -18,9 +17,10 @@ interface PsychicCardProps {
     status: "Available" | "Busy" | "Meditating";
   };
   onClick: () => void;
+  dictionary: Record<string, string>;
 }
 
-const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, onClick }) => {
+const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, onClick, dictionary }) => {
   const statusColor =
     psychic.status === "Available"
       ? "text-green-500"
@@ -42,6 +42,7 @@ const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, onClick }) => {
         initial={{ opacity: 0.1 }}
         whileHover={{ opacity: 0.5 }}
       ></motion.div>
+
       <div className="relative z-10 flex flex-col items-center">
         <motion.div
           className="w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-400 mb-4"
@@ -57,20 +58,21 @@ const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, onClick }) => {
             className="object-cover"
           />
         </motion.div>
-        <h3 className="text-xl font-bold text-white mb-1">
-          {psychic.name}
-        </h3>
+
+        <h3 className="text-xl font-bold text-white mb-1">{psychic.name}</h3>
         <p className="text-sm text-gray-300 mb-2">
-          {psychic.specialty}
+          {dictionary[psychic.specialty] || psychic.specialty}
         </p>
+
         <motion.p
           className="italic text-yellow-300 text-center mb-4 text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          "{psychic.phrase}"
+          "{dictionary[psychic.phrase] || psychic.phrase}"
         </motion.p>
+
         <div className="flex items-center text-yellow-400 mb-2">
           {[...Array(5)].map((_, i) => (
             <Star
@@ -81,15 +83,18 @@ const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, onClick }) => {
               className={i < psychic.rating ? "" : "text-gray-400"}
             />
           ))}
-          <span className="ml-2 text-white text-sm">({psychic.readings} readings)</span>
+          <span className="ml-2 text-white text-sm">
+            ({psychic.readings} {dictionary["PsychicCard.readings"] || "readings"})
+          </span>
         </div>
+
         <motion.p
           className={`text-sm font-semibold ${statusColor}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          Status: {psychic.status}
+          {dictionary["PsychicCard.status"] || "Status"}: {psychic.status}
         </motion.p>
       </div>
     </motion.div>

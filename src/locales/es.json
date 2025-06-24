@@ -529,6 +529,10 @@
   "TarotPersonalityPage.errorAllAnswers": "Por favor, proporciona una respuesta reflexiva (mínimo 10 caracteres) para todas las preguntas.",
   "TarotPersonalityPage.errorFetching": "Los espíritus están reflexionando... No se pudo determinar tu carta. Por favor, inténtalo de nuevo.",
   "Auth.loginTitle": "Iniciar Sesión",
+  "PsychicChatPage.chatWith": "Chatear con {psychicName}",
+  "PsychicChatPage.initialMessage": "¡Hola! Soy {psychicName}. Hablemos sobre \"{topicName}\". ¿Cómo puedo ayudarte hoy?",
+  "PsychicChatPage.sendMessageError": "Error al conectar con el psíquico.",
+  "PsychicChatPage.sendingButton": "Enviando...",
   "PsychicGallery.title": "Selecciona Tu Guía Psíquico",
   "Auth.loginSubtitle": "Accede a tu cuenta de AstroVibes.",
   "Auth.loginFormTitle": "Ingresa tu Nombre de Usuario",
@@ -701,7 +705,25 @@
   "PsychicChatPage.title": "Psychic Chat",
   "PsychicChatPage.subtitle": "Connect with a psychic for guidance.",
   "PsychicChatClient.inputPlaceholder": "Type your question here...",
-  "PsychicChatClient.sendButton": "Send"
+  "PsychicChatClient.sendButton": "Send",
+  "PsychicSpecialty.loveRelationships": "Amor y Relaciones",
+  "PsychicSpecialty.careerFinance": "Carrera y Finanzas",
+  "PsychicSpecialty.spirituality": "Espiritualidad y Crecimiento Personal",
+  "PsychicPhrase.esmeralda": "El corazón conoce el camino verdadero.",
+  "PsychicPhrase.zephyr": "Desbloquea tu potencial.",
+  "PsychicPhrase.seraphina": "Encuentra la luz interior.",
+  "PsychicTopic.loveRelationships": "Amor y Relaciones",
+  "PsychicTopic.careerFinance": "Carrera y Finanzas",
+  "PsychicTopic.healthWellbeing": "Salud y Bienestar",
+  "PsychicTopic.spiritualGrowth": "Crecimiento Espiritual",
+  "PsychicTopic.generalReading": "Lectura General",
+  "PsychicChatPage.selectTopicTitle": "Selecciona un Tema",
+  "PsychicChatPage.startChatButton": "Iniciar Chat",
+  "PsychicChatPage.psychicNotFound": "Psíquico no encontrado",
+  "PsychicChatPage.psychicNotFoundMessage": "El psíquico que buscas no pudo ser encontrado.",
+  "PsychicChatPage.selectTopicPrompt": "Por favor, selecciona un tema para iniciar el chat.",
+  "PsychicCard.readings": "lecturas",
+  "PsychicCard.status": "Estado"
 
 }
 

@@ -15,7 +15,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">{dictionary['PsychicGallery.title'] || "Select Your Psychic Guide"}</h1>
-      <PsychicGallery />
+      <PsychicGallery dictionary={dictionary} locale={params.locale} />
     </div>
   );
 }

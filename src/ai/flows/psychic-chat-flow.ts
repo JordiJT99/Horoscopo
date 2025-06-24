@@ -3,8 +3,6 @@
  * @fileOverview A psychic chat AI agent.
  *
  * - psychicChat - A function that handles the psychic chat process.
- * - PsychicChatInput - The input type for the psychicChat function.
- * - PsychicChatOutput - The return type for the psychicChat function.
  */
 
 import {ai} from '@/ai/genkit';
@@ -12,6 +10,7 @@ import {z} from 'genkit';
 import type { Locale } from '@/lib/dictionaries';
 import { psychics } from '@/lib/psychics';
 
+// This is the schema for the data passed *into* the Genkit flow.
 const PsychicChatInputSchema = z.object({
   prompt: z.string().describe("The user's question or message to the psychic."),
   locale: z.string().describe("The locale (e.g., 'en', 'es') for the response language."),
@@ -23,9 +22,11 @@ type PsychicChatInput = z.infer<typeof PsychicChatInputSchema>;
 
 export type PsychicChatOutput = string;
 
-// The exported function that the client component will call
+// The exported function that the client component will call.
+// It accepts primitive types to avoid serialization issues with objects in Server Actions.
 export async function psychicChat(prompt: string, locale: Locale, psychicId: string, topic: string, userName?: string): Promise<PsychicChatOutput> {
-  const input: PsychicChatInput = { prompt, locale, userName, psychicId, topic };
+  const input: PsychicChatInput = { prompt, locale, psychicId, topic, userName };
+  // The 'input' object is now correctly structured according to PsychicChatInputSchema
   return psychicChatFlow(input);
 }
 

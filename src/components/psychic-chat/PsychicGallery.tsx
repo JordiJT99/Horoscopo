@@ -2,10 +2,16 @@
 'use client';
 
 import { psychics } from '@/lib/psychics';
-import PsychicCard from './PsychicCard'; // Corrected path
+import PsychicCard from './PsychicCard';
 import { useRouter } from 'next/navigation';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 
-const PsychicGallery = () => {
+interface PsychicGalleryProps {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+const PsychicGallery = ({ dictionary, locale }: PsychicGalleryProps) => {
   const router = useRouter();
   return (
     <div className="container mx-auto px-4 py-8">
@@ -15,7 +21,8 @@ const PsychicGallery = () => {
           <PsychicCard
             key={psychic.id}
             psychic={psychic}
-            onClick={() => router.push(`/psychic-chat/${psychic.id}`)}
+            onClick={() => router.push(`/${locale}/psychic-chat/${psychic.id}`)}
+            dictionary={dictionary}
           />
         ))}
       </div>
