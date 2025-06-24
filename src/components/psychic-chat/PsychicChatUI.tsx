@@ -102,11 +102,12 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       );
       const newAiMessage: Message = { text: aiResponse, sender: 'ai' };
       
-      // Artificial delay to simulate typing
+      // Artificial delay to simulate typing, now longer and variable
+      const randomDelay = Math.floor(Math.random() * 2000) + 2500; // Delay between 2.5 and 4.5 seconds
       setTimeout(() => {
         setMessages(prev => [...prev, newAiMessage]);
         setIsSending(false);
-      }, 1800);
+      }, randomDelay);
 
     } catch (error) {
       console.error('Error sending message:', error);
