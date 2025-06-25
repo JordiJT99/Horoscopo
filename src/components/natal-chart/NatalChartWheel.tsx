@@ -52,30 +52,27 @@ const zodiacSignDetails: Record<string, { glyph: string; start: number }> = {
 
 // Map aspect types to colors for line drawing
 const aspectColors: Record<string, string> = {
-  // Spanish
-  'Conjunción': '#FFD700', // Gold
-  'Oposición': '#E53E3E',   // Red
-  'Trígono': '#3182CE',    // Blue
-  'Cuadratura': '#E53E3E',  // Red
-  'Sextil': '#38A169',     // Green
-  // English fallbacks
-  'Conjunction': '#FFD700',
+  // Spanish & English
+  'Conjunción': '#3182CE', // Blue for easy
+  'Conjunction': '#3182CE',
+  'Oposición': '#E53E3E',   // Red for hard
   'Opposition': '#E53E3E',
+  'Trígono': '#3182CE',    // Blue
   'Trine': '#3182CE',
+  'Cuadratura': '#E53E3E',  // Red
   'Square': '#E53E3E',
+  'Sextil': '#38A169',     // Green for opportunity
   'Sextile': '#38A169',
 };
 
 
 const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspects, imageDataUrl }) => {
   const wheelSize = 400; // The size of the wheel container in pixels
-  const radius = wheelSize * 0.38; // Radius to place planets within the wheel
 
-  const calculatePosition = (degree: number) => {
-    // Astrological degrees start with 0° at the far left (Aries point) and go counter-clockwise.
-    // To convert: an astrological degree 'd' is at angle (180 - d) in CSS/SVG.
+  // Function to calculate position OUTSIDE the wheel for labels
+  const calculateLabelPosition = (degree: number) => {
+    const radius = wheelSize * 0.49; // Position labels outside the main graphic
     const angleRad = (180 - degree) * (Math.PI / 180);
-
     const x = wheelSize / 2 + radius * Math.cos(angleRad);
     const y = wheelSize / 2 - radius * Math.sin(angleRad);
     return { x, y };
@@ -124,7 +121,7 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
                     y2={pos2.y}
                     stroke={color}
                     strokeWidth="1.5"
-                    opacity="0.8"
+                    opacity="0.9"
                 />
             );
         })}
@@ -135,10 +132,10 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
         {Object.entries(planetPositions).map(([planet, data]) => {
           if (!planetGlyphs[planet]) return null;
 
-          const { x, y } = calculatePosition(data.degree);
+          const { x, y } = calculateLabelPosition(data.degree);
           const signInfo = zodiacSignDetails[data.sign];
           // Correctly calculate the degree within the sign (0-29)
-          const degreeInSign = Math.floor(data.degree - (signInfo?.start ?? 0));
+          const degreeInSign = Math.floor(data.degree % 30);
           
           return (
             <div
@@ -151,14 +148,21 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
                 textShadow: '0 1px 4px rgba(0, 0, 0, 0.9)',
               }}
             >
-              <span className="text-xl leading-none">{planetGlyphs[planet]}</span>
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-semibold tracking-tighter">{`${degreeInSign}°`}</span>
+              {/* Planet Glyph */}
+              <span className="text-2xl leading-none">{planetGlyphs[planet]}</span>
+              
+              {/* Info Box */}
+              <div 
+                className="flex items-center justify-center rounded-sm px-1.5 py-0.5"
+                style={{
+                  background: 'hsl(var(--primary) / 0.8)',
+                  backdropFilter: 'blur(2px)',
+                  border: '1px solid hsl(var(--primary) / 0.5)',
+                }}
+              >
+                <span className="text-xs font-bold tracking-tighter mr-1">{`${degreeInSign}°`}</span>
                 {signInfo && (
-                   <span className={cn(
-                     "text-xs rounded-[3px] px-1 py-0.5 leading-none",
-                     "bg-purple-600/80 backdrop-blur-sm border border-purple-400/50"
-                   )}>
+                   <span className="text-xs font-normal">
                      {signInfo.glyph}
                    </span>
                 )}
@@ -172,3 +176,4 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
 };
 
 export default NatalChartWheel;
+

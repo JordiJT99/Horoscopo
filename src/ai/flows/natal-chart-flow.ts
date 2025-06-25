@@ -117,10 +117,19 @@ const getSignFromDegree = (degree: number): ZodiacSignName => {
 function calculateAspects(planetPositions: Record<string, { sign: string; degree: number }>): AspectDetail[] {
   const planets = Object.entries(planetPositions);
   const aspects: AspectDetail[] = [];
-  const orbs = { 'Conjunción': 8, 'Oposición': 8, 'Trígono': 8, 'Cuadratura': 7, 'Sextil': 5 };
+  // Increased orbs to ensure aspects are always generated
+  const orbs = { 'Conjunción': 10, 'Oposición': 10, 'Trígono': 10, 'Cuadratura': 8, 'Sextil': 6 };
   const aspectAngles = { 'Conjunción': 0, 'Oposición': 180, 'Trígono': 120, 'Cuadratura': 90, 'Sextil': 60 };
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  
+  const explanationTemplates: Record<string, string> = {
+    'Conjunción': `Una Conjunción entre {body1} y {body2} fusiona sus energías. Esto indica un área de gran poder y enfoque en tu vida, donde las características de ambos planetas se combinan intensamente.`,
+    'Oposición': `Una Oposición entre {body1} y {body2} crea tensión y conciencia. Te desafía a encontrar un equilibrio entre dos áreas opuestas de tu vida, buscando la integración en lugar del conflicto.`,
+    'Trígono': `Un Trígono entre {body1} y {body2} es un aspecto de flujo y armonía. Sus energías colaboran sin esfuerzo, indicando talentos naturales y áreas de la vida donde las cosas tienden a ir bien.`,
+    'Cuadratura': `Una Cuadratura entre {body1} y {body2} genera una tensión dinámica que te impulsa a la acción. Representa un desafío interno que, una vez superado, se convierte en una de tus mayores fortalezas.`,
+    'Sextil': `Un Sextil entre {body1} y {body2} presenta una oportunidad para el crecimiento. Sus energías se comunican bien, ofreciéndote la oportunidad de desarrollar nuevas habilidades y hacer conexiones creativas.`,
+  };
 
   for (let i = 0; i < planets.length; i++) {
     for (let j = i + 1; j < planets.length; j++) {
@@ -135,12 +144,17 @@ function calculateAspects(planetPositions: Record<string, { sign: string; degree
       for (const [aspectName, aspectAngle] of Object.entries(aspectAngles)) {
         const orb = orbs[aspectName as keyof typeof orbs];
         if (Math.abs(normalizedAngle - aspectAngle) <= orb) {
+          const explanation = (explanationTemplates[aspectName] || `Un aspecto de {type} entre {body1} y {body2} sugiere una interacción dinámica.`)
+            .replace('{body1}', capitalize(p1Name))
+            .replace('{body2}', capitalize(p2Name))
+            .replace('{type}', aspectName.toLowerCase());
+
           aspects.push({
             body1: capitalize(p1Name),
             body2: capitalize(p2Name),
             type: aspectName,
             degree: parseFloat(normalizedAngle.toFixed(1)),
-            explanation: `Un aspecto de ${aspectName.toLowerCase()} entre ${capitalize(p1Name)} y ${capitalize(p2Name)}. Este aspecto sugiere una interacción dinámica entre dos áreas de tu vida. (Explicación genérica).`
+            explanation: explanation
           });
           break; // Find the tightest aspect and move on
         }
@@ -166,10 +180,10 @@ const natalChartFlowInternal = ai.defineFlow(
     // --- Dynamic Planet Positions for the Chart Wheel (Simplified & Deterministic) ---
     const degrees = {
       sun: (15 + ((birthDateObj.getMonth() * 30 + birthDateObj.getDate()) % 360)),
-      moon: ((birthDateObj.getDate() * 12) % 360),
-      ascendant: ((birthHour * 15) % 360),
-      mercury: ((birthDateObj.getMonth() + 1) * 28 % 360),
-      venus: ((birthDateObj.getMonth() + 2) * 30 % 360),
+      moon: ((birthDateObj.getDate() * 12 + birthHour * 5) % 360),
+      ascendant: ((birthHour * 15 + birthDateObj.getMinutes() / 4) % 360),
+      mercury: ((15 + ((birthDateObj.getMonth() * 30 + birthDateObj.getDate()) % 360)) + 20) % 360,
+      venus: ((15 + ((birthDateObj.getMonth() * 30 + birthDateObj.getDate()) % 360)) - 35 + 360) % 360,
       mars: ((birthDateObj.getDate() + 3) * 18 % 360),
       jupiter: ((birthDateObj.getFullYear()) * 30 % 360),
       saturn: ((birthDateObj.getFullYear() + 2) * 12 % 360),
