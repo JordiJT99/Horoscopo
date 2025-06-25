@@ -89,11 +89,7 @@ Escribe una explicación personalizada y detallada para CADA UNA de las 7 seccio
 3.  **Explicación del Ascendente (clave "ascendant"):** Detalla el significado de tener el Ascendente en **{{ascendantSign}}**, explicando su rol como la 'máscara' social y el camino de vida.
 4.  **Planetas Personales (clave "personalPlanets"):** Ofrece una explicación general de Mercurio, Venus y Marte.
 5.  **Planetas Transpersonales (clave "transpersonalPlanets"):** Ofrece una explicación general de Júpiter, Saturno, Urano, Neptuno y Plutón.
-6.  **Las Casas Astrológicas (clave "houses"):** Proporciona una explicación personalizada y perspicaz sobre las áreas de la vida más importantes para el usuario, basándote en los planetas que se encuentran en las diferentes casas.
-    - Primero, escribe una breve introducción general sobre qué representan las casas astrológicas.
-    - Luego, analiza los siguientes emplazamientos: **{{planetHousePlacements}}**.
-    - Para los planetas más importantes (Sol, Luna, Mercurio, Venus, Marte), explica cómo su energía influye en el área de vida de la casa en la que se encuentran. Por ejemplo, "Con el Sol en la Casa 10, tu identidad y propósito de vida están fuertemente ligados a tu carrera y reputación pública."
-    - Sé detallado y ofrece una perspectiva que ayude al usuario a entender sus focos de vida. No es necesario explicar las casas que están vacías.
+6.  **Las Casas Astrológicas (clave "houses"):** Basándote en los siguientes emplazamientos: **{{planetHousePlacements}}**, escribe una explicación personalizada y detallada. Para CADA emplazamiento, explica cómo la energía de ese planeta influye en el área de la vida representada por esa casa. Por ejemplo, si el Sol está en la Casa 10, explicarías: "Con el Sol en la Casa 10, tu identidad y propósito de vida están fuertemente ligados a tu carrera y reputación pública. Buscas el reconocimiento a través de tus logros profesionales". NO des una definición general de las casas; enfócate únicamente en la interpretación personalizada para el usuario.
 7.  **Aspectos Importantes (clave "aspects"):** Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, etc.).
 
 Genera el objeto JSON con estas 7 explicaciones en el idioma {{locale}}.
