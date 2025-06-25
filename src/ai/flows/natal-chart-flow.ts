@@ -32,7 +32,7 @@ const AspectDetailSchema = z.object({
 export type AspectDetail = z.infer<typeof AspectDetailSchema>;
 
 
-// Output schema remains the same
+// Output schema updated to include houses
 const NatalChartOutputSchema = z.object({
   sun: z.string().describe('Explanation of the Sun sign.'),
   moon: z.string().describe('Explanation of the Moon sign.'),
