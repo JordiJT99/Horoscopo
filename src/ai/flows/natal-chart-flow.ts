@@ -89,10 +89,13 @@ Escribe una explicación personalizada y detallada para CADA UNA de las 7 seccio
 3.  **Explicación del Ascendente (clave "ascendant"):** Detalla el significado de tener el Ascendente en **{{ascendantSign}}**, explicando su rol como la 'máscara' social y el camino de vida.
 4.  **Planetas Personales (clave "personalPlanets"):** Ofrece una explicación general de Mercurio, Venus y Marte.
 5.  **Planetas Transpersonales (clave "transpersonalPlanets"):** Ofrece una explicación general de Júpiter, Saturno, Urano, Neptuno y Plutón.
-6.  **Las Casas Astrológicas (clave "houses"):** ¡CRÍTICO! Para esta clave, genera una explicación PERSONALIZADA basada en los datos de **{{planetHousePlacements}}**. El texto DEBE explicar cómo la energía de cada planeta influye en el área de la vida de la casa en la que se encuentra. NO des una definición genérica de las 12 casas. Formato obligatorio:
-    - Empieza con la frase: "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida."
-    - Luego, para CADA emplazamiento en los datos, añade un párrafo separado en negrita (ej. **Sol en Casa 10:**) seguido de su explicación personalizada.
-    - Ejemplo de salida para la clave 'houses': "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida.\\n\\n**Sol en Casa 10:** Tu identidad y propósito vital están profundamente ligados a tu carrera, tu reputación y tus logros públicos...\\n\\n**Luna en Casa 4:** Tus raíces, tu hogar y tu familia son tu santuario emocional..."
+6.  **Las Casas Astrológicas (clave "houses"):** ¡INSTRUCCIÓN CRÍTICA! Para esta clave "houses", DEBES generar una explicación PERSONALIZADA basada en los datos que te proporciono en 'planetHousePlacements'. **NO DES UNA DEFINICIÓN GENÉRICA DE LAS 12 CASAS.** Tu texto DEBE explicar cómo la energía de cada planeta influye en el área de la vida de la casa en la que se encuentra.
+    Los datos de emplazamiento son: **{{planetHousePlacements}}**.
+    El formato de tu respuesta para la clave 'houses' DEBE ser:
+    - Comienza con la frase exacta: "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida."
+    - A continuación, para CADA planeta en los datos proporcionados, escribe un párrafo separado que comience con el emplazamiento en negrita (ejemplo: "**Sol en Casa 10:**") seguido de su interpretación personalizada. Usa \\n\\n para separar los párrafos.
+    Ejemplo de cómo debe verse el valor de la clave 'houses':
+    "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida.\\n\\n**Sol en Casa 10:** Tu identidad y propósito vital están profundamente ligados a tu carrera y reputación...\\n\\n**Luna en Casa 4:** Tus raíces y tu hogar son tu santuario emocional..."
 7.  **Aspectos Importantes (clave "aspects"):** Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, etc.).
 
 Genera el objeto JSON con estas 7 explicaciones en el idioma {{locale}}.
