@@ -67,7 +67,7 @@ const aspectColors: Record<string, string> = {
 
 
 const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspects, imageDataUrl }) => {
-  const wheelSize = 400; // The size of the wheel container in pixels
+  const wheelSize = 360; // The size of the wheel container in pixels
 
   // Function to calculate position OUTSIDE the wheel for labels
   const calculateLabelPosition = (degree: number) => {

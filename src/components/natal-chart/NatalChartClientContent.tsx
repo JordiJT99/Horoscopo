@@ -204,7 +204,7 @@ export default function NatalChartClientContent({
       {/* Unconditional Chart Wheel rendering */}
       <div className="my-8 flex flex-col items-center">
         {isLoading || !explanations ? (
-          <div className="w-[400px] h-[400px] flex items-center justify-center">
+          <div className="w-[360px] h-[360px] flex items-center justify-center">
             <Skeleton className="w-full h-full rounded-full" />
           </div>
         ) : (
