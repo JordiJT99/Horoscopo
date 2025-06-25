@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -69,14 +68,56 @@ const aspectColors: Record<string, string> = {
 const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspects, imageDataUrl }) => {
   const wheelSize = 360; // The size of the wheel container in pixels
 
-  // Function to calculate position OUTSIDE the wheel for labels
-  const calculateLabelPosition = (degree: number) => {
-    const radius = wheelSize * 0.55; // Pushed labels further out to give them space
+  // Function to calculate position, now accepts an offset flag
+  const calculateLabelPosition = (degree: number, useOffset: boolean) => {
+    const radius = wheelSize * (useOffset ? 0.64 : 0.53); // Stagger radii
     const angleRad = (180 - degree) * (Math.PI / 180);
     const x = wheelSize / 2 + radius * Math.cos(angleRad);
     const y = wheelSize / 2 - radius * Math.sin(angleRad);
     return { x, y };
   };
+  
+    // Pre-process planets to determine which ones need to be staggered
+  const sortedPlanets = Object.entries(planetPositions).sort(
+    (a, b) => a[1].degree - b[1].degree
+  );
+
+  let lastWasOffset = false;
+  const planetRenderData = sortedPlanets.map((entry, index, array) => {
+    const [planet, data] = entry;
+    let isCloseToPrevious = false;
+    const DEGREE_THRESHOLD = 15; // Labels will be staggered if they are within 15 degrees
+
+    // Check distance to previous planet
+    if (index > 0) {
+      const prevPlanetData = array[index - 1][1];
+      if (Math.abs(data.degree - prevPlanetData.degree) < DEGREE_THRESHOLD) {
+        isCloseToPrevious = true;
+      }
+    }
+    
+    // Check wrap-around case between last and first planet
+    if (index === 0 && array.length > 1) {
+      const lastPlanetData = array[array.length - 1][1];
+      const diff = (data.degree + 360) - lastPlanetData.degree;
+      if (diff < DEGREE_THRESHOLD) {
+        isCloseToPrevious = true;
+      }
+    }
+
+    // Decide whether to apply the offset based on proximity and the state of the previous label
+    let useOffset = false;
+    if (isCloseToPrevious) {
+      if (!lastWasOffset) {
+        useOffset = true;
+      }
+      lastWasOffset = !lastWasOffset;
+    } else {
+      lastWasOffset = false;
+    }
+
+    return { planet, data, useOffset };
+  });
 
   return (
     <div className="relative flex justify-center items-center" style={{ width: wheelSize, height: wheelSize }}>
@@ -129,10 +170,10 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
 
       {/* Div overlay for planet glyphs */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        {Object.entries(planetPositions).map(([planet, data]) => {
+        {planetRenderData.map(({ planet, data, useOffset }) => {
           if (!planetGlyphs[planet]) return null;
 
-          const { x, y } = calculateLabelPosition(data.degree);
+          const { x, y } = calculateLabelPosition(data.degree, useOffset);
           const signInfo = zodiacSignDetails[data.sign];
           const degreeInSign = Math.floor(data.degree % 30);
           
