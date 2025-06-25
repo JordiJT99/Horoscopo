@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
 import NatalChartAspectsView from './NatalChartAspectsView';
+import NatalChartHousesView from './NatalChartHousesView'; // New
 import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -102,7 +103,6 @@ export default function NatalChartClientContent({
     ascendantTitle,
     personalPlanetsTitle,
     transpersonalPlanetsTitle,
-    housesTitle,
     aspectsTitle,
   } = dictionary.NatalChartPage;
 
@@ -253,12 +253,12 @@ export default function NatalChartClientContent({
       )}
 
       {/* Contenido de la Pestaña de Casas */}
-      {activeTab === 'houses' && (
-        <div className="space-y-6 py-4">
-          <SectionExplanation
-            title={housesTitle}
-            content={explanations?.houses}
-            isLoading={isLoading}
+      {activeTab === 'houses' && explanations?.housesDetails && (
+        <div className="space-y-4 py-4">
+          {explanations.housesIntroduction && <p className="text-center text-muted-foreground">{explanations.housesIntroduction}</p>}
+          <NatalChartHousesView 
+            housesDetails={explanations.housesDetails}
+            dictionary={dictionary}
           />
         </div>
       )}

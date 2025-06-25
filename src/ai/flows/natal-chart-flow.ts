@@ -31,15 +31,23 @@ const AspectDetailSchema = z.object({
 });
 export type AspectDetail = z.infer<typeof AspectDetailSchema>;
 
+// New schema for structured house placements
+const HousePlacementDetailSchema = z.object({
+  placement: z.string().describe('The celestial body and house placement (e.g., "Sol en Casa 10").'),
+  explanation: z.string().describe('A personalized explanation of this specific placement.'),
+});
+export type HousePlacementDetail = z.infer<typeof HousePlacementDetailSchema>;
 
-// Output schema updated to include houses
+
+// Output schema updated to include structured housesDetails
 const NatalChartOutputSchema = z.object({
   sun: z.string().describe('Explanation of the Sun sign.'),
   moon: z.string().describe('Explanation of the Moon sign.'),
   ascendant: z.string().describe('Explanation of the Ascendant sign.'),
   personalPlanets: z.string().describe('Explanation of personal planets.'),
   transpersonalPlanets: z.string().describe('Explanation of transpersonal planets.'),
-  houses: z.string().describe('A personalized explanation of the houses based on the user\'s planet placements.'),
+  housesIntroduction: z.string().describe('A brief introductory sentence for the houses section.'),
+  housesDetails: z.array(HousePlacementDetailSchema).describe('A detailed list of personalized house placements with explanations.'),
   aspects: z.string().describe('General explanation of aspects.'),
   planetPositions: z.record(
     z.object({
@@ -80,25 +88,35 @@ He calculado los siguientes signos clave:
 - Luna: {{moonSign}}
 - Ascendente: {{ascendantSign}}
 
-Tu respuesta DEBE ser un objeto JSON con las siguientes 7 claves: "sun", "moon", "ascendant", "personalPlanets", "transpersonalPlanets", "houses", y "aspects". NO incluyas "aspectsDetails".
+Tu respuesta DEBE ser un objeto JSON con las siguientes 8 claves: "sun", "moon", "ascendant", "personalPlanets", "transpersonalPlanets", "housesIntroduction", "housesDetails" y "aspects". NO incluyas "planetPositions" ni "aspectsDetails" en tu respuesta JSON.
 
-Escribe una explicación personalizada y detallada para CADA UNA de las 7 secciones, adaptando la profundidad al "Nivel de Detalle: {{detailLevel}}". Las explicaciones deben ser coherentes con los datos proporcionados.
+Escribe una explicación personalizada y detallada para CADA UNA de las 8 secciones, adaptando la profundidad al "Nivel de Detalle: {{detailLevel}}".
 
 1.  **Explicación del Sol (clave "sun"):** Detalla el significado de tener el Sol en **{{sunSign}}**, conectándolo con la identidad central del usuario.
 2.  **Explicación de la Luna (clave "moon"):** Detalla el significado de tener la Luna en **{{moonSign}}**, conectándolo con el mundo emocional del usuario.
 3.  **Explicación del Ascendente (clave "ascendant"):** Detalla el significado de tener el Ascendente en **{{ascendantSign}}**, explicando su rol como la 'máscara' social y el camino de vida.
 4.  **Planetas Personales (clave "personalPlanets"):** Ofrece una explicación general de Mercurio, Venus y Marte.
 5.  **Planetas Transpersonales (clave "transpersonalPlanets"):** Ofrece una explicación general de Júpiter, Saturno, Urano, Neptuno y Plutón.
-6.  **Las Casas Astrológicas (clave "houses"):** ¡INSTRUCCIÓN CRÍTICA! Para esta clave "houses", DEBES generar una explicación PERSONALIZADA basada en los datos que te proporciono en 'planetHousePlacements'. **NO DES UNA DEFINICIÓN GENÉRICA DE LAS 12 CASAS.** Tu texto DEBE explicar cómo la energía de cada planeta influye en el área de la vida de la casa en la que se encuentra.
+6.  **Introducción a las Casas (clave "housesIntroduction"):** Escribe una única y breve frase introductoria. Debe ser exactamente: "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida."
+7.  **Detalles de las Casas (clave "housesDetails"):** ¡INSTRUCCIÓN CRÍTICA! Para esta clave, DEBES generar un ARRAY de objetos JSON. Cada objeto debe representar la interpretación personalizada de un planeta en una casa, basándose en 'planetHousePlacements'. **NO DES UNA DEFINICIÓN GENÉRICA DE LAS 12 CASAS.**
     Los datos de emplazamiento son: **{{planetHousePlacements}}**.
-    El formato de tu respuesta para la clave 'houses' DEBE ser:
-    - Comienza con la frase exacta: "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida."
-    - A continuación, para CADA planeta en los datos proporcionados, escribe un párrafo separado que comience con el emplazamiento en negrita (ejemplo: "**Sol en Casa 10:**") seguido de su interpretación personalizada. Usa \\n\\n para separar los párrafos.
-    Ejemplo de cómo debe verse el valor de la clave 'houses':
-    "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida.\\n\\n**Sol en Casa 10:** Tu identidad y propósito vital están profundamente ligados a tu carrera y reputación...\\n\\n**Luna en Casa 4:** Tus raíces y tu hogar son tu santuario emocional..."
-7.  **Aspectos Importantes (clave "aspects"):** Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, etc.).
+    Cada objeto en el array DEBE tener estas dos claves:
+    - "placement": una cadena de texto con el nombre del planeta y la casa (ej: "Sol en Casa 10").
+    - "explanation": una cadena de texto con la interpretación personalizada para ese emplazamiento específico.
+    Ejemplo de cómo debe verse el valor de la clave 'housesDetails':
+    [
+      {
+        "placement": "Sol en Casa 10",
+        "explanation": "Tu identidad y propósito vital están profundamente ligados a tu carrera y reputación..."
+      },
+      {
+        "placement": "Luna en Casa 4",
+        "explanation": "Tus raíces y tu hogar son tu santuario emocional..."
+      }
+    ]
+8.  **Aspectos Importantes (clave "aspects"):** Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, etc.).
 
-Genera el objeto JSON con estas 7 explicaciones en el idioma {{locale}}.
+Genera el objeto JSON con estas 8 explicaciones en el idioma {{locale}}.
 `
 });
 
@@ -238,7 +256,8 @@ const natalChartFlowInternal = ai.defineFlow(
     };
 
     let aiOutput: Omit<NatalChartOutput, 'planetPositions' | 'aspectsDetails'> = {
-        sun: '', moon: '', ascendant: '', personalPlanets: '', transpersonalPlanets: '', houses: '', aspects: ''
+        sun: '', moon: '', ascendant: '', personalPlanets: '', transpersonalPlanets: '', 
+        housesIntroduction: '', housesDetails: [], aspects: ''
     };
 
     try {
@@ -257,7 +276,8 @@ const natalChartFlowInternal = ai.defineFlow(
             ascendant: `Ocurrió un error al generar la explicación para tu Ascendente en ${promptInput.ascendantSign}. El Ascendente es la máscara que muestras al mundo.`,
             personalPlanets: "Ocurrió un error al generar la explicación de los planetas personales. Por favor, inténtalo de nuevo más tarde.",
             transpersonalPlanets: "Ocurrió un error al generar la explicación de los planetas transpersonales. Por favor, inténtalo de nuevo más tarde.",
-            houses: "Ocurrió un error al generar la explicación personalizada de las casas. Por favor, inténtalo de nuevo más tarde.",
+            housesIntroduction: "Ocurrió un error al generar la introducción a las casas.",
+            housesDetails: [],
             aspects: "Ocurrió un error al generar la explicación general de los aspectos. Por favor, inténtalo de nuevo más tarde.",
         };
     }

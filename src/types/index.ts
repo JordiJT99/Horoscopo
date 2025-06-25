@@ -1,5 +1,6 @@
 
 
+
 export type ZodiacSignName =
   | "Aries"
   | "Taurus"
@@ -233,4 +234,31 @@ export type SelectedProfileType = 'user' | 'generic';
 export interface ChatMessage {
   role: 'user' | 'model';
   content: string;
+}
+
+// Type for Natal Chart
+export interface AspectDetail {
+  body1: string;
+  body2: string;
+  type: string;
+  degree: number;
+  explanation: string;
+}
+
+export interface HousePlacementDetail {
+  placement: string;
+  explanation: string;
+}
+
+export interface NatalChartOutput {
+  sun: string;
+  moon: string;
+  ascendant: string;
+  personalPlanets: string;
+  transpersonalPlanets: string;
+  housesIntroduction: string;
+  housesDetails: HousePlacementDetail[];
+  aspects: string;
+  planetPositions: Record<string, { sign: string; degree: number }>;
+  aspectsDetails: AspectDetail[];
 }
