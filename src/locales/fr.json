@@ -1,3 +1,4 @@
+
 {
   "App.title": "AstroVibes",
   "App.description": "Votre source quotidienne d'horoscopes et d'informations astrologiques.",
@@ -427,6 +428,7 @@
   "PsychicChatPage.subtitle": "Connectez-vous avec un médium pour obtenir des conseils.",
   "PsychicChatClient.inputPlaceholder": "Tapez votre question ici...",
   "PsychicChatClient.sendButton": "Envoyer",
+  "PsychicGallery.title": "Sélectionnez Votre Guide Médiumnique",
   "PsychicSpecialty.loveRelationships": "Amour et Relations",
   "PsychicSpecialty.careerFinance": "Carrière et Finances",
   "PsychicSpecialty.spirituality": "Spiritualité et Croissance Personnelle",
@@ -448,6 +450,29 @@
   "PsychicChatPage.chatWith": "Chattez avec {psychicName}",
   "PsychicChatPage.initialMessage": "Bonjour ! Je suis {psychicName}. Parlons de \"{topicName}\". Comment puis-je vous aider aujourd'hui ?",
   "PsychicChatPage.sendMessageError": "Erreur lors de la connexion au médium.",
-  "PsychicChatPage.sendingButton": "Envoi en cours..."
+  "PsychicChatPage.sendingButton": "Envoi en cours...",
+  "NatalChartPage": {
+    "title": "Thème Natal",
+    "underDevelopmentMessage": "Cette fonctionnalité est en cours de développement. Veuillez revenir plus tard !",
+    "detailLevel": {
+      "label": "Sélectionner le niveau de détail",
+      "basic": "Basique",
+      "advanced": "Avancé",
+      "spiritual": "Spirituel"
+    },
+    "sunTitle": "Le Soleil dans votre Thème Natal",
+    "moonTitle": "La Lune dans votre Thème Natal",
+    "ascendantTitle": "L'Ascendant dans votre Thème Natal",
+    "personalPlanetsTitle": "Planètes Personnelles",
+    "transpersonalPlanetsTitle": "Planètes Transpersonnelles",
+    "housesTitle": "Les Maisons Astrologiques",
+    "aspectsTitle": "Aspects Importants",
+    "chartTab": "Carte",
+    "aspectsTab": "Aspects",
+    "detailsTab": "Détails",
+    "housesTab": "Maisons",
+    "aspectsDetails": {
+      "noAspectsFound": "Aucun aspect significatif trouvé dans ce thème."
+    }
   }
-  
+}
