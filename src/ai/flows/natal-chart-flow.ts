@@ -39,7 +39,7 @@ const NatalChartOutputSchema = z.object({
   ascendant: z.string().describe('Explanation of the Ascendant sign.'),
   personalPlanets: z.string().describe('Explanation of personal planets.'),
   transpersonalPlanets: z.string().describe('Explanation of transpersonal planets.'),
-  houses: z.string().describe('Explanation of the houses.'),
+  houses: z.string().describe('A personalized explanation of the houses based on the user\'s planet placements.'),
   aspects: z.string().describe('General explanation of aspects.'),
   planetPositions: z.record(
     z.object({
@@ -51,11 +51,12 @@ const NatalChartOutputSchema = z.object({
 });
 export type NatalChartOutput = z.infer<typeof NatalChartOutputSchema>;
 
-// Schema for AI prompt remains the same
+// Schema for AI prompt now includes planet house placements
 const NatalChartPromptInputSchema = NatalChartInputSchema.extend({
   sunSign: z.string(),
   moonSign: z.string(),
   ascendantSign: z.string(),
+  planetHousePlacements: z.string().describe('A summary of which planets are in which houses.'),
 });
 
 // AI prompt definition updated to be more specific and prevent placeholders
@@ -88,7 +89,11 @@ Escribe una explicación personalizada y detallada para CADA UNA de las 7 seccio
 3.  **Explicación del Ascendente (clave "ascendant"):** Detalla el significado de tener el Ascendente en **{{ascendantSign}}**, explicando su rol como la 'máscara' social y el camino de vida.
 4.  **Planetas Personales (clave "personalPlanets"):** Ofrece una explicación general de Mercurio, Venus y Marte.
 5.  **Planetas Transpersonales (clave "transpersonalPlanets"):** Ofrece una explicación general de Júpiter, Saturno, Urano, Neptuno y Plutón.
-6.  **Las Casas Astrológicas (clave "houses"):** Explica de forma general qué son las 12 casas astrológicas.
+6.  **Las Casas Astrológicas (clave "houses"):** Proporciona una explicación personalizada y perspicaz sobre las áreas de la vida más importantes para el usuario, basándote en los planetas que se encuentran en las diferentes casas.
+    - Primero, escribe una breve introducción general sobre qué representan las casas astrológicas.
+    - Luego, analiza los siguientes emplazamientos: **{{planetHousePlacements}}**.
+    - Para los planetas más importantes (Sol, Luna, Mercurio, Venus, Marte), explica cómo su energía influye en el área de vida de la casa en la que se encuentran. Por ejemplo, "Con el Sol en la Casa 10, tu identidad y propósito de vida están fuertemente ligados a tu carrera y reputación pública."
+    - Sé detallado y ofrece una perspectiva que ayude al usuario a entender sus focos de vida. No es necesario explicar las casas que están vacías.
 7.  **Aspectos Importantes (clave "aspects"):** Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, etc.).
 
 Genera el objeto JSON con estas 7 explicaciones en el idioma {{locale}}.
@@ -110,6 +115,15 @@ const getSignFromDegree = (degree: number): ZodiacSignName => {
   if (d < 300) return 'Capricorn';
   if (d < 330) return 'Aquarius';
   return 'Pisces';
+};
+
+// Helper function to get the house for a planet using the Whole Sign House system
+const getHouseForDegree = (planetDegree: number, ascendantDegree: number): number => {
+  // Normalize degrees to be relative to the ascendant
+  const relativeDegree = (planetDegree - ascendantDegree + 360) % 360;
+  // Each house is 30 degrees in the Whole Sign system
+  const house = Math.floor(relativeDegree / 30) + 1;
+  return house;
 };
 
 
@@ -199,13 +213,26 @@ const natalChartFlowInternal = ai.defineFlow(
       jupiter: { sign: getSignFromDegree(degrees.jupiter), degree: degrees.jupiter },
       saturn: { sign: getSignFromDegree(degrees.saturn), degree: degrees.saturn },
     };
+
+    // Calculate house placements for each planet
+    const planetHousePlacements: Record<string, number> = {};
+    for (const [planet, data] of Object.entries(chartData)) {
+      if (planet !== 'ascendant') { // Ascendant is the cusp of the 1st house, not "in" a house.
+        planetHousePlacements[planet] = getHouseForDegree(data.degree, chartData.ascendant.degree);
+      }
+    }
+
+    const planetHousePlacementsString = Object.entries(planetHousePlacements)
+      .map(([planet, house]) => `${planet.charAt(0).toUpperCase() + planet.slice(1)} en Casa ${house}`)
+      .join(', ');
     
     // Call AI prompt for text explanations
-    const promptInput = {
+    const promptInput: NatalChartPromptInputSchema = {
       ...input,
       sunSign: chartData.sun.sign,
       moonSign: chartData.moon.sign,
       ascendantSign: chartData.ascendant.sign,
+      planetHousePlacements: planetHousePlacementsString,
     };
 
     let aiOutput: Omit<NatalChartOutput, 'planetPositions' | 'aspectsDetails'> = {
@@ -228,7 +255,7 @@ const natalChartFlowInternal = ai.defineFlow(
             ascendant: `Ocurrió un error al generar la explicación para tu Ascendente en ${promptInput.ascendantSign}. El Ascendente es la máscara que muestras al mundo.`,
             personalPlanets: "Ocurrió un error al generar la explicación de los planetas personales. Por favor, inténtalo de nuevo más tarde.",
             transpersonalPlanets: "Ocurrió un error al generar la explicación de los planetas transpersonales. Por favor, inténtalo de nuevo más tarde.",
-            houses: "Ocurrió un error al generar la explicación de las casas. Por favor, inténtalo de nuevo más tarde.",
+            houses: "Ocurrió un error al generar la explicación personalizada de las casas. Por favor, inténtalo de nuevo más tarde.",
             aspects: "Ocurrió un error al generar la explicación general de los aspectos. Por favor, inténtalo de nuevo más tarde.",
         };
     }
