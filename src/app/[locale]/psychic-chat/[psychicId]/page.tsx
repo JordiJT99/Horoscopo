@@ -1,10 +1,24 @@
 
 import { psychics } from '@/lib/psychics';
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import PsychicChatUI from '@/components/psychic-chat/PsychicChatUI';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { MessageCircle } from 'lucide-react';
+
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  const psychicIds = psychics.map(p => p.id);
+
+  const params: { locale: string; psychicId: string }[] = [];
+  locales.forEach(locale => {
+    psychicIds.forEach(psychicId => {
+      params.push({ locale, psychicId });
+    });
+  });
+
+  return params;
+}
 
 interface PsychicChatPageProps {
   params: { psychicId: string; locale: Locale };
