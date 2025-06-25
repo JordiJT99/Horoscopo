@@ -611,7 +611,7 @@
   "OnboardingPage.loadingOnboarding": "Lade Onboarding...",
   "MorePage.allFunctionsTitle": "Alle Funktionen",
   "MorePage.accountTitle": "Konto",
-  "MorePage.settingsTitle": "Ajustes",
+  "MorePage.settingsTitle": "Einstellungen",
   "MorePage.premium": "Premium",
   "MorePage.fortuneCookie": "Glückskeks",
   "MorePage.celebrityCompatibility": "Promi-Kompatibilität",
@@ -625,6 +625,7 @@
   "MorePage.inviteAndEarn": "Einladen & Belohnungen",
   "MorePage.notifications": "Benachrichtigungen",
   "MorePage.newBadge": "NEU",
+  "MorePage.palmReading": "Handlesen",
   "Language.es": "Spanisch",
   "Language.en": "Englisch",
   "Language.de": "Deutsch",
@@ -680,5 +681,6 @@
     "aspectsDetails": {
       "noAspectsFound": "Keine signifikanten Aspekte in diesem Horoskop gefunden."
     }
-  }
+  },
+  "PsychicChatPage.title": "Psychischer Chat"
 }

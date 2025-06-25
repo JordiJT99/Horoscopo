@@ -424,7 +424,7 @@
   "Share.buttonLabelTarotReadingLinkContent": "Partager Cette Lecture",
   "Share.crystalBallInviteTextLink": "J'ai reçu une révélation de la Boule de Cristal sur AstroVibes ! Voyez-la ici :",
   "Share.dreamInterpretationInviteTextLink": "J'ai fait interpréter mon rêve sur AstroVibes ! Voyez l'interprétation ici :",
-  "PsychicChatPage.title": "Chat avec un Médium",
+  "PsychicChatPage.title": "Chat Médium",
   "PsychicChatPage.subtitle": "Connectez-vous avec un médium pour obtenir des conseils.",
   "PsychicChatClient.inputPlaceholder": "Tapez votre question ici...",
   "PsychicChatClient.sendButton": "Envoyer",
@@ -488,5 +488,26 @@
       "invalidTime": "Format d'heure invalide"
     },
     "pickDate": "Choisir une date"
-  }
+  },
+  "MorePage.allFunctionsTitle": "Toutes les fonctionnalités",
+  "MorePage.accountTitle": "Compte",
+  "MorePage.settingsTitle": "Paramètres",
+  "MorePage.premium": "Premium",
+  "MorePage.fortuneCookie": "Biscuit Chinois",
+  "MorePage.celebrityCompatibility": "Compatibilité Célébrité",
+  "MorePage.chineseHoroscope": "Horoscope Chinois",
+  "MorePage.druidHoroscope": "Horoscope Druidique",
+  "MorePage.risingSign": "Signe Ascendant",
+  "MorePage.articles": "Articles",
+  "MorePage.dreamInterpretation": "Interprétation des Rêves",
+  "MorePage.meditation": "Méditation",
+  "MorePage.profile": "Profil",
+  "MorePage.inviteAndEarn": "Inviter & Gagner",
+  "MorePage.notifications": "Notifications",
+  "MorePage.newBadge": "NOUVEAU",
+  "MorePage.palmReading": "Chiromancie",
+  "Language.es": "Espagnol",
+  "Language.en": "Anglais",
+  "Language.de": "Allemand",
+  "Language.fr": "Français"
 }
