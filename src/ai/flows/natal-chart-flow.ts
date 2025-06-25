@@ -9,7 +9,7 @@
  */
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { getSunSignFromDate, ZODIAC_SIGNS } from '@/lib/constants'; // Import helpers
+import type { ZodiacSignName } from '@/types'; // Import ZodiacSignName
 
 // Input schema remains the same
 const NatalChartInputSchema = z.object({
@@ -63,7 +63,6 @@ const natalChartPrompt = ai.definePrompt({
   name: 'natalChartPrompt',
   input: { schema: NatalChartPromptInputSchema },
   output: {
-    // The AI no longer needs to generate the complex aspectsDetails array.
     schema: NatalChartOutputSchema.omit({ planetPositions: true, aspectsDetails: true }),
     format: 'json', // Ensure JSON output
   },
@@ -95,6 +94,23 @@ Escribe una explicación personalizada y detallada para CADA UNA de las 7 seccio
 Genera el objeto JSON con estas 7 explicaciones en el idioma {{locale}}.
 `
 });
+
+// Helper function to get sign based on absolute degree
+const getSignFromDegree = (degree: number): ZodiacSignName => {
+  const d = degree % 360;
+  if (d < 30) return 'Aries';
+  if (d < 60) return 'Taurus';
+  if (d < 90) return 'Gemini';
+  if (d < 120) return 'Cancer';
+  if (d < 150) return 'Leo';
+  if (d < 180) return 'Virgo';
+  if (d < 210) return 'Libra';
+  if (d < 240) return 'Scorpio';
+  if (d < 270) return 'Sagittarius';
+  if (d < 300) return 'Capricorn';
+  if (d < 330) return 'Aquarius';
+  return 'Pisces';
+};
 
 
 // Helper function to calculate aspects deterministically
@@ -147,34 +163,35 @@ const natalChartFlowInternal = ai.defineFlow(
     const birthDateObj = new Date(input.birthDate + 'T' + input.birthTime);
     const [birthHour] = input.birthTime.split(':').map(Number);
 
-    // --- Dynamic Sign Calculation (Simplified) ---
-    // Sun sign is accurate
-    const sunSign = getSunSignFromDate(birthDateObj)?.name || 'Leo';
-    
-    // Moon and Ascendant are pseudo-random but based on user input for a dynamic feel
-    // This is NOT astrologically correct but avoids using a complex library
-    const moonSign = ZODIAC_SIGNS[(birthDateObj.getDate() - 1) % 12].name;
-    const ascendantSign = ZODIAC_SIGNS[birthHour % 12].name;
-
     // --- Dynamic Planet Positions for the Chart Wheel (Simplified & Deterministic) ---
-    // These positions will look varied and are consistent with the text.
-    const chartData = {
-      sun: { sign: sunSign, degree: 15 + ((birthDateObj.getMonth() * 30 + birthDateObj.getDate()) % 360) },
-      moon: { sign: moonSign, degree: (birthDateObj.getDate() * 12) % 360 },
-      ascendant: { sign: ascendantSign, degree: (birthHour * 15) % 360 },
-      mercury: { sign: ZODIAC_SIGNS[(birthDateObj.getMonth() + 1) % 12].name, degree: (birthDateObj.getDate() * 5) % 360 },
-      venus: { sign: ZODIAC_SIGNS[(birthDateObj.getMonth() + 2) % 12].name, degree: (birthDateObj.getDate() * 15) % 360 },
-      mars: { sign: ZODIAC_SIGNS[(birthDateObj.getDate() + 3) % 12].name, degree: (birthDateObj.getDate() * 20) % 360 },
-      jupiter: { sign: ZODIAC_SIGNS[(birthDateObj.getFullYear()) % 12].name, degree: (birthDateObj.getMonth() * 30) % 360 },
-      saturn: { sign: ZODIAC_SIGNS[(birthDateObj.getFullYear() + 2) % 12].name, degree: (birthDateObj.getMonth() * 12) % 360 },
+    const degrees = {
+      sun: (15 + ((birthDateObj.getMonth() * 30 + birthDateObj.getDate()) % 360)),
+      moon: ((birthDateObj.getDate() * 12) % 360),
+      ascendant: ((birthHour * 15) % 360),
+      mercury: ((birthDateObj.getMonth() + 1) * 28 % 360),
+      venus: ((birthDateObj.getMonth() + 2) * 30 % 360),
+      mars: ((birthDateObj.getDate() + 3) * 18 % 360),
+      jupiter: ((birthDateObj.getFullYear()) * 30 % 360),
+      saturn: ((birthDateObj.getFullYear() + 2) * 12 % 360),
     };
 
+    const chartData = {
+      sun: { sign: getSignFromDegree(degrees.sun), degree: degrees.sun },
+      moon: { sign: getSignFromDegree(degrees.moon), degree: degrees.moon },
+      ascendant: { sign: getSignFromDegree(degrees.ascendant), degree: degrees.ascendant },
+      mercury: { sign: getSignFromDegree(degrees.mercury), degree: degrees.mercury },
+      venus: { sign: getSignFromDegree(degrees.venus), degree: degrees.venus },
+      mars: { sign: getSignFromDegree(degrees.mars), degree: degrees.mars },
+      jupiter: { sign: getSignFromDegree(degrees.jupiter), degree: degrees.jupiter },
+      saturn: { sign: getSignFromDegree(degrees.saturn), degree: degrees.saturn },
+    };
+    
     // Call AI prompt for text explanations
     const promptInput = {
       ...input,
-      sunSign: sunSign,
-      moonSign: moonSign,
-      ascendantSign: ascendantSign,
+      sunSign: chartData.sun.sign,
+      moonSign: chartData.moon.sign,
+      ascendantSign: chartData.ascendant.sign,
     };
 
     let aiOutput: Omit<NatalChartOutput, 'planetPositions' | 'aspectsDetails'> = {
@@ -192,9 +209,9 @@ const natalChartFlowInternal = ai.defineFlow(
         console.error(`Natal chart text generation failed for ${input.birthDate}. Error: ${error.message}`);
         // Fallback to generic explanations
         aiOutput = {
-            sun: `Ocurrió un error al generar la explicación para tu Sol en ${sunSign}. Esto puede ser un problema temporal con el servicio de IA. Por favor, inténtalo de nuevo más tarde. Generalmente, el Sol representa tu identidad central y tu ego.`,
-            moon: `Ocurrió un error al generar la explicación para tu Luna en ${moonSign}. La Luna rige tu mundo emocional y tus instintos.`,
-            ascendant: `Ocurrió un error al generar la explicación para tu Ascendente en ${ascendantSign}. El Ascendente es la máscara que muestras al mundo.`,
+            sun: `Ocurrió un error al generar la explicación para tu Sol en ${promptInput.sunSign}. Esto puede ser un problema temporal con el servicio de IA. Por favor, inténtalo de nuevo más tarde. Generalmente, el Sol representa tu identidad central y tu ego.`,
+            moon: `Ocurrió un error al generar la explicación para tu Luna en ${promptInput.moonSign}. La Luna rige tu mundo emocional y tus instintos.`,
+            ascendant: `Ocurrió un error al generar la explicación para tu Ascendente en ${promptInput.ascendantSign}. El Ascendente es la máscara que muestras al mundo.`,
             personalPlanets: "Ocurrió un error al generar la explicación de los planetas personales. Por favor, inténtalo de nuevo más tarde.",
             transpersonalPlanets: "Ocurrió un error al generar la explicación de los planetas transpersonales. Por favor, inténtalo de nuevo más tarde.",
             houses: "Ocurrió un error al generar la explicación de las casas. Por favor, inténtalo de nuevo más tarde.",

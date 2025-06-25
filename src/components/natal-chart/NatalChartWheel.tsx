@@ -3,6 +3,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface AspectDetail {
   body1: string;
@@ -71,7 +72,8 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
   const radius = wheelSize * 0.38; // Radius to place planets within the wheel
 
   const calculatePosition = (degree: number) => {
-    // Convert astrological degree to cartesian angle in radians
+    // Astrological degrees start with 0° at the far left (Aries point) and go counter-clockwise.
+    // To convert: an astrological degree 'd' is at angle (180 - d) in CSS/SVG.
     const angleRad = (180 - degree) * (Math.PI / 180);
 
     const x = wheelSize / 2 + radius * Math.cos(angleRad);
@@ -96,13 +98,11 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
       {/* SVG overlay for aspect lines */}
       <svg className="absolute top-0 left-0 w-full h-full" viewBox={`0 0 ${wheelSize} ${wheelSize}`}>
         {aspects.map((aspect, index) => {
-            // Find planet positions, converting aspect body names to lowercase
             const planet1 = planetPositions[aspect.body1.toLowerCase()];
             const planet2 = planetPositions[aspect.body2.toLowerCase()];
             
             if (!planet1 || !planet2) return null;
             
-            // We need a different radius for the aspect lines so they are drawn inside the planets
             const lineRadius = wheelSize * 0.3; // A smaller radius for the line endpoints
             const pos1 = {
                 x: wheelSize / 2 + lineRadius * Math.cos((180 - planet1.degree) * Math.PI / 180),
@@ -130,28 +130,39 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
         })}
       </svg>
 
-      {/* Div overlay for planet glyphs (on top of lines) */}
+      {/* Div overlay for planet glyphs */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {Object.entries(planetPositions).map(([planet, data]) => {
           if (!planetGlyphs[planet]) return null;
 
           const { x, y } = calculatePosition(data.degree);
           const signInfo = zodiacSignDetails[data.sign];
+          // Correctly calculate the degree within the sign (0-29)
           const degreeInSign = Math.floor(data.degree - (signInfo?.start ?? 0));
-
+          
           return (
             <div
               key={planet}
-              className="absolute text-white flex flex-col items-center"
+              className="absolute text-white flex flex-col items-center gap-0.5"
               style={{
                 left: `${x}px`,
                 top: `${y}px`,
                 transform: 'translate(-50%, -50%)',
-                textShadow: '0px 0px 4px rgba(0, 0, 0, 0.9)',
+                textShadow: '0 1px 4px rgba(0, 0, 0, 0.9)',
               }}
             >
-              <span style={{ fontSize: '20px', lineHeight: '1' }}>{planetGlyphs[planet]}</span>
-              <span className="text-xs" style={{lineHeight: '1.2'}}>{`${degreeInSign}° ${signInfo?.glyph ?? ''}`}</span>
+              <span className="text-xl leading-none">{planetGlyphs[planet]}</span>
+              <div className="flex items-center gap-1">
+                <span className="text-xs font-semibold tracking-tighter">{`${degreeInSign}°`}</span>
+                {signInfo && (
+                   <span className={cn(
+                     "text-xs rounded-[3px] px-1 py-0.5 leading-none",
+                     "bg-purple-600/80 backdrop-blur-sm border border-purple-400/50"
+                   )}>
+                     {signInfo.glyph}
+                   </span>
+                )}
+              </div>
             </div>
           );
         })}
