@@ -39,15 +39,19 @@ const natalChartImageFlowInternal = ai.defineFlow(
     console.log("Generating new natal chart image.");
     const { media } = await ai.generate({
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
-      prompt: `Generate a visually stunning, artistic, and mystical image of an astrological natal chart.
-      The style should be elegant, with deep cosmic blues, purples, and gold highlights, resembling a celestial map or an ancient artifact.
-      The chart should be circular, with zodiac symbols clearly visible around the circumference.
-      Incorporate abstract representations of the user's key signs:
-      - Sun in ${input.sunSign}
-      - Moon in ${input.moonSign}
-      - Ascendant (Rising) in ${input.ascendantSign}
-      Do not include any legible text or specific planet placements. Focus on the artistic and symbolic representation.
-      The overall feeling should be magical, profound, and beautiful.`,
+      prompt: `Generar una carta natal astrológica circular, con un diseño elegante y místico, en un fondo oscuro con tonos de azul profundo y morado. Agregar detalles en dorado que evoquen la sensación de un antiguo mapa celestial o un artefacto cósmico.
+
+La carta debe incluir de manera destacada los 12 símbolos de los signos zodiacales dispuestos en la circunferencia del círculo, asegurándose de que sean fácilmente legibles. En el centro de la carta, crear un diseño abstracto que represente la interconexión de los planetas y los aspectos astrológicos. Punto crítico: Las líneas que representan las conexiones deben ser el foco principal del centro. Utilizar líneas nítidas, definidas y brillantes. Cada línea debe tener un color distinto (rojo, azul, verde) para ser fácilmente diferenciable. Las líneas no deben superponerse de forma desordenada; deben cruzarse de manera limpia y geométrica, creando un patrón que sea a la vez complejo y claro, fácil de leer y estéticamente agradable.
+
+Incluir representaciones simbólicas de los siguientes signos astrológicos sin mostrar los nombres o posiciones planetarias exactas:
+
+Sol en ${input.sunSign}
+
+Luna en ${input.moonSign}
+
+Ascendente (Rising) en ${input.ascendantSign}
+
+El diseño debe ser puramente artístico, con un enfoque místico y profundo que capture la esencia de una carta natal, sin mostrar detalles excesivos o posiciones planetarias exactas.`,
       config: {
         responseModalities: ['TEXT', 'IMAGE'],
       },
