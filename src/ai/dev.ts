@@ -7,4 +7,5 @@ import './flows/tarot-reading-flow';
 import './flows/tarot-personality-flow';
 import './flows/natal-chart-flow';
 import './flows/psychic-chat-flow';
+import './flows/natal-chart-image-flow';
 // Removed: import './flows/compatibility-report-flow';

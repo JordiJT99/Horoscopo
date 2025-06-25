@@ -4,6 +4,7 @@
 import type { Dictionary } from '@/lib/dictionaries';
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
+import { natalChartImageFlow } from '@/ai/flows/natal-chart-image-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
@@ -116,32 +117,29 @@ export default function NatalChartClientContent({
   useEffect(() => {
     const fetchChartData = async () => {
       setIsLoading(true);
-      const staticImageUrl = '/custom_assets/natal_chart_bg.png'; // Using static image as requested
       
       const birthDataString = JSON.stringify(birthData);
-      const cacheKey = user ? `natalChart_text_${user.uid}_${birthDataString}_${detailLevel}` : null;
-      let cachedData: NatalChartOutput | null = null;
+      const textCacheKey = user ? `natalChart_text_${user.uid}_${birthDataString}_${detailLevel}` : null;
+      let cachedText: NatalChartOutput | null = null;
       
-      // Try to load text data from cache
-      if (cacheKey) {
+      if (textCacheKey) {
         try {
-          const cachedItem = localStorage.getItem(cacheKey);
+          const cachedItem = localStorage.getItem(textCacheKey);
           if (cachedItem) {
-            cachedData = JSON.parse(cachedItem);
-            console.log("Loaded natal chart data from cache.");
+            cachedText = JSON.parse(cachedItem);
           }
         } catch (e) {
-          console.error("Failed to parse cached data, fetching new data.", e);
-          localStorage.removeItem(cacheKey);
+          console.error("Failed to parse cached text data, fetching new data.", e);
+          localStorage.removeItem(textCacheKey);
         }
       }
 
       try {
-        let resultData: NatalChartOutput;
-        if (cachedData) {
-          resultData = cachedData;
+        let textData: NatalChartOutput;
+        if (cachedText) {
+          console.log("Loaded natal chart text from cache.");
+          textData = cachedText;
         } else {
-          // Fetch new data if not in cache
           const flowInput = {
             detailLevel,
             locale: dictionary.locale || 'es',
@@ -150,16 +148,25 @@ export default function NatalChartClientContent({
             birthCity: birthData.city,
             birthCountry: birthData.country,
           };
-          resultData = await natalChartFlow(flowInput);
-          if (cacheKey) {
-            localStorage.setItem(cacheKey, JSON.stringify(resultData));
+          textData = await natalChartFlow(flowInput);
+          if (textCacheKey) {
+            localStorage.setItem(textCacheKey, JSON.stringify(textData));
             console.log("Saved natal chart text data to cache.");
           }
         }
         
-        if (resultData) {
-          setExplanations(resultData);
-          setImageUrl(staticImageUrl); // Always use the static URL for the background
+        if (textData) {
+          setExplanations(textData);
+
+          const imageInput = {
+              sunSign: textData.planetPositions.sun.sign,
+              moonSign: textData.planetPositions.moon.sign,
+              ascendantSign: textData.planetPositions.ascendant.sign,
+          };
+          // The image flow now uses server-side caching, so we call it every time.
+          const imageData = await natalChartImageFlow(imageInput);
+          setImageUrl(imageData.imageUrl);
+
         } else {
           throw new Error("Received null or undefined result from natalChartFlow.");
         }
