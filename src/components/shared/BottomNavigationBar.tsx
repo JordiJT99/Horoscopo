@@ -27,7 +27,7 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
     { href: "/", labelKey: "BottomNav.horoscopes", icon: Sparkles },
     { href: "/friends", labelKey: "BottomNav.friends", icon: Users, isPlaceholder: true }, // Placeholder for now
     { href: "/compatibility", labelKey: "BottomNav.compatibility", icon: Heart },
-    { href: "/psychic-chat", labelKey: "BottomNav.chat", icon: MessageSquare },
+    { href: "/psychic-chat", labelKey: "BottomNav.chat", icon: MessageSquare, notification: true },
     { href: "/more", labelKey: "BottomNav.more", icon: BookOpen },
   ];
 
@@ -54,7 +54,12 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
               )}
             >
               <Link href={item.isPlaceholder ? "#" : `/${currentLocale}${item.href}`}>
-                <DisplayIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mb-0.5", itemIsActive && "text-bottom-nav-active-foreground")} />
+                <div className="relative">
+                  <DisplayIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mb-0.5", itemIsActive && "text-bottom-nav-active-foreground")} />
+                  {item.notification && (
+                    <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-destructive ring-2 ring-background transform translate-x-1/2 -translate-y-1/2"></span>
+                  )}
+                </div>
                 {item.labelKey === 'BottomNav.friends' ? (
                   <div className="flex flex-col items-center leading-tight -mt-0.5">
                      <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
