@@ -97,7 +97,7 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/lunar-ascendant", icon: LunarIcon, titleKey: "LunarAscendantPage.title", newBadge: false, isPlaceholder: false },
     { href: "/chinese-horoscope", icon: ChineseIcon, titleKey: "ChineseHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/mayan-horoscope", icon: MayanAstrologyIcon, titleKey: "MayanHoroscopePage.title", newBadge: false, isPlaceholder: false },
-    { href: "/natalchart", icon: Sparkles, titleKey: "NatalChartPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/natalchart", icon: Sparkles, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
     { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: true, isPlaceholder: false },
     { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
