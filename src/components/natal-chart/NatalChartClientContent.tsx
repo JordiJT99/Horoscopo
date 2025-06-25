@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
 import NatalChartAspectsView from './NatalChartAspectsView';
-import NatalChartHousesView from './NatalChartHousesView'; // New
+import NatalChartHousesView from './NatalChartHousesView';
 import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -39,15 +39,6 @@ function SectionExplanation({
   isLoading: boolean;
 }) {
   const getZodiacSymbol = (title: string) => {
-    const symbols: Record<string, string> = {
-      'Sol': '☉',
-      'Luna': '☽',
-      'Ascendente': '↑',
-      'Planetas Personales': '☿',
-      'Planetas Transpersonales': '♆',
-      'Casas': '⌂',
-    };
-
     const clean = title.toLowerCase();
     if (clean.includes('sol')) return '☉';
     if (clean.includes('luna')) return '☽';
@@ -55,7 +46,7 @@ function SectionExplanation({
     if (clean.includes('personal')) return '☿';
     if (clean.includes('transpersonal')) return '♆';
     if (clean.includes('casa')) return '⌂';
-
+    if (clean.includes('aspectos')) return '⚹';
     return '✦';
   };
 
@@ -64,7 +55,7 @@ function SectionExplanation({
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="relative p-6 sm:p-8 my-8 rounded-2xl bg-gradient-to-b from-background/70 to-background/40 border border-primary/30 shadow-[0_0_20px_rgba(100,100,255,0.08)] backdrop-blur-xl"
+      className="relative p-6 sm:p-8 my-6 rounded-2xl bg-gradient-to-b from-background/70 to-background/40 border border-primary/30 shadow-[0_0_20px_rgba(100,100,255,0.08)] backdrop-blur-xl"
     >
       <div className="absolute top-4 right-4 text-2xl sm:text-3xl text-primary/60 pointer-events-none select-none">
         {getZodiacSymbol(title)}
@@ -103,6 +94,7 @@ export default function NatalChartClientContent({
     ascendantTitle,
     personalPlanetsTitle,
     transpersonalPlanetsTitle,
+    housesTitle, // Added
     aspectsTitle,
   } = dictionary.NatalChartPage;
 
@@ -112,7 +104,6 @@ export default function NatalChartClientContent({
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  // Static path for the background image
   const staticChartImageUrl = '/custom_assets/natal_chart_bg.png';
 
   useEffect(() => {
@@ -189,12 +180,10 @@ export default function NatalChartClientContent({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Título principal */}
       <h2 className="text-3xl sm:text-4xl font-headline font-semibold text-primary text-center mb-4">
         {title}
       </h2>
 
-      {/* Selector de nivel de detalle */}
       <div className="flex justify-center mt-4 mb-8">
         <label htmlFor="detailLevel" className="mr-2 self-center">
           {detailLevelDict?.label || 'Nivel de detalle'}:
@@ -212,7 +201,6 @@ export default function NatalChartClientContent({
         </select>
       </div>
       
-      {/* Pestañas de Navegación */}
       <div className="flex justify-center mb-6 space-x-2 sm:space-x-4 flex-wrap">
          <Button variant={activeTab === 'chart' ? 'default' : 'ghost'} onClick={() => setActiveTab('chart')}>
           {dictionary.NatalChartPage?.chartTab || 'Chart'}
@@ -228,7 +216,6 @@ export default function NatalChartClientContent({
         </Button>
       </div>
 
-      {/* Contenido de la Pestaña de la Carta */}
       {activeTab === 'chart' && (
          <div className="my-8 flex flex-col items-center">
           {isLoading || !explanations ? (
@@ -247,15 +234,17 @@ export default function NatalChartClientContent({
         </div>
       )}
 
-      {/* Contenido de la Pestaña de Aspectos */}
       {activeTab === 'aspects' && explanations?.aspectsDetails && (
         <NatalChartAspectsView aspectsDetails={explanations.aspectsDetails} dictionary={dictionary} />
       )}
 
-      {/* Contenido de la Pestaña de Casas */}
       {activeTab === 'houses' && explanations?.housesDetails && (
         <div className="space-y-4 py-4">
-          {explanations.housesIntroduction && <p className="text-center text-muted-foreground">{explanations.housesIntroduction}</p>}
+          <SectionExplanation
+            title={housesTitle}
+            content={explanations?.housesIntroduction}
+            isLoading={isLoading}
+          />
           <NatalChartHousesView 
             housesDetails={explanations.housesDetails}
             dictionary={dictionary}
@@ -263,23 +252,19 @@ export default function NatalChartClientContent({
         </div>
       )}
 
-      {/* Contenido de la Pestaña de Detalles */}
       {activeTab === 'details' && (
         <div className="space-y-6 py-4">
           {detailExplanationSections.map((section, index) => (
-            section.content ? (
-              <SectionExplanation
-                key={index}
-                title={section.title}
-                content={section.content}
-                isLoading={isLoading}
-              />
-            ) : null
+            <SectionExplanation
+              key={index}
+              title={section.title}
+              content={section.content}
+              isLoading={isLoading}
+            />
           ))}
         </div>
       )}
 
-      {/* Mensaje de desarrollo */}
       <p className="text-center mt-8 text-sm text-muted-foreground">
         {underDevelopmentMessage}
       </p>
