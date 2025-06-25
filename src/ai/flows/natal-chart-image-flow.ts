@@ -39,19 +39,28 @@ const natalChartImageFlowInternal = ai.defineFlow(
     console.log("Generating new natal chart image.");
     const { media } = await ai.generate({
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
-      prompt: `Generar una carta natal astrológica circular, con un diseño elegante y místico, en un fondo oscuro con tonos de azul profundo y morado. Agregar detalles en dorado que evoquen la sensación de un antiguo mapa celestial o un artefacto cósmico.
+      prompt: `Genera una imagen de una carta natal astrológica con un diseño de alta tecnología y a la vez místico, como un diagrama celestial digital.
 
-La carta debe incluir de manera destacada los 12 símbolos de los signos zodiacales dispuestos en la circunferencia del círculo, asegurándose de que sean fácilmente legibles. En el centro de la carta, crear un diseño abstracto que represente la interconexión de los planetas y los aspectos astrológicos. Punto crítico: Las líneas que representan las conexiones deben ser el foco principal del centro. Utilizar líneas nítidas, definidas y brillantes. Cada línea debe tener un color distinto (rojo, azul, verde) para ser fácilmente diferenciable. Las líneas no deben superponerse de forma desordenada; deben cruzarse de manera limpia y geométrica, creando un patrón que sea a la vez complejo y claro, fácil de leer y estéticamente agradable.
+**Estilo General:**
+- La estética debe ser una mezcla de mapa estelar antiguo y un diagrama digital de alta resolución.
+- El fondo es un espacio profundo, una nebulosa con tonos de azul oscuro y morado.
+- Prioriza la claridad, la nitidez y la precisión geométrica sobre un estilo pictórico o borroso.
 
-Incluir representaciones simbólicas de los siguientes signos astrológicos sin mostrar los nombres o posiciones planetarias exactas:
+**Estructura del Círculo:**
+- La carta debe ser perfectamente circular, centrada en la imagen.
+- El borde exterior es un anillo ancho de color azul real oscuro. Sobre este anillo, incrusta los 12 símbolos del zodíaco en un dorado brillante y nítido.
+- Dentro del anillo del zodíaco, debe haber múltiples círculos concéntricos dorados, finos y elegantes.
+- El círculo más interno debe estar dividido en 12 secciones (casas) por líneas radiales muy tenues y sutiles.
 
-Sol en ${input.sunSign}
+**Líneas de Aspectos (Punto Clave):**
+- El centro debe estar lleno de una compleja red de líneas rectas y de colores vivos.
+- **CRÍTICO**: Las líneas deben ser muy finas, nítidas y brillantes, como rayos láser de diferentes colores (rojo, verde, azul, amarillo, rosa). Deben cruzarse limpiamente, formando un patrón geométrico claro y ordenado, no un enredo borroso.
 
-Luna en ${input.moonSign}
-
-Ascendente (Rising) en ${input.ascendantSign}
-
-El diseño debe ser puramente artístico, con un enfoque místico y profundo que capture la esencia de una carta natal, sin mostrar detalles excesivos o posiciones planetarias exactas.`,
+**Información a Excluir (MUY IMPORTANTE):**
+- **NO dibujes símbolos de planetas** (como ☉, ☽, ♃).
+- **NO escribas ningún texto, número o grado**.
+- La imagen debe ser una **plantilla de fondo pura** y hermosa. La aplicación se encargará de superponer los planetas y los grados específicos.
+`,
       config: {
         responseModalities: ['TEXT', 'IMAGE'],
       },
