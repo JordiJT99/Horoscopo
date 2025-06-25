@@ -56,7 +56,14 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
             >
               <Link href={item.isPlaceholder ? "#" : `/${currentLocale}${item.href}`}>
                 <DisplayIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mb-0.5", itemIsActive && "text-bottom-nav-active-foreground")} />
-                <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
+                {item.labelKey === 'BottomNav.friends' ? (
+                  <div className="flex flex-col items-center leading-tight -mt-0.5">
+                     <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
+                     <span className="text-[0.5rem] opacity-80 scale-90">{dictionary['HomePage.comingSoon'] || 'Próximamente'}</span>
+                  </div>
+                ) : (
+                  <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
+                )}
               </Link>
             </Button>
           );
