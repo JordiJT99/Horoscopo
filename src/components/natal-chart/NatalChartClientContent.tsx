@@ -94,12 +94,12 @@ export default function NatalChartClientContent({
     ascendantTitle,
     personalPlanetsTitle,
     transpersonalPlanetsTitle,
-    housesTitle, // Added
+    housesTitle,
     aspectsTitle,
   } = dictionary.NatalChartPage;
 
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
-  const [activeTab, setActiveTab] = useState<NatalChartTab>('chart');
+  const [activeTab, setActiveTab] = useState<NatalChartTab>('details');
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -200,10 +200,27 @@ export default function NatalChartClientContent({
           <option value="spiritual">{detailLevelDict?.spiritual}</option>
         </select>
       </div>
+
+      {/* Unconditional Chart Wheel rendering */}
+      <div className="my-8 flex flex-col items-center">
+        {isLoading || !explanations ? (
+          <div className="w-[400px] h-[400px] flex items-center justify-center">
+            <Skeleton className="w-full h-full rounded-full" />
+          </div>
+        ) : (
+          explanations.planetPositions && (
+            <NatalChartWheel 
+              planetPositions={explanations.planetPositions} 
+              aspects={explanations.aspectsDetails || []}
+              imageDataUrl={staticChartImageUrl} 
+            />
+          )
+        )}
+      </div>
       
       <div className="flex justify-center mb-6 space-x-2 sm:space-x-4 flex-wrap">
-         <Button variant={activeTab === 'chart' ? 'default' : 'ghost'} onClick={() => setActiveTab('chart')}>
-          {dictionary.NatalChartPage?.chartTab || 'Chart'}
+         <Button variant={activeTab === 'details' ? 'default' : 'ghost'} onClick={() => setActiveTab('details')}>
+          {dictionary.NatalChartPage?.detailsTab || 'Details'}
         </Button>
         <Button variant={activeTab === 'aspects' ? 'default' : 'ghost'} onClick={() => setActiveTab('aspects')}>
           {dictionary.NatalChartPage?.aspectsTab || 'Aspects'}
@@ -211,28 +228,7 @@ export default function NatalChartClientContent({
         <Button variant={activeTab === 'houses' ? 'default' : 'ghost'} onClick={() => setActiveTab('houses')}>
           {dictionary.NatalChartPage?.housesTab || 'Houses'}
         </Button>
-        <Button variant={activeTab === 'details' ? 'default' : 'ghost'} onClick={() => setActiveTab('details')}>
-          {dictionary.NatalChartPage?.detailsTab || 'Details'}
-        </Button>
       </div>
-
-      {activeTab === 'chart' && (
-         <div className="my-8 flex flex-col items-center">
-          {isLoading || !explanations ? (
-            <div className="w-[400px] h-[400px] flex items-center justify-center">
-              <Skeleton className="w-full h-full rounded-full" />
-            </div>
-          ) : (
-            explanations.planetPositions && (
-              <NatalChartWheel 
-                planetPositions={explanations.planetPositions} 
-                aspects={explanations.aspectsDetails || []}
-                imageDataUrl={staticChartImageUrl} 
-              />
-            )
-          )}
-        </div>
-      )}
 
       {activeTab === 'aspects' && explanations?.aspectsDetails && (
         <NatalChartAspectsView aspectsDetails={explanations.aspectsDetails} dictionary={dictionary} />
