@@ -646,29 +646,18 @@
   "UpcomingPhase.sampleDate3": "Sample 3",
   "UpcomingPhase.sampleDate4": "Sample 4",
   "Data.notAvailable": "N/A",
-  "NatalChartPage": {
-    "title": "Natal Chart",
-    "underDevelopmentMessage": "This feature is currently under development. Please check back later!",
-    "detailLevel": {
-      "label": "Select Detail Level",
-      "basic": "Basic",
-      "advanced": "Advanced",
-      "spiritual": "Spiritual"
+  "birthForm": {
+    "dateLabel": "Date of Birth",
+    "timeLabel": "Time of Birth",
+    "cityLabel": "City of Birth",
+    "countryLabel": "Country of Birth",
+    "submitButton": "Generate Natal Chart",
+    "validationErrors": {
+      "required": "This field is required",
+      "invalidDate": "Invalid date format",
+      "invalidTime": "Invalid time format"
     },
-    "sunTitle": "The Sun in Your Natal Chart",
-    "moonTitle": "The Moon in Your Natal Chart",
-    "ascendantTitle": "The Ascendant in Your Natal Chart",
-    "personalPlanetsTitle": "Personal Planets",
-    "transpersonalPlanetsTitle": "Transpersonal Planets",
-    "housesTitle": "The Astrological Houses",
-    "aspectsTitle": "Important Aspects",
-    "chartTab": "Chart",
-    "aspectsTab": "Aspects",
-    "detailsTab": "Details",
-    "housesTab": "Houses",
-    "aspectsDetails": {
-      "noAspectsFound": "No significant aspects found in this chart."
-    }
+    "pickDate": "Pick a date"
   },
   "PsychicChatPage.title": "Psychic Chat",
   "PsychicChatPage.subtitle": "Connect with a psychic for guidance.",
@@ -696,5 +685,30 @@
   "PsychicChatPage.chatWith": "Chat with {psychicName}",
   "PsychicChatPage.initialMessage": "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?",
   "PsychicChatPage.sendMessageError": "Error connecting to the psychic.",
-  "PsychicChatPage.sendingButton": "Sending..."
+  "PsychicChatPage.sendingButton": "Sending...",
+  "NatalChartPage": {
+    "title": "Natal Chart",
+    "underDevelopmentMessage": "This feature is currently under development. Please check back later!",
+    "detailLevel": {
+      "label": "Select Detail Level",
+      "basic": "Basic",
+      "advanced": "Advanced",
+      "spiritual": "Spiritual"
+    },
+    "sunTitle": "The Sun in Your Natal Chart",
+    "moonTitle": "The Moon in Your Natal Chart",
+    "ascendantTitle": "The Ascendant in Your Natal Chart",
+    "personalPlanetsTitle": "Personal Planets",
+    "transpersonalPlanetsTitle": "Transpersonal Planets",
+    "housesTitle": "The Astrological Houses",
+    "aspectsTitle": "Important Aspects",
+    "chartTab": "Chart",
+    "generatingImage": "Generating natal chart image...",
+    "aspectsTab": "Aspects",
+    "aspectsDetails": {
+      "noAspectsFound": "No significant aspects found in this chart."
+    },
+    "detailsTab": "Details",
+    "housesTab": "Houses"
+  }
 }

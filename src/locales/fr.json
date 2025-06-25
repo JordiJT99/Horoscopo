@@ -468,11 +468,25 @@
     "housesTitle": "Les Maisons Astrologiques",
     "aspectsTitle": "Aspects Importants",
     "chartTab": "Carte",
+    "generatingImage": "Génération de l'image du thème natal...",
     "aspectsTab": "Aspects",
     "detailsTab": "Détails",
     "housesTab": "Maisons",
     "aspectsDetails": {
       "noAspectsFound": "Aucun aspect significatif trouvé dans ce thème."
     }
+  },
+  "birthForm": {
+    "dateLabel": "Date de Naissance",
+    "timeLabel": "Heure de Naissance",
+    "cityLabel": "Ville de Naissance",
+    "countryLabel": "Pays de Naissance",
+    "submitButton": "Générer le Thème Natal",
+    "validationErrors": {
+      "required": "Ce champ est requis",
+      "invalidDate": "Format de date invalide",
+      "invalidTime": "Format d'heure invalide"
+    },
+    "pickDate": "Choisir une date"
   }
 }

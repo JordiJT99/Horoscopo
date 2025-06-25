@@ -643,6 +643,19 @@
   "UpcomingPhase.sampleDate3": "Beispiel 3",
   "UpcomingPhase.sampleDate4": "Beispiel 4",
   "Data.notAvailable": "k.A.",
+  "birthForm": {
+    "dateLabel": "Geburtsdatum",
+    "timeLabel": "Geburtszeit",
+    "cityLabel": "Geburtsstadt",
+    "countryLabel": "Geburtsland",
+    "submitButton": "Geburtshoroskop erstellen",
+    "validationErrors": {
+      "required": "Dieses Feld ist erforderlich",
+      "invalidDate": "Ungültiges Datumsformat",
+      "invalidTime": "Ungültiges Zeitformat"
+    },
+    "pickDate": "Datum auswählen"
+  },
   "NatalChartPage": {
     "title": "Geburtshoroskop",
     "underDevelopmentMessage": "Diese Funktion wird derzeit entwickelt. Bitte schauen Sie später wieder vorbei!",
@@ -660,18 +673,12 @@
     "housesTitle": "Die Astrologischen Häuser",
     "aspectsTitle": "Wichtige Aspekte",
     "chartTab": "Diagramm",
+    "generatingImage": "Generiere Geburtshoroskop-Bild...",
     "aspectsTab": "Aspekte",
     "detailsTab": "Details",
     "housesTab": "Häuser",
     "aspectsDetails": {
       "noAspectsFound": "Keine signifikanten Aspekte in diesem Horoskop gefunden."
     }
-  },
-  "NatalChartImage": {
-    "loadingImage": "Generiere Geburtshoroskop-Bild..."
   }
 }
-
-
-
-    
