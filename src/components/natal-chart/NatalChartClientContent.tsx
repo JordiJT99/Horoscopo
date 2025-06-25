@@ -117,28 +117,25 @@ export default function NatalChartClientContent({
   useEffect(() => {
     const fetchExplanations = async () => {
       setIsLoading(true);
-  
+
       const birthDataString = JSON.stringify(birthData);
-      const cacheKey = user ? `natalChart_${user.uid}_${birthDataString}_${detailLevel}` : null;
-  
-      if (cacheKey) {
+      const textCacheKey = user ? `natalChart_text_${user.uid}_${birthDataString}_${detailLevel}` : null;
+      let cachedTextData: NatalChartOutput | null = null;
+
+      // 1. Try to load text-only data from cache
+      if (textCacheKey) {
         try {
-            const cachedData = localStorage.getItem(cacheKey);
-            if (cachedData) {
-                const parsedData = JSON.parse(cachedData);
-                setExplanations(parsedData);
-                setImageUrl(parsedData.imageUrl); // Assuming imageUrl is saved in the cached object
-                setIsLoading(false);
-                console.log("Loaded natal chart from cache.");
-                return; // Exit if loaded from cache
-            }
-        } catch(e) {
-            console.error("Failed to parse cached data, fetching new data.", e);
-            localStorage.removeItem(cacheKey); // Remove corrupted data
+          const cachedItem = localStorage.getItem(textCacheKey);
+          if (cachedItem) {
+            cachedTextData = JSON.parse(cachedItem);
+            console.log("Loaded natal chart TEXT from cache.");
+          }
+        } catch (e) {
+          console.error("Failed to parse cached text data, fetching new data.", e);
+          localStorage.removeItem(textCacheKey); // Clear corrupted data
         }
       }
-  
-      console.log("Fetching new natal chart data...");
+
       try {
         const commonInput = {
           detailLevel,
@@ -148,25 +145,32 @@ export default function NatalChartClientContent({
           birthCity: birthData.city,
           birthCountry: birthData.country,
         };
-  
-        // Run both flows in parallel
-        const [textResult, imageResult] = await Promise.all([
-          natalChartFlow(commonInput),
-          natalChartImageFlow(commonInput),
-        ]);
-  
+
+        // 2. Set up promises. Fetch text only if it's not already in cache.
+        //    Always fetch the image to avoid storage issues.
+        const textPromise = cachedTextData 
+          ? Promise.resolve(cachedTextData)
+          : natalChartFlow(commonInput);
+        
+        const imagePromise = natalChartImageFlow(commonInput);
+
+        // 3. Await both promises to complete
+        const [textResult, imageResult] = await Promise.all([textPromise, imagePromise]);
+
         if (textResult && imageResult?.imageUrl) {
+          // Combine results from cache/fetch and update the UI state
           const fullResult = { ...textResult, imageUrl: imageResult.imageUrl };
-  
           setExplanations(fullResult);
           setImageUrl(imageResult.imageUrl);
-  
-          if (cacheKey) {
-            localStorage.setItem(cacheKey, JSON.stringify(fullResult));
-            console.log("Saved natal chart to cache.");
+
+          // 4. If text was freshly fetched (not from cache), save it.
+          //    We specifically DO NOT save the imageResult.
+          if (!cachedTextData && textCacheKey) {
+            localStorage.setItem(textCacheKey, JSON.stringify(textResult));
+            console.log("Saved natal chart TEXT to cache. Image is not cached.");
           }
         } else {
-          throw new Error("Received null or undefined result from AI flow(s).");
+          throw new Error("Received null or undefined result from one of the AI flows.");
         }
       } catch (error: any) {
         console.error('Failed to fetch natal chart data:', error);
