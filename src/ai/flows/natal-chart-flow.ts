@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A Genkit flow to provide text explanations for a natal chart.
@@ -28,6 +29,8 @@ const AspectDetailSchema = z.object({
   degree: z.number().describe('The exact degree of the aspect (orb).'),
   explanation: z.string().describe('A personalized explanation of this specific aspect.'),
 });
+export type AspectDetail = z.infer<typeof AspectDetailSchema>;
+
 
 // Output schema remains the same
 const NatalChartOutputSchema = z.object({
@@ -60,122 +63,77 @@ const natalChartPrompt = ai.definePrompt({
   name: 'natalChartPrompt',
   input: { schema: NatalChartPromptInputSchema },
   output: {
-    schema: NatalChartOutputSchema.omit({ planetPositions: true }),
+    // The AI no longer needs to generate the complex aspectsDetails array.
+    schema: NatalChartOutputSchema.omit({ planetPositions: true, aspectsDetails: true }),
     format: 'json', // Ensure JSON output
   },
-  prompt: `Eres un astrólogo experto, sabio y elocuente, con un profundo conocimiento de la astrología psicológica y espiritual. Tu tarea es proporcionar explicaciones claras, perspicaces y PERSONALIZADAS para los componentes principales de una carta natal del usuario.
+  prompt: `Eres un astrólogo experto, sabio y elocuente. Tu tarea es proporcionar explicaciones claras y perspicaces para los componentes principales de una carta natal.
 
-El usuario ha proporcionado los siguientes datos de nacimiento:
-- Fecha de Nacimiento: {{birthDate}}
-- Hora de Nacimiento: {{birthTime}}
-- Ciudad de Nacimiento: {{birthCity}}
-- País de Nacimiento: {{birthCountry}}
+Datos de nacimiento del usuario:
+- Fecha: {{birthDate}}
+- Hora: {{birthTime}}
+- Ciudad: {{birthCity}}
+- País: {{birthCountry}}
 
-He calculado los siguientes signos clave para el usuario basado en esos datos:
-- Signo Solar: {{sunSign}}
-- Signo Lunar: {{moonSign}}
-- Signo Ascendente: {{ascendantSign}}
+He calculado los siguientes signos clave:
+- Sol: {{sunSign}}
+- Luna: {{moonSign}}
+- Ascendente: {{ascendantSign}}
 
-Considerando todos los datos de nacimiento y los signos clave, y ASUMIENDO las posiciones planetarias y las casas que se derivarían de estos datos para una carta natal real, tu respuesta DEBE ser un objeto JSON válido con las siguientes 8 claves principales: "sun", "moon", "ascendant", "personalPlanets", "transpersonalPlanets", "houses", "aspects", y "aspectsDetails".
+Tu respuesta DEBE ser un objeto JSON con las siguientes 7 claves: "sun", "moon", "ascendant", "personalPlanets", "transpersonalPlanets", "houses", y "aspects". NO incluyas "aspectsDetails".
 
-Debes escribir una explicación personalizada y detallada para CADA UNA de las primeras 7 secciones, adaptando la profundidad y el lenguaje al "Nivel de Detalle Solicitado: {{detailLevel}}". La sección "aspectsDetails" DEBE ser un array de objetos, como se describe en las instrucciones detalladas.
+Escribe una explicación personalizada y detallada para CADA UNA de las 7 secciones, adaptando la profundidad al "Nivel de Detalle: {{detailLevel}}". Las explicaciones deben ser coherentes con los datos proporcionados.
 
-Es ABSOLUTAMENTE CRUCIAL que las explicaciones sean COHERENTES entre sí y con los datos de nacimiento proporcionados. Por ejemplo, si el Sol está en Aries, la explicación del Sol debe reflejar esto, y las explicaciones de los aspectos que involucren al Sol deben relacionarse con la energía de Aries.
+1.  **Explicación del Sol (clave "sun"):** Detalla el significado de tener el Sol en **{{sunSign}}**, conectándolo con la identidad central del usuario.
+2.  **Explicación de la Luna (clave "moon"):** Detalla el significado de tener la Luna en **{{moonSign}}**, conectándolo con el mundo emocional del usuario.
+3.  **Explicación del Ascendente (clave "ascendant"):** Detalla el significado de tener el Ascendente en **{{ascendantSign}}**, explicando su rol como la 'máscara' social y el camino de vida.
+4.  **Planetas Personales (clave "personalPlanets"):** Ofrece una explicación general de Mercurio, Venus y Marte.
+5.  **Planetas Transpersonales (clave "transpersonalPlanets"):** Ofrece una explicación general de Júpiter, Saturno, Urano, Neptuno y Plutón.
+6.  **Las Casas Astrológicas (clave "houses"):** Explica de forma general qué son las 12 casas astrológicas.
+7.  **Aspectos Importantes (clave "aspects"):** Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, etc.).
 
---- INSTRUCCIONES DETALLADAS PARA CADA SECCIÓN ---
-
-1.  **Explicación del Sol (clave "sun"):**
-    - Escribe una explicación personalizada y detallada sobre el significado de tener el Sol en **{{sunSign}}**, considerando también la posible casa en la que se encontraría (asumiendo una distribución típica de casas basada en la hora y el ascendente).
-    - Conecta las características de **{{sunSign}}** con la identidad central del usuario, su ego, vitalidad, propósito de vida y cómo esto se manifiesta en el área de vida representada por la casa del Sol.
-    - Ejemplo (para Sol en Leo en Casa 5, nivel básico): "Con tu Sol en Leo, tu identidad central es vibrante, creativa y magnética. Eres un líder natural al que le encanta brillar, expresar su singularidad e inspirar a los demás. Al estar en la Casa 5, esta energía se enfoca fuertemente en la autoexpresión, la creatividad, los romances, los hijos y la búsqueda de la alegría y el reconocimiento."
-
-2.  **Explicación de la Luna (clave "moon"):**
-    - Escribe una explicación personalizada y detallada sobre el significado de tener la Luna en **{{moonSign}}**, considerando también la posible casa lunar.
-    - Conecta las características de **{{moonSign}}** con el mundo emocional del usuario, sus instintos, su necesidad de seguridad, sus reacciones subconscientes y cómo todo esto se vive en el área de vida de la casa lunar.
-    - Ejemplo (para Luna en Tauro en Casa 2, nivel avanzado): "Tu Luna en Tauro revela un mundo emocional que anhela estabilidad, seguridad y confort sensorial. Tus reacciones son tranquilas y mesuradas. Al estar en la Casa 2, encuentras seguridad emocional en tus recursos materiales, tu capacidad de ganar dinero y tus valores personales. La estabilidad financiera y sensorial es clave para tu bienestar interior."
-
-3.  **Explicación del Ascendente (clave "ascendant"):**
-    - Escribe una explicación personalizada y detallada sobre el significado de tener el Ascendente en **{{ascendantSign}}**.
-    - Explica que el Ascendente es la 'máscara' social, la primera impresión, el cuerpo físico y el camino de vida del usuario.
-    - Conecta las características de **{{ascendantSign}}** con la forma en que el usuario se presenta al mundo y su enfoque inicial hacia la vida.
-    - Ejemplo (para Ascendente en Géminis, nivel espiritual): "Tu Ascendente en Géminis es el vehículo a través del cual tu alma interactúa con el mundo. Proyectas una energía de curiosidad, comunicación y adaptabilidad. Tu camino de vida implica aprender a dominar la palabra, a sintetizar información diversa y a construir puentes entre diferentes ideas y personas, utilizando tu intelecto como una herramienta para la conexión espiritual. La forma en que inicias las cosas y te presentas es versátil y mentalmente ágil."
-
-4.  **Planetas Personales (clave "personalPlanets"):**
-    - Ofrece una explicación general de lo que representan Mercurio (mente), Venus (amor y valores) y Marte (acción y deseo) en una carta natal, considerando cómo su energía general podría manifestarse dado el {{detailLevel}}. NO personalices con signos o casas aquí, mantén la explicación general de estos planetas.
-
-5.  **Planetas Transpersonales (clave "transpersonalPlanets"):**
-    - Ofrece una explicación general de Júpiter (expansión, creencias), Saturno (estructura, lecciones), Urano (innovación, cambio), Neptuno (espiritualidad, ilusión) y Plutón (transformación, poder) en una carta natal. Explica cómo estos planetas influyen en las generaciones y en los temas de vida más amplios. Adapta la profundidad al "{{detailLevel}}".
-
-6.  **Las Casas Astrológicas (clave "houses"):**
-    - Explica de forma general qué son las 12 casas astrológicas y cómo representan diferentes áreas de la vida (ej. identidad, recursos, comunicación, hogar, creatividad, salud, relaciones, transformación, filosofía, carrera, amistades, espiritualidad). Adapta la profundidad al "{{detailLevel}}".
-
-7.  **Aspectos Importantes (clave "aspects"):**
-    - Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura, sextil, quincuncio, etc.) y cómo describen las relaciones energéticas entre los planetas y puntos clave en la carta natal. Menciona cómo los diferentes tipos de aspectos (armónicos vs. desarmónicos) sugieren fluidez o desafío. Adapta la profundidad al "{{detailLevel}}".
-
-El usuario ha proporcionado los siguientes datos:
-- Fecha de Nacimiento: {{birthDate}}
-- Hora de Nacimiento: {{birthTime}}
-- Nivel de Detalle Solicitado: {{detailLevel}}
-- Idioma: {{locale}}
-
-He calculado los siguientes signos clave para el usuario:
-- Signo Solar: {{sunSign}}
-- Signo Lunar: {{moonSign}}
-- Signo Ascendente: {{ascendantSign}}
-
-Tu respuesta DEBE ser un objeto JSON válido con las siguientes 8 claves: "sun", "moon", "ascendant", "personalPlanets", "transpersonalPlanets", "houses", "aspects", y "aspectsDetails".
-Debes escribir una explicación para CADA una de las primeras 7 secciones, adaptando la profundidad y el lenguaje al "{{detailLevel}}" solicitado. La sección "aspectsDetails" DEBE ser un array de objetos, como se describe a continuación.
-
---- INSTRUCCIONES DETALLADAS POR SECCIÓN ---
-
-1.  **Explicación del Sol (clave "sun"):**
-    - Escribe una explicación personalizada y detallada sobre el significado de tener el Sol en **{{sunSign}}**.
-    - Conecta las características de **{{sunSign}}** con la identidad central del usuario, su ego, vitalidad y propósito de vida.
-    - Ejemplo (para Sol en Leo, nivel básico): "Con tu Sol en Leo, tu identidad central es vibrante, creativa y magnética. Eres un líder natural al que le encanta brillar, expresar su singularidad e inspirar a los demás. Tu energía irradia calidez y generosidad."
-
-2.  **Explicación de la Luna (clave "moon"):**
-    - Escribe una explicación personalizada y detallada sobre el significado de tener la Luna en **{{moonSign}}**.
-    - Conecta las características de **{{moonSign}}** con el mundo emocional del usuario, sus instintos, su necesidad de seguridad y sus reacciones subconscientes.
-    - Ejemplo (para Luna en Tauro, nivel avanzado): "Tu Luna en Tauro revela un mundo emocional que anhela estabilidad, seguridad y confort sensorial. Tus reacciones son tranquilas y mesuradas, pero una vez que te sientes seguro, tu lealtad y afecto son inquebrantables. Encuentras seguridad en las rutinas, la belleza y los placeres tangibles de la vida."
-
-3.  **Explicación del Ascendente (clave "ascendant"):**
-    - Escribe una explicación personalizada y detallada sobre el significado de tener el Ascendente en **{{ascendantSign}}**.
-    - Explica que el Ascendente es la 'máscara' social, la primera impresión y el camino de vida del usuario.
-    - Conecta las características de **{{ascendantSign}}** con la forma en que el usuario se presenta al mundo.
-    - Ejemplo (para Ascendente en Géminis, nivel espiritual): "Tu Ascendente en Géminis es el vehículo a través del cual tu alma interactúa con el mundo. Proyectas una energía de curiosidad, comunicación y adaptabilidad. Tu camino de vida implica aprender a dominar la palabra, a sintetizar información diversa y a construir puentes entre diferentes ideas y personas, utilizando tu intelecto como una herramienta para la conexión espiritual."
-
-4.  **Planetas Personales (clave "personalPlanets"):**
-    - Ofrece una explicación general de lo que representan Mercurio (mente), Venus (amor y valores) y Marte (acción y deseo).
-    - Adapta la profundidad al "{{detailLevel}}" solicitado. No personalices con signos aquí, mantén la explicación general.
-
-5.  **Planetas Transpersonales (clave "transpersonalPlanets"):**
-    - Ofrece una explicación general de Júpiter (expansión), Saturno (estructura), Urano (innovación), Neptuno (espiritualidad) y Plutón (transformación).
-    - Explica cómo estos planetas influyen en las generaciones y en los temas de vida más amplios. Adapta la profundidad al "{{detailLevel}}".
-
-6.  **Las Casas Astrológicas (clave "houses"):**
-    - Explica de forma general qué son las 12 casas astrológicas y cómo representan diferentes áreas de la vida (ej. carrera, hogar, relaciones).
-    - Adapta la profundidad al "{{detailLevel}}".
-
-7.  **Aspectos Importantes (clave "aspects"):**
-    - Explica de forma general qué son los aspectos (conjunción, oposición, trígono, cuadratura) y cómo describen las relaciones entre los planetas.
- - Adapta la profundidad al "{{detailLevel}}".
-
---- INSTRUCCIONES ADICIONALES PARA ASPECTOS DETALLADOS ---
-
-8.  **Lista de Aspectos Detallados (clave "aspectsDetails"):**
-    - Genera una lista (un array de objetos) de los aspectos astrológicos más significativos (conjunción, oposición, trígono, cuadratura, sextil, quincuncio) en la carta natal basada en los datos de nacimiento del usuario (fecha y hora).
-    - Para cada aspecto significativo que identifiques, crea un objeto con las siguientes claves:
-        - **body1 (string):** El nombre del primer cuerpo celeste involucrado (ej. "Sol", "Luna", "Marte", "Ascendente").
-        - **body2 (string):** El nombre del segundo cuerpo celeste involucrado.
-        - **type (string):** El nombre del aspecto en el idioma {{locale}} (ej. "Conjunción", "Trígono", "Oposición").
-        - **degree (number):** El orbe exacto del aspecto en grados (usa un número decimal).
-        - **explanation (string):** Una explicación personalizada y detallada del significado de ESTE aspecto específico en la carta natal del usuario.
-    - Incluye al menos 5-10 de los aspectos más importantes. No inventes aspectos; básate en las relaciones comunes que se formarían con los planetas principales y puntos como el Ascendente.
-    - Asegúrate de que las explicaciones sean coherentes con el resto de la carta natal y el nivel de detalle solicitado.
-
-Ahora, genera el objeto JSON completo con las 7 explicaciones y el array "aspectsDetails" en el idioma {{locale}}, utilizando los datos de nacimiento ({{birthDate}}, {{birthTime}}) y los signos clave ({{sunSign}}, {{moonSign}}, {{ascendantSign}}) para la personalización.
+Genera el objeto JSON con estas 7 explicaciones en el idioma {{locale}}.
 `
 });
+
+
+// Helper function to calculate aspects deterministically
+function calculateAspects(planetPositions: Record<string, { sign: string; degree: number }>): AspectDetail[] {
+  const planets = Object.entries(planetPositions);
+  const aspects: AspectDetail[] = [];
+  const orbs = { 'Conjunción': 8, 'Oposición': 8, 'Trígono': 8, 'Cuadratura': 7, 'Sextil': 5 };
+  const aspectAngles = { 'Conjunción': 0, 'Oposición': 180, 'Trígono': 120, 'Cuadratura': 90, 'Sextil': 60 };
+
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  for (let i = 0; i < planets.length; i++) {
+    for (let j = i + 1; j < planets.length; j++) {
+      const p1Name = planets[i][0];
+      const p2Name = planets[j][0];
+      const p1Degree = planets[i][1].degree;
+      const p2Degree = planets[j][1].degree;
+
+      const angleDiff = Math.abs(p1Degree - p2Degree);
+      const normalizedAngle = angleDiff > 180 ? 360 - angleDiff : angleDiff;
+
+      for (const [aspectName, aspectAngle] of Object.entries(aspectAngles)) {
+        const orb = orbs[aspectName as keyof typeof orbs];
+        if (Math.abs(normalizedAngle - aspectAngle) <= orb) {
+          aspects.push({
+            body1: capitalize(p1Name),
+            body2: capitalize(p2Name),
+            type: aspectName,
+            degree: parseFloat(normalizedAngle.toFixed(1)),
+            explanation: `Un aspecto de ${aspectName.toLowerCase()} entre ${capitalize(p1Name)} y ${capitalize(p2Name)}. Este aspecto sugiere una interacción dinámica entre dos áreas de tu vida. (Explicación genérica).`
+          });
+          break; // Find the tightest aspect and move on
+        }
+      }
+    }
+  }
+  return aspects;
+}
+
 
 // Internal flow - This is where the logic changes
 const natalChartFlowInternal = ai.defineFlow(
@@ -211,7 +169,7 @@ const natalChartFlowInternal = ai.defineFlow(
       saturn: { sign: ZODIAC_SIGNS[(birthDateObj.getFullYear() + 2) % 12].name, degree: (birthDateObj.getMonth() * 12) % 360 },
     };
 
-    // Call AI prompt for text explanations and detailed aspects
+    // Call AI prompt for text explanations
     const promptInput = {
       ...input,
       sunSign: sunSign,
@@ -219,8 +177,8 @@ const natalChartFlowInternal = ai.defineFlow(
       ascendantSign: ascendantSign,
     };
 
-    let aiOutput: Omit<NatalChartOutput, 'planetPositions'> = {
-        sun: '', moon: '', ascendant: '', personalPlanets: '', transpersonalPlanets: '', houses: '', aspects: '', aspectsDetails: []
+    let aiOutput: Omit<NatalChartOutput, 'planetPositions' | 'aspectsDetails'> = {
+        sun: '', moon: '', ascendant: '', personalPlanets: '', transpersonalPlanets: '', houses: '', aspects: ''
     };
 
     try {
@@ -228,7 +186,6 @@ const natalChartFlowInternal = ai.defineFlow(
         if (!output) {
             throw new Error("AI prompt returned no output.");
         }
-        // Ensure the output matches the expected structure including aspectsDetails
         aiOutput = output;
 
     } catch (error: any) {
@@ -242,13 +199,16 @@ const natalChartFlowInternal = ai.defineFlow(
             transpersonalPlanets: "Ocurrió un error al generar la explicación de los planetas transpersonales. Por favor, inténtalo de nuevo más tarde.",
             houses: "Ocurrió un error al generar la explicación de las casas. Por favor, inténtalo de nuevo más tarde.",
             aspects: "Ocurrió un error al generar la explicación general de los aspectos. Por favor, inténtalo de nuevo más tarde.",
-            aspectsDetails: [], // Return empty array on error
         };
     }
+    
+    // Calculate aspects deterministically
+    const aspectsDetails = calculateAspects(chartData);
     
     return {
       ...aiOutput,
       planetPositions: chartData,
+      aspectsDetails: aspectsDetails, // Add the reliably calculated aspects
     };
   }
 );
