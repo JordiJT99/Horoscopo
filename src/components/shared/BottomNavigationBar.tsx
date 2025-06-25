@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -59,7 +58,7 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
                 {item.labelKey === 'BottomNav.friends' ? (
                   <div className="flex flex-col items-center leading-tight -mt-0.5">
                      <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
-                     <span className="text-[0.5rem] opacity-80 scale-90">{dictionary['HomePage.comingSoon'] || 'Próximamente'}</span>
+                     <span className="text-[0.6rem] scale-100 font-bold text-destructive">{dictionary['HomePage.comingSoon'] || 'Próximamente'}</span>
                   </div>
                 ) : (
                   <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
