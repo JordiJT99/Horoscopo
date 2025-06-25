@@ -4,7 +4,6 @@
 import type { Dictionary } from '@/lib/dictionaries';
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
-import { natalChartImageFlow } from '@/ai/flows/natal-chart-image-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
@@ -110,9 +109,11 @@ export default function NatalChartClientContent({
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
   const [activeTab, setActiveTab] = useState<NatalChartTab>('chart');
   const [explanations, setExplanations] = useState<NatalChartOutput | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+
+  // Static path for the background image
+  const staticChartImageUrl = '/custom_assets/natal_chart_bg.png';
 
   useEffect(() => {
     const fetchChartData = async () => {
@@ -157,16 +158,6 @@ export default function NatalChartClientContent({
         
         if (textData) {
           setExplanations(textData);
-
-          const imageInput = {
-              sunSign: textData.planetPositions.sun.sign,
-              moonSign: textData.planetPositions.moon.sign,
-              ascendantSign: textData.planetPositions.ascendant.sign,
-          };
-          // The image flow now uses server-side caching, so we call it every time.
-          const imageData = await natalChartImageFlow(imageInput);
-          setImageUrl(imageData.imageUrl);
-
         } else {
           throw new Error("Received null or undefined result from natalChartFlow.");
         }
@@ -178,7 +169,6 @@ export default function NatalChartClientContent({
           variant: 'destructive',
         });
         setExplanations(null);
-        setImageUrl(null);
       } finally {
         setIsLoading(false);
       }
@@ -187,15 +177,6 @@ export default function NatalChartClientContent({
     fetchChartData();
   }, [detailLevel, birthData, dictionary, toast, user]);
 
-
-  const handleDownload = () => {
-    if (!imageUrl) return;
-
-    const link = document.createElement('a');
-    link.download = 'natal-chart.png';
-    link.href = imageUrl;
-    link.click();
-  };
 
   const explanationSections = [
     { title: sunTitle, content: explanations?.sun },
@@ -248,20 +229,17 @@ export default function NatalChartClientContent({
       {/* Contenido de la Pestaña de la Carta */}
       {activeTab === 'chart' && (
          <div className="my-8 flex flex-col items-center">
-          {isLoading || !explanations || !imageUrl ? (
+          {isLoading || !explanations ? (
             <div className="w-[400px] h-[400px] flex items-center justify-center">
               <Skeleton className="w-full h-full rounded-full" />
             </div>
           ) : (
             explanations.planetPositions && (
-              <>
-                <NatalChartWheel planetPositions={explanations.planetPositions} imageDataUrl={imageUrl} />
-                {imageUrl && (
-                  <Button onClick={handleDownload} className="mt-4">
-                    Descargar imagen
-                  </Button>
-                )}
-              </>
+              <NatalChartWheel 
+                planetPositions={explanations.planetPositions} 
+                aspects={explanations.aspectsDetails || []}
+                imageDataUrl={staticChartImageUrl} 
+              />
             )
           )}
         </div>
