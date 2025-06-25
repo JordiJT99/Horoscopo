@@ -71,7 +71,7 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
 
   // Function to calculate position OUTSIDE the wheel for labels
   const calculateLabelPosition = (degree: number) => {
-    const radius = wheelSize * 0.49; // Position labels outside the main graphic
+    const radius = wheelSize * 0.55; // Pushed labels further out to give them space
     const angleRad = (180 - degree) * (Math.PI / 180);
     const x = wheelSize / 2 + radius * Math.cos(angleRad);
     const y = wheelSize / 2 - radius * Math.sin(angleRad);
@@ -134,35 +134,32 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
 
           const { x, y } = calculateLabelPosition(data.degree);
           const signInfo = zodiacSignDetails[data.sign];
-          // Correctly calculate the degree within the sign (0-29)
           const degreeInSign = Math.floor(data.degree % 30);
           
           return (
             <div
               key={planet}
-              className="absolute text-white flex flex-col items-center gap-0.5"
+              className="absolute text-white flex items-center gap-1"
               style={{
                 left: `${x}px`,
                 top: `${y}px`,
                 transform: 'translate(-50%, -50%)',
-                textShadow: '0 1px 4px rgba(0, 0, 0, 0.9)',
+                textShadow: '0 1px 3px rgba(0,0,0,0.7)',
+                background: 'hsl(var(--primary) / 0.75)',
+                padding: '2px 5px',
+                borderRadius: '4px',
+                border: '1px solid hsl(var(--primary) / 0.5)',
+                backdropFilter: 'blur(2px)',
               }}
             >
               {/* Planet Glyph */}
-              <span className="text-2xl leading-none">{planetGlyphs[planet]}</span>
+              <span className="text-base leading-none font-semibold">{planetGlyphs[planet]}</span>
               
-              {/* Info Box */}
-              <div 
-                className="flex items-center justify-center rounded-sm px-1.5 py-0.5"
-                style={{
-                  background: 'hsl(var(--primary) / 0.8)',
-                  backdropFilter: 'blur(2px)',
-                  border: '1px solid hsl(var(--primary) / 0.5)',
-                }}
-              >
-                <span className="text-xs font-bold tracking-tighter mr-1">{`${degreeInSign}°`}</span>
+              {/* Info Box Content */}
+              <div className="flex items-baseline">
+                <span className="text-xs font-bold tracking-tighter">{`${degreeInSign}°`}</span>
                 {signInfo && (
-                   <span className="text-xs font-normal">
+                   <span className="text-sm font-normal ml-0.5">
                      {signInfo.glyph}
                    </span>
                 )}
@@ -176,4 +173,3 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
 };
 
 export default NatalChartWheel;
-
