@@ -28,7 +28,7 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
     { href: "/", labelKey: "BottomNav.horoscopes", icon: Sparkles },
     { href: "/friends", labelKey: "BottomNav.friends", icon: Users, isPlaceholder: true }, // Placeholder for now
     { href: "/compatibility", labelKey: "BottomNav.compatibility", icon: Heart },
-    { href: "/chat", labelKey: "BottomNav.chat", icon: MessageSquare, isPlaceholder: true }, // Placeholder for now
+    { href: "/psychic-chat", labelKey: "BottomNav.chat", icon: MessageSquare },
     { href: "/more", labelKey: "BottomNav.more", icon: BookOpen },
   ];
 
