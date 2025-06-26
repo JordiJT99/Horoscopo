@@ -10,6 +10,8 @@ import { getCrystalBallRevelation, type CrystalBallRevelationInput, type Crystal
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useAuth } from '@/context/AuthContext';
+import type { OnboardingFormData } from '@/types';
 
 interface CrystalBallClientContentProps {
   dictionary: Dictionary;
@@ -23,11 +25,37 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const { toast } = useToast();
   const crystalBallGifPath = "/gifs/crystal-ball.gif";
 
+  const { user } = useAuth();
+  const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
+
+  useEffect(() => {
+    if (user?.uid) {
+      const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
+      if (storedData) {
+        try {
+          const parsedData = JSON.parse(storedData) as OnboardingFormData;
+          if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') {
+            parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
+          }
+          setOnboardingData(parsedData);
+        } catch (e) {
+          console.error("Failed to parse onboarding data:", e);
+          setOnboardingData(null);
+        }
+      }
+    } else {
+        setOnboardingData(null);
+    }
+  }, [user]);
+
   const handleGetRevelation = async () => {
     setIsLoading(true);
     setRevelation(null);
     try {
-      const input: CrystalBallRevelationInput = { locale };
+      const input: CrystalBallRevelationInput = { 
+        locale,
+        userName: onboardingData?.name || user?.displayName || undefined,
+      };
       const result: CrystalBallRevelationOutput = await getCrystalBallRevelation(input);
       setRevelation(result.revelation);
     } catch (err) {
