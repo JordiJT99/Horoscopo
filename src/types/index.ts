@@ -187,20 +187,15 @@ export interface MayanKinInfo {
   kinNumber: number;
 }
 
-// Type for Tarot Personality Test
-export interface TarotPersonalityAnswer {
-  question: string; // The question text (can be a key for dictionary)
-  answer: string;   // User's free-form answer
-}
-
+// Type for Tarot Personality Test (now Daily Reading)
 export interface TarotPersonalityInputType {
-  answers: TarotPersonalityAnswer[];
   locale: string;
+  userName?: string;
 }
 
 export interface TarotPersonalityOutputType {
   cardName: string;
-  cardDescription: string; // Why this card fits them
+  reading: string; // This used to be cardDescription
   cardImagePlaceholderUrl: string;
 }
 
