@@ -77,8 +77,8 @@ The reading is focused on: "${input.topic}". Keep this in mind, but let the conv
     }));
     
     // Define a limit for the conversation history to manage token usage.
-    // We'll keep the last 10 messages of history, plus the current user message.
-    const HISTORY_LIMIT = 10;
+    // We'll keep the last 20 messages of history, plus the current user message.
+    const HISTORY_LIMIT = 20;
     
     // The last message is the new prompt, which will be passed to `generate`
     const latestMessage = allMessages.pop();
