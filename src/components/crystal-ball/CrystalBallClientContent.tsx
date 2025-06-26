@@ -145,8 +145,8 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
 
         {!isLoading && revelation && (
           <Card className="w-full bg-secondary/30 p-4 rounded-lg shadow text-center min-h-[80px]">
-            <p className="font-body italic leading-relaxed text-card-foreground text-base">
-              "{revelation}"
+            <p className="font-body leading-relaxed text-card-foreground text-base whitespace-pre-line">
+              {revelation}
             </p>
           </Card>
         )}
