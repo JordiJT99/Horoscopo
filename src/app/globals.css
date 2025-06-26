@@ -260,3 +260,16 @@
   opacity: 0.15; /* Aumentada la opacidad de 0.08 a 0.15 */
   pointer-events: none;
 }
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* For Safari */
+  }
+}

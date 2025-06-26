@@ -510,6 +510,7 @@
   "TarotDailyReading.readingTitle": "Message d'Aujourd'hui :",
   "TarotDailyReading.drawAgainButton": "Tirer une Autre Carte",
   "TarotDailyReading.errorFetching": "Les esprits réfléchissent... Impossible de déterminer votre carte. Veuillez réessayer.",
+  "TarotDailyReading.cardBackAlt": "Dos d'une carte de tarot",
   "Auth.loginTitle": "Connexion",
   "Auth.loginSubtitle": "Accédez à votre compte AstroVibes.",
   "Auth.loginFormTitle": "Entrez Votre Nom d'utilisateur",

@@ -536,6 +536,7 @@
   "TarotDailyReading.readingTitle": "Today's Message:",
   "TarotDailyReading.drawAgainButton": "Draw Another Card",
   "TarotDailyReading.errorFetching": "The spirits are pondering... Could not determine your card. Please try again.",
+  "TarotDailyReading.cardBackAlt": "Back of a tarot card",
   "Auth.loginTitle": "Login",
   "Auth.loginSubtitle": "Access your AstroVibes account.",
   "Auth.loginFormTitle": "Enter Your Username",

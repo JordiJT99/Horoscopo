@@ -1,17 +1,18 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Brain, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { tarotPersonalityFlow, type TarotPersonalityInput, type TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData } from '@/types';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
@@ -21,7 +22,7 @@ interface TarotPersonalityTestClientPageProps {
 export default function TarotPersonalityTestClientPage({ dictionary, locale }: TarotPersonalityTestClientPageProps) {
   const [result, setResult] = useState<TarotPersonalityOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
@@ -44,9 +45,9 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   }, [user]);
 
   const handleGetDailyCard = async () => {
+    if (isLoading || isFlipped) return;
+
     setIsLoading(true);
-    setError(null);
-    setResult(null);
     try {
       const input: TarotPersonalityInput = {
         locale,
@@ -54,9 +55,9 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
       };
       const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
       setResult(flowResult);
+      setIsFlipped(true); // Trigger the flip animation
     } catch (err) {
       console.error("Error getting daily tarot card:", err);
-      setError(dictionary['TarotDailyReading.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.");
       toast({
         title: dictionary['Error.genericTitle'] || "Error",
         description: dictionary['TarotDailyReading.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.",
@@ -68,88 +69,109 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   };
 
   const handleTryAgain = () => {
-    setResult(null);
-    setError(null);
+    setIsFlipped(false);
+    // Reset result after the flip-back animation completes
+    setTimeout(() => {
+      setResult(null);
+    }, 300); 
   };
-
-  if (Object.keys(dictionary).length === 0) {
-    return (
-      <div className="text-center py-10">
-        <LoadingSpinner className="h-12 w-12 text-primary" />
-        <p className="mt-4 font-body">Loading Tarot Personality Test...</p>
-      </div>
-    );
-  }
+  
+  const cardBackPath = "/custom_assets/tarot-card-back.png";
 
   return (
-    <Card className="w-full max-w-xl mx-auto shadow-xl">
-      <CardHeader className="px-4 py-4 md:px-6 md:py-5">
-        <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
-          {result ? (dictionary['TarotDailyReading.resultTitle'] || "Your Card for Today") : (dictionary['TarotDailyReading.revealTitle'] || "Reveal Your Daily Card")}
-        </CardTitle>
-        {!result && (
-          <CardDescription className="text-center font-body text-sm md:text-base">
-            {dictionary['TarotDailyReading.revealDescription'] || "Focus on the day ahead and let the cards reveal the energy that guides you today."}
-          </CardDescription>
+    <div className="flex flex-col items-center justify-center w-full max-w-xl mx-auto">
+      
+      {/* 3D Card Flip Container */}
+      <div className="perspective-1000 w-[180px] h-[315px] sm:w-[220px] sm:h-[385px] mb-6">
+        <motion.div
+          className="relative w-full h-full transform-style-preserve-3d"
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          {/* Card Back */}
+          <div
+            className={cn(
+                "absolute w-full h-full backface-hidden rounded-lg overflow-hidden shadow-lg border-2 border-primary/20",
+                !isFlipped && "cursor-pointer hover:shadow-primary/40 hover:scale-105 transition-all duration-300",
+                isLoading && "cursor-wait animate-pulse"
+            )}
+            onClick={handleGetDailyCard}
+            onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') handleGetDailyCard() }}
+            tabIndex={!isFlipped && !isLoading ? 0 : -1}
+            role="button"
+            aria-label={dictionary['TarotDailyReading.revealButton'] || "Reveal My Daily Card"}
+          >
+            <Image
+              src={cardBackPath}
+              alt={dictionary['TarotDailyReading.cardBackAlt'] || "Back of a tarot card"}
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+              priority
+              data-ai-hint="tarot card back illustration ornate"
+            />
+          </div>
+
+          {/* Card Front */}
+          <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)] rounded-lg overflow-hidden shadow-lg border-2 border-primary/50">
+            {result && (
+              <Image
+                src={result.cardImagePlaceholderUrl}
+                alt={result.cardName}
+                layout="fill"
+                objectFit="cover"
+                quality={100}
+                unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")}
+                data-ai-hint={`${result.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = "https://placehold.co/220x385.png?text=Error";
+                  target.setAttribute("data-ai-hint", "tarot placeholder error");
+                }}
+              />
+            )}
+          </div>
+        </motion.div>
+      </div>
+
+      {isLoading && (
+          <div className="text-center my-4">
+              <LoadingSpinner className="h-8 w-8 text-primary" />
+          </div>
+      )}
+
+      {/* Result Display */}
+      <div className="w-full transition-opacity duration-500" style={{ opacity: isFlipped && !isLoading ? 1 : 0 }}>
+        {isFlipped && !isLoading && result && (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+            >
+                <Card className="w-full bg-secondary/30 p-4 md:p-6 rounded-lg shadow mt-4">
+                    <CardHeader className="p-0 pb-3 md:pb-4 text-center">
+                        <CardTitle className="font-headline text-2xl text-accent-foreground">
+                            {result.cardName}
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0 space-y-3 md:space-y-4">
+                        <div>
+                            <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotDailyReading.readingTitle'] || "Today's Message:"}</h4>
+                            <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm sm:text-base whitespace-pre-line">
+                                {result.reading}
+                            </div>
+                        </div>
+                         <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm mt-4">
+                            <RotateCcw className="mr-2 h-4 w-4" />
+                            {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"}
+                        </Button>
+                    </CardContent>
+                </Card>
+            </motion.div>
         )}
-      </CardHeader>
-      <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6 min-h-[300px] flex flex-col justify-center items-center">
-        {!result ? (
-          <>
-            <Button onClick={handleGetDailyCard} disabled={isLoading} className="w-full max-w-xs font-body text-base" size="lg">
-              {isLoading ? (
-                <>
-                  <Brain className="mr-2 h-4 w-4 animate-pulse" />
-                  {dictionary['TarotDailyReading.revealingButton'] || "Revealing Card..."}
-                </>
-              ) : (
-                <>
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  {dictionary['TarotDailyReading.revealButton'] || "Reveal My Daily Card"}
-                </>
-              )}
-            </Button>
-            {error && <p className="text-destructive text-center font-body text-sm md:text-base mt-4">{error}</p>}
-          </>
-        ) : (
-          <Card className="w-full bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
-            <CardHeader className="p-0 pb-3 md:pb-4 text-center">
-               <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
-                 {result.cardName}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0 space-y-3 md:space-y-4">
-              <div className="flex justify-center mb-3 md:mb-4">
-                <Image
-                  src={result.cardImagePlaceholderUrl}
-                  alt={result.cardName}
-                  width={150}
-                  height={262}
-                  className="rounded-md shadow-lg border-2 border-primary/50"
-                  data-ai-hint={`${result.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
-                  unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src = "https://placehold.co/150x262.png?text=Error";
-                    target.setAttribute("data-ai-hint", "tarot placeholder error");
-                  }}
-                />
-              </div>
-              <div>
-                <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotDailyReading.readingTitle'] || "Today's Message:"}</h4>
-                 <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-xs sm:text-sm whitespace-pre-line">
-                  {result.reading}
-                </div>
-              </div>
-              <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm mt-4">
-                <RotateCcw className="mr-2 h-4 w-4" />
-                {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-      </CardContent>
-    </Card>
+      </div>
+
+    </div>
   );
 }

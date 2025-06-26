@@ -510,6 +510,7 @@
   "TarotDailyReading.readingTitle": "Heutige Botschaft:",
   "TarotDailyReading.drawAgainButton": "Eine weitere Karte ziehen",
   "TarotDailyReading.errorFetching": "Die Geister grübeln... Deine Karte konnte nicht ermittelt werden. Bitte versuche es erneut.",
+  "TarotDailyReading.cardBackAlt": "Rückseite einer Tarotkarte",
   "Auth.loginTitle": "Anmelden",
   "Auth.loginSubtitle": "Greifen Sie auf Ihr AstroVibes-Konto zu.",
   "Auth.loginFormTitle": "Geben Sie Ihren Benutzernamen ein",
