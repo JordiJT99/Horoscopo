@@ -55,15 +55,17 @@ const dailyTarotPrompt = ai.definePrompt({
   output: {schema: TarotPersonalityOutputSchema.omit({ cardImagePlaceholderUrl: true })},
   prompt: `You are an insightful and empathetic Tarot reader. Your task is to provide a one-card daily reading for the user.
 
+**CRITICAL INSTRUCTION FOR RANDOMNESS:** Each time you are invoked, you must simulate a completely new and random draw. **Do not repeat cards or fall into patterns.** The user expects a different, random outcome for each request.
+
 **User Information:**
 {{#if userName}}
 - User's Name: {{userName}}
 {{/if}}
 
 **Instructions:**
-1.  Select ONE Tarot card from the Major Arcana that represents the core energy or theme for the user's day today.
+1.  **RANDOM SELECTION:** Randomly select ONE Tarot card from the Major Arcana. The selection must be genuinely random each time.
     Available Major Arcana cards: ${MAJOR_ARCANA_TAROT_CARDS.join(", ")}.
-2.  **Randomly decide if the card is drawn upright or reversed.** Set the 'isReversed' boolean field accordingly (about a 30% chance of being reversed).
+2.  **RANDOM REVERSAL:** Randomly decide if the card is drawn upright or reversed. Set the 'isReversed' boolean field accordingly. A reversed card should appear roughly 30% of the time. This decision must also be random for each draw.
 3.  Provide the name of the card in the "cardName" field. CRITICAL: The "cardName" value MUST ALWAYS BE IN ENGLISH and MUST EXACTLY match one of the names from the list (e.g., "The Fool", "Strength").
 4.  Write a thoughtful and personalized "reading" for the user in the {{locale}} language. This should be 2-3 paragraphs, separated by '\\n\\n'.
     - If a userName is provided, start with a warm, personal greeting like "Hola, {{userName}}, la carta que te guía hoy es...".
@@ -86,7 +88,7 @@ Example for a user who draws 'The Chariot' REVERSED and locale is 'es':
   "reading": "Hoy, El Carro aparece invertido en tu lectura. Esto no señala un fracaso, sino una poderosa llamada a la introspección. Sientes un fuerte impulso de avanzar, pero una falta de dirección o un conflicto interno te está frenando. La energía está presente, pero dispersa.\\n\\nEl consejo de hoy es detenerse y reevaluar tu rumbo antes de seguir adelante. ¿Están tus acciones alineadas con tus verdaderos deseos? En lugar de forzar el avance, concéntrate en encontrar tu equilibrio interno. La victoria no siempre consiste en avanzar rápido, sino en moverse con un propósito claro.\\n\\nReflexiona sobre esto: ¿Qué fuerzas opuestas luchan dentro de ti en este momento? Encuentra la armonía entre ellas antes de volver a tomar las riendas."
 }
 
-Now, provide a new, unique reading for today.
+Now, provide a new, unique, and truly random reading for today.
 {{#if userName}}
 Personalize the "reading" for {{userName}}.
 {{/if}}
