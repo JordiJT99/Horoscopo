@@ -67,6 +67,7 @@ const PromptInputSchema = z.object({
   userGender: z.string().optional(),
   userRelationshipStatus: z.string().optional(),
   userEmploymentStatus: z.string().optional(),
+  astrologicalTheme: z.string().optional().describe('El tema astrológico central del día para guiar la predicción.'),
 });
 type PromptInput = z.infer<typeof PromptInputSchema>;
 
@@ -86,6 +87,39 @@ const formatDateForWeeklyCache = (date: Date): string => `${getISOWeekYear(date)
 const formatDateForMonthlyCache = (date: Date): string => format(date, 'yyyy-MM');
 
 
+// Themes for daily horoscopes to ensure variety
+const dailyThemes = [
+  "un impulso de energía creativa y autoexpresión",
+  "un desafío inesperado en la comunicación que requiere paciencia",
+  "una oportunidad para la introspección profunda y el descanso necesario",
+  "un encuentro social sorprendente que podría traer nuevas oportunidades",
+  "un enfoque renovado en las finanzas y la seguridad material",
+  "una necesidad de establecer límites claros en las relaciones personales",
+  "un momento de claridad sobre una vieja duda o un problema persistente",
+  "un día ideal para la aventura, la espontaneidad y salir de la rutina",
+  "una conexión emocional profunda y significativa con alguien cercano",
+  "un obstáculo profesional que requiere una estrategia cuidadosa en lugar de acción impulsiva",
+  "una revelación sobre la salud y la importancia del bienestar físico y mental",
+  "una invitación a aprender algo nuevo o a explorar un interés intelectual",
+  "un día de armonía en el hogar y en las relaciones familiares",
+  "un conflicto entre la responsabilidad y el deseo de libertad",
+  "la llegada de noticias inesperadas que podrían cambiar tus planes",
+];
+
+// Function to get a deterministic theme based on date and sign
+function getDeterministicTheme(dateStr: string, sign: string, themes: string[]): string {
+  let hash = 0;
+  const seed = `${dateStr}-${sign}`;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0; // Convert to 32bit integer
+  }
+  const index = Math.abs(hash) % themes.length;
+  return themes[index];
+}
+
+
 // Daily Horoscope Prompt
 const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
@@ -94,6 +128,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo DIARIO PERSONALIZADO para {{userName}} (signo {{sign}}) para {{dateDescriptor}} en el idioma {{locale}}.
+**INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en {{userName}} ({{sign}}). No te desvíes de este tema.
 Dirígete al usuario por su nombre, {{userName}}, de forma natural dentro del horóscopo cuando sea apropiado (por ejemplo, "Hola {{userName}}, hoy para tu signo {{sign}}...").
 {{#if userRelationshipStatus}}
 Considera sutilmente su estado sentimental ({{userRelationshipStatus}}) al redactar la sección de amor, sin hacerlo el foco principal. Por ejemplo, si es 'single', enfócate en la autoexploración o nuevas conexiones. Si es 'in-relationship', en la profundización de lazos.
@@ -104,39 +139,33 @@ Considera sutilmente su situación laboral ({{userEmploymentStatus}}) al redacta
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo, {{userName}}. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales podrían influir en {{userName}} ({{sign}}).
-Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}.
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}.
-Para 'health', sugiere cómo {{userName}} puede mantener el bienestar.
+Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en {{userName}} ({{sign}}).
+Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}, siempre en relación con "{{astrologicalTheme}}".
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}, en el contexto de "{{astrologicalTheme}}".
+Para 'health', sugiere cómo {{userName}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
 {{else}}
 Genera ÚNICAMENTE el horóscopo DIARIO GENERAL para el signo zodiacal {{sign}} para {{dateDescriptor}} en el idioma {{locale}}.
+**INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en el signo {{sign}}. No te desvíes de este tema.
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales podrían influir en el signo {{sign}}.
-Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}.
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}.
-Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar.
+Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en el signo {{sign}}.
+Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}, siempre en relación con "{{astrologicalTheme}}".
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}, en el contexto de "{{astrologicalTheme}}".
+Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
 {{/if}}
 
 IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health". El contenido de estas secciones debe ser la predicción para el día indicado por {{dateDescriptor}}, pero sin mencionar explícitamente la fecha dentro del texto de la predicción.
 
 CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). NO añadas ninguna otra clave. NO uses markdown en las cadenas.
-Ejemplo de estructura de salida para un horóscopo GENERAL (isPersonalized: false):
+Ejemplo de estructura de salida (theme: "un encuentro social sorprendente"):
 {
-  "main": "Aries, podrías sentir un eco de decepciones pasadas. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad. Quizás es momento de sanar alguna herida y mirar hacia adelante con nueva determinación.",
-  "love": "En el amor, la honestidad contigo mismo sobre lo que necesitas para confiar es crucial. Si sientes que viejas heridas afectan tus interacciones, permítete un espacio para la reflexión.",
-  "money": "Tu regente Marte impulsa la acción, pero la claridad mental es tu mejor activo financiero. Antes de tomar decisiones, evalúa si se alinean con tus metas actuales.",
-  "health": "Dedica tiempo a actividades que te reconecten con tu fuerza interior. Sanar implica tanto el cuerpo como la mente."
+  "main": "Hoy, la energía social te rodea, Aries. Un encuentro inesperado podría cambiar el curso de tu día, ofreciéndote una nueva perspectiva. Mantente abierto a conversaciones con extraños; la sincronicidad está de tu lado.",
+  "love": "Si estás en pareja, una salida social podría reavivar la chispa. Para los solteros, este es un día excelente para conocer a alguien en un evento o reunión. Tu carisma estará en su punto más alto.",
+  "money": "El networking es tu mejor activo hoy. Una conversación casual podría llevar a una oportunidad profesional o financiera. No subestimes el poder de tus conexiones.",
+  "health": "Tu bienestar se beneficia de la interacción social. Compartir una actividad física con amigos, como una caminata o un deporte en equipo, te recargará de energía."
 }
-Ejemplo de estructura de salida para un horóscopo PERSONALIZADO para 'Elena' (isPersonalized: true, userName: 'Elena'):
-{
-  "main": "Hola Elena, hoy para tu signo Aries, podrías sentir un eco de decepciones pasadas. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad.",
-  "love": "Elena, en el amor, la honestidad contigo misma sobre lo que necesitas para confiar es crucial. Si estás en una relación, la comunicación auténtica fortalecerá el vínculo.",
-  "money": "Tu regente Marte impulsa la acción, Elena, pero la claridad mental es tu mejor activo financiero. Podrías identificar una nueva dirección para tus esfuerzos profesionales.",
-  "health": "Dedica tiempo a actividades que te reconecten con tu fuerza interior, Elena. Si viejas tensiones resurgen, canaliza esa energía en ejercicio consciente."
-}
-Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}}, reflejando este estilo perspicaz y empático, y personalizándolo si isPersonalized es true:
+Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}} y el tema "{{astrologicalTheme}}", reflejando este estilo perspicaz y empático:
 `,
 });
 
@@ -256,6 +285,8 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   } else if (targetDateNormalized.getTime() === yesterday.getTime()) {
     dateDescriptor = "AYER";
   }
+  
+  const theme = getDeterministicTheme(dateStr, input.sign, dailyThemes);
 
   const promptPayload: PromptInput = {
       sign: input.sign,
@@ -266,6 +297,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
       userGender: input.onboardingData?.gender,
       userRelationshipStatus: input.onboardingData?.relationshipStatus,
       userEmploymentStatus: input.onboardingData?.employmentStatus,
+      astrologicalTheme: theme,
   };
 
   try {
@@ -535,3 +567,6 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
 }
 
 
+
+
+    
