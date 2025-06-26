@@ -298,32 +298,29 @@ export function getChineseCompatibility(animal1: ChineseAnimalSignName, animal2:
   const key1 = `${animal1}-${animal2}`;
   const key2 = `${animal2}-${animal1}`;
   
-  // Use the detailed pairings from the new file
-  let pairingData: ChineseCompatibilityReportDetail | undefined = chineseCompatibilityPairings[key1] || chineseCompatibilityPairings[key2];
+  const pairingData: ChineseCompatibilityReportDetail | undefined = chineseCompatibilityPairings[key1] || chineseCompatibilityPairings[key2];
   
   if (pairingData) {
     return {
       animal1,
       animal2,
-      report: pairingData.report,
+      report: pairingData.report[locale] || pairingData.report.es, // Use selected locale, fallback to Spanish
       score: pairingData.score,
     };
   }
   
-  // Generic fallback if no specific pairing is found
-  let genericReportText = `La conexión entre ${animal1} y ${animal2} es única. No hay una regla fija, pero su dinámica se basa en el respeto mutuo y la comprensión de sus diferencias. (Informe genérico).`;
-  if (locale === 'en') {
-    genericReportText = `The connection between ${animal1} and ${animal2} is unique. There's no fixed rule, but their dynamic relies on mutual respect and understanding their differences. (Generic report).`;
-  } else if (locale === 'de') {
-     genericReportText = `Die Verbindung zwischen ${animal1} und ${animal2} ist einzigartig. Es gibt keine feste Regel, aber ihre Dynamik beruht auf gegenseitigem Respekt und dem Verständnis ihrer Unterschiede. (Allgemeiner Bericht).`;
-  } else if (locale === 'fr') {
-     genericReportText = `La connexion entre ${animal1} et ${animal2} est unique. Il n'y a pas de règle fixe, mais leur dynamique repose sur le respect mutuel et la compréhension de leurs différences. (Rapport générique).`;
-  }
+  // Generic fallback with translations
+  const genericReports: Record<Locale, string> = {
+      es: `La conexión entre ${animal1} y ${animal2} es única. No hay una regla fija, pero su dinámica se basa en el respeto mutuo y la comprensión de sus diferencias. (Informe genérico).`,
+      en: `The connection between ${animal1} and ${animal2} is unique. There's no fixed rule, but their dynamic relies on mutual respect and understanding their differences. (Generic report).`,
+      de: `Die Verbindung zwischen ${animal1} und ${animal2} ist einzigartig. Es gibt keine feste Regel, aber ihre Dynamik beruht auf gegenseitigem Respekt und dem Verständnis ihrer Unterschiede. (Allgemeiner Bericht).`,
+      fr: `La connexion entre ${animal1} et ${animal2} est unique. Il n'y a pas de règle fixe, mais leur dynamique repose sur le respect mutuel et la compréhension de leurs différences. (Rapport générique).`
+  };
 
   return {
     animal1,
     animal2,
-    report: genericReportText,
+    report: genericReports[locale] || genericReports.es,
     score: Math.floor(Math.random() * 3) + 2, // Random score between 2 and 4 for generic cases
   };
 }
