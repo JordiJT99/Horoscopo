@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Button } from "@/components/ui/button";
-import { Sparkles, Users, MessageSquare, BookOpen } from 'lucide-react';
+import { Sparkles, Users, MessageSquare, BookOpen, Orbit } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BottomNavigationBarProps {
@@ -34,6 +34,7 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
 
   const navItems = [
     { href: "/", labelKey: "BottomNav.horoscopes", icon: Sparkles },
+    { href: "/natalchart", labelKey: "BottomNav.natalChart", icon: Orbit },
     { href: "/community", labelKey: "BottomNav.community", icon: Users },
     { href: "/psychic-chat", labelKey: "BottomNav.chat", icon: MessageSquare, notification: true },
     { href: "/more", labelKey: "BottomNav.more", icon: BookOpen },
