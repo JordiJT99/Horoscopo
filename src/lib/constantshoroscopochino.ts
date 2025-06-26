@@ -119,7 +119,7 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     score: 1
   },
 
-  // Otras combinaciones para rellenar
+  // Otras combinaciones
   "Rat-Rabbit": {
     report: "Esta combinación, conocida como la 'penalidad de la falta de cortesía', presenta desafíos significativos. La Rata, con su naturaleza directa y a veces oportunista, puede herir sin querer al Conejo, que es sensible y valora la paz por encima de todo. El Conejo puede ver a la Rata como demasiado agresiva, ruidosa y egocéntrica, mientras que la Rata puede encontrar al Conejo demasiado tímido, indeciso y pasivo. Para que funcione, la Rata debe aprender el arte del tacto y la consideración, y el Conejo debe desarrollar una piel un poco más gruesa y expresar sus necesidades de forma más clara y directa en lugar de retirarse.",
     score: 2
@@ -134,6 +134,26 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
   },
   "Horse-Rooster": {
     report: "Una pareja con potencial para la irritación mutua. El Caballo es un espíritu libre que odia ser criticado o controlado, y valora la espontaneidad. El Gallo es un perfeccionista que no puede evitar señalar los defectos y tratar de 'mejorar' a su pareja, valorando el orden y la planificación. El Gallo ve al Caballo como inconsistente, desorganizado y superficial. El Caballo ve al Gallo como un fastidioso, un aguafiestas y demasiado crítico. Pueden tener una vida social activa juntos, pero en la intimidad, la crítica constante del Gallo agotará la paciencia del Caballo.",
+    score: 2
+  },
+  "Tiger-Rat": {
+    report: "El poderoso Tigre y la astuta Rata forman una pareja intrigante basada en el respeto mutuo por la inteligencia y la capacidad de supervivencia del otro. La Rata admira el coraje y el carisma del Tigre, mientras que el Tigre se siente atraído por el ingenio rápido y la habilidad de la Rata para navegar situaciones sociales complejas. Pueden ser excelentes socios en proyectos que requieren tanto audacia como estrategia. Sin embargo, sus estilos chocan: el Tigre es impulsivo y actúa a gran escala, mientras que la Rata es más cautelosa y oportunista. La Rata puede encontrar al Tigre demasiado imprudente, y el Tigre puede ver a la Rata como demasiado calculadora. Su éxito depende de que el Tigre escuche los consejos estratégicos de la Rata y de que la Rata confíe en el liderazgo valiente del Tigre.",
+    score: 3
+  },
+  "Tiger-Tiger": {
+    report: "Dos Tigres juntos son una fuerza de la naturaleza. La atracción es instantánea, basada en una comprensión mutua de su necesidad de libertad, pasión e independencia. Su relación es intensa, emocionante y nunca aburrida. Sin embargo, es precisamente esta similitud la que crea su mayor desafío: ¿quién lidera? Ambos son dominantes y orgullosos, lo que puede llevar a épicas luchas de poder. Si compiten, la relación puede volverse destructiva. Pero si aprenden a funcionar como un equipo de iguales, turnándose el liderazgo o enfocando su energía en un enemigo común, son una pareja imparable. Su lealtad es feroz, pero también lo es su temperamento. La clave es el respeto y el espacio.",
+    score: 3
+  },
+  "Tiger-Rabbit": {
+    report: "Una combinación de poder y gentileza que requiere un cuidado delicado. El diplomático y sensible Conejo puede sentirse fácilmente abrumado por la naturaleza poderosa, directa y a veces impulsiva del Tigre. El Conejo anhela la paz y la armonía, mientras que el Tigre prospera en el desafío y la competencia. Para que esta relación funcione, el Tigre debe aprender a suavizar su enfoque, actuando como un protector gentil en lugar de un depredador. El Conejo, a su vez, debe aprender a expresar sus límites con claridad en lugar de simplemente retirarse. Si el Tigre ofrece seguridad y el Conejo ofrece un refugio de paz, pueden encontrar un equilibrio, pero requiere un esfuerzo consciente de ambas partes.",
+    score: 2
+  },
+  "Tiger-Goat": {
+    report: "Una pareja que combina la fuerza con la creatividad. El Tigre, audaz y enérgico, se siente atraído por la naturaleza amable, artística y gentil de la Cabra. La Cabra, a su vez, admira la confianza y el coraje del Tigre, sintiéndose segura bajo su protección. El Tigre puede inspirar a la Cabra a tener más confianza en sí misma y a mostrar su talento al mundo. Sin embargo, pueden surgir conflictos por sus diferentes ritmos de vida. El Tigre es activo y social, mientras que la Cabra es más hogareña y emocional. El Tigre puede impacientarse con la sensibilidad de la Cabra, y la Cabra puede sentirse descuidada por la independencia del Tigre. Si aprenden a apreciar sus diferencias, el Tigre puede proporcionar la fuerza y la Cabra la inspiración, creando un hogar lleno de pasión y creatividad.",
+    score: 3
+  },
+  "Tiger-Rooster": {
+    report: "El líder audaz se encuentra con el perfeccionista meticuloso. El Tigre, con su visión a gran escala y su enfoque en la acción, y el Gallo, con su atención al detalle y su necesidad de orden, tienen estilos de trabajo muy diferentes. El Gallo no puede evitar señalar los defectos y las áreas de mejora, lo que el orgulloso Tigre puede percibir como una crítica constante y una falta de confianza. El Tigre, a su vez, puede ver al Gallo como quisquilloso, limitante y demasiado preocupado por trivialidades. Su relación puede funcionar en un entorno profesional si tienen roles muy definidos, pero en una relación personal, la crítica del Gallo y el orgullo del Tigre están en un curso de colisión constante.",
     score: 2
   }
 };
