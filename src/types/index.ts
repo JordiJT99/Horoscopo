@@ -1,5 +1,6 @@
 
 
+export type Locale = 'en' | 'es' | 'de' | 'fr';
 
 export type ZodiacSignName =
   | "Aries"

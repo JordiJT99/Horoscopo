@@ -5,7 +5,7 @@ import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon,
 import { loveCompatibilityPairings } from './constantslove';
 import { friendshipCompatibilityPairings } from './constantsfriendship';
 import { workCompatibilityPairings } from './constantswork';
-import type { CompatibilityReportDetail } from './constantslove'; // Re-use the type
+import type { CompatibilityReportDetail } from './constantslove'; 
 import { chineseCompatibilityPairings, type ChineseCompatibilityReportDetail } from './constantshoroscopochino';
 
 
@@ -47,23 +47,23 @@ export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
 
 export const ALL_SIGN_NAMES = ZODIAC_SIGNS.map(sign => sign.name) as [ZodiacSignName, ...ZodiacSignName[]];
 
-function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, type: 'love' | 'friendship' | 'work', locale: Locale): CompatibilityReportDetail {
-  const typeText = type === 'love' ? (locale === 'es' ? 'amorosa' : 'romantic') : (type === 'friendship' ? (locale === 'es' ? 'de amistad' : 'friendship') : (locale === 'es' ? 'laboral' : 'work'));
-  let generalNote = `La conexión ${typeText} entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante para este tipo de relación. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente. (Este es un informe de compatibilidad general para ${type}. Los detalles específicos pueden variar.)`;
-  
-  if (locale === 'en') {
-    generalNote = `The ${typeText} connection between ${sign1} and ${sign2} is unique, woven with the threads of their distinct elements and modalities. ${sign1}, with its inherent energy, interacts with ${sign2}, who brings their characteristic distinctiveness, creating a dynamic that can be both complementary and challenging for this type of relationship. It's an encounter of two worlds that, with understanding, can enrich each other. (This is a general compatibility report for ${type}. Specific details may vary.)`;
-  } else if (locale === 'de') {
-    generalNote = `Die ${typeText} Verbindung zwischen ${sign1} und ${sign2} ist einzigartig, gewebt aus den Fäden ihrer unterschiedlichen Elemente und Modalitäten. ${sign1}, mit seiner inhärenten Energie, interagiert mit ${sign2}, der seine charakteristische Besonderheit einbringt, und schafft eine Dynamik, die für diese Art von Beziehung sowohl ergänzend als auch herausfordernd sein kann. Es ist eine Begegnung zweier Welten, die sich mit Verständnis gegenseitig bereichern können. (Dies ist ein allgemeiner Kompatibilitätsbericht für ${type}. Spezifische Details können variieren.)`;
-  } else if (locale === 'fr') {
-    generalNote = `La connexion ${typeText} entre ${sign1} et ${sign2} est unique, tissée avec les fils de leurs éléments et modalités distincts. ${sign1}, avec son énergie inhérente, interagit avec ${sign2}, qui apporte sa particularité caractéristique, créant une dynamique qui peut être à la fois complémentaire et stimulante pour ce type de relation. C'est une rencontre de deux mondes qui, avec compréhension, peuvent s'enrichir mutuellement. (Ceci est un rapport de compatibilité général pour ${type}. Les détails spécifiques peuvent varier.)`;
-  }
+function getGenericCompatibilityReport(sign1: ZodiacSignName, sign2: ZodiacSignName, type: 'love' | 'friendship' | 'work'): CompatibilityReportDetail {
+  const typeTextMap: Record<string, Record<Locale, string>> = {
+    love: { es: 'amorosa', en: 'romantic', de: 'romantische', fr: 'romantique' },
+    friendship: { es: 'de amistad', en: 'friendship', de: 'freundschaftliche', fr: 'amicale' },
+    work: { es: 'laboral', en: 'work', de: 'berufliche', fr: 'professionnelle' }
+  };
 
-  let baseScore = 3; 
+  const reports: Record<Locale, string> = {
+    es: `La conexión ${typeTextMap[type].es} entre ${sign1} y ${sign2} es única, tejida con los hilos de sus elementos y modalidades distintivas. ${sign1}, con su energía inherente, interactúa con ${sign2}, quien aporta su característica distintiva, creando una dinámica que puede ser tanto complementaria como desafiante para este tipo de relación. Es un encuentro de dos mundos que, con entendimiento, pueden enriquecerse mutuamente. (Este es un informe de compatibilidad general para ${typeTextMap[type].es}. Los detalles específicos pueden variar.)`,
+    en: `The ${typeTextMap[type].en} connection between ${sign1} and ${sign2} is unique, woven with the threads of their distinct elements and modalities. ${sign1}, with its inherent energy, interacts with ${sign2}, who brings their characteristic distinctiveness, creating a dynamic that can be both complementary and challenging for this type of relationship. It's an encounter of two worlds that, with understanding, can enrich each other. (This is a general compatibility report for ${typeTextMap[type].en}. Specific details may vary.)`,
+    de: `Die ${typeTextMap[type].de} Verbindung zwischen ${sign1} und ${sign2} ist einzigartig, gewebt aus den Fäden ihrer unterschiedlichen Elemente und Modalitäten. ${sign1}, mit seiner inhärenten Energie, interagiert mit ${sign2}, der seine charakteristische Besonderheit einbringt, und schafft eine Dynamik, die für diese Art von Beziehung sowohl ergänzend als auch herausfordernd sein kann. Es ist eine Begegnung zweier Welten, die sich mit Verständnis gegenseitig bereichern können. (Dies ist ein allgemeiner Kompatibilitätsbericht für ${typeTextMap[type].de}. Spezifische Details können variieren.)`,
+    fr: `La connexion ${typeTextMap[type].fr} entre ${sign1} et ${sign2} est unique, tissée avec les fils de leurs éléments et modalités distincts. ${sign1}, avec son énergie inhérente, interagit avec ${sign2}, qui apporte sa particularité caractéristique, créant une dynamique qui peut être à la fois complémentaire et stimulante pour ce type de relation. C'est une rencontre de deux mondes qui, avec compréhension, peuvent s'enrichir mutuellement. (Ceci est un rapport de compatibilité général pour ${typeTextMap[type].fr}. Les détails spécifiques peuvent varier.)`
+  };
 
   return {
-    report: generalNote,
-    score: baseScore 
+    report: reports,
+    score: 3 
   };
 }
 
@@ -88,13 +88,13 @@ export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, t
   let reportData = pairings[key1] || pairings[key2];
   
   if (!reportData) {
-    reportData = getGenericCompatibilityReport(sign1, sign2, type, locale);
+    reportData = getGenericCompatibilityReport(sign1, sign2, type);
   }
 
   return {
     sign1,
     sign2,
-    report: reportData.report,
+    report: reportData.report[locale] || reportData.report.es, // Fallback to Spanish if locale is not found
     score: reportData.score,
   };
 }
