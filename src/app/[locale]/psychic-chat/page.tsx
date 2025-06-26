@@ -27,6 +27,9 @@ interface PsychicCategoryRowProps {
 }
 
 const PsychicCategoryRow: React.FC<PsychicCategoryRowProps> = ({ title, description, icon: Icon, psychics, dictionary, locale }) => {
+  if (psychics.length === 0) {
+    return null; // Don't render the section if there are no psychics for it
+  }
   return (
     <section className="mb-8">
       <div className="flex justify-between items-center mb-3 px-2">
@@ -58,10 +61,19 @@ const PsychicCategoryRow: React.FC<PsychicCategoryRowProps> = ({ title, descript
 export default async function PsychicChatPage({ params }: { params: { locale: Locale } }) {
   const dictionary = await getDictionary(params.locale);
 
-  // Shuffle psychics for variety in categories
-  const shuffledPsychics1 = [...psychics].sort(() => 0.5 - Math.random());
-  const shuffledPsychics2 = [...psychics].sort(() => 0.5 - Math.random());
-  const shuffledPsychics3 = [...psychics].sort(() => 0.5 - Math.random());
+  // --- Logic for Categorizing Psychics ---
+
+  // "Your Affinity Psychics" - Based on most reviews (loyal followers)
+  const affinityPsychics = [...psychics].sort((a, b) => b.reviews - a.reviews);
+
+  // "The Most Accurate" - Based on highest rating
+  const mostAccuratePsychics = [...psychics].sort((a, b) => b.rating - a.rating);
+
+  // "Best Love Readings" - Filtered by specialty
+  const loveReadingPsychics = psychics.filter(p => p.specialty === 'PsychicSpecialty.loveRelationships');
+
+  // --- End of Logic ---
+
 
   return (
     <main className="container mx-auto px-2 sm:px-4 py-6">
@@ -87,7 +99,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
         title={dictionary['PsychicGallery.affinityPsychicsTitle'] || 'Your Affinity Psychics'}
         description={dictionary['PsychicGallery.affinityPsychicsDescription'] || 'Psychics who best fit your profile and are highly recommended by their loyal followers.'}
         icon={ThumbsUp}
-        psychics={shuffledPsychics1}
+        psychics={affinityPsychics}
         dictionary={dictionary}
         locale={params.locale}
       />
@@ -96,7 +108,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
         title={dictionary['PsychicGallery.mostAccurateTitle'] || 'The Most Accurate'}
         description={dictionary['PsychicGallery.mostAccurateDescription'] || 'Psychics recognized for their exceptional precision in predictions and guidance.'}
         icon={Target}
-        psychics={shuffledPsychics2}
+        psychics={mostAccuratePsychics}
         dictionary={dictionary}
         locale={params.locale}
       />
@@ -105,7 +117,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
         title={dictionary['PsychicGallery.loveReadingsTitle'] || 'Best Love Readings'}
         description={dictionary['PsychicGallery.loveReadingsDescription'] || 'Specialists in matters of the heart, relationships, and soulmates.'}
         icon={Heart}
-        psychics={shuffledPsychics3}
+        psychics={loveReadingPsychics}
         dictionary={dictionary}
         locale={params.locale}
       />
