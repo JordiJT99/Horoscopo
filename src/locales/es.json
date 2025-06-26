@@ -697,12 +697,17 @@
   "PsychicGallery.viewAll": "Ver todo",
   "PsychicSpecialty.loveRelationships": "Amor y Relaciones",
   "PsychicSpecialty.careerFinance": "Carrera y Finanzas",
-  "PsychicSpecialty.spirituality": "Espiritualidad y Crecimiento Personal",
+  "PsychicSpecialty.spiritualityGrowth": "Espiritualidad y Crecimiento Personal",
+  "PsychicSpecialty.generalReading": "Lectura General",
   "PsychicPhrase.esmeralda": "El corazón conoce el camino verdadero.",
   "PsychicPhrase.zephyr": "Desbloquea tu potencial.",
   "PsychicPhrase.seraphina": "Encuentra la luz interior.",
   "PsychicPhrase.aurora": "Las estrellas susurran tus posibilidades.",
   "PsychicPhrase.orion": "La claridad aguarda en el cosmos.",
+  "PsychicPhrase.kaelen": "Las respuestas yacen en el silencio entre tus pensamientos.",
+  "PsychicPhrase.isolde": "El verdadero mapa del amor está escrito en el corazón.",
+  "PsychicPhrase.rohan": "Tu ambición es la llave que abre la puerta del destino.",
+  "PsychicPhrase.lyra": "El universo canta una canción para ti, solo tienes que escuchar.",
   "PsychicTopic.loveRelationships": "Amor y Relaciones",
   "PsychicTopic.careerFinance": "Carrera y Finanzas",
   "PsychicTopic.healthWellbeing": "Salud y Bienestar",
@@ -773,5 +778,3 @@
   "PsychicMatch.submittingTitle": "Consultando el Cosmos...",
   "PsychicMatch.submittingDescription": "Estamos encontrando al guía perfecto para tu viaje espiritual."
 }
-
-
