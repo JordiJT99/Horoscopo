@@ -589,7 +589,6 @@
   "OnboardingPage.timeOfBirthLabel": "Hora de Nacimiento (Opcional)",
   "OnboardingPage.timeOfBirthHelper": "Saber tu hora de nacimiento ayuda a cálculos astrológicos más precisos, como tu signo ascendente.",
   "OnboardingPage.cityOfBirthLabel": "Ciudad de Nacimiento (Opcional)",
-  "OnboardingPage.cityOfBirthPlaceholder": "Ej: Londres, Nueva York",
   "OnboardingPage.cityOfBirthHelper": "Tu ciudad de nacimiento también puede refinar detalles astrológicos.",
   "OnboardingPage.relationshipStatusLabel": "Estado Sentimental",
   "OnboardingPage.relationshipSingle": "Soltero/a",
@@ -747,6 +746,32 @@
     },
     "detailsTab": "Detalles",
     "housesTab": "Casas"
-  }
+  },
+  "PsychicMatch.title": "Encuentra tu Psíquico Ideal",
+  "PsychicMatch.subtitle": "Responde unas preguntas para conectarte con el guía adecuado para ti.",
+  "PsychicMatch.stepIndicator": "Paso {current} de {total}",
+  "PsychicMatch.q1": "¿Qué área de tu vida necesita más claridad en este momento?",
+  "PsychicMatch.q1.opt1": "Amor y Relaciones",
+  "PsychicMatch.q1.opt2": "Carrera y Finanzas",
+  "PsychicMatch.q1.opt3": "Crecimiento Personal y Espiritualidad",
+  "PsychicMatch.q1.opt4": "Una visión general de mi vida",
+  "PsychicMatch.q2": "¿Qué estilo de guía prefieres?",
+  "PsychicMatch.q2.opt1": "Directo y al grano",
+  "PsychicMatch.q2.opt2": "Gentil y compasivo",
+  "PsychicMatch.q2.opt3": "Espiritual y metafórico",
+  "PsychicMatch.q2.opt4": "Práctico y orientado a la acción",
+  "PsychicMatch.q3": "¿Qué describe mejor tu estado de ánimo actual?",
+  "PsychicMatch.q3.opt1": "Me siento atascado/a o inseguro/a",
+  "PsychicMatch.q3.opt2": "Enfrentando una gran decisión",
+  "PsychicMatch.q3.opt3": "Buscando cerrar ciclos o sanar el pasado",
+  "PsychicMatch.q3.opt4": "Simplemente curioso/a y abierto/a a descubrir",
+  "PsychicMatch.errorSelectOption": "Por favor, selecciona una opción para continuar.",
+  "PsychicMatch.submitButton": "Encontrar mi Psíquico",
+  "PsychicMatch.successTitle": "¡Hemos encontrado a tu psíquico ideal!",
+  "PsychicMatch.successDescription": "Redirigiéndote a tu psíquico...",
+  "PsychicMatch.errorFindingPsychic": "No pudimos encontrar un psíquico para ti en este momento. Por favor, inténtalo de nuevo más tarde.",
+  "PsychicMatch.submittingTitle": "Consultando el Cosmos...",
+  "PsychicMatch.submittingDescription": "Estamos encontrando al guía perfecto para tu viaje espiritual."
 }
+
 

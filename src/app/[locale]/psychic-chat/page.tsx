@@ -67,7 +67,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
     <main className="container mx-auto px-2 sm:px-4 py-6">
       <h1 className="text-3xl font-bold font-headline text-center mb-6">{dictionary['PsychicGallery.title'] || "Psychics"}</h1>
 
-      <div className={cn(
+      <Link href={`/${params.locale}/psychic-chat/match`} className={cn(
         "mb-8 p-4 rounded-lg text-white flex items-center justify-between cursor-pointer",
         "bg-gradient-to-r from-purple-600 to-indigo-700 shadow-lg hover:shadow-primary/40 transition-shadow"
         )}>
@@ -81,7 +81,7 @@ export default async function PsychicChatPage({ params }: { params: { locale: Lo
             </div>
         </div>
         <ChevronRight className="h-6 w-6" />
-      </div>
+      </Link>
 
       <PsychicCategoryRow
         title={dictionary['PsychicGallery.affinityPsychicsTitle'] || 'Your Affinity Psychics'}
