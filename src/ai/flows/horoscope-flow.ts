@@ -139,20 +139,20 @@ Considera sutilmente su situación laboral ({{userEmploymentStatus}}) al redacta
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo, {{userName}}. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en {{userName}} ({{sign}}).
-Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}, siempre en relación con "{{astrologicalTheme}}".
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}, en el contexto de "{{astrologicalTheme}}".
-Para 'health', sugiere cómo {{userName}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
+Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en {{userName}} ({{sign}}). **La explicación debe ser detallada y tener 2-3 frases completas.**
+Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}, siempre en relación con "{{astrologicalTheme}}". **La explicación debe ser detallada y tener 2-3 frases completas.**
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}, en el contexto de "{{astrologicalTheme}}". **La explicación debe ser detallada y tener 2-3 frases completas.**
+Para 'health', sugiere cómo {{userName}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}". **La explicación debe ser detallada y tener 2-3 frases completas.**
 {{else}}
 Genera ÚNICAMENTE el horóscopo DIARIO GENERAL para el signo zodiacal {{sign}} para {{dateDescriptor}} en el idioma {{locale}}.
 **INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en el signo {{sign}}. No te desvíes de este tema.
 Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
 Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en el signo {{sign}}.
-Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}, siempre en relación con "{{astrologicalTheme}}".
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}, en el contexto de "{{astrologicalTheme}}".
-Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
+Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en el signo {{sign}}. **La explicación debe ser detallada y tener 2-3 frases completas.**
+Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}, siempre en relación con "{{astrologicalTheme}}". **La explicación debe ser detallada y tener 2-3 frases completas.**
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}, en el contexto de "{{astrologicalTheme}}". **La explicación debe ser detallada y tener 2-3 frases completas.**
+Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}". **La explicación debe ser detallada y tener 2-3 frases completas.**
 {{/if}}
 
 IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health". El contenido de estas secciones debe ser la predicción para el día indicado por {{dateDescriptor}}, pero sin mencionar explícitamente la fecha dentro del texto de la predicción.
@@ -160,12 +160,12 @@ IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", 
 CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). NO añadas ninguna otra clave. NO uses markdown en las cadenas.
 Ejemplo de estructura de salida (theme: "un encuentro social sorprendente"):
 {
-  "main": "Hoy, la energía social te rodea, Aries. Un encuentro inesperado podría cambiar el curso de tu día, ofreciéndote una nueva perspectiva. Mantente abierto a conversaciones con extraños; la sincronicidad está de tu lado.",
-  "love": "Si estás en pareja, una salida social podría reavivar la chispa. Para los solteros, este es un día excelente para conocer a alguien en un evento o reunión. Tu carisma estará en su punto más alto.",
-  "money": "El networking es tu mejor activo hoy. Una conversación casual podría llevar a una oportunidad profesional o financiera. No subestimes el poder de tus conexiones.",
-  "health": "Tu bienestar se beneficia de la interacción social. Compartir una actividad física con amigos, como una caminata o un deporte en equipo, te recargará de energía."
+  "main": "Hoy, la energía social te rodea, Aries, invitándote a salir de tu rutina y conectar con los demás. Un encuentro inesperado, quizás con alguien de tu pasado o un completo desconocido, podría cambiar el curso de tu día y ofrecerte una nueva perspectiva sobre un asunto personal. Mantente receptivo a las conversaciones espontáneas, ya que la sincronicidad está de tu lado y una simple charla podría contener la semilla de una gran idea.",
+  "love": "Para los Aries en pareja, una salida social podría reavivar la chispa y recordarles por qué se divierten tanto juntos. Para los solteros, este es un día excelente para conocer a alguien en un evento, una reunión o incluso en una cafetería. Tu carisma natural estará en su punto más alto, así que no dudes en iniciar una conversación; la atracción será magnética.",
+  "money": "El networking es tu mejor activo financiero y profesional hoy. No se trata de pedir, sino de conectar genuinamente. Una conversación casual en un evento social podría llevar a una colaboración inesperada o a una valiosa oportunidad laboral. No subestimes el poder de tus conexiones; una charla amistosa puede tener un valor incalculable.",
+  "health": "Tu bienestar físico y mental se beneficia enormemente de la interacción social positiva. Considera compartir una actividad física con amigos, como una caminata, un deporte en equipo o una clase de baile. La energía del grupo no solo te motivará, sino que también te recargará emocionalmente, aliviando el estrés."
 }
-Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}} y el tema "{{astrologicalTheme}}", reflejando este estilo perspicaz y empático:
+Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}} y el tema "{{astrologicalTheme}}", reflejando este estilo perspicaz, empático y MÁS DETALLADO:
 `,
 });
 
