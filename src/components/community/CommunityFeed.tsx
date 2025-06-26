@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import type { CommunityPost } from '@/types';
+import type { CommunityPost, ZodiacSignName } from '@/types';
 import { getCommunityPosts, addCommunityPost } from '@/lib/community-posts';
 import CommunityPostCard from './CommunityPostCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +13,7 @@ import { Send } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { getSunSignFromDate } from '@/lib/constants';
 
 interface CommunityFeedProps {
   dictionary: Dictionary;
@@ -58,10 +59,29 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
 
     setIsPosting(true);
 
+    let authorZodiacSign: ZodiacSignName = 'Aries'; // Default value
+    if (user?.uid) {
+      const storedDataRaw = localStorage.getItem(`onboardingData_${user.uid}`);
+      if (storedDataRaw) {
+        try {
+          const storedData = JSON.parse(storedDataRaw);
+          if (storedData.dateOfBirth) {
+            const sign = getSunSignFromDate(new Date(storedData.dateOfBirth));
+            if (sign) {
+              authorZodiacSign = sign.name;
+            }
+          }
+        } catch(e) {
+          console.error("Could not parse onboarding data to get zodiac sign.", e)
+        }
+      }
+    }
+
+
     const newPost: Omit<CommunityPost, 'id' | 'timestamp'> = {
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
-      authorZodiacSign: 'Aries', // This should be dynamic based on user profile
+      authorZodiacSign: authorZodiacSign,
       content: newPostContent,
     };
 
