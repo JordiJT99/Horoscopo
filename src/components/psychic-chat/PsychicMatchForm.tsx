@@ -109,7 +109,8 @@ export default function PsychicMatchForm({ dictionary, locale }: PsychicMatchFor
             title: dictionary['PsychicMatch.successTitle'] || "We found a match!",
             description: dictionary['PsychicMatch.successDescription'] || "Redirecting you to your psychic...",
         });
-        router.push(`/${locale}/psychic-chat/${result.psychicId}`);
+        const topic = answers['q1'];
+        router.push(`/${locale}/psychic-chat/${result.psychicId}?topic=${topic}`);
     } catch(err) {
         console.error("Error finding psychic:", err);
         toast({
