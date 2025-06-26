@@ -12,6 +12,7 @@ import NatalChartHousesView from './NatalChartHousesView';
 import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface BirthData {
   date: string;
@@ -205,7 +206,7 @@ export default function NatalChartClientContent({
       <div className="my-8 flex flex-col items-center">
         {isLoading || !explanations ? (
           <div className="w-[360px] h-[360px] flex items-center justify-center">
-            <Skeleton className="w-full h-full rounded-full" />
+            <LoadingSpinner className="w-16 h-16 text-primary" />
           </div>
         ) : (
           explanations.planetPositions && (

@@ -7,11 +7,12 @@ import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Wand, Sparkles, Loader2, Share2, RotateCcw } from 'lucide-react'; 
+import { Wand, Sparkles, Share2, RotateCcw } from 'lucide-react'; 
 import { tarotReadingFlow, type TarotReadingInput, type TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface TarotReadingClientProps {
   dictionary: Dictionary;
@@ -175,7 +176,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   if (!isClient || Object.keys(dictionary).length === 0) {
     return (
       <div className="text-center py-10">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4 font-body">Loading Tarot Reading experience...</p>
       </div>
     );
@@ -225,7 +226,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <LoadingSpinner className="mr-2 h-4 w-4" />
                     {dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card..."}
                   </>
                 ) : (

@@ -11,9 +11,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, UserCircle, Loader2 } from 'lucide-react';
+import { Send, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface Message {
   text: string;
@@ -178,9 +179,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
                 </Avatar>
                 <div className="p-3 rounded-2xl bg-secondary text-secondary-foreground rounded-bl-none">
                   <div className="flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.3s]"></span>
-                    <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.15s]"></span>
-                    <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-pulse"></span>
+                    <LoadingSpinner className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </div>
               </div>
@@ -202,7 +201,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
           disabled={isSending}
         />
         <Button onClick={handleSendMessage} disabled={isSending || !inputMessage.trim()} size="icon">
-          {isSending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send size={18} />}
+          {isSending ? <LoadingSpinner className="h-4 w-4" /> : <Send size={18} />}
           <span className="sr-only">{dictionary['PsychicChatClient.sendButton'] || 'Send'}</span>
         </Button>
       </div>

@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
 import { useToast } from "@/hooks/use-toast";
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface DreamElements {
   symbols: string[];
@@ -208,7 +209,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   if (!isClient || Object.keys(dictionary).length === 0) {
     return (
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading dictionary...</p>
       </div>
     );
@@ -290,4 +291,3 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     </Card>
   );
 }
-

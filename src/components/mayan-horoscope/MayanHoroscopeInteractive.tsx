@@ -22,6 +22,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface MayanHoroscopeInteractiveProps {
   dictionary: Dictionary;
@@ -139,7 +140,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
 
           {isLoadingKin && (
             <div className="text-center p-4">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
+              <LoadingSpinner className="h-10 w-10 text-primary" />
             </div>
           )}
           {errorKin && <p className="text-destructive text-center">{errorKin}</p>}

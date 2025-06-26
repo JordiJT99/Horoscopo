@@ -7,10 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { HelpCircle, Sparkles, Loader2, User, Brain } from 'lucide-react';
+import { HelpCircle, Sparkles, User, Brain } from 'lucide-react';
 import { tarotPersonalityFlow, type TarotPersonalityInputType, type TarotPersonalityOutputType } from '@/ai/flows/tarot-personality-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 const initialQuestions = (dict: Dictionary) => [
   { id: 'q1', text: dict['TarotPersonalityPage.question1'] || "Describe how you generally approach new challenges or opportunities.", answer: '' },
@@ -83,7 +84,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   if (Object.keys(dictionary).length === 0) {
     return (
       <div className="text-center py-10">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4 font-body">Loading Tarot Personality Test...</p>
       </div>
     );

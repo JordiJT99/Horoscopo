@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2, Loader2 } from 'lucide-react';
+import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2 } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 import Image from 'next/image';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface LunarAscendantClientContentProps {
   dictionary: Dictionary;
@@ -77,7 +78,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
   if (!hasMounted || Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading content...</p>
       </div>
     );
@@ -154,7 +155,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                 )
               ) : (
                 <div className="text-center py-10 h-[200px]">
-                    <Loader2 className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto" />
+                    <LoadingSpinner className="h-10 w-10 text-primary" />
                     <p className="mt-3 font-body text-muted-foreground">{dictionary['LunarAscendantSection.loadingLunar'] || "Tracking the moon..."}</p>
                 </div>
             )}
@@ -216,9 +217,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                   <Input id="birth-city-lunar-client" type="text" placeholder={dictionary['LunarAscendantSection.birthCityPlaceholder'] || "e.g., New York"} value={birthCity} onChange={(e) => setBirthCity(e.target.value)} className="font-body" />
                 </div>
                 <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant || !birthDate || !birthTime || !birthCity} className="w-full font-body">
-                  {isLoadingAscendant ? (
-                    <><Loader2 className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2" /> {dictionary['LunarAscendantSection.calculatingButton'] || "Calculating..."}</>
-                  ) : (dictionary['LunarAscendantSection.calculateButton'] || "Calculate Ascendant")}
+                  {isLoadingAscendant ? (<><LoadingSpinner className="h-4 w-4 text-primary-foreground mr-2" /> {dictionary['LunarAscendantSection.calculatingButton'] || "Calculating..."}</>) : (dictionary['LunarAscendantSection.calculateButton'] || "Calculate Ascendant")}
                 </Button>
               </div>
 

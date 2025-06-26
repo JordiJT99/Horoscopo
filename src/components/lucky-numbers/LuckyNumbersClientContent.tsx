@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Clover, Palette, Gem, MessageCircleHeart, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface LuckyNumbersClientContentProps {
   dictionary: Dictionary;
@@ -56,7 +57,7 @@ export default function LuckyNumbersClientContent({ dictionary, locale }: LuckyN
     // For consistency, the server component already has a loader for the dictionary.
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading content...</p>
       </div>
     );
@@ -92,7 +93,7 @@ export default function LuckyNumbersClientContent({ dictionary, locale }: LuckyN
       <CardContent className="text-center">
         {isLoading ? (
           <div className="p-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <LoadingSpinner className="h-12 w-12 text-primary" />
             <p className="mt-4 font-body text-muted-foreground">{dictionary['LuckyNumbersSection.loading'] || "Unveiling your fortunes..."}</p>
           </div>
         ) : luckyInfo ? (

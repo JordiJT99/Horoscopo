@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogIn, UserPlus, Loader2 } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Interface for LoginClientContent props
 interface LoginClientContentProps {
@@ -73,7 +74,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
   if (authIsLoading || (!authIsLoading && user)) {
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center min-h-[calc(100vh-100px)]">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
       </main>
     );
   }
@@ -146,7 +147,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
           <CardFooter className="flex flex-col gap-3 md:gap-4 pt-2 pb-4 px-4 md:pt-3 md:pb-6 md:px-6">
             <Button type="submit" className="w-full font-body py-3 text-base" disabled={isSubmitting || authIsLoading}>
               {isSubmitting ? (
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <LoadingSpinner className="mr-2 h-5 w-5" />
               ) : isSignupMode ? (
                 <UserPlus className="mr-2 h-5 w-5" />
               ) : (

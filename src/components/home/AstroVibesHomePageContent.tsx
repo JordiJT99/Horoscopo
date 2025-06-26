@@ -18,10 +18,11 @@ import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
 import PromotionCard from '@/components/shared/PromotionCard';
 import { Button } from '@/components/ui/button';
-import { Sparkles as ContentSparklesIcon, Heart, CircleDollarSign, Activity, CalendarDays, Share2 } from 'lucide-react';
+import { CalendarDays, Share2, Heart, CircleDollarSign, Activity } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 
 interface AstroVibesPageContentProps {
@@ -394,7 +395,7 @@ export default function AstroVibesHomePageContent({
   if (authLoading && !user && !initialSignFromUrl) {
     return (
       <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-var(--top-bar-height,56px)-var(--bottom-nav-height,64px))]">
-        <ContentSparklesIcon className="h-12 w-12 animate-pulse text-primary mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         {dictionary && Object.keys(dictionary).length > 0 && <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>}
       </div>
     );
@@ -525,7 +526,7 @@ export default function AstroVibesHomePageContent({
                     <h3 className={cn(
                       "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl" 
                     )}>
-                        <ContentSparklesIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" )} />
+                        <LoadingSpinner className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" )} />
                         {dictionary['HoroscopeSection.loading'] || "Loading..."}
                     </h3>
                     <div className={cn("space-y-1.5")}>
@@ -554,4 +555,3 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
-

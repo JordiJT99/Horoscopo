@@ -2,9 +2,10 @@
 // Server Component - Ahora es la página de SELECCIÓN DE TIPO DE COMPATIBILIDAD
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
-import { Loader2, Users } from 'lucide-react';
+import { Users } from 'lucide-react';
 import SectionTitle from '@/components/shared/SectionTitle';
 import CompatibilityTypeSelectorCards from '@/components/compatibility/CompatibilityTypeSelectorCards'; // Nuevo componente cliente
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 export async function generateStaticParams() {
   const locales = getSupportedLocales();
@@ -25,7 +26,7 @@ export default async function CompatibilityTypeSelectionPage({ params }: Compati
   if (Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading dictionary...</p>
       </div>
     );

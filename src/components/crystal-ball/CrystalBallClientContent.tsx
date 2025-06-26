@@ -10,10 +10,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Eye, Sparkles, Share2, RotateCcw, Loader2 } from 'lucide-react';
+import { Eye, Sparkles, Share2, RotateCcw } from 'lucide-react';
 import { crystalBallFlow, type CrystalBallInput, type CrystalBallOutput } from '@/ai/flows/crystal-ball-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image'; 
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 type PrecisionLevel = 'basic' | 'deep' | 'mystic';
 
@@ -164,7 +165,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   if (!isClientForContent || Object.keys(dictionary).length === 0) { 
      return (
         <div className="text-center">
-          <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+          <LoadingSpinner className="h-12 w-12 text-primary" />
           <p className="mt-4">Loading Crystal Ball...</p>
         </div>
       );
