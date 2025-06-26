@@ -53,7 +53,6 @@ const dailyTarotPrompt = ai.definePrompt({
   input: {schema: TarotPersonalityInputSchema},
   output: {schema: TarotPersonalityOutputSchema.omit({ cardImagePlaceholderUrl: true })},
   prompt: `You are an insightful and empathetic Tarot reader. Your task is to provide a one-card daily reading for the user.
-Respond in the {{locale}} language.
 
 **User Information:**
 {{#if userName}}
@@ -63,24 +62,24 @@ Respond in the {{locale}} language.
 **Instructions:**
 1.  Select ONE Tarot card from the Major Arcana that represents the core energy or theme for the user's day today.
     Available Major Arcana cards: ${MAJOR_ARCANA_TAROT_CARDS.join(", ")}.
-    CRITICAL: Your "cardName" output MUST EXACTLY match one of these names, including capitalization and "The " prefix where applicable (e.g., "The Fool", "Strength").
-2.  Provide the name of the card in the "cardName" field.
-3.  Write a thoughtful and personalized "reading" for the user. This should be 2-3 paragraphs, separated by '\\n\\n'.
+2.  Provide the name of the card in the "cardName" field. CRITICAL: The "cardName" value MUST ALWAYS BE IN ENGLISH and MUST EXACTLY match one of the names from the list (e.g., "The Fool", "Strength").
+3.  Write a thoughtful and personalized "reading" for the user in the {{locale}} language. This should be 2-3 paragraphs, separated by '\\n\\n'.
     - If a userName is provided, start with a warm, personal greeting like "Hola, {{userName}}, la carta que te guía hoy es...".
     - Explain the card's energy in the context of TODAY. What does it suggest for them?
     - Offer a piece of simple, actionable advice based on the card's meaning.
     - Conclude with a point of reflection for them to consider throughout their day.
 
-Example for a user named 'Alex' who draws 'The Star':
+Example for a user named 'Alex' who draws 'The Star' and locale is 'es':
 {
   "cardName": "The Star",
   "reading": "Hola, Alex, la carta que ilumina tu camino hoy es La Estrella. Este es un día de esperanza renovada, inspiración y una profunda conexión con tu verdad interior. Después de un período de desafíos, La Estrella aparece como una señal de que la sanación y la calma están a tu alcance.\\n\\nEl consejo de hoy es que te permitas soñar y creer en el futuro. Busca un momento de tranquilidad, tal vez bajo el cielo nocturno si es posible, para reconectar con tus esperanzas más profundas. Confía en la guía del universo; te está llevando en la dirección correcta.\\n\\nReflexiona sobre esto: ¿Qué creencia limitante puedes liberar hoy para hacer espacio a la esperanza? Deja que la energía serena de La Estrella te recuerde tu propia luz."
 }
 
-Now, provide a new, unique reading for today in the {{locale}} language.
+Now, provide a new, unique reading for today.
 {{#if userName}}
-Personalize it for {{userName}}.
+Personalize the "reading" for {{userName}}.
 {{/if}}
+Ensure the "reading" is in the {{locale}} language, but the "cardName" is ALWAYS in English.
 `,
 });
 
@@ -92,7 +91,7 @@ const tarotPersonalityFlowInternal = ai.defineFlow(
   },
   async (input) => {
     const {output: aiOutput} = await dailyTarotPrompt(input);
-    if (!aiOutput || !aiOutput.cardName || !aiOutput.reading || aiOutput.reading.trim() === "") {
+    if (!aiOutput || !aiOutput.cardName || !aiOutput.reading || aiOutput.cardName.trim() === '' || aiOutput.reading.trim() === '') {
       console.error('[AstroVibes - TarotPersonalityFlow] AI output missing cardName or reading. AI Output:', JSON.stringify(aiOutput));
       throw new Error('Tarot reader provided no insights or an invalid card name.');
     }
