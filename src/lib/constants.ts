@@ -99,6 +99,24 @@ export function getCompatibility(sign1: ZodiacSignName, sign2: ZodiacSignName, t
   };
 }
 
+const luckyColors: Record<string, Record<Locale, string>> = {
+  red: { es: "Rojo", en: "Red", de: "Rot", fr: "Rouge" },
+  green: { es: "Verde", en: "Green", de: "Grün", fr: "Vert" },
+  blue: { es: "Azul", en: "Blue", de: "Blau", fr: "Bleu" },
+  yellow: { es: "Amarillo", en: "Yellow", de: "Gelb", fr: "Jaune" },
+  purple: { es: "Púrpura", en: "Purple", de: "Lila", fr: "Violet" },
+  orange: { es: "Naranja", en: "Orange", de: "Orange", fr: "Orange" },
+};
+
+const luckyGemstones: Record<string, Record<Locale, string>> = {
+  diamond: { es: "Diamante", en: "Diamond", de: "Diamant", fr: "Diamant" },
+  emerald: { es: "Esmeralda", en: "Emerald", de: "Smaragd", fr: "Émeraude" },
+  sapphire: { es: "Zafiro", en: "Sapphire", de: "Saphir", fr: "Saphir" },
+  ruby: { es: "Rubí", en: "Ruby", de: "Rubin", fr: "Rubis" },
+  amethyst: { es: "Amatista", en: "Amethyst", de: "Amethyst", fr: "Améthyste" },
+  topaz: { es: "Topacio", en: "Topaz", de: "Topas", fr: "Topaze" },
+};
+
 const motivationalPhrases: Record<Locale, string[]> = {
   es: [
     "La fortuna favorece a los audaces.",
@@ -132,11 +150,22 @@ const motivationalPhrases: Record<Locale, string[]> = {
 
 export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): LuckyNumbersData => {
   const phrases = motivationalPhrases[locale] || motivationalPhrases.es;
+  
+  const colorKeys = Object.keys(luckyColors);
+  const gemstoneKeys = Object.keys(luckyGemstones);
+  
+  const randomColorKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+  const randomGemstoneKey = gemstoneKeys[Math.floor(Math.random() * gemstoneKeys.length)];
+  
+  // Get the translated value, fallback to Spanish
+  const selectedColor = luckyColors[randomColorKey]?.[locale] || luckyColors[randomColorKey]?.es || "Color";
+  const selectedGemstone = luckyGemstones[randomGemstoneKey]?.[locale] || luckyGemstones[randomGemstoneKey]?.es || "Gemstone";
+
   return {
     sign,
     numbers: [Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1],
-    luckyColor: ["Rojo", "Verde", "Azul", "Amarillo", "Púrpura", "Naranja"][Math.floor(Math.random() * 6)],
-    luckyGemstone: ["Diamante", "Esmeralda", "Zafiro", "Rubí", "Amatista", "Topacio"][Math.floor(Math.random() * 6)],
+    luckyColor: selectedColor,
+    luckyGemstone: selectedGemstone,
     motivationalPhrase: phrases[Math.floor(Math.random() * phrases.length)],
   };
 };
