@@ -761,5 +761,6 @@
   "CommunityPage.postErrorTitle": "Erreur de Publication",
   "CommunityPage.postErrorEmpty": "Votre publication ne peut pas être vide.",
   "CommunityPage.loginToPost": "Vous devez être connecté pour publier.",
-  "CommunityPage.postedBy": "Publié par"
+  "CommunityPage.postedBy": "Publié par",
+  "Tarot.reversed": "Renversée"
 }

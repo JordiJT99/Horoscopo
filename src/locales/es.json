@@ -510,6 +510,7 @@
   "TarotDailyReading.readingTitle": "Mensaje de Hoy:",
   "TarotDailyReading.drawAgainButton": "Sacar Otra Carta",
   "TarotDailyReading.errorFetching": "Los espíritus están reflexionando... No se pudo determinar tu carta. Por favor, inténtalo de nuevo.",
+  "TarotDailyReading.cardBackAlt": "Reverso de una carta de tarot",
   "Auth.loginTitle": "Iniciar Sesión",
   "Auth.loginSubtitle": "Accede a tu cuenta de AstroVibes.",
   "Auth.loginFormTitle": "Ingresa tu Nombre de Usuario",
@@ -787,5 +788,6 @@
   "CommunityPage.postErrorTitle": "Error al Publicar",
   "CommunityPage.postErrorEmpty": "Tu publicación no puede estar vacía.",
   "CommunityPage.loginToPost": "Debes iniciar sesión para publicar.",
-  "CommunityPage.postedBy": "Publicado por"
+  "CommunityPage.postedBy": "Publicado por",
+  "Tarot.reversed": "Invertida"
 }

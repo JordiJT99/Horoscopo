@@ -196,6 +196,7 @@ export interface TarotPersonalityInputType {
 export interface TarotPersonalityOutputType {
   cardName: string;
   reading: string; // This used to be cardDescription
+  isReversed: boolean;
   cardImagePlaceholderUrl: string;
 }
 

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -113,23 +114,29 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
           </div>
 
           {/* Card Front */}
-          <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)] rounded-lg overflow-hidden shadow-lg border-2 border-primary/50">
+          <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)] rounded-lg overflow-hidden shadow-lg border-2 border-primary/50 tarot-card-aura">
             {result && (
-              <Image
-                src={result.cardImagePlaceholderUrl}
-                alt={result.cardName}
-                layout="fill"
-                objectFit="cover"
-                quality={100}
-                unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")}
-                data-ai-hint={`${result.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null;
-                  target.src = "https://placehold.co/220x385.png?text=Error";
-                  target.setAttribute("data-ai-hint", "tarot placeholder error");
-                }}
-              />
+              <motion.div
+                className="w-full h-full"
+                animate={{ rotate: result.isReversed ? 180 : 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Image
+                  src={result.cardImagePlaceholderUrl}
+                  alt={result.cardName}
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")}
+                  data-ai-hint={`${result.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null;
+                    target.src = "https://placehold.co/220x385.png?text=Error";
+                    target.setAttribute("data-ai-hint", "tarot placeholder error");
+                  }}
+                />
+              </motion.div>
             )}
           </div>
         </motion.div>
@@ -152,7 +159,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
                 <Card className="w-full bg-secondary/30 p-4 md:p-6 rounded-lg shadow mt-4">
                     <CardHeader className="p-0 pb-3 md:pb-4 text-center">
                         <CardTitle className="font-headline text-2xl text-accent-foreground">
-                            {result.cardName}
+                            {result.cardName} {result.isReversed && `(${dictionary['Tarot.reversed'] || 'Reversed'})`}
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="p-0 space-y-3 md:space-y-4">

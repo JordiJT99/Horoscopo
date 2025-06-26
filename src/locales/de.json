@@ -303,7 +303,7 @@
   "MayanSign.Manik.interpretation": "Manik ist die heilende Hand, das Werkzeug der Vollendung und des Wissens. Es führt dich zur Vollendung deiner Projekte und erinnert dich an deine Kraft zu heilen und zu erschaffen. Es ist ein Tag für Taten, Großzügigkeit und die Manifestation deiner Gaben.",
   "MayanSign.Lamat.description": "Stern/Hase - Repräsentiert den Stern, Harmonie, Fülle, Schönheit und Kunst.",
   "MayanSign.Lamat.interpretation": "Lamat ist der Stern, der mit Harmonie und Schönheit scheint und Fülle anzieht. Es inspiriert dich zu schaffen, Eleganz in allen Dingen zu finden und deine Talente zu vervielfachen. Es ist ein Tag für Kreativität, Fruchtbarkeit und die Wertschätzung der Kunst.",
-  "MayanSign.Muluc.description": "Wasser/Mond - Symbolisiert Wasser, Emotionen, Reinigung und den Fluss des Lebens.",
+  "MayanSign.Muluc.description": "Wasser/Mond - Symbolisiert das Wasser, die Emotionen, die Reinigung und den Fluss des Lebens.",
   "MayanSign.Muluc.interpretation": "Muluc ist das urzeitliche Wasser, die Essenz der Emotionen und der Reinigung. Es lädt dich ein, mit dem Leben zu fließen, deine Emotionen zu reinigen und dich an deine Verbindung mit dem universellen Bewusstsein zu erinnern. Es ist ein Tag für emotionale Selbstbeobachtung und Erneuerung.",
   "MayanSign.Oc.description": "Hund - Repräsentiert Loyalität, Kameradschaft, Führung und bedingungslose Liebe.",
   "MayanSign.Oc.interpretation": "Oc ist der treue Begleiter, der liebevolle Führer, der dich auf deinem Weg begleitet. Es lehrt dich über bedingungslose Liebe, Treue und die Bedeutung wahrer Beziehungen. Es ist ein Tag, um dich mit deinen Lieben zu verbinden und dein Herz zu öffnen.",
@@ -761,5 +761,6 @@
   "CommunityPage.postErrorTitle": "Fehler beim Posten",
   "CommunityPage.postErrorEmpty": "Ihr Beitrag darf nicht leer sein.",
   "CommunityPage.loginToPost": "Sie müssen angemeldet sein, um zu posten.",
-  "CommunityPage.postedBy": "Gepostet von"
+  "CommunityPage.postedBy": "Gepostet von",
+  "Tarot.reversed": "Umgekehrt"
 }
