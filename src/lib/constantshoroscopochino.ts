@@ -124,6 +124,30 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     report: "Esta combinación, conocida como la 'penalidad de la falta de cortesía', presenta desafíos significativos. La Rata, con su naturaleza directa y a veces oportunista, puede herir sin querer al Conejo, que es sensible y valora la paz por encima de todo. El Conejo puede ver a la Rata como demasiado agresiva, ruidosa y egocéntrica, mientras que la Rata puede encontrar al Conejo demasiado tímido, indeciso y pasivo. Para que funcione, la Rata debe aprender el arte del tacto y la consideración, y el Conejo debe desarrollar una piel un poco más gruesa y expresar sus necesidades de forma más clara y directa en lugar de retirarse.",
     score: 2
   },
+  "Rat-Rat": {
+    report: "Cuando dos Ratas se unen, la conexión es instantánea. Se reconocen en su inteligencia, su ambición y su encanto social. Juntos, son un equipo formidable para los negocios y la vida social, capaces de crear redes y aprovechar oportunidades que otros no ven. Su hogar es a menudo un centro de actividad y conversación. La competencia puede surgir, ya que ambos son astutos, pero si celebran los éxitos del otro como un logro conjunto, su vínculo es fuerte y próspero.",
+    score: 4
+  },
+  "Rat-Snake": {
+    report: "Una combinación intrigante y magnética de astucia y sabiduría. La Rata se siente fascinada por la mente profunda, la calma y el misterio de la Serpiente. La Serpiente, a su vez, respeta la inteligencia rápida y la habilidad de la Rata para prosperar. Son una excelente pareja para la estrategia y la planificación a largo plazo, aunque la naturaleza social de la Rata puede chocar con la posesividad de la Serpiente si no hay confianza plena.",
+    score: 4
+  },
+  "Rat-Goat": {
+    report: "Esta es una de las combinaciones más desafiantes. La Rata, práctica y ambiciosa, tiene dificultades para entender la naturaleza emocional, soñadora y a veces poco práctica de la Cabra. La Cabra, a su vez, se siente herida por la crítica directa y el enfoque materialista de la Rata. Para que funcione, la Rata debe aprender a valorar la creatividad y la sensibilidad, y la Cabra a ser un poco más práctica.",
+    score: 2
+  },
+  "Rat-Rooster": {
+    report: "Una relación llena de debates y críticas. Tanto la Rata como el Gallo son inteligentes y elocuentes, pero sus estilos chocan. El Gallo es directo, perfeccionista y crítico, lo que irrita a la Rata, que prefiere usar su ingenio de forma más sutil. La Rata puede ver al Gallo como arrogante y ruidoso. La clave del éxito es aprender a respetar sus diferentes estilos de comunicación y no tomarse las críticas como un ataque personal.",
+    score: 2
+  },
+  "Rat-Dog": {
+    report: "Una combinación sólida basada en el respeto mutuo. La Rata admira la lealtad, la honestidad y el idealismo del Perro. El Perro, a su vez, respeta la inteligencia y la capacidad de la Rata para cuidar de su familia. El oportunismo ocasional de la Rata puede chocar con el alto sentido de la moralidad del Perro, pero su lealtad mutua generalmente supera cualquier diferencia.",
+    score: 3
+  },
+  "Rat-Pig": {
+    report: "Una pareja muy feliz y armoniosa. La naturaleza generosa, optimista y de buen corazón del Cerdo hace que la Rata se sienta completamente segura y amada. El Cerdo no juzga la naturaleza ambiciosa de la Rata, sino que disfruta de la comodidad y la seguridad que esta le proporciona. Es una relación llena de afecto y disfrute mutuo. El único riesgo es que ambos pueden ser un poco indulgentes.",
+    score: 4
+  },
   "Ox-Tiger": {
     report: "Una relación de voluntades fuertes y estilos opuestos. El Buey es metódico, paciente y conservador. El Tigre es impulsivo, arriesgado y rebelde. El Buey quiere seguir el camino probado y seguro, mientras que el Tigre quiere abrir uno nuevo a través de la jungla con un machete. Hay una lucha de poder inherente. El Tigre se siente frustrado por la lentitud y la cautela del Buey, y el Buey se exaspera con la imprudencia y la falta de planificación del Tigre. El respeto es posible si logran objetivos juntos en un entorno profesional, pero la armonía en la vida cotidiana es un desafío constante.",
     score: 2
@@ -157,3 +181,5 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     score: 2
   }
 };
+
+    
