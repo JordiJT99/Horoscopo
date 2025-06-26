@@ -59,12 +59,12 @@ const NatalChartOutputSchema = z.object({
 });
 export type NatalChartOutput = z.infer<typeof NatalChartOutputSchema>;
 
-// Schema for AI prompt now includes planet house placements
+// Schema for AI prompt now includes planet house placements as a structured object
 const NatalChartPromptInputSchema = NatalChartInputSchema.extend({
   sunSign: z.string(),
   moonSign: z.string(),
   ascendantSign: z.string(),
-  planetHousePlacements: z.string().describe('A summary of which planets are in which houses.'),
+  planetHousePlacements: z.record(z.number()).describe('An object mapping planet names to their house number.'),
 });
 
 // AI prompt definition updated to be more specific and prevent placeholders
@@ -98,12 +98,17 @@ Escribe una explicación personalizada y detallada para CADA UNA de las 8 seccio
 4.  **Planetas Personales (clave "personalPlanets"):** Ofrece una explicación general de Mercurio, Venus y Marte.
 5.  **Planetas Transpersonales (clave "transpersonalPlanets"):** Ofrece una explicación general de Júpiter, Saturno, Urano, Neptuno y Plutón.
 6.  **Introducción a las Casas (clave "housesIntroduction"):** Escribe una única y breve frase introductoria. Debe ser exactamente: "A continuación, vemos cómo tus planetas personales activan áreas clave de tu vida."
-7.  **Detalles de las Casas (clave "housesDetails"):** ¡INSTRUCCIÓN CRÍTICA! Para esta clave, DEBES generar un ARRAY de objetos JSON. Cada objeto debe representar la interpretación personalizada de un planeta en una casa, basándose en 'planetHousePlacements'. **NO DES UNA DEFINICIÓN GENÉRICA DE LAS 12 CASAS.**
-    Los datos de emplazamiento son: **{{planetHousePlacements}}**.
-    Cada objeto en el array DEBE tener estas dos claves:
-    - "placement": una cadena de texto con el nombre del planeta y la casa (ej: "Sol en Casa 10").
-    - "explanation": una cadena de texto con la interpretación personalizada para ese emplazamiento específico.
-    Ejemplo de cómo debe verse el valor de la clave 'housesDetails':
+7.  **Detalles de las Casas (clave "housesDetails"):** ¡INSTRUCCIÓN CRÍTICA! Para esta clave, DEBES generar un ARRAY de objetos JSON, uno para cada planeta en la lista de emplazamientos que te proporciono. **NO DES UNA DEFINICIÓN GENÉRICA DE LAS 12 CASAS.**
+    Los emplazamientos de planetas en casas son:
+    {{#each planetHousePlacements}}
+    - {{@key}} en Casa {{this}}
+    {{/each}}
+
+    Para CADA UNO de estos emplazamientos, crea un objeto JSON en el array de salida. Cada objeto DEBE tener estas dos claves:
+    - "placement": una cadena de texto con el nombre del planeta y la casa (ej: "Sol en Casa 10"). DEBES USAR el planeta y el número de casa de la lista anterior. La primera letra del planeta debe estar en mayúscula.
+    - "explanation": una cadena de texto con la interpretación personalizada y detallada para ese emplazamiento específico.
+    
+    Ejemplo de cómo debe verse el valor de la clave 'housesDetails' si te diera "Sol en Casa 10" y "Luna en Casa 4":
     [
       {
         "placement": "Sol en Casa 10",
@@ -238,21 +243,18 @@ const natalChartFlowInternal = ai.defineFlow(
     const planetHousePlacements: Record<string, number> = {};
     for (const [planet, data] of Object.entries(chartData)) {
       if (planet !== 'ascendant') { // Ascendant is the cusp of the 1st house, not "in" a house.
-        planetHousePlacements[planet] = getHouseForDegree(data.degree, chartData.ascendant.degree);
+        const capitalizedPlanet = planet.charAt(0).toUpperCase() + planet.slice(1);
+        planetHousePlacements[capitalizedPlanet] = getHouseForDegree(data.degree, chartData.ascendant.degree);
       }
     }
-
-    const planetHousePlacementsString = Object.entries(planetHousePlacements)
-      .map(([planet, house]) => `${planet.charAt(0).toUpperCase() + planet.slice(1)} en Casa ${house}`)
-      .join(', ');
     
     // Call AI prompt for text explanations
-    const promptInput: NatalChartPromptInputSchema = {
+    const promptInput = {
       ...input,
       sunSign: chartData.sun.sign,
       moonSign: chartData.moon.sign,
       ascendantSign: chartData.ascendant.sign,
-      planetHousePlacements: planetHousePlacementsString,
+      planetHousePlacements: planetHousePlacements, // Pass the object
     };
 
     let aiOutput: Omit<NatalChartOutput, 'planetPositions' | 'aspectsDetails'> = {
