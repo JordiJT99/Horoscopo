@@ -667,7 +667,7 @@
   "UpcomingPhase.sampleDate2": "Muestra 2",
   "UpcomingPhase.sampleDate3": "Muestra 3",
   "UpcomingPhase.sampleDate4": "Muestra 4",
-  "Data.notAvailable": "N/A",
+  "Data.notAvailable": "N/D",
   "birthForm": {
     "dateLabel": "Fecha de Nacimiento",
     "timeLabel": "Hora de Nacimiento",
