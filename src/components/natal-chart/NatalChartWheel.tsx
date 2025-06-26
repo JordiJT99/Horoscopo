@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -141,7 +142,7 @@ const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspe
             
             if (!planet1 || !planet2) return null;
             
-            const lineRadius = wheelSize * 0.3; // A smaller radius for the line endpoints
+            const lineRadius = wheelSize * 0.42; // A larger radius for the line endpoints
             const pos1 = {
                 x: wheelSize / 2 + lineRadius * Math.cos((180 - planet1.degree) * Math.PI / 180),
                 y: wheelSize / 2 - lineRadius * Math.sin((180 - planet1.degree) * Math.PI / 180)
