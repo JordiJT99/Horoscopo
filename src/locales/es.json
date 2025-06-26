@@ -17,8 +17,7 @@
   "TopBar.horoscopeTitle": "Horóscopo",
   "TopBar.settingsAriaLabel": "Configuración",
   "BottomNav.horoscopes": "Horóscopos",
-  "BottomNav.friends": "Amigos",
-  "BottomNav.compatibility": "Amor",
+  "BottomNav.community": "Comunidad",
   "BottomNav.chat": "Psíquicos",
   "BottomNav.more": "Más",
   "SignSelector.addFriend": "Añadir",
@@ -776,5 +775,16 @@
   "PsychicMatch.successDescription": "Redirigiéndote a tu psíquico...",
   "PsychicMatch.errorFindingPsychic": "No pudimos encontrar un psíquico para ti en este momento. Por favor, inténtalo de nuevo más tarde.",
   "PsychicMatch.submittingTitle": "Consultando el Cosmos...",
-  "PsychicMatch.submittingDescription": "Estamos encontrando al guía perfecto para tu viaje espiritual."
+  "PsychicMatch.submittingDescription": "Estamos encontrando al guía perfecto para tu viaje espiritual.",
+  "MorePage.community": "Comunidad",
+  "CommunityPage.title": "Comunidad",
+  "CommunityPage.subtitle": "Comparte tus pensamientos y conecta con otros.",
+  "CommunityPage.newPostTitle": "Crear una Nueva Publicación",
+  "CommunityPage.postPlaceholder": "¿Qué tienes en mente, observador de estrellas?",
+  "CommunityPage.postButton": "Publicar",
+  "CommunityPage.posting": "Publicando...",
+  "CommunityPage.postErrorTitle": "Error al Publicar",
+  "CommunityPage.postErrorEmpty": "Tu publicación no puede estar vacía.",
+  "CommunityPage.loginToPost": "Debes iniciar sesión para publicar.",
+  "CommunityPage.postedBy": "Publicado por"
 }

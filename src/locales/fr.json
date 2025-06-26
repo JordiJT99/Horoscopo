@@ -17,8 +17,7 @@
   "TopBar.horoscopeTitle": "Horoscope",
   "TopBar.settingsAriaLabel": "Paramètres",
   "BottomNav.horoscopes": "Horoscopes",
-  "BottomNav.friends": "Amis",
-  "BottomNav.compatibility": "Amour",
+  "BottomNav.community": "Communauté",
   "BottomNav.chat": "Voyants",
   "BottomNav.more": "Plus",
   "SignSelector.addFriend": "Ajouter",
@@ -589,7 +588,6 @@
   "OnboardingPage.timeOfBirthLabel": "Heure de Naissance (Facultatif)",
   "OnboardingPage.timeOfBirthHelper": "Connaître votre heure de naissance aide à des calculs astrologiques plus précis comme votre signe ascendant.",
   "OnboardingPage.cityOfBirthLabel": "Ville de Naissance (Facultatif)",
-  "OnboardingPage.cityOfBirthPlaceholder": "ex. Londres, New York",
   "OnboardingPage.cityOfBirthHelper": "Votre ville de naissance peut également affiner les détails astrologiques.",
   "OnboardingPage.relationshipStatusLabel": "Situation Amoureuse",
   "OnboardingPage.relationshipSingle": "Célibataire",
@@ -701,6 +699,31 @@
   "PsychicChatPage.initialMessage": "Bonjour ! Je suis {psychicName}. Parlons de \"{topicName}\". Comment puis-je vous aider aujourd'hui ?",
   "PsychicChatPage.sendMessageError": "Erreur de connexion avec le voyant.",
   "PsychicChatPage.sendingButton": "Envoi...",
+  "NatalChartPage": {
+    "title": "Thème Natal",
+    "underDevelopmentMessage": "Cette fonctionnalité est actuellement en développement. Veuillez revenir plus tard !",
+    "detailLevel": {
+      "label": "Sélectionner le niveau de détail",
+      "basic": "Basique",
+      "advanced": "Avancé",
+      "spiritual": "Spirituel"
+    },
+    "sunTitle": "Le Soleil dans votre thème natal",
+    "moonTitle": "La Lune dans votre thème natal",
+    "ascendantTitle": "L'Ascendant dans votre thème natal",
+    "personalPlanetsTitle": "Planètes personnelles",
+    "transpersonalPlanetsTitle": "Planètes transpersonnelles",
+    "housesTitle": "Les Maisons Astrologiques",
+    "aspectsTitle": "Aspects importants",
+    "chartTab": "Carte",
+    "generatingImage": "Génération de l'image du thème natal...",
+    "aspectsTab": "Aspects",
+    "aspectsDetails": {
+      "noAspectsFound": "Aucun aspect significatif trouvé dans ce thème."
+    },
+    "detailsTab": "Détails",
+    "housesTab": "Maisons"
+  },
   "PsychicMatch.title": "Trouvez Votre Voyant Idéal",
   "PsychicMatch.subtitle": "Répondez à quelques questions pour vous connecter avec le bon guide.",
   "PsychicMatch.stepIndicator": "Étape {current} sur {total}",
@@ -725,5 +748,16 @@
   "PsychicMatch.successDescription": "Redirection vers votre voyant...",
   "PsychicMatch.errorFindingPsychic": "Nous n'avons pas pu trouver de voyant pour vous pour le moment. Veuillez réessayer plus tard.",
   "PsychicMatch.submittingTitle": "Consultation du Cosmos...",
-  "PsychicMatch.submittingDescription": "Nous trouvons le guide parfait pour votre voyage spirituel."
+  "PsychicMatch.submittingDescription": "Nous trouvons le guide parfait pour votre voyage spirituel.",
+  "MorePage.community": "Communauté",
+  "CommunityPage.title": "Communauté",
+  "CommunityPage.subtitle": "Partagez vos pensées et connectez-vous avec les autres.",
+  "CommunityPage.newPostTitle": "Créer une Nouvelle Publication",
+  "CommunityPage.postPlaceholder": "Qu'avez-vous en tête, observateur d'étoiles ?",
+  "CommunityPage.postButton": "Publier",
+  "CommunityPage.posting": "Publication...",
+  "CommunityPage.postErrorTitle": "Erreur de Publication",
+  "CommunityPage.postErrorEmpty": "Votre publication ne peut pas être vide.",
+  "CommunityPage.loginToPost": "Vous devez être connecté pour publier.",
+  "CommunityPage.postedBy": "Publié par"
 }

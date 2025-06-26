@@ -6,7 +6,7 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
- Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare,
+ Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare, Users as CommunityIcon,
   Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
   Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Users as CompatibilityIcon, Hand, Sparkles
 } from 'lucide-react';
@@ -93,12 +93,13 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
     { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/compatibility", icon: CompatibilityIcon, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
-    { href: "/lucky-numbers", icon: LuckyNumbersIcon, titleKey: "LuckyNumbersPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/lucky-numbers", icon: Clover, titleKey: "LuckyNumbersPage.title", newBadge: false, isPlaceholder: false },
     { href: "/lunar-ascendant", icon: LunarIcon, titleKey: "LunarAscendantPage.title", newBadge: false, isPlaceholder: false },
     { href: "/chinese-horoscope", icon: ChineseIcon, titleKey: "ChineseHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/mayan-horoscope", icon: MayanAstrologyIcon, titleKey: "MayanHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/natalchart", icon: Sparkles, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
-    { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: true, isPlaceholder: false },
+    { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/community", icon: CommunityIcon, titleKey: "CommunityPage.title", newBadge: true, isPlaceholder: false },
     { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },

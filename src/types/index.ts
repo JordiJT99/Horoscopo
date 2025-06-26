@@ -1,6 +1,5 @@
 
 
-
 export type Locale = 'en' | 'es' | 'de' | 'fr';
 
 export type ZodiacSignName =
@@ -278,4 +277,14 @@ export interface Psychic {
   isFree: boolean;
   status: "Available" | "Busy" | "Meditating";
   aiHint: string;
+}
+
+// Type for Community Forum Posts
+export interface CommunityPost {
+  id: string;
+  authorName: string;
+  authorAvatarUrl: string;
+  authorZodiacSign: ZodiacSignName;
+  timestamp: string; // ISO 8601 string for date
+  content: string;
 }
