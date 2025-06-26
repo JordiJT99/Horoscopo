@@ -1,5 +1,6 @@
 
 
+
 export type Locale = 'en' | 'es' | 'de' | 'fr';
 
 export type ZodiacSignName =
@@ -262,4 +263,19 @@ export interface NatalChartOutput {
   aspects: string;
   planetPositions: Record<string, { sign: string; degree: number }>;
   aspectsDetails: AspectDetail[];
+}
+
+export interface Psychic {
+  id: string;
+  name: string;
+  image: string;
+  specialty: string; 
+  phrase: string;
+  rating: number;
+  reviews: number;
+  experience: number; 
+  price: number | null; 
+  isFree: boolean;
+  status: "Available" | "Busy" | "Meditating";
+  aiHint: string;
 }

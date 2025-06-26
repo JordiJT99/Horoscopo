@@ -1,46 +1,102 @@
 
-import type { StaticImageData } from 'next/image';
-
 export interface Psychic {
   id: string;
   name: string;
-  image: string; // Changed from StaticImageData to string
-  specialty: string; // This will now be a translation key
-  phrase: string; // This will now be a translation key
+  image: string;
+  specialty: string; // Translation key
+  phrase: string; // Translation key
   rating: number;
-  readings: number;
+  reviews: number;
+  experience: number; // years
+  price: number | null; // null if free
+  isFree: boolean;
   status: "Available" | "Busy" | "Meditating";
+  aiHint: string;
 }
 
 export const psychics: Psychic[] = [
   {
-    id: 'esmeralda', // Keep IDs as unique identifiers
-    name: 'Esmeralda', // Keep names as they might be used elsewhere or remain untranslated specific names
-    image: '/images/esmeralda.png', // Using public URL path
-    specialty: 'PsychicSpecialty.loveRelationships', // Translation key
-    phrase: 'PsychicPhrase.esmeralda', // Translation key
+    id: 'shenaya',
+    name: 'Shenaya',
+    image: 'https://placehold.co/200x200.png',
+    aiHint: 'woman portrait confident',
+    specialty: 'PsychicSpecialty.loveRelationships',
+    phrase: 'PsychicPhrase.esmeralda',
     rating: 4.8,
-    readings: 1250,
+    reviews: 207,
+    experience: 9,
+    price: null,
+    isFree: true,
     status: 'Available',
   },
   {
-    id: 'zephyr', // Keep IDs
-    name: 'Zephyr', // Keep names
-    image: '/images/zephyr.png', // Using public URL path
-    specialty: 'PsychicSpecialty.careerFinance', // Translation key
-    phrase: 'PsychicPhrase.zephyr', // Translation key
+    id: 'missmia',
+    name: 'Miss Mia',
+    image: 'https://placehold.co/200x200.png',
+    aiHint: 'woman portrait friendly',
+    specialty: 'PsychicSpecialty.careerFinance',
+    phrase: 'PsychicPhrase.zephyr',
     rating: 4.5,
-    readings: 980,
-    status: 'Busy',
+    reviews: 60,
+    experience: 11,
+    price: 3.99,
+    isFree: false,
+    status: 'Available',
   },
   {
     id: 'seraphina',
     name: 'Seraphina',
-    image: '/images/seraphina.png', // Using public URL path
-    specialty: 'PsychicSpecialty.spiritualityGrowth', // Translation key
-    phrase: 'PsychicPhrase.seraphina', // Translation key
+    image: 'https://placehold.co/200x200.png',
+    aiHint: 'woman portrait ethereal',
+    specialty: 'PsychicSpecialty.spiritualityGrowth',
+    phrase: 'PsychicPhrase.seraphina',
     rating: 4.9,
-    readings: 1520,
+    reviews: 1520,
+    experience: 15,
+    price: 5.50,
+    isFree: false,
+    status: 'Busy',
+  },
+  {
+    id: 'aurora',
+    name: 'Aurora',
+    image: 'https://placehold.co/200x200.png',
+    aiHint: 'woman portrait mystical',
+    specialty: 'PsychicSpecialty.loveRelationships',
+    phrase: 'PsychicPhrase.aurora',
+    rating: 4.7,
+    reviews: 834,
+    experience: 12,
+    price: 4.50,
+    isFree: false,
+    status: 'Available',
+  },
+  {
+    id: 'orion',
+    name: 'Orion',
+    image: 'https://placehold.co/200x200.png',
+    aiHint: 'man portrait wise',
+    specialty: 'PsychicSpecialty.careerFinance',
+    phrase: 'PsychicPhrase.orion',
+    rating: 4.6,
+    reviews: 512,
+    experience: 7,
+    price: null,
+    isFree: true,
     status: 'Meditating',
+  },
+  {
+    id: 'luna',
+    name: 'Luna',
+    image: 'https://placehold.co/200x200.png',
+    aiHint: 'woman portrait gentle',
+    specialty: 'PsychicSpecialty.spiritualityGrowth',
+    phrase: 'PsychicPhrase.seraphina',
+    rating: 4.8,
+    reviews: 987,
+    experience: 10,
+    price: 4.99,
+    isFree: false,
+    status: 'Available',
   },
 ];

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -17,17 +18,24 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
   
   const isActive = (path: string) => {
     const baseCheck = `/${currentLocale}${path}`;
+    // Special handling for the root path to avoid matching all sub-paths
     if (path === "/") {
-        return pathname === `/${currentLocale}` || pathname === `/${currentLocale}/`;
+        const horoscopePaths = [
+          `/${currentLocale}`,
+          `/${currentLocale}/`,
+          `/${currentLocale}/yesterday-horoscope`,
+          `/${currentLocale}/weekly-horoscope`,
+          `/${currentLocale}/monthly-horoscope`
+        ];
+        return horoscopePaths.some(p => pathname === p || (pathname.startsWith(p) && p !== `/${currentLocale}`));
     }
     return pathname === baseCheck || pathname.startsWith(`${baseCheck}/`);
   };
 
   const navItems = [
     { href: "/", labelKey: "BottomNav.horoscopes", icon: Sparkles },
-    { href: "/friends", labelKey: "BottomNav.friends", icon: Users, isPlaceholder: true }, // Placeholder for now
-    { href: "/compatibility", labelKey: "BottomNav.compatibility", icon: Heart },
     { href: "/psychic-chat", labelKey: "BottomNav.chat", icon: MessageSquare, notification: true },
+    { href: "/compatibility", labelKey: "BottomNav.compatibility", icon: Heart },
     { href: "/more", labelKey: "BottomNav.more", icon: BookOpen },
   ];
 
@@ -46,28 +54,19 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
               key={item.href}
               variant="ghost"
               asChild
-              disabled={item.isPlaceholder}
               className={cn(
                 "flex flex-col items-center justify-center h-full px-1 py-1 text-[0.65rem] sm:text-xs font-medium text-bottom-nav-foreground hover:text-bottom-nav-active-foreground relative rounded-none flex-1 min-w-0",
-                itemIsActive && "text-bottom-nav-active-foreground font-semibold",
-                item.isPlaceholder && "opacity-50 cursor-not-allowed"
+                itemIsActive && "text-bottom-nav-active-foreground font-semibold"
               )}
             >
-              <Link href={item.isPlaceholder ? "#" : `/${currentLocale}${item.href}`}>
+              <Link href={`/${currentLocale}${item.href}`}>
                 <div className="relative">
                   <DisplayIcon className={cn("h-5 w-5 sm:h-6 sm:h-6 mb-0.5", itemIsActive && "text-bottom-nav-active-foreground")} />
                   {item.notification && (
                     <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-destructive ring-2 ring-background transform translate-x-1/2 -translate-y-1/2"></span>
                   )}
                 </div>
-                {item.labelKey === 'BottomNav.friends' ? (
-                  <div className="flex flex-col items-center leading-tight -mt-0.5">
-                     <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
-                     <span className="text-[0.6rem] scale-100 font-bold text-destructive">{dictionary['HomePage.comingSoon'] || 'Próximamente'}</span>
-                  </div>
-                ) : (
                   <span className="truncate">{dictionary[item.labelKey] || item.labelKey.split('.').pop()}</span>
-                )}
               </Link>
             </Button>
           );
@@ -78,7 +77,3 @@ const BottomNavigationBar = ({ dictionary, currentLocale }: BottomNavigationBarP
 };
 
 export default BottomNavigationBar;
-
-// Add shadow-top utility if it doesn't exist in your globals or tailwind config
-// Example for tailwind.config.ts if needed:
-// theme: { extend: { boxShadow: { top: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -2px rgba(0, 0, 0, 0.1)' } } }
