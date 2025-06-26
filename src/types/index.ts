@@ -154,17 +154,17 @@ export type MayanSignName =
 export interface MayanZodiacSign {
   name: MayanSignName;
   icon: React.ElementType;
-  description: string;
-  detailedInterpretation: string; // Added for more detailed info
+  descriptionKey: string;
+  detailedInterpretationKey: string;
   associatedColor?: string;
 }
 
 export interface GalacticTone {
   id: number;
-  nameKey: string; // For translation, e.g., "Magnetic", "Lunar"
-  keywordKey: string; // For translation, e.g., "Unity", "Challenge"
-  questionKey: string; // For translation, e.g., "WhatIsMyGoal", "WhatAreTheObstacles"
-  detailedInterpretation: string; // Added for more detailed info
+  nameKey: string;
+  keywordKey: string;
+  questionKey: string;
+  detailedInterpretationKey: string;
 }
 
 export interface ChineseHoroscopeData {
