@@ -44,7 +44,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder,
   }
 
   return (
-    <Link href={`/${locale}${href}`} passHref>
+    <Link href={`/${locale}${href}`}>
       <Card className={`${cardClasses} relative`}>
         {content}
       </Card>
@@ -75,7 +75,7 @@ const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:
   }
   
   return (
-    <Link href={`/${locale}${href}`} passHref>
+    <Link href={`/${locale}${href}`}>
       <div className={itemClasses}>
        {content}
       </div>
