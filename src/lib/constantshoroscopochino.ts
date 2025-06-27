@@ -375,24 +375,6 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 4
   },
-  "Rabbit-Dragon": {
-    report: {
-      es: "Una combinación fascinante. El Conejo astuto puede manejar el ego del poderoso Dragón. El Dragón se siente atraído por la inteligencia y el buen gusto del Conejo. El Conejo es el estratega perfecto detrás del trono. El Dragón debe aprender a escuchar y valorar los consejos de su sabio compañero.",
-      en: "A fascinating combination. The cunning Rabbit can handle the powerful Dragon's ego. The Dragon is attracted to the Rabbit's intelligence and good taste. The Rabbit is the perfect strategist behind the throne. The Dragon must learn to listen and value its wise partner's advice.",
-      de: "Eine faszinierende Kombination. Das schlaue Kaninchen kann mit dem Ego des mächtigen Drachen umgehen. Der Drache fühlt sich von der Intelligenz und dem guten Geschmack des Kaninchens angezogen. Das Kaninchen ist der perfekte Stratege hinter dem Thron. Der Drache muss lernen, zuzuhören und den Rat seines weisen Partners zu schätzen.",
-      fr: "Une combinaison fascinante. Le Lapin rusé peut gérer l'ego du puissant Dragon. Le Dragon est attiré par l'intelligence et le bon goût du Lapin. Le Lapin est le stratège parfait derrière le trône. Le Dragon doit apprendre à écouter et à apprécier les conseils de son sage partenaire."
-    },
-    score: 3
-  },
-  "Rabbit-Snake": {
-    report: {
-      es: "Una pareja elegante, inteligente y muy compatible. Ambos son refinados y sabios. Comparten un amor por el arte y un ambiente tranquilo. Se comunican a menudo en un nivel no verbal. La confianza es fundamental. Una vez establecida, su vínculo es profundo y duradero.",
-      en: "An elegant, intelligent, and very compatible pair. Both are refined and wise. They share a love for art and a quiet environment. They often communicate on a non-verbal level. Trust is fundamental. Once established, their bond is deep and lasting.",
-      de: "Ein elegantes, intelligentes und sehr kompatibles Paar. Beide sind raffiniert und weise. Sie teilen die Liebe zur Kunst und einer ruhigen Umgebung. Sie kommunizieren oft auf einer nonverbalen Ebene. Vertrauen ist fundamental. Einmal hergestellt, ist ihre Bindung tief und dauerhaft.",
-      fr: "Un couple élégant, intelligent et très compatible. Tous deux sont raffinés et sages. Ils partagent un amour pour l'art et un environnement calme. Ils communiquent souvent à un niveau non verbal. La confiance est fondamentale. Une fois établie, leur lien est profond et durable."
-    },
-    score: 4
-  },
   "Rabbit-Horse": {
     report: {
       es: "Una combinación desafiante. El Conejo anhela un hogar seguro, mientras que el Caballo necesita aventura. Sus necesidades fundamentales están en conflicto. El estilo de vida impulsivo del Caballo genera ansiedad en el cauteloso Conejo. Requiere un compromiso enorme para funcionar.",
@@ -412,13 +394,22 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     score: 2
   },
 
-  // --- Combinaciones del Dragón ---
+  // --- Combinaciones del Dragón (Nuevas) ---
   "Dragon-Ox": {
     report: {
       es: "El carismático Dragón se encuentra con el pragmático Buey. Es una unión de poder y estabilidad, pero también de voluntades fuertes. El Dragón, audaz, puede encontrar al Buey demasiado conservador. El Buey puede ver al Dragón como imprudente. Si alinean sus metas, son un equipo formidable.",
       en: "The charismatic Dragon meets the pragmatic Ox. It's a union of power and stability, but also of strong wills. The bold Dragon may find the Ox too conservative. The Ox may see the Dragon as reckless. If they align their goals, they are a formidable team.",
       de: "Der charismatische Drache trifft auf den pragmatischen Ochsen. Es ist eine Vereinigung von Macht und Stabilität, aber auch von starken Willen. Der kühne Drache mag den Ochsen als zu konservativ empfinden. Der Ochse mag den Drachen als rücksichtslos ansehen. Wenn sie ihre Ziele aufeinander abstimmen, sind sie ein beeindruckendes Team.",
       fr: "Le Dragon charismatique rencontre le Bœuf pragmatique. C'est une union de pouvoir et de stabilité, mais aussi de volontés fortes. Le Dragon audacieux peut trouver le Bœuf trop conservateur. Le Bœuf peut voir le Dragon comme imprudent. S'ils alignent leurs objectifs, ils forment une équipe redoutable."
+    },
+    score: 3
+  },
+  "Rabbit-Dragon": {
+    report: {
+      es: "Una combinación fascinante. El Conejo astuto puede manejar el ego del poderoso Dragón. El Dragón se siente atraído por la inteligencia y el buen gusto del Conejo. El Conejo es el estratega perfecto detrás del trono. El Dragón debe aprender a escuchar y valorar los consejos de su sabio compañero.",
+      en: "A fascinating combination. The cunning Rabbit can handle the powerful Dragon's ego. The Dragon is attracted to the Rabbit's intelligence and good taste. The Rabbit is the perfect strategist behind the throne. The Dragon must learn to listen and value its wise partner's advice.",
+      de: "Eine faszinierende Kombination. Das schlaue Kaninchen kann mit dem Ego des mächtigen Drachen umgehen. Der Drache fühlt sich von der Intelligenz und dem guten Geschmack des Kaninchens angezogen. Das Kaninchen ist der perfekte Stratege hinter dem Thron. Der Drache muss lernen, zuzuhören und den Rat seines weisen Partners zu schätzen.",
+      fr: "Une combinaison fascinante. Le Lapin rusé peut gérer l'ego du puissant Dragon. Le Dragon est attiré par l'intelligence et le bon goût du Lapin. Le Lapin est le stratège parfait derrière le trône. Le Dragon doit apprendre à écouter et à apprécier les conseils de son sage partenaire."
     },
     score: 3
   },
@@ -445,7 +436,7 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
       es: "Una pareja vibrante y enérgica. Tanto el Dragón como el Caballo son extrovertidos y aman la aventura. Se dan mutuamente la libertad que necesitan. Pueden surgir conflictos si el Dragón se vuelve demasiado controlador o si el Caballo parece demasiado independiente.",
       en: "A vibrant and energetic couple. Both the Dragon and the Horse are extroverted and love adventure. They give each other the freedom they need. Conflicts can arise if the Dragon becomes too controlling or if the Horse seems too independent.",
       de: "Ein lebhaftes und energiegeladenes Paar. Sowohl der Drache als auch das Pferd sind extrovertiert und lieben Abenteuer. Sie geben einander die Freiheit, die sie brauchen. Konflikte können entstehen, wenn der Drache zu kontrollierend wird oder wenn das Pferd zu unabhängig erscheint.",
-      fr: "Un couple vibrant et énergique. Le Dragon et le Cheval sont tous deux extravertis et aiment l'aventure. Ils se donnent mutuellement la liberté dont ils ont besoin. Des conflits могут survenir si le Dragon devient trop contrôlant ou si le Cheval semble trop indépendant."
+      fr: "Un couple vibrant et énergique. Le Dragon et le Cheval sont tous deux extravertis et aiment l'aventure. Ils se donnent mutuellement la liberté dont ils ont besoin. Des conflits peuvent survenir si le Dragon devient trop contrôlant ou si le Cheval semble trop indépendant."
     },
     score: 4
   },
@@ -466,6 +457,53 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
       fr: "Le puissant Dragon trouve un admirateur loyal dans le généreux Cochon. Le Cochon ne rivalise pas pour être sous les feux de la rampe et est heureux de célébrer les succès du Dragon. Le Dragon offre au Cochon de l'excitation et de la protection. C'est une relation très positive et de soutien mutuel."
     },
     score: 4
+  },
+  
+  // --- Combinaciones de la Serpiente (Nuevas) ---
+  "Rabbit-Snake": {
+    report: {
+      es: "Una pareja elegante, inteligente y muy compatible. Ambos son refinados y sabios. Comparten un amor por el arte y un ambiente tranquilo. Se comunican a menudo en un nivel no verbal. La confianza es fundamental. Una vez establecida, su vínculo es profundo y duradero.",
+      en: "An elegant, intelligent, and very compatible pair. Both are refined and wise. They share a love for art and a quiet environment. They often communicate on a non-verbal level. Trust is fundamental. Once established, their bond is deep and lasting.",
+      de: "Ein elegantes, intelligentes und sehr kompatibles Paar. Beide sind raffiniert und weise. Sie teilen die Liebe zur Kunst und einer ruhigen Umgebung. Sie kommunizieren oft auf einer nonverbalen Ebene. Vertrauen ist fundamental. Einmal hergestellt, ist ihre Bindung tief und dauerhaft.",
+      fr: "Un couple élégant, intelligent et très compatible. Tous deux sont raffinés et sages. Ils partagent un amour pour l'art et un environnement calme. Ils communiquent souvent à un niveau non verbal. La confiance est fondamentale. Une fois établie, leur lien est profond et durable."
+    },
+    score: 4
+  },
+  "Snake-Snake": {
+    report: {
+      es: "Una unión de almas gemelas misteriosas. Dos Serpientes juntas crean una conexión profunda e intelectual. Se entienden a la perfección, pero su naturaleza desconfiada puede volverse en su contra, generando celos. Si confían, su vínculo es indestructible.",
+      en: "A union of mysterious soulmates. Two Snakes together create a deep and intellectual connection. They understand each other perfectly, but their suspicious nature can turn against them, generating jealousy. If they trust, their bond is unbreakable.",
+      de: "Eine Vereinigung geheimnisvoller Seelenverwandter. Zwei Schlangen zusammen schaffen eine tiefe und intellektuelle Verbindung. Sie verstehen sich perfekt, aber ihre misstrauische Natur kann sich gegen sie wenden und Eifersucht erzeugen. Wenn sie vertrauen, ist ihre Bindung unzerbrechlich.",
+      fr: "Une union d'âmes sœurs mystérieuses. Deux Serpents ensemble créent une connexion profonde et intellectuelle. Ils se comprennent parfaitement, mais leur nature méfiante peut se retourner contre eux, générant de la jalousie. S'ils ont confiance, leur lien est indestructible."
+    },
+    score: 4
+  },
+  "Snake-Horse": {
+    report: {
+      es: "Una combinación difícil. La Serpiente es introvertida y posesiva, mientras que el Caballo es extrovertido y necesita libertad. La Serpiente puede intentar controlar al Caballo, lo que este no tolerará. Es una dinámica de tensión constante.",
+      en: "A difficult combination. The Snake is introverted and possessive, while the Horse is extroverted and needs freedom. The Snake may try to control the Horse, which it will not tolerate. It is a dynamic of constant tension.",
+      de: "Eine schwierige Kombination. Die Schlange ist introvertiert und besitzergreifend, während das Pferd extrovertiert ist und Freiheit braucht. Die Schlange könnte versuchen, das Pferd zu kontrollieren, was dieses nicht tolerieren wird. Es ist eine Dynamik ständiger Spannung.",
+      fr: "Une combinaison difficile. Le Serpent est introverti et possessif, tandis que le Cheval est extraverti et a besoin de liberté. Le Serpent peut essayer de contrôler le Cheval, ce qui ne sera pas toléré. C'est une dynamique de tension constante."
+    },
+    score: 2
+  },
+  "Snake-Goat": {
+    report: {
+      es: "Una pareja dulce y de apoyo. La sabia Serpiente se siente atraída por la naturaleza amable y artística de la Cabra. La Cabra, a su vez, encuentra seguridad en la inteligencia de la Serpiente. Pueden crear una vida hogareña pacífica y llena de belleza juntos.",
+      en: "A sweet and supportive couple. The wise Snake is attracted to the kind and artistic nature of the Goat. The Goat, in turn, finds security in the Snake's intelligence. They can create a peaceful and beautiful home life together.",
+      de: "Ein süßes und unterstützendes Paar. Die weise Schlange fühlt sich von der freundlichen und künstlerischen Natur der Ziege angezogen. Die Ziege wiederum findet Sicherheit in der Intelligenz der Schlange. Sie können gemeinsam ein friedliches und schönes Zuhause schaffen.",
+      fr: "Un couple doux et solidaire. Le Serpent sage est attiré par la nature aimable et artistique de la Chèvre. La Chèvre, à son tour, trouve la sécurité dans l'intelligence du Serpent. Ils peuvent créer ensemble une vie de famille paisible et belle."
+    },
+    score: 4
+  },
+  "Snake-Dog": {
+    report: {
+      es: "Una relación que requiere esfuerzo. La Serpiente es reservada y a veces manipuladora, mientras que el Perro valora la honestidad por encima de todo. La naturaleza sospechosa de la Serpiente puede chocar con la lealtad directa del Perro. La confianza es difícil de construir aquí.",
+      en: "A relationship that requires effort. The Snake is reserved and sometimes manipulative, while the Dog values honesty above all. The Snake's suspicious nature can clash with the Dog's direct loyalty. Trust is difficult to build here.",
+      de: "Eine Beziehung, die Anstrengung erfordert. Die Schlange ist zurückhaltend und manchmal manipulativ, während der Hund Ehrlichkeit über alles schätzt. Die misstrauische Natur der Schlange kann mit der direkten Loyalität des Hundes kollidieren. Vertrauen ist hier schwer aufzubauen.",
+      fr: "Une relation qui demande des efforts. Le Serpent est réservé et parfois manipulateur, tandis que le Chien valorise l'honnêteté par-dessus tout. La nature méfiante du Serpent peut entrer en conflit avec la loyauté directe du Chien. La confiance est difficile à construire ici."
+    },
+    score: 3
   },
 
   // Combinaciones restantes
