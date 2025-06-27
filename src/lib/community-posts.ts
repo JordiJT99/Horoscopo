@@ -12,8 +12,6 @@ import {
   limit,
 } from 'firebase/firestore';
 
-// The initialPosts array is removed, as data will now come from Firestore.
-
 // Fetch posts from Firestore
 export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
   if (!db) {
