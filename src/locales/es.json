@@ -798,5 +798,16 @@
   "CommunityPage.shareTarotSuccess": "Tu lectura de tarot ha sido compartida con la comunidad.",
   "CommunityPage.dreamPostTitle": "Compartió una interpretación de sueño",
   "CommunityPage.tarotPostTitle": "Compartió una carta de Tarot",
-  "Tarot.reversed": "Invertida"
+  "Tarot.reversed": "Invertida",
+  "birthForm": {
+    "submitButton": "Generar Carta Natal",
+    "dateLabel": "Fecha de Nacimiento",
+    "timeLabel": "Hora de Nacimiento (aprox.)",
+    "cityLabel": "Ciudad de Nacimiento",
+    "countryLabel": "País de Nacimiento",
+    "pickDate": "Elige una fecha",
+    "validationErrors": {
+      "required": "Este campo es obligatorio"
+    }
+  }
 }
