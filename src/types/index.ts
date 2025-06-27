@@ -247,6 +247,18 @@ export interface HousePlacementDetail {
   explanation: string;
 }
 
+// --- Import from Dream Interpretation Flow ---
+import type { DreamInterpretationOutput } from './ai/flows/dream-interpretation-flow';
+
+// Type for storing dream interpretations in localStorage
+export interface StoredDream {
+  id: string;
+  timestamp: string; // ISO string
+  interpretation: DreamInterpretationOutput;
+  vividness: number;
+}
+
+
 export interface NatalChartOutput {
   sun: string;
   moon: string;

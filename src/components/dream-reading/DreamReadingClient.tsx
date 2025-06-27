@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -9,13 +9,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Slider } from '@/components/ui/slider';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch, ChevronLeft, ChevronRight, Feather, Home, Users, Drama, BookHeart } from 'lucide-react';
+import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch, ChevronLeft, ChevronRight, Feather, Home, Users, Drama, BookHeart, BarChart3 } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput, type DreamWizardData } from '@/ai/flows/dream-interpretation-flow';
+import type { StoredDream } from '@/types';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import DreamTrends from './DreamTrends';
 
-const TOTAL_STEPS = 5;
+
+const TOTAL_STEPS = 6;
 
 type ViewMode = 'wizard' | 'loading' | 'result';
 
@@ -30,6 +34,7 @@ const wizardSteps = [
   { step: 3, field: 'locations', titleKey: 'DreamWizard.step3.title', descKey: 'DreamWizard.step3.description', placeholderKey: 'DreamWizard.step3.placeholder', icon: Home, maxLength: 50 },
   { step: 4, field: 'emotions', titleKey: 'DreamWizard.step4.title', descKey: 'DreamWizard.step4.description', placeholderKey: 'DreamWizard.step4.placeholder', icon: Drama, maxLength: 50 },
   { step: 5, field: 'symbols', titleKey: 'DreamWizard.step5.title', descKey: 'DreamWizard.step5.description', placeholderKey: 'DreamWizard.step5.placeholder', icon: BookHeart, maxLength: 50 },
+  { step: 6, field: 'vividness', titleKey: 'DreamWizard.step6.title', descKey: 'DreamWizard.step6.description', icon: BarChart3 },
 ];
 
 const DreamMapCategory = ({ title, items, icon: Icon }: { title: string, items: string[], icon: React.ElementType }) => {
@@ -57,11 +62,15 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<DreamWizardData>({ coreDescription: '' });
+  const [formData, setFormData] = useState<DreamWizardData>({ 
+    coreDescription: '',
+    vividness: 3,
+  });
 
   const [interpretation, setInterpretation] = useState<string | null>(null);
   const [dreamElements, setDreamElements] = useState<DreamInterpretationOutput['dreamElements'] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [newDreamTrigger, setNewDreamTrigger] = useState(0);
   
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
@@ -100,6 +109,24 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
       setInterpretation(result.interpretation);
       setDreamElements(result.dreamElements);
+      
+      try {
+        const newDreamRecord: StoredDream = {
+            id: new Date().toISOString(),
+            timestamp: new Date().toISOString(),
+            interpretation: result,
+            vividness: formData.vividness || 3,
+        };
+        const storedDreamsRaw = localStorage.getItem('dreamJournal');
+        const storedDreams: StoredDream[] = storedDreamsRaw ? JSON.parse(storedDreamsRaw) : [];
+        // Keep the journal to a reasonable size, e.g., 100 entries
+        const updatedDreams = [newDreamRecord, ...storedDreams].slice(0, 100);
+        localStorage.setItem('dreamJournal', JSON.stringify(updatedDreams));
+        setNewDreamTrigger(Date.now()); // Trigger re-calculation of trends
+      } catch(e) {
+        console.error("Could not save dream to journal:", e);
+      }
+
       setViewMode('result');
     } catch (err) {
       console.error("Error interpreting dream:", err);
@@ -121,7 +148,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     router.push(`/${locale}/dream-reading`);
     setInterpretation(null);
     setDreamElements(null);
-    setFormData({ coreDescription: '' });
+    setFormData({ coreDescription: '', vividness: 3 });
     setCurrentStep(1);
     setError(null);
     setViewMode('wizard');
@@ -145,7 +172,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     }
   };
 
-  const handleFormChange = (field: keyof DreamWizardData, value: string) => {
+  const handleFormChange = (field: keyof DreamWizardData, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -162,7 +189,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     if (!stepInfo) return null;
     const Icon = stepInfo.icon;
     const fieldName = stepInfo.field as keyof DreamWizardData;
-    const value = formData[fieldName] || '';
+    const value = formData[fieldName];
     const maxLength = (stepInfo as any).maxLength;
 
     return (
@@ -187,18 +214,37 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
               transition={{ duration: 0.3 }}
               className="w-full"
             >
-              <Textarea
-                value={value}
-                onChange={(e) => handleFormChange(fieldName, e.target.value)}
-                placeholder={dictionary[stepInfo.placeholderKey]}
-                className="min-h-[150px] font-body"
-                rows={5}
-                maxLength={maxLength}
-              />
-              {maxLength && (
-                <div className="text-right text-xs text-muted-foreground mt-1 pr-1">
-                  {value.length} / {maxLength}
+              {stepInfo.field === 'vividness' ? (
+                <div className='py-8 px-2'>
+                  <Slider
+                    defaultValue={[3]}
+                    value={[Number(value) || 3]}
+                    onValueChange={(val) => handleFormChange(fieldName, val[0])}
+                    max={5}
+                    min={1}
+                    step={1}
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                    <span>{dictionary['DreamWizard.step6.labelLow'] || 'Vague'}</span>
+                    <span>{dictionary['DreamWizard.step6.labelHigh'] || 'Vivid'}</span>
+                  </div>
                 </div>
+              ) : (
+                <>
+                <Textarea
+                  value={String(value || '')}
+                  onChange={(e) => handleFormChange(fieldName, e.target.value)}
+                  placeholder={dictionary[stepInfo.placeholderKey]}
+                  className="min-h-[150px] font-body"
+                  rows={5}
+                  maxLength={maxLength}
+                />
+                {maxLength && (
+                  <div className="text-right text-xs text-muted-foreground mt-1 pr-1">
+                    {String(value || '').length} / {maxLength}
+                  </div>
+                )}
+                </>
               )}
             </motion.div>
           </AnimatePresence>
@@ -230,6 +276,18 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm md:text-base whitespace-pre-line">
               {interpretation?.split('\\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
+
+            <div className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
+                <h3 className="font-headline text-lg md:text-xl text-primary flex items-center justify-center gap-2 mb-4">
+                  <BarChart3 className="w-5 h-5 md:w-6 md:h-6" /> {dictionary['DreamReadingPage.dreamEnergyTitle'] || "Dream Energy Level"}
+                </h3>
+                <Progress value={(formData.vividness || 0) * 20} className="h-3" />
+                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                  <span>{dictionary['DreamWizard.step6.labelLow'] || "Vague"}</span>
+                  <span>{dictionary['DreamWizard.step6.labelHigh'] || "Vivid"}</span>
+                </div>
+            </div>
+
             {dreamElements && (
               <div className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
                 <h3 className="font-headline text-lg md:text-xl text-primary flex items-center justify-center gap-2 mb-4">
@@ -244,6 +302,9 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
                 </div>
               </div>
             )}
+            
+            <DreamTrends dictionary={dictionary} newDreamTrigger={newDreamTrigger} />
+
             <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button onClick={handleNewInterpretation} variant="outline" className="flex-1">
                   <RotateCcw className="mr-2 h-4 w-4" />

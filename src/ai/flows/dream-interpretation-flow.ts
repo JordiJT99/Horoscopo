@@ -16,6 +16,7 @@ const DreamWizardDataSchema = z.object({
   locations: z.string().optional().describe("The primary places or settings where the dream occurred."),
   emotions: z.string().optional().describe("The dominant emotions felt during the dream."),
   symbols: z.string().optional().describe("Specific objects or recurring symbols that stood out."),
+  vividness: z.number().optional().describe('A rating from 1 to 5 of how vivid or intense the dream was.'),
 });
 export type DreamWizardData = z.infer<typeof DreamWizardDataSchema>;
 
