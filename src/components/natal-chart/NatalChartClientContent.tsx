@@ -108,7 +108,9 @@ export default function NatalChartClientContent({
   const staticChartImageUrl = '/custom_assets/natal_chart_bg.png';
 
   useEffect(() => {
+ 
     const fetchChartData = async () => {
+
       setIsLoading(true);
       
       const birthDataString = JSON.stringify(birthData);
@@ -128,6 +130,7 @@ export default function NatalChartClientContent({
       }
 
       try {
+
         let textData: NatalChartOutput;
         if (cachedText) {
           console.log("Loaded natal chart text from cache.");
@@ -145,6 +148,7 @@ export default function NatalChartClientContent({
           if (textCacheKey) {
             localStorage.setItem(textCacheKey, JSON.stringify(textData));
             console.log("Saved natal chart text data to cache.");
+
           }
         }
         
