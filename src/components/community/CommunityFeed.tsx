@@ -77,7 +77,7 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
       }
     }
 
-    const newPost: Omit<CommunityPost, 'id' | 'timestamp'> = {
+    const newPostData: Omit<CommunityPost, 'id' | 'timestamp' | 'reactions' | 'commentCount'> = {
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
@@ -86,7 +86,7 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
     };
 
     try {
-      const addedPost = await addCommunityPost(newPost);
+      const addedPost = await addCommunityPost(newPostData);
       setPosts(prevPosts => [addedPost, ...prevPosts]);
       setNewPostContent('');
     } catch (error) {
