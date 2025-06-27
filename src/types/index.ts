@@ -291,6 +291,7 @@ export interface Comment {
 
 export interface CommunityPost {
   id: string;
+  authorId: string;
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;

@@ -36,6 +36,7 @@ export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
       
       const post: CommunityPost = {
         id: doc.id,
+        authorId: data.authorId, // Retrieve authorId
         authorName: data.authorName,
         authorAvatarUrl: data.authorAvatarUrl,
         authorZodiacSign: data.authorZodiacSign,
@@ -73,6 +74,7 @@ export const addCommunityPost = async (newPostData: Omit<CommunityPost, 'id' | '
   }
   try {
     const postsCollection = collection(db, 'community-posts');
+    // The data passed to addDoc must include authorId, enforced by the type.
     const docRef = await addDoc(postsCollection, {
       ...newPostData,
       timestamp: serverTimestamp(),
@@ -112,35 +114,39 @@ export const getCommentsForPost = async (postId: string): Promise<Comment[]> => 
 
 export const addCommentToPost = async (postId: string, commentData: Omit<Comment, 'id' | 'timestamp'>): Promise<Comment> => {
     if (!db) {
-      throw new Error("Firestore is not initialized. Cannot add post.");
+      throw new Error("Firestore is not initialized. Cannot add comment.");
     }
     const postRef = doc(db, 'community-posts', postId);
-    // Create a reference for a new comment with a unique ID in the 'comments' subcollection
-    const newCommentRef = doc(collection(postRef, 'comments'));
+    const commentsCollectionRef = collection(postRef, 'comments');
 
-    // Use a batch to perform multiple writes as a single atomic unit
-    const batch = writeBatch(db);
+    try {
+        // Use a transaction to ensure atomicity
+        await runTransaction(db, async (transaction) => {
+            const newCommentRef = doc(commentsCollectionRef); // Generate a new doc ref for the comment
+            
+            // 1. Set the new comment data
+            transaction.set(newCommentRef, {
+                ...commentData,
+                timestamp: serverTimestamp(), // Use server timestamp for consistency
+            });
 
-    const newCommentData = {
-        ...commentData,
-        timestamp: serverTimestamp(),
-    };
+            // 2. Atomically increment the commentCount on the parent post
+            transaction.update(postRef, { commentCount: increment(1) });
+        });
 
-    // 1. Add the new comment to the batch
-    batch.set(newCommentRef, newCommentData);
+        // Optimistically return the new comment for UI update
+        // Note: The final doc ID and timestamp would need to be re-fetched for perfect accuracy,
+        // but this is sufficient for optimistic UI.
+        return {
+            id: 'temp-id-' + Date.now(), // Temporary ID for UI
+            ...commentData,
+            timestamp: new Date().toISOString(),
+        };
 
-    // 2. Atomically increment the commentCount on the parent post
-    batch.update(postRef, { commentCount: increment(1) });
-
-    // Commit the batch
-    await batch.commit();
-
-    // Return the new comment data for optimistic UI update
-    return {
-        id: newCommentRef.id,
-        ...commentData,
-        timestamp: new Date().toISOString(),
-    };
+    } catch (error) {
+        console.error("Error adding comment in transaction: ", error);
+        throw error; // Re-throw to be caught by the calling component
+    }
 }
 
 // --- Reactions ---

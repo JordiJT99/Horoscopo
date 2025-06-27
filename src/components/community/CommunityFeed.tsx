@@ -78,6 +78,7 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
     }
 
     const newPostData: Omit<CommunityPost, 'id' | 'timestamp' | 'reactions' | 'commentCount'> = {
+      authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
@@ -87,7 +88,16 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
 
     try {
       const addedPost = await addCommunityPost(newPostData);
-      setPosts(prevPosts => [addedPost, ...prevPosts]);
+      // Optimistically add the new post to the UI.
+      // We create a new post object that matches the expected CommunityPost structure.
+      const postForUi: CommunityPost = {
+        id: addedPost.id, // Use ID from the returned value
+        timestamp: new Date().toISOString(), // Use current time for optimistic UI
+        reactions: {},
+        commentCount: 0,
+        ...newPostData,
+      };
+      setPosts(prevPosts => [postForUi, ...prevPosts]);
       setNewPostContent('');
     } catch (error) {
       toast({
