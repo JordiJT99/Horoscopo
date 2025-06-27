@@ -280,6 +280,20 @@ export interface Psychic {
 // Type for Community Forum Posts
 export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
 
+// This is the data needed to create a new post
+export interface NewPostData {
+  authorId: string;
+  authorName: string;
+  authorAvatarUrl: string;
+  authorZodiacSign: ZodiacSignName;
+  postType: PostType;
+  // Optional content fields
+  textContent?: string;
+  dreamData?: DreamInterpretationOutput;
+  tarotReadingData?: TarotReadingOutput;
+  tarotPersonalityData?: TarotPersonalityOutput;
+}
+
 export interface Comment {
   id: string; // Document ID from Firestore
   authorId: string;
@@ -289,20 +303,10 @@ export interface Comment {
   timestamp: string; // ISO 8601 string for date
 }
 
-export interface CommunityPost {
+export interface CommunityPost extends NewPostData {
   id: string;
-  authorId: string;
-  authorName: string;
-  authorAvatarUrl: string;
-  authorZodiacSign: ZodiacSignName;
   timestamp: string;
-  postType: PostType;
-  // Optional content fields
-  textContent?: string;
-  dreamData?: DreamInterpretationOutput;
-  tarotReadingData?: TarotReadingOutput;
-  tarotPersonalityData?: TarotPersonalityOutput;
-  // Interactivity fields
+  // Interactivity fields are optional in the base type
   reactions?: Record<string, string>; // { [userId]: emoji }
   commentCount?: number;
 }

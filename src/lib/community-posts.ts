@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -50,7 +51,7 @@ export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
         commentCount: data.commentCount || 0,
       };
 
-      // Clean up undefined fields
+      // Clean up undefined fields to avoid serialization issues
       Object.keys(post).forEach(key => {
           if (post[key as keyof CommunityPost] === undefined) {
               delete post[key as keyof CommunityPost];
@@ -63,7 +64,7 @@ export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
     return posts;
   } catch (error) {
     console.error("Error fetching community posts:", error);
-    return [];
+    return []; // Return empty array on error to prevent crashes
   }
 };
 
@@ -77,6 +78,7 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
   }
 
   try {
+    // Build the data object carefully, ensuring no undefined fields are sent.
     const dataToSave: any = {
       authorId: newPostData.authorId,
       authorName: newPostData.authorName,
@@ -84,8 +86,8 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
       authorZodiacSign: newPostData.authorZodiacSign,
       postType: newPostData.postType,
       timestamp: serverTimestamp(),
-      reactions: {},
-      commentCount: 0,
+      reactions: {}, // Initialize as empty
+      commentCount: 0, // Initialize as 0
     };
 
     if (newPostData.textContent) dataToSave.textContent = newPostData.textContent;
@@ -97,6 +99,7 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
     const postsCollection = collection(db, 'community-posts');
     const docRef = await addDoc(postsCollection, dataToSave);
 
+    // Return an optimistic version of the post for immediate UI update.
     const optimisticPost: CommunityPost = {
       id: docRef.id,
       timestamp: new Date().toISOString(),
@@ -105,6 +108,7 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
       ...newPostData,
     };
     
+    // Final cleanup of the returned object
     Object.keys(optimisticPost).forEach(key => {
       if (optimisticPost[key as keyof CommunityPost] === undefined) {
           delete optimisticPost[key as keyof CommunityPost];
@@ -115,6 +119,7 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
 
   } catch (error: any) {
     console.error("Firestore addCommunityPost operation failed:", error.message, error.stack);
+    // You can customize this error message further if needed
     throw new Error("Failed to add post to the community feed.");
   }
 };
@@ -136,7 +141,6 @@ export const getCommentsForPost = async (postId: string): Promise<Comment[]> => 
     });
 }
 
-// **REFACTORED** to use a batched write
 export const addCommentToPost = async (postId: string, commentData: Omit<Comment, 'id' | 'timestamp'>): Promise<Comment> => {
     if (!db) {
       throw new Error("Firestore is not initialized. Cannot add comment.");
@@ -174,7 +178,7 @@ export const addCommentToPost = async (postId: string, commentData: Omit<Comment
     }
 }
 
-// **REFACTORED** to use atomic field updates
+// --- Reactions ---
 export const toggleReactionOnPost = async (postId: string, userId: string, emoji: string): Promise<Record<string, string>> => {
     if (!db) {
         throw new Error("Firestore is not initialized. Cannot toggle reaction.");
