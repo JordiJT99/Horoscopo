@@ -19,6 +19,22 @@ import {
   increment,
 } from 'firebase/firestore';
 
+// Define a more specific type for creating new posts, ensuring authorId is always present.
+type NewPostData = Pick<
+  CommunityPost,
+  | 'authorId'
+  | 'authorName'
+  | 'authorAvatarUrl'
+  | 'authorZodiacSign'
+  | 'postType'
+> & Partial<
+  Pick<
+    CommunityPost,
+    'textContent' | 'dreamData' | 'tarotReadingData' | 'tarotPersonalityData'
+  >
+>;
+
+
 // Fetch posts from Firestore
 export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
   if (!db) {
@@ -36,7 +52,7 @@ export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
       
       const post: CommunityPost = {
         id: doc.id,
-        authorId: data.authorId, // Retrieve authorId
+        authorId: data.authorId,
         authorName: data.authorName,
         authorAvatarUrl: data.authorAvatarUrl,
         authorZodiacSign: data.authorZodiacSign,
@@ -68,13 +84,17 @@ export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
 };
 
 // Add a new post to Firestore
-export const addCommunityPost = async (newPostData: Omit<CommunityPost, 'id' | 'timestamp' | 'reactions' | 'commentCount'>): Promise<CommunityPost> => {
+export const addCommunityPost = async (newPostData: NewPostData): Promise<CommunityPost> => {
   if (!db) {
     throw new Error("Firestore is not initialized. Cannot add post.");
   }
+  // Safeguard to ensure authorId is present before sending to Firestore
+  if (!newPostData.authorId) {
+    throw new Error("Cannot create post: authorId is missing.");
+  }
+
   try {
     const postsCollection = collection(db, 'community-posts');
-    // The data passed to addDoc must include authorId, enforced by the type.
     const docRef = await addDoc(postsCollection, {
       ...newPostData,
       timestamp: serverTimestamp(),
@@ -82,13 +102,20 @@ export const addCommunityPost = async (newPostData: Omit<CommunityPost, 'id' | '
       commentCount: 0,
     });
 
-    return {
+    // Create a complete CommunityPost object for optimistic UI update.
+    const optimisticPost: CommunityPost = {
       id: docRef.id,
       timestamp: new Date().toISOString(),
       reactions: {},
       commentCount: 0,
-      ...newPostData,
+      textContent: newPostData.textContent,
+      dreamData: newPostData.dreamData,
+      tarotReadingData: newPostData.tarotReadingData,
+      tarotPersonalityData: newPostData.tarotPersonalityData,
+      ...newPostData
     };
+    return optimisticPost;
+
   } catch (error) {
     console.error("Error adding community post:", error);
     throw new Error("Failed to add post to the community feed.");
@@ -121,31 +148,32 @@ export const addCommentToPost = async (postId: string, commentData: Omit<Comment
 
     try {
         // Use a transaction to ensure atomicity
-        await runTransaction(db, async (transaction) => {
-            const newCommentRef = doc(commentsCollectionRef); // Generate a new doc ref for the comment
+        const newCommentDoc = await runTransaction(db, async (transaction) => {
+            const newCommentRef = doc(commentsCollectionRef);
             
-            // 1. Set the new comment data
-            transaction.set(newCommentRef, {
+            const completeCommentData = {
                 ...commentData,
-                timestamp: serverTimestamp(), // Use server timestamp for consistency
-            });
+                timestamp: serverTimestamp(),
+            };
+
+            // 1. Set the new comment data
+            transaction.set(newCommentRef, completeCommentData);
 
             // 2. Atomically increment the commentCount on the parent post
             transaction.update(postRef, { commentCount: increment(1) });
+            
+            return {
+                id: newCommentRef.id,
+                ...commentData,
+                timestamp: new Date().toISOString(), // for optimistic return
+            };
         });
-
-        // Optimistically return the new comment for UI update
-        // Note: The final doc ID and timestamp would need to be re-fetched for perfect accuracy,
-        // but this is sufficient for optimistic UI.
-        return {
-            id: 'temp-id-' + Date.now(), // Temporary ID for UI
-            ...commentData,
-            timestamp: new Date().toISOString(),
-        };
+        
+        return newCommentDoc;
 
     } catch (error) {
         console.error("Error adding comment in transaction: ", error);
-        throw error; // Re-throw to be caught by the calling component
+        throw error;
     }
 }
 
@@ -164,10 +192,9 @@ export const toggleReactionOnPost = async (postId: string, userId: string, emoji
 
         const currentReactions = postDoc.data().reactions || {};
         
-        // If user has already reacted with this emoji, remove the reaction.
         if (currentReactions[userId] === emoji) {
             delete currentReactions[userId];
-        } else { // Otherwise, add or update the reaction.
+        } else {
             currentReactions[userId] = emoji;
         }
 
