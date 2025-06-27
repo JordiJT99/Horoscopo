@@ -123,7 +123,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
 
   const handleReact = async (emoji: string) => {
     if (!user) {
-      toast({ title: dictionary['Auth.notLoggedInTitle'], description: 'You must be logged in to react.', variant: 'destructive' });
+      toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToReact'] || 'You must be logged in to react.', variant: 'destructive' });
       return;
     }
 
@@ -139,9 +139,17 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
 
     try {
       await toggleReactionOnPost(post.id, user.uid, emoji);
-    } catch (error) {
+    } catch (error: any) {
       setReactions(originalReactions);
-      toast({ title: dictionary['Error.genericTitle'], description: 'Could not save reaction.', variant: 'destructive' });
+      if (error.code === 'permission-denied') {
+        toast({
+            title: dictionary['Error.permissionDeniedTitle'] || "Permission Denied",
+            description: dictionary['Error.permissionDeniedDescription'] || "Your Firestore security rules do not allow this action. Please ensure you have configured rules to allow writes for authenticated users.",
+            variant: 'destructive'
+        });
+      } else {
+        toast({ title: dictionary['Error.genericTitle'], description: dictionary['CommunityPage.reactionError'] || 'Could not save reaction.', variant: 'destructive' });
+      }
     }
   };
 
@@ -163,8 +171,16 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       setComments(prev => [...prev, addedComment]);
       setCommentCount(prev => prev + 1);
       setNewComment('');
-    } catch (error) {
-       toast({ title: dictionary['Error.genericTitle'], description: 'Could not post comment.', variant: 'destructive' });
+    } catch (error: any) {
+       if (error.code === 'permission-denied') {
+            toast({
+                title: dictionary['Error.permissionDeniedTitle'] || "Permission Denied",
+                description: dictionary['Error.permissionDeniedDescription'] || "Your Firestore security rules do not allow this action. Please ensure you have configured rules to allow writes for authenticated users.",
+                variant: 'destructive'
+            });
+       } else {
+            toast({ title: dictionary['Error.genericTitle'], description: dictionary['CommunityPage.commentError'] || 'Could not post comment.', variant: 'destructive' });
+       }
     } finally {
        setIsPostingComment(false);
     }
