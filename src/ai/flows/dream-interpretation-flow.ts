@@ -82,6 +82,7 @@ Here is the user's dream, broken down into parts:
 "{{dreamData.symbols}}"
 {{/if}}
 
+**IMPORTANT:** Use standard UTF-8 characters directly in your response (e.g., 'ñ', 'á', 'é'). Do NOT use HTML entities like '&ntilde;' or '&aacute;'.
 
 Provide your response as a single JSON object with two main keys: "interpretation" (string) and "dreamElements" (object containing arrays of strings for symbols, emotions, characters, locations, themes).
 
