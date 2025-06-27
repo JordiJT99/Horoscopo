@@ -780,6 +780,11 @@
   "CommunityPage.seeMore": "Ver más",
   "CommunityPage.seeLess": "Ver menos",
   "CommunityPage.reactButton": "Reaccionar",
+  "CommunityPage.postCommentButton": "Publicar Comentario",
+  "CommunityPage.commentPlaceholder": "Escribe un comentario...",
+  "CommunityPage.reactions": "Reacciones",
+  "CommunityPage.beFirstToReact": "Sé el primero en reaccionar",
+  "CommunityPage.noCommentsYet": "Aún no hay comentarios. ¡Inicia sesión para empezar la conversación!",
   "Tarot.reversed": "Invertida",
   "birthForm": {
     "submitButton": "Generar Carta Natal",

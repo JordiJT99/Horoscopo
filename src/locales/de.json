@@ -780,6 +780,11 @@
   "CommunityPage.seeMore": "Mehr sehen",
   "CommunityPage.seeLess": "Weniger sehen",
   "CommunityPage.reactButton": "Reagieren",
+  "CommunityPage.postCommentButton": "Kommentar posten",
+  "CommunityPage.commentPlaceholder": "Schreibe einen Kommentar...",
+  "CommunityPage.reactions": "Reaktionen",
+  "CommunityPage.beFirstToReact": "Sei der Erste, der reagiert",
+  "CommunityPage.noCommentsYet": "Noch keine Kommentare. Melden Sie sich an, um die Unterhaltung zu beginnen!",
   "Tarot.reversed": "Umgekehrt",
   "birthForm": {
     "submitButton": "Geburtshoroskop Erstellen",

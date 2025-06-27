@@ -1,7 +1,8 @@
 
-import type { DreamInterpretationOutput } from './ai/flows/dream-interpretation-flow';
-import type { TarotReadingOutput } from './ai/flows/tarot-reading-flow';
-import type { TarotPersonalityOutput } from './ai/flows/tarot-personality-flow';
+
+import type { DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
+import type { TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
+import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
@@ -279,6 +280,12 @@ export interface Psychic {
 // Type for Community Forum Posts
 export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
 
+export interface Comment {
+  authorName: string;
+  authorAvatarUrl: string;
+  text: string;
+}
+
 export interface CommunityPost {
   id: string;
   authorName: string;
@@ -291,4 +298,7 @@ export interface CommunityPost {
   dreamData?: DreamInterpretationOutput;
   tarotReadingData?: TarotReadingOutput;
   tarotPersonalityData?: TarotPersonalityOutput;
+  // New fields for interactivity
+  reactions?: Record<string, number>; // e.g., { "❤️": 12, "✨": 5 }
+  comments?: Comment[];
 }

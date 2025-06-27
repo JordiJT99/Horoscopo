@@ -780,6 +780,11 @@
   "CommunityPage.seeMore": "Voir plus",
   "CommunityPage.seeLess": "Voir moins",
   "CommunityPage.reactButton": "Réagir",
+  "CommunityPage.postCommentButton": "Publier un Commentaire",
+  "CommunityPage.commentPlaceholder": "Écrire un commentaire...",
+  "CommunityPage.reactions": "Réactions",
+  "CommunityPage.beFirstToReact": "Soyez le premier à réagir",
+  "CommunityPage.noCommentsYet": "Aucun commentaire pour le moment. Connectez-vous pour commencer la conversation !",
   "Tarot.reversed": "Renversée",
   "birthForm": {
     "submitButton": "Générer le Thème Natal",

@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { CommunityPost } from '@/types';
+import type { CommunityPost, Comment } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,11 +11,12 @@ import { formatDistanceToNow } from 'date-fns';
 import { es, enUS, de, fr } from 'date-fns/locale';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles } from 'lucide-react';
+import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
+import { useAuth } from '@/context/AuthContext';
+import { Textarea } from '../ui/textarea';
 
 interface CommunityPostCardProps {
   post: CommunityPost;
@@ -81,10 +82,40 @@ const ExpandableText = ({ text, dictionary, textKey }: { text: string; dictionar
 };
 
 export default function CommunityPostCard({ post, dictionary, locale }: CommunityPostCardProps) {
+  const { user } = useAuth();
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<Comment[]>(post.comments || []);
+  const [newComment, setNewComment] = useState('');
+  const [reactions, setReactions] = useState<Record<string, number>>(post.reactions || {});
+
   const timeAgo = formatDistanceToNow(new Date(post.timestamp), {
     addSuffix: true,
     locale: dateLocales[locale] || enUS,
   });
+
+  const handleReact = (emoji: string) => {
+    setReactions(prev => {
+      const newReactions = { ...prev };
+      newReactions[emoji] = (newReactions[emoji] || 0) + 1;
+      return newReactions;
+    });
+  };
+
+  const handleCommentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newComment.trim() || !user) return;
+
+    const commentToAdd: Comment = {
+      authorName: user.displayName || 'Anonymous',
+      authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
+      text: newComment,
+    };
+
+    setComments(prev => [...prev, commentToAdd]);
+    setNewComment('');
+  };
+  
+  const sortedReactions = Object.entries(reactions).sort(([, a], [, b]) => b - a);
 
   const renderPostContent = () => {
     switch (post.postType) {
@@ -158,11 +189,25 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
           </div>
         </div>
       </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
+      <CardContent className="px-4 pb-2 pt-0">
         {renderPostContent()}
       </CardContent>
-      <CardFooter className="p-4 pt-2 flex justify-between items-center text-xs text-muted-foreground">
-        <p>{timeAgo}</p>
+
+      {/* Reaction Counts */}
+      <div className="px-4 pb-2 flex items-center gap-2">
+        {sortedReactions.length > 0 ? (
+          sortedReactions.slice(0, 3).map(([emoji, count]) => (
+            <div key={emoji} className="flex items-center gap-1 bg-background/50 rounded-full px-2 py-0.5 text-xs">
+              <span className="text-sm">{emoji}</span>
+              <span className="font-medium text-muted-foreground">{count}</span>
+            </div>
+          ))
+        ) : (
+          <p className="text-xs text-muted-foreground italic">{dictionary['CommunityPage.beFirstToReact'] || "Be the first to react"}</p>
+        )}
+      </div>
+
+      <CardFooter className="p-4 pt-0 flex justify-between items-center text-xs text-muted-foreground border-t border-border/30 mt-2">
         <div className="flex items-center gap-1">
           <Popover>
             <PopoverTrigger asChild>
@@ -172,20 +217,66 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
             </PopoverTrigger>
             <PopoverContent className="w-auto p-1 bg-background/80 backdrop-blur-md border-border/50">
               <div className="flex gap-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">👍</Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">❤️</Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">😂</Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">😢</Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">🙏</Button>
+                {['👍', '❤️', '😂', '😢', '🙏', '✨'].map(emoji => (
+                  <Button key={emoji} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125" onClick={() => handleReact(emoji)}>
+                    {emoji}
+                  </Button>
+                ))}
               </div>
             </PopoverContent>
           </Popover>
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-            <MessageCircle className="w-4 h-4 mr-2" />
-            <span className="text-xs">{dictionary['CommunityPage.commentButton'] || 'Comment'}</span>
-          </Button>
         </div>
+        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary" onClick={() => setShowComments(s => !s)}>
+          <MessageCircle className="w-4 h-4 mr-2" />
+          <span className="text-xs">{comments.length} {dictionary['CommunityPage.commentButton'] || 'Comment'}</span>
+        </Button>
       </CardFooter>
+      
+      {showComments && (
+        <div className="px-4 pb-4 border-t border-border/30 bg-background/30">
+          {/* Comment input form */}
+          {user && (
+            <form onSubmit={handleCommentSubmit} className="flex items-start gap-2 pt-4">
+              <Avatar className="w-8 h-8">
+                <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'}/>
+                <AvatarFallback>{user.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <Textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder={dictionary['CommunityPage.commentPlaceholder'] || 'Write a comment...'}
+                  className="bg-input/50 text-sm min-h-[40px]"
+                  rows={1}
+                />
+                <Button type="submit" size="sm" className="mt-2" disabled={!newComment.trim()}>
+                   <Send className="mr-2 h-3 w-3" />
+                  {dictionary['CommunityPage.postCommentButton'] || 'Post Comment'}
+                </Button>
+              </div>
+            </form>
+          )}
+          {/* Comments List */}
+          <div className="mt-4 space-y-4">
+            {comments.map((comment, index) => (
+              <div key={index} className="flex items-start gap-3">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={comment.authorAvatarUrl} alt={comment.authorName} />
+                  <AvatarFallback>{comment.authorName.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1 bg-background/40 rounded-lg p-2">
+                  <p className="font-semibold text-xs text-foreground">{comment.authorName}</p>
+                  <p className="text-sm text-muted-foreground">{comment.text}</p>
+                </div>
+              </div>
+            ))}
+            {comments.length === 0 && !user && (
+              <p className="text-center text-xs text-muted-foreground py-2">{dictionary['CommunityPage.noCommentsYet'] || "No comments yet. Log in to start the conversation!"}</p>
+            )}
+          </div>
+        </div>
+      )}
+
     </Card>
   );
 }
