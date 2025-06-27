@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -141,15 +140,12 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       await toggleReactionOnPost(post.id, user.uid, emoji);
     } catch (error: any) {
       setReactions(originalReactions);
-      if (error.code === 'permission-denied') {
-        toast({
-            title: dictionary['Error.permissionDeniedTitle'] || "Permission Denied",
-            description: dictionary['Error.permissionDeniedDescription'] || "Your Firestore security rules do not allow this action. Please ensure you have configured rules to allow writes for authenticated users.",
-            variant: 'destructive'
-        });
-      } else {
-        toast({ title: dictionary['Error.genericTitle'], description: dictionary['CommunityPage.reactionError'] || 'Could not save reaction.', variant: 'destructive' });
-      }
+      const errorMsg = error.message || (dictionary['CommunityPage.reactionError'] || 'Could not save reaction.');
+      toast({
+          title: dictionary['Error.genericTitle'] || "Error",
+          description: errorMsg,
+          variant: 'destructive'
+      });
     }
   };
 
@@ -172,15 +168,12 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       setCommentCount(prev => prev + 1);
       setNewComment('');
     } catch (error: any) {
-       if (error.code === 'permission-denied') {
-            toast({
-                title: dictionary['Error.permissionDeniedTitle'] || "Permission Denied",
-                description: dictionary['Error.permissionDeniedDescription'] || "Your Firestore security rules do not allow this action. Please ensure you have configured rules to allow writes for authenticated users.",
-                variant: 'destructive'
-            });
-       } else {
-            toast({ title: dictionary['Error.genericTitle'], description: dictionary['CommunityPage.commentError'] || 'Could not post comment.', variant: 'destructive' });
-       }
+       const errorMsg = error.message || (dictionary['CommunityPage.commentError'] || 'Could not post comment.');
+       toast({
+         title: dictionary['Error.genericTitle'] || "Error",
+         description: errorMsg,
+         variant: 'destructive'
+       });
     } finally {
        setIsPostingComment(false);
     }

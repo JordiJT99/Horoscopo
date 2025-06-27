@@ -1,8 +1,7 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import type { CommunityPost, Comment } from '@/types';
+import type { CommunityPost, Comment, NewPostData } from '@/types';
 import {
   collection,
   query,
@@ -14,26 +13,11 @@ import {
   serverTimestamp,
   Timestamp,
   limit,
-  runTransaction,
+  updateDoc,
+  deleteField,
   writeBatch,
   increment,
 } from 'firebase/firestore';
-
-// Define a more specific type for creating new posts, ensuring authorId is always present.
-type NewPostData = Pick<
-  CommunityPost,
-  | 'authorId'
-  | 'authorName'
-  | 'authorAvatarUrl'
-  | 'authorZodiacSign'
-  | 'postType'
-> & Partial<
-  Pick<
-    CommunityPost,
-    'textContent' | 'dreamData' | 'tarotReadingData' | 'tarotPersonalityData'
-  >
->;
-
 
 // Fetch posts from Firestore
 export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
@@ -93,7 +77,6 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
   }
 
   try {
-    // Explicitly build the object to save, avoiding any undefined fields from the spread
     const dataToSave: any = {
       authorId: newPostData.authorId,
       authorName: newPostData.authorName,
@@ -105,7 +88,6 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
       commentCount: 0,
     };
 
-    // Add optional fields only if they exist in the input data
     if (newPostData.textContent) dataToSave.textContent = newPostData.textContent;
     if (newPostData.dreamData) dataToSave.dreamData = newPostData.dreamData;
     if (newPostData.tarotReadingData) dataToSave.tarotReadingData = newPostData.tarotReadingData;
@@ -115,7 +97,6 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
     const postsCollection = collection(db, 'community-posts');
     const docRef = await addDoc(postsCollection, dataToSave);
 
-    // Create a complete CommunityPost object for optimistic UI update.
     const optimisticPost: CommunityPost = {
       id: docRef.id,
       timestamp: new Date().toISOString(),
@@ -124,7 +105,6 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
       ...newPostData,
     };
     
-    // Clean up undefined properties for the return object
     Object.keys(optimisticPost).forEach(key => {
       if (optimisticPost[key as keyof CommunityPost] === undefined) {
           delete optimisticPost[key as keyof CommunityPost];
@@ -133,8 +113,8 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
     
     return optimisticPost;
 
-  } catch (error) {
-    console.error("Firestore addCommunityPost operation failed:", error);
+  } catch (error: any) {
+    console.error("Firestore addCommunityPost operation failed:", error.message, error.stack);
     throw new Error("Failed to add post to the community feed.");
   }
 };
@@ -156,71 +136,76 @@ export const getCommentsForPost = async (postId: string): Promise<Comment[]> => 
     });
 }
 
+// **REFACTORED** to use a batched write
 export const addCommentToPost = async (postId: string, commentData: Omit<Comment, 'id' | 'timestamp'>): Promise<Comment> => {
     if (!db) {
       throw new Error("Firestore is not initialized. Cannot add comment.");
     }
     const postRef = doc(db, 'community-posts', postId);
-    const commentsCollectionRef = collection(postRef, 'comments');
-    const newCommentRef = doc(commentsCollectionRef);
-
+    const newCommentRef = doc(collection(postRef, 'comments'));
+    
     try {
-        await runTransaction(db, async (transaction) => {
-            const postDoc = await transaction.get(postRef);
-            if (!postDoc.exists()) {
-                throw new Error("Post does not exist!");
-            }
+        const batch = writeBatch(db);
 
-            const completeCommentData = {
-                ...commentData,
-                timestamp: serverTimestamp(),
-            };
-            
-            transaction.set(newCommentRef, completeCommentData);
-            transaction.update(postRef, { commentCount: increment(1) });
-        });
+        // 1. Set the new comment in the subcollection
+        const completeCommentData = {
+            ...commentData,
+            timestamp: serverTimestamp(),
+        };
+        batch.set(newCommentRef, completeCommentData);
+
+        // 2. Atomically increment the comment count on the parent post
+        batch.update(postRef, { commentCount: increment(1) });
+
+        // 3. Commit the batch
+        await batch.commit();
         
+        // Return the comment for optimistic UI update
         return {
             id: newCommentRef.id,
             ...commentData,
             timestamp: new Date().toISOString(),
         };
 
-    } catch (error) {
-        console.error("Firestore addCommentToPost transaction failed:", error);
+    } catch (error: any) {
+        console.error("Firestore addCommentToPost batch failed:", error.message, error.stack);
+        // Re-throw the original error to be caught by the client
         throw error;
     }
 }
 
-// --- Reactions ---
+// **REFACTORED** to use atomic field updates
 export const toggleReactionOnPost = async (postId: string, userId: string, emoji: string): Promise<Record<string, string>> => {
-    if (!db) throw new Error("Firestore is not initialized.");
+    if (!db) {
+        throw new Error("Firestore is not initialized. Cannot toggle reaction.");
+    }
     const postRef = doc(db, 'community-posts', postId);
 
-    let finalReactions: Record<string, string> = {};
-
     try {
-      await runTransaction(db, async (transaction) => {
-          const postDoc = await transaction.get(postRef);
-          if (!postDoc.exists()) {
-              throw new Error("Post does not exist!");
-          }
+        // We still need one read to know if we are adding or removing the reaction
+        const postDoc = await getDoc(postRef);
+        if (!postDoc.exists()) {
+            throw new Error("Post does not exist!");
+        }
 
-          const currentReactions = postDoc.data().reactions || {};
-          
-          if (currentReactions[userId] === emoji) {
-              delete currentReactions[userId];
-          } else {
-              currentReactions[userId] = emoji;
-          }
+        const currentReactions = postDoc.data().reactions || {};
+        const userReactionField = `reactions.${userId}`;
 
-          transaction.update(postRef, { reactions: currentReactions });
-          finalReactions = currentReactions;
-      });
+        if (currentReactions[userId] === emoji) {
+            // User is toggling off their own reaction - use deleteField
+            await updateDoc(postRef, { [userReactionField]: deleteField() });
+            delete currentReactions[userId]; // Update local copy for return
+        } else {
+            // User is adding a new reaction or changing it
+            await updateDoc(postRef, { [userReactionField]: emoji });
+            currentReactions[userId] = emoji; // Update local copy for return
+        }
+        
+        return currentReactions;
 
-      return finalReactions;
-    } catch (error) {
-      console.error("Firestore toggleReactionOnPost transaction failed:", error);
-      throw error;
+    } catch (error: any) {
+        console.error("Firestore toggleReactionOnPost failed:", error.message, error.stack);
+        // Re-throw original error
+        throw error;
     }
 }
