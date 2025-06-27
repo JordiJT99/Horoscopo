@@ -1,7 +1,6 @@
-
 'use server';
 /**
- * @fileOverview A Genkit flow to interpret user-described dreams and extract key dream elements.
+ * @fileOverview A Genkit flow to interpret user-described dreams using a guided wizard and extract key dream elements.
  *
  * - dreamInterpretationFlow - A function that calls the dream interpretation flow.
  * - DreamInterpretationInput - The input type for the dreamInterpretationFlow function.
@@ -11,11 +10,21 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
+const DreamWizardDataSchema = z.object({
+  coreDescription: z.string().describe("The main, detailed narrative of the dream."),
+  characters: z.string().optional().describe("Key people, animals, or beings that appeared in the dream."),
+  locations: z.string().optional().describe("The primary places or settings where the dream occurred."),
+  emotions: z.string().optional().describe("The dominant emotions felt during the dream."),
+  symbols: z.string().optional().describe("Specific objects or recurring symbols that stood out."),
+});
+export type DreamWizardData = z.infer<typeof DreamWizardDataSchema>;
+
 const DreamInterpretationInputSchema = z.object({
-  dreamDescription: z.string().describe('A detailed description of the dream provided by the user.'),
+  dreamData: DreamWizardDataSchema,
   locale: z.string().describe('The locale (e.g., "en", "es") for the interpretation language.'),
 });
 export type DreamInterpretationInput = z.infer<typeof DreamInterpretationInputSchema>;
+
 
 const DreamElementsSchema = z.object({
   symbols: z.array(z.string()).describe('Key symbols or objects that appeared in the dream (e.g., "key", "mirror", "tree"). Max 5 items.'),
@@ -36,9 +45,9 @@ const dreamInterpretationPrompt = ai.definePrompt({
   input: {schema: DreamInterpretationInputSchema},
   output: {schema: DreamInterpretationOutputSchema},
   prompt: `You are an expert dream interpreter with a deep understanding of symbolism and psychology.
-The user will describe a dream they had. Respond in the {{locale}} language.
+The user will describe a dream they had in several structured parts. Respond in the {{locale}} language.
 
-Your task is twofold:
+Your task is to synthesize this information and then perform two main actions:
 1.  Provide a thoughtful, insightful, and multi-paragraph interpretation of the dream. Analyze the symbols, emotions, characters, and events present in the dream. Consider common dream symbolism but also encourage the user to reflect on their personal associations with the dream elements. Structure your interpretation clearly. Avoid definitive statements like "This dream means exactly X." Instead, use phrases like "This could suggest...", "It might represent...", "Consider how this relates to your waking life...".
 2.  Extract key elements from the dream to populate a "Dream Map". These elements should be categorized as:
     *   symbols: Key symbols or objects (max 5).
@@ -47,12 +56,35 @@ Your task is twofold:
     *   locations: Main places or settings (max 3).
     *   themes: Recurrent themes or core concepts (max 3).
 
-The user's dream description is:
-"{{dreamDescription}}"
+Here is the user's dream, broken down into parts:
+
+**Main Dream Narrative:**
+"{{dreamData.coreDescription}}"
+
+{{#if dreamData.characters}}
+**Characters Mentioned:**
+"{{dreamData.characters}}"
+{{/if}}
+
+{{#if dreamData.locations}}
+**Locations Mentioned:**
+"{{dreamData.locations}}"
+{{/if}}
+
+{{#if dreamData.emotions}}
+**Emotions Felt:**
+"{{dreamData.emotions}}"
+{{/if}}
+
+{{#if dreamData.symbols}}
+**Key Symbols/Objects:**
+"{{dreamData.symbols}}"
+{{/if}}
+
 
 Provide your response as a single JSON object with two main keys: "interpretation" (string) and "dreamElements" (object containing arrays of strings for symbols, emotions, characters, locations, themes).
 
-Example for dream "I was flying over a city made of clouds, chased by a shadowy figure. I felt a mix of exhilaration and fear. My best friend was there, trying to hand me a glowing orb.":
+Example for dream: { coreDescription: "I was flying over a city made of clouds", characters: "my best friend, a shadowy figure", emotions: "exhilaration and fear", symbols: "a glowing orb" }
 {
   "interpretation": "Flying in dreams often symbolizes a sense of freedom, liberation, or a desire to rise above current challenges. The city made of clouds could represent a realm of imagination or aspirations. The feeling of exhilaration mixed with fear suggests a complex emotional state regarding this pursuit of freedom or new heights. The shadowy figure might represent an internal fear, an external pressure, or an unresolved issue that feels like it's pursuing you. Your best friend offering a glowing orb is a powerful symbol; friends often represent supportive aspects of ourselves or literal support systems. The orb could signify wisdom, a solution, or a gift you are meant to receive or acknowledge. Consider what this 'glowing orb' might mean to you personally and how your friend's presence makes you feel in the context of being chased.",
   "dreamElements": {
@@ -64,7 +96,7 @@ Example for dream "I was flying over a city made of clouds, chased by a shadowy 
   }
 }
 
-Now, analyze the user's dream: "{{dreamDescription}}" and provide the JSON output.
+Now, analyze the user's dream and provide the JSON output.
 `,
 });
 
