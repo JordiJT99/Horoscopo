@@ -95,11 +95,12 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       }
     }
     
-    const postData: Omit<CommunityPost, 'id' | 'timestamp'> = {
+    const postData = {
+      authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
-      postType: 'tarot_reading',
+      postType: 'tarot_reading' as const,
       tarotReadingData: reading,
     };
 

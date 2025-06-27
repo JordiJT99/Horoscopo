@@ -153,11 +153,12 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       }
     }
     
-    const postData: Omit<CommunityPost, 'id' | 'timestamp'> = {
+    const postData = {
+      authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
-      postType: 'dream',
+      postType: 'dream' as const,
       dreamData: interpretationResult
     };
 
