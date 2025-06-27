@@ -803,5 +803,16 @@
   "CommunityPage.shareTarotSuccess": "Your tarot reading has been shared with the community.",
   "CommunityPage.dreamPostTitle": "Shared a Dream Interpretation",
   "CommunityPage.tarotPostTitle": "Shared a Tarot Card",
-  "Tarot.reversed": "Reversed"
+  "Tarot.reversed": "Reversed",
+  "birthForm": {
+    "submitButton": "Generate Natal Chart",
+    "dateLabel": "Birth Date",
+    "timeLabel": "Birth Time (approx.)",
+    "cityLabel": "Birth City",
+    "countryLabel": "Birth Country",
+    "pickDate": "Pick a date",
+    "validationErrors": {
+      "required": "This field is required"
+    }
+  }
 }
