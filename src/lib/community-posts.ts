@@ -88,19 +88,32 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
   if (!db) {
     throw new Error("Firestore is not initialized. Cannot add post.");
   }
-  // Safeguard to ensure authorId is present before sending to Firestore
   if (!newPostData.authorId) {
     throw new Error("Cannot create post: authorId is missing.");
   }
 
   try {
-    const postsCollection = collection(db, 'community-posts');
-    const docRef = await addDoc(postsCollection, {
-      ...newPostData,
+    // Explicitly build the object to save, avoiding any undefined fields from the spread
+    const dataToSave: any = {
+      authorId: newPostData.authorId,
+      authorName: newPostData.authorName,
+      authorAvatarUrl: newPostData.authorAvatarUrl,
+      authorZodiacSign: newPostData.authorZodiacSign,
+      postType: newPostData.postType,
       timestamp: serverTimestamp(),
       reactions: {},
       commentCount: 0,
-    });
+    };
+
+    // Add optional fields only if they exist in the input data
+    if (newPostData.textContent) dataToSave.textContent = newPostData.textContent;
+    if (newPostData.dreamData) dataToSave.dreamData = newPostData.dreamData;
+    if (newPostData.tarotReadingData) dataToSave.tarotReadingData = newPostData.tarotReadingData;
+    if (newPostData.tarotPersonalityData) dataToSave.tarotPersonalityData = newPostData.tarotPersonalityData;
+
+
+    const postsCollection = collection(db, 'community-posts');
+    const docRef = await addDoc(postsCollection, dataToSave);
 
     // Create a complete CommunityPost object for optimistic UI update.
     const optimisticPost: CommunityPost = {
@@ -108,12 +121,16 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
       timestamp: new Date().toISOString(),
       reactions: {},
       commentCount: 0,
-      textContent: newPostData.textContent,
-      dreamData: newPostData.dreamData,
-      tarotReadingData: newPostData.tarotReadingData,
-      tarotPersonalityData: newPostData.tarotPersonalityData,
-      ...newPostData
+      ...newPostData,
     };
+    
+    // Clean up undefined properties for the return object
+    Object.keys(optimisticPost).forEach(key => {
+      if (optimisticPost[key as keyof CommunityPost] === undefined) {
+          delete optimisticPost[key as keyof CommunityPost];
+      }
+    });
+    
     return optimisticPost;
 
   } catch (error) {
@@ -146,34 +163,38 @@ export const addCommentToPost = async (postId: string, commentData: Omit<Comment
     const postRef = doc(db, 'community-posts', postId);
     const commentsCollectionRef = collection(postRef, 'comments');
 
+    // Generate a new ref for the comment document *before* the transaction
+    const newCommentRef = doc(commentsCollectionRef);
+
     try {
-        // Use a transaction to ensure atomicity
-        const newCommentDoc = await runTransaction(db, async (transaction) => {
-            const newCommentRef = doc(commentsCollectionRef);
-            
+        await runTransaction(db, async (transaction) => {
+            const postDoc = await transaction.get(postRef);
+            if (!postDoc.exists()) {
+                throw new Error("Post does not exist!");
+            }
+
             const completeCommentData = {
                 ...commentData,
                 timestamp: serverTimestamp(),
             };
 
-            // 1. Set the new comment data
+            // 1. Create the new comment document
             transaction.set(newCommentRef, completeCommentData);
 
             // 2. Atomically increment the commentCount on the parent post
             transaction.update(postRef, { commentCount: increment(1) });
-            
-            return {
-                id: newCommentRef.id,
-                ...commentData,
-                timestamp: new Date().toISOString(), // for optimistic return
-            };
         });
         
-        return newCommentDoc;
+        // If transaction is successful, return the optimistic data for the UI
+        return {
+            id: newCommentRef.id,
+            ...commentData,
+            timestamp: new Date().toISOString(),
+        };
 
     } catch (error) {
         console.error("Error adding comment in transaction: ", error);
-        throw error;
+        throw error; // Re-throw to be caught by the UI component
     }
 }
 
