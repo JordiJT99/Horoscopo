@@ -134,7 +134,7 @@ export const addCommunityPost = async (newPostData: NewPostData): Promise<Commun
     return optimisticPost;
 
   } catch (error) {
-    console.error("Error adding community post:", error);
+    console.error("Firestore addCommunityPost operation failed:", error);
     throw new Error("Failed to add post to the community feed.");
   }
 };
@@ -162,8 +162,6 @@ export const addCommentToPost = async (postId: string, commentData: Omit<Comment
     }
     const postRef = doc(db, 'community-posts', postId);
     const commentsCollectionRef = collection(postRef, 'comments');
-
-    // Generate a new ref for the comment document *before* the transaction
     const newCommentRef = doc(commentsCollectionRef);
 
     try {
@@ -177,15 +175,11 @@ export const addCommentToPost = async (postId: string, commentData: Omit<Comment
                 ...commentData,
                 timestamp: serverTimestamp(),
             };
-
-            // 1. Create the new comment document
+            
             transaction.set(newCommentRef, completeCommentData);
-
-            // 2. Atomically increment the commentCount on the parent post
             transaction.update(postRef, { commentCount: increment(1) });
         });
         
-        // If transaction is successful, return the optimistic data for the UI
         return {
             id: newCommentRef.id,
             ...commentData,
@@ -193,8 +187,8 @@ export const addCommentToPost = async (postId: string, commentData: Omit<Comment
         };
 
     } catch (error) {
-        console.error("Error adding comment in transaction: ", error);
-        throw error; // Re-throw to be caught by the UI component
+        console.error("Firestore addCommentToPost transaction failed:", error);
+        throw error;
     }
 }
 
@@ -205,23 +199,28 @@ export const toggleReactionOnPost = async (postId: string, userId: string, emoji
 
     let finalReactions: Record<string, string> = {};
 
-    await runTransaction(db, async (transaction) => {
-        const postDoc = await transaction.get(postRef);
-        if (!postDoc.exists()) {
-            throw new Error("Post does not exist!");
-        }
+    try {
+      await runTransaction(db, async (transaction) => {
+          const postDoc = await transaction.get(postRef);
+          if (!postDoc.exists()) {
+              throw new Error("Post does not exist!");
+          }
 
-        const currentReactions = postDoc.data().reactions || {};
-        
-        if (currentReactions[userId] === emoji) {
-            delete currentReactions[userId];
-        } else {
-            currentReactions[userId] = emoji;
-        }
+          const currentReactions = postDoc.data().reactions || {};
+          
+          if (currentReactions[userId] === emoji) {
+              delete currentReactions[userId];
+          } else {
+              currentReactions[userId] = emoji;
+          }
 
-        transaction.update(postRef, { reactions: currentReactions });
-        finalReactions = currentReactions;
-    });
+          transaction.update(postRef, { reactions: currentReactions });
+          finalReactions = currentReactions;
+      });
 
-    return finalReactions;
+      return finalReactions;
+    } catch (error) {
+      console.error("Firestore toggleReactionOnPost transaction failed:", error);
+      throw error;
+    }
 }
