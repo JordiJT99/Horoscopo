@@ -1,4 +1,8 @@
 
+import type { DreamInterpretationOutput } from './ai/flows/dream-interpretation-flow';
+import type { TarotReadingOutput } from './ai/flows/tarot-reading-flow';
+import type { TarotPersonalityOutput } from './ai/flows/tarot-personality-flow';
+
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
 
@@ -187,18 +191,6 @@ export interface MayanKinInfo {
   kinNumber: number;
 }
 
-// Type for Tarot Personality Test (now Daily Reading)
-export interface TarotPersonalityInputType {
-  locale: string;
-  userName?: string;
-}
-
-export interface TarotPersonalityOutputType {
-  cardName: string;
-  reading: string; // This used to be cardDescription
-  isReversed: boolean;
-  cardImagePlaceholderUrl: string;
-}
 
 // User type for Firebase Authentication
 export interface AuthUser {
@@ -247,9 +239,6 @@ export interface HousePlacementDetail {
   explanation: string;
 }
 
-// --- Import from Dream Interpretation Flow ---
-import type { DreamInterpretationOutput } from './ai/flows/dream-interpretation-flow';
-
 // Type for storing dream interpretations in localStorage
 export interface StoredDream {
   id: string;
@@ -288,11 +277,18 @@ export interface Psychic {
 }
 
 // Type for Community Forum Posts
+export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
+
 export interface CommunityPost {
   id: string;
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
   timestamp: string; // ISO 8601 string for date
-  content: string;
+  postType: PostType;
+  // Optional content fields, only one should be present based on postType
+  textContent?: string;
+  dreamData?: DreamInterpretationOutput;
+  tarotReadingData?: TarotReadingOutput;
+  tarotPersonalityData?: TarotPersonalityOutput;
 }

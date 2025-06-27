@@ -2,18 +2,21 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, MessageCircle } from 'lucide-react';
 import { tarotPersonalityFlow, type TarotPersonalityInput, type TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData } from '@/types';
+import type { OnboardingFormData, ZodiacSignName, CommunityPost } from '@/types';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { addCommunityPost } from '@/lib/community-posts';
+import { getSunSignFromDate } from '@/lib/constants';
 
 interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
@@ -21,8 +24,10 @@ interface TarotPersonalityTestClientPageProps {
 }
 
 export default function TarotPersonalityTestClientPage({ dictionary, locale }: TarotPersonalityTestClientPageProps) {
+  const router = useRouter();
   const [result, setResult] = useState<TarotPersonalityOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
@@ -77,12 +82,58 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
     }, 300); 
   };
   
+  const handleShareToCommunity = async () => {
+    if (!user) {
+      toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToPost'], variant: 'destructive' });
+      return;
+    }
+    if (!result) {
+        toast({ title: "Error", description: "No reading data to share.", variant: 'destructive' });
+        return;
+    }
+
+    setIsSubmitting(true);
+    
+    let authorZodiacSign: ZodiacSignName = 'Aries'; 
+    if (user?.uid) {
+      const storedDataRaw = localStorage.getItem(`onboardingData_${user.uid}`);
+      if (storedDataRaw) {
+        try {
+          const storedData = JSON.parse(storedDataRaw);
+          if (storedData.dateOfBirth) {
+            const sign = getSunSignFromDate(new Date(storedData.dateOfBirth));
+            if (sign) {
+              authorZodiacSign = sign.name;
+            }
+          }
+        } catch(e) { console.error("Could not get zodiac sign.", e) }
+      }
+    }
+    
+    const postData: Omit<CommunityPost, 'id' | 'timestamp'> = {
+      authorName: user.displayName || 'Anonymous Astro-Fan',
+      authorAvatarUrl: user.photoURL || `https://placehold.co/64x64.png?text=${(user.displayName || 'A').charAt(0)}`,
+      authorZodiacSign: authorZodiacSign,
+      postType: 'tarot_personality',
+      tarotPersonalityData: result,
+    };
+
+    try {
+      await addCommunityPost(postData);
+      toast({ title: dictionary['CommunityPage.shareSuccessTitle'] || "Success!", description: dictionary['CommunityPage.shareTarotSuccess'] || "Your tarot card has been shared." });
+      router.push(`/${locale}/community`);
+    } catch (error) {
+      toast({ title: dictionary['Error.genericTitle'], description: (error as Error).message || "Could not share your card.", variant: 'destructive' });
+    } finally {
+        setIsSubmitting(false);
+    }
+  }
+
   const cardBackPath = "/custom_assets/tarot-card-back.png";
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-xl mx-auto">
       
-      {/* 3D Card Flip Container */}
       <div className="perspective-1000 w-[180px] h-[315px] sm:w-[220px] sm:h-[385px] mb-6">
         <motion.div
           className="relative w-full h-full transform-style-preserve-3d"
@@ -148,7 +199,6 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
           </div>
       )}
 
-      {/* Result Display */}
       <div className="w-full transition-opacity duration-500" style={{ opacity: isFlipped && !isLoading ? 1 : 0 }}>
         {isFlipped && !isLoading && result && (
             <motion.div
@@ -169,10 +219,16 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
                                 {result.reading}
                             </div>
                         </div>
-                         <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm mt-4">
-                            <RotateCcw className="mr-2 h-4 w-4" />
-                            {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"}
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                          <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm flex-1">
+                              <RotateCcw className="mr-2 h-4 w-4" />
+                              {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"}
+                          </Button>
+                          <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="w-full font-body text-xs md:text-sm flex-1">
+                             {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
+                             {dictionary['CommunityPage.shareToCommunity'] || "Share to Community"}
+                          </Button>
+                        </div>
                     </CardContent>
                 </Card>
             </motion.div>

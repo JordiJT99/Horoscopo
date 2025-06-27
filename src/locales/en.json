@@ -796,5 +796,12 @@
   "CommunityPage.postErrorEmpty": "Your post cannot be empty.",
   "CommunityPage.loginToPost": "You must be logged in to post.",
   "CommunityPage.postedBy": "Posted by",
+  "CommunityPage.commentButton": "Comment",
+  "CommunityPage.shareToCommunity": "Share to Community",
+  "CommunityPage.shareSuccessTitle": "Shared!",
+  "CommunityPage.shareDreamSuccess": "Your dream has been shared with the community.",
+  "CommunityPage.shareTarotSuccess": "Your tarot reading has been shared with the community.",
+  "CommunityPage.dreamPostTitle": "Shared a Dream Interpretation",
+  "CommunityPage.tarotPostTitle": "Shared a Tarot Card",
   "Tarot.reversed": "Reversed"
 }

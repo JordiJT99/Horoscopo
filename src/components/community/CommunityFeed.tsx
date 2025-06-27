@@ -77,12 +77,12 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
       }
     }
 
-
     const newPost: Omit<CommunityPost, 'id' | 'timestamp'> = {
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
-      content: newPostContent,
+      postType: 'text',
+      textContent: newPostContent,
     };
 
     try {

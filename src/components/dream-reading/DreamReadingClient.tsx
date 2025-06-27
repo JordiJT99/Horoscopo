@@ -11,12 +11,15 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Slider } from '@/components/ui/slider';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch, ChevronLeft, ChevronRight, Feather, Home, Users, Drama, BookHeart, BarChart3 } from 'lucide-react';
+import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch, ChevronLeft, ChevronRight, Feather, Home, Users, Drama, BookHeart, BarChart3, MessageCircle } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput, type DreamWizardData } from '@/ai/flows/dream-interpretation-flow';
-import type { StoredDream } from '@/types';
+import type { StoredDream, ZodiacSignName, CommunityPost } from '@/types';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import DreamTrends from './DreamTrends';
+import { useAuth } from '@/context/AuthContext';
+import { addCommunityPost } from '@/lib/community-posts';
+import { getSunSignFromDate } from '@/lib/constants';
 
 
 const TOTAL_STEPS = 6;
@@ -59,6 +62,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);
@@ -66,9 +70,9 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     coreDescription: '',
     vividness: 3,
   });
-
-  const [interpretation, setInterpretation] = useState<string | null>(null);
-  const [dreamElements, setDreamElements] = useState<DreamInterpretationOutput['dreamElements'] | null>(null);
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [interpretationResult, setInterpretationResult] = useState<DreamInterpretationOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [newDreamTrigger, setNewDreamTrigger] = useState(0);
   
@@ -77,24 +81,6 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (!isClient) return;
-
-    const sharedInterpretation = searchParams.get('interpretation');
-    if (sharedInterpretation) {
-      try {
-        const decodedInterpretation = decodeURIComponent(sharedInterpretation);
-        setInterpretation(decodedInterpretation);
-        setDreamElements(null);
-        setViewMode('result');
-      } catch (e) {
-        console.error("Error decoding shared interpretation:", e);
-        setError(dictionary['DreamReadingPage.errorDecoding'] || "Could not display the shared interpretation. It might be corrupted.");
-        setViewMode('wizard');
-      }
-    }
-  }, [searchParams, dictionary, isClient]);
-
   const handleInterpretDream = async () => {
     if (!formData.coreDescription.trim()) {
       toast({ title: dictionary['Error.genericTitle'] || "Error", description: dictionary['DreamWizard.error.coreRequired'] || "The main dream description is required.", variant: 'destructive'});
@@ -102,13 +88,11 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     }
     setViewMode('loading');
     setError(null);
-    setInterpretation(null);
-    setDreamElements(null);
+    setInterpretationResult(null);
     try {
       const input: DreamInterpretationInput = { dreamData: formData, locale };
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
-      setInterpretation(result.interpretation);
-      setDreamElements(result.dreamElements);
+      setInterpretationResult(result);
       
       try {
         const newDreamRecord: StoredDream = {
@@ -119,10 +103,9 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
         };
         const storedDreamsRaw = localStorage.getItem('dreamJournal');
         const storedDreams: StoredDream[] = storedDreamsRaw ? JSON.parse(storedDreamsRaw) : [];
-        // Keep the journal to a reasonable size, e.g., 100 entries
         const updatedDreams = [newDreamRecord, ...storedDreams].slice(0, 100);
         localStorage.setItem('dreamJournal', JSON.stringify(updatedDreams));
-        setNewDreamTrigger(Date.now()); // Trigger re-calculation of trends
+        setNewDreamTrigger(Date.now());
       } catch(e) {
         console.error("Could not save dream to journal:", e);
       }
@@ -140,14 +123,58 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     }
   };
 
-  const handleShare = async () => {
-    // Sharing logic remains the same
-  };
+  const handleShareToCommunity = async () => {
+    if (!user) {
+      toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToPost'], variant: 'destructive' });
+      return;
+    }
+    if (!interpretationResult) {
+        toast({ title: "Error", description: "No interpretation data to share.", variant: 'destructive' });
+        return;
+    }
+
+    setIsSubmitting(true);
+    
+    let authorZodiacSign: ZodiacSignName = 'Aries'; 
+    if (user?.uid) {
+      const storedDataRaw = localStorage.getItem(`onboardingData_${user.uid}`);
+      if (storedDataRaw) {
+        try {
+          const storedData = JSON.parse(storedDataRaw);
+          if (storedData.dateOfBirth) {
+            const sign = getSunSignFromDate(new Date(storedData.dateOfBirth));
+            if (sign) {
+              authorZodiacSign = sign.name;
+            }
+          }
+        } catch(e) {
+          console.error("Could not parse onboarding data to get zodiac sign.", e)
+        }
+      }
+    }
+    
+    const postData: Omit<CommunityPost, 'id' | 'timestamp'> = {
+      authorName: user.displayName || 'Anonymous Astro-Fan',
+      authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
+      authorZodiacSign: authorZodiacSign,
+      postType: 'dream',
+      dreamData: interpretationResult
+    };
+
+    try {
+      await addCommunityPost(postData);
+      toast({ title: dictionary['CommunityPage.shareSuccessTitle'] || "Success!", description: dictionary['CommunityPage.shareDreamSuccess'] || "Your dream has been shared with the community." });
+      router.push(`/${locale}/community`);
+    } catch (error) {
+      toast({ title: dictionary['Error.genericTitle'] || "Error", description: (error as Error).message || "Could not share your dream.", variant: 'destructive' });
+    } finally {
+        setIsSubmitting(false);
+    }
+  }
 
   const handleNewInterpretation = () => {
     router.push(`/${locale}/dream-reading`);
-    setInterpretation(null);
-    setDreamElements(null);
+    setInterpretationResult(null);
     setFormData({ coreDescription: '', vividness: 3 });
     setCurrentStep(1);
     setError(null);
@@ -267,14 +294,12 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     <Card className="w-full max-w-xl mx-auto shadow-xl">
         <CardHeader className="px-4 py-4 md:px-6 md:py-5">
             <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
-            {searchParams.get('interpretation')
-                ? (dictionary['DreamReadingPage.sharedInterpretationTitle'] || "A Shared Dream Interpretation")
-                : (dictionary['DreamReadingPage.interpretationTitle'] || "Dream Interpretation")}
+                {dictionary['DreamReadingPage.interpretationTitle'] || "Dream Interpretation"}
             </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
             <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm md:text-base whitespace-pre-line">
-              {interpretation?.split('\\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+              {interpretationResult?.interpretation?.split('\\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
 
             <div className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
@@ -288,17 +313,17 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
                 </div>
             </div>
 
-            {dreamElements && (
+            {interpretationResult?.dreamElements && (
               <div className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
                 <h3 className="font-headline text-lg md:text-xl text-primary flex items-center justify-center gap-2 mb-4">
                   <PackageSearch className="w-5 h-5 md:w-6 md:h-6" /> {dictionary['DreamReadingPage.dreamMapTitle'] || "Dream Map"}
                 </h3>
                 <div className="space-y-4">
-                  <DreamMapCategory title={dictionary['DreamReadingPage.mapSymbols'] || "Key Symbols"} items={dreamElements.symbols} icon={Hash} />
-                  <DreamMapCategory title={dictionary['DreamReadingPage.mapEmotions'] || "Dominant Emotions"} items={dreamElements.emotions} icon={Smile} />
-                  <DreamMapCategory title={dictionary['DreamReadingPage.mapCharacters'] || "Characters"} items={dreamElements.characters} icon={Users} />
-                  <DreamMapCategory title={dictionary['DreamReadingPage.mapLocations'] || "Locations"} items={dreamElements.locations} icon={MapPin} />
-                  <DreamMapCategory title={dictionary['DreamReadingPage.mapThemes'] || "Core Themes"} items={dreamElements.themes} icon={Brain} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapSymbols'] || "Key Symbols"} items={interpretationResult.dreamElements.symbols} icon={Hash} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapEmotions'] || "Dominant Emotions"} items={interpretationResult.dreamElements.emotions} icon={Smile} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapCharacters'] || "Characters"} items={interpretationResult.dreamElements.characters} icon={Users} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapLocations'] || "Locations"} items={interpretationResult.dreamElements.locations} icon={MapPin} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapThemes'] || "Core Themes"} items={interpretationResult.dreamElements.themes} icon={Brain} />
                 </div>
               </div>
             )}
@@ -310,9 +335,9 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
                   <RotateCcw className="mr-2 h-4 w-4" />
                   {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"}
               </Button>
-              <Button onClick={handleShare} className="flex-1">
-                  <Share2 className="mr-2 h-4 w-4" />
-                  {dictionary['Share.buttonLabelInterpretationLinkContent'] || "Share This Interpretation"}
+               <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="flex-1">
+                 {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
+                 {dictionary['CommunityPage.shareToCommunity'] || "Share to Community"}
               </Button>
             </div>
         </CardContent>

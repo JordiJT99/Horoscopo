@@ -770,5 +770,12 @@
   "CommunityPage.postErrorEmpty": "Ihr Beitrag darf nicht leer sein.",
   "CommunityPage.loginToPost": "Sie müssen angemeldet sein, um zu posten.",
   "CommunityPage.postedBy": "Gepostet von",
+  "CommunityPage.commentButton": "Kommentar",
+  "CommunityPage.shareToCommunity": "In der Community teilen",
+  "CommunityPage.shareSuccessTitle": "Geteilt!",
+  "CommunityPage.shareDreamSuccess": "Ihr Traum wurde mit der Community geteilt.",
+  "CommunityPage.shareTarotSuccess": "Ihre Tarot-Lesung wurde mit der Community geteilt.",
+  "CommunityPage.dreamPostTitle": "Teilte eine Traumdeutung",
+  "CommunityPage.tarotPostTitle": "Teilte eine Tarotkarte",
   "Tarot.reversed": "Umgekehrt"
 }

@@ -25,17 +25,30 @@ export const getCommunityPosts = async (): Promise<CommunityPost[]> => {
 
     const posts: CommunityPost[] = querySnapshot.docs.map((doc) => {
       const data = doc.data();
-      // Convert Firestore Timestamp to ISO string for consistency with the type
       const timestamp = data.timestamp instanceof Timestamp ? data.timestamp.toDate().toISOString() : new Date().toISOString();
       
-      return {
+      const post: CommunityPost = {
         id: doc.id,
         authorName: data.authorName,
         authorAvatarUrl: data.authorAvatarUrl,
         authorZodiacSign: data.authorZodiacSign,
-        content: data.content,
         timestamp: timestamp,
-      } as CommunityPost;
+        postType: data.postType || 'text', // Fallback to 'text' for old posts
+        // Add all potential data fields
+        textContent: data.textContent,
+        dreamData: data.dreamData,
+        tarotReadingData: data.tarotReadingData,
+        tarotPersonalityData: data.tarotPersonalityData,
+      };
+
+      // Clean up undefined fields to avoid serialization issues
+      Object.keys(post).forEach(key => {
+          if (post[key as keyof CommunityPost] === undefined) {
+              delete post[key as keyof CommunityPost];
+          }
+      });
+      
+      return post;
     });
 
     return posts;
