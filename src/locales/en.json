@@ -534,6 +534,8 @@
   "Share.horoscopeCopiedSuccess": "Horoscope and link copied to clipboard.",
   "Share.viewOnline": "View online:",
   "Error.genericTitle": "Error",
+  "Error.permissionDeniedTitle": "Permission Denied",
+  "Error.permissionDeniedDescription": "Your Firestore security rules do not allow this action. Please ensure you have configured rules to allow writes for authenticated users.",
   "TarotDailyReading.title": "Your Daily Tarot Card",
   "TarotDailyReading.subtitle": "Draw a card to receive guidance and insight for your day.",
   "TarotDailyReading.revealTitle": "Reveal Your Daily Card",
@@ -811,6 +813,9 @@
   "CommunityPage.reactions": "Reactions",
   "CommunityPage.beFirstToReact": "Be the first to react",
   "CommunityPage.noCommentsYet": "No comments yet. Log in to start the conversation!",
+  "CommunityPage.reactionError": "Could not save reaction.",
+  "CommunityPage.commentError": "Could not post comment.",
+  "CommunityPage.loginToReact": "You must be logged in to react.",
   "Tarot.reversed": "Reversed",
   "birthForm": {
     "submitButton": "Generate Natal Chart",

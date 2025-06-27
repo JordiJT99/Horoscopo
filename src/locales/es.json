@@ -508,6 +508,8 @@
   "Share.horoscopeCopiedSuccess": "Horóscopo y enlace copiados al portapapeles.",
   "Share.viewOnline": "Ver en línea:",
   "Error.genericTitle": "Error",
+  "Error.permissionDeniedTitle": "Permiso Denegado",
+  "Error.permissionDeniedDescription": "Tus reglas de seguridad de Firestore no permiten esta acción. Asegúrate de haber configurado las reglas para permitir escrituras para usuarios autenticados.",
   "TarotDailyReading.title": "Tu Carta del Tarot Diaria",
   "TarotDailyReading.subtitle": "Saca una carta para recibir orientación y perspectiva para tu día.",
   "TarotDailyReading.revealTitle": "Revela tu Carta Diaria",
@@ -785,6 +787,9 @@
   "CommunityPage.reactions": "Reacciones",
   "CommunityPage.beFirstToReact": "Sé el primero en reaccionar",
   "CommunityPage.noCommentsYet": "Aún no hay comentarios. ¡Inicia sesión para empezar la conversación!",
+  "CommunityPage.reactionError": "No se pudo guardar la reacción.",
+  "CommunityPage.commentError": "No se pudo publicar el comentario.",
+  "CommunityPage.loginToReact": "Debes iniciar sesión para reaccionar.",
   "Tarot.reversed": "Invertida",
   "birthForm": {
     "submitButton": "Generar Carta Natal",
