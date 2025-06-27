@@ -26,11 +26,29 @@ interface DreamReadingClientProps {
 
 const wizardSteps = [
   { step: 1, field: 'coreDescription', titleKey: 'DreamWizard.step1.title', descKey: 'DreamWizard.step1.description', placeholderKey: 'DreamWizard.step1.placeholder', icon: Feather },
-  { step: 2, field: 'characters', titleKey: 'DreamWizard.step2.title', descKey: 'DreamWizard.step2.description', placeholderKey: 'DreamWizard.step2.placeholder', icon: Users },
-  { step: 3, field: 'locations', titleKey: 'DreamWizard.step3.title', descKey: 'DreamWizard.step3.description', placeholderKey: 'DreamWizard.step3.placeholder', icon: Home },
-  { step: 4, field: 'emotions', titleKey: 'DreamWizard.step4.title', descKey: 'DreamWizard.step4.description', placeholderKey: 'DreamWizard.step4.placeholder', icon: Drama },
-  { step: 5, field: 'symbols', titleKey: 'DreamWizard.step5.title', descKey: 'DreamWizard.step5.description', placeholderKey: 'DreamWizard.step5.placeholder', icon: BookHeart },
+  { step: 2, field: 'characters', titleKey: 'DreamWizard.step2.title', descKey: 'DreamWizard.step2.description', placeholderKey: 'DreamWizard.step2.placeholder', icon: Users, maxLength: 50 },
+  { step: 3, field: 'locations', titleKey: 'DreamWizard.step3.title', descKey: 'DreamWizard.step3.description', placeholderKey: 'DreamWizard.step3.placeholder', icon: Home, maxLength: 50 },
+  { step: 4, field: 'emotions', titleKey: 'DreamWizard.step4.title', descKey: 'DreamWizard.step4.description', placeholderKey: 'DreamWizard.step4.placeholder', icon: Drama, maxLength: 50 },
+  { step: 5, field: 'symbols', titleKey: 'DreamWizard.step5.title', descKey: 'DreamWizard.step5.description', placeholderKey: 'DreamWizard.step5.placeholder', icon: BookHeart, maxLength: 50 },
 ];
+
+const DreamMapCategory = ({ title, items, icon: Icon }: { title: string, items: string[], icon: React.ElementType }) => {
+  if (!items || items.length === 0) return null;
+  return (
+    <div>
+      <h4 className="font-headline text-base font-semibold text-accent-foreground mb-2 flex items-center gap-2">
+        <Icon className="w-4 h-4 text-primary" />
+        {title}
+      </h4>
+      <div className="flex flex-wrap gap-2">
+        {items.map((item, index) => (
+          <Badge key={index} variant="secondary" className="text-sm font-normal">{item}</Badge>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 
 export default function DreamReadingClient({ dictionary, locale }: DreamReadingClientProps) {
   const router = useRouter();
@@ -144,6 +162,8 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     if (!stepInfo) return null;
     const Icon = stepInfo.icon;
     const fieldName = stepInfo.field as keyof DreamWizardData;
+    const value = formData[fieldName] || '';
+    const maxLength = (stepInfo as any).maxLength;
 
     return (
       <Card className="w-full max-w-xl mx-auto shadow-xl">
@@ -157,7 +177,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             {dictionary[stepInfo.descKey]}
           </CardDescription>
         </CardHeader>
-        <CardContent className="min-h-[180px] md:min-h-[200px] flex items-center px-4 pb-0 md:px-6">
+        <CardContent className="min-h-[180px] md:min-h-[200px] flex flex-col justify-center px-4 pb-0 md:px-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
@@ -168,12 +188,18 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
               className="w-full"
             >
               <Textarea
-                value={formData[fieldName] || ''}
+                value={value}
                 onChange={(e) => handleFormChange(fieldName, e.target.value)}
                 placeholder={dictionary[stepInfo.placeholderKey]}
                 className="min-h-[150px] font-body"
                 rows={5}
+                maxLength={maxLength}
               />
+              {maxLength && (
+                <div className="text-right text-xs text-muted-foreground mt-1 pr-1">
+                  {value.length} / {maxLength}
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </CardContent>
@@ -204,14 +230,19 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm md:text-base whitespace-pre-line">
               {interpretation?.split('\\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
-            {/* Dream Elements Map */}
             {dreamElements && (
-                <div className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
-                    <h3 className="font-headline text-lg md:text-xl text-primary flex items-center justify-center gap-2 mb-4">
-                        <PackageSearch className="w-5 h-5 md:w-6 md:h-6" /> {dictionary['DreamReadingPage.dreamMapTitle'] || "Dream Map"}
-                    </h3>
-                    {/* Render logic for each category */}
+              <div className="mt-6 bg-secondary/20 p-4 sm:p-6 rounded-lg shadow">
+                <h3 className="font-headline text-lg md:text-xl text-primary flex items-center justify-center gap-2 mb-4">
+                  <PackageSearch className="w-5 h-5 md:w-6 md:h-6" /> {dictionary['DreamReadingPage.dreamMapTitle'] || "Dream Map"}
+                </h3>
+                <div className="space-y-4">
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapSymbols'] || "Key Symbols"} items={dreamElements.symbols} icon={Hash} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapEmotions'] || "Dominant Emotions"} items={dreamElements.emotions} icon={Smile} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapCharacters'] || "Characters"} items={dreamElements.characters} icon={Users} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapLocations'] || "Locations"} items={dreamElements.locations} icon={MapPin} />
+                  <DreamMapCategory title={dictionary['DreamReadingPage.mapThemes'] || "Core Themes"} items={dreamElements.themes} icon={Brain} />
                 </div>
+              </div>
             )}
             <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button onClick={handleNewInterpretation} variant="outline" className="flex-1">
