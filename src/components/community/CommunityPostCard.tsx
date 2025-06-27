@@ -1,4 +1,3 @@
-
 'use client';
 
 import type { CommunityPost } from '@/types';
@@ -12,6 +11,7 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 
 interface CommunityPostCardProps {
