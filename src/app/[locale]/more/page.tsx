@@ -6,9 +6,9 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
- Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare,
+ Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare, Users,
   Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
-  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Users as CompatibilityIcon, Hand, Sparkles
+  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 
@@ -44,7 +44,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder,
   }
 
   return (
-    <Link href={`/${locale}${href}`} passHref>
+    <Link href={`/${locale}${href}`}>
       <Card className={`${cardClasses} relative`}>
         {content}
       </Card>
@@ -75,7 +75,7 @@ const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:
   }
   
   return (
-    <Link href={`/${locale}${href}`} passHref>
+    <Link href={`/${locale}${href}`}>
       <div className={itemClasses}>
        {content}
       </div>
@@ -92,14 +92,15 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/tarot-personality-test", icon: Sparkles, titleKey: "TarotPersonalityPage.title", newBadge: false, isPlaceholder: false },
     { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
     { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
-    { href: "/compatibility", icon: CompatibilityIcon, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/compatibility", icon: Users, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
     { href: "/lucky-numbers", icon: LuckyNumbersIcon, titleKey: "LuckyNumbersPage.title", newBadge: false, isPlaceholder: false },
     { href: "/lunar-ascendant", icon: LunarIcon, titleKey: "LunarAscendantPage.title", newBadge: false, isPlaceholder: false },
     { href: "/chinese-horoscope", icon: ChineseIcon, titleKey: "ChineseHoroscopePage.title", newBadge: false, isPlaceholder: false },
     { href: "/mayan-horoscope", icon: MayanAstrologyIcon, titleKey: "MayanHoroscopePage.title", newBadge: false, isPlaceholder: false },
-    { href: "/natalchart", icon: Sparkles, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
-    { href: "/psychic-chat", icon: MessageSquare, titleKey: "MorePage.psychicChat", newBadge: true, isPlaceholder: false },
-    { href: "/palm-reading", icon: Hand, titleKey: "FeatureCards.palmReading", newBadge: true, isPlaceholder: true }, // Placeholder
+    { href: "/natalchart", icon: Orbit, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
+    { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/community", icon: Users, titleKey: "CommunityPage.title", newBadge: true, isPlaceholder: false },
+    { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
     { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: true },

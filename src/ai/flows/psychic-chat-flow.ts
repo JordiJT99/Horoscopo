@@ -71,22 +71,29 @@ The reading is focused on: "${input.topic}". Keep this in mind, but let the conv
 `;
 
     // Map the input messages to the format Genkit expects for history
-    const history: MessageData[] = input.messages.map(msg => ({
+    const allMessages: MessageData[] = input.messages.map(msg => ({
         role: msg.role,
         parts: [{ text: msg.content }],
     }));
     
+    // Define a limit for the conversation history to manage token usage.
+    // We'll keep the last 20 messages of history, plus the current user message.
+    const HISTORY_LIMIT = 20;
+    
     // The last message is the new prompt, which will be passed to `generate`
-    const latestMessage = history.pop();
+    const latestMessage = allMessages.pop();
     if (!latestMessage) {
         throw new Error("No messages provided to the psychic chat flow.");
     }
     const prompt = latestMessage.parts[0].text;
 
+    // Take the last `HISTORY_LIMIT` messages from the remaining history.
+    const history = allMessages.slice(-HISTORY_LIMIT);
+
     const psychicResponse = await ai.generate({
       prompt: prompt, // The newest message from the user.
       system: systemPrompt,
-      history: history, // The rest of the conversation history.
+      history: history, // The rest of the conversation history (now capped).
       config: {
         temperature: 0.8,
         maxOutputTokens: 300,

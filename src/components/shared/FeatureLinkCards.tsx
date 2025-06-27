@@ -1,10 +1,9 @@
-
 "use client";
 
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
-import { Heart, Hand, ChevronRight } from 'lucide-react';
+import { Heart, Eye, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -59,9 +58,9 @@ export default function FeatureLinkCards({ dictionary, locale }: FeatureLinkCard
       href: "/compatibility",
     },
     {
-      titleKey: "FeatureCards.palmReading",
-      icon: Hand,
-      href: "/palm-reading", 
+      titleKey: "FeatureCards.crystalBall",
+      icon: Eye,
+      href: "/crystal-ball", 
     },
   ];
 
@@ -85,4 +84,3 @@ export default function FeatureLinkCards({ dictionary, locale }: FeatureLinkCard
     </motion.div>
   );
 }
-

@@ -1,11 +1,13 @@
 
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth"; // Import Auth type
+import { getFirestore } from "firebase/firestore"; // Import Firestore
 
 const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
 let app: ReturnType<typeof initializeApp> | null = null;
 let authInstance: Auth | null = null;
+let db: ReturnType<typeof getFirestore> | null = null; // Add db instance
 let appInitializedSuccessfully = false;
 
 if (!apiKey || apiKey === "YOUR_API_KEY_HERE" || apiKey.trim() === "" || apiKey === "YOUR_AUTH_DOMAIN_HERE" /* common copy-paste error */) {
@@ -48,9 +50,11 @@ if (!apiKey || apiKey === "YOUR_API_KEY_HERE" || apiKey.trim() === "" || apiKey 
   if (appInitializedSuccessfully && app) {
     try {
       authInstance = getAuth(app);
+      db = getFirestore(app); // Initialize Firestore here
     } catch (error) {
-      console.error("Firebase getAuth error (likely due to bad config despite initializeApp success, or other issue):", error);
-      authInstance = null; // Ensure authInstance is null on error
+      console.error("Firebase getAuth/getFirestore error:", error);
+      authInstance = null;
+      db = null; // Ensure db is null on error
       appInitializedSuccessfully = false; // Mark as not successfully initialized fully
     }
   } else if (appInitializedSuccessfully && !app) {
@@ -62,4 +66,4 @@ if (!apiKey || apiKey === "YOUR_API_KEY_HERE" || apiKey.trim() === "" || apiKey 
 }
 
 // Export authInstance directly as auth
-export { app, authInstance as auth, appInitializedSuccessfully };
+export { app, authInstance as auth, db, appInitializedSuccessfully };

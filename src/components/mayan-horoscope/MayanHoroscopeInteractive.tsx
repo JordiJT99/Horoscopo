@@ -22,6 +22,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface MayanHoroscopeInteractiveProps {
   dictionary: Dictionary;
@@ -139,7 +140,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
 
           {isLoadingKin && (
             <div className="text-center p-4">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto"></div>
+              <LoadingSpinner className="h-10 w-10 text-primary" />
             </div>
           )}
           {errorKin && <p className="text-destructive text-center">{errorKin}</p>}
@@ -157,8 +158,8 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                      <mayanKin.daySign.icon className="w-8 h-8 text-primary" />
                     <span className="font-bold text-xl">{dictionary[mayanKin.daySign.name] || mayanKin.daySign.name}</span>
                   </div>
-                  <p className="text-sm mt-1 text-muted-foreground">{mayanKin.daySign.description}</p>
-                  <p className="text-sm mt-2">{mayanKin.daySign.detailedInterpretation}</p>
+                  <p className="text-sm mt-1 text-muted-foreground">{dictionary[mayanKin.daySign.descriptionKey]}</p>
+                  <p className="text-sm mt-2">{dictionary[mayanKin.daySign.detailedInterpretationKey]}</p>
                 </div>
                 <Separator />
                 <div>
@@ -174,7 +175,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                   <p className="text-sm italic mt-1 text-muted-foreground">
                     <strong>{dictionary['MayanHoroscopePage.question']}</strong> {dictionary[`GalacticTone.${mayanKin.tone.nameKey}.question`] || mayanKin.tone.questionKey}
                   </p>
-                  <p className="text-sm mt-2">{mayanKin.tone.detailedInterpretation}</p>
+                  <p className="text-sm mt-2">{dictionary[mayanKin.tone.detailedInterpretationKey]}</p>
                 </div>
                 <div className="mt-4 text-center">
                   <Button variant="link" onClick={() => setShowCalculationExplanation(!showCalculationExplanation)} className="text-sm text-primary hover:underline">
@@ -217,6 +218,8 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
         {MAYAN_ZODIAC_SIGNS.map((sign) => {
           const SignIcon = sign.icon;
           const translatedSignName = dictionary[sign.name] || sign.name;
+          const translatedDescription = dictionary[sign.descriptionKey] || sign.descriptionKey;
+          const translatedInterpretation = dictionary[sign.detailedInterpretationKey] || sign.detailedInterpretationKey;
           return (
             <Card key={sign.name} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="items-center text-center">
@@ -226,11 +229,11 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
               <CardContent className="flex-grow space-y-2">
                 <div>
                     <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.description']}</p>
-                    <p className="text-sm font-body text-card-foreground/90">{sign.description}</p>
+                    <p className="text-sm font-body text-card-foreground/90">{translatedDescription}</p>
                 </div>
                  <div>
                     <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.detailedInterpretation']}</p>
-                    <p className="text-xs font-body text-card-foreground/80 leading-relaxed">{sign.detailedInterpretation}</p>
+                    <p className="text-xs font-body text-card-foreground/80 leading-relaxed">{translatedInterpretation}</p>
                 </div>
               </CardContent>
             </Card>
@@ -250,6 +253,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
           const translatedToneName = dictionary[`GalacticTone.${tone.nameKey}.name`] || tone.nameKey;
           const translatedKeyword = dictionary[`GalacticTone.${tone.nameKey}.keyword`] || tone.keywordKey;
           const translatedQuestion = dictionary[`GalacticTone.${tone.nameKey}.question`] || tone.questionKey;
+          const translatedInterpretation = dictionary[tone.detailedInterpretationKey] || tone.detailedInterpretationKey;
           const toneLabel = `${dictionary['MayanHoroscopePage.tone'] || 'Tone'} ${tone.id}:`;
 
           return (
@@ -270,7 +274,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                 </div>
                  <div>
                     <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.detailedInterpretation']}</p>
-                    <p className="text-xs font-body text-card-foreground/80 leading-relaxed">{tone.detailedInterpretation}</p>
+                    <p className="text-xs font-body text-card-foreground/80 leading-relaxed">{translatedInterpretation}</p>
                 </div>
               </CardContent>
             </Card>

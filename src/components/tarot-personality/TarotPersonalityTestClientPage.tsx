@@ -1,22 +1,22 @@
 
 "use client";
 
-import { useState, useEffect, useMemo } from 'react'; 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { HelpCircle, Sparkles, Loader2, User, Brain } from 'lucide-react';
-import { tarotPersonalityFlow, type TarotPersonalityInputType, type TarotPersonalityOutputType } from '@/ai/flows/tarot-personality-flow';
+import { RotateCcw, MessageCircle } from 'lucide-react';
+import { tarotPersonalityFlow, type TarotPersonalityInput, type TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
-
-const initialQuestions = (dict: Dictionary) => [
-  { id: 'q1', text: dict['TarotPersonalityPage.question1'] || "Describe how you generally approach new challenges or opportunities.", answer: '' },
-  { id: 'q2', text: dict['TarotPersonalityPage.question2'] || "What is a quality you value most in yourself?", answer: '' },
-  { id: 'q3', text: dict['TarotPersonalityPage.question3'] || "What kind of energy or guidance are you seeking in your life right now?", answer: '' },
-];
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useAuth } from '@/context/AuthContext';
+import type { OnboardingFormData, ZodiacSignName, CommunityPost } from '@/types';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { addCommunityPost } from '@/lib/community-posts';
+import { getSunSignFromDate } from '@/lib/constants';
 
 interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
@@ -24,49 +24,49 @@ interface TarotPersonalityTestClientPageProps {
 }
 
 export default function TarotPersonalityTestClientPage({ dictionary, locale }: TarotPersonalityTestClientPageProps) {
-  const [questions, setQuestions] = useState(() => initialQuestions(dictionary));
-  const [result, setResult] = useState<TarotPersonalityOutputType | null>(null);
+  const router = useRouter();
+  const [result, setResult] = useState<TarotPersonalityOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
-    setQuestions(initialQuestions(dictionary));
-  }, [dictionary]);
-
-  const handleAnswerChange = (index: number, value: string) => {
-    const newQuestions = [...questions];
-    newQuestions[index].answer = value;
-    setQuestions(newQuestions);
-  };
-
-  const handleSubmitTest = async () => {
-    const allAnswered = questions.every(q => q.answer.trim().length >= 10); 
-    if (!allAnswered) {
-      setError(dictionary['TarotPersonalityPage.errorAllAnswers'] || "Please provide a thoughtful answer (at least 10 characters) for all questions.");
-      toast({
-        title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['TarotPersonalityPage.errorAllAnswers'] || "Please provide a thoughtful answer (at least 10 characters) for all questions.",
-        variant: "destructive",
-      });
-      return;
+    if (user?.uid) {
+      const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
+      if (storedData) {
+        try {
+          const parsedData = JSON.parse(storedData) as OnboardingFormData;
+          setOnboardingData(parsedData);
+        } catch (e) {
+          console.error("Failed to parse onboarding data:", e);
+          setOnboardingData(null);
+        }
+      }
+    } else {
+        setOnboardingData(null);
     }
+  }, [user]);
+
+  const handleGetDailyCard = async () => {
+    if (isLoading || isFlipped) return;
+
     setIsLoading(true);
-    setError(null);
-    setResult(null);
     try {
-      const input: TarotPersonalityInputType = {
-        answers: questions.map(q => ({ question: q.text, answer: q.answer })),
+      const input: TarotPersonalityInput = {
         locale,
+        userName: onboardingData?.name || user?.displayName || undefined,
       };
-      const flowResult: TarotPersonalityOutputType = await tarotPersonalityFlow(input);
+      const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
       setResult(flowResult);
+      setIsFlipped(true); // Trigger the flip animation
     } catch (err) {
-      console.error("Error getting tarot personality:", err);
-      setError(dictionary['TarotPersonalityPage.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.");
+      console.error("Error getting daily tarot card:", err);
       toast({
         title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['TarotPersonalityPage.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.",
+        description: dictionary['TarotDailyReading.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -75,103 +75,166 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   };
 
   const handleTryAgain = () => {
-    setResult(null);
-    setQuestions(initialQuestions(dictionary)); 
-    setError(null);
+    setIsFlipped(false);
+    // Reset result after the flip-back animation completes
+    setTimeout(() => {
+      setResult(null);
+    }, 300); 
   };
+  
+  const handleShareToCommunity = async () => {
+    if (!user) {
+      toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToPost'], variant: 'destructive' });
+      return;
+    }
+    if (!result) {
+        toast({ title: "Error", description: "No reading data to share.", variant: 'destructive' });
+        return;
+    }
 
-  if (Object.keys(dictionary).length === 0) {
-    return (
-      <div className="text-center py-10">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
-        <p className="mt-4 font-body">Loading Tarot Personality Test...</p>
-      </div>
-    );
+    setIsSubmitting(true);
+    
+    let authorZodiacSign: ZodiacSignName = 'Aries'; 
+    if (user?.uid) {
+      const storedDataRaw = localStorage.getItem(`onboardingData_${user.uid}`);
+      if (storedDataRaw) {
+        try {
+          const storedData = JSON.parse(storedDataRaw);
+          if (storedData.dateOfBirth) {
+            const sign = getSunSignFromDate(new Date(storedData.dateOfBirth));
+            if (sign) {
+              authorZodiacSign = sign.name;
+            }
+          }
+        } catch(e) { console.error("Could not get zodiac sign.", e) }
+      }
+    }
+    
+    const postData: Omit<CommunityPost, 'id' | 'timestamp'> = {
+      authorName: user.displayName || 'Anonymous Astro-Fan',
+      authorAvatarUrl: user.photoURL || `https://placehold.co/64x64.png?text=${(user.displayName || 'A').charAt(0)}`,
+      authorZodiacSign: authorZodiacSign,
+      postType: 'tarot_personality',
+      tarotPersonalityData: result,
+    };
+
+    try {
+      await addCommunityPost(postData);
+      toast({ title: dictionary['CommunityPage.shareSuccessTitle'] || "Success!", description: dictionary['CommunityPage.shareTarotSuccess'] || "Your tarot card has been shared." });
+      router.push(`/${locale}/community`);
+    } catch (error) {
+      toast({ title: dictionary['Error.genericTitle'], description: (error as Error).message || "Could not share your card.", variant: 'destructive' });
+    } finally {
+        setIsSubmitting(false);
+    }
   }
 
+  const cardBackPath = "/custom_assets/tarot-card-back.png";
+
   return (
-    <Card className="w-full max-w-xl mx-auto shadow-xl">
-      <CardHeader className="px-4 py-4 md:px-6 md:py-5">
-        <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
-          {result ? (dictionary['TarotPersonalityPage.resultTitle'] || "Your Tarot Card") : (dictionary['TarotPersonalityPage.quizTitle'] || "Discover Your Card")}
-        </CardTitle>
-        {!result && (
-          <CardDescription className="text-center font-body text-sm md:text-base">
-            {dictionary['TarotPersonalityPage.quizDescription'] || "Reflect on the questions below. Your answers will help reveal the tarot card that resonates with you."}
-          </CardDescription>
-        )}
-      </CardHeader>
-      <CardContent className="space-y-4 md:space-y-6 px-4 pb-4 md:px-6 md:pb-6">
-        {!result ? (
-          <>
-            {questions.map((q, index) => (
-              <div key={q.id} className="space-y-1">
-                <Label htmlFor={q.id} className="font-body font-semibold text-sm md:text-base">{index + 1}. {q.text}</Label>
-                <Textarea
-                  id={q.id}
-                  value={q.answer}
-                  onChange={(e) => handleAnswerChange(index, e.target.value)}
-                  placeholder={dictionary['TarotPersonalityPage.answerPlaceholder'] || "Your thoughts here..."}
-                  className="min-h-[100px] font-body"
-                  aria-label={q.text}
-                />
-              </div>
-            ))}
-            <Button onClick={handleSubmitTest} disabled={isLoading} className="w-full font-body text-sm md:text-base">
-              {isLoading ? (
-                <>
-                  <Brain className="mr-2 h-4 w-4 animate-pulse" />
-                  {dictionary['TarotPersonalityPage.determiningButton'] || "Determining Your Card..."}
-                </>
-              ) : (
-                <>
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  {dictionary['TarotPersonalityPage.submitButton'] || "Reveal My Card"}
-                </>
-              )}
-            </Button>
-            {error && <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>}
-          </>
-        ) : (
-          <Card className="mt-6 bg-secondary/30 p-4 md:p-6 rounded-lg shadow">
-            <CardHeader className="p-0 pb-3 md:pb-4 text-center">
-               <CardTitle className="font-headline text-lg md:text-xl text-accent-foreground">
-                 {dictionary['TarotPersonalityPage.yourCardIs'] || "You are:"} {result.cardName}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0 space-y-3 md:space-y-4">
-              <div className="flex justify-center mb-3 md:mb-4">
+    <div className="flex flex-col items-center justify-center w-full max-w-xl mx-auto">
+      
+      <div className="perspective-1000 w-[180px] h-[315px] sm:w-[220px] sm:h-[385px] mb-6">
+        <motion.div
+          className="relative w-full h-full transform-style-preserve-3d"
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          {/* Card Back */}
+          <div
+            className={cn(
+                "absolute w-full h-full backface-hidden rounded-lg overflow-hidden shadow-lg border-2 border-primary/20",
+                !isFlipped && "cursor-pointer hover:shadow-primary/40 hover:scale-105 transition-all duration-300",
+                isLoading && "cursor-wait animate-pulse"
+            )}
+            onClick={handleGetDailyCard}
+            onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') handleGetDailyCard() }}
+            tabIndex={!isFlipped && !isLoading ? 0 : -1}
+            role="button"
+            aria-label={dictionary['TarotDailyReading.revealButton'] || "Reveal My Daily Card"}
+          >
+            <Image
+              src={cardBackPath}
+              alt={dictionary['TarotDailyReading.cardBackAlt'] || "Back of a tarot card"}
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+              priority
+              data-ai-hint="tarot card back illustration ornate"
+            />
+          </div>
+
+          {/* Card Front */}
+          <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)] rounded-lg overflow-hidden shadow-lg border-2 border-primary/50 tarot-card-aura">
+            {result && (
+              <motion.div
+                className="w-full h-full"
+                animate={{ rotate: result.isReversed ? 180 : 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
                 <Image
-                  src={result.cardImagePlaceholderUrl} // This will now be the actual image path
+                  src={result.cardImagePlaceholderUrl}
                   alt={result.cardName}
-                  width={134} 
-                  height={235} // Adjusted to maintain aspect ratio of 267x470 used in placeholder
-                  className="rounded-md shadow-lg border-2 border-primary/50"
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")}
                   data-ai-hint={`${result.cardName.toLowerCase().replace(/\s+/g, '_')} tarot`}
-                  unoptimized={result.cardImagePlaceholderUrl.startsWith("https://placehold.co")} // only unoptimize placeholders
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.onerror = null; 
-                    target.src = "https://placehold.co/134x235.png?text=Error";
+                    target.onerror = null;
+                    target.src = "https://placehold.co/220x385.png?text=Error";
                     target.setAttribute("data-ai-hint", "tarot placeholder error");
                   }}
                 />
-              </div>
-              <div>
-                <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotPersonalityPage.cardDescriptionTitle'] || "What this means for you:"}</h4>
-                 <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-xs sm:text-sm">
-                  {result.cardDescription.split('\\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-              <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm">
-                {dictionary['TarotPersonalityPage.tryAgainButton'] || "Try Again"}
-              </Button>
-            </CardContent>
-          </Card>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      </div>
+
+      {isLoading && (
+          <div className="text-center my-4">
+              <LoadingSpinner className="h-8 w-8 text-primary" />
+          </div>
+      )}
+
+      <div className="w-full transition-opacity duration-500" style={{ opacity: isFlipped && !isLoading ? 1 : 0 }}>
+        {isFlipped && !isLoading && result && (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+            >
+                <Card className="w-full bg-secondary/30 p-4 md:p-6 rounded-lg shadow mt-4">
+                    <CardHeader className="p-0 pb-3 md:pb-4 text-center">
+                        <CardTitle className="font-headline text-2xl text-accent-foreground">
+                            {result.cardName} {result.isReversed && `(${dictionary['Tarot.reversed'] || 'Reversed'})`}
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0 space-y-3 md:space-y-4">
+                        <div>
+                            <h4 className="font-headline text-md md:text-lg font-semibold text-primary mb-1">{dictionary['TarotDailyReading.readingTitle'] || "Today's Message:"}</h4>
+                            <div className="font-body text-card-foreground leading-relaxed space-y-2 md:space-y-3 text-sm sm:text-base whitespace-pre-line">
+                                {result.reading}
+                            </div>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                          <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm flex-1">
+                              <RotateCcw className="mr-2 h-4 w-4" />
+                              {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"}
+                          </Button>
+                          <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="w-full font-body text-xs md:text-sm flex-1">
+                             {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
+                             {dictionary['CommunityPage.shareToCommunity'] || "Share to Community"}
+                          </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            </motion.div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn, Settings, Award, ShieldQuestion, Loader2 } from 'lucide-react';
+import { UserCircle, Mail, CalendarDays, Edit3, Gem, Star, LogOut, LogIn, Settings, Award, ShieldQuestion } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';

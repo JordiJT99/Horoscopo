@@ -1,4 +1,3 @@
-
 // Server Component
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
@@ -25,7 +24,7 @@ export default async function CrystalBallPage({ params }: CrystalBallPageProps) 
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
       <SectionTitle
         title={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
-        subtitle={dictionary['CrystalBallPage.subtitle'] || "Peer into the mists and ask your question to the Crystal Ball."}
+        subtitle={dictionary['CrystalBallPage.newSubtitle'] || "Discover what the universe has in store for you today."}
         icon={Eye}
         className="mb-12"
       />

@@ -1,103 +1,91 @@
+
 "use client";
 
 import * as React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import type { Psychic } from "@/lib/psychics";
+import type { Dictionary, Locale } from "@/lib/dictionaries";
 import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface PsychicCardProps {
-  psychic: {
-    id: string;
-    name: string;
-    image: string;
-    specialty: string;
-    phrase: string;
-    rating: number;
-    readings: number;
-    status: "Available" | "Busy" | "Meditating";
-  };
-  onClick: () => void;
+  psychic: Psychic;
   dictionary: Record<string, string>;
+  locale: Locale;
 }
 
-const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, onClick, dictionary }) => {
-  const statusColor =
-    psychic.status === "Available"
-      ? "text-green-500"
-      : psychic.status === "Busy"
-      ? "text-yellow-500"
-      : "text-blue-500";
+const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, dictionary, locale }) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/${locale}/psychic-chat/${psychic.id}`);
+  };
+  
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <div className="flex items-center">
+        {[...Array(fullStars)].map((_, i) => (
+          <Star key={`full-${i}`} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+        ))}
+        {halfStar && <Star key="half" className="w-3 h-3 text-yellow-400" style={{ clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0% 100%)' }} fill="currentColor" />}
+        {[...Array(emptyStars)].map((_, i) => (
+          <Star key={`empty-${i}`} className="w-3 h-3 text-gray-400" />
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <motion.div
-      className="relative flex flex-col items-center justify-center p-6 bg-gradient-to-br from-purple-900 to-indigo-900 rounded-xl shadow-lg cursor-pointer overflow-hidden group"
-      whileHover={{ scale: 1.05, rotateY: 5 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClick}
-      style={{ perspective: 1000 }}
+    <div 
+      onClick={handleCardClick} 
+      className="bg-card rounded-lg shadow-md overflow-hidden flex flex-col h-full cursor-pointer group"
     >
-      <motion.div
-        className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity"
-        style={{ backgroundImage: "url('/custom_assets/tarot-card-back.png')" }}
-        initial={{ opacity: 0.1 }}
-        whileHover={{ opacity: 0.5 }}
-      ></motion.div>
-
-      <div className="relative z-10 flex flex-col items-center">
-        <motion.div
-          className="w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-400 mb-4"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Image
-            src={psychic.image}
-            alt={psychic.name}
-            width={96}
-            height={96}
-            className="object-cover"
-          />
-        </motion.div>
-
-        <h3 className="text-xl font-bold text-white mb-1">{psychic.name}</h3>
-        <p className="text-sm text-gray-300 mb-2">
-          {dictionary[psychic.specialty] || psychic.specialty}
-        </p>
-
-        <motion.p
-          className="italic text-yellow-300 text-center mb-4 text-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          "{dictionary[psychic.phrase] || psychic.phrase}"
-        </motion.p>
-
-        <div className="flex items-center text-yellow-400 mb-2">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              size={16}
-              fill={i < psychic.rating ? "currentColor" : "none"}
-              stroke="currentColor"
-              className={i < psychic.rating ? "" : "text-gray-400"}
-            />
-          ))}
-          <span className="ml-2 text-white text-sm">
-            ({psychic.readings} {dictionary["PsychicCard.readings"] || "readings"})
-          </span>
-        </div>
-
-        <motion.p
-          className={`text-sm font-semibold ${statusColor}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
-          {dictionary["PsychicCard.status"] || "Status"}: {psychic.status}
-        </motion.p>
+      <div className="relative w-full aspect-[4/3]">
+        <Image
+          src={psychic.image}
+          alt={psychic.name}
+          layout="fill"
+          objectFit="cover"
+          className="group-hover:scale-105 transition-transform duration-300"
+          data-ai-hint={psychic.aiHint}
+        />
+        <div 
+          className={cn(
+            "absolute top-2 left-2 h-3 w-3 rounded-full border-2 border-background",
+            psychic.status === "Available" ? "bg-green-500" :
+            psychic.status === "Busy" ? "bg-yellow-500" : "bg-blue-500"
+          )}
+          title={dictionary[psychic.status] || psychic.status} 
+        />
       </div>
-    </motion.div>
+      <div className="p-3 flex-grow flex flex-col">
+        <h3 className="font-bold font-headline text-md truncate">{psychic.name}</h3>
+        <p className="text-xs text-muted-foreground mb-2">
+            {(dictionary['PsychicCard.experience'] || '{experience} years exp.').replace('{experience}', psychic.experience.toString())}
+        </p>
+        <div className="flex items-center gap-1 text-xs mb-3">
+          {renderStars(psychic.rating)}
+          <span className="text-muted-foreground">({psychic.reviews})</span>
+        </div>
+        <div className="mt-auto">
+          {psychic.isFree ? (
+            <Button size="sm" className="w-full text-xs">
+              {dictionary['PsychicCard.chatFree'] || 'CHAT | FREE'}
+            </Button>
+          ) : (
+            <Button size="sm" variant="secondary" className="w-full text-xs">
+              {(dictionary['PsychicCard.chatPerMinute'] || 'CHAT | ${price}/MIN').replace('{price}', psychic.price?.toFixed(2) || '0.00')}
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

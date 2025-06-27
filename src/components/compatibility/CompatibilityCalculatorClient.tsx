@@ -5,8 +5,9 @@ import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import CompatibilityClientContent, { type CompatibilityType } from '@/components/compatibility/CompatibilityClientContent';
-import { Loader2, Heart, Handshake, Briefcase } from 'lucide-react';
+import { Heart, Handshake, Briefcase } from 'lucide-react';
 import SectionTitle from '@/components/shared/SectionTitle';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface CompatibilityCalculatorClientProps {
     dictionary: Dictionary;
@@ -60,7 +61,7 @@ export default function CompatibilityCalculatorClient(props: CompatibilityCalcul
     return (
         <Suspense fallback={
             <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
-              <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+              <LoadingSpinner className="h-12 w-12 text-primary" />
               <p className="mt-4">Loading calculator...</p>
             </div>
           }>

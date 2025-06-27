@@ -57,27 +57,24 @@ const tarotReadingPrompt = ai.definePrompt({
   input: {schema: TarotReadingInputSchema},
   output: {schema: TarotReadingOutputSchema.omit({ imagePlaceholderUrl: true })},
   prompt: `You are a wise and insightful Tarot reader. The user will ask you a question.
-Your task is to:
-1. Select ONE Tarot card from the Major Arcana that you feel is most relevant to the user's question.
-   The Major Arcana includes: ${MAJOR_ARCANA_TAROT_CARDS.join(", ")}.
-   CRITICAL: Your "cardName" output MUST EXACTLY match one of these names, including capitalization and "The " prefix where applicable (e.g., "The Fool", "Strength").
-2. Provide the name of the card in the "cardName" field.
-3. Give a general meaning of this card (2-3 sentences) in the "cardMeaning" field.
-4. Offer specific advice or insight related to the user's question, based on the drawn card (2-3 sentences) in the "advice" field.
 
-Respond in the {{locale}} language.
+Your task is to perform these steps:
+1. Select ONE Tarot card from the Major Arcana that is most relevant to the user's question. The available Major Arcana cards are: ${MAJOR_ARCANA_TAROT_CARDS.join(", ")}.
+2. In the response, provide the name of the card in the "cardName" field. CRITICAL: The "cardName" value MUST ALWAYS BE IN ENGLISH and MUST EXACTLY match one of the names from the list (e.g., "The Fool", "Strength").
+3. Write a general meaning of this card (2-3 sentences) in the "cardMeaning" field, written in the language specified by the {{locale}} code.
+4. Write specific advice related to the user's question (2-3 sentences) in the "advice" field, also in the {{locale}} language.
 
 User's question: "{{question}}"
 
-Example for question "Should I change my career?" and you (AI) choose "The Fool":
+Example for question "Should I change my career?", with locale "es", and you (the AI) choose "The Fool":
 {
   "cardName": "The Fool",
-  "cardMeaning": "The Fool represents new beginnings, innocence, spontaneity, and a leap of faith. It signifies embarking on a new journey with an open heart and mind, often without knowing all the details but trusting in the universe.",
-  "advice": "Regarding your career change, The Fool suggests that this might be a time for a fresh start and embracing the unknown. It encourages you to take that leap of faith if it feels right, even if it seems unconventional. Trust your instincts and be open to new possibilities."
+  "cardMeaning": "El Loco representa nuevos comienzos, inocencia, espontaneidad y un salto de fe. Significa embarcarse en un nuevo viaje con el corazón y la mente abiertos, a menudo sin conocer todos los detalles pero confiando en el universo.",
+  "advice": "Con respecto a tu cambio de carrera, El Loco sugiere que este podría ser un momento para un nuevo comienzo y abrazar lo desconocido. Te anima a dar ese salto de fe si te parece correcto, incluso si parece poco convencional. Confía en tus instintos y mantente abierto a nuevas posibilidades."
 }
 
-Now, provide a reading for the user's question: "{{question}}"
-Ensure your "cardName" is an exact match from the provided Major Arcana list.
+Now, provide a reading for the user's question: "{{question}}".
+Ensure your "cardName" is an exact match from the provided Major Arcana list and is in English, while "cardMeaning" and "advice" are in the {{locale}} language.
 `,
 });
 

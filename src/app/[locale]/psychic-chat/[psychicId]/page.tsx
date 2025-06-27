@@ -1,10 +1,26 @@
 
 import { psychics } from '@/lib/psychics';
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
+import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import PsychicChatUI from '@/components/psychic-chat/PsychicChatUI';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { MessageCircle } from 'lucide-react';
+import { Suspense } from 'react';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
+
+export async function generateStaticParams() {
+  const locales = getSupportedLocales();
+  const psychicIds = psychics.map(p => p.id);
+
+  const params: { locale: string; psychicId: string }[] = [];
+  locales.forEach(locale => {
+    psychicIds.forEach(psychicId => {
+      params.push({ locale, psychicId });
+    });
+  });
+
+  return params;
+}
 
 interface PsychicChatPageProps {
   params: { psychicId: string; locale: Locale };
@@ -40,7 +56,13 @@ const PsychicChatPage = async ({ params }: PsychicChatPageProps) => {
        </div>
       {/* min-h-0 is a flexbox trick to prevent the child from overflowing its container */}
       <div className="flex-grow min-h-0">
-        <PsychicChatUI psychic={psychic} dictionary={dictionary} locale={locale} />
+        <Suspense fallback={
+          <div className="h-full flex items-center justify-center">
+             <LoadingSpinner className="h-16 w-16 text-primary" />
+          </div>
+        }>
+          <PsychicChatUI psychic={psychic} dictionary={dictionary} locale={locale} />
+        </Suspense>
       </div>
     </main>
   );

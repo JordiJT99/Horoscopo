@@ -9,12 +9,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 // SectionTitle es ahora manejado por la página servidora
-import { Users, Heart as HeartLucide, Loader2, Search } from 'lucide-react';
+import { Users, Heart as HeartLucide, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from '@/components/ui/button';
 // RadioGroup y Label para seleccionar tipo ya no son necesarios aquí
 import { cn } from "@/lib/utils";
 import { useSearchParams, useRouter } from 'next/navigation'; // Para leer type de searchParams si es necesario
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 const AnimatedHeart = ({ filled, animated }: { filled: boolean, animated?: boolean }) => (
   <svg
@@ -96,7 +97,7 @@ function CompatibilityClientContentInternal({ dictionary, locale, compatibilityT
   if (Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading dictionary...</p>
       </div>
     );
@@ -164,7 +165,7 @@ function CompatibilityClientContentInternal({ dictionary, locale, compatibilityT
           className="w-full font-body text-base py-3 mb-6"
         >
           {isLoading ? (
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            <LoadingSpinner className="mr-2 h-5 w-5" />
           ) : (
             <Search className="mr-2 h-5 w-5" />
           )}
@@ -173,7 +174,7 @@ function CompatibilityClientContentInternal({ dictionary, locale, compatibilityT
 
         {isLoading && (
             <div className="text-center p-8 min-h-[200px] flex flex-col justify-center items-center">
-                <Loader2 className="h-12 w-12 sm:h-14 sm:h-14 text-primary animate-spin" />
+                <LoadingSpinner className="h-12 w-12 sm:h-14 sm:h-14 text-primary" />
                 <p className="mt-4 text-muted-foreground text-sm sm:text-base">{dictionary['CompatibilitySection.checkingCosmicConnection'] || "Checking cosmic connection..."}</p>
             </div>
         )}
@@ -218,7 +219,7 @@ export default function CompatibilityClientContentWrapper(props: CompatibilityCl
   return (
     <Suspense fallback={
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading compatibility calculator...</p>
       </div>
     }>
