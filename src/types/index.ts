@@ -281,9 +281,12 @@ export interface Psychic {
 export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
 
 export interface Comment {
+  id: string; // Document ID from Firestore
+  authorId: string;
   authorName: string;
   authorAvatarUrl: string;
   text: string;
+  timestamp: string; // ISO 8601 string for date
 }
 
 export interface CommunityPost {
@@ -291,14 +294,14 @@ export interface CommunityPost {
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
-  timestamp: string; // ISO 8601 string for date
+  timestamp: string;
   postType: PostType;
-  // Optional content fields, only one should be present based on postType
+  // Optional content fields
   textContent?: string;
   dreamData?: DreamInterpretationOutput;
   tarotReadingData?: TarotReadingOutput;
   tarotPersonalityData?: TarotPersonalityOutput;
-  // New fields for interactivity
-  reactions?: Record<string, number>; // e.g., { "❤️": 12, "✨": 5 }
-  comments?: Comment[];
+  // Interactivity fields
+  reactions?: Record<string, string>; // { [userId]: emoji }
+  commentCount?: number;
 }
