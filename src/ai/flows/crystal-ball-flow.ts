@@ -1,135 +1,79 @@
-
 'use server';
 /**
- * @fileOverview A Genkit flow to simulate a crystal ball providing mystical answers
- * with different levels of precision.
+ * @fileOverview A Genkit flow to get a mystical revelation for the day from a crystal ball.
  *
- * - crystalBallFlow - A function that calls the crystal ball answer generation flow.
- * - CrystalBallInput - The input type for the crystalBallFlow function.
- * - CrystalBallOutput - The return type for the crystalBallFlow function.
+ * - getCrystalBallRevelation - A function that calls the revelation generation flow.
+ * - CrystalBallRevelationInput - The input type for the flow.
+ * - CrystalBallRevelationOutput - The return type for the flow.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-const CrystalBallInputSchema = z.object({
-  question: z.string().describe('The question the user asks the crystal ball.'),
-  locale: z.string().describe('The locale (e.g., "en", "es") for the answer language.'),
-  precisionLevel: z.enum(['basic', 'deep', 'mystic']).default('basic').describe('The desired level of detail and style for the answer: "basic" for short, "deep" for more elaborate, "mystic" for elaborate with a historical/oracle quote.'),
+const CrystalBallRevelationInputSchema = z.object({
+  locale: z.string().describe('The locale (e.g., "en", "es") for the revelation language.'),
+  userName: z.string().optional().describe('The name of the user, for a personalized revelation.'),
 });
-export type CrystalBallInput = z.infer<typeof CrystalBallInputSchema>;
+export type CrystalBallRevelationInput = z.infer<typeof CrystalBallRevelationInputSchema>;
 
-const CrystalBallOutputSchema = z.object({
-  answer: z.string().describe('The mystical, enigmatic answer from the crystal ball. Its length and style depend on the precisionLevel.'),
+const CrystalBallRevelationOutputSchema = z.object({
+  revelation: z.string().describe("A gentle, positive, and personalized message for the user's day, consisting of 4-5 short paragraphs. It should include a theme, simple advice, an insight, and an encouraging summary."),
 });
-export type CrystalBallOutput = z.infer<typeof CrystalBallOutputSchema>;
-
-// Define a new input schema for the prompt that includes boolean flags
-const PromptInputSchema = CrystalBallInputSchema.extend({
-  isBasic: z.boolean(),
-  isDeep: z.boolean(),
-  isMystic: z.boolean(),
-});
-type PromptInput = z.infer<typeof PromptInputSchema>;
-
+export type CrystalBallRevelationOutput = z.infer<typeof CrystalBallRevelationOutputSchema>;
 
 const crystalBallPrompt = ai.definePrompt({
-  name: 'crystalBallPrompt',
-  input: {schema: PromptInputSchema}, // Use the extended schema
-  output: {schema: CrystalBallOutputSchema},
-  prompt: `You are a mystical Crystal Ball, an ancient oracle of glass and starlight. The user will ask you a question.
+  name: 'crystalBallRevelationPrompt',
+  input: {schema: CrystalBallRevelationInputSchema},
+  output: {schema: CrystalBallRevelationOutputSchema},
+  prompt: `You are a wise and empathetic cosmic guide, speaking through a Crystal Ball. Your purpose is to provide the user with a gentle, positive, and actionable theme for their day.
 Respond in the {{locale}} language.
-Your answers should ALWAYS have an oracular, enigmatic, and slightly poetic tone.
-**CRITICALLY IMPORTANT: Do NOT provide concrete advice, factual information, or direct "yes/no" answers.**
-Instead, offer cryptic insights, reflections, or ponderings related to the question's theme.
-**Vary your phrasing and imagery significantly in every response. Avoid repeating specific phrases (like "The mists swirl", "The orb reflects", "The tapestry of fate") or similar opening statements across different answers.** Each revelation must feel unique and fresh.
-Use diverse metaphors: starlight, shadows, echoes, whispers, ancient stones, flowing water, cosmic dust, silent mountains, deep roots, celestial winds, etc.
 
-The user's question is: "{{question}}"
+**Core Instruction:** Generate a personalized message for the user that feels like a warm, mystical whisper from the universe.
 
-{{#if isBasic}}
-Provide a SHORT and DIRECT mystical answer, 1-2 concise sentences. It should be an enigmatic fragment of wisdom.
-Example for question "Will I find true love?":
-{
-  "answer": "El tapiz del destino revela hilos entrelazados. La paciencia puede iluminar el sendero oculto."
-}
-Example for question "Should I change my career?":
-{
-  "answer": "El eco del cambio resuena en el orbe de cristal. Las decisiones de hoy tejen los senderos del mañana."
-}
-Example for question "Will I be happy?":
-{
-  "answer": "En el corazón de la quietud, la alegría susurra su nombre. Busca dentro, no en el viento errante."
-}
-{{else if isDeep}}
-Provide a MORE ELABORATE mystical answer, 3-4 sentences. Explore different facets or implications of the question with a slightly more descriptive and reflective tone, using richer imagery.
-Example for question "Will I find true love?":
-{
-  "answer": "La esfera muestra senderos que se bifurcan, algunos bañados en luz lunar, otros velados por sombras ancestrales. Un corazón abierto, cual flor al sol, puede atraer la conexión cuando las mareas cósmicas son propicias. No busques con ojos impacientes, sino con un espíritu dispuesto a danzar con lo inesperado."
-}
-Example for question "Should I change my career?":
-{
-  "answer": "El cristal refleja un cruce de caminos: uno familiar y seguro, otro envuelto en la niebla de lo posible. Contempla no solo el destino, sino el viaje mismo. La corriente del cambio puede arrastrarte a orillas insospechadas o revelar gemas ocultas en la profundidad de tu ser."
-}
-Example for question "Will I be happy?":
-{
-  "answer": "La felicidad es una melodía que el alma aprende a cantar, no un trofeo que se gana en batallas externas. En las mareas de la existencia, tanto en la calma como en la tempestad, yace la oportunidad de afinar tu canción. ¿Qué notas resuenan verdaderas en tu espíritu hoy, más allá del ruido del mundo?"
-}
-{{else if isMystic}}
-Provide a MYSTICAL and slightly more profound answer, 3-4 sentences. Incorporate a wise saying or quote attributed to an ancient oracle, a forgotten seer, or a metaphorical cosmic entity (e.g., "the Whispering Stars", "the Keeper of Timeless Echoes"). This quote should be thematically relevant to the question and enhance the enigmatic quality.
-Example for question "Will I find true love?":
-{
-  "answer": "El vidrio ancestral brilla con hilos de luminosa posibilidad. Como susurró una vez el Oráculo de Eldoria: 'El eco del amor no se encuentra en la ávida búsqueda, sino en el sereno florecer del alma'. Cultiva tu jardín interior, y la flor más rara e inesperada podría prender en él. Las constelaciones guardan silencio, observando con sabiduría."
-}
-Example for question "Should I change my career?":
-{
-  "answer": "El orbe tiembla, imbuido con la potente energía de la encrucijada. El Vidente de las Montañas Olvidadas proclamó: 'Cada umbral que se cruza con intención es un universo entero por descubrir'. Sopesa el llamado de lo nuevo con la voz profunda de tu ser. Los vientos cósmicos observan tu elección con aliento contenido."
-}
-Example for question "Will I be happy?":
-{
-  "answer": "La esfera se ilumina con una luz suave, reflejando el anhelo de tu corazón. La Guardiana de los Ecos Atemporales solía decir: 'La alegría es el polen dorado que el viento del presente esparce sobre el alma receptiva'. No persigas efímeras mariposas lejanas; cultiva el jardín donde ellas anhelen posarse."
-}
-{{else}}
-{{! Default to basic if no specific precisionLevel flag is true }}
-Provide a SHORT and DIRECT mystical answer, 1-2 concise sentences. It should be an enigmatic fragment of wisdom.
-Example for question "Will I find true love?":
-{
-  "answer": "El tapiz del destino revela hilos entrelazados. La paciencia puede iluminar el sendero oculto."
-}
-Example for question "Should I change my career?":
-{
-  "answer": "El eco del cambio resuena en el orbe de cristal. Las decisiones de hoy tejen los senderos del mañana."
-}
+{{#if userName}}
+**PERSONALIZATION:** The user's name is {{userName}}. Start the message with a direct and friendly greeting, like "¡Hola, {{userName}}!" or "Para ti, {{userName}},...".
 {{/if}}
 
-Now, answer the user's question "{{question}}" with the style determined by the flags (isBasic: {{isBasic}}, isDeep: {{isDeep}}, isMystic: {{isMystic}}).
-Ensure your response is a JSON object with a single key "answer".
+**Structure and Tone:**
+- **Theme:** Introduce a central, positive theme for the day (e.g., prioritizing well-being, connecting with others, finding joy in small things). Use mystical but clear phrasing like "el universo te susurra que..." or "el cosmos sugiere...".
+- **Actionable Advice:** Offer 1-2 simple, gentle suggestions related to the theme (e.g., "un baño relajante," "una caminata," "escuchar tu canción favorita").
+- **Insight:** Add a short sentence that provides a deeper, mental or spiritual insight.
+- **Encouragement:** End with a positive and encouraging summary for the day.
+- **Formatting:** Use newline characters ('\\n\\n') to separate the different parts of the message into distinct paragraphs for readability.
+
+**Example for userName 'Jordi':**
+{
+  "revelation": "¡Hola, Jordi! Hoy el universo te susurra que es momento de priorizar tu bienestar.\\n\\nTu energía merece un respiro, así que escucha a tu cuerpo.\\n\\nEl cosmos sugiere que incorpores pequeños rituales de cuidado: un baño relajante, una caminata bajo el sol o unos minutos de meditación.\\n\\nRecuerda que la rejuvenescencia no solo es física, también es mental.\\n\\nHoy es un día perfecto para reconectar con lo que te hace sentir pleno y en paz."
+}
+
+**Example without userName:**
+{
+  "revelation": "Hoy es un día para encontrar la magia en lo simple. El cosmos sugiere que bajes el ritmo y observes los detalles a tu alrededor.\\n\\nPermítete disfrutar de una taza de té en silencio, o mirar las nubes pasar por la ventana.\\n\\nLa verdadera maravilla no siempre está en los grandes gestos, sino en la paz de los pequeños momentos. Reconecta con la alegría serena que ya habita en ti."
+}
+
+Now, provide a new, unique revelation for today in the {{locale}} language, following this structure and tone precisely.
+{{#if userName}}
+Personalize it for {{userName}}.
+{{/if}}
+Ensure your response is a JSON object with a single key "revelation".
 `,
 });
 
-const crystalBallFlowInternal = ai.defineFlow(
+const getCrystalBallRevelationFlow = ai.defineFlow(
   {
-    name: 'crystalBallFlowInternal',
-    inputSchema: CrystalBallInputSchema,
-    outputSchema: CrystalBallOutputSchema,
+    name: 'getCrystalBallRevelationFlow',
+    inputSchema: CrystalBallRevelationInputSchema,
+    outputSchema: CrystalBallRevelationOutputSchema,
   },
   async (input) => {
-    const promptInput: PromptInput = {
-      ...input,
-      isBasic: input.precisionLevel === 'basic',
-      isDeep: input.precisionLevel === 'deep',
-      isMystic: input.precisionLevel === 'mystic',
-    };
-
-    const {output} = await crystalBallPrompt(promptInput);
+    const {output} = await crystalBallPrompt(input);
     if (!output) {
-      throw new Error('Crystal ball provided no answer.');
+      throw new Error('Crystal ball provided no revelation.');
     }
     return output;
   }
 );
 
-export async function crystalBallFlow(input: CrystalBallInput): Promise<CrystalBallOutput> {
-  return crystalBallFlowInternal(input);
+export async function getCrystalBallRevelation(input: CrystalBallRevelationInput): Promise<CrystalBallRevelationOutput> {
+  return getCrystalBallRevelationFlow(input);
 }
-

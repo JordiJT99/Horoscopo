@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { Psychic } from '@/lib/psychics';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { psychicChat } from '@/ai/flows/psychic-chat-flow';
@@ -11,9 +12,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, UserCircle, Loader2 } from 'lucide-react';
+import { Send, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 interface Message {
   text: string;
@@ -60,6 +62,7 @@ const TopicSelector = ({ dictionary, onTopicSelect, psychic }: { dictionary: Dic
 };
 
 export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicChatUIProps) {
+  const searchParams = useSearchParams();
   const [selectedTopic, setSelectedTopic] = useState<{ key: string, name: string } | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -67,6 +70,35 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const { user } = useAuth();
   const { toast } = useToast();
   const scrollViewportRef = useRef<HTMLDivElement>(null);
+
+  const topicKeyMapping: { [key: string]: string } = {
+    'love': 'PsychicTopic.loveRelationships',
+    'career': 'PsychicTopic.careerFinance',
+    'personal_growth': 'PsychicTopic.spiritualGrowth',
+    'general': 'PsychicTopic.generalReading',
+  };
+
+  const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
+    const initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
+      .replace('{psychicName}', psychic.name)
+      .replace('{topicName}', topicName);
+    
+    setMessages([{ text: initialMessage, sender: 'ai' }]);
+    setSelectedTopic({ key: topicKey, name: topicName });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dictionary, psychic.name]);
+
+  useEffect(() => {
+    const topicFromQuery = searchParams.get('topic');
+    if (topicFromQuery && topicKeyMapping[topicFromQuery]) {
+        const topicDictKey = topicKeyMapping[topicFromQuery];
+        const topicName = dictionary[topicDictKey] || topicFromQuery;
+        if (!selectedTopic) {
+            handleTopicSelect(topicDictKey, topicName);
+        }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
 
   const scrollToBottom = () => {
     if (scrollViewportRef.current) {
@@ -102,8 +134,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       );
       const newAiMessage: Message = { text: aiResponse, sender: 'ai' };
       
-      // Artificial delay to simulate typing, now longer and variable
-      const randomDelay = Math.floor(Math.random() * 3000) + 3500; // Delay between 2.5 and 4.5 seconds
+      const randomDelay = Math.floor(Math.random() * 3000) + 3500;
       setTimeout(() => {
         setMessages(prev => [...prev, newAiMessage]);
         setIsSending(false);
@@ -118,15 +149,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       });
       setIsSending(false);
     }
-  };
-  
-  const handleTopicSelect = (topicKey: string, topicName: string) => {
-    const initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
-      .replace('{psychicName}', psychic.name)
-      .replace('{topicName}', topicName);
-    
-    setMessages([{ text: initialMessage, sender: 'ai' }]);
-    setSelectedTopic({ key: topicKey, name: topicName });
   };
   
   const userInitial = user?.displayName?.charAt(0).toUpperCase() || <UserCircle size={18} />;
@@ -178,9 +200,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
                 </Avatar>
                 <div className="p-3 rounded-2xl bg-secondary text-secondary-foreground rounded-bl-none">
                   <div className="flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.3s]"></span>
-                    <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.15s]"></span>
-                    <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-pulse"></span>
+                    <LoadingSpinner className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </div>
               </div>
@@ -202,7 +222,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
           disabled={isSending}
         />
         <Button onClick={handleSendMessage} disabled={isSending || !inputMessage.trim()} size="icon">
-          {isSending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send size={18} />}
+          {isSending ? <LoadingSpinner className="h-4 w-4" /> : <Send size={18} />}
           <span className="sr-only">{dictionary['PsychicChatClient.sendButton'] || 'Send'}</span>
         </Button>
       </div>

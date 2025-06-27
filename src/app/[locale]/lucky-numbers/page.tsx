@@ -3,8 +3,9 @@
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Clover, Loader2 } from 'lucide-react';
+import { Clover } from 'lucide-react';
 import LuckyNumbersClientContent from '@/components/lucky-numbers/LuckyNumbersClientContent';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -26,7 +27,7 @@ export default async function LuckyNumbersPage({ params }: LuckyNumbersPageProps
   if (Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading dictionary...</p>
       </div>
     );

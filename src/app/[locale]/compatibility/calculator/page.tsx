@@ -1,7 +1,7 @@
 // Server Component - This page now just fetches data and renders the client wrapper.
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
-import { Loader2 } from 'lucide-react';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import CompatibilityCalculatorClient from '@/components/compatibility/CompatibilityCalculatorClient'; // Import the new client component
 
 export async function generateStaticParams() {
@@ -24,7 +24,7 @@ export default async function CompatibilityCalculatorPage({ params }: Compatibil
   if (Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center min-h-screen">
-        <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4">Loading dictionary...</p>
       </div>
     );

@@ -67,6 +67,7 @@ const PromptInputSchema = z.object({
   userGender: z.string().optional(),
   userRelationshipStatus: z.string().optional(),
   userEmploymentStatus: z.string().optional(),
+  astrologicalTheme: z.string().optional().describe('El tema astrológico central del día para guiar la predicción.'),
 });
 type PromptInput = z.infer<typeof PromptInputSchema>;
 
@@ -86,57 +87,81 @@ const formatDateForWeeklyCache = (date: Date): string => `${getISOWeekYear(date)
 const formatDateForMonthlyCache = (date: Date): string => format(date, 'yyyy-MM');
 
 
+// Themes for daily horoscopes to ensure variety
+const dailyThemes = [
+  "un impulso de energía creativa y autoexpresión",
+  "un desafío inesperado en la comunicación que requiere paciencia",
+  "una oportunidad para la introspección profunda y el descanso necesario",
+  "un encuentro social sorprendente que podría traer nuevas oportunidades",
+  "un enfoque renovado en las finanzas y la seguridad material",
+  "una necesidad de establecer límites claros en las relaciones personales",
+  "un momento de claridad sobre una vieja duda o un problema persistente",
+  "un día ideal para la aventura, la espontaneidad y salir de la rutina",
+  "una conexión emocional profunda y significativa con alguien cercano",
+  "un obstáculo profesional que requiere una estrategia cuidadosa en lugar de acción impulsiva",
+  "una revelación sobre la salud y la importancia del bienestar físico y mental",
+  "una invitación a aprender algo nuevo o a explorar un interés intelectual",
+  "un día de armonía en el hogar y en las relaciones familiares",
+  "un conflicto entre la responsabilidad y el deseo de libertad",
+  "la llegada de noticias inesperadas que podrían cambiar tus planes",
+];
+
+// Function to get a deterministic theme based on date and sign
+function getDeterministicTheme(dateStr: string, sign: string, themes: string[]): string {
+  let hash = 0;
+  const seed = `${dateStr}-${sign}`;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0; // Convert to 32bit integer
+  }
+  const index = Math.abs(hash) % themes.length;
+  return themes[index];
+}
+
+
 // Daily Horoscope Prompt
 const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
   input: { schema: PromptInputSchema },
   output: { schema: HoroscopeDetailSchema },
-  prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
+  prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas del día influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo DIARIO PERSONALIZADO para {{userName}} (signo {{sign}}) para {{dateDescriptor}} en el idioma {{locale}}.
-Dirígete al usuario por su nombre, {{userName}}, de forma natural dentro del horóscopo cuando sea apropiado (por ejemplo, "Hola {{userName}}, hoy para tu signo {{sign}}...").
+**INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en {{userName}} ({{sign}}).
+**Saluda a {{userName}} al principio de la predicción principal de forma natural y amigable.** Tu tono debe ser místico y directo, como si revelaras un secreto del cosmos. Usa frases como "Hola {{userName}}, hoy el universo te depara...", "Para ti, {{userName}}, las estrellas sugieren...", "La energía cósmica de hoy te invita a...".
 {{#if userRelationshipStatus}}
-Considera sutilmente su estado sentimental ({{userRelationshipStatus}}) al redactar la sección de amor, sin hacerlo el foco principal. Por ejemplo, si es 'single', enfócate en la autoexploración o nuevas conexiones. Si es 'in-relationship', en la profundización de lazos.
+Considera sutilmente su estado sentimental ({{userRelationshipStatus}}) al redactar la sección de amor.
 {{/if}}
 {{#if userEmploymentStatus}}
-Considera sutilmente su situación laboral ({{userEmploymentStatus}}) al redactar la sección de dinero/trabajo, sin hacerlo el foco principal. Por ejemplo, si es 'student', enfócate en el aprendizaje y futuras oportunidades. Si es 'employed', en el desarrollo profesional.
+Considera sutilmente su situación laboral ({{userEmploymentStatus}}) al redactar la sección de dinero/trabajo.
 {{/if}}
-Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
-Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo, {{userName}}. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales podrían influir en {{userName}} ({{sign}}).
-Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}.
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}.
-Para 'health', sugiere cómo {{userName}} puede mantener el bienestar.
+Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en {{userName}} ({{sign}}).
+Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}, siempre en relación con "{{astrologicalTheme}}".
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}, en el contexto de "{{astrologicalTheme}}".
+Para 'health', sugiere cómo {{userName}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
 {{else}}
 Genera ÚNICAMENTE el horóscopo DIARIO GENERAL para el signo zodiacal {{sign}} para {{dateDescriptor}} en el idioma {{locale}}.
-Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para el día) con el crecimiento personal y el bienestar emocional.
-Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
+**INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en el signo {{sign}}.
+Tu tono debe ser místico y predictivo, usando frases como "el cosmos depara", "las estrellas sugieren", "la energía de hoy invita a".
 
-Para la sección 'main', profundiza en cómo las energías diarias actuales podrían influir en el signo {{sign}}.
-Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}.
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}.
-Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar.
+Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en el signo {{sign}}.
+Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}, siempre en relación con "{{astrologicalTheme}}".
+Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}, en el contexto de "{{astrologicalTheme}}".
+Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
 {{/if}}
 
-IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health". El contenido de estas secciones debe ser la predicción para el día indicado por {{dateDescriptor}}, pero sin mencionar explícitamente la fecha dentro del texto de la predicción.
-
-CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). NO añadas ninguna otra clave. NO uses markdown en las cadenas.
-Ejemplo de estructura de salida para un horóscopo GENERAL (isPersonalized: false):
+IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health".
+CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main", "love", "money", "health". NO añadas ninguna otra clave. NO uses markdown.
+Ejemplo de estructura de salida para {{userName}}="Alex" y tema="un encuentro social sorprendente" (CASO PERSONALIZADO):
 {
-  "main": "Aries, podrías sentir un eco de decepciones pasadas. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad. Quizás es momento de sanar alguna herida y mirar hacia adelante con nueva determinación.",
-  "love": "En el amor, la honestidad contigo mismo sobre lo que necesitas para confiar es crucial. Si sientes que viejas heridas afectan tus interacciones, permítete un espacio para la reflexión.",
-  "money": "Tu regente Marte impulsa la acción, pero la claridad mental es tu mejor activo financiero. Antes de tomar decisiones, evalúa si se alinean con tus metas actuales.",
-  "health": "Dedica tiempo a actividades que te reconecten con tu fuerza interior. Sanar implica tanto el cuerpo como la mente."
+  "main": "Hola Alex, para tu signo Aries, el cosmos hoy te depara un encuentro social sorprendente. Una conexión inesperada, ya sea con alguien nuevo o del pasado, tiene el potencial de ofrecerte una perspectiva que no habías considerado. Mantente abierto a las conversaciones espontáneas; las estrellas indican que la sincronicidad está de tu lado.",
+  "love": "En el amor, esta energía social te beneficia enormemente. Si estás en pareja, una salida con amigos puede reavivar la chispa. Si estás soltero, Alex, tu carisma estará en su punto más alto en cualquier evento social. No dudes en iniciar una conversación.",
+  "money": "El networking es tu mejor activo hoy, Alex. Una conversación casual en un entorno relajado podría llevar a una colaboración inesperada o a una valiosa oportunidad profesional. Escucha atentamente.",
+  "health": "Tu bienestar se nutre de la interacción social positiva. Considera una actividad física en grupo, como un deporte de equipo o una clase de baile con amigos. La energía colectiva no solo te motivará, sino que también aliviará el estrés acumulado."
 }
-Ejemplo de estructura de salida para un horóscopo PERSONALIZADO para 'Elena' (isPersonalized: true, userName: 'Elena'):
-{
-  "main": "Hola Elena, hoy para tu signo Aries, podrías sentir un eco de decepciones pasadas. Recuerda que los altibajos son parte de la vida, pero la sospecha constante no resuena con tu naturaleza fogosa. Una introspección sobre tus metas te dará claridad.",
-  "love": "Elena, en el amor, la honestidad contigo misma sobre lo que necesitas para confiar es crucial. Si estás en una relación, la comunicación auténtica fortalecerá el vínculo.",
-  "money": "Tu regente Marte impulsa la acción, Elena, pero la claridad mental es tu mejor activo financiero. Podrías identificar una nueva dirección para tus esfuerzos profesionales.",
-  "health": "Dedica tiempo a actividades que te reconecten con tu fuerza interior, Elena. Si viejas tensiones resurgen, canaliza esa energía en ejercicio consciente."
-}
-Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}}, reflejando este estilo perspicaz y empático, y personalizándolo si isPersonalized es true:
+Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}} y el tema "{{astrologicalTheme}}", reflejando este estilo perspicaz, empático y detallado.
 `,
 });
 
@@ -145,36 +170,27 @@ const weeklyHoroscopePrompt = ai.definePrompt({
   name: 'weeklyHoroscopePrompt',
   input: { schema: PromptInputSchema }, // Using the new PromptInputSchema
   output: { schema: HoroscopeDetailSchema },
-  prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
+  prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas de la semana influirán en la vida del usuario.
 {{#if isPersonalized}}
-Genera ÚNICAMENTE el horóscopo SEMANAL PERSONALIZADO para ESTA SEMANA ACTUAL para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
-Saluda a {{userName}} al inicio del horóscopo de manera natural.
+Genera ÚNICAMENTE el horóscopo SEMANAL PERSONALIZADO para ESTA SEMANA para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
+**Saluda a {{userName}} al principio de la predicción principal de forma natural y amigable.** Tu tono debe ser místico y predictivo, usando frases como "Hola {{userName}}, esta semana el universo te depara...", "Para ti, {{userName}}, las estrellas sugieren...", "La energía cósmica de esta semana te invita a...".
 {{else}}
-Genera ÚNICAMENTE el horóscopo SEMANAL GENERAL para ESTA SEMANA ACTUAL para el signo zodiacal {{sign}} en el idioma {{locale}}.
+Genera ÚNICAMENTE el horóscopo SEMANAL GENERAL para ESTA SEMANA para el signo zodiacal {{sign}} en el idioma {{locale}}.
+Tu tono debe ser místico y predictivo, usando frases como "esta semana el cosmos depara", "las estrellas sugieren", "la energía de la semana invita a".
 {{/if}}
 
-Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (reales o arquetípicos para la semana, como el ingreso de un planeta en un nuevo sector o signo) con el crecimiento personal y el bienestar emocional.
-Tu tono debe ser similar a este ejemplo de sabiduría astrológica: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Esta semana, con Marte —tu regente— ingresando en un nuevo sector del cielo, obtendrás mayor claridad sobre tus metas. Su paso por Virgo trae la oportunidad de sanar heridas del pasado y avanzar en una nueva dirección. Atraerás personas confiables, dispuestas a apoyarte y motivarte en tu camino."
-Busca una profundidad y un tono similares en tus respuestas, adaptados a una perspectiva semanal.
+Para la sección 'main', proporciona una visión general completa para LA SEMANA ACTUAL. Comienza con un tema general para la semana, posiblemente mencionando cómo un tránsito planetario clave podría influir.
+Para 'love', 'money', y 'health', proporciona perspectivas elaboradas, consejos y posibles desarrollos para TODA LA SEMANA.
 
-Para la sección 'main', proporciona una visión general completa para LA SEMANA ACTUAL.
-{{#if isPersonalized}}
-Comienza con un tema general para la semana para {{userName}} ({{sign}}), posiblemente mencionando cómo un tránsito planetario clave (ej. "Marte en Virgo") podría influir en su perspectiva o metas.
-{{else}}
-Comienza con un tema general para la semana para el signo {{sign}}, posiblemente mencionando cómo un tránsito planetario clave (ej. "Marte en Virgo") podría influir en su perspectiva o metas.
-{{/if}}
-Si es apropiado, divide la semana en fases (por ejemplo, inicio, mediados, fin de semana) discutiendo cómo las diferentes energías podrían influir. Aborda temas como el crecimiento personal, los desafíos como oportunidades, y cómo los rasgos centrales del signo interactúan con estas energías semanales.
-Para 'love', 'money', y 'health', proporciona perspectivas elaboradas, consejos y posibles desarrollos para TODA LA SEMANA. Estas secciones también deben ser de varios párrafos y detalladas, conectando con el tema principal de la semana si es posible.
-
-CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). NO añadas ninguna otra clave. NO uses markdown en las cadenas.
-Ejemplo de estructura de salida (CONTENIDO EJEMPLO, GENERA EL TUYO PROPIO):
+CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main", "love", "money", "health". NO añadas ninguna otra clave. NO uses markdown.
+Ejemplo de estructura de salida para {{userName}}="Alex" (CASO PERSONALIZADO):
 {
-  "main": "{{#if isPersonalized}}Hola {{userName}}, esta semana para tu signo Virgo, {{else}}Virgo, esta semana, {{/if}}con el ingreso de Mercurio en un sector de comunicación profunda, te invita a reflexionar sobre cómo expresas tus verdades...",
-  "love": "En el amor, {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}}, la influencia de Mercurio te anima a tener esas conversaciones pendientes...",
-  "money": "En el ámbito financiero y profesional, la precisión de {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}} se ve potenciada...",
-  "health": "Tu bienestar esta semana, {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}}, se beneficia de rutinas que fomenten tanto la claridad mental..."
+  "main": "Hola Alex, esta semana para tu signo Virgo, el universo te depara una mayor claridad en tus comunicaciones. Con el ingreso de Mercurio en un sector de reflexión profunda, es un momento ideal para expresar tus verdades y organizar tus pensamientos. Las conversaciones que tengas a mitad de semana podrían ser particularmente reveladoras.",
+  "love": "En el amor, la influencia de Mercurio te anima a tener esas conversaciones pendientes. Para los Virgo en pareja, es una oportunidad para fortalecer la conexión. Si estás soltero, Alex, tu elocuencia podría atraer a alguien con quien compartes una profunda conexión intelectual.",
+  "money": "Profesional y financieramente, tu precisión se ve potenciada esta semana. Es un excelente momento para revisar contratos, planificar presupuestos o presentar proyectos detallados. Tu atención al detalle será tu mayor activo.",
+  "health": "Tu bienestar se beneficia de rutinas que fomenten tanto la claridad mental como la física. Considera empezar un diario o practicar ejercicios de respiración para calmar la mente y organizar tus ideas."
 }
-Ahora genera el horóscopo SEMANAL MUY DETALLADO para {{sign}} en {{locale}} para esta semana, reflejando este estilo perspicaz y empático, y personalizándolo si isPersonalized es true:
+Ahora genera el horóscopo SEMANAL DETALLADO para {{sign}} en {{locale}} para esta semana, reflejando este estilo perspicaz y personalizándolo si isPersonalized es true:
 `,
 });
 
@@ -183,37 +199,28 @@ const monthlyHoroscopePrompt = ai.definePrompt({
   name: 'monthlyHoroscopePrompt',
   input: { schema: PromptInputSchema }, // Using the new PromptInputSchema
   output: { schema: HoroscopeDetailSchema },
-  prompt: `Eres un astrólogo sabio, empático y perspicaz que ofrece una guía profunda.
+  prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas del mes influirán en la vida del usuario.
 {{#if isPersonalized}}
-Genera ÚNICAMENTE el horóscopo MENSUAL PERSONALIZADO para ESTE MES ACTUAL para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
-Saluda a {{userName}} al inicio del horóscopo de manera natural.
+Genera ÚNICAMENTE el horóscopo MENSUAL PERSONALIZADO para ESTE MES para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
+**Saluda a {{userName}} al principio de la predicción principal de forma natural y amigable.** Tu tono debe ser místico y predictivo, usando frases como "Hola {{userName}}, este mes el universo te depara...", "Para ti, {{userName}}, las estrellas sugieren...", "La energía cósmica de este mes te invita a...".
 {{else}}
-Genera ÚNICAMENTE el horóscopo MENSUAL GENERAL para ESTE MES ACTUAL para el signo zodiacal {{sign}} en el idioma {{locale}}.
+Genera ÚNICAMENTE el horóscopo MENSUAL GENERAL para ESTE MES para el signo zodiacal {{sign}} en el idioma {{locale}}.
+Tu tono debe ser místico y predictivo, usando frases como "este mes el cosmos depara", "las estrellas sugieren", "la energía del mes invita a".
 {{/if}}
+Evita marcadores de posición como "[Insertar mes actual]"; el horóscopo es para el mes actual, así que refiérete a él como "este mes" si es necesario.
 
-Adopta un léxico reflexivo, perspicaz y que conecte los eventos astrológicos (puedes mencionar tránsitos planetarios importantes del mes, ya sean reales o arquetípicos, y cómo impactan a {{sign}}) con el crecimiento personal, las emociones y las metas a largo plazo.
-Evita marcadores de posición como "[Insertar mes actual]" o similares; el horóscopo es para el mes actual, así que refiérete a él como "este mes" o "el mes actual" si es necesario.
-Tu tono debe ser similar a este ejemplo de sabiduría astrológica, adaptado a una perspectiva mensual: "Cuando sufrimos decepciones, resulta más difícil volver a confiar. La vida, naturalmente, conlleva altibajos para todos. Pero vivir con sospecha constante no va contigo. Este mes, con el Sol iluminando un área clave de tu carta, obtendrás mayor claridad sobre tus aspiraciones más profundas. Es un período para sanar heridas del pasado relacionadas con tu autoestima y avanzar con una renovada sensación de propósito. Las relaciones se tornan más significativas, atrayendo personas confiables que te apoyan incondicionalmente."
-Busca una profundidad y un tono similares en tus respuestas.
+Para la sección 'main', proporciona una visión general completa para EL MES ACTUAL. Comienza estableciendo los temas generales.
+Para 'love', 'money', y 'health', proporciona perspectivas elaboradas, consejos y posibles desarrollos para TODO EL MES.
 
-Para la sección 'main', proporciona una visión general completa para EL MES ACTUAL.
-{{#if isPersonalized}}
-Comienza estableciendo las energías o temas generales que afectarán a {{userName}} ({{sign}}) durante este período.
-{{else}}
-Comienza estableciendo las energías o temas generales que afectarán al signo {{sign}} durante este período.
-{{/if}}
-Si es apropiado, divide el mes en fases (por ejemplo, primera quincena, segunda quincena, o por semanas clave) discutiendo cómo diferentes influencias podrían desarrollarse. Aborda temas como el crecimiento personal, el hogar, las aspiraciones profesionales, las relaciones, la creatividad y cómo los rasgos centrales del signo interactúan con estas energías mensuales.
-Para 'love', 'money', y 'health', proporciona perspectivas elaboradas, consejos y posibles desarrollos para TODO EL MES. Estas secciones también deben ser de varios párrafos y muy detalladas, ofreciendo una guía que ayude a {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}} a navegar el mes con mayor conciencia y bienestar.
-
-CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main" (cadena de texto), "love" (cadena de texto), "money" (cadena de texto), "health" (cadena de texto). NO añadas ninguna otra clave. NO uses markdown en las cadenas.
-Ejemplo de estructura de salida (CONTENIDO EJEMPLO, GENERA EL TUYO PROPIO):
+CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main", "love", "money", "health". NO añadas ninguna otra clave. NO uses markdown.
+Ejemplo de estructura de salida para {{userName}}="Alex" (CASO PERSONALIZADO):
 {
-  "main": "{{#if isPersonalized}}Hola {{userName}}, este mes para tu signo Capricornio, {{else}}Capricornio, este mes, {{/if}}se perfila como un período de profunda introspección...",
-  "love": "En el terreno sentimental, {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}}, este mes te pide honestidad emocional...",
-  "money": "Profesional y financieramente, {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}}, este mes es para la estrategia y la consolidación...",
-  "health": "Tu bienestar, {{#if isPersonalized}}{{userName}} ({{sign}}){{else}}{{sign}}{{/if}}, este mes se beneficia enormemente de prácticas que fomenten la conexión mente-cuerpo..."
+  "main": "Hola Alex, para tu signo Capricornio, este mes se perfila como un período de profunda consolidación profesional. El Sol iluminando tu casa de la carrera te invita a tomar el liderazgo y a cosechar los frutos de tu arduo trabajo. Es un momento para la ambición y la estrategia a largo plazo.",
+  "love": "En el terreno sentimental, Alex, este mes te pide un equilibrio entre tu vida profesional y personal. Si estás en pareja, asegúrate de dedicar tiempo de calidad. Para los solteros, es más probable que la atracción surja en entornos profesionales o a través de contactos de trabajo.",
+  "money": "Financieramente, este mes es para la estrategia y la inversión en tu futuro. Podrías recibir un reconocimiento o un ascenso que venga con una mejora económica. Es un buen momento para planificar tus finanzas con una visión a largo plazo.",
+  "health": "Tu bienestar este mes se beneficia enormemente de rutinas que te ayuden a gestionar el estrés laboral. No descuides el descanso. Prácticas como el yoga o simplemente desconectar en la naturaleza serán cruciales para mantener tu energía."
 }
-Ahora genera el horóscopo MENSUAL MUY DETALLADO para {{sign}} en {{locale}} para este mes, reflejando este estilo perspicaz y empático, y personalizándolo si isPersonalized es true:
+Ahora genera el horóscopo MENSUAL DETALLADO para {{sign}} en {{locale}} para este mes, reflejando este estilo perspicaz y personalizándolo si isPersonalized es true:
 `,
 });
 
@@ -256,6 +263,8 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
   } else if (targetDateNormalized.getTime() === yesterday.getTime()) {
     dateDescriptor = "AYER";
   }
+  
+  const theme = getDeterministicTheme(dateStr, input.sign, dailyThemes);
 
   const promptPayload: PromptInput = {
       sign: input.sign,
@@ -266,6 +275,7 @@ async function getDailyHoroscopeDetails(input: HoroscopeFlowInputInternal, targe
       userGender: input.onboardingData?.gender,
       userRelationshipStatus: input.onboardingData?.relationshipStatus,
       userEmploymentStatus: input.onboardingData?.employmentStatus,
+      astrologicalTheme: theme,
   };
 
   try {
@@ -535,3 +545,8 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
 }
 
 
+
+
+    
+
+    

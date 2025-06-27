@@ -17,9 +17,10 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
-import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Sparkles, Clock, Building, Users2, Briefcase, ShieldCheck, Loader2 } from 'lucide-react';
+import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Sparkles, Clock, Building, Users2, Briefcase, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from "@/hooks/use-toast";
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | typeof fr> = {
   es,
@@ -214,7 +215,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
   if (!isClient || Object.keys(dictionary).length === 0) {
     return (
       <div className="flex-grow container mx-auto px-4 py-8 md:py-12 text-center">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
         <p className="mt-4 font-body">{dictionary['OnboardingPage.loadingOnboarding'] || "Loading onboarding..."}</p>
       </div>
     );
@@ -223,7 +224,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
   if (authLoading || (!user && !authLoading && isClient)) {
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <LoadingSpinner className="h-12 w-12 text-primary" />
       </main>
     );
   }

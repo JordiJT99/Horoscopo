@@ -6,6 +6,7 @@ import BottomNavigationBar from '@/components/shared/BottomNavigationBar';
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
@@ -54,7 +55,7 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
   if (!hasMounted || (authLoading && !isLoginPage && !isOnboardingPage)) {
      return (
       <div className="flex-grow flex items-center justify-center min-h-screen bg-background text-foreground">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+        <LoadingSpinner className="h-12 w-12 text-primary" />
       </div>
     );
   }

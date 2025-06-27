@@ -1,4 +1,10 @@
 
+import type { DreamInterpretationOutput } from './ai/flows/dream-interpretation-flow';
+import type { TarotReadingOutput } from './ai/flows/tarot-reading-flow';
+import type { TarotPersonalityOutput } from './ai/flows/tarot-personality-flow';
+
+
+export type Locale = 'en' | 'es' | 'de' | 'fr';
 
 export type ZodiacSignName =
   | "Aries"
@@ -152,17 +158,17 @@ export type MayanSignName =
 export interface MayanZodiacSign {
   name: MayanSignName;
   icon: React.ElementType;
-  description: string;
-  detailedInterpretation: string; // Added for more detailed info
+  descriptionKey: string;
+  detailedInterpretationKey: string;
   associatedColor?: string;
 }
 
 export interface GalacticTone {
   id: number;
-  nameKey: string; // For translation, e.g., "Magnetic", "Lunar"
-  keywordKey: string; // For translation, e.g., "Unity", "Challenge"
-  questionKey: string; // For translation, e.g., "WhatIsMyGoal", "WhatAreTheObstacles"
-  detailedInterpretation: string; // Added for more detailed info
+  nameKey: string;
+  keywordKey: string;
+  questionKey: string;
+  detailedInterpretationKey: string;
 }
 
 export interface ChineseHoroscopeData {
@@ -185,22 +191,6 @@ export interface MayanKinInfo {
   kinNumber: number;
 }
 
-// Type for Tarot Personality Test
-export interface TarotPersonalityAnswer {
-  question: string; // The question text (can be a key for dictionary)
-  answer: string;   // User's free-form answer
-}
-
-export interface TarotPersonalityInputType {
-  answers: TarotPersonalityAnswer[];
-  locale: string;
-}
-
-export interface TarotPersonalityOutputType {
-  cardName: string;
-  cardDescription: string; // Why this card fits them
-  cardImagePlaceholderUrl: string;
-}
 
 // User type for Firebase Authentication
 export interface AuthUser {
@@ -233,4 +223,72 @@ export type SelectedProfileType = 'user' | 'generic';
 export interface ChatMessage {
   role: 'user' | 'model';
   content: string;
+}
+
+// Type for Natal Chart
+export interface AspectDetail {
+  body1: string;
+  body2: string;
+  type: string;
+  degree: number;
+  explanation: string;
+}
+
+export interface HousePlacementDetail {
+  placement: string;
+  explanation: string;
+}
+
+// Type for storing dream interpretations in localStorage
+export interface StoredDream {
+  id: string;
+  timestamp: string; // ISO string
+  interpretation: DreamInterpretationOutput;
+  vividness: number;
+}
+
+
+export interface NatalChartOutput {
+  sun: string;
+  moon: string;
+  ascendant: string;
+  personalPlanets: string;
+  transpersonalPlanets: string;
+  housesIntroduction: string;
+  housesDetails: HousePlacementDetail[];
+  aspects: string;
+  planetPositions: Record<string, { sign: string; degree: number }>;
+  aspectsDetails: AspectDetail[];
+}
+
+export interface Psychic {
+  id: string;
+  name: string;
+  image: string;
+  specialty: string; 
+  phrase: string;
+  rating: number;
+  reviews: number;
+  experience: number; 
+  price: number | null; 
+  isFree: boolean;
+  status: "Available" | "Busy" | "Meditating";
+  aiHint: string;
+}
+
+// Type for Community Forum Posts
+export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
+
+export interface CommunityPost {
+  id: string;
+  authorName: string;
+  authorAvatarUrl: string;
+  authorZodiacSign: ZodiacSignName;
+  timestamp: string; // ISO 8601 string for date
+  postType: PostType;
+  // Optional content fields, only one should be present based on postType
+  textContent?: string;
+  dreamData?: DreamInterpretationOutput;
+  tarotReadingData?: TarotReadingOutput;
+  tarotPersonalityData?: TarotPersonalityOutput;
 }
