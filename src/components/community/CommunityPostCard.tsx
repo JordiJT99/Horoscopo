@@ -1,5 +1,7 @@
+
 'use client';
 
+import { useState } from 'react';
 import type { CommunityPost } from '@/types';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -12,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 
 interface CommunityPostCardProps {
@@ -57,6 +60,26 @@ const DreamElements = ({ dreamData, dictionary }: { dreamData: any, dictionary: 
   );
 };
 
+const ExpandableText = ({ text, dictionary, textKey }: { text: string; dictionary: Dictionary, textKey: string }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLongText = text.length > 250;
+
+  if (!isLongText) {
+    return <p className="whitespace-pre-line text-sm text-card-foreground">{text}</p>;
+  }
+
+  return (
+    <div>
+      <p className={cn("whitespace-pre-wrap text-sm text-card-foreground", !isExpanded && "line-clamp-4")}>
+        {text}
+      </p>
+      <Button variant="link" size="sm" onClick={() => setIsExpanded(!isExpanded)} className="p-0 h-auto text-primary text-xs mt-1">
+        {isExpanded ? (dictionary['CommunityPage.seeLess'] || 'See Less') : (dictionary['CommunityPage.seeMore'] || 'See More')}
+      </Button>
+    </div>
+  );
+};
+
 export default function CommunityPostCard({ post, dictionary, locale }: CommunityPostCardProps) {
   const timeAgo = formatDistanceToNow(new Date(post.timestamp), {
     addSuffix: true,
@@ -72,9 +95,9 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
               <Feather className="w-4 h-4" />
               <span>{dictionary['CommunityPage.dreamPostTitle'] || "Shared a Dream Interpretation"}</span>
             </div>
-            <p className="italic text-sm text-foreground/90 line-clamp-4">
-              "{post.dreamData?.interpretation}"
-            </p>
+            <div className="italic text-sm text-foreground/90">
+              <ExpandableText text={post.dreamData?.interpretation || ''} dictionary={dictionary} textKey="interpretation" />
+            </div>
             {post.dreamData?.dreamElements && <DreamElements dreamData={post.dreamData} dictionary={dictionary} />}
           </div>
         );
@@ -82,7 +105,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       case 'tarot_reading':
       case 'tarot_personality':
         const cardData = post.tarotReadingData || post.tarotPersonalityData;
-        const reading = post.tarotReadingData?.advice || post.tarotPersonalityData?.reading;
+        const reading = post.tarotReadingData?.advice || post.tarotPersonalityData?.reading || '';
         const isReversed = post.tarotPersonalityData?.isReversed || false;
         
         return (
@@ -102,7 +125,9 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
                 />
                 <div className="flex-1 space-y-1">
                   <h4 className="font-bold font-headline text-foreground">{cardData?.cardName} {isReversed ? `(${dictionary['Tarot.reversed'] || 'Reversed'})` : ''}</h4>
-                  <p className="text-sm text-foreground/80 line-clamp-4">{reading}</p>
+                  <div className="text-sm text-foreground/80">
+                     <ExpandableText text={reading} dictionary={dictionary} textKey="reading" />
+                  </div>
                 </div>
             </div>
           </div>
@@ -111,9 +136,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       case 'text':
       default:
         return (
-          <p className="whitespace-pre-wrap text-sm text-card-foreground">
-            {post.textContent}
-          </p>
+          <ExpandableText text={post.textContent || ''} dictionary={dictionary} textKey="textContent" />
         );
     }
   };
@@ -138,12 +161,30 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       <CardContent className="px-4 pb-4 pt-0">
         {renderPostContent()}
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-xs text-muted-foreground">{timeAgo}</p>
-        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-          <MessageCircle className="w-4 h-4 mr-2" />
-          <span className="text-xs">{dictionary['CommunityPage.commentButton'] || 'Comment'}</span>
-        </Button>
+      <CardFooter className="p-4 pt-2 flex justify-between items-center text-xs text-muted-foreground">
+        <p>{timeAgo}</p>
+        <div className="flex items-center gap-1">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+                <Smile className="w-4 h-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-1 bg-background/80 backdrop-blur-md border-border/50">
+              <div className="flex gap-1">
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">👍</Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">❤️</Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">😂</Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">😢</Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-2xl hover:bg-primary/20 transition-transform hover:scale-125">🙏</Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+            <MessageCircle className="w-4 h-4 mr-2" />
+            <span className="text-xs">{dictionary['CommunityPage.commentButton'] || 'Comment'}</span>
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

@@ -803,6 +803,9 @@
   "CommunityPage.shareTarotSuccess": "Your tarot reading has been shared with the community.",
   "CommunityPage.dreamPostTitle": "Shared a Dream Interpretation",
   "CommunityPage.tarotPostTitle": "Shared a Tarot Card",
+  "CommunityPage.seeMore": "See More",
+  "CommunityPage.seeLess": "See Less",
+  "CommunityPage.reactButton": "React",
   "Tarot.reversed": "Reversed",
   "birthForm": {
     "submitButton": "Generate Natal Chart",
