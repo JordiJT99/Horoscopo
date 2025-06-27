@@ -16,6 +16,7 @@ import {
   limit,
   runTransaction,
   writeBatch,
+  increment,
 } from 'firebase/firestore';
 
 // Fetch posts from Firestore
@@ -110,27 +111,31 @@ export const getCommentsForPost = async (postId: string): Promise<Comment[]> => 
 }
 
 export const addCommentToPost = async (postId: string, commentData: Omit<Comment, 'id' | 'timestamp'>): Promise<Comment> => {
-    if (!db) throw new Error("Firestore is not initialized.");
+    if (!db) {
+      throw new Error("Firestore is not initialized. Cannot add post.");
+    }
     const postRef = doc(db, 'community-posts', postId);
-    const commentsCol = collection(postRef, 'comments');
-    
+    // Create a reference for a new comment with a unique ID in the 'comments' subcollection
+    const newCommentRef = doc(collection(postRef, 'comments'));
+
+    // Use a batch to perform multiple writes as a single atomic unit
+    const batch = writeBatch(db);
+
     const newCommentData = {
         ...commentData,
         timestamp: serverTimestamp(),
     };
 
-    const newCommentRef = await addDoc(commentsCol, newCommentData);
-    
-    // Update comment count on the main post document
-    await runTransaction(db, async (transaction) => {
-        const postDoc = await transaction.get(postRef);
-        if (!postDoc.exists()) {
-            throw "Post does not exist!";
-        }
-        const newCount = (postDoc.data().commentCount || 0) + 1;
-        transaction.update(postRef, { commentCount: newCount });
-    });
+    // 1. Add the new comment to the batch
+    batch.set(newCommentRef, newCommentData);
 
+    // 2. Atomically increment the commentCount on the parent post
+    batch.update(postRef, { commentCount: increment(1) });
+
+    // Commit the batch
+    await batch.commit();
+
+    // Return the new comment data for optimistic UI update
     return {
         id: newCommentRef.id,
         ...commentData,
@@ -148,7 +153,7 @@ export const toggleReactionOnPost = async (postId: string, userId: string, emoji
     await runTransaction(db, async (transaction) => {
         const postDoc = await transaction.get(postRef);
         if (!postDoc.exists()) {
-            throw "Post does not exist!";
+            throw new Error("Post does not exist!");
         }
 
         const currentReactions = postDoc.data().reactions || {};
