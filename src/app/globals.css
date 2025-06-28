@@ -109,8 +109,8 @@
   }
   body {
     @apply text-foreground font-body antialiased;
-    font-size: 18px; /* Increased base font size */
-    line-height: 1.625; /* Increased line height */
+    font-size: 16px; /* Base font size set to 16px */
+    line-height: 1.625;
     background-image: url('/custom_assets/nebula-background.png');
     background-size: cover;
     background-position: center;

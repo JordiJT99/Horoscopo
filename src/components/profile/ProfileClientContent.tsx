@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, Sparkles } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -96,7 +96,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
     return (
         <div className="text-center max-w-md mx-auto">
             <Card className="w-full p-8 bg-card/70 backdrop-blur-sm">
-                <p className="font-body text-lg mb-6">{dictionary['Auth.pleaseLoginToProfile'] || "You need to be logged in to access your profile and settings."}</p>
+                <p className="font-body text-base mb-6">{dictionary['Auth.pleaseLoginToProfile'] || "You need to be logged in to access your profile and settings."}</p>
                 <Button asChild className="w-full font-body">
                     <Link href={`/${locale}/login`}>
                         <LogIn className="mr-2 h-5 w-5" />
@@ -119,7 +119,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
               <AvatarImage src={user.photoURL || undefined} alt={displayName} />
               <AvatarFallback className="text-3xl bg-muted/50">{userInitial}</AvatarFallback>
             </Avatar>
-            <CardTitle className="text-2xl font-headline">{displayName}</CardTitle>
+            <CardTitle className="text-xl font-headline">{displayName}</CardTitle>
             {userSunSign && (
               <div className="flex items-center gap-1.5 text-sm text-primary font-semibold">
                 <ZodiacSignIcon signName={userSunSign.name} className="w-4 h-4" />
@@ -152,7 +152,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
             <TabsContent value="profile" className="mt-6 space-y-8">
                 <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
                   <CardHeader className="flex flex-row items-center justify-between p-6">
-                    <CardTitle className="font-headline text-xl">{dictionary['ProfilePage.aboutMeTitle'] || "About Me"}</CardTitle>
+                    <CardTitle className="text-lg">{dictionary['ProfilePage.aboutMeTitle'] || "About Me"}</CardTitle>
                     <Button variant="ghost" size="icon" onClick={handleAboutEdit}>
                       {isEditingAbout ? <Save className="h-5 w-5 text-primary" /> : <Edit3 className="h-5 w-5" />}
                     </Button>
@@ -163,18 +163,18 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                         placeholder={dictionary['ProfilePage.bioPlaceholder'] || 'Tell us about your cosmic journey...'}
-                        className="min-h-[100px] bg-input/50"
+                        className="min-h-[100px] bg-input/50 text-sm"
                         maxLength={300}
                       />
                     ) : (
-                      <p className="font-body text-card-foreground leading-relaxed min-h-[100px] whitespace-pre-wrap">{bio}</p>
+                      <p className="font-body text-base text-card-foreground leading-relaxed min-h-[100px] whitespace-pre-wrap">{bio}</p>
                     )}
                   </CardContent>
                 </Card>
                 
                 <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
                   <CardHeader className="p-6">
-                    <CardTitle className="font-headline text-xl">{dictionary['ProfilePage.accountSettingsTitle'] || "Account Settings"}</CardTitle>
+                    <CardTitle className="text-lg">{dictionary['ProfilePage.accountSettingsTitle'] || "Account Settings"}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4 p-6 pt-0">
                     <div className="space-y-2">
@@ -196,7 +196,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
             <TabsContent value="extras" className="mt-6 space-y-8">
                 <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
                   <CardHeader className="p-6">
-                    <CardTitle className="font-headline text-xl flex items-center gap-2">
+                    <CardTitle className="text-lg flex items-center gap-2">
                       <ShieldQuestion className="h-5 w-5 text-primary" />
                       {dictionary['ProfilePage.preferencesTitle'] || "Astrological Preferences"}
                     </CardTitle>
@@ -208,7 +208,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
 
                 <Card className="bg-card/70 backdrop-blur-sm border-primary/30 shadow-xl">
                   <CardHeader className="p-6">
-                    <CardTitle className="font-headline text-xl text-primary flex items-center gap-2">
+                    <CardTitle className="text-lg text-primary flex items-center gap-2">
                       <Award className="h-5 w-5" />
                       {dictionary['ProfilePage.premiumTitle'] || "Unlock Premium Features"}
                     </CardTitle>
