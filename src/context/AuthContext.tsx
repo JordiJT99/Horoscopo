@@ -23,7 +23,8 @@ interface AuthContextType {
   login: (email: string, password: string, locale: Locale) => Promise<void>;
   signup: (email: string, password: string, username: string, locale: Locale) => Promise<void>;
   logout: (locale: Locale) => Promise<void>;
-  markOnboardingAsComplete: () => void; // No UID needed, will use current user
+  markOnboardingAsComplete: () => void;
+  updateUsername: (newName: string, locale: Locale) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -75,6 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           uid: firebaseUser.uid,
           email: firebaseUser.email,
           displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
         };
         setUser(authUser);
         // Redirection logic after auth state is confirmed will be handled in login/signup
@@ -176,6 +178,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           uid: userCredential.user.uid,
           email: userCredential.user.email,
           displayName: username,
+          photoURL: null,
         };
         setUser(authUser);
         
@@ -194,6 +197,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     }
   }, [router, toast]);
+  
+  const updateUsername = useCallback(async (newName: string, locale: Locale) => {
+    const dictionary = await getDictionary(locale);
+    if (!auth.currentUser) {
+      toast({ title: dictionary['Error.genericTitle'] || "Error", description: "No user is currently signed in.", variant: "destructive" });
+      return;
+    }
+    
+    try {
+      await updateProfile(auth.currentUser, { displayName: newName });
+      setUser(prevUser => prevUser ? { ...prevUser, displayName: newName } : null);
+      toast({ title: dictionary['ProfilePage.accountUpdateSuccessTitle'] || "Account Updated", description: dictionary['ProfilePage.accountUpdateSuccessMessage'] || "Your username has been successfully updated." });
+    } catch (error: any) {
+      console.error("Error updating username:", error);
+      toast({ title: dictionary['ProfilePage.accountUpdateErrorTitle'] || "Update Error", description: error.message || "Could not update your username.", variant: "destructive" });
+    }
+  }, [toast]);
+
 
   const logout = useCallback(async (locale: Locale) => {
     if (!appInitializedSuccessfully || !auth) {
@@ -261,7 +282,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, signup, logout, markOnboardingAsComplete }}>
+    <AuthContext.Provider value={{ user, isLoading, login, signup, logout, markOnboardingAsComplete, updateUsername }}>
       {children}
     </AuthContext.Provider>
   );
