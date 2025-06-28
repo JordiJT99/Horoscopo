@@ -1,23 +1,23 @@
-
 "use client";
 
 import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Sparkles, Star } from 'lucide-react';
+import { Sparkles, Star, MinusCircle, PlusCircle } from 'lucide-react';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
+import { Button } from '../ui/button';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints } = useCosmicEnergy();
   const { toast } = useToast();
 
-  const handleDevClick = () => {
+  const handleAddPoints = () => {
     const { pointsAdded, leveledUp, newLevel } = addDebugPoints(100);
     if (leveledUp) {
       toast({
@@ -32,27 +32,47 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     }
   };
 
+  const handleSubtractPoints = () => {
+    subtractDebugPoints(100);
+    toast({
+      title: `🔧 Dev Tool`,
+      description: `-100 EC (Dev)`,
+    });
+  };
+
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
       <CardHeader className="p-4 pb-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <CardTitle
-                className="text-lg flex items-center gap-2 cursor-pointer"
-                onClick={handleDevClick}
-                role="button"
-                aria-label="Add 100 debug points"
-              >
+         <div className="flex justify-between items-center">
+            <CardTitle className="text-lg flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
                 {dictionary['ProfilePage.cosmicEnergyTitle'] || "Cosmic Energy"}
-              </CardTitle>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Dev Tool: Click to add 100 EC</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+            </CardTitle>
+            <TooltipProvider>
+                <div className="flex items-center gap-1">
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleSubtractPoints}>
+                                <MinusCircle className="h-4 w-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Dev Tool: Subtract 100 EC</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                             <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleAddPoints}>
+                                <PlusCircle className="h-4 w-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Dev Tool: Add 100 EC</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+            </TooltipProvider>
+        </div>
         <CardDescription className="text-xs">
           {dictionary['ProfilePage.cosmicEnergyDescription'] || "Gain points by interacting with the app."}
         </CardDescription>
