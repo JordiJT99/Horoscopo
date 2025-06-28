@@ -802,7 +802,6 @@
   "Reward.ringOfLightFrame": "Marco de Avatar 'Anillo de Luz'",
   "Reward.supernovaTitle": "Título 'Supernova'",
   "Reward.titleGuidingStar": "Estrella Guía",
-  "Reward.titleSupernova": "Supernova",
   "Reward.titleEnlightened": "Iluminado/a",
   "ProfilePage.getMoreStardustTitle": "Obtén más Polvo Estelar",
   "ProfilePage.rateAppButton": "Valora la App",
@@ -874,7 +873,7 @@
     },
     "Leo": {
       "title": "Rasgos de Leo",
-      "description": "Regido por el Sol, Leo es el rey (o reina) del zodíaco. Son carismáticos, generosos, de gran corazón y aman ser el centro de atención. La creatividad y la autoexpresión son vitales para ellos.",
+      "description": "Regido por el Sol, Leo es el rey (o la reina) del zodíaco. Son carismáticos, generosos, de gran corazón y aman ser el centro de atención. La creatividad y la autoexpresión son vitales para ellos.",
       "strengthsTitle": "Fortalezas",
       "strengths": ["Creativo", "apasionado", "generoso", "de buen corazón", "alegre", "humorístico"],
       "weaknessesTitle": "Debilidades",
@@ -892,7 +891,7 @@
       "weaknessesTitle": "Debilidades",
       "weaknesses": ["Timidez", "preocupación", "excesivamente crítico consigo mismo y con los demás", "todo trabajo y nada de juego"],
       "loveTitle": "Virgo en el Amor",
-      "love": "Virgo expresa el amor a través de actos de servicio y una devoción silenciosa. Buscan una pareja ordenada, inteligente y que aprecie su deseo de cuidar los detalles.",
+      "love": "La Vierge exprime le amour à travers des actes de service et une dévotion silencieuse. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de prendre soin des détails.",
       "workTitle": "Virgo en el Trabajo",
       "work": "El perfeccionista del zodíaco. Virgo es un trabajador increíblemente eficiente, organizado y orientado a los detalles. Son invaluables en cualquier campo que requiera precisión y análisis."
     },
@@ -928,45 +927,47 @@
       "weaknessesTitle": "Debilidades",
       "weaknesses": ["Promete más de lo que puede cumplir", "impaciente", "sin tacto"],
       "loveTitle": "Sagitario en el Amor",
-      "love": "Sagitario necesita libertad en el amor. Buscan una pareja que sea también su mejor amigo y compañero de viaje. Pueden ser reacios al compromiso, temiendo que les corte las alas, pero son increíblemente leales una vez que han encontrado a su pareja.",
+      "love": "El Sagitario necesita libertad en el amor. Buscan una pareja que sea también su mejor amigo y compañero de viaje. Pueden ser reacios al compromiso, temiendo que les corte las alas, pero son increíblemente leales una vez que han encontrado a su pareja.",
       "workTitle": "Sagitario en el Trabajo",
-      "work": "Sagitario destaca en carreras que involucran viajes, educación, publicaciones o filosofía. Necesitan autonomía y un sentido de propósito, y son maestros y líderes inspiradores."
+      "work": "El Sagitario destaca en carreras que involucran viajes, educación, publicaciones o filosofía. Necesitan autonomía y un sentido de propósito, y son maestros y líderes inspiradores."
     },
     "Capricorn": {
       "title": "Rasgos de Capricornio",
-      "description": "",
+      "description": "La cabra ambiciosa y disciplinada del zodíaco. Regidos por Saturno, los Capricornio son maestros del autocontrol y tienen la capacidad de liderar, hacer planes sólidos y realistas, y gestionar a muchas personas que trabajan para ellos en cualquier momento. Son maestros de la manifestación.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Responsable", "disciplinado", "autocontrol", "buenos gestores", "leales"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Sabelotodo", "implacable", "condescendiente", "esperando lo peor"],
       "loveTitle": "Capricornio en el Amor",
-      "love": "",
+      "love": "Capricornio es una pareja seria y comprometida. Muestran amor a través de actos prácticos y lealtad. Buscan un socio que sea igualmente ambicioso y comprenda su necesidad de estructura y seguridad.",
       "workTitle": "Capricornio en el Trabajo",
-      "work": ""
+      "work": "Los Capricornio son los directores ejecutivos del zodíaco. Son trabajadores, orientados a objetivos y excelentes en la gestión de proyectos y personas. Prosperan en entornos donde pueden construir y lograr el éxito a largo plazo."
     },
     "Aquarius": {
       "title": "Rasgos de Acuario",
-      "description": "",
+      "description": "El visionario y humanitario del zodíaco. Regidos por Urano, los Acuario son originales, independientes y con visión de futuro. Marchan a su propio ritmo y están dedicados a hacer del mundo un lugar mejor.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Progresista", "original", "independiente", "humanitario", "intelectual"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Huye de la expresión emocional", "temperamental", "intransigente", "distante"],
       "loveTitle": "Acuario en el Amor",
-      "love": "",
+      "love": "En el amor, el Acuario necesita un socio que sea ante todo un amigo. Valoran la conexión intelectual y la libertad. Pueden parecer distantes, pero su amor es genuino y se basa en ideales compartidos.",
       "workTitle": "Acuario en el Trabajo",
-      "work": ""
+      "work": "El Acuario destaca en roles que requieren innovación y pensamiento no convencional, como en la tecnología, la ciencia o el activismo social. Necesitan autonomía y trabajan mejor cuando creen en la causa."
     },
     "Pisces": {
       "title": "Rasgos de Piscis",
-      "description": "",
+      "description": "El místico y soñador del zodíaco. Regidos por Neptuno, los Piscis son compasivos, artísticos y profundamente intuitivos. Están conectados con el reino espiritual y tienen una capacidad ilimitada para la empatía.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Compasivo", "artístico", "intuitivo", "gentil", "sabio"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Temeroso", "demasiado confiado", "triste", "deseo de escapar de la realidad", "puede ser una víctima o un mártir"],
       "loveTitle": "Piscis en el Amor",
-      "love": "",
+      "love": "Piscis es un romántico empedernido que busca una conexión mágica y profunda del alma. Son parejas increíblemente desinteresadas y devotas, pero también pueden perderse en la idealización e ignorar las señales de alerta.",
       "workTitle": "Piscis en el Trabajo",
-      "work": ""
+      "work": "Los Piscis prosperan en campos creativos y compasivos. Son excelentes artistas, músicos, sanadores y consejeros. Su intuición les da una perspectiva única en todos los roles que desempeñan."
     }
   }
 }
+
+    

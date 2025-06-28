@@ -935,39 +935,41 @@
     },
     "Capricorn": {
       "title": "Capricorn Traits",
-      "description": "",
+      "description": "The ambitious and disciplined goat of the zodiac. Ruled by Saturn, Capricorns are masters of self-control and have the ability to lead the way, make solid and realistic plans, and manage many people who work for them at any time. They are masters of manifestation.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Responsible", "disciplined", "self-control", "good managers", "loyal"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Know-it-all", "unforgiving", "condescending", "expecting the worst"],
       "loveTitle": "Capricorn in Love",
-      "love": "",
+      "love": "Capricorn is a serious and committed partner. They show love through practical acts and loyalty. They seek a partner who is equally ambitious and understands their need for structure and security.",
       "workTitle": "Capricorn at Work",
-      "work": ""
+      "work": "Capricorns are the CEOs of the zodiac. They are hardworking, goal-oriented, and excellent at managing projects and people. They thrive in environments where they can build and achieve long-term success."
     },
     "Aquarius": {
       "title": "Aquarius Traits",
-      "description": "",
+      "description": "The visionary and humanitarian of the zodiac. Ruled by Uranus, Aquarians are original, independent, and forward-thinking. They march to the beat of their own drum and are dedicated to making the world a better place.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Progressive", "original", "independent", "humanitarian", "intellectual"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Runs from emotional expression", "temperamental", "uncompromising", "aloof"],
       "loveTitle": "Aquarius in Love",
-      "love": "",
+      "love": "In love, Aquarius needs a partner who is first and foremost a friend. They value intellectual connection and freedom. They may seem detached, but their love is genuine and based on shared ideals.",
       "workTitle": "Aquarius at Work",
-      "work": ""
+      "work": "Aquarius excels in roles that require innovation and unconventional thinking, such as technology, science, or social activism. They need autonomy and work best when they believe in the cause."
     },
     "Pisces": {
       "title": "Pisces Traits",
-      "description": "",
+      "description": "The mystic and dreamer of the zodiac. Ruled by Neptune, Pisces are compassionate, artistic, and deeply intuitive. They are connected to the spiritual realm and have a boundless capacity for empathy.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Compassionate", "artistic", "intuitive", "gentle", "wise"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Fearful", "overly trusting", "sad", "desire to escape reality", "can be a victim or a martyr"],
       "loveTitle": "Pisces in Love",
-      "love": "",
+      "love": "Pisces is a hopeless romantic who seeks a magical, soul-deep connection. They are incredibly selfless and devoted partners, but can also get lost in idealization and ignore red flags.",
       "workTitle": "Pisces at Work",
-      "work": ""
+      "work": "Pisces thrives in creative and compassionate fields. They are excellent artists, musicians, healers, and counselors. Their intuition gives them a unique perspective in any role they undertake."
     }
   }
 }
+
+    
