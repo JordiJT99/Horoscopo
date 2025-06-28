@@ -15,7 +15,6 @@ interface RewardsCardProps {
 const rewards = [
   { level: 1, key: 'baseAccess', icon: Sparkles, stardust: 50 },
   { level: 2, key: 'cometFrame', icon: Palette, stardust: 0 },
-  { level: 3, key: 'unlockChineseHoroscope', icon: ChineseAstrologyIcon, stardust: 0 },
   { level: 3, key: 'lunarSticker', icon: Moon, stardust: 0 },
   { level: 4, key: 'gaiaNebulaBackground', icon: Palette, stardust: 100 },
   { level: 5, key: 'freePsychicChat', icon: MessageCircle, stardust: 0 },
