@@ -801,9 +801,7 @@
   "Reward.stardustBonus": "Bonus de Poussière d'Étoiles (+10%)",
   "Reward.ringOfLightFrame": "Cadre d'Avatar 'Anneau de Lumière'",
   "Reward.supernovaTitle": "Titre 'Supernova'",
-  "Reward.enlightenedTitle": "Titre 'Illuminé(e)'",
   "Reward.titleGuidingStar": "Étoile Polaire",
-  "Reward.titleSupernova": "Supernova",
   "Reward.titleEnlightened": "Illuminé(e)",
   "ProfilePage.getMoreStardustTitle": "Obtenir plus de Poussière d'Étoiles",
   "ProfilePage.rateAppButton": "Évaluer l'application",
@@ -945,3 +943,5 @@
   "ZodiacDetail.Pisces.workTitle": "Poissons au Travail",
   "ZodiacDetail.Pisces.work": "Les Poissons excellent dans les professions créatives et de guérison. Leur empathie et leur imagination sont leurs plus grands dons professionnels."
 }
+
+    
