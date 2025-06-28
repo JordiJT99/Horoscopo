@@ -3,8 +3,10 @@
 
 import { useState, useEffect } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import type { CommunityPost, ZodiacSignName } from '@/types';
-import { getCommunityPosts, addCommunityPost } from '@/lib/community-posts';
+import type { CommunityPost, NewPostData, ZodiacSignName } from '@/types';
+import { getCommunityPosts } from '@/lib/community-posts'; // Only import read functions
+import { db } from '@/lib/firebase'; // Import client-side db instance
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; // Import client-side write functions
 import CommunityPostCard from './CommunityPostCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -60,39 +62,49 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
     setIsPosting(true);
 
     let authorZodiacSign: ZodiacSignName = 'Aries'; // Default value
-    if (user?.uid) {
-      const storedDataRaw = localStorage.getItem(`onboardingData_${user.uid}`);
-      if (storedDataRaw) {
-        try {
-          const storedData = JSON.parse(storedDataRaw);
-          if (storedData.dateOfBirth) {
-            const sign = getSunSignFromDate(new Date(storedData.dateOfBirth));
-            if (sign) {
-              authorZodiacSign = sign.name;
-            }
-          }
-        } catch(e) {
-          console.error("Could not parse onboarding data to get zodiac sign.", e)
+    const storedDataRaw = localStorage.getItem(`onboardingData_${user.uid}`);
+    if (storedDataRaw) {
+      try {
+        const storedData = JSON.parse(storedDataRaw);
+        if (storedData.dateOfBirth) {
+          const sign = getSunSignFromDate(new Date(storedData.dateOfBirth));
+          if (sign) authorZodiacSign = sign.name;
         }
+      } catch (e) {
+        console.error("Could not parse onboarding data to get zodiac sign.", e);
       }
     }
 
-    const newPost: Omit<CommunityPost, 'id' | 'timestamp'> = {
+    const newPostData: NewPostData = {
+      authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
       postType: 'text',
       textContent: newPostContent,
+      reactions: {},
+      commentCount: 0,
     };
 
     try {
-      const addedPost = await addCommunityPost(newPost);
-      setPosts(prevPosts => [addedPost, ...prevPosts]);
+      // Direct client-side write to Firestore
+      const docRef = await addDoc(collection(db, 'community-posts'), {
+        ...newPostData,
+        timestamp: serverTimestamp(),
+      });
+      
+      const postForUi: CommunityPost = {
+        ...newPostData,
+        id: docRef.id,
+        timestamp: new Date().toISOString(),
+      };
+      setPosts(prevPosts => [postForUi, ...prevPosts]);
       setNewPostContent('');
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Error adding post client-side:", error);
       toast({
         title: dictionary['Error.genericTitle'] || "Error",
-        description: (error as Error).message || "Could not submit post.",
+        description: error.message || "Could not submit post.",
         variant: 'destructive',
       });
     } finally {

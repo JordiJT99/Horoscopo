@@ -6,6 +6,7 @@ import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
 
 // Import the client component that contains all UI logic and animations
 import AstroVibesHomePageContent from '@/components/home/AstroVibesHomePageContent';
+import type { HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -16,12 +17,12 @@ export async function generateStaticParams() {
 }
 
 interface MonthlyHoroscopePageProps {
-  params: { locale: Locale }; // Changed from Promise<{ locale: Locale }>
+  params: Promise<{ locale: Locale }>;
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function MonthlyHoroscopePageWrapper({ params, searchParams }: MonthlyHoroscopePageProps) {
-  // params.locale is directly available now
+export default async function MonthlyHoroscopePageWrapper({ params: paramsPromise, searchParams }: MonthlyHoroscopePageProps) {
+  const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {
@@ -44,4 +45,3 @@ export default async function MonthlyHoroscopePageWrapper({ params, searchParams
     />
   );
 }
-

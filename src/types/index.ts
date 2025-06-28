@@ -1,7 +1,8 @@
 
-import type { DreamInterpretationOutput } from './ai/flows/dream-interpretation-flow';
-import type { TarotReadingOutput } from './ai/flows/tarot-reading-flow';
-import type { TarotPersonalityOutput } from './ai/flows/tarot-personality-flow';
+
+import type { DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
+import type { TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
+import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
@@ -279,16 +280,32 @@ export interface Psychic {
 // Type for Community Forum Posts
 export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
 
-export interface CommunityPost {
-  id: string;
+// This is the data needed to create a new post
+export interface NewPostData {
+  authorId: string;
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
-  timestamp: string; // ISO 8601 string for date
   postType: PostType;
-  // Optional content fields, only one should be present based on postType
+  reactions: Record<string, string>;
+  commentCount: number;
+  // Optional content fields
   textContent?: string;
   dreamData?: DreamInterpretationOutput;
   tarotReadingData?: TarotReadingOutput;
   tarotPersonalityData?: TarotPersonalityOutput;
+}
+
+export interface Comment {
+  id: string; // Document ID from Firestore
+  authorId: string;
+  authorName: string;
+  authorAvatarUrl: string;
+  text: string;
+  timestamp: string; // ISO 8601 string for date
+}
+
+export interface CommunityPost extends NewPostData {
+  id: string;
+  timestamp: string;
 }
