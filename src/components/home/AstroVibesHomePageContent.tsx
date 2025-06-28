@@ -6,8 +6,8 @@ import { useEffect, useState, useMemo } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData } from '@/types';
-import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData, UserAstrologyProfile } from '@/types';
+import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon, getMoonSign, getAscendantSign } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
 import { motion, type PanInfo } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
@@ -88,6 +88,17 @@ export default function AstroVibesHomePageContent({
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
   const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true);
+
+  const userAstrologyProfile: UserAstrologyProfile = useMemo(() => {
+    if (!onboardingData?.dateOfBirth) return { sun: null, moon: null, ascendant: null };
+    const birthDate = new Date(onboardingData.dateOfBirth);
+    const sun = getSunSignFromDate(birthDate);
+    const moon = getMoonSign(birthDate);
+    const ascendantSignObject = onboardingData.timeOfBirth ? getAscendantSign(birthDate, onboardingData.timeOfBirth, onboardingData.cityOfBirth || '') : null;
+    const ascendant = ascendantSignObject ? ZODIAC_SIGNS.find(s => s.name === ascendantSignObject.sign) || null : null;
+
+    return { sun, moon, ascendant };
+  }, [onboardingData]);
 
 
   useEffect(() => {
@@ -473,6 +484,8 @@ export default function AstroVibesHomePageContent({
               dictionary={dictionary}
               locale={locale}
               selectedSign={selectedDisplaySign}
+              isPersonalized={isPersonalizedRequestActive && !!user}
+              userProfile={userAstrologyProfile}
             />
           </motion.div>
 
