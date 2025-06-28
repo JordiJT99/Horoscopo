@@ -32,6 +32,7 @@ import {
   deleteField,
   Timestamp,
 } from 'firebase/firestore';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface CommunityPostCardProps {
   post: CommunityPost;
@@ -99,6 +100,7 @@ const ExpandableText = ({ text, dictionary }: { text: string; dictionary: Dictio
 export default function CommunityPostCard({ post, dictionary, locale }: CommunityPostCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { addEnergyPoints } = useCosmicEnergy();
   
   const [reactions, setReactions] = useState<Record<string, string>>(post.reactions || {});
   const [commentCount, setCommentCount] = useState(post.commentCount || 0);
@@ -197,6 +199,8 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       batch.update(postRef, { commentCount: increment(1) });
       await batch.commit();
       
+      addEnergyPoints('add_comment', 10);
+
       const optimisticComment: Comment = {
         id: newCommentRef.id,
         ...commentData,

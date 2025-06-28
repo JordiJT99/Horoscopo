@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -12,6 +13,7 @@ import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData } from '@/types';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface CrystalBallClientContentProps {
   dictionary: Dictionary;
@@ -26,6 +28,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const crystalBallGifPath = "/gifs/crystal-ball.gif";
 
   const { user } = useAuth();
+  const { addEnergyPoints } = useCosmicEnergy();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
       };
       const result: CrystalBallRevelationOutput = await getCrystalBallRevelation(input);
       setRevelation(result.revelation);
+      addEnergyPoints('use_crystal_ball', 10);
     } catch (err) {
       console.error("Error consulting crystal ball:", err);
       toast({

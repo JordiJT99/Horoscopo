@@ -360,7 +360,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
                     onChange={(e) => handleChange('timeOfBirth', e.target.value)}
                     className="font-body"
                   />
-                  <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.timeOfBirthHelper'] || "Knowing your birth time helps in more accurate astrological calculations like your ascendant sign."}</p>
+                  <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.timeOfBirthHelper'] || "Knowing your birth time helps in more accurate astrological calculations like your rising sign."}</p>
                 </div>
               )}
 
