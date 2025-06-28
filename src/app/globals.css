@@ -1,4 +1,5 @@
 
+
 @import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 @tailwind base;
@@ -271,5 +272,37 @@
   .backface-hidden {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden; /* For Safari */
+  }
+
+  /* Animated Avatar Frames */
+  @keyframes pulse-border-glow-level-1 {
+    0%, 100% { box-shadow: 0 0 6px 1px hsl(var(--primary) / 0.5); }
+    50% { box-shadow: 0 0 10px 2px hsl(var(--primary) / 0.8); }
+  }
+  .avatar-frame-level-5 {
+    animation: pulse-border-glow-level-1 3s infinite ease-in-out;
+  }
+
+  @keyframes pulse-border-glow-level-2 {
+    0%, 100% { box-shadow: 0 0 8px 2px hsl(var(--accent) / 0.6), 0 0 3px 1px hsl(var(--accent) / 0.7) inset; }
+    50% { box-shadow: 0 0 14px 4px hsl(var(--accent) / 0.9), 0 0 5px 2px hsl(var(--accent) / 1) inset; }
+  }
+  .avatar-frame-level-15 {
+    animation: pulse-border-glow-level-2 2.5s infinite ease-in-out;
+  }
+
+  /* Profile Background Themes */
+  .profile-bg-rosette {
+    background-image: radial-gradient(ellipse at bottom, hsl(var(--primary)/0.15) 0%, transparent 70%),
+                      radial-gradient(ellipse at top, hsl(var(--accent)/0.15) 0%, transparent 80%),
+                      var(--original-bg-image, none);
+    background-color: hsl(var(--background));
+    background-blend-mode: screen;
+  }
+  .profile-bg-aurora {
+    background-image: linear-gradient(170deg, hsl(180 50% 30% / 0.25) 0%, hsl(var(--primary)/0.15) 50%, transparent 100%),
+                      var(--original-bg-image, none);
+    background-color: hsl(var(--background));
+    background-blend-mode: overlay;
   }
 }

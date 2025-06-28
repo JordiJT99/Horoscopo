@@ -11,11 +11,12 @@ import CommunityPostCard from './CommunityPostCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Send } from 'lucide-react';
+import { Send, Sparkles } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { getSunSignFromDate } from '@/lib/constants';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface CommunityFeedProps {
   dictionary: Dictionary;
@@ -29,6 +30,7 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
   const [isPosting, setIsPosting] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
+  const { level: userLevel } = useCosmicEnergy();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -80,6 +82,7 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
+      authorLevel: userLevel,
       postType: 'text',
       textContent: newPostContent,
       reactions: {},
@@ -112,6 +115,10 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
     }
   };
 
+  const handleInsertExclusiveEmoji = () => {
+    setNewPostContent(prev => prev + '🔯');
+  };
+
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       {user && (
@@ -131,10 +138,24 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
                 rows={3}
                 disabled={isPosting}
               />
-              <Button type="submit" disabled={isPosting || !newPostContent.trim()}>
-                {isPosting ? <LoadingSpinner className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
-                {isPosting ? (dictionary['CommunityPage.posting'] || "Posting...") : (dictionary['CommunityPage.postButton'] || "Post")}
-              </Button>
+              <div className="flex justify-between items-center">
+                <Button type="submit" disabled={isPosting || !newPostContent.trim()}>
+                  {isPosting ? <LoadingSpinner className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
+                  {isPosting ? (dictionary['CommunityPage.posting'] || "Posting...") : (dictionary['CommunityPage.postButton'] || "Post")}
+                </Button>
+                {userLevel >= 5 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleInsertExclusiveEmoji}
+                    aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"}
+                  >
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    <span className="font-bold text-lg ml-1">🔯</span>
+                  </Button>
+                )}
+              </div>
             </form>
           </CardContent>
         </Card>
