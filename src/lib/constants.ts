@@ -1,7 +1,8 @@
 
-import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey } from '@/types';
+
+import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey, DailyTransit } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
-import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Cat, PawPrint, Gitlab, Shell } from 'lucide-react';
+import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Cat, PawPrint, Gitlab, Shell, TrendingUp, Zap, Heart } from 'lucide-react';
 import { loveCompatibilityPairings } from './constantslove';
 import { friendshipCompatibilityPairings } from './constantsfriendship';
 import { workCompatibilityPairings } from './constantswork';
@@ -42,6 +43,12 @@ export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
   if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Pisces")!;
   
   return null;
+};
+
+export const getMoonSign = (date: Date): ZodiacSign | null => {
+  const dayOfMonth = date.getDate();
+  const signIndex = Math.floor((dayOfMonth - 1) / 2.5) % 12;
+  return ZODIAC_SIGNS[signIndex];
 };
 
 
@@ -438,3 +445,18 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
 ];
 
 export { Briefcase as WorkIcon };
+
+const transits: DailyTransit[] = [
+  { titleKey: "VenusTrineMoon", descriptionKey: "EnergyForLove", icon: Heart },
+  { titleKey: "SunConjunctMercury", descriptionKey: "ExcellentForCommunication", icon: Sun },
+  { titleKey: "MarsSquareSaturn", descriptionKey: "ChallengesRequiringPatience", icon: Zap },
+  { titleKey: "JupiterEntersPisces", descriptionKey: "ExpansionOfCreativity", icon: TrendingUp },
+  { titleKey: "MercuryRetrograde", descriptionKey: "ReviewReflect", icon: TrendingUp },
+  { titleKey: "FullMoonInScorpio", descriptionKey: "EmotionalIntensity", icon: Moon },
+  { titleKey: "SunTrineJupiter", descriptionKey: "OptimismGrowth", icon: StarIcon },
+];
+
+export const getDailyTransit = (date: Date): DailyTransit => {
+  const dayOfYear = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+  return transits[dayOfYear % transits.length];
+};

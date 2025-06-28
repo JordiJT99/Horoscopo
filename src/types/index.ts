@@ -316,3 +316,15 @@ export interface CosmicEnergyState {
   level: number;
   lastGained: Record<string, string>; // e.g., { 'read_daily_horoscope': '2024-07-25' }
 }
+
+export interface DailyTransit {
+  titleKey: string;
+  descriptionKey: string;
+  icon: React.ElementType;
+}
+
+export interface UserAstrologyProfile {
+  sun: ZodiacSign | null;
+  moon: ZodiacSign | null;
+  ascendant: ZodiacSign | null;
+}
