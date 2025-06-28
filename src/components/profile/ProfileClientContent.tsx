@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
