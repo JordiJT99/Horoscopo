@@ -462,6 +462,8 @@
   "DreamTrends.title": "Tendances dans vos Rêves",
   "DreamTrends.description": "Symboles apparaissant fréquemment dans vos rêves ce mois-ci.",
   "DreamTrends.noTrends": "Pas encore de tendances récurrentes. Continuez à enregistrer vos rêves pour découvrir des schémas !",
+  "TarotPersonalityPage.title": "Votre Carte de Tarot Quotidienne",
+  "TarotPersonalityPage.subtitle": "Découvrez quel arcane majeur représente votre énergie pour la journée.",
   "TarotDailyReading.title": "Votre Carte de Tarot Quotidienne",
   "TarotDailyReading.subtitle": "Tirez une carte pour recevoir des conseils et des aperçus pour votre journée.",
   "TarotDailyReading.revealButton": "Révéler ma Carte Quotidienne",
@@ -763,5 +765,3 @@
   "Busy": "Occupé",
   "Meditating": "En méditation"
 }
-
-    

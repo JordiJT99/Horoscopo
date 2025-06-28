@@ -462,6 +462,8 @@
   "DreamTrends.title": "Trends in deinen Träumen",
   "DreamTrends.description": "Symbole, die diesen Monat häufig in deinen Träumen erscheinen.",
   "DreamTrends.noTrends": "Noch keine wiederkehrenden Trends. Protokolliere weiter deine Träume, um Muster aufzudecken!",
+  "TarotPersonalityPage.title": "Deine Tägliche Tarotkarte",
+  "TarotPersonalityPage.subtitle": "Entdecke, welche große Arkana deine Energie für den Tag repräsentiert.",
   "TarotDailyReading.title": "Deine tägliche Tarotkarte",
   "TarotDailyReading.subtitle": "Ziehe eine Karte, um Führung und Einblick für deinen Tag zu erhalten.",
   "TarotDailyReading.revealButton": "Meine Tageskarte aufdecken",
@@ -763,5 +765,3 @@
   "Busy": "Beschäftigt",
   "Meditating": "Meditierend"
 }
-
-    
