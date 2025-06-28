@@ -168,10 +168,10 @@ export const useCosmicEnergy = () => {
         result.newLevel = finalLevel;
         return result;
 
-    }, [user, state.level, state.points, state.freeChats, state.lastGained]);
+    }, [user, state.level]); // Simplified dependencies
 
     const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
-        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0, stardust: 0 } };
+        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: 1, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
         
         const currentState = store.getState();
@@ -205,7 +205,7 @@ export const useCosmicEnergy = () => {
         result.leveledUp = finalLevel > currentState.level;
         result.newLevel = finalLevel;
         return result;
-    }, [user, state.level, state.points, state.freeChats]);
+    }, [user]); // Simplified dependencies
     
     const subtractDebugPoints = useCallback((pointsToSubtract: number) => {
         if (!user?.uid || !store) return;
@@ -229,7 +229,7 @@ export const useCosmicEnergy = () => {
             freeChats: newFreeChats,
         });
 
-    }, [user]);
+    }, [user]); // Simplified dependencies
 
     const useFreeChat = useCallback(() => {
         if (!user?.uid || !store) return;
@@ -237,7 +237,7 @@ export const useCosmicEnergy = () => {
         if (currentState.freeChats > 0) {
             store.setState({ freeChats: currentState.freeChats - 1 });
         }
-    }, [user]);
+    }, [user]); // Simplified dependencies
     
     const pointsForCurrentLevel = LEVEL_THRESHOLDS[state.level - 1] ?? 0;
     const pointsForNextLevel = LEVEL_THRESHOLDS[state.level] ?? LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length-1];
