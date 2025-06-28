@@ -899,39 +899,39 @@
     },
     "Libra": {
       "title": "Libra Traits",
-      "description": "",
+      "description": "Ruled by Venus, Libra is the sign of balance, harmony, and justice. Librans are social beings who thrive on partnership and seek to create equilibrium in all areas of life. They have a keen eye for beauty and a natural diplomatic charm.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Cooperative", "diplomatic", "gracious", "fair-minded", "social"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Indecisive", "avoids confrontations", "carries a grudge", "self-pity"],
       "loveTitle": "Libra in Love",
-      "love": "",
+      "love": "In love, Libra is a romantic idealist who seeks a true partnership. They need balance and harmony, and will go to great lengths to please their partner. Communication and intellectual connection are key for them.",
       "workTitle": "Libra at Work",
-      "work": ""
+      "work": "Libras excel as mediators, diplomats, and in any role that requires fairness and social grace. They are great team players and thrive in beautiful, harmonious work environments, often in arts, law, or public relations."
     },
     "Scorpio": {
       "title": "Scorpio Traits",
-      "description": "",
+      "description": "Scorpio is a sign of deep emotion, power, and transformation. Ruled by Pluto, they are passionate, resourceful, and incredibly determined. Scorpios are known for their intensity and their ability to see beneath the surface to the truth of any matter.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Resourceful", "brave", "passionate", "a true friend", "determined"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Distrusting", "jealous", "secretive", "can be manipulative"],
       "loveTitle": "Scorpio in Love",
-      "love": "",
+      "love": "In love, Scorpio is all-or-nothing. They are incredibly loyal, passionate, and protective, seeking a deep, soul-baring connection. They require absolute trust and can be quite possessive.",
       "workTitle": "Scorpio at Work",
-      "work": ""
+      "work": "Scorpios are excellent investigators, researchers, and strategists. They thrive in roles that require them to uncover truths or wield power, such as detectives, scientists, or financial leaders."
     },
     "Sagittarius": {
       "title": "Sagittarius Traits",
-      "description": "",
+      "description": "The adventurer and philosopher of the zodiac, Sagittarius is ruled by Jupiter, the planet of expansion and luck. They are optimistic, freedom-loving, and have an insatiable thirst for knowledge and new experiences.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Generous", "idealistic", "great sense of humor", "optimistic"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Promises more than can deliver", "impatient", "tactless"],
       "loveTitle": "Sagittarius in Love",
-      "love": "",
+      "love": "Sagittarius needs freedom in love. They seek a partner who is also their best friend and travel companion. They can be wary of commitment, fearing it will clip their wings, but are incredibly loyal once they've found their match.",
       "workTitle": "Sagittarius at Work",
-      "work": ""
+      "work": "Sagittarius excels in careers that involve travel, education, publishing, or philosophy. They need autonomy and a sense of purpose, and they make inspiring teachers and leaders."
     },
     "Capricorn": {
       "title": "Capricorn Traits",

@@ -899,39 +899,39 @@
     },
     "Libra": {
       "title": "Eigenschaften der Waage",
-      "description": "",
+      "description": "Regiert von Venus, ist die Waage das Zeichen für Gleichgewicht, Harmonie und Gerechtigkeit. Waagen sind soziale Wesen, die in Partnerschaften aufblühen und danach streben, in allen Lebensbereichen ein Gleichgewicht zu schaffen. Sie haben ein feines Gespür für Schönheit und einen natürlichen diplomatischen Charme.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Kooperativ", "diplomatisch", "liebenswürdig", "gerecht", "sozial"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Unentschlossen", "vermeidet Konfrontationen", "nachtragend", "selbstmitleidig"],
       "loveTitle": "Waage in der Liebe",
-      "love": "",
+      "love": "In der Liebe ist die Waage ein romantischer Idealist, der eine echte Partnerschaft sucht. Sie brauchen Gleichgewicht und Harmonie und werden große Anstrengungen unternehmen, um ihren Partner glücklich zu machen. Kommunikation und intellektuelle Verbindung sind für sie entscheidend.",
       "workTitle": "Waage bei der Arbeit",
-      "work": ""
+      "work": "Waagen zeichnen sich als Mediatoren, Diplomaten und in jeder Rolle aus, die Fairness und soziales Geschick erfordert. Sie sind großartige Teamplayer und gedeihen in schönen, harmonischen Arbeitsumgebungen, oft in den Bereichen Kunst, Recht oder Öffentlichkeitsarbeit."
     },
     "Scorpio": {
       "title": "Eigenschaften des Skorpions",
-      "description": "",
+      "description": "Skorpion ist ein Zeichen tiefer Emotionen, Macht und Transformation. Regiert von Pluto, sind sie leidenschaftlich, einfallsreich und unglaublich entschlossen. Skorpione sind bekannt für ihre Intensität und ihre Fähigkeit, unter die Oberfläche zu blicken, um die Wahrheit in jeder Angelegenheit zu erkennen.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Einfallsreich", "mutig", "leidenschaftlich", "ein wahrer Freund", "entschlossen"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Misstrauisch", "eifersüchtig", "geheimniskrämerisch", "kann manipulativ sein"],
       "loveTitle": "Skorpion in der Liebe",
-      "love": "",
+      "love": "In der Liebe ist der Skorpion alles oder nichts. Sie sind unglaublich loyal, leidenschaftlich und beschützend und suchen eine tiefe, seelenentblößende Verbindung. Sie benötigen absolutes Vertrauen und können ziemlich besitzergreifend sein.",
       "workTitle": "Skorpion bei der Arbeit",
-      "work": ""
+      "work": "Skorpione sind ausgezeichnete Ermittler, Forscher und Strategen. Sie gedeihen in Rollen, die es ihnen ermöglichen, Wahrheiten aufzudecken oder Macht auszuüben, wie zum Beispiel als Detektive, Wissenschaftler oder Finanzführer."
     },
     "Sagittarius": {
       "title": "Eigenschaften des Schützen",
-      "description": "",
+      "description": "Der Abenteurer und Philosoph des Tierkreises, der Schütze wird von Jupiter regiert, dem Planeten der Expansion und des Glücks. Sie sind optimistisch, freiheitsliebend und haben einen unstillbaren Durst nach Wissen und neuen Erfahrungen.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Großzügig", "idealistisch", "großartiger Sinn für Humor", "optimistisch"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Verspricht mehr, als er halten kann", "ungeduldig", "taktlos"],
       "loveTitle": "Schütze in der Liebe",
-      "love": "",
+      "love": "Der Schütze braucht Freiheit in der Liebe. Er sucht einen Partner, der auch sein bester Freund und Reisebegleiter ist. Sie können sich vor Verpflichtungen scheuen, aus Angst, ihre Flügel könnten gestutzt werden, sind aber unglaublich loyal, sobald sie ihren Partner gefunden haben.",
       "workTitle": "Schütze bei der Arbeit",
-      "work": ""
+      "work": "Der Schütze zeichnet sich in Karrieren aus, die Reisen, Bildung, Verlagswesen oder Philosophie beinhalten. Sie brauchen Autonomie und einen Sinn für Zweck und sind inspirierende Lehrer und Führer."
     },
     "Capricorn": {
       "title": "Eigenschaften des Steinbocks",
