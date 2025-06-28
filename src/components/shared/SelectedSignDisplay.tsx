@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Sun, Moon, ArrowUpRight } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
+import Link from 'next/link';
 
 
 interface SelectedSignDisplayProps {
@@ -52,16 +53,9 @@ export default function SelectedSignDisplay({
     aiHint = `${selectedSign.name.toLowerCase()} zodiac symbol illustration`;
   }
 
-  const handleBannerClick = () => {
-    const detailsSection = document.getElementById('horoscope-details-section');
-    if (detailsSection) {
-      detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   const translatedSignName = dictionary[selectedSign.name] || selectedSign.name;
-  const scrollToDetailsAriaLabel = (dictionary['SelectedSign.scrollToDetails'] || "Scroll to {signName} details").replace('{signName}', translatedSignName);
   const moreDetailsAriaLabel = (dictionary['SelectedSign.moreDetailsAria'] || "More details for {signName}").replace('{signName}', translatedSignName);
+  const detailPagePath = `/${locale}/zodiac/${selectedSign.name.toLowerCase()}`;
 
 
   return (
@@ -72,35 +66,33 @@ export default function SelectedSignDisplay({
       <p className="text-sm text-muted-foreground mb-4 font-body">
         {selectedSign.dateRange}
       </p>
-      <div
-        className={cn(
-          "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer"
-          // p-1 bg-primary ha sido eliminado
-        )}
-        onClick={handleBannerClick}
-        role="button"
-        tabIndex={0}
-        aria-label={scrollToDetailsAriaLabel}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBannerClick(); }}
-      >
-        <div className="w-full h-full rounded-full overflow-hidden border-2 border-primary"> {/* Borde añadido aquí */}
-          <Image
-              src={imagePath}
-              alt={translatedSignName}
-              layout="fill"
-              objectFit="cover"
-              priority={true}
-              key={imagePath}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.onerror = null;
-                target.src = `https://placehold.co/144x144/2A0A2A/FFFFFF.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`;
-                target.setAttribute("data-ai-hint", "letter placeholder");
-              }}
-              data-ai-hint={aiHint}
-          />
+      <Link href={detailPagePath} className="block" aria-label={moreDetailsAriaLabel}>
+        <div
+          className={cn(
+            "relative w-32 h-32 sm:w-36 sm:h-36 mb-2 rounded-full shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
+          )}
+          role="button"
+          tabIndex={-1} // The link handles focus
+        >
+          <div className="w-full h-full rounded-full overflow-hidden border-2 border-primary">
+            <Image
+                src={imagePath}
+                alt={translatedSignName}
+                layout="fill"
+                objectFit="cover"
+                priority={true}
+                key={imagePath}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = `https://placehold.co/144x144/2A0A2A/FFFFFF.png?text=${selectedSign.name.substring(0,1).toUpperCase()}&font=lora`;
+                  target.setAttribute("data-ai-hint", "letter placeholder");
+                }}
+                data-ai-hint={aiHint}
+            />
+          </div>
         </div>
-      </div>
+      </Link>
 
        {isPersonalized && (userProfile.sun || userProfile.moon || userProfile.ascendant) && (
         <div className="mt-4 w-full max-w-xs p-3 bg-card/50 rounded-lg border border-primary/20 backdrop-blur-sm">
@@ -117,10 +109,12 @@ export default function SelectedSignDisplay({
         variant="outline"
         size="sm"
         className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary text-xs mt-4 px-6 rounded-md font-body"
-        onClick={handleBannerClick}
         aria-label={moreDetailsAriaLabel}
+        asChild
       >
-        {dictionary['SelectedSign.moreDetails'] || "Más detalles"}
+        <Link href={detailPagePath}>
+          {dictionary['SelectedSign.moreDetails'] || "Más detalles"}
+        </Link>
       </Button>
     </div>
   );
