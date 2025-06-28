@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useSyncExternalStore, useCallback } from 'react';
@@ -184,6 +183,30 @@ export const useCosmicEnergy = () => {
         result.newLevel = newLevel;
         return result;
     }, [user, state.level]);
+    
+    const subtractDebugPoints = useCallback((pointsToSubtract: number) => {
+        if (!user?.uid || !store) return;
+        
+        const currentState = store.getState();
+        const newPoints = Math.max(0, currentState.points - pointsToSubtract);
+        const newLevel = calculateLevel(newPoints);
+        
+        let newFreeChats = currentState.freeChats || 0;
+        if (newLevel < currentState.level) {
+            for (let level = currentState.level; level > newLevel; level--) {
+                if (LEVEL_REWARDS[level]?.freeChats) {
+                    newFreeChats = Math.max(0, newFreeChats - (LEVEL_REWARDS[level].freeChats || 0));
+                }
+            }
+        }
+        
+        store.setState({
+            points: newPoints,
+            level: newLevel,
+            freeChats: newFreeChats,
+        });
+
+    }, [user]);
 
     const useFreeChat = useCallback(() => {
         if (!user?.uid || !store) return;
@@ -207,5 +230,6 @@ export const useCosmicEnergy = () => {
         addEnergyPoints,
         useFreeChat,
         addDebugPoints,
+        subtractDebugPoints,
     };
 };
