@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'use-sync-external-store/shim/with-selector';
+import { useState, useEffect, useCallback, useSyncExternalStore } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import type { CosmicEnergyState } from '@/types';
 import { useToast } from './use-toast';
