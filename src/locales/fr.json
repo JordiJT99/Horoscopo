@@ -806,5 +806,25 @@
     "validationErrors": {
       "required": "Ce champ est obligatoire"
     }
-  }
+  },
+  "DreamWizard.step1.title": "Récit Principal du Rêve",
+  "DreamWizard.step1.description": "Décrivez l'histoire principale de votre rêve, que s'est-il passé du début à la fin ?",
+  "DreamWizard.step1.placeholder": "J'étais dans une forêt et j'ai trouvé une porte mystérieuse...",
+  "DreamWizard.step2.title": "Personnages Clés",
+  "DreamWizard.step2.description": "Qui est apparu ? Des personnes, des animaux ou des êtres. (Facultatif)",
+  "DreamWizard.step2.placeholder": "Un vieil ami, un animal qui parle, une silhouette sombre...",
+  "DreamWizard.step3.title": "Lieux Principaux",
+  "DreamWizard.step3.description": "Où le rêve a-t-il eu lieu ? (Facultatif)",
+  "DreamWizard.step3.placeholder": "Ma maison d'enfance, une ville flottante, une grotte sombre...",
+  "DreamWizard.step4.title": "Émotions Dominantes",
+  "DreamWizard.step4.description": "Quelles ont été les principales émotions que vous avez ressenties ? (Facultatif)",
+  "DreamWizard.step4.placeholder": "Joie, peur, confusion, paix...",
+  "DreamWizard.step5.title": "Symboles Récurrents",
+  "DreamWizard.step5.description": "Y avait-il des objets ou des symboles qui se sont démarqués ? (Facultatif)",
+  "DreamWizard.step5.placeholder": "Une clé, un miroir, un numéro spécifique, un type de fleur...",
+  "DreamWizard.error.coreRequired": "La description principale du rêve est requise.",
+  "DreamWizard.loadingMessage": "Les esprits analysent les symboles et les émotions de votre voyage...",
+  "DreamWizard.prevButton": "Précédent",
+  "DreamWizard.nextButton": "Suivant",
+  "DreamWizard.getInterpretationButton": "Obtenir l'Interprétation"
 }

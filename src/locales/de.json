@@ -801,5 +801,25 @@
     "validationErrors": {
       "required": "Dieses Feld ist erforderlich"
     }
-  }
+  },
+  "DreamWizard.step1.title": "Haupthandlung des Traums",
+  "DreamWizard.step1.description": "Beschreiben Sie die Haupthandlung Ihres Traums, was ist von Anfang bis Ende passiert?",
+  "DreamWizard.step1.placeholder": "Ich war in einem Wald und fand eine mysteriöse Tür...",
+  "DreamWizard.step2.title": "Schlüsselfiguren",
+  "DreamWizard.step2.description": "Wer erschien? Menschen, Tiere oder Wesen. (Optional)",
+  "DreamWizard.step2.placeholder": "Ein alter Freund, ein sprechendes Tier, eine schattenhafte Gestalt...",
+  "DreamWizard.step3.title": "Hauptorte",
+  "DreamWizard.step3.description": "Wo hat der Traum stattgefunden? (Optional)",
+  "DreamWizard.step3.placeholder": "Mein Elternhaus, eine schwebende Stadt, eine dunkle Höhle...",
+  "DreamWizard.step4.title": "Dominante Emotionen",
+  "DreamWizard.step4.description": "Was waren die Hauptemotionen, die Sie gefühlt haben? (Optional)",
+  "DreamWizard.step4.placeholder": "Freude, Angst, Verwirrung, Frieden...",
+  "DreamWizard.step5.title": "Wiederkehrende Symbole",
+  "DreamWizard.step5.description": "Gab es Objekte oder Symbole, die herausstachen? (Optional)",
+  "DreamWizard.step5.placeholder": "Ein Schlüssel, ein Spiegel, eine bestimmte Zahl, eine Art von Blume...",
+  "DreamWizard.error.coreRequired": "Die Haupttraumbeschreibung ist erforderlich.",
+  "DreamWizard.loadingMessage": "Die Geister analysieren die Symbole und Emotionen Ihrer Reise...",
+  "DreamWizard.prevButton": "Zurück",
+  "DreamWizard.nextButton": "Weiter",
+  "DreamWizard.getInterpretationButton": "Deutung erhalten"
 }
