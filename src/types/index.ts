@@ -271,8 +271,6 @@ export interface Psychic {
   rating: number;
   reviews: number;
   experience: number; 
-  price: number | null; 
-  isFree: boolean;
   status: "Available" | "Busy" | "Meditating";
   aiHint: string;
 }
@@ -325,8 +323,9 @@ export type GameActionId =
 export interface CosmicEnergyState {
   points: number;
   level: number;
-  freeChats: number; // Added for rewards
-  lastGained: Record<GameActionId, string>; // e.g., { 'read_daily_horoscope': '2024-07-25' }
+  stardust: number;
+  freeChats: number;
+  lastGained: Record<GameActionId, string>; 
 }
 
 export interface DailyTransit {

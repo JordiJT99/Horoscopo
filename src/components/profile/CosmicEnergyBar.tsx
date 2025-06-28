@@ -1,9 +1,10 @@
+
 "use client";
 
 import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Sparkles, Star, MinusCircle, PlusCircle } from 'lucide-react';
+import { Sparkles, Star, MinusCircle, PlusCircle, Gem } from 'lucide-react';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
@@ -14,7 +15,7 @@ interface CosmicEnergyBarProps {
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust } = useCosmicEnergy();
   const { toast } = useToast();
 
   const handleAddPoints = () => {
@@ -90,6 +91,10 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
           </span>
         </div>
         <Progress value={progress} className="h-2.5" />
+        <div className="flex justify-end items-center mt-2 text-cyan-400">
+          <Gem className="w-3.5 h-3.5 mr-1.5" />
+          <span className="font-semibold text-sm">{stardust.toLocaleString()} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
+        </div>
       </CardContent>
     </Card>
   );
