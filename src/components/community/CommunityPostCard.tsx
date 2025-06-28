@@ -100,7 +100,7 @@ const ExpandableText = ({ text, dictionary }: { text: string; dictionary: Dictio
 export default function CommunityPostCard({ post, dictionary, locale }: CommunityPostCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
-  const { addEnergyPoints, level: currentUserLevel } = useCosmicEnergy();
+  const { addEnergyPoints, awardStardustForAction, level: currentUserLevel } = useCosmicEnergy();
   
   const [reactions, setReactions] = useState<Record<string, string>>(post.reactions || {});
   const [commentCount, setCommentCount] = useState(post.commentCount || 0);
@@ -152,6 +152,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
     }
 
     const originalReactions = { ...reactions };
+    const hadReaction = !!originalReactions[user.uid];
     const newReactions = { ...reactions };
     const postRef = doc(db, 'community-posts', post.id);
     const userReactionField = `reactions.${user.uid}`;
@@ -170,6 +171,15 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       setReactions(newReactions);
       try {
         await updateDoc(postRef, { [userReactionField]: emoji });
+        if (!hadReaction) {
+            const stardustResult = awardStardustForAction('react_to_post', 1);
+            if (stardustResult.success) {
+                toast({
+                    title: `✨ ${dictionary['CosmicEnergy.stardust'] || 'Stardust'}!`,
+                    description: (dictionary['Toast.dailyReactionStardust'] || "+{amount} 💫 for your first reaction of the day!").replace('{amount}', stardustResult.amount.toString()),
+                });
+            }
+        }
       } catch (error: any) {
         setReactions(originalReactions);
         toast({ title: dictionary['Error.genericTitle'], description: error.message, variant: 'destructive' });
@@ -199,21 +209,30 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       batch.update(postRef, { commentCount: increment(1) });
       await batch.commit();
       
-      const { pointsAdded, leveledUp, newLevel } = addEnergyPoints('add_comment', 10);
-      if (pointsAdded > 0) {
+      const energyResult = addEnergyPoints('add_community_comment', 10);
+      if (energyResult.pointsAdded > 0) {
         toast({
             title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
-            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${pointsAdded} EC!`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
         });
-         if (leveledUp) {
+         if (energyResult.leveledUp) {
             setTimeout(() => {
                 toast({
                     title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
-                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', newLevel.toString())}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
                 });
             }, 500);
         }
       }
+
+      const stardustResult = awardStardustForAction('add_community_comment', 1);
+      if (stardustResult.success) {
+          toast({
+              title: `✨ ${dictionary['CosmicEnergy.stardust'] || 'Stardust'}!`,
+              description: (dictionary['Toast.dailyCommentStardust'] || "+{amount} 💫 for your first comment of the day!").replace('{amount}', stardustResult.amount.toString()),
+          });
+      }
+
 
       const optimisticComment: Comment = {
         id: newCommentRef.id,

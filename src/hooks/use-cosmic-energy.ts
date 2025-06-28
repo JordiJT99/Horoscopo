@@ -3,8 +3,7 @@
 
 import { useSyncExternalStore, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import type { CosmicEnergyState, GameActionId } from '@/types';
-import { useToast } from '@/hooks/use-toast';
+import type { CosmicEnergyState, GameActionId, AwardStardustResult } from '@/types';
 
 // --- Configuration ---
 // XP needed to reach the start of each level. Index corresponds to level - 1.
@@ -120,8 +119,6 @@ export const useCosmicEnergy = () => {
         store?.getState ?? getInitialState
     );
     
-    const { toast } = useToast();
-    
     const addEnergyPoints = useCallback((actionId: GameActionId, pointsToAdd: number): AddEnergyPointsResult => {
         const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
@@ -183,6 +180,28 @@ export const useCosmicEnergy = () => {
 
     }, [user, state.level, state.freeChats, state.stardust, state.lastGained]);
     
+    const awardStardustForAction = useCallback((actionId: GameActionId, amount: number): AwardStardustResult => {
+        if (!user?.uid || !store) return { success: false, amount: 0 };
+        
+        const currentState = store.getState();
+        const lastGainedDate = currentState.lastGained[actionId];
+        const today = new Date().toISOString().split('T')[0];
+
+        if (lastGainedDate === today) {
+            return { success: false, amount: 0 }; // Already awarded today
+        }
+        
+        const newStardust = currentState.stardust + amount;
+        const newLastGained = { ...currentState.lastGained, [actionId]: today };
+
+        store.setState({
+            stardust: newStardust,
+            lastGained: newLastGained,
+        });
+
+        return { success: true, amount };
+    }, [user, state.stardust, state.lastGained]);
+
     const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
          const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: 1, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
@@ -300,6 +319,7 @@ export const useCosmicEnergy = () => {
         pointsForNextLevel: pointsForNextLevel,
         progress,
         addEnergyPoints,
+        awardStardustForAction,
         useFreeChat,
         addDebugPoints,
         subtractDebugPoints,

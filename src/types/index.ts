@@ -315,10 +315,11 @@ export type GameActionId =
   | 'read_weekly_horoscope'
   | 'read_monthly_horoscope'
   | 'complete_profile'
-  | 'add_comment'
   | 'draw_tarot_card'
   | 'draw_personality_card'
-  | 'use_crystal_ball';
+  | 'use_crystal_ball'
+  | 'add_community_comment'
+  | 'react_to_post';
 
 export interface CosmicEnergyState {
   points: number;
@@ -339,4 +340,9 @@ export interface UserAstrologyProfile {
   sun: ZodiacSign | null;
   moon: ZodiacSign | null;
   ascendant: ZodiacSign | null;
+}
+
+export interface AwardStardustResult {
+    success: boolean;
+    amount: number;
 }
