@@ -110,11 +110,12 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
       }
     }
     
-    const postData: Omit<CommunityPost, 'id' | 'timestamp'> = {
+    const postData = {
+      authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
-      postType: 'tarot_personality',
+      postType: 'tarot_personality' as const,
       tarotPersonalityData: result,
     };
 

@@ -16,12 +16,12 @@ export async function generateStaticParams() {
 }
 
 interface AstroVibesHomePageProps {
-  params: { locale: Locale }; // Corrected type for server component params
+  params: Promise<{ locale: Locale }>;
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function AstroVibesHomePageWrapper({ params, searchParams }: AstroVibesHomePageProps) {
-  // params.locale is directly available
+export default async function AstroVibesHomePageWrapper({ params: paramsPromise, searchParams }: AstroVibesHomePageProps) {
+  const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {
