@@ -862,39 +862,39 @@
     },
     "Cancer": {
       "title": "Rasgos de Cáncer",
-      "description": "",
+      "description": "Cáncer, regido por la Luna, es el signo de la nutrición, la seguridad y las profundas emociones. Son protectores, intuitivos y tienen un fuerte vínculo con el hogar y la familia.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Tenaz", "altamente imaginativo", "leal", "emocional", "simpático", "persuasivo"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Temperamental", "pesimista", "suspicaz", "manipulador", "inseguro"],
       "loveTitle": "Cáncer en el Amor",
-      "love": "",
+      "love": "Busca una conexión emocional profunda y seguridad. Es un amante increíblemente protector y cariñoso que valora la lealtad y el confort del hogar por encima de todo.",
       "workTitle": "Cáncer en el Trabajo",
-      "work": ""
+      "work": "Destaca en profesiones que implican cuidado, como la sanidad o la enseñanza. Su intuición también les convierte en excelentes psicólogos o artistas."
     },
     "Leo": {
       "title": "Rasgos de Leo",
-      "description": "",
+      "description": "Regido por el Sol, Leo es el rey (o reina) del zodíaco. Son carismáticos, generosos, de gran corazón y aman ser el centro de atención. La creatividad y la autoexpresión son vitales para ellos.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Creativo", "apasionado", "generoso", "de buen corazón", "alegre", "humorístico"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Arrogante", "terco", "egocéntrico", "perezoso", "inflexible"],
       "loveTitle": "Leo en el Amor",
-      "love": "",
+      "love": "En el amor, Leo es dramático, leal y extremadamente generoso. Aman ser adorados y tratarán a su pareja como a la realeza, esperando lo mismo a cambio.",
       "workTitle": "Leo en el Trabajo",
-      "work": ""
+      "work": "Leo es un líder nato. Son excelentes para inspirar a otros y prosperan en roles que les permiten brillar y ser creativos, como las artes, el entretenimiento o la gestión."
     },
     "Virgo": {
       "title": "Rasgos de Virgo",
-      "description": "",
+      "description": "Virgo es el signo del servicio, el análisis y la atención al detalle. Regidos por Mercurio, tienen una mente aguda y un deseo innato de mejorar todo lo que les rodea.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Leal", "analítico", "amable", "trabajador", "práctico"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Timidez", "preocupación", "excesivamente crítico consigo mismo y con los demás", "todo trabajo y nada de juego"],
       "loveTitle": "Virgo en el Amor",
-      "love": "",
+      "love": "Virgo expresa el amor a través de actos de servicio y una devoción silenciosa. Buscan una pareja ordenada, inteligente y que aprecie su deseo de cuidar los detalles.",
       "workTitle": "Virgo en el Trabajo",
-      "work": ""
+      "work": "El perfeccionista del zodíaco. Virgo es un trabajador increíblemente eficiente, organizado y orientado a los detalles. Son invaluables en cualquier campo que requiera precisión y análisis."
     },
     "Libra": {
       "title": "Rasgos de Libra",

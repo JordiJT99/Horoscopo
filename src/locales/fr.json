@@ -861,39 +861,39 @@
     },
     "Cancer": {
       "title": "Traits du Cancer",
-      "description": "",
+      "description": "Le Cancer, gouverné par la Lune, est le signe de l'éducation, de la sécurité et des émotions profondes. Ils sont protecteurs, intuitifs et ont un lien fort avec le foyer et la famille.",
       "strengthsTitle": "Forces",
-      "strengths": [],
+      "strengths": ["Tenace", "très imaginatif", "loyal", "émotionnel", "sympathique", "persuasif"],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": [],
+      "weaknesses": ["Lunatique", "pessimiste", "méfiant", "manipulateur", "inquiet"],
       "loveTitle": "Cancer en Amour",
-      "love": "",
+      "love": "Recherche une connexion émotionnelle profonde et de la sécurité. Un amant incroyablement protecteur et attentionné qui valorise la loyauté et le confort du foyer par-dessus tout.",
       "workTitle": "Cancer au Travail",
-      "work": ""
+      "work": "Excelle dans les professions qui impliquent de prendre soin des autres, comme les soins de santé ou l'enseignement. Leur intuition en fait également d'excellents psychologues ou artistes."
     },
     "Leo": {
       "title": "Traits du Lion",
-      "description": "",
+      "description": "Gouverné par le Soleil, le Lion est le roi (ou la reine) du zodiaque. Ils sont charismatiques, généreux, chaleureux et aiment être le centre de l'attention. La créativité et l'expression de soi sont vitales pour eux.",
       "strengthsTitle": "Forces",
-      "strengths": [],
+      "strengths": ["Créatif", "passionné", "généreux", "chaleureux", "joyeux", "humoristique"],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": [],
+      "weaknesses": ["Arrogant", "têtu", "égocentrique", "paresseux", "inflexible"],
       "loveTitle": "Lion en Amour",
-      "love": "",
+      "love": "En amour, le Lion est dramatique, loyal et extrêmement généreux. Ils aiment être adorés et traiteront leur partenaire comme un roi, en attendant la même chose en retour.",
       "workTitle": "Lion au Travail",
-      "work": ""
+      "work": "Le Lion est un leader né. Ils sont excellents pour inspirer les autres et s'épanouissent dans des rôles qui leur permettent de briller et d'être créatifs, comme les arts, le divertissement ou la gestion."
     },
     "Virgo": {
       "title": "Traits de la Vierge",
-      "description": "",
+      "description": "La Vierge est le signe du service, de l'analyse et du souci du détail. Gouvernés par Mercure, ils ont un esprit vif et un désir inné d'améliorer tout ce qui les entoure.",
       "strengthsTitle": "Forces",
-      "strengths": [],
+      "strengths": ["Loyal", "analytique", "gentil", "travailleur", "pratique"],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": [],
+      "weaknesses": ["Timidité", "inquiétude", "trop critique envers soi-même et les autres", "tout travail et pas de jeu"],
       "loveTitle": "Vierge en Amour",
-      "love": "",
+      "love": "La Vierge exprime l'amour par des actes de service et une dévotion tranquille. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de s'occuper des détails.",
       "workTitle": "Vierge au Travail",
-      "work": ""
+      "work": "Le perfectionniste du zodiaque. La Vierge est un travailleur incroyablement efficace, organisé et soucieux des détails. Ils sont inestimables dans tout domaine qui requiert précision et analyse."
     },
     "Libra": {
       "title": "Traits de la Balance",
