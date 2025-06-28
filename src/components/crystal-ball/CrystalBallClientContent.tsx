@@ -61,7 +61,21 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
       };
       const result: CrystalBallRevelationOutput = await getCrystalBallRevelation(input);
       setRevelation(result.revelation);
-      addEnergyPoints('use_crystal_ball', 10);
+      const energyResult = addEnergyPoints('use_crystal_ball', 10);
+      if (energyResult.pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+        });
+         if (energyResult.leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
     } catch (err) {
       console.error("Error consulting crystal ball:", err);
       toast({

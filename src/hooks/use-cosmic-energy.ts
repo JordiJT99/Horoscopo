@@ -1,13 +1,9 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useSyncExternalStore } from 'react';
+import { useSyncExternalStore, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import type { CosmicEnergyState } from '@/types';
-import { useToast } from './use-toast';
-import type { Dictionary } from '@/lib/dictionaries';
-import { getDictionary } from '@/lib/dictionaries';
-import type { Locale } from '@/types';
+import type { CosmicEnergyState, GameActionId } from '@/types';
 
 // --- Configuration ---
 const BASE_XP_PER_LEVEL = 100;
@@ -15,13 +11,11 @@ const LEVEL_MULTIPLIER = 1.5;
 
 const calculateLevel = (points: number): number => {
     if (points < BASE_XP_PER_LEVEL) return 1;
-    // A simple logarithmic formula for smoother level progression
     return Math.floor(1 + Math.log(points / BASE_XP_PER_LEVEL + 1) / Math.log(LEVEL_MULTIPLIER));
 };
 
 const getPointsForNextLevel = (level: number): number => {
     if (level <= 0) return BASE_XP_PER_LEVEL;
-    // Reverse the logarithmic formula to find points needed for the *start* of the next level
     return Math.ceil((Math.pow(LEVEL_MULTIPLIER, level) - 1) * BASE_XP_PER_LEVEL);
 };
 
@@ -76,26 +70,19 @@ const createStore = (userId: string) => {
     return { state: currentState, listeners, setState, getState, subscribe };
 }
 
+export interface AddEnergyPointsResult {
+    pointsAdded: number;
+    leveledUp: boolean;
+    newLevel: number;
+}
+
 // Custom hook to interact with the store
 export const useCosmicEnergy = () => {
     const { user } = useAuth();
-    const { toast } = useToast();
-    const [dictionary, setDictionary] = useState<Dictionary | null>(null);
-    const [locale, setLocale] = useState<Locale>('es');
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const currentLocale = (window.location.pathname.split('/')[1] || 'es') as Locale;
-            setLocale(currentLocale);
-            getDictionary(currentLocale).then(setDictionary);
-        }
-    }, []);
-
-    // Initialize or get the store for the current user
+    
     if (user?.uid && !store) {
         store = createStore(user.uid);
     } else if (!user?.uid && store) {
-        // Clear store on logout
         store = null;
     }
     
@@ -104,18 +91,22 @@ export const useCosmicEnergy = () => {
         store?.getState ?? getInitialState
     );
 
-    const addEnergyPoints = useCallback((actionId: string, pointsToAdd: number) => {
-        if (!user?.uid || !store || !dictionary) return;
-
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        const lastGainedDate = store.getState().lastGained[actionId];
-
-        if (lastGainedDate === today && actionId !== 'complete_profile') {
-            // Already gained points for this daily action today
-            return;
-        }
-
+    const addEnergyPoints = useCallback((actionId: GameActionId, pointsToAdd: number): AddEnergyPointsResult => {
+        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level };
+        if (!user?.uid || !store) return result;
+        
         const currentState = store.getState();
+        const lastGainedDate = currentState.lastGained[actionId];
+        
+        if (actionId === 'complete_profile' && lastGainedDate) {
+            return result; // Already awarded for completing profile once
+        }
+        
+        const today = new Date().toISOString().split('T')[0];
+        if (lastGainedDate === today && actionId !== 'complete_profile') {
+            return result; // Daily action already performed today
+        }
+        
         const newPoints = currentState.points + pointsToAdd;
         const newLevel = calculateLevel(newPoints);
         const newLastGained = { ...currentState.lastGained, [actionId]: today };
@@ -126,20 +117,14 @@ export const useCosmicEnergy = () => {
             lastGained: newLastGained,
         });
 
-        toast({
-            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
-            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${pointsToAdd} EC!`,
-        });
+        const leveledUp = newLevel > currentState.level;
 
-        if (newLevel > currentState.level) {
-             setTimeout(() => {
-                toast({
-                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
-                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', newLevel.toString())}`,
-                });
-            }, 500);
-        }
-    }, [user, dictionary, toast]);
+        return {
+            pointsAdded: pointsToAdd,
+            leveledUp,
+            newLevel
+        };
+    }, [user, state.level]);
     
     const pointsForNextLevel = getPointsForNextLevel(state.level);
     const pointsForCurrentLevel = getPointsForNextLevel(state.level - 1);
