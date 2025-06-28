@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useSyncExternalStore, useCallback } from 'react';
@@ -33,7 +34,7 @@ const calculateLevel = (points: number): number => {
 
 // Reward structure: key is the level reached, value is the reward
 const LEVEL_REWARDS: Record<number, { freeChats?: number; stardust?: number }> = {
-    3: { freeChats: 1 }, // Level 3: Luna -> 1 free chat
+    3: { freeChats: 0 }, // Changed from 1 to 0 as per new design
     4: { stardust: 100 },
     5: { freeChats: 1 },
     7: { stardust: 250 }, // Example, can be adjusted
@@ -55,14 +56,15 @@ const getInitialState = (): CosmicEnergyState => ({
     points: 0,
     level: 1,
     freeChats: 0,
-    stardust: 0, // FIXED: Ensure stardust is initialized to 0
+    stardust: 0,
     lastGained: {} as Record<GameActionId, string>,
+    hasRatedApp: false, // New state for one-time reward
 });
 
 const createStore = (userId: string) => {
     const listeners = new Set<() => void>();
     
-    const localStorageKey = `cosmicEnergy_v3_${userId}`; // Updated version
+    const localStorageKey = `cosmicEnergy_v4_${userId}`; // Updated version
     let currentState: CosmicEnergyState = getInitialState();
 
     try {
@@ -107,10 +109,7 @@ export interface AddEnergyPointsResult {
 export const useCosmicEnergy = () => {
     const { user } = useAuth();
     
-    // This logic seems flawed. If user changes, the store is not recreated.
-    // The store should be tied to the user session.
-    // If user logs out, store becomes null. If new user logs in, store is created.
-    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v3_${user.uid}`))) {
+    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v4_${user.uid}`))) {
         store = createStore(user.uid);
     } else if (!user?.uid && store) {
         store = null;
@@ -162,7 +161,7 @@ export const useCosmicEnergy = () => {
         }
 
         // Special one-time welcome stardust
-        if (actionId === 'complete_profile') {
+        if (actionId === 'complete_profile' && !lastGainedDate) {
             newStardust += 50;
             result.rewards.stardust += 50;
         }
@@ -182,7 +181,7 @@ export const useCosmicEnergy = () => {
         result.newLevel = finalLevel;
         return result;
 
-    }, [user, state.level, state.freeChats, state.stardust, state.lastGained, toast]);
+    }, [user, state.level, state.freeChats, state.stardust, state.lastGained]);
     
     const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
          const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: 1, rewards: { freeChats: 0, stardust: 0 } };
@@ -220,7 +219,7 @@ export const useCosmicEnergy = () => {
         result.leveledUp = finalLevel > currentState.level;
         result.newLevel = finalLevel;
         return result;
-    }, [user, toast]);
+    }, [user]);
 
     const subtractDebugPoints = useCallback((pointsToSubtract: number) => {
         if (!user?.uid || !store) return;
@@ -249,7 +248,7 @@ export const useCosmicEnergy = () => {
             stardust: newStardust,
         });
 
-    }, [user, toast]);
+    }, [user]);
 
     const useFreeChat = useCallback(() => {
         if (!user?.uid || !store) return false;
@@ -271,6 +270,26 @@ export const useCosmicEnergy = () => {
         return false;
     }, [user]);
     
+    const addStardust = useCallback((amount: number) => {
+        if (!user?.uid || !store) return;
+        const currentState = store.getState();
+        store.setState({ stardust: currentState.stardust + amount });
+    }, [user]);
+
+    const claimRateReward = useCallback(() => {
+        if (!user?.uid || !store) return { success: false, amount: 0 };
+        const currentState = store.getState();
+        if (currentState.hasRatedApp) {
+            return { success: false, amount: 0 };
+        }
+        const rewardAmount = 150;
+        store.setState({ 
+            stardust: currentState.stardust + rewardAmount,
+            hasRatedApp: true 
+        });
+        return { success: true, amount: rewardAmount };
+    }, [user]);
+
     const pointsForCurrentLevel = LEVEL_THRESHOLDS[state.level - 1] ?? 0;
     const pointsForNextLevel = LEVEL_THRESHOLDS[state.level] ?? LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length-1];
     const progress = pointsForNextLevel === pointsForCurrentLevel ? 100 : Math.max(0, Math.min(100, ((state.points - pointsForCurrentLevel) / (pointsForNextLevel - pointsForCurrentLevel)) * 100));
@@ -285,5 +304,7 @@ export const useCosmicEnergy = () => {
         addDebugPoints,
         subtractDebugPoints,
         spendStardust,
+        addStardust,
+        claimRateReward,
     };
 };

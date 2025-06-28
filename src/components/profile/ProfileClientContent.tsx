@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings, Star } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings, Star, ShoppingBag, Clapperboard } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -25,6 +25,99 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { cn } from '@/lib/utils';
 import RewardsCard from './RewardsCard';
+
+
+const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
+    const { addStardust, claimRateReward, hasRatedApp } = useCosmicEnergy();
+    const [isAdPlaying, setIsAdPlaying] = useState(false);
+    const { toast } = useToast();
+
+    const handleRateApp = () => {
+        const { success, amount } = claimRateReward();
+        if (success) {
+            toast({
+                title: dictionary['Toast.rateSuccessTitle'] || "Thank You!",
+                description: (dictionary['Toast.rateSuccessDescription'] || "You've been awarded {amount} Stardust for your feedback.").replace('{amount}', amount.toString())
+            });
+        } else {
+             toast({
+                title: dictionary['Toast.alreadyRated'] || "Already Rewarded",
+                description: "You have already claimed this reward."
+            });
+        }
+    };
+
+    const handleWatchAd = () => {
+        setIsAdPlaying(true);
+        setTimeout(() => {
+            const adReward = 15;
+            addStardust(adReward);
+            setIsAdPlaying(false);
+            toast({
+                 title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
+                description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
+            });
+        }, 2000); // Simulate ad watch time
+    };
+
+    const stardustPacks = [
+        { amount: 100, price: "$0.99", popular: false, icon: '💎' },
+        { amount: 550, price: "$4.99", popular: true, icon: '✨' },
+        { amount: 1200, price: "$9.99", popular: false, icon: '🌟' }
+    ];
+
+    return (
+        <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
+            <CardHeader className="p-6">
+                <CardTitle className="text-lg flex items-center gap-2">
+                    <ShoppingBag className="h-5 w-5 text-primary" />
+                    {dictionary['ProfilePage.getMoreStardustTitle'] || "Get More Stardust"}
+                </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6 pt-0 space-y-4">
+                <Button onClick={handleRateApp} disabled={hasRatedApp} className="w-full justify-between h-auto py-3 px-4">
+                    <div className="flex items-center gap-3">
+                         <Star className="h-5 w-5"/>
+                         <div className="text-left">
+                            <p className="font-semibold">{dictionary['ProfilePage.rateAppButton'] || "Rate the App"}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '150')}</p>
+                         </div>
+                    </div>
+                    <span>{hasRatedApp ? '✅' : '▶️'}</span>
+                </Button>
+                 <Button onClick={handleWatchAd} disabled={isAdPlaying} className="w-full justify-between h-auto py-3 px-4">
+                    <div className="flex items-center gap-3">
+                         <Clapperboard className="h-5 w-5"/>
+                         <div className="text-left">
+                            <p className="font-semibold">{dictionary['ProfilePage.watchAdButton'] || "Watch an Ad"}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '15')}</p>
+                         </div>
+                    </div>
+                    <span>{isAdPlaying ? '...' : '▶️'}</span>
+                </Button>
+
+                <div className="pt-4">
+                    <h4 className="text-center font-semibold mb-3">{dictionary['ProfilePage.buyStardustTitle'] || "Buy Stardust"}</h4>
+                    <div className="grid grid-cols-1 gap-2">
+                        {stardustPacks.map(pack => (
+                             <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-lg">{pack.icon}</span>
+                                    <p className="font-semibold">{pack.amount.toLocaleString()} 💫</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="font-bold">{pack.price}</p>
+                                    <p className="text-xs font-normal text-muted-foreground">{dictionary['MorePage.comingSoon']}</p>
+                                </div>
+                            </Button>
+                        ))}
+                    </div>
+                </div>
+
+            </CardContent>
+        </Card>
+    );
+};
 
 
 export default function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
@@ -222,18 +315,8 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
           </TabsContent>
 
           <TabsContent value="extras" className="mt-6 space-y-8">
+            <GetStardustCard dictionary={dictionary} />
             <RewardsCard dictionary={dictionary} />
-            <Card className="bg-card/70 backdrop-blur-sm border-primary/30 shadow-xl">
-              <CardHeader className="p-6">
-                <CardTitle className="text-lg text-primary flex items-center gap-2">
-                  <Award className="h-5 w-5" />
-                  {dictionary['ProfilePage.premiumTitle'] || "Unlock Premium Features"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6 pt-0">
-                  <p className="text-sm text-muted-foreground">{dictionary['MorePage.comingSoon'] || 'Coming Soon'}</p>
-              </CardContent>
-            </Card>
           </TabsContent>
         </Tabs>
       </div>
