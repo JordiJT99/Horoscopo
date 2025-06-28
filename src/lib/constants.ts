@@ -1,5 +1,4 @@
 
-
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey, DailyTransit } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Cat, PawPrint, Gitlab, Shell, TrendingUp, Zap, Heart } from 'lucide-react';
@@ -8,6 +7,7 @@ import { friendshipCompatibilityPairings } from './constantsfriendship';
 import { workCompatibilityPairings } from './constantswork';
 import type { CompatibilityReportDetail } from './constantslove'; 
 import { chineseCompatibilityPairings, type ChineseCompatibilityReportDetail } from './constantshoroscopochino';
+import { getSunLongitude, getMoonLongitude, getAscendantLongitude, getJulianDay } from './astronomy';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -26,23 +26,10 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
 ];
 
 export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
-  const day = date.getDate();
-  const month = date.getMonth() + 1; // JS months are 0-indexed
-
-  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return ZODIAC_SIGNS.find(s => s.name === "Aries")!;
-  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Taurus")!;
-  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Gemini")!;
-  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Cancer")!;
-  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Leo")!;
-  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Virgo")!;
-  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return ZODIAC_SIGNS.find(s => s.name === "Libra")!;
-  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return ZODIAC_SIGNS.find(s => s.name === "Scorpio")!;
-  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return ZODIAC_SIGNS.find(s => s.name === "Sagittarius")!;
-  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return ZODIAC_SIGNS.find(s => s.name === "Capricorn")!;
-  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return ZODIAC_SIGNS.find(s => s.name === "Aquarius")!;
-  if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return ZODIAC_SIGNS.find(s => s.name === "Pisces")!;
-  
-  return null;
+  const jd = getJulianDay(date);
+  const longitude = getSunLongitude(jd);
+  const signName = getSignFromDegree(longitude);
+  return ZODIAC_SIGNS.find(s => s.name === signName) || null;
 };
 
 // Helper function to get sign based on absolute degree
@@ -63,10 +50,10 @@ export const getSignFromDegree = (degree: number): ZodiacSignName => {
 };
 
 export const getMoonSign = (date: Date): ZodiacSign | null => {
-  // A simple deterministic calculation for moon sign
-  const moonDegree = ((date.getDate() * 12 + date.getHours() * 0.5) % 360);
-  const moonSignName = getSignFromDegree(moonDegree);
-  return ZODIAC_SIGNS.find(s => s.name === moonSignName) || null;
+  const jd = getJulianDay(date);
+  const longitude = getMoonLongitude(jd);
+  const signName = getSignFromDegree(longitude);
+  return ZODIAC_SIGNS.find(s => s.name === signName) || null;
 };
 
 
@@ -299,6 +286,10 @@ export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale
 
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
+  // NOTE: Geocoding birthCity is not implemented. Using fixed coordinates for Madrid, Spain as a placeholder.
+  const lat = 40.4168;
+  const lon = -3.7038;
+  
   if (!birthTime) {
     return null;
   }
@@ -307,14 +298,16 @@ export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: 
     return null;
   }
 
-  // This is a simplified deterministic calculation for ascendant sign
-  // A real calculation is extremely complex. This provides a believable mock.
-  const ascendantDegree = ((hour * 15 + minute / 4) % 360);
-  const ascendantSignName = getSignFromDegree(ascendantDegree);
+  const dateWithTime = new Date(birthDate);
+  dateWithTime.setUTCHours(hour, minute);
+
+  const jd = getJulianDay(dateWithTime);
+  const longitude = getAscendantLongitude(jd, lat, lon);
+  const signName = getSignFromDegree(longitude);
 
   return {
-    sign: ascendantSignName,
-    briefExplanation: `Tu signo ascendente, ${ascendantSignName}, influye en tu personalidad externa y cómo te perciben los demás.`,
+    sign: signName,
+    briefExplanation: `Your ascendant sign, ${signName}, influences your outer personality and how others perceive you.`,
   };
 };
 
