@@ -414,5 +414,12 @@
   "ProfilePage.defaultUsername": "Astro-Benutzer",
   "ProfilePage.defaultEmail": "Keine E-Mail angegeben",
   "ProfilePage.profileTab": "Profil",
-  "ProfilePage.extrasTab": "Extras"
+  "ProfilePage.extrasTab": "Extras",
+  "ProfilePage.cosmicEnergyTitle": "Kosmische Energie",
+  "ProfilePage.cosmicEnergyDescription": "Sammle Punkte, indem du die App nutzt.",
+  "ProfilePage.levelLabel": "Level",
+  "CosmicEnergy.pointsEarnedTitle": "Kosmische Energie erhalten!",
+  "CosmicEnergy.pointsEarnedDescription": "Du hast +{points} KE verdient!",
+  "CosmicEnergy.levelUpTitle": "Level Up!",
+  "CosmicEnergy.levelUpDescription": "Du hast Level {level} erreicht!"
 }

@@ -414,5 +414,12 @@
   "ProfilePage.defaultUsername": "Utilisateur Astro",
   "ProfilePage.defaultEmail": "Aucun e-mail fourni",
   "ProfilePage.profileTab": "Profil",
-  "ProfilePage.extrasTab": "Extras"
+  "ProfilePage.extrasTab": "Extras",
+  "ProfilePage.cosmicEnergyTitle": "Énergie Cosmique",
+  "ProfilePage.cosmicEnergyDescription": "Gagnez des points en interagissant avec l'application.",
+  "ProfilePage.levelLabel": "Niveau",
+  "CosmicEnergy.pointsEarnedTitle": "Énergie Cosmique Gagnée !",
+  "CosmicEnergy.pointsEarnedDescription": "Vous avez gagné +{points} EC !",
+  "CosmicEnergy.levelUpTitle": "Niveau Supérieur !",
+  "CosmicEnergy.levelUpDescription": "Vous avez atteint le Niveau {level} !"
 }
