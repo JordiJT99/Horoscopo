@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useEffect, useState, useMemo } from 'react';
@@ -18,6 +19,7 @@ import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHead
 import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
 import PromotionCard from '@/components/shared/PromotionCard';
+import DailyTransitWidget from './DailyTransitWidget';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Share2, Heart, CircleDollarSign, Activity } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -419,6 +421,9 @@ export default function AstroVibesHomePageContent({
   return (
     <div className="flex flex-col">
       <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden">
+        
+        <DailyTransitWidget dictionary={dictionary} />
+
         <SignSelectorHorizontalScroll
           dictionary={dictionary}
           locale={locale}
