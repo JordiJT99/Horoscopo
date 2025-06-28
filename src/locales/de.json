@@ -935,39 +935,41 @@
     },
     "Capricorn": {
       "title": "Eigenschaften des Steinbocks",
-      "description": "",
+      "description": "Die ehrgeizige und disziplinierte Ziege des Tierkreises. Regiert von Saturn, sind Steinböcke Meister der Selbstkontrolle und haben die Fähigkeit, den Weg zu weisen, solide und realistische Pläne zu machen und viele Menschen zu führen, die für sie arbeiten. Sie sind Meister der Manifestation.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Verantwortungsbewusst", "diszipliniert", "Selbstkontrolle", "gute Manager", "loyal"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Besserwisserisch", "unversöhnlich", "herablassend", "erwartet das Schlimmste"],
       "loveTitle": "Steinbock in der Liebe",
-      "love": "",
+      "love": "Steinbock ist ein ernster und engagierter Partner. Sie zeigen Liebe durch praktische Taten und Loyalität. Sie suchen einen Partner, der ebenso ehrgeizig ist und ihr Bedürfnis nach Struktur und Sicherheit versteht.",
       "workTitle": "Steinbock bei der Arbeit",
-      "work": ""
+      "work": "Steinböcke sind die CEOs des Tierkreises. Sie sind fleißig, zielorientiert und ausgezeichnet im Management von Projekten und Menschen. Sie gedeihen in Umgebungen, in denen sie langfristigen Erfolg aufbauen und erreichen können."
     },
     "Aquarius": {
       "title": "Eigenschaften des Wassermanns",
-      "description": "",
+      "description": "Der Visionär und Humanist des Tierkreises. Regiert von Uranus, sind Wassermänner originell, unabhängig und zukunftsorientiert. Sie gehen ihren eigenen Weg und setzen sich dafür ein, die Welt zu einem besseren Ort zu machen.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Fortschrittlich", "originell", "unabhängig", "humanitär", "intellektuell"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Flüchtet vor emotionalem Ausdruck", "temperamentvoll", "kompromisslos", "distanziert"],
       "loveTitle": "Wassermann in der Liebe",
-      "love": "",
+      "love": "In der Liebe braucht der Wassermann einen Partner, der vor allem ein Freund ist. Sie schätzen intellektuelle Verbindung und Freiheit. Sie mögen distanziert erscheinen, aber ihre Liebe ist echt und basiert auf gemeinsamen Idealen.",
       "workTitle": "Wassermann bei der Arbeit",
-      "work": ""
+      "work": "Der Wassermann zeichnet sich in Rollen aus, die Innovation und unkonventionelles Denken erfordern, wie in der Technologie, Wissenschaft oder im sozialen Aktivismus. Sie brauchen Autonomie und arbeiten am besten, wenn sie an die Sache glauben."
     },
     "Pisces": {
       "title": "Eigenschaften der Fische",
-      "description": "",
+      "description": "Der Mystiker und Träumer des Tierkreises. Regiert von Neptun, sind Fische mitfühlend, künstlerisch und zutiefst intuitiv. Sie sind mit der spirituellen Welt verbunden und haben eine grenzenlose Fähigkeit zur Empathie.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Mitfühlend", "künstlerisch", "intuitiv", "sanft", "weise"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Ängstlich", "übermäßig vertrauensvoll", "traurig", "Wunsch, der Realität zu entfliehen", "kann ein Opfer oder ein Märtyrer sein"],
       "loveTitle": "Fische in der Liebe",
-      "love": "",
+      "love": "Fische sind hoffnungslose Romantiker, die eine magische, seelentiefe Verbindung suchen. Sie sind unglaublich selbstlose und hingebungsvolle Partner, können sich aber auch in der Idealisierung verlieren und Warnsignale ignorieren.",
       "workTitle": "Fische bei der Arbeit",
-      "work": ""
+      "work": "Fische gedeihen in kreativen und mitfühlenden Bereichen. Sie sind ausgezeichnete Künstler, Musiker, Heiler und Berater. Ihre Intuition gibt ihnen eine einzigartige Perspektive in jeder Rolle, die sie übernehmen."
     }
   }
 }
+
+    
