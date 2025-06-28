@@ -45,10 +45,28 @@ export const getSunSignFromDate = (date: Date): ZodiacSign | null => {
   return null;
 };
 
+// Helper function to get sign based on absolute degree
+export const getSignFromDegree = (degree: number): ZodiacSignName => {
+  const d = degree % 360;
+  if (d < 30) return 'Aries';
+  if (d < 60) return 'Taurus';
+  if (d < 90) return 'Gemini';
+  if (d < 120) return 'Cancer';
+  if (d < 150) return 'Leo';
+  if (d < 180) return 'Virgo';
+  if (d < 210) return 'Libra';
+  if (d < 240) return 'Scorpio';
+  if (d < 270) return 'Sagittarius';
+  if (d < 300) return 'Capricorn';
+  if (d < 330) return 'Aquarius';
+  return 'Pisces';
+};
+
 export const getMoonSign = (date: Date): ZodiacSign | null => {
-  const dayOfMonth = date.getDate();
-  const signIndex = Math.floor((dayOfMonth - 1) / 2.5) % 12;
-  return ZODIAC_SIGNS[signIndex];
+  // A simple deterministic calculation for moon sign
+  const moonDegree = ((date.getDate() * 12 + date.getHours() * 0.5) % 360);
+  const moonSignName = getSignFromDegree(moonDegree);
+  return ZODIAC_SIGNS.find(s => s.name === moonSignName) || null;
 };
 
 
@@ -280,12 +298,23 @@ export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale
 };
 
 
-export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData => {
-  const month = birthDate.getMonth(); 
-  const ascendantSign = ZODIAC_SIGNS[month % 12].name;
+export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
+  if (!birthTime) {
+    return null;
+  }
+  const [hour, minute] = birthTime.split(':').map(Number);
+  if (isNaN(hour) || isNaN(minute)) {
+    return null;
+  }
+
+  // This is a simplified deterministic calculation for ascendant sign
+  // A real calculation is extremely complex. This provides a believable mock.
+  const ascendantDegree = ((hour * 15 + minute / 4) % 360);
+  const ascendantSignName = getSignFromDegree(ascendantDegree);
+
   return {
-    sign: ascendantSign,
-    briefExplanation: `Tu signo ascendente, ${ascendantSign}, influye en tu personalidad externa y cómo te perciben los demás. Juega un papel importante en tus primeras impresiones y reacciones espontáneas. (Explicación de ejemplo en español, para ${birthCity} a las ${birthTime} del ${birthDate.toLocaleDateString()}).`,
+    sign: ascendantSignName,
+    briefExplanation: `Tu signo ascendente, ${ascendantSignName}, influye en tu personalidad externa y cómo te perciben los demás.`,
   };
 };
 
