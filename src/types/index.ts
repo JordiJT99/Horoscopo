@@ -287,6 +287,8 @@ export interface NewPostData {
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
   postType: PostType;
+  reactions: Record<string, string>;
+  commentCount: number;
   // Optional content fields
   textContent?: string;
   dreamData?: DreamInterpretationOutput;
@@ -306,7 +308,4 @@ export interface Comment {
 export interface CommunityPost extends NewPostData {
   id: string;
   timestamp: string;
-  // Interactivity fields are optional in the base type
-  reactions?: Record<string, string>; // { [userId]: emoji }
-  commentCount?: number;
 }

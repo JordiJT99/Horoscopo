@@ -18,9 +18,20 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { useAuth } from '@/context/AuthContext';
 import { Textarea } from '../ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { getCommentsForPost, addCommentToPost, toggleReactionOnPost } from '@/lib/community-posts';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
-
+import { db } from '@/lib/firebase';
+import {
+  collection,
+  query,
+  orderBy,
+  getDocs,
+  doc,
+  writeBatch,
+  increment,
+  updateDoc,
+  deleteField,
+  Timestamp,
+} from 'firebase/firestore';
 
 interface CommunityPostCardProps {
   post: CommunityPost;
@@ -108,9 +119,21 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       const fetchComments = async () => {
         setIsLoadingComments(true);
         try {
-          const fetchedComments = await getCommentsForPost(post.id);
+          if (!db) throw new Error("Firestore not initialized");
+          const commentsCol = collection(db, 'community-posts', post.id, 'comments');
+          const q = query(commentsCol, orderBy('timestamp', 'asc'));
+          const snapshot = await getDocs(q);
+          const fetchedComments = snapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              ...data,
+              timestamp: (data.timestamp as Timestamp).toDate().toISOString(),
+            } as Comment;
+          });
           setComments(fetchedComments);
         } catch (error) {
+          console.error("Error fetching comments client-side:", error);
           toast({ title: dictionary['Error.genericTitle'], description: 'Could not load comments.', variant: 'destructive' });
         } finally {
           setIsLoadingComments(false);
@@ -120,55 +143,71 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
     }
   }, [showComments, post.id, comments.length, commentCount, dictionary, toast]);
 
-
   const handleReact = async (emoji: string) => {
-    if (!user) {
+    if (!user || !db) {
       toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToReact'] || 'You must be logged in to react.', variant: 'destructive' });
       return;
     }
 
     const originalReactions = { ...reactions };
     const newReactions = { ...reactions };
+    const postRef = doc(db, 'community-posts', post.id);
+    const userReactionField = `reactions.${user.uid}`;
 
     if (newReactions[user.uid] === emoji) {
       delete newReactions[user.uid];
+      setReactions(newReactions);
+      try {
+        await updateDoc(postRef, { [userReactionField]: deleteField() });
+      } catch (error: any) {
+        setReactions(originalReactions);
+        toast({ title: dictionary['Error.genericTitle'], description: error.message, variant: 'destructive' });
+      }
     } else {
       newReactions[user.uid] = emoji;
-    }
-    setReactions(newReactions);
-
-    try {
-      await toggleReactionOnPost(post.id, user.uid, emoji);
-    } catch (error: any) {
-      setReactions(originalReactions);
-      const errorMsg = error.message || (dictionary['CommunityPage.reactionError'] || 'Could not save reaction.');
-      toast({
-          title: dictionary['Error.genericTitle'] || "Error",
-          description: errorMsg,
-          variant: 'destructive'
-      });
+      setReactions(newReactions);
+      try {
+        await updateDoc(postRef, { [userReactionField]: emoji });
+      } catch (error: any) {
+        setReactions(originalReactions);
+        toast({ title: dictionary['Error.genericTitle'], description: error.message, variant: 'destructive' });
+      }
     }
   };
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim() || !user) return;
+    if (!newComment.trim() || !user || !db) return;
 
     setIsPostingComment(true);
     try {
+      const batch = writeBatch(db);
+      const postRef = doc(db, 'community-posts', post.id);
+      const newCommentRef = doc(collection(postRef, 'comments'));
+      
       const commentData = {
         authorId: user.uid,
         authorName: user.displayName || 'Anonymous',
         authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
         text: newComment,
+        timestamp: Timestamp.now(),
+      };
+      
+      batch.set(newCommentRef, commentData);
+      batch.update(postRef, { commentCount: increment(1) });
+      await batch.commit();
+      
+      const optimisticComment: Comment = {
+        id: newCommentRef.id,
+        ...commentData,
+        timestamp: commentData.timestamp.toDate().toISOString(),
       };
 
-      const addedComment = await addCommentToPost(post.id, commentData);
-      
-      setComments(prev => [...prev, addedComment]);
+      setComments(prev => [...prev, optimisticComment]);
       setCommentCount(prev => prev + 1);
       setNewComment('');
     } catch (error: any) {
+      console.error("Error submitting comment client-side:", error);
        const errorMsg = error.message || (dictionary['CommunityPage.commentError'] || 'Could not post comment.');
        toast({
          title: dictionary['Error.genericTitle'] || "Error",
