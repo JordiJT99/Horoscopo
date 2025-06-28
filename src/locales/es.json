@@ -118,8 +118,8 @@
   "UserZodiacCard.lunarSign": "SIGNO LUNAR",
   "UserZodiacCard.ascendantSign": "SIGNO ASCENDENTE",
   "UserZodiacCard.element": "ELEMENTO",
-  "UserZodiacCard.polarity": "POLARIDAD",
-  "UserZodiacCard.modality": "MODALIDAD",
+  "UserZodiacCard.polarity": "POLARITÄT",
+  "UserZodiacCard.modality": "MODALITÄT",
   "UserZodiacCard.completeProfile": "Completa tu perfil",
   "UserZodiacCard.discoverButton": "Descubrir",
   "HoroscopeSection.title": "Horóscopo de {signName}",
@@ -801,7 +801,6 @@
   "Reward.stardustBonus": "Bonus de Polvo Estelar (+10%)",
   "Reward.ringOfLightFrame": "Marco de Avatar 'Anillo de Luz'",
   "Reward.supernovaTitle": "Título 'Supernova'",
-  "Reward.enlightenedTitle": "Título 'Iluminado/a'",
   "Reward.titleGuidingStar": "Estrella Guía",
   "Reward.titleSupernova": "Supernova",
   "Reward.titleEnlightened": "Iluminado/a",
@@ -820,10 +819,10 @@
   "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!",
   "ZodiacGalleryPage.title": "Signes du Zodiaque",
   "ZodiacGalleryPage.subtitle": "Explorez les caractéristiques de chaque signe astrologique.",
-  "ZodiacDetail.title": "Détails pour {signName}",
-  "ZodiacDetail.element": "Élément",
-  "ZodiacDetail.modality": "Modalité",
-  "ZodiacDetail.polarity": "Polarité",
+  "ZodiacDetail.title": "Detalles para {signName}",
+  "ZodiacDetail.element": "Elemento",
+  "ZodiacDetail.modality": "Modalidad",
+  "ZodiacDetail.polarity": "Polaridad",
   "ZodiacDetail.Aries.title": "Rasgos de Aries",
   "ZodiacDetail.Aries.description": "Aries es el primer signo del zodíaco, un pionero lleno de energía y entusiasmo. Regidos por Marte, el planeta de la guerra y la acción, los Aries son líderes natos, valientes y siempre listos para un nuevo desafío.",
   "ZodiacDetail.Aries.strengthsTitle": "Fortalezas",
@@ -945,3 +944,5 @@
   "ZodiacDetail.Pisces.workTitle": "Piscis en el Trabajo",
   "ZodiacDetail.Pisces.work": "Piscis se destaca en profesiones creativas y de sanación. Su empatía y su imaginación son sus mayores dones profesionales."
 }
+
+    

@@ -743,11 +743,11 @@
   "PsychicPhrase.isolde": "The red thread of fate may tangle, but it never breaks.",
   "PsychicPhrase.rohan": "Clarity on your goals is the first step to abundance.",
   "PsychicPhrase.lyra": "The melody of your life is full of possibilities. What song do you want to sing today?",
-  "PsychicTopic.loveRelationships": "Love & Relationships",
-  "PsychicTopic.careerFinance": "Career & Finance",
-  "PsychicTopic.healthWellbeing": "Health & Wellbeing",
-  "PsychicTopic.spiritualGrowth": "Spiritual Growth",
-  "PsychicTopic.generalReading": "General Reading",
+  "PsychicTopic.loveRelationships": "Amour & Relations",
+  "PsychicTopic.careerFinance": "Carrière & Finances",
+  "PsychicTopic.healthWellbeing": "Santé & Bien-être",
+  "PsychicTopic.spiritualGrowth": "Croissance Spirituelle",
+  "PsychicTopic.generalReading": "Lecture Générale",
   "Available": "Available",
   "Busy": "Busy",
   "Meditating": "Meditating",
@@ -945,3 +945,5 @@
   "ZodiacDetail.Pisces.workTitle": "Pisces at Work",
   "ZodiacDetail.Pisces.work": "Pisces excels in creative and healing professions. Their empathy and imagination are their greatest professional gifts."
 }
+
+    
