@@ -1,8 +1,9 @@
+
 "use client"; // Directive at the top of the client module
 
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -108,8 +109,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
           <Card className={cardClasses}>
             <CardHeader className="items-center text-center p-4 md:p-6">
               <Avatar className="w-24 h-24 md:w-32 md:h-32 mb-4 border-4 border-primary shadow-md">
-                {/* Assuming AvatarImage handles fallback if user.photoURL is null/undefined */}
-                {/* <AvatarImage src={user.photoURL} alt={displayName} /> */}
+                <AvatarImage src={user.photoURL || undefined} alt={displayName} />
                 <AvatarFallback className="text-3xl md:text-4xl bg-muted/50">
                   {userInitial}{userSecondInitial}
                 </AvatarFallback>
