@@ -8,8 +8,6 @@ export interface Psychic {
   rating: number;
   reviews: number;
   experience: number; // years
-  price: number | null; // null if free
-  isFree: boolean;
   status: "Available" | "Busy" | "Meditating";
   aiHint: string;
 }
@@ -25,8 +23,6 @@ export const psychics: Psychic[] = [
     rating: 4.8,
     reviews: 207,
     experience: 9,
-    price: null,
-    isFree: true,
     status: 'Available',
   },
   {
@@ -39,8 +35,6 @@ export const psychics: Psychic[] = [
     rating: 4.5,
     reviews: 60,
     experience: 11,
-    price: 3.99,
-    isFree: false,
     status: 'Available',
   },
   {
@@ -53,8 +47,6 @@ export const psychics: Psychic[] = [
     rating: 4.9,
     reviews: 1520,
     experience: 15,
-    price: 5.50,
-    isFree: false,
     status: 'Busy',
   },
   {
@@ -67,8 +59,6 @@ export const psychics: Psychic[] = [
     rating: 4.7,
     reviews: 834,
     experience: 12,
-    price: 4.50,
-    isFree: false,
     status: 'Available',
   },
   {
@@ -81,8 +71,6 @@ export const psychics: Psychic[] = [
     rating: 4.6,
     reviews: 512,
     experience: 7,
-    price: null,
-    isFree: true,
     status: 'Meditating',
   },
   {
@@ -95,8 +83,6 @@ export const psychics: Psychic[] = [
     rating: 4.8,
     reviews: 987,
     experience: 10,
-    price: 4.99,
-    isFree: false,
     status: 'Available',
   },
   {
@@ -109,8 +95,6 @@ export const psychics: Psychic[] = [
     rating: 4.9,
     reviews: 450,
     experience: 20,
-    price: null,
-    isFree: true,
     status: 'Meditating',
   },
   {
@@ -123,8 +107,6 @@ export const psychics: Psychic[] = [
     rating: 4.7,
     reviews: 1120,
     experience: 8,
-    price: 6.99,
-    isFree: false,
     status: 'Available',
   },
   {
@@ -137,8 +119,6 @@ export const psychics: Psychic[] = [
     rating: 4.8,
     reviews: 780,
     experience: 13,
-    price: 5.99,
-    isFree: false,
     status: 'Busy',
   },
   {
@@ -151,8 +131,6 @@ export const psychics: Psychic[] = [
     rating: 4.6,
     reviews: 310,
     experience: 5,
-    price: null,
-    isFree: true,
     status: 'Available',
   },
 ];

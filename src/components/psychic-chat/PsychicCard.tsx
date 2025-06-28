@@ -74,15 +74,9 @@ const PsychicCard: React.FC<PsychicCardProps> = ({ psychic, dictionary, locale }
           <span className="text-muted-foreground">({psychic.reviews})</span>
         </div>
         <div className="mt-auto">
-          {psychic.isFree ? (
-            <Button size="sm" className="w-full text-xs">
-              {dictionary['PsychicCard.chatFree'] || 'CHAT | FREE'}
-            </Button>
-          ) : (
-            <Button size="sm" variant="secondary" className="w-full text-xs">
-              {(dictionary['PsychicCard.chatPerMinute'] || 'CHAT | ${price}/MIN').replace('{price}', psychic.price?.toFixed(2) || '0.00')}
-            </Button>
-          )}
+          <Button size="sm" className="w-full text-xs">
+              {dictionary['PsychicCard.chatNow'] || 'Chat Now'}
+          </Button>
         </div>
       </div>
     </div>
