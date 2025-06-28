@@ -17,6 +17,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { addCommunityPost } from '@/lib/community-posts';
 import { getSunSignFromDate } from '@/lib/constants';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
@@ -31,6 +32,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { addEnergyPoints } = useCosmicEnergy();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
       };
       const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
       setResult(flowResult);
+      addEnergyPoints('draw_personality_card', 15);
       setIsFlipped(true); // Trigger the flip animation
     } catch (err) {
       console.error("Error getting daily tarot card:", err);

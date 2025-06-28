@@ -17,6 +17,7 @@ import { useAuth } from '@/context/AuthContext';
 import { addCommunityPost } from '@/lib/community-posts';
 import type { CommunityPost, ZodiacSignName } from '@/types';
 import { getSunSignFromDate } from '@/lib/constants';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface TarotReadingClientProps {
   dictionary: Dictionary;
@@ -33,6 +34,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { addEnergyPoints } = useCosmicEnergy();
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   
@@ -54,6 +56,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
+      addEnergyPoints('draw_tarot_card', 15);
     } catch (err) {
       console.error("Error getting tarot reading:", err);
       setError(dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.");

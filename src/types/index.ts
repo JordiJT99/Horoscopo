@@ -311,6 +311,16 @@ export interface CommunityPost extends NewPostData {
 }
 
 // Gamification Types
+export type GameActionId = 
+  | 'read_daily_horoscope'
+  | 'read_weekly_horoscope'
+  | 'read_monthly_horoscope'
+  | 'complete_profile'
+  | 'add_comment'
+  | 'draw_tarot_card'
+  | 'draw_personality_card'
+  | 'use_crystal_ball';
+
 export interface CosmicEnergyState {
   points: number;
   level: number;
