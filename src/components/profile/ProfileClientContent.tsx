@@ -87,14 +87,14 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
   };
   
   const profileBackgroundClass = useMemo(() => {
-    if (userLevel >= 20) return 'profile-bg-rosette';
-    if (userLevel >= 15) return 'profile-bg-aurora';
+    if (userLevel >= 9) return 'profile-bg-rosette'; // Supernova
+    if (userLevel >= 4) return 'profile-bg-gaia-nebula'; // Planeta
     return '';
   }, [userLevel]);
 
   const avatarFrameClass = useMemo(() => {
-    if (userLevel >= 15) return 'avatar-frame-level-15';
-    if (userLevel >= 5) return 'avatar-frame-level-5';
+    if (userLevel >= 8) return 'avatar-frame-ring-of-light'; // Nebulosa
+    if (userLevel >= 2) return 'avatar-frame-comet'; // Cometa
     return '';
   }, [userLevel]);
 
@@ -142,7 +142,6 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
             </Avatar>
             <CardTitle className="text-2xl font-headline flex items-center gap-2">
               {displayName}
-              {userLevel >= 15 && <Star className="w-5 h-5 text-yellow-400" title={dictionary['ProfilePage.supernovaTitle'] || 'Supernova'} />}
             </CardTitle>
             {userSunSign && (
               <div className="flex items-center gap-1.5 text-sm text-primary font-semibold">

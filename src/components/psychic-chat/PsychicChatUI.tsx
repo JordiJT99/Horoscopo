@@ -88,7 +88,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       .replace('{topicName}', topicName);
 
     if (freeChats > 0) {
-      initialMessage += `\n\n${dictionary['PsychicChatPage.freeChatAvailable'] || "I see you have a free reading credit. Your first question is on me!"}`;
+      initialMessage += `\n\n✨ ${(dictionary['PsychicChatPage.freeChatAvailable'] || "You have a free reading credit. Your first question is on me!")}`;
     }
     
     setMessages([{ text: initialMessage, sender: 'ai' }]);

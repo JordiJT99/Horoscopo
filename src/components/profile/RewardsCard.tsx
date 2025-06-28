@@ -1,22 +1,29 @@
+
 'use client';
 
 import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
-import { CheckCircle, Lock, Award, MessageCircle, Sparkles, Star, Palette } from 'lucide-react';
+import { CheckCircle, Lock, Award, MessageCircle, Sparkles, Star, Palette, Moon, Ticket, Download, Crown, Gem, Box, Atom } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ChineseAstrologyIcon } from '@/lib/constants';
 
 interface RewardsCardProps {
   dictionary: Dictionary;
 }
 
 const rewards = [
-  { level: 5, key: 'exclusiveEmoji', icon: Sparkles },
-  { level: 5, key: 'freeChat', icon: MessageCircle },
-  { level: 10, key: 'freeChat', icon: MessageCircle },
-  { level: 15, key: 'supernovaTitle', icon: Star },
-  { level: 15, key: 'auroraBackground', icon: Palette },
-  { level: 20, key: 'rosetteBackground', icon: Palette },
+  { level: 1, key: 'baseAccess', icon: Sparkles, stardust: 50 },
+  { level: 2, key: 'cometFrame', icon: Palette, stardust: 0 },
+  { level: 3, key: 'unlockChineseHoroscope', icon: ChineseAstrologyIcon, stardust: 0 },
+  { level: 3, key: 'lunarSticker', icon: Moon, stardust: 0 },
+  { level: 4, key: 'gaiaNebulaBackground', icon: Palette, stardust: 100 },
+  { level: 5, key: 'freePsychicChat', icon: MessageCircle, stardust: 0 },
+  { level: 5, key: 'guidingStarBadge', icon: Star, stardust: 0 },
+  { level: 7, key: 'stardustBonus', icon: Gem, stardust: 0 },
+  { level: 8, key: 'ringOfLightFrame', icon: Palette, stardust: 0 },
+  { level: 9, key: 'supernovaTitle', icon: Star, stardust: 0 },
+  { level: 10, key: 'enlightenedTitle', icon: Crown, stardust: 500 },
 ];
 
 export default function RewardsCard({ dictionary }: RewardsCardProps) {
@@ -47,14 +54,21 @@ export default function RewardsCard({ dictionary }: RewardsCardProps) {
             >
               <div className="flex items-center gap-3">
                 <Icon className={cn("w-5 h-5", isUnlocked ? "text-primary" : "text-muted-foreground")} />
-                <span className={cn("font-medium text-sm", !isUnlocked && "text-muted-foreground")}>
-                  {dictionary[`Reward.${reward.key}`] || reward.key}
-                </span>
+                <div>
+                    <span className={cn("font-medium text-sm", !isUnlocked && "text-muted-foreground")}>
+                      {(dictionary[`Reward.${reward.key}`] || reward.key.replace(/([A-Z])/g, ' $1').trim())}
+                    </span>
+                    {reward.stardust > 0 && (
+                        <p className="text-xs text-primary/80 font-semibold">
+                            + {reward.stardust} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}
+                        </p>
+                    )}
+                </div>
               </div>
               <div className={cn("flex items-center gap-2 text-xs font-semibold", isUnlocked ? "text-green-400" : "text-muted-foreground")}>
                 {isUnlocked ? <CheckCircle className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
                 <span>
-                  {(dictionary['Reward.unlockedAtLevel'] || 'Lv. {level}').replace('{level}', reward.level.toString())}
+                  {(dictionary['Reward.levelLabel'] || 'Lv. {level}').replace('{level}', reward.level.toString())}
                 </span>
               </div>
             </div>

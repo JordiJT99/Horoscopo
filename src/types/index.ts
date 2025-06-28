@@ -326,7 +326,7 @@ export interface CosmicEnergyState {
   points: number;
   level: number;
   freeChats: number; // Added for rewards
-  lastGained: Record<string, string>; // e.g., { 'read_daily_horoscope': '2024-07-25' }
+  lastGained: Record<GameActionId, string>; // e.g., { 'read_daily_horoscope': '2024-07-25' }
 }
 
 export interface DailyTransit {
