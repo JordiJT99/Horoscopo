@@ -63,7 +63,21 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
       };
       const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
       setResult(flowResult);
-      addEnergyPoints('draw_personality_card', 15);
+      const energyResult = addEnergyPoints('draw_personality_card', 15);
+      if (energyResult.pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+        });
+         if (energyResult.leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
       setIsFlipped(true); // Trigger the flip animation
     } catch (err) {
       console.error("Error getting daily tarot card:", err);

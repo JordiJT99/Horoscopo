@@ -56,7 +56,21 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
-      addEnergyPoints('draw_tarot_card', 15);
+      const energyResult = addEnergyPoints('draw_tarot_card', 15);
+      if (energyResult.pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+        });
+         if (energyResult.leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
     } catch (err) {
       console.error("Error getting tarot reading:", err);
       setError(dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.");

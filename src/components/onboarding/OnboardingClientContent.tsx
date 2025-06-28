@@ -176,7 +176,21 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
     if (user) {
       markOnboardingAsComplete();
       localStorage.setItem(`onboardingData_${user.uid}`, JSON.stringify(formData));
-      addEnergyPoints('complete_profile', 50); // Award points for completing profile
+      const energyResult = addEnergyPoints('complete_profile', 50); // Award points for completing profile
+        if (energyResult.pointsAdded > 0) {
+            toast({
+                title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+                description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+            });
+             if (energyResult.leveledUp) {
+                setTimeout(() => {
+                    toast({
+                        title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                        description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                    });
+                }, 500);
+            }
+        }
     }
 
     toast({

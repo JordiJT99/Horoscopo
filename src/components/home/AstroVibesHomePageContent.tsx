@@ -174,12 +174,27 @@ export default function AstroVibesHomePageContent({
           setCurrentDisplayHoroscope(result[displayPeriod]);
           
           if (user?.uid) {
-            const actionTypeMap: Record<typeof displayPeriod, string> = {
+            const actionTypeMap: Record<typeof displayPeriod, 'read_daily_horoscope' | 'read_weekly_horoscope' | 'read_monthly_horoscope'> = {
               daily: 'read_daily_horoscope',
               weekly: 'read_weekly_horoscope',
               monthly: 'read_monthly_horoscope',
             };
-            addEnergyPoints(actionTypeMap[displayPeriod], 5);
+            const energyResult = addEnergyPoints(actionTypeMap[displayPeriod], 5);
+
+            if (energyResult.pointsAdded > 0) {
+              toast({
+                  title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+                  description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+              });
+              if (energyResult.leveledUp) {
+                  setTimeout(() => {
+                      toast({
+                          title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                          description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                      });
+                  }, 500);
+              }
+            }
           }
 
         } else {
