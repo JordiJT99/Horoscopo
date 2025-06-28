@@ -287,8 +287,6 @@ export interface NewPostData {
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
   postType: PostType;
-  reactions: Record<string, string>;
-  commentCount: number;
   // Optional content fields
   textContent?: string;
   dreamData?: DreamInterpretationOutput;
@@ -308,4 +306,13 @@ export interface Comment {
 export interface CommunityPost extends NewPostData {
   id: string;
   timestamp: string;
+  reactions: Record<string, string>;
+  commentCount: number;
+}
+
+// Gamification Types
+export interface CosmicEnergyState {
+  points: number;
+  level: number;
+  lastGained: Record<string, string>; // e.g., { 'read_daily_horoscope': '2024-07-25' }
 }

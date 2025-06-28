@@ -21,6 +21,7 @@ import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Spar
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | typeof fr> = {
   es,
@@ -48,6 +49,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
   const router = useRouter();
   const { user, isLoading: authLoading, markOnboardingAsComplete } = useAuth();
   const { toast } = useToast();
+  const { addEnergyPoints } = useCosmicEnergy();
 
   const [currentStep, setCurrentStep] = useState(1);
   const initialDateOfBirth = new Date(1995, 5, 15);
@@ -174,6 +176,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
     if (user) {
       markOnboardingAsComplete();
       localStorage.setItem(`onboardingData_${user.uid}`, JSON.stringify(formData));
+      addEnergyPoints('complete_profile', 50); // Award points for completing profile
     }
 
     toast({

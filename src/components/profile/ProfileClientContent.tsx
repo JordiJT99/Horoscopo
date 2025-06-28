@@ -19,6 +19,7 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import type { OnboardingFormData, ZodiacSign } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS } from '@/lib/constants';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
+import CosmicEnergyBar from './CosmicEnergyBar';
 
 
 export default function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
@@ -86,6 +87,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
           <Skeleton className="h-[320px] w-full rounded-lg bg-card/50" />
         </div>
         <div className="md:col-span-2 space-y-8">
+          <Skeleton className="h-[150px] w-full rounded-lg bg-card/50" />
           <Skeleton className="h-[400px] w-full rounded-lg bg-card/50" />
         </div>
       </div>
@@ -150,6 +152,8 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
             </TabsList>
             
             <TabsContent value="profile" className="mt-6 space-y-8">
+                <CosmicEnergyBar dictionary={dictionary} />
+
                 <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
                   <CardHeader className="flex flex-row items-center justify-between p-6">
                     <CardTitle className="text-lg">{dictionary['ProfilePage.aboutMeTitle'] || "About Me"}</CardTitle>
