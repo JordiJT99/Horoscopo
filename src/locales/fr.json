@@ -854,5 +854,7 @@
   "Toast.rateSuccessDescription": "Vous avez reçu {amount} Poussière d'Étoiles pour avoir évalué l'application.",
   "Toast.adWatchedTitle": "Publicité terminée",
   "Toast.adWatchedDescription": "Vous avez gagné {amount} Poussière d'Étoiles.",
-  "Toast.alreadyRated": "Vous avez déjà réclamé cette récompense."
+  "Toast.alreadyRated": "Vous avez déjà réclamé cette récompense.",
+  "Toast.dailyReactionStardust": "+{amount} 💫 pour votre première réaction de la journée !",
+  "Toast.dailyCommentStardust": "+{amount} 💫 pour votre premier commentaire de la journée !"
 }
