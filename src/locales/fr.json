@@ -817,5 +817,18 @@
   "DailyTransits.OptimismGrowth": "Optimisme, croissance et bonne fortune.",
   "ProfilePage.editAboutAriaLabel": "Modifier la section à propos de moi",
   "ProfilePage.saveAboutAriaLabel": "Enregistrer les modifications de la section à propos de moi",
-  "ProfilePage.editBirthDataAriaLabel": "Modifier les données de naissance"
+  "ProfilePage.editBirthDataAriaLabel": "Modifier les données de naissance",
+  "PsychicChatPage.freeChatAvailable": "Je vois que vous avez un crédit de lecture gratuite. Votre première question est pour moi !",
+  "PsychicChatPage.freeChatUsedTitle": "Lecture Gratuite Utilisée",
+  "PsychicChatPage.freeChatUsedDescription": "Votre crédit de lecture gratuite a été appliqué.",
+  "CommunityPage.exclusiveEmojiAria": "Insérer un emoji exclusif",
+  "ProfilePage.supernovaTitle": "Supernova",
+  "ProfilePage.rewardsTitle": "Récompenses de Niveau",
+  "ProfilePage.rewardsDescription": "Débloquez de nouveaux avantages en augmentant votre Énergie Cosmique.",
+  "Reward.freeChat": "Chat Psychique Gratuit",
+  "Reward.exclusiveEmoji": "Emoji Exclusif 🔯",
+  "Reward.supernovaTitle": "Titre 'Supernova'",
+  "Reward.auroraBackground": "Fond de Profil 'Aurore'",
+  "Reward.rosetteBackground": "Fond de Profil 'Rosette'",
+  "Reward.unlockedAtLevel": "Niv. {level}"
 }

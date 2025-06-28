@@ -24,6 +24,7 @@ import NotificationSettingsCard from './NotificationSettingsCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { cn } from '@/lib/utils';
+import RewardsCard from './RewardsCard';
 
 
 export default function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
@@ -222,6 +223,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
           </TabsContent>
 
           <TabsContent value="extras" className="mt-6 space-y-8">
+            <RewardsCard dictionary={dictionary} />
             <Card className="bg-card/70 backdrop-blur-sm border-primary/30 shadow-xl">
               <CardHeader className="p-6">
                 <CardTitle className="text-lg text-primary flex items-center gap-2">
