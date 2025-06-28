@@ -152,6 +152,39 @@ export const useCosmicEnergy = () => {
 
     }, [user, state.level]);
 
+    const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
+        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0 } };
+        if (!user?.uid || !store) return result;
+        
+        const currentState = store.getState();
+        
+        const newPoints = currentState.points + pointsToAdd;
+        const newLevel = calculateLevel(newPoints);
+        
+        const leveledUp = newLevel > currentState.level;
+        let newFreeChats = currentState.freeChats || 0;
+
+        if (leveledUp) {
+            for (let level = currentState.level + 1; level <= newLevel; level++) {
+                if (LEVEL_REWARDS[level]) {
+                    newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
+                    result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
+                }
+            }
+        }
+
+        store.setState({
+            points: newPoints,
+            level: newLevel,
+            freeChats: newFreeChats,
+        });
+
+        result.pointsAdded = pointsToAdd;
+        result.leveledUp = leveledUp;
+        result.newLevel = newLevel;
+        return result;
+    }, [user, state.level]);
+
     const useFreeChat = useCallback(() => {
         if (!user?.uid || !store) return;
         const currentState = store.getState();
@@ -172,6 +205,7 @@ export const useCosmicEnergy = () => {
         pointsForNextLevel,
         progress,
         addEnergyPoints,
-        useFreeChat
+        useFreeChat,
+        addDebugPoints,
     };
 };
