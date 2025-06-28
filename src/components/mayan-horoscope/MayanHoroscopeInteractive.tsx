@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -156,7 +157,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                   <h4 className="font-semibold text-lg text-accent-foreground mb-1">{dictionary['MayanHoroscopePage.yourDaySign']}</h4>
                   <div className="flex items-center gap-2">
                      <mayanKin.daySign.icon className="w-8 h-8 text-primary" />
-                    <span className="font-bold text-xl">{dictionary[mayanKin.daySign.name] || mayanKin.daySign.name}</span>
+                    <span className="font-bold text-xl">{dictionary[mayanKin.daySign.nameKey] || mayanKin.daySign.name}</span>
                   </div>
                   <p className="text-sm mt-1 text-muted-foreground">{dictionary[mayanKin.daySign.descriptionKey]}</p>
                   <p className="text-sm mt-2">{dictionary[mayanKin.daySign.detailedInterpretationKey]}</p>
@@ -217,7 +218,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
         {MAYAN_ZODIAC_SIGNS.map((sign) => {
           const SignIcon = sign.icon;
-          const translatedSignName = dictionary[sign.name] || sign.name;
+          const translatedSignName = dictionary[sign.nameKey] || sign.name;
           const translatedDescription = dictionary[sign.descriptionKey] || sign.descriptionKey;
           const translatedInterpretation = dictionary[sign.detailedInterpretationKey] || sign.detailedInterpretationKey;
           return (
