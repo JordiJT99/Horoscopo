@@ -898,39 +898,39 @@
     },
     "Libra": {
       "title": "Rasgos de Libra",
-      "description": "",
+      "description": "Gobernado por Venus, Libra es el signo del equilibrio, la armonía y la justicia. Los Libra son seres sociales que prosperan en la asociación y buscan crear equilibrio en todas las áreas de la vida. Tienen un agudo sentido de la belleza y un encanto diplomático natural.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Cooperativo", "diplomático", "cortés", "justo", "social"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Indeciso", "evita las confrontaciones", "guarda rencor", "autocompasión"],
       "loveTitle": "Libra en el Amor",
-      "love": "",
+      "love": "En el amor, Libra es un idealista romántico que busca una verdadera asociación. Necesitan equilibrio y armonía, y harán todo lo posible para complacer a su pareja. La comunicación y la conexión intelectual son clave para ellos.",
       "workTitle": "Libra en el Trabajo",
-      "work": ""
+      "work": "Los Libra destacan como mediadores, diplomáticos y en cualquier rol que requiera justicia y gracia social. Son excelentes jugadores de equipo y prosperan en ambientes de trabajo hermosos y armoniosos, a menudo en las artes, el derecho o las relaciones públicas."
     },
     "Scorpio": {
       "title": "Rasgos de Escorpio",
-      "description": "",
+      "description": "Escorpio es un signo de emoción profunda, poder y transformación. Regido por Plutón, son apasionados, ingeniosos e increíblemente determinados. Los Escorpio son conocidos por su intensidad y su capacidad para ver más allá de la superficie hasta la verdad de cualquier asunto.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Ingenioso", "valiente", "apasionado", "un verdadero amigo", "determinado"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Desconfiado", "celoso", "reservado", "puede ser manipulador"],
       "loveTitle": "Escorpio en el Amor",
-      "love": "",
+      "love": "En el amor, Escorpio es todo o nada. Son increíblemente leales, apasionados y protectores, buscando una conexión profunda y reveladora. Requieren confianza absoluta y pueden ser bastante posesivos.",
       "workTitle": "Escorpio en el Trabajo",
-      "work": ""
+      "work": "Los Escorpio son excelentes investigadores, científicos y estrategas. Prosperan en roles que les exigen descubrir verdades o ejercer poder, como detectives, científicos o líderes financieros."
     },
     "Sagittarius": {
       "title": "Rasgos de Sagitario",
-      "description": "",
+      "description": "El aventurero y filósofo del zodíaco, Sagitario está regido por Júpiter, el planeta de la expansión y la suerte. Son optimistas, amantes de la libertad y tienen una sed insaciable de conocimiento y nuevas experiencias.",
       "strengthsTitle": "Fortalezas",
-      "strengths": [],
+      "strengths": ["Generoso", "idealista", "gran sentido del humor", "optimista"],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": [],
+      "weaknesses": ["Promete más de lo que puede cumplir", "impaciente", "sin tacto"],
       "loveTitle": "Sagitario en el Amor",
-      "love": "",
+      "love": "Sagitario necesita libertad en el amor. Buscan una pareja que sea también su mejor amigo y compañero de viaje. Pueden ser reacios al compromiso, temiendo que les corte las alas, pero son increíblemente leales una vez que han encontrado a su pareja.",
       "workTitle": "Sagitario en el Trabajo",
-      "work": ""
+      "work": "Sagitario destaca en carreras que involucran viajes, educación, publicaciones o filosofía. Necesitan autonomía y un sentido de propósito, y son maestros y líderes inspiradores."
     },
     "Capricorn": {
       "title": "Rasgos de Capricornio",

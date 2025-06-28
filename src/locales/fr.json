@@ -752,7 +752,7 @@
   "Busy": "Occupé",
   "Meditating": "En méditation",
   "ProfilePage.mySignsTitle": "Mes Signes",
-  "ProfilePage.mySignsDescription": "Vos placements astrologiques principaux.",
+  "ProfilePage.mySignsDescription": "Tus emplazamientos astrológicos principales.",
   "ProfilePage.sunSignLabel": "Soleil",
   "ProfilePage.moonSignLabel": "Lune",
   "ProfilePage.ascendantSignLabel": "Ascendant",
@@ -897,39 +897,39 @@
     },
     "Libra": {
       "title": "Traits de la Balance",
-      "description": "",
+      "description": "Gouvernée par Vénus, la Balance est le signe de l'équilibre, de l'harmonie et de la justice. Les Balances sont des êtres sociaux qui s'épanouissent dans le partenariat et cherchent à créer un équilibre dans tous les domaines de la vie. Ils ont un œil vif pour la beauté et un charme diplomatique naturel.",
       "strengthsTitle": "Forces",
-      "strengths": [],
+      "strengths": ["Coopératif", "diplomate", "gracieux", "juste", "social"],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": [],
+      "weaknesses": ["Indécis", "évite les confrontations", "rancunier", "s'apitoie sur son sort"],
       "loveTitle": "Balance en Amour",
-      "love": "",
+      "love": "En amour, la Balance est un idéaliste romantique qui recherche un véritable partenariat. Ils ont besoin d'équilibre et d'harmonie, et feront de grands efforts pour plaire à leur partenaire. La communication et la connexion intellectuelle sont essentielles pour eux.",
       "workTitle": "Balance au Travail",
-      "work": ""
+      "work": "Les Balances excellent en tant que médiateurs, diplomates et dans tout rôle qui exige de l'équité et de la grâce sociale. Ce sont de grands joueurs d'équipe et ils s'épanouissent dans des environnements de travail beaux et harmonieux, souvent dans les arts, le droit ou les relations publiques."
     },
     "Scorpio": {
       "title": "Traits du Scorpion",
-      "description": "",
+      "description": "Le Scorpion est un signe d'émotion profonde, de pouvoir et de transformation. Gouvernés par Pluton, ils sont passionnés, ingénieux et incroyablement déterminés. Les Scorpions sont connus pour leur intensité et leur capacité à voir au-delà de la surface pour découvrir la vérité en toute chose.",
       "strengthsTitle": "Forces",
-      "strengths": [],
+      "strengths": ["Ingénieux", "courageux", "passionné", "un véritable ami", "déterminé"],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": [],
+      "weaknesses": ["Méfiant", "jaloux", "secret", "peut être manipulateur"],
       "loveTitle": "Scorpion en Amour",
-      "love": "",
+      "love": "En amour, le Scorpion est tout ou rien. Ils sont incroyablement loyaux, passionnés et protecteurs, recherchant une connexion profonde et révélatrice. Ils exigent une confiance absolue et peuvent être assez possessifs.",
       "workTitle": "Scorpion au Travail",
-      "work": ""
+      "work": "Les Scorpions sont d'excellents enquêteurs, chercheurs et stratèges. Ils s'épanouissent dans des rôles qui leur demandent de découvrir des vérités ou d'exercer le pouvoir, comme les détectives, les scientifiques ou les dirigeants financiers."
     },
     "Sagittarius": {
       "title": "Traits du Sagittaire",
-      "description": "",
+      "description": "L'aventurier et philosophe du zodiaque, le Sagittaire est gouverné par Jupiter, la planète de l'expansion et de la chance. Ils sont optimistes, épris de liberté et ont une soif insatiable de connaissances et de nouvelles expériences.",
       "strengthsTitle": "Forces",
-      "strengths": [],
+      "strengths": ["Généreux", "idéaliste", "grand sens de l'humour", "optimiste"],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": [],
+      "weaknesses": ["Promet plus qu'il ne peut tenir", "impatient", "sans tact"],
       "loveTitle": "Sagittaire en Amour",
-      "love": "",
+      "love": "Le Sagittaire a besoin de liberté en amour. Ils recherchent un partenaire qui soit aussi leur meilleur ami et compagnon de voyage. Ils peuvent être méfiants à l'égard de l'engagement, craignant que cela ne leur coupe les ailes, mais sont incroyablement loyaux une fois qu'ils ont trouvé leur partenaire.",
       "workTitle": "Sagittaire au Travail",
-      "work": ""
+      "work": "Le Sagittaire excelle dans les carrières qui impliquent les voyages, l'éducation, l'édition ou la philosophie. Ils ont besoin d'autonomie et d'un sens du but, et ils font des enseignants et des leaders inspirants."
     },
     "Capricorn": {
       "title": "Traits du Capricorne",
