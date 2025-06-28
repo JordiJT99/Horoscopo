@@ -159,6 +159,7 @@ export type MayanSignName =
 export interface MayanZodiacSign {
   name: MayanSignName;
   icon: React.ElementType;
+  nameKey: string;
   descriptionKey: string;
   detailedInterpretationKey: string;
   associatedColor?: string;

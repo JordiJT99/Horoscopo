@@ -1,4 +1,5 @@
 
+
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey, DailyTransit } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { Sparkles as SparklesIcon, Rabbit as RabbitIcon, Feather as FeatherIcon, Star as StarIcon, Layers, Calculator as CalculatorIcon, HelpCircle, Briefcase, Waves, Wind, Sun, Moon, Leaf, Droplets, Flame, Rat as RatIcon, Dog as DogIcon, Bird as BirdIcon, Banana, Worm, Mountain as MountainIcon, Cat, PawPrint, Gitlab, Shell, TrendingUp, Zap, Heart } from 'lucide-react';
@@ -387,27 +388,28 @@ export function getChineseCompatibility(animal1: ChineseAnimalSignName, animal2:
 const DefaultMayanIcon = HelpCircle; 
 
 export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
-  { name: "Imix", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Imix.description", detailedInterpretationKey: "MayanSign.Imix.interpretation", associatedColor: "Rojo" },
-  { name: "Ik", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ik.description", detailedInterpretationKey: "MayanSign.Ik.interpretation", associatedColor: "Blanco" },
-  { name: "Akbal", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Akbal.description", detailedInterpretationKey: "MayanSign.Akbal.interpretation", associatedColor: "Negro/Azul" },
-  { name: "Kan", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Kan.description", detailedInterpretationKey: "MayanSign.Kan.interpretation", associatedColor: "Amarillo" },
-  { name: "Chicchan", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Chicchan.description", detailedInterpretationKey: "MayanSign.Chicchan.interpretation", associatedColor: "Rojo" },
-  { name: "Cimi", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Cimi.description", detailedInterpretationKey: "MayanSign.Cimi.interpretation", associatedColor: "Blanco" },
-  { name: "Manik", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Manik.description", detailedInterpretationKey: "MayanSign.Manik.interpretation", associatedColor: "Azul/Negro" },
-  { name: "Lamat", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Lamat.description", detailedInterpretationKey: "MayanSign.Lamat.interpretation", associatedColor: "Amarillo" },
-  { name: "Muluc", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Muluc.description", detailedInterpretationKey: "MayanSign.Muluc.interpretation", associatedColor: "Rojo" },
-  { name: "Oc", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Oc.description", detailedInterpretationKey: "MayanSign.Oc.interpretation", associatedColor: "Blanco" },
-  { name: "Chuen", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Chuen.description", detailedInterpretationKey: "MayanSign.Chuen.interpretation", associatedColor: "Azul/Negro" },
-  { name: "Eb", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Eb.description", detailedInterpretationKey: "MayanSign.Eb.interpretation", associatedColor: "Amarillo" },
-  { name: "Ben", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ben.description", detailedInterpretationKey: "MayanSign.Ben.interpretation", associatedColor: "Rojo" },
-  { name: "Ix", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ix.description", detailedInterpretationKey: "MayanSign.Ix.interpretation", associatedColor: "Blanco" },
-  { name: "Men", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Men.description", detailedInterpretationKey: "MayanSign.Men.interpretation", associatedColor: "Azul/Negro" },
-  { name: "Cib", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Cib.description", detailedInterpretationKey: "MayanSign.Cib.interpretation", associatedColor: "Amarillo" },
-  { name: "Caban", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Caban.description", detailedInterpretationKey: "MayanSign.Caban.interpretation", associatedColor: "Rojo" },
-  { name: "Etznab", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Etznab.description", detailedInterpretationKey: "MayanSign.Etznab.interpretation", associatedColor: "Blanco" },
-  { name: "Cauac", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Cauac.description", detailedInterpretationKey: "MayanSign.Cauac.interpretation", associatedColor: "Azul/Negro" },
-  { name: "Ahau", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ahau.description", detailedInterpretationKey: "MayanSign.Ahau.interpretation", associatedColor: "Amarillo" },
+  { name: "Imix", nameKey: "MayanSign.Imix.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Imix.description", detailedInterpretationKey: "MayanSign.Imix.interpretation", associatedColor: "Rojo" },
+  { name: "Ik", nameKey: "MayanSign.Ik.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ik.description", detailedInterpretationKey: "MayanSign.Ik.interpretation", associatedColor: "Blanco" },
+  { name: "Akbal", nameKey: "MayanSign.Akbal.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Akbal.description", detailedInterpretationKey: "MayanSign.Akbal.interpretation", associatedColor: "Negro/Azul" },
+  { name: "Kan", nameKey: "MayanSign.Kan.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Kan.description", detailedInterpretationKey: "MayanSign.Kan.interpretation", associatedColor: "Amarillo" },
+  { name: "Chicchan", nameKey: "MayanSign.Chicchan.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Chicchan.description", detailedInterpretationKey: "MayanSign.Chicchan.interpretation", associatedColor: "Rojo" },
+  { name: "Cimi", nameKey: "MayanSign.Cimi.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Cimi.description", detailedInterpretationKey: "MayanSign.Cimi.interpretation", associatedColor: "Blanco" },
+  { name: "Manik", nameKey: "MayanSign.Manik.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Manik.description", detailedInterpretationKey: "MayanSign.Manik.interpretation", associatedColor: "Azul/Negro" },
+  { name: "Lamat", nameKey: "MayanSign.Lamat.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Lamat.description", detailedInterpretationKey: "MayanSign.Lamat.interpretation", associatedColor: "Amarillo" },
+  { name: "Muluc", nameKey: "MayanSign.Muluc.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Muluc.description", detailedInterpretationKey: "MayanSign.Muluc.interpretation", associatedColor: "Rojo" },
+  { name: "Oc", nameKey: "MayanSign.Oc.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Oc.description", detailedInterpretationKey: "MayanSign.Oc.interpretation", associatedColor: "Blanco" },
+  { name: "Chuen", nameKey: "MayanSign.Chuen.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Chuen.description", detailedInterpretationKey: "MayanSign.Chuen.interpretation", associatedColor: "Azul/Negro" },
+  { name: "Eb", nameKey: "MayanSign.Eb.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Eb.description", detailedInterpretationKey: "MayanSign.Eb.interpretation", associatedColor: "Amarillo" },
+  { name: "Ben", nameKey: "MayanSign.Ben.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ben.description", detailedInterpretationKey: "MayanSign.Ben.interpretation", associatedColor: "Rojo" },
+  { name: "Ix", nameKey: "MayanSign.Ix.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ix.description", detailedInterpretationKey: "MayanSign.Ix.interpretation", associatedColor: "Blanco" },
+  { name: "Men", nameKey: "MayanSign.Men.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Men.description", detailedInterpretationKey: "MayanSign.Men.interpretation", associatedColor: "Azul/Negro" },
+  { name: "Cib", nameKey: "MayanSign.Cib.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Cib.description", detailedInterpretationKey: "MayanSign.Cib.interpretation", associatedColor: "Amarillo" },
+  { name: "Caban", nameKey: "MayanSign.Caban.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Caban.description", detailedInterpretationKey: "MayanSign.Caban.interpretation", associatedColor: "Rojo" },
+  { name: "Etznab", nameKey: "MayanSign.Etznab.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Etznab.description", detailedInterpretationKey: "MayanSign.Etznab.interpretation", associatedColor: "Blanco" },
+  { name: "Cauac", nameKey: "MayanSign.Cauac.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Cauac.description", detailedInterpretationKey: "MayanSign.Cauac.interpretation", associatedColor: "Azul/Negro" },
+  { name: "Ahau", nameKey: "MayanSign.Ahau.name", icon: DefaultMayanIcon, descriptionKey: "MayanSign.Ahau.description", detailedInterpretationKey: "MayanSign.Ahau.interpretation", associatedColor: "Amarillo" },
 ];
+
 export const ALL_MAYAN_SIGN_NAMES = MAYAN_ZODIAC_SIGNS.map(s => s.name as string) as [string, ...string[]];
 
 export const GALACTIC_TONES: GalacticTone[] = [
