@@ -11,7 +11,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { es, enUS, de, fr } from 'date-fns/locale';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send } from 'lucide-react';
+import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -100,7 +100,7 @@ const ExpandableText = ({ text, dictionary }: { text: string; dictionary: Dictio
 export default function CommunityPostCard({ post, dictionary, locale }: CommunityPostCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
-  const { addEnergyPoints } = useCosmicEnergy();
+  const { addEnergyPoints, level: currentUserLevel } = useCosmicEnergy();
   
   const [reactions, setReactions] = useState<Record<string, string>>(post.reactions || {});
   const [commentCount, setCommentCount] = useState(post.commentCount || 0);
@@ -199,17 +199,17 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       batch.update(postRef, { commentCount: increment(1) });
       await batch.commit();
       
-      const energyResult = addEnergyPoints('add_comment', 10);
-      if (energyResult.pointsAdded > 0) {
+      const { pointsAdded, leveledUp, newLevel } = addEnergyPoints('add_comment', 10);
+      if (pointsAdded > 0) {
         toast({
             title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
-            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${pointsAdded} EC!`,
         });
-         if (energyResult.leveledUp) {
+         if (leveledUp) {
             setTimeout(() => {
                 toast({
                     title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
-                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', newLevel.toString())}`,
                 });
             }, 500);
         }
@@ -237,6 +237,10 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
     }
   };
   
+  const handleInsertExclusiveEmoji = () => {
+    setNewComment(prev => prev + '🔯');
+  };
+
   const reactionCounts = Object.values(reactions).reduce((acc, emoji) => {
     acc[emoji] = (acc[emoji] || 0) + 1;
     return acc;
@@ -306,13 +310,23 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
           <AvatarImage src={post.authorAvatarUrl} alt={post.authorName} />
           <AvatarFallback>{post.authorName.charAt(0)}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
-          <CardTitle className="text-base font-semibold font-body leading-tight">
-            {post.authorName}
-          </CardTitle>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-base font-semibold font-body leading-tight">
+              {post.authorName}
+            </CardTitle>
+            {(post.authorLevel || 0) >= 15 && (
+              <Badge variant="destructive" className="text-xs px-1.5 py-0.5">
+                <Star className="w-3 h-3 mr-1"/>
+                Supernova
+              </Badge>
+            )}
+          </div>
           <div className="flex items-center text-xs text-muted-foreground">
             <ZodiacSignIcon signName={post.authorZodiacSign} className="w-3.5 h-3.5 mr-1" />
             <span>{dictionary[post.authorZodiacSign] || post.authorZodiacSign}</span>
+             <span className="mx-1.5">·</span>
+             <span>Lv. {post.authorLevel || 1}</span>
           </div>
         </div>
       </CardHeader>
@@ -375,10 +389,24 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
                   rows={1}
                   disabled={isPostingComment}
                 />
-                <Button type="submit" size="sm" className="mt-2" disabled={!newComment.trim() || isPostingComment}>
-                   {isPostingComment ? <LoadingSpinner className="h-3 w-3 mr-2" /> : <Send className="mr-2 h-3 w-3" />}
-                  {dictionary['CommunityPage.postCommentButton'] || 'Post Comment'}
-                </Button>
+                 <div className="flex justify-between items-center mt-2">
+                    <Button type="submit" size="sm" disabled={!newComment.trim() || isPostingComment}>
+                      {isPostingComment ? <LoadingSpinner className="h-3 w-3 mr-2" /> : <Send className="mr-2 h-3 w-3" />}
+                      {dictionary['CommunityPage.postCommentButton'] || 'Post Comment'}
+                    </Button>
+                    {currentUserLevel >= 5 && (
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={handleInsertExclusiveEmoji}
+                            aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"}
+                            className="h-8 w-8"
+                        >
+                            <span className="font-bold text-lg">🔯</span>
+                        </Button>
+                    )}
+                 </div>
               </div>
             </form>
           )}

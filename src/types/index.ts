@@ -286,6 +286,7 @@ export interface NewPostData {
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
+  authorLevel?: number; // Added author's level at time of posting
   postType: PostType;
   // Optional content fields
   textContent?: string;
@@ -324,6 +325,7 @@ export type GameActionId =
 export interface CosmicEnergyState {
   points: number;
   level: number;
+  freeChats: number; // Added for rewards
   lastGained: Record<string, string>; // e.g., { 'read_daily_horoscope': '2024-07-25' }
 }
 

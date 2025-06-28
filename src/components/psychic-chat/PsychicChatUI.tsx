@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -12,10 +13,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, UserCircle } from 'lucide-react';
+import { Send, UserCircle, Gift } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface Message {
   text: string;
@@ -69,6 +71,8 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const [isSending, setIsSending] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
+  const { freeChats, useFreeChat } = useCosmicEnergy();
+  const [hasUsedFreeChat, setHasUsedFreeChat] = useState(false);
   const scrollViewportRef = useRef<HTMLDivElement>(null);
 
   const topicKeyMapping: { [key: string]: string } = {
@@ -79,14 +83,17 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   };
 
   const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
-    const initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
+    let initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
       .replace('{psychicName}', psychic.name)
       .replace('{topicName}', topicName);
+
+    if (freeChats > 0) {
+      initialMessage += `\n\n${dictionary['PsychicChatPage.freeChatAvailable'] || "I see you have a free reading credit. Your first question is on me!"}`;
+    }
     
     setMessages([{ text: initialMessage, sender: 'ai' }]);
     setSelectedTopic({ key: topicKey, name: topicName });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dictionary, psychic.name]);
+  }, [dictionary, psychic.name, freeChats]);
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
@@ -97,7 +104,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
             handleTopicSelect(topicDictKey, topicName);
         }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
 
   const scrollToBottom = () => {
@@ -112,6 +118,15 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isSending || !selectedTopic) return;
+
+    if (freeChats > 0 && !hasUsedFreeChat) {
+      useFreeChat();
+      setHasUsedFreeChat(true);
+      toast({
+        title: `🎁 ${dictionary['PsychicChatPage.freeChatUsedTitle'] || 'Free Reading Used'}`,
+        description: dictionary['PsychicChatPage.freeChatUsedDescription'] || 'Your free reading credit has been applied.',
+      });
+    }
 
     const newUserMessage: Message = { text: inputMessage, sender: 'user' };
     const updatedMessagesForUI = [...messages, newUserMessage];

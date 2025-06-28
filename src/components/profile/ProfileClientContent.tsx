@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { Locale, Dictionary } from '@/lib/dictionaries';
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings, Star } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -20,13 +21,16 @@ import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import CosmicEnergyBar from './CosmicEnergyBar';
 import MySignsCard from './MySignsCard';
 import NotificationSettingsCard from './NotificationSettingsCard';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { cn } from '@/lib/utils';
 
 
 export default function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading, logout, updateUsername } = useAuth();
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
+  const { level: userLevel } = useCosmicEnergy();
 
   // Editing states
   const [isEditingAbout, setIsEditingAbout] = useState(false);
@@ -80,6 +84,19 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
   const handleLogout = async () => {
     await logout(locale);
   };
+  
+  const profileBackgroundClass = useMemo(() => {
+    if (userLevel >= 20) return 'profile-bg-rosette';
+    if (userLevel >= 15) return 'profile-bg-aurora';
+    return '';
+  }, [userLevel]);
+
+  const avatarFrameClass = useMemo(() => {
+    if (userLevel >= 15) return 'avatar-frame-level-15';
+    if (userLevel >= 5) return 'avatar-frame-level-5';
+    return '';
+  }, [userLevel]);
+
 
   if (!isClient || isLoading) {
     return (
@@ -112,17 +129,20 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+    <div className={cn("grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto p-4 rounded-lg transition-all duration-500", profileBackgroundClass)}>
       
       {/* --- Left Column: Main Profile Card --- */}
       <div className="md:col-span-1 space-y-8">
         <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
           <CardHeader className="items-center text-center p-6">
-            <Avatar className="w-24 h-24 mb-4 border-4 border-primary shadow-lg">
+            <Avatar className={cn("w-24 h-24 mb-4 border-4 border-primary shadow-lg", avatarFrameClass)}>
               <AvatarImage src={user.photoURL || undefined} alt={displayName} />
               <AvatarFallback className="text-3xl bg-muted/50">{userInitial}</AvatarFallback>
             </Avatar>
-            <CardTitle className="text-2xl font-headline">{displayName}</CardTitle>
+            <CardTitle className="text-2xl font-headline flex items-center gap-2">
+              {displayName}
+              {userLevel >= 15 && <Star className="w-5 h-5 text-yellow-400" title={dictionary['ProfilePage.supernovaTitle'] || 'Supernova'} />}
+            </CardTitle>
             {userSunSign && (
               <div className="flex items-center gap-1.5 text-sm text-primary font-semibold">
                 <ZodiacSignIcon signName={userSunSign.name} className="w-4 h-4" />
