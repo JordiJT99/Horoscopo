@@ -413,6 +413,8 @@
   "ProfilePage.welcomeUserSubtitle": "¡Bienvenido/a de nuevo, {username}!",
   "ProfilePage.defaultUsername": "Usuario Astral",
   "ProfilePage.defaultEmail": "Sin email",
+  "ProfilePage.profileTab": "Perfil",
+  "ProfilePage.extrasTab": "Extras",
   "CrystalBallPage.title": "Bola de Cristal",
   "CrystalBallPage.subtitle": "Observa las nieblas y haz tu pregunta a la Bola de Cristal.",
   "CrystalBallPage.newSubtitle": "Descubre lo que el universo tiene reservado para ti hoy.",
