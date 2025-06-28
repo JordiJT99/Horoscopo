@@ -842,5 +842,16 @@
   "Reward.enlightenedTitle": "Titre 'Illuminé(e)'",
   "Reward.titleGuidingStar": "Étoile Polaire",
   "Reward.titleSupernova": "Supernova",
-  "Reward.titleEnlightened": "Illuminé(e)"
+  "Reward.titleEnlightened": "Illuminé(e)",
+  "ProfilePage.getMoreStardustTitle": "Obtenir plus de Poussière d'Étoiles",
+  "ProfilePage.rateAppButton": "Évaluer l'application",
+  "ProfilePage.rateAppDescription": "+{amount} 💫 pour vos commentaires !",
+  "ProfilePage.watchAdButton": "Regarder une publicité",
+  "ProfilePage.watchAdDescription": "+{amount} 💫 pour votre temps !",
+  "ProfilePage.buyStardustTitle": "Acheter de la Poussière d'Étoiles",
+  "Toast.rateSuccessTitle": "Merci !",
+  "Toast.rateSuccessDescription": "Vous avez reçu {amount} Poussière d'Étoiles pour avoir évalué l'application.",
+  "Toast.adWatchedTitle": "Publicité terminée",
+  "Toast.adWatchedDescription": "Vous avez gagné {amount} Poussière d'Étoiles.",
+  "Toast.alreadyRated": "Vous avez déjà réclamé cette récompense."
 }

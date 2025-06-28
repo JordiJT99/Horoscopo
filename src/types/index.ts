@@ -325,7 +325,8 @@ export interface CosmicEnergyState {
   level: number;
   stardust: number;
   freeChats: number;
-  lastGained: Record<GameActionId, string>; 
+  lastGained: Record<GameActionId, string>;
+  hasRatedApp: boolean;
 }
 
 export interface DailyTransit {

@@ -842,5 +842,16 @@
   "Reward.enlightenedTitle": "'Erleuchtet'-Titel",
   "Reward.titleGuidingStar": "Leitstern",
   "Reward.titleSupernova": "Supernova",
-  "Reward.titleEnlightened": "Erleuchtet"
+  "Reward.titleEnlightened": "Erleuchtet",
+  "ProfilePage.getMoreStardustTitle": "Mehr Sternenstaub erhalten",
+  "ProfilePage.rateAppButton": "App bewerten",
+  "ProfilePage.rateAppDescription": "+{amount} 💫 für dein Feedback!",
+  "ProfilePage.watchAdButton": "Anzeige ansehen",
+  "ProfilePage.watchAdDescription": "+{amount} 💫 für deine Zeit!",
+  "ProfilePage.buyStardustTitle": "Sternenstaub kaufen",
+  "Toast.rateSuccessTitle": "Danke!",
+  "Toast.rateSuccessDescription": "Du hast {amount} Sternenstaub für die Bewertung der App erhalten.",
+  "Toast.adWatchedTitle": "Anzeige beendet",
+  "Toast.adWatchedDescription": "Du hast {amount} Sternenstaub verdient.",
+  "Toast.alreadyRated": "Du hast diese Belohnung bereits beansprucht."
 }

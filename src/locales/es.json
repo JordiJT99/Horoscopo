@@ -842,5 +842,16 @@
   "Reward.enlightenedTitle": "Título 'Iluminado/a'",
   "Reward.titleGuidingStar": "Estrella Guía",
   "Reward.titleSupernova": "Supernova",
-  "Reward.titleEnlightened": "Iluminado/a"
+  "Reward.titleEnlightened": "Iluminado/a",
+  "ProfilePage.getMoreStardustTitle": "Obtén más Polvo Estelar",
+  "ProfilePage.rateAppButton": "Valora la App",
+  "ProfilePage.rateAppDescription": "¡+{amount} 💫 por tu opinión!",
+  "ProfilePage.watchAdButton": "Ver un Anuncio",
+  "ProfilePage.watchAdDescription": "¡+{amount} 💫 por tu tiempo!",
+  "ProfilePage.buyStardustTitle": "Comprar Polvo Estelar",
+  "Toast.rateSuccessTitle": "¡Gracias!",
+  "Toast.rateSuccessDescription": "Has recibido {amount} de Polvo Estelar por valorar la app.",
+  "Toast.adWatchedTitle": "Anuncio Terminado",
+  "Toast.adWatchedDescription": "Has ganado {amount} de Polvo Estelar.",
+  "Toast.alreadyRated": "Ya has reclamado esta recompensa."
 }
