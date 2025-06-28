@@ -801,6 +801,7 @@
   "Reward.stardustBonus": "Sternenstaub-Bonus (+10%)",
   "Reward.ringOfLightFrame": "Avatar-Rahmen 'Ring aus Licht'",
   "Reward.supernovaTitle": "'Supernova'-Titel",
+  "Reward.enlightenedTitle": "Erleuchtet",
   "Reward.titleGuidingStar": "Leitstern",
   "Reward.titleSupernova": "Supernova",
   "Reward.titleEnlightened": "Erleuchtet",
@@ -862,39 +863,39 @@
     },
     "Cancer": {
       "title": "Eigenschaften des Krebses",
-      "description": "",
+      "description": "Krebs, vom Mond regiert, ist das Zeichen der Fürsorge, Sicherheit und tiefen Emotionen. Sie sind beschützend, intuitiv und haben eine starke Bindung zu Heimat und Familie.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Hartnäckig", "sehr einfallsreich", "loyal", "emotional", "sympathisch", "überzeugend"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Launisch", "pessimistisch", "misstrauisch", "manipulativ", "unsicher"],
       "loveTitle": "Krebs in der Liebe",
-      "love": "",
+      "love": "Sucht tiefe emotionale Verbindung und Sicherheit. Ein unglaublich beschützender und fürsorglicher Liebhaber, der Loyalität und häuslichen Komfort über alles schätzt.",
       "workTitle": "Krebs bei der Arbeit",
-      "work": ""
+      "work": "Zeichnet sich in Berufen aus, die Fürsorge beinhalten, wie im Gesundheitswesen oder im Lehramt. Ihre Intuition macht sie auch zu ausgezeichneten Psychologen oder Künstlern."
     },
     "Leo": {
       "title": "Eigenschaften des Löwen",
-      "description": "",
+      "description": "Vom der Sonne regiert, ist der Löwe der König (oder die Königin) des Tierkreises. Sie sind charismatisch, großzügig, warmherzig und lieben es, im Mittelpunkt zu stehen. Kreativität und Selbstausdruck sind für sie lebenswichtig.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Kreativ", "leidenschaftlich", "großzügig", "warmherzig", "fröhlich", "humorvoll"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Arrogant", "stur", "egozentrisch", "faul", "unflexibel"],
       "loveTitle": "Löwe in der Liebe",
-      "love": "",
+      "love": "In der Liebe ist der Löwe dramatisch, loyal und äußerst großzügig. Sie lieben es, angebetet zu werden und behandeln ihren Partner wie einen König, erwarten aber dasselbe zurück.",
       "workTitle": "Löwe bei der Arbeit",
-      "work": ""
+      "work": "Der Löwe ist eine geborene Führungskraft. Sie sind hervorragend darin, andere zu inspirieren und gedeihen in Rollen, die es ihnen ermöglichen, zu glänzen und kreativ zu sein, wie in den Künsten, der Unterhaltung oder im Management."
     },
     "Virgo": {
       "title": "Eigenschaften der Jungfrau",
-      "description": "",
+      "description": "Jungfrau ist das Zeichen des Dienstes, der Analyse und der Liebe zum Detail. Vom Merkur regiert, haben sie einen scharfen Verstand und den angeborenen Wunsch, alles um sie herum zu verbessern.",
       "strengthsTitle": "Stärken",
-      "strengths": [],
+      "strengths": ["Loyal", "analytisch", "freundlich", "fleißig", "praktisch"],
       "weaknessesTitle": "Schwächen",
-      "weaknesses": [],
+      "weaknesses": ["Schüchternheit", "Sorgen", "übermäßig kritisch gegenüber sich selbst und anderen", "nur Arbeit und kein Vergnügen"],
       "loveTitle": "Jungfrau in der Liebe",
-      "love": "",
+      "love": "Die Jungfrau drückt Liebe durch Taten des Dienstes und stille Hingabe aus. Sie suchen einen Partner, der ordentlich, intelligent ist und ihren Wunsch, sich um die Details zu kümmern, schätzt.",
       "workTitle": "Jungfrau bei der Arbeit",
-      "work": ""
+      "work": "Der Perfektionist des Tierkreises. Die Jungfrau ist ein unglaublich effizienter, organisierter und detailorientierter Arbeiter. Sie sind in jedem Bereich, der Präzision und Analyse erfordert, von unschätzbarem Wert."
     },
     "Libra": {
       "title": "Eigenschaften der Waage",

@@ -863,39 +863,39 @@
     },
     "Cancer": {
       "title": "Cancer Traits",
-      "description": "",
+      "description": "Cancer, ruled by the Moon, is the sign of nurturing, security, and deep emotions. They are protective, intuitive, and have a strong connection to home and family.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Tenacious", "Highly imaginative", "Loyal", "Emotional", "Sympathetic", "Persuasive"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Moody", "Pessimistic", "Suspicious", "Manipulative", "Insecure"],
       "loveTitle": "Cancer in Love",
-      "love": "",
+      "love": "Seeks deep emotional connection and security. An incredibly protective and caring lover who values loyalty and home comfort above all else.",
       "workTitle": "Cancer at Work",
-      "work": ""
+      "work": "Excels in professions that involve caring, such as healthcare or teaching. Their intuition also makes them excellent psychologists or artists."
     },
     "Leo": {
       "title": "Leo Traits",
-      "description": "",
+      "description": "Ruled by the Sun, Leo is the king (or queen) of the zodiac. They are charismatic, generous, warm-hearted, and love to be the center of attention. Creativity and self-expression are vital to them.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Creative", "Passionate", "Generous", "Warm-hearted", "Cheerful", "Humorous"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Arrogant", "Stubborn", "Self-centered", "Lazy", "Inflexible"],
       "loveTitle": "Leo in Love",
-      "love": "",
+      "love": "In love, Leo is dramatic, loyal, and extremely generous. They love to be adored and will treat their partner like royalty, expecting the same in return.",
       "workTitle": "Leo at Work",
-      "work": ""
+      "work": "Leo is a natural-born leader. They are excellent at inspiring others and thrive in roles that allow them to shine and be creative, such as the arts, entertainment, or management."
     },
     "Virgo": {
       "title": "Virgo Traits",
-      "description": "",
+      "description": "Virgo is the sign of service, analysis, and attention to detail. Ruled by Mercury, they have a sharp mind and an innate desire to improve everything around them.",
       "strengthsTitle": "Strengths",
-      "strengths": [],
+      "strengths": ["Loyal", "Analytical", "Kind", "Hardworking", "Practical"],
       "weaknessesTitle": "Weaknesses",
-      "weaknesses": [],
+      "weaknesses": ["Shyness", "Worry", "Overly critical of self and others", "All work and no play"],
       "loveTitle": "Virgo in Love",
-      "love": "",
+      "love": "Virgo expresses love through acts of service and quiet devotion. They seek a partner who is neat, intelligent, and appreciates their desire to take care of the details.",
       "workTitle": "Virgo at Work",
-      "work": ""
+      "work": "The perfectionist of the zodiac. Virgo is an incredibly efficient, organized, and detail-oriented worker. They are invaluable in any field that requires precision and analysis."
     },
     "Libra": {
       "title": "Libra Traits",
