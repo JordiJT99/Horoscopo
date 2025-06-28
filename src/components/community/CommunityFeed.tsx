@@ -11,7 +11,7 @@ import CommunityPostCard from './CommunityPostCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Send, Sparkles } from 'lucide-react';
+import { Send, Sparkles, Moon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
@@ -115,8 +115,8 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
     }
   };
 
-  const handleInsertExclusiveEmoji = () => {
-    setNewPostContent(prev => prev + '🔯');
+  const handleInsertExclusiveEmoji = (emoji: string) => {
+    setNewPostContent(prev => prev + emoji);
   };
 
   return (
@@ -143,18 +143,18 @@ export default function CommunityFeed({ dictionary, locale }: CommunityFeedProps
                   {isPosting ? <LoadingSpinner className="mr-2 h-4 w-4" /> : <Send className="mr-2 h-4 w-4" />}
                   {isPosting ? (dictionary['CommunityPage.posting'] || "Posting...") : (dictionary['CommunityPage.postButton'] || "Post")}
                 </Button>
-                {userLevel >= 5 && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    onClick={handleInsertExclusiveEmoji}
-                    aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"}
-                  >
-                    <Sparkles className="h-5 w-5 text-primary" />
-                    <span className="font-bold text-lg ml-1">🔯</span>
-                  </Button>
-                )}
+                <div className="flex items-center gap-1">
+                    {userLevel >= 3 && (
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleInsertExclusiveEmoji('🌙')} aria-label={dictionary['Reward.lunarSticker'] || "Insert moon sticker"}>
+                           <span className="font-bold text-lg">🌙</span>
+                        </Button>
+                    )}
+                    {userLevel >= 5 && (
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleInsertExclusiveEmoji('🔯')} aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"}>
+                            <span className="font-bold text-lg">🔯</span>
+                        </Button>
+                    )}
+                </div>
               </div>
             </form>
           </CardContent>

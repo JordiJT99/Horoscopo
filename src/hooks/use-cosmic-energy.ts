@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useSyncExternalStore, useCallback } from 'react';
@@ -5,25 +6,36 @@ import { useAuth } from '@/context/AuthContext';
 import type { CosmicEnergyState, GameActionId } from '@/types';
 
 // --- Configuration ---
-const BASE_XP_PER_LEVEL = 100;
-const LEVEL_MULTIPLIER = 1.5;
-
-// Reward structure: key is the level reached, value is the reward
-const LEVEL_REWARDS: Record<number, { freeChats?: number; title?: string }> = {
-    5: { freeChats: 1 },
-    10: { freeChats: 1 },
-    15: { title: 'Supernova' },
-};
+// XP needed to reach the start of each level. Index corresponds to level - 1.
+export const LEVEL_THRESHOLDS = [
+  0,     // Level 1: Asteroide
+  250,   // Level 2: Cometa
+  700,   // Level 3: Luna
+  1400,  // Level 4: Planeta
+  2300,  // Level 5: Estrella
+  3500,  // Level 6: Constelación
+  5000,  // Level 7: Galaxia
+  7000,  // Level 8: Nebulosa
+  10000, // Level 9: Supernova
+  14000, // Level 10: Cuásar
+  Infinity // Cap at level 10
+];
 
 
 const calculateLevel = (points: number): number => {
-    if (points < BASE_XP_PER_LEVEL) return 1;
-    return Math.floor(1 + Math.log(points / BASE_XP_PER_LEVEL + 1) / Math.log(LEVEL_MULTIPLIER));
+  for (let i = LEVEL_THRESHOLDS.length - 2; i >= 0; i--) {
+    if (points >= LEVEL_THRESHOLDS[i]) {
+      return i + 1;
+    }
+  }
+  return 1;
 };
 
-const getPointsForNextLevel = (level: number): number => {
-    if (level <= 0) return BASE_XP_PER_LEVEL;
-    return Math.ceil(Math.pow(LEVEL_MULTIPLIER, level - 1) * BASE_XP_PER_LEVEL);
+// Reward structure: key is the level reached, value is the reward
+const LEVEL_REWARDS: Record<number, { freeChats?: number; stardust?: number }> = {
+    4: { stardust: 100 },
+    5: { freeChats: 1 },
+    10: { stardust: 500 },
 };
 
 // This store will hold the state and notify listeners of changes.
@@ -40,23 +52,20 @@ const getInitialState = (): CosmicEnergyState => ({
     points: 0,
     level: 1,
     freeChats: 0,
-    lastGained: {},
+    lastGained: {} as Record<GameActionId, string>,
 });
 
 const createStore = (userId: string) => {
     const listeners = new Set<() => void>();
     
-    const localStorageKey = `cosmicEnergy_${userId}`;
+    const localStorageKey = `cosmicEnergy_v2_${userId}`;
     let currentState: CosmicEnergyState = getInitialState();
 
     try {
         const storedState = localStorage.getItem(localStorageKey);
         if (storedState) {
             const parsedState = JSON.parse(storedState);
-            // Ensure freeChats exists to avoid issues with older state formats
-            if (typeof parsedState.freeChats !== 'number') {
-                parsedState.freeChats = 0;
-            }
+            // Ensure all fields exist to avoid issues with older state formats
             currentState = { ...getInitialState(), ...parsedState };
         }
     } catch (error) {
@@ -87,14 +96,14 @@ export interface AddEnergyPointsResult {
     pointsAdded: number;
     leveledUp: boolean;
     newLevel: number;
-    rewards: { freeChats: number };
+    rewards: { freeChats: number; stardust: number; };
 }
 
 // Custom hook to interact with the store
 export const useCosmicEnergy = () => {
     const { user } = useAuth();
     
-    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_${user.uid}`))) {
+    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v2_${user.uid}`))) {
         store = createStore(user.uid);
     } else if (!user?.uid && store) {
         store = null;
@@ -106,7 +115,7 @@ export const useCosmicEnergy = () => {
     );
 
     const addEnergyPoints = useCallback((actionId: GameActionId, pointsToAdd: number): AddEnergyPointsResult => {
-        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0 } };
+        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
         
         const currentState = store.getState();
@@ -121,68 +130,82 @@ export const useCosmicEnergy = () => {
             return result; // Daily action already performed today
         }
         
-        const newPoints = currentState.points + pointsToAdd;
+        const stardustMultiplier = currentState.level >= 7 ? 1.1 : 1.0;
+        const finalPointsToAdd = actionId === 'complete_profile' ? pointsToAdd : Math.ceil(pointsToAdd * stardustMultiplier);
+
+        const newPoints = currentState.points + finalPointsToAdd;
         const newLevel = calculateLevel(newPoints);
         const newLastGained = { ...currentState.lastGained, [actionId]: today };
 
         const leveledUp = newLevel > currentState.level;
         let newFreeChats = currentState.freeChats || 0;
+        let newTotalPoints = newPoints;
+
 
         if (leveledUp) {
             for (let level = currentState.level + 1; level <= newLevel; level++) {
                 if (LEVEL_REWARDS[level]) {
                     newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
+                    newTotalPoints += LEVEL_REWARDS[level].stardust || 0;
                     result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
+                    result.rewards.stardust += LEVEL_REWARDS[level].stardust || 0;
                 }
             }
         }
+        
+        // Recalculate level in case stardust bonus caused another level up
+        const finalLevel = calculateLevel(newTotalPoints);
 
         store.setState({
-            points: newPoints,
-            level: newLevel,
+            points: newTotalPoints,
+            level: finalLevel,
             freeChats: newFreeChats,
             lastGained: newLastGained,
         });
 
-        result.pointsAdded = pointsToAdd;
-        result.leveledUp = leveledUp;
-        result.newLevel = newLevel;
+        result.pointsAdded = finalPointsToAdd;
+        result.leveledUp = finalLevel > currentState.level;
+        result.newLevel = finalLevel;
         return result;
 
-    }, [user, state.level]);
+    }, [user, state.level, state.points, state.freeChats, state.lastGained]);
 
     const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
-        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0 } };
+        const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
         
         const currentState = store.getState();
-        
         const newPoints = currentState.points + pointsToAdd;
         const newLevel = calculateLevel(newPoints);
         
         const leveledUp = newLevel > currentState.level;
         let newFreeChats = currentState.freeChats || 0;
+        let newTotalPoints = newPoints;
 
         if (leveledUp) {
             for (let level = currentState.level + 1; level <= newLevel; level++) {
                 if (LEVEL_REWARDS[level]) {
                     newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
+                    newTotalPoints += LEVEL_REWARDS[level].stardust || 0;
                     result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
+                    result.rewards.stardust += LEVEL_REWARDS[level].stardust || 0;
                 }
             }
         }
+        
+        const finalLevel = calculateLevel(newTotalPoints);
 
         store.setState({
-            points: newPoints,
-            level: newLevel,
+            points: newTotalPoints,
+            level: finalLevel,
             freeChats: newFreeChats,
         });
 
         result.pointsAdded = pointsToAdd;
-        result.leveledUp = leveledUp;
-        result.newLevel = newLevel;
+        result.leveledUp = finalLevel > currentState.level;
+        result.newLevel = finalLevel;
         return result;
-    }, [user, state.level]);
+    }, [user, state.level, state.points, state.freeChats]);
     
     const subtractDebugPoints = useCallback((pointsToSubtract: number) => {
         if (!user?.uid || !store) return;
@@ -216,16 +239,14 @@ export const useCosmicEnergy = () => {
         }
     }, [user]);
     
-    const pointsForNextLevel = getPointsForNextLevel(state.level + 1);
-    const pointsForCurrentLevel = getPointsForNextLevel(state.level);
-    const progress = state.level === 1 && state.points < BASE_XP_PER_LEVEL
-        ? (state.points / BASE_XP_PER_LEVEL) * 100
-        : Math.max(0, Math.min(100, ((state.points - pointsForCurrentLevel) / (pointsForNextLevel - pointsForCurrentLevel)) * 100));
+    const pointsForCurrentLevel = LEVEL_THRESHOLDS[state.level - 1] ?? 0;
+    const pointsForNextLevel = LEVEL_THRESHOLDS[state.level] ?? LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length-1];
+    const progress = pointsForNextLevel === pointsForCurrentLevel ? 100 : Math.max(0, Math.min(100, ((state.points - pointsForCurrentLevel) / (pointsForNextLevel - pointsForCurrentLevel)) * 100));
 
 
     return {
         ...state,
-        pointsForNextLevel,
+        pointsForNextLevel: pointsForNextLevel,
         progress,
         addEnergyPoints,
         useFreeChat,

@@ -11,7 +11,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { es, enUS, de, fr } from 'date-fns/locale';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send, Star } from 'lucide-react';
+import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send, Star, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -237,8 +237,8 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
     }
   };
   
-  const handleInsertExclusiveEmoji = () => {
-    setNewComment(prev => prev + '🔯');
+  const handleInsertExclusiveEmoji = (emoji: string) => {
+    setNewComment(prev => prev + emoji);
   };
 
   const reactionCounts = Object.values(reactions).reduce((acc, emoji) => {
@@ -247,6 +247,15 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
   }, {} as Record<string, number>);
 
   const sortedReactions = Object.entries(reactionCounts).sort(([, a], [, b]) => b - a);
+  
+  const getUserTitle = (level: number): string | null => {
+    if (level >= 10) return dictionary['Reward.titleEnlightened'] || 'Iluminado/a';
+    if (level >= 9) return dictionary['Reward.titleSupernova'] || 'Supernova';
+    if (level >= 5) return dictionary['Reward.titleGuidingStar'] || 'Estrella Guía';
+    return null;
+  };
+  const userTitle = getUserTitle(post.authorLevel || 1);
+
 
   const renderPostContent = () => {
     switch (post.postType) {
@@ -315,10 +324,10 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
             <CardTitle className="text-base font-semibold font-body leading-tight">
               {post.authorName}
             </CardTitle>
-            {(post.authorLevel || 0) >= 15 && (
+            {userTitle && (
               <Badge variant="destructive" className="text-xs px-1.5 py-0.5">
                 <Star className="w-3 h-3 mr-1"/>
-                Supernova
+                {userTitle}
               </Badge>
             )}
           </div>
@@ -326,7 +335,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
             <ZodiacSignIcon signName={post.authorZodiacSign} className="w-3.5 h-3.5 mr-1" />
             <span>{dictionary[post.authorZodiacSign] || post.authorZodiacSign}</span>
              <span className="mx-1.5">·</span>
-             <span>Lv. {post.authorLevel || 1}</span>
+             <span>{dictionary['ProfilePage.levelLabel'] || 'Level'} {post.authorLevel || 1}</span>
           </div>
         </div>
       </CardHeader>
@@ -394,18 +403,18 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
                       {isPostingComment ? <LoadingSpinner className="h-3 w-3 mr-2" /> : <Send className="mr-2 h-3 w-3" />}
                       {dictionary['CommunityPage.postCommentButton'] || 'Post Comment'}
                     </Button>
-                    {currentUserLevel >= 5 && (
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            onClick={handleInsertExclusiveEmoji}
-                            aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"}
-                            className="h-8 w-8"
-                        >
-                            <span className="font-bold text-lg">🔯</span>
-                        </Button>
-                    )}
+                    <div className="flex items-center gap-1">
+                        {currentUserLevel >= 3 && (
+                            <Button type="button" variant="ghost" size="icon" onClick={() => handleInsertExclusiveEmoji('🌙')} aria-label={dictionary['Reward.lunarSticker'] || "Insert moon sticker"} className="h-8 w-8">
+                                <span className="font-bold text-lg">🌙</span>
+                            </Button>
+                        )}
+                        {currentUserLevel >= 5 && (
+                            <Button type="button" variant="ghost" size="icon" onClick={() => handleInsertExclusiveEmoji('🔯')} aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"} className="h-8 w-8">
+                                <span className="font-bold text-lg">🔯</span>
+                            </Button>
+                        )}
+                    </div>
                  </div>
               </div>
             </form>

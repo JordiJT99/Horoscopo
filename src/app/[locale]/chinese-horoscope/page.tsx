@@ -1,9 +1,12 @@
-
+// Server Component
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { ChineseAstrologyIcon } from '@/lib/constants';
-import ChineseHoroscopeInteractive from '@/components/chinese-horoscope/ChineseHoroscopeInteractive';
+import ChineseHoroscopeClientWrapper from '@/components/chinese-horoscope/ChineseHoroscopeClientWrapper'; // Import the new wrapper
+import { Suspense } from 'react';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
+
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -20,7 +23,6 @@ interface ChineseHoroscopePageProps {
 }
 
 export default async function ChineseHoroscopePage({ params }: ChineseHoroscopePageProps) {
-  // params.locale is directly available now
   const dictionary = await getDictionary(params.locale);
 
   return (
@@ -31,8 +33,13 @@ export default async function ChineseHoroscopePage({ params }: ChineseHoroscopeP
         icon={ChineseAstrologyIcon}
         className="mb-12"
       />
-      <ChineseHoroscopeInteractive dictionary={dictionary} />
+      <Suspense fallback={
+        <div className="text-center py-10">
+          <LoadingSpinner className="h-12 w-12" />
+        </div>
+      }>
+        <ChineseHoroscopeClientWrapper dictionary={dictionary} locale={params.locale} />
+      </Suspense>
     </main>
   );
 }
-
