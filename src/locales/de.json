@@ -334,7 +334,7 @@
   "MayanSign.Oc.description": "Hund - Repräsentiert Loyalität, Kameradschaft, Führung und bedingungslose Liebe.",
   "MayanSign.Oc.interpretation": "Oc ist der treue Begleiter, der liebevolle Führer, der dich auf deinem Weg begleitet. Es lehrt dich über bedingungslose Liebe, Treue und die Bedeutung wahrer Beziehungen. Es ist ein Tag, um dich mit deinen Lieben zu verbinden und dein Herz zu öffnen.",
   "MayanSign.Chuen.description": "Affe - Symbolisiert Freude, Kreativität, Kunst, Spiel und Magie.",
-  "MayanSign.Chuen.interpretation": "Chuen ist der Künstler, der Magier, der Weber von Illusion und Freude. Es ermutigt dich zu spielen, kreativ zu sein und Magie im Alltag zu finden. Es ist ein Tag für Spontaneität, Spaß und künstlerischen Ausdruck.",
+  "MayanSign.Chuen.interpretation": "Chuen ist der Künstler, der Magier, der Weber von Illusion und Freude. Es ermutigt dich zu spielen, zu sein kreativ und Magie im Alltag zu finden. Es ist ein Tag für Spontaneität, Spaß und künstlerischen Ausdruck.",
   "MayanSign.Eb.description": "Weg/Gras - Repräsentiert den Pfad, die Reise, den freien Willen und die Vitalität.",
   "MayanSign.Eb.interpretation": "Eb ist der Lebensweg, der freie Wille und die Vitalität, die aus der Erde entspringt. Es erinnert dich daran, dass du die Macht hast, deinen Weg zu wählen, und verbindet dich mit der Fülle der Natur. Es ist ein Tag für bewusste Entscheidungen und die Verbindung mit deiner inneren Weisheit.",
   "MayanSign.Ben.description": "Schilf/Himmelswanderer - Symbolisiert Säulen des Lichts, die Himmel und Erde verbinden, Mut und Erkundung.",
@@ -817,5 +817,18 @@
   "DailyTransits.OptimismGrowth": "Optimismus, Wachstum und Glück.",
   "ProfilePage.editAboutAriaLabel": "Abschnitt 'Über mich' bearbeiten",
   "ProfilePage.saveAboutAriaLabel": "Änderungen zu 'Über mich' speichern",
-  "ProfilePage.editBirthDataAriaLabel": "Geburtsdaten bearbeiten"
+  "ProfilePage.editBirthDataAriaLabel": "Geburtsdaten bearbeiten",
+  "PsychicChatPage.freeChatAvailable": "Ich sehe, du hast ein kostenloses Leseguthaben. Deine erste Frage geht auf mich!",
+  "PsychicChatPage.freeChatUsedTitle": "Kostenlose Lesung verwendet",
+  "PsychicChatPage.freeChatUsedDescription": "Dein kostenloses Leseguthaben wurde angewendet.",
+  "CommunityPage.exclusiveEmojiAria": "Exklusives Emoji einfügen",
+  "ProfilePage.supernovaTitle": "Supernova",
+  "ProfilePage.rewardsTitle": "Level-Belohnungen",
+  "ProfilePage.rewardsDescription": "Schalte neue Vorteile frei, indem du deine Kosmische Energie auflevelst.",
+  "Reward.freeChat": "Kostenloser Hellseher-Chat",
+  "Reward.exclusiveEmoji": "Exklusives Emoji 🔯",
+  "Reward.supernovaTitle": "Titel 'Supernova'",
+  "Reward.auroraBackground": "Profilhintergrund 'Aurora'",
+  "Reward.rosetteBackground": "Profilhintergrund 'Rosette'",
+  "Reward.unlockedAtLevel": "Lv. {level}"
 }
