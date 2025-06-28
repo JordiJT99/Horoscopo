@@ -44,8 +44,8 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
       const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
       if (!onboardingComplete && !isOnboardingPage && !isLoginPage) {
         router.push(onboardingPath);
-      } else if (onboardingComplete && (isLoginPage || isOnboardingPage)) {
-        // If onboarding is complete and user is on login/onboarding, redirect to profile or home
+      } else if (onboardingComplete && isLoginPage) {
+        // If onboarding is complete and user is on the login page, redirect to home
         router.push(`/${locale}/`); 
       }
     }
