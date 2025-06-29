@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Votre source quotidienne d'horoscopes et d'informations astrologiques.",
@@ -195,6 +196,7 @@
   "LunarAscendantPage.moonInSignText": "en {signName}",
   "LunarAscendantPage.illuminationText": "Illumination : {percentage}%",
   "LunarAscendantPage.easternTimeNote": "Note : Toutes les heures ET",
+  "LunarAscendantPage.synodicCycle": "Progression du Cycle Synodal",
   "WeeklyHoroscopePage.title": "Horoscope Hebdomadaire",
   "WeeklyHoroscopePage.subtitle": "Vos prévisions astrologiques pour la semaine à venir. Sélectionnez votre signe.",
   "MonthlyHoroscopePage.title": "Horoscope Mensuel",
@@ -900,7 +902,7 @@
   "ZodiacDetail.Virgo.strengthsTitle": "Forces",
   "ZodiacDetail.Virgo.strengths": ["Loyal", "analytique", "gentil", "travailleur", "pratique", "modeste"],
   "ZodiacDetail.Virgo.weaknessesTitle": "Faiblesses",
-  "ZodiacDetail.Virgo.weaknesses": ["Timidez", "preocupación", "excesivamente crítico consigo mismo y con los demás", "todo trabajo y nada de juego"],
+  "ZodiacDetail.Virgo.weaknesses": ["Timidité", "inquiétude", "trop critique envers soi-même et les autres", "tout travail et pas de jeu"],
   "ZodiacDetail.Virgo.loveTitle": "La Vierge en Amour",
   "ZodiacDetail.Virgo.love": "En amour, la Vierge montre son affection par des actes de service pratiques et une dévotion constante, et non par de grands gestes romantiques. Ils sont prudents et prennent du temps pour s'ouvrir. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de prendre soin des détails.",
   "ZodiacDetail.Virgo.friendshipTitle": "La Vierge en Amitié",
@@ -996,5 +998,3 @@
   "StoreProducts.incenseHolder.title": "Porte-Encens en Céramique",
   "StoreProducts.incenseHolder.description": "Un support élégant pour brûler en toute sécurité vos bâtonnets d'encens préférés pendant la méditation ou la relaxation."
 }
-
-    

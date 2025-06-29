@@ -8,7 +8,7 @@ import { friendshipCompatibilityPairings } from './constantsfriendship';
 import { workCompatibilityPairings } from './constantswork';
 import type { CompatibilityReportDetail } from './constantslove'; 
 import { chineseCompatibilityPairings, type ChineseCompatibilityReportDetail } from './constantshoroscopochino';
-import { getSunLongitude, getMoonLongitude, getAscendantLongitude, getJulianDay } from './astronomy';
+import { getSunLongitude, getMoonLongitude, getAscendantLongitude, getJulianDay, computeLunarPhasesForMonth } from './astronomy';
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -195,15 +195,6 @@ export const getMoonImageUrl = (phaseKey: MoonPhaseKey, size: string = '80x80'):
   return `${base}/${size}/${colors}.png?text=${text}`;
 };
 
-export const getMockUpcomingPhases = (dictionary: Dictionary): UpcomingPhase[] => {
-  return [
-    { nameKey: "MoonPhase.firstQuarter", date: dictionary['UpcomingPhase.sampleDate1'] || "Jun 2", iconUrl: getMoonImageUrl('firstQuarter', '48x48'), phaseKey: "firstQuarter" },
-    { nameKey: "MoonPhase.full", date: dictionary['UpcomingPhase.sampleDate2'] || "Jun 9", iconUrl: getMoonImageUrl('full', '48x48'), phaseKey: "full" },
-    { nameKey: "MoonPhase.lastQuarter", date: dictionary['UpcomingPhase.sampleDate3'] || "Jun 16", iconUrl: getMoonImageUrl('lastQuarter', '48x48'), phaseKey: "lastQuarter" },
-    { nameKey: "MoonPhase.new", date: dictionary['UpcomingPhase.sampleDate4'] || "Jun 23", iconUrl: getMoonImageUrl('new', '48x48'), phaseKey: "new" },
-  ];
-};
-
 const mapOpenMeteoPhaseToApp = (
   phaseValue: number,
   dictionary: Dictionary
@@ -242,28 +233,67 @@ const mapOpenMeteoPhaseToApp = (
   return { phaseName, illumination, phaseKey };
 };
 
-
 export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es'): LunarData => {
   try {
     const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    // Get the exact dates of the 4 main phases for the current, previous, and next months.
+    const currentMonthPhases = computeLunarPhasesForMonth(year, month, locale, dictionary);
+    const prevMonthPhases = computeLunarPhasesForMonth(year, month - 1, locale, dictionary);
+    const nextMonthPhases = computeLunarPhasesForMonth(year, month + 1, locale, dictionary);
+
+    const allPhases = [...prevMonthPhases, ...currentMonthPhases, ...nextMonthPhases]
+      .sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime());
+      
+    // 1. Calculate current illumination and phase
     const jd = getJulianDay(today);
     const sunLon = getSunLongitude(jd);
     const moonLon = getMoonLongitude(jd);
-
-    // Calculate phase value (0=new, 0.25=first quarter, 0.5=full, etc.)
     const phaseValue = ((moonLon - sunLon + 360) % 360) / 360;
-
     const { phaseName, illumination, phaseKey } = mapOpenMeteoPhaseToApp(phaseValue, dictionary);
+    
+    // 2. Determine Moon Sign
     const moonSign = getMoonSign(today);
+
+    // 3. Find the upcoming phases relative to today
+    const upcomingPhases = allPhases
+      .filter(p => p.dateObj.getTime() >= today.getTime())
+      .slice(0, 4);
+
+    // 4. Calculate synodic progress
+    const newMoons = allPhases.filter(p => p.phaseKey === 'new');
+    let lastNewMoon: UpcomingPhase | undefined;
+    let nextNewMoon: UpcomingPhase | undefined;
+
+    for (const nm of newMoons) {
+        if (nm.dateObj <= today) {
+            lastNewMoon = nm;
+        } else {
+            nextNewMoon = nm;
+            break;
+        }
+    }
+
+    let synodicProgress = 0;
+    if (lastNewMoon && nextNewMoon) {
+        const totalCycleMillis = nextNewMoon.dateObj.getTime() - lastNewMoon.dateObj.getTime();
+        const elapsedMillis = today.getTime() - lastNewMoon.dateObj.getTime();
+        if (totalCycleMillis > 0) {
+          synodicProgress = Math.min(100, (elapsedMillis / totalCycleMillis) * 100);
+        }
+    }
 
     return {
       phase: phaseName,
       phaseKey: phaseKey,
       illumination: illumination,
+      synodicProgress: synodicProgress,
       currentMoonImage: getMoonImageUrl(phaseKey),
       moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
       moonSignIcon: moonSign ? moonSign.name : undefined,
-      upcomingPhases: getMockUpcomingPhases(dictionary),
+      upcomingPhases,
     };
   } catch (error) {
     console.error("Error calculating local lunar data:", error);
@@ -271,17 +301,18 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
       phase: dictionary['MoonPhase.unknown'] || "Unknown Phase",
       phaseKey: "unknown",
       illumination: 0,
+      synodicProgress: 0,
       currentMoonImage: getMoonImageUrl('unknown'),
-      upcomingPhases: getMockUpcomingPhases(dictionary),
+      upcomingPhases: [],
       error: (error as Error).message || "Failed to calculate lunar data",
     };
   }
 };
 
 
-
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
-  // NOTE: Geocoding birthCity is not implemented. Using fixed coordinates for Madrid, Spain as a placeholder.
+  // TODO: Implement a proper geocoding service to convert birthCity to lat/lon.
+  // Using fixed coordinates for Madrid, Spain as a placeholder.
   const lat = 40.4168;
   const lon = -3.7038;
   

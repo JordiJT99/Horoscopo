@@ -92,20 +92,24 @@ export type MoonPhaseKey = 'new' | 'waxingCrescent' | 'firstQuarter' | 'waxingGi
 
 
 export interface UpcomingPhase {
-  nameKey: string; // e.g., "MoonPhase.FirstQuarter" for translation
-  date: string;    // e.g., "Jun 2"
+  nameKey: string;
+  date: string;
   iconUrl: string;
   phaseKey: MoonPhaseKey;
+  dateObj: Date;
+  time?: string;
 }
+
 export interface LunarData {
-  phase: string; // e.g., "Full Moon", "New Moon", "Waxing Crescent" (translated)
-  phaseKey: MoonPhaseKey; // Key for the main current phase
-  illumination: number; // Percentage
-  currentMoonImage: string; // URL for the large moon image
-  moonInSign?: string; // e.g., "Acuario" (translated) - No longer optional
-  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius" - No longer optional
+  phase: string;
+  phaseKey: MoonPhaseKey;
+  illumination: number;
+  currentMoonImage: string;
+  moonInSign?: string;
+  moonSignIcon?: ZodiacSignName;
   upcomingPhases: UpcomingPhase[];
-  error?: string; // Optional error message for API failures
+  error?: string;
+  synodicProgress?: number;
 }
 
 
