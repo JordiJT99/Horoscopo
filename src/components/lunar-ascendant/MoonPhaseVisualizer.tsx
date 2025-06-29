@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import React, { useId } from 'react';
@@ -25,8 +23,9 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
 
   const r = size / 2;
 
-  const lightForeground = 'hsl(var(--foreground))';
+  const lightForeground = 'hsl(50, 80%, 85%)'; // Warm yellowish moon color
   const darkBackground = 'hsl(var(--muted) / 0.8)';
+  const craterColor = 'hsl(50, 30%, 60%)'; // Darker, desaturated yellow for craters
 
   // Reusable component for the crater pattern
   const Craters = ({ fill, opacity }: { fill: string; opacity: number }) => (
@@ -40,14 +39,14 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
   const baseDarkMoon = (
     <g>
       <circle cx={r} cy={r} r={r} fill={darkBackground} />
-      <Craters fill="hsl(var(--foreground))" opacity={0.08} />
+      <Craters fill={lightForeground} opacity={0.08} /> {/* Faint yellow highlights on the dark side */}
     </g>
   );
 
   const fullLitMoonWithCraters = (
     <g>
       <circle cx={r} cy={r} r={r} fill={lightForeground} />
-      <Craters fill="hsl(var(--muted-foreground))" opacity={0.15} />
+      <Craters fill={craterColor} opacity={0.25} />
     </g>
   );
 
@@ -122,7 +121,7 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
         viewBox={`0 0 ${size} ${size}`}
         role="img"
         aria-label={`Current moon phase: ${phaseKey}, ${illumination}% illuminated`}
-        className="drop-shadow-[0_0_4px_hsl(var(--primary)/0.6)]"
+        className="drop-shadow-[0_0_4px_hsl(50,80%,70%,0.6)]" // Yellowish glow
       >
         <defs>
           <clipPath id={clipPathId}>
