@@ -21,10 +21,17 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
   const isWaning = phaseKey.startsWith('waning') || phaseKey === 'lastQuarter' || (phaseKey === 'full' && illumination < 100);
 
   // Translate illumination (0-100) to a mask position (0 to size)
-  // 0 illumination (new moon) -> mask is at size/2 (centered, full black circle covers)
-  // 50 illumination (quarter) -> mask is at 0 or size (half covered)
-  // 100 illumination (full) -> mask is at -size/2 (moved off, full white circle visible)
   const maskCx = r - (size * (illumination / 100 - 0.5));
+
+  // Simplified crater pattern
+  const craterPattern = (
+    <g fill="hsl(var(--muted-foreground))" opacity="0.1">
+      <circle cx={r * 0.6} cy={r * 0.5} r={r * 0.15} />
+      <circle cx={r * 1.4} cy={r * 0.8} r={r * 0.2} />
+      <circle cx={r * 0.9} cy={r * 1.5} r={r * 0.12} />
+      <ellipse cx={r * 1.5} cy={r * 1.4} rx={r * 0.1} ry={r * 0.15} />
+    </g>
+  );
 
   return (
     <div className={cn('relative', className)} style={{ width: size, height: size }}>
@@ -38,24 +45,22 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
       >
         <defs>
           <mask id={`moon-mask-${size}`}>
-            {/* The mask is a white background with a black circle moving across it */}
             <rect x="0" y="0" width={size} height={size} fill="white" />
             {illumination < 100 && <circle cx={maskCx} cy={r} r={r} fill="black" />}
           </mask>
         </defs>
 
-        {/* The dark side of the moon, always present as the base */}
+        {/* Base dark side */}
         <circle cx={r} cy={r} r={r} fill="hsl(var(--muted) / 0.8)" />
+        {/* Craters on the dark side */}
+        {craterPattern}
 
-        {/* The illuminated part, revealed by the mask */}
-        <circle
-          cx={r}
-          cy={r}
-          r={r}
-          fill="hsl(var(--foreground))"
-          mask={`url(#moon-mask-${size})`}
-          transform={isWaning ? `rotate(180 ${r} ${r})` : ''}
-        />
+        {/* Illuminated part */}
+        <g mask={`url(#moon-mask-${size})`} transform={isWaning ? `rotate(180 ${r} ${r})` : ''}>
+           <circle cx={r} cy={r} r={r} fill="hsl(var(--foreground))" />
+           {/* Craters on the light side */}
+           {craterPattern}
+        </g>
       </svg>
     </div>
   );
