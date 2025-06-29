@@ -152,41 +152,46 @@ function getJulianDayOfPhase(k: number, phase: number): number {
     const T = k / 1236.85;
     const T2 = T * T;
     const T3 = T * T2;
-    const T4 = T * T3;
 
     // Mean time of the phase
-    let jde = 2451550.09766 + 29.530588861 * k + 0.00015437 * T2 - 0.000000150 * T3 + 0.00000000073 * T4;
-    
-    jde += 0.25 * phase * 29.530588861;
+    let jde = 2451550.09766 + 29.530588861 * k + 0.00015437 * T2 - 0.000000150 * T3 + (7.3e-9) * T2*T2;
+
+    // Apply phase offset (0 for New, 0.25 for FirstQ, 0.5 for Full, 0.75 for LastQ)
+    jde += (0.25 * phase) * 29.530588861;
 
     // Sun's mean anomaly
-    const M = degToRad(normalizeAngle(2.5534 + 29.10535670 * k));
+    const E = 1 - 0.002516 * T - 0.0000074 * T2;
+    const M_sun = degToRad(normalizeAngle(2.5534 + 29.10535670 * k));
+    
     // Moon's mean anomaly
-    const Mprime = degToRad(normalizeAngle(201.5643 + 385.81693528 * k));
+    const M_prime = degToRad(normalizeAngle(201.5643 + 385.81693528 * k));
+    
     // Moon's argument of latitude
     const F = degToRad(normalizeAngle(160.7108 + 390.67050284 * k));
 
     let corrections = 0;
     if (phase === 0 || phase === 2) { // New and Full Moon
-        corrections += (
-            -0.40720 * Math.sin(Mprime) +
-            0.17241 * Math.sin(M) +
-            0.01608 * Math.sin(2 * Mprime) +
+        corrections =
+            -0.40720 * Math.sin(M_prime) +
+            0.17241 * E * Math.sin(M_sun) +
+            0.01608 * Math.sin(2 * M_prime) +
             0.01039 * Math.sin(2 * F) +
-            0.00739 * Math.sin(Mprime - M) -
-            0.00514 * Math.sin(Mprime + M) +
-            0.00208 * Math.sin(2 * M)
-        );
+            0.00739 * E * Math.sin(M_prime - M_sun) -
+            0.00514 * E * Math.sin(M_prime + M_sun) +
+            0.00208 * E * E * Math.sin(2 * M_sun);
     } else if (phase === 1 || phase === 3) { // First and Last Quarter
-         corrections += (
-            -0.62801 * Math.sin(Mprime) +
-            0.17302 * Math.sin(M) -
-            0.01179 * Math.sin(2 * Mprime) +
+         corrections =
+            -0.62801 * Math.sin(M_prime) +
+            0.17302 * E * Math.sin(M_sun) +
+            0.01179 * Math.sin(2 * M_prime) +
             0.01043 * Math.sin(2 * F) -
-            0.00739 * Math.sin(Mprime + M) +
-            0.00679 * Math.sin(Mprime - M) +
-            0.00337 * Math.sin(2 * M)
-        );
+            0.00739 * E * Math.sin(M_prime + M_sun) +
+            0.00679 * E * Math.sin(M_prime - M_sun) +
+            0.00337 * E*E * Math.sin(2 * M_sun);
+        
+        // Additional correction for quarters
+        const phaseCorrection = (phase === 1) ? 0.00325 : -0.00325;
+        corrections += phaseCorrection;
     }
     
     return jde + corrections;
