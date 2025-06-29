@@ -244,12 +244,13 @@ const mapOpenMeteoPhaseToApp = (
 
 
 export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
-  // The API call is simplified by requesting a 1-day forecast, which includes today.
-  // Using timezone=auto is more robust than a fixed timezone.
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&daily=moon_phase&timezone=auto&forecast_days=1`;
+  // Construct the API URL with explicit start and end dates for today.
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&daily=moon_phase&timezone=auto&start_date=${todayStr}&end_date=${todayStr}`;
 
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, { cache: 'no-store' }); // Added no-store cache to avoid stale data issues
     if (!response.ok) {
       console.error("Open-Meteo API request failed:", response.status, response.statusText);
       throw new Error(`API request failed with status ${response.status}`);
