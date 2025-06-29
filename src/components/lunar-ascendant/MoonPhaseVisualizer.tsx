@@ -1,7 +1,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useId } from 'react';
 import { cn } from '@/lib/utils';
 import type { MoonPhaseKey } from '@/types';
 
@@ -18,6 +18,9 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
   size = 72,
   className,
 }) => {
+  const uniqueId = useId();
+  const maskId = `moon-mask-${uniqueId}`;
+
   const r = size / 2;
   const isWaning = phaseKey.startsWith('waning') || phaseKey === 'lastQuarter' || (phaseKey === 'full' && illumination < 100);
 
@@ -45,7 +48,7 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
         className="drop-shadow-[0_0_4px_hsl(var(--primary)/0.6)]"
       >
         <defs>
-          <mask id={`moon-mask-${size}`}>
+          <mask id={maskId}>
             <rect x="0" y="0" width={size} height={size} fill="white" />
             {illumination < 100 && <circle cx={maskCx} cy={r} r={r} fill="black" />}
           </mask>
@@ -57,7 +60,7 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
         {craterPattern}
 
         {/* Illuminated part */}
-        <g mask={`url(#moon-mask-${size})`} transform={isWaning ? `rotate(180 ${r} ${r})` : ''}>
+        <g mask={`url(#${maskId})`} transform={isWaning ? `rotate(180 ${r} ${r})` : ''}>
            <circle cx={r} cy={r} r={r} fill="hsl(var(--foreground))" />
            {/* Craters on the light side */}
            {craterPattern}
