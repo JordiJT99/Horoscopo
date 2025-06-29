@@ -4,7 +4,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import type { LunarData, AscendantData } from '@/types';
-import type { Dictionary, Locale, MoonPhaseKey } from '@/types';
+import type { Dictionary, Locale, MoonPhaseKey, UpcomingPhase } from '@/types';
 import { getCurrentLunarData, getAscendantSign, ZODIAC_SIGNS } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,7 @@ import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { Progress } from '@/components/ui/progress';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface LunarAscendantClientContentProps {
   dictionary: Dictionary;
@@ -80,8 +81,8 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
   }, [locale, hasMounted, dictionary]);
 
   const handleCalculateAscendant = () => {
-    // TODO: The getAscendantSign function uses placeholder coordinates.
-    // A geocoding service would be needed here to convert birthCity/birthCountry to lat/lon for accurate results.
+    // TODO: Implement a proper geocoding service to convert birthCity/birthCountry to lat/lon.
+    // Using fixed coordinates for Madrid, Spain as a placeholder.
     if (!birthDate || !birthTime || !birthCity) {
       alert(dictionary['LunarAscendantSection.fillAllDetails'] || "Please fill in all birth details.");
       return;
