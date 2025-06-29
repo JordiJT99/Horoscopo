@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -218,7 +217,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                     </Popover>
                                 ))}
                                 </div>
-                                <ScrollBar orientation="horizontal" className="h-2.5 bg-muted/40" />
+                                <ScrollBar orientation="horizontal" className="h-3 bg-muted" />
                             </ScrollArea>
                     </div>
                      <div className="pt-2 flex justify-center">
