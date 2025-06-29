@@ -195,7 +195,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
 
                     <div className="space-y-2">
                         <h4 className="font-headline text-lg text-primary text-center">{dictionary['LunarAscendantPage.upcomingPhasesTitle'] || "Upcoming Phases"}</h4>
-                            <ScrollArea className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
+                            <ScrollArea type="always" className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
                                 <div className="flex w-max space-x-4">
                                 {lunarData.upcomingPhases.map((phase, index) => (
                                     <Popover key={index}>
