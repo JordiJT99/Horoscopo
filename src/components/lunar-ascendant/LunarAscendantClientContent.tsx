@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2 } from 'lucide-react';
+import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2, Share2 } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -23,6 +23,8 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { Progress } from '@/components/ui/progress';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useToast } from '@/hooks/use-toast';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface LunarAscendantClientContentProps {
   dictionary: Dictionary;
@@ -64,6 +66,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
   const [birthCountry, setBirthCountry] = useState<string>("");
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const { toast } = useToast();
   const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
@@ -80,11 +83,48 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
     
   }, [locale, hasMounted, dictionary]);
 
+  const handleShare = async () => {
+    if (!lunarData) return;
+
+    const shareTitle = dictionary['Share.lunarPhaseTitle'] || "Current Moon Phase from AstroVibes";
+    const shareText = (dictionary['Share.lunarPhaseText'] || "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!")
+        .replace('{phaseName}', lunarData.phase)
+        .replace('{signName}', lunarData.moonInSign || 'the cosmos')
+        .replace('{illumination}', lunarData.illumination.toString());
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          console.error('Error sharing:', err);
+        }
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(`${shareText}\n\n${shareUrl}`);
+        toast({
+          title: dictionary['Share.copiedTitle'] || "Copied!",
+          description: dictionary['Share.copiedLinkMessage'] || "The lunar phase info has been copied to your clipboard.",
+        });
+      } catch (copyError) {
+        toast({
+          title: dictionary['Share.errorTitle'] || "Sharing Error",
+          description: dictionary['Share.errorMessageClipboard'] || "Could not copy. Please try sharing manually.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+  
   const handleCalculateAscendant = () => {
-    // TODO: Implement a proper geocoding service to convert birthCity/birthCountry to lat/lon.
-    // Using fixed coordinates for Madrid, Spain as a placeholder.
     if (!birthDate || !birthTime || !birthCity) {
-      alert(dictionary['LunarAscendantSection.fillAllDetails'] || "Please fill in all birth details.");
+      toast({title: "Error", description: dictionary['LunarAscendantSection.fillAllDetails'] || "Please fill in all birth details.", variant: 'destructive'});
       return;
     }
     setIsLoadingAscendant(true);
@@ -92,7 +132,6 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
       setAscendantData(getAscendantSign(birthDate, birthTime, birthCity));
       setIsLoadingAscendant(false);
     }, 700);
-    // Cleanup timer if component unmounts or inputs change before timeout
     return () => clearTimeout(ascendantTimer);
   };
 
@@ -179,24 +218,46 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 text-center">
-                      {lunarData.upcomingPhases.map((phase, index) => (
-                        <div key={index} className="flex flex-col items-center p-1.5 bg-secondary/20 rounded-md">
-                           <div className={cn("p-1 rounded-full border-2", getPhaseColorClass(phase.phaseKey))}>
-                            <Image
-                              src={phase.iconUrl}
-                              alt={dictionary[phase.nameKey] || phase.phaseKey}
-                              width={36}
-                              height={36}
-                              className="rounded-full bg-slate-600 object-cover"
-                              data-ai-hint="moon phase icon"
-                            />
-                           </div>
-                          <p className="text-xs font-semibold text-muted-foreground mt-1.5">{phase.date}</p>
-                          <p className="text-xs text-muted-foreground/80">{phase.time}</p>
-                        </div>
-                      ))}
+                    <div className="space-y-2">
+                        <h4 className="font-headline text-lg text-primary text-center">{dictionary['LunarAscendantPage.upcomingPhasesTitle'] || "Upcoming Phases"}</h4>
+                        <TooltipProvider>
+                            <ScrollArea className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
+                                <div className="flex w-max space-x-4">
+                                {lunarData.upcomingPhases.map((phase, index) => (
+                                    <Tooltip key={index} delayDuration={100}>
+                                        <TooltipTrigger asChild>
+                                            <div className="flex flex-col items-center p-1.5 rounded-md w-20 shrink-0 cursor-default">
+                                                <div className={cn("p-1 rounded-full border-2", getPhaseColorClass(phase.phaseKey))}>
+                                                <Image
+                                                    src={phase.iconUrl}
+                                                    alt={dictionary[phase.nameKey] || phase.phaseKey}
+                                                    width={40}
+                                                    height={40}
+                                                    className="rounded-full bg-slate-600 object-cover"
+                                                    data-ai-hint="moon phase icon"
+                                                />
+                                                </div>
+                                                <p className="text-xs font-semibold text-muted-foreground mt-1.5 truncate">{phase.date}</p>
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p className="font-semibold">{dictionary[phase.nameKey] || phase.phaseKey}</p>
+                                            <p className="text-sm text-muted-foreground">{phase.date} &bull; {phase.time}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                ))}
+                                </div>
+                                <ScrollBar orientation="horizontal" />
+                            </ScrollArea>
+                        </TooltipProvider>
                     </div>
+                     <div className="pt-2 flex justify-center">
+                        <Button onClick={handleShare} variant="outline" size="sm">
+                            <Share2 className="mr-2 h-4 w-4" />
+                            {dictionary['Share.buttonLabelLunar'] || "Share Current Phase"}
+                        </Button>
+                    </div>
+
                   </div>
                 )
               ) : (
@@ -262,6 +323,17 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                   <Label htmlFor="birth-city-lunar-client" className="font-body">{dictionary['LunarAscendantSection.birthCityLabel'] || "Birth City"}</Label>
                   <Input id="birth-city-lunar-client" type="text" placeholder={dictionary['LunarAscendantSection.birthCityPlaceholder'] || "e.g., New York"} value={birthCity} onChange={(e) => setBirthCity(e.target.value)} className="font-body" />
                 </div>
+                 <div>
+                    <Label htmlFor="birth-country-lunar-client" className="font-body">{dictionary['birthForm.countryLabel'] || 'Birth Country'}</Label>
+                    <Input
+                      id="birth-country-lunar-client"
+                      type="text"
+                      placeholder={dictionary['OnboardingPage.cityOfBirthPlaceholder'] || 'e.g., United States'}
+                      value={birthCountry}
+                      onChange={(e) => setBirthCountry(e.target.value)}
+                      className="font-body"
+                    />
+                  </div>
                 <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant || !birthDate || !birthTime || !birthCity} className="w-full font-body">
                   {isLoadingAscendant ? (<><LoadingSpinner className="h-4 w-4 text-primary-foreground mr-2" /> {dictionary['LunarAscendantSection.calculatingButton'] || "Calculating..."}</>) : (dictionary['LunarAscendantSection.calculateButton'] || "Calculate Ascendant")}
                 </Button>

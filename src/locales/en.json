@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Your daily source for horoscopes and astrological insights.",
@@ -195,6 +196,8 @@
   "LunarAscendantPage.moonInSignText": "in {signName}",
   "LunarAscendantPage.illuminationText": "Illumination: {percentage}%",
   "LunarAscendantPage.easternTimeNote": "Note: All times ET",
+  "LunarAscendantPage.synodicCycle": "Synodic Cycle Progress",
+  "LunarAscendantPage.upcomingPhasesTitle": "Upcoming Phases",
   "WeeklyHoroscopePage.title": "Weekly Horoscope",
   "WeeklyHoroscopePage.subtitle": "Your astrological forecast for the week ahead. Select your sign.",
   "MonthlyHoroscopePage.title": "Monthly Horoscope",
@@ -529,6 +532,9 @@
   "Share.successTitle": "Success!",
   "Share.horoscopeSharedSuccess": "Horoscope shared successfully.",
   "Share.errorMessage": "Could not share the content. Please try again.",
+  "Share.lunarPhaseTitle": "Current Moon Phase from AstroVibes",
+  "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
+  "Share.buttonLabelLunar": "Share Current Phase",
   "Error.genericTitle": "Error",
   "Data.notAvailable": "N/A",
   "OnboardingPage.title": "Welcome to AstroVibes!",

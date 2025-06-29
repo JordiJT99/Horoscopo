@@ -18,12 +18,12 @@
     --popover: 270 30% 10%; /* Popovers aún más oscuros */
     --popover-foreground: 0 0% 95%;
 
-    /* Primario: Magenta Vibrante (de la imagen) */
-    --primary: 330 90% 60%;
+    /* Primario: Magenta Vibrante (de la imagen) - Luminosidad aumentada para contraste */
+    --primary: 330 90% 65%;
     --primary-foreground: 0 0% 100%; /* Blanco */
 
     /* Acento: Mismo que primario para consistencia, o un púrpura vibrante secundario */
-    --accent: 330 90% 60%;
+    --accent: 330 90% 65%;
     --accent-foreground: 0 0% 100%;
 
     --secondary: 270 25% 20%; /* Púrpura oscuro para elementos secundarios */
@@ -37,7 +37,7 @@
 
     --border: 270 20% 30%; /* Borde púrpura oscuro */
     --input: 270 20% 18%; /* Fondo de input púrpura muy oscuro */
-    --ring: 330 90% 65%; /* Color de anillo, primario con ligero ajuste */
+    --ring: 330 90% 70%; /* Color de anillo, primario con ligero ajuste */
 
     --radius: 0.75rem;
 
@@ -72,19 +72,19 @@
     --card-foreground: 0 0% 90%;
     --popover: 270 30% 10%;
     --popover-foreground: 0 0% 95%;
-    --primary: 330 90% 60%;
+    --primary: 330 90% 65%;
     --primary-foreground: 0 0% 100%;
     --secondary: 270 25% 20%;
     --secondary-foreground: 0 0% 85%;
     --muted: 270 20% 25%;
     --muted-foreground: 270 15% 65%;
-    --accent: 330 90% 60%;
+    --accent: 330 90% 65%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
     --border: 270 20% 30%;
     --input: 270 20% 18%;
-    --ring: 330 90% 65%;
+    --ring: 330 90% 70%;
 
     --top-bar-background: hsl(var(--background) / 0.85);
     --top-bar-foreground: hsl(var(--foreground));
