@@ -845,169 +845,310 @@
       "title": "Rasgos de Aries",
       "description": "Como primer signo del zodíaco, Aries representa el amanecer, el impulso primordial y la chispa que lo inicia todo. Regido por Marte, el planeta de la guerra, la acción y el deseo, un Aries es la encarnación de la energía en su forma más pura y directa. No conocen el miedo a la hora de abrir nuevos caminos; son los pioneros, los exploradores y los guerreros, lanzándose de cabeza a lo desconocido, a menudo donde otros no se atreven. Su espíritu es el de un líder nato, no porque busquen seguidores, sino porque su confianza y fe inquebrantable en sí mismos son contagiosas. Viven en el momento, con una urgencia que puede ser tanto inspiradora como abrumadora. Un Aries no contempla el fracaso, porque para ellos, cada intento es una victoria en sí misma. Esta naturaleza impulsiva los convierte en seres increíblemente dinámicos y espontáneos, siempre listos para la próxima aventura. Sin embargo, esta misma cualidad puede llevarlos a la impaciencia y a la falta de previsión. Su lema podría ser 'actúa primero, pregunta después', lo que los mete en problemas con la misma frecuencia con la que les abre puertas. Son ferozmente independientes y valoran su autonomía por encima de todo. Un Aries no pide permiso, lo toma, creyendo firmemente en su derecho a forjar su propio destino.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Valiente", "Enérgico", "Independiente", "Apasionado", "Optimista", "Honesto"],
+      "strengths": [
+        "Valiente",
+        "Enérgico",
+        "Independiente",
+        "Apasionado",
+        "Optimista",
+        "Honesto"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Impulsivo", "Impaciente", "Agresivo", "Miope", "Egoísta"],
+      "weaknesses": [
+        "Impulsivo",
+        "Impaciente",
+        "Agresivo",
+        "Miope",
+        "Egoísta"
+      ],
       "loveTitle": "Aries en el Amor",
-      "love": "En el amor, un Aries es un compañero apasionado, directo y algo impaciente. Disfrutan de la emoción de la conquista y buscan una relación llena de aventura y espontaneidad. Necesitan una pareja que pueda seguir su ritmo energético y que respete su independencia. Aunque se encienden rápidamente, su lealtad es fuerte una vez que se comprometen, y defenderán a su pareja con un coraje inquebrantable.",
+      "love": "En el amor, un Aries es una fuerza de la naturaleza. Apasionados e impulsivos, se entregan con una intensidad que puede ser a la vez emocionante y abrumadora. La fase de cortejo es su campo de batalla favorito, donde disfrutan de la emoción de la conquista. Buscan una pareja que no solo sea un amante, sino un compañero de aventuras, alguien dispuesto a saltar al vacío con ellos. Su lenguaje de amor es la acción: planearán escapadas sorpresa y te defenderán ferozmente. Sin embargo, su independencia es sagrada y no toleran la posesividad. Su mayor desafío es la paciencia; quieren que todo suceda ahora, y pueden frustrarse si el ritmo de la relación es demasiado lento. Una vez que se comprometen de verdad, su lealtad es inquebrantable, convirtiéndose en el protector más feroz de su pareja.",
       "friendshipTitle": "Aries en la Amistad",
-      "friendship": "Como amigo, Aries es tu animador más entusiasta y tu compañero de aventuras. Son extremadamente leales y te defenderán hasta el fin del mundo. Una amistad con un Aries nunca es aburrida; siempre están iniciando nuevas actividades y empujándote a probar cosas nuevas. Sin embargo, su naturaleza competitiva a veces puede aflorar, y su honestidad sin rodeos, aunque bien intencionada, a veces puede doler. Prosperan con la acción y las experiencias compartidas, lo que los convierte en excelentes amigos para quienes aman la espontaneidad y un buen desafío.",
+      "friendship": "Un amigo Aries es el catalizador de tu vida social, el que llama un viernes por la tarde con un plan descabellado pero irresistible. Su lealtad es legendaria; son del tipo 'primero actúa, luego pregunta' cuando se trata de defender a sus amigos. Una amistad con ellos es una serie de aventuras inolvidables, ya que odian el estancamiento y siempre están buscando la próxima emoción. Te empujarán a salir de tu zona de confort y a enfrentar tus miedos. Sin embargo, su honestidad es tan directa que puede ser hiriente sin quererlo, y su espíritu competitivo puede convertir una noche de juegos de mesa en una batalla épica. Pero su enfado dura poco y su generosidad no tiene límites, haciendo que cada momento de alta energía valga la pena.",
       "workTitle": "Aries en el Trabajo",
-      "work": "En el lugar de trabajo, Aries brilla en roles de liderazgo y como emprendedor. Son excelentes para iniciar proyectos, tomar riesgos y motivar a otros con su energía inagotable. Prefieren un entorno de ritmo rápido donde puedan tomar decisiones rápidas. Su desafío radica en el seguimiento y los detalles minuciosos; pueden perder el interés una vez que la emoción inicial se desvanece. Trabajan mejor cuando pueden establecer la visión y dejar la ejecución detallada a otros."
+      "work": "En el entorno laboral, Aries es el pionero y el emprendedor. Son excelentes para iniciar proyectos desde cero, con una energía y un coraje que pueden inspirar a equipos enteros. No temen asumir riesgos calculados y prosperan en entornos de alta presión donde las decisiones rápidas son la clave. Sin embargo, no son los mejores en el mantenimiento a largo plazo o en tareas repetitivas. El micromanagement o una burocracia lenta pueden frustrarlos enormemente. Su mayor desafío es la constancia; una vez que la emoción inicial de un proyecto se desvanece, pueden estar buscando la siguiente 'gran cosa'. Funcionan mejor en roles de liderazgo, como fundadores o jefes de proyecto, donde pueden delegar los detalles y centrarse en la visión y la estrategia general."
     },
     "Taurus": {
       "title": "Rasgos de Tauro",
       "description": "Tauro, regido por Venus, es la encarnación de la fuerza tranquila, la resistencia y una conexión sensual con el mundo físico. Como signo de Tierra fijo, son los constructores del zodíaco, arraigados en la realidad y dotados de una paciencia casi infinita. Su misión es traer belleza, estabilidad y seguridad al mundo material. Un Tauro no se precipita; se mueve con un ritmo deliberado y metódico, evaluando cuidadosamente cada paso. Para ellos, la calidad siempre triunfa sobre la cantidad, ya sea en sus posesiones, sus relaciones o sus proyectos. Valoran profundamente los placeres sensuales: el sabor de una buena comida, la textura de una tela suave, el sonido de una música armoniosa. Esta conexión con lo tangible les da una base sólida, pero también puede manifestarse en una terquedad legendaria. Una vez que un Tauro ha tomado una decisión, moverlo es casi como mover una montaña. Esta determinación es su mayor fortaleza y, a veces, su mayor debilidad. Son increíblemente leales y fiables, el tipo de persona que construye cimientos duraderos en todo lo que hace. Su búsqueda de seguridad no es solo material, sino también emocional, lo que los convierte en parejas y amigos increíblemente protectores y constantes.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Fiable", "Paciente", "Práctico", "Leal", "Sensual", "Estable"],
+      "strengths": [
+        "Fiable",
+        "Paciente",
+        "Práctico",
+        "Leal",
+        "Sensual",
+        "Estable"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Testarudo", "Posesivo", "Reacio al cambio", "Materialista"],
+      "weaknesses": [
+        "Testarudo",
+        "Posesivo",
+        "Reacio al cambio",
+        "Materialista"
+      ],
       "loveTitle": "Tauro en el Amor",
-      "love": "Como amante, Tauro es paciente, sensual e increíblemente leal. Construyen sus relaciones lenta y constantemente, buscando una pareja que ofrezca seguridad y fiabilidad. Muestran su afecto a través del tacto físico, los regalos y la creación de un hogar cómodo y hermoso. Su mayor desafío es su posesividad, que surge de su profunda necesidad de seguridad.",
+      "love": "Como amante, Tauro es la personificación de la devoción y la sensualidad. Se acerca al amor con la misma paciencia y cuidado metódico que aplica a todas las áreas de su vida, buscando una pareja que le brinde una sensación de seguridad y estabilidad inquebrantable. Sus expresiones de afecto son tangibles: se deleitan en mimar a través del tacto, masajes, cocinando comidas suntuosas o creando un hogar hermoso y confortable. Para ellos, el amor es algo que se construye. El desafío surge cuando su necesidad de seguridad se convierte en posesividad. Necesitan una pareja que valore su lealtad y que pueda manejar su terquedad ocasional con paciencia.",
       "friendshipTitle": "Tauro en la Amistad",
-      "friendship": "Un Tauro es la roca de tu grupo de amigos. Son increíblemente fiables, leales y el amigo al que puedes llamar en medio de la noche. Prefieren reuniones tranquilas con buena comida y buena compañía a fiestas ruidosas. Un amigo Tauro te mimará con consejos prácticos y un apoyo inquebrantable. Sin embargo, su terquedad puede llevar a conflictos si sienten que sus valores son cuestionados.",
+      "friendship": "Un amigo Tauro es en quien siempre puedes confiar, la roca en medio del caos de la vida. Son la definición de lealtad y fiabilidad, la persona a la que llamas a las 2 de la mañana sin dudarlo. Sus amistades se basan en la comodidad y los placeres compartidos: una buena cena, una tarde tranquila con música o simplemente disfrutar de una compañía pacífica. Ofrecen consejos prácticos y con los pies en la tierra, y su apoyo es inquebrantable. El único punto de fricción es su terquedad; un desacuerdo con un Tauro puede sentirse como luchar contra una fuerza inamovible, pero su lealtad asegura que siempre vuelvan.",
       "workTitle": "Tauro en el Trabajo",
-      "work": "Tauro es el corredor de maratón del lugar de trabajo, no el velocista. Son metódicos, pacientes y tienen una increíble capacidad para llevar los proyectos desde el principio hasta el final. Sobresalen en roles que requieren estabilidad, atención al detalle y un enfoque práctico, como en finanzas, diseño o agricultura. No son arriesgados, prefiriendo construir lenta y seguramente."
+      "work": "En el lugar de trabajo, Tauro es el constructor constante. No están interesados en ganancias rápidas, sino en construir resultados duraderos y de alta calidad. Son metódicos, pacientes y tienen una increíble resistencia para llevar los proyectos hasta su finalización, mucho después de que otros se hayan rendido. Prosperan en entornos estables y sobresalen en roles que requieren un enfoque práctico y un ojo para la estética, como en finanzas, arquitectura, diseño o agricultura. Son el cimiento de cualquier equipo, asegurando que el trabajo no solo se haga, sino que se haga bien."
     },
     "Gemini": {
       "title": "Rasgos de Géminis",
       "description": "Géminis, regido por el planeta Mercurio, es el mariposón social y el intelectual del zodíaco. Son naturalmente curiosos, adaptables y tienen una sed insaciable de información. Su mente es como un torbellino, saltando de una idea a otra, lo que los convierte en conversadores fascinantes y aprendices de por vida. Su dualidad inherente, simbolizada por los Gemelos, les permite ver múltiples perspectivas a la vez y adaptarse sin esfuerzo a situaciones cambiantes. Son los mensajeros del zodíaco, creando conexiones y difundiendo información. Su energía es juvenil, juguetona e inquieta, siempre en busca de la próxima conversación interesante, el próximo libro o la próxima aventura. Sin embargo, esta búsqueda constante de novedad también puede hacer que parezcan dispersos e inconsistentes. Viven en un mundo de posibilidades y a veces tienen dificultades para comprometerse con un solo camino, por miedo a perderse algo más. Su mayor fortaleza es su agilidad mental, que les permite comunicarse con cualquiera y sentirse a gusto en cualquier entorno.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Inteligente", "Curioso", "Adaptable", "Sociable", "Ingenioso", "Comunicativo"],
+      "strengths": [
+        "Inteligente",
+        "Curioso",
+        "Adaptable",
+        "Sociable",
+        "Ingenioso",
+        "Comunicativo"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Inconsistente", "Indeciso", "Nervioso", "Superficial", "Poco fiable"],
+      "weaknesses": [
+        "Inconsistente",
+        "Indeciso",
+        "Nervioso",
+        "Superficial",
+        "Poco fiable"
+      ],
       "loveTitle": "Géminis en el Amor",
-      "love": "En el amor, un Géminis necesita una pareja que sea su mejor amigo. La estimulación mental es más importante que cualquier otra cosa. Son juguetones, coquetos y aman la variedad, lo que a veces puede malinterpretarse como inconsistencia. Una relación con un Géminis nunca es aburrida, pero requiere una pareja que entienda su libertad y su necesidad de comunicación y interacción social constantes.",
+      "love": "En el amor, una relación con un Géminis es una montaña rusa de ingenio, encanto y gimnasia intelectual. Necesitan una pareja que estimule su cerebro tanto como su corazón; la comunicación es para ellos la máxima forma de juego previo. Son juguetones, coquetos y a veces esquivos, lo que no se debe a una falta de sentimiento, sino a un enfoque que cambia constantemente. Necesitan variedad y espontaneidad para no aburrirse. Una pareja que respete su libertad y esté dispuesta a explorar nuevas ideas y lugares con ellos se ganará su lealtad eterna y un compañero que siempre los hará reír.",
       "friendshipTitle": "Géminis en la Amistad",
-      "friendship": "Un amigo Géminis es el que te mantiene al día de las últimas tendencias, cotilleos y datos fascinantes. Son increíblemente sociales y tienen un amplio círculo de conocidos. Una amistad con ellos está llena de risas, debates y aventuras. Entienden la necesidad de espacio e independencia, pero a veces pueden ser esquivos o difíciles de pillar, ya que están constantemente haciendo malabares con diferentes intereses y grupos sociales.",
+      "friendship": "Un amigo Géminis es el centro de tu red social. Conocen a todo el mundo y siempre tienen la información más reciente. Las amistades con ellos son dinámicas, divertidas y llenas de conversaciones estimulantes. Son increíblemente adaptables y pueden llevarse bien con casi cualquier persona. Valoran su independencia y esperan lo mismo de sus amigos. El desafío es mantener su atención, ya que a menudo hacen malabares con diferentes círculos sociales e intereses. Pero cuando necesitas un amigo para generar una nueva idea o simplemente analizar el mundo, un Géminis es el mejor aliado.",
       "workTitle": "Géminis en el Trabajo",
-      "work": "Los Géminis son los maestros del multitarea. Prosperan en entornos dinámicos y de ritmo rápido que requieren comunicación, creación de redes y generación de ideas. Los roles en marketing, ventas, periodismo o enseñanza son perfectos para ellos. Su mayor desafío es concentrarse en una sola tarea, ya que su mente busca constantemente nuevos estímulos."
+      "work": "En el trabajo, Géminis es un maestro de la comunicación y la multitarea. Prosperan en entornos dinámicos y de ritmo rápido donde pueden usar su agilidad mental para resolver problemas y generar ideas. Los roles en marketing, ventas, periodismo, enseñanza y relaciones públicas son ideales para ellos. Son excelentes networkers y pueden establecer fácilmente conexiones entre diferentes departamentos o conceptos. Su mayor desafío es concentrarse en tareas a largo plazo y orientadas a los detalles. Necesitan estimulación y variedad constantes para dar lo mejor de sí mismos."
     },
     "Cancer": {
       "title": "Rasgos de Cáncer",
       "description": "Regido por la Luna, Cáncer es el corazón profundamente emocional e intuitivo del zodíaco. Son naturalmente protectores y cuidadosos con aquellos que aman, valorando el hogar y la familia por encima de todo. Su caparazón exterior puede parecer duro, pero en su interior yace una inmensa sensibilidad y una rica vida interior. Tienen una memoria asombrosa, especialmente para los eventos emocionales. Los Cáncer operan en un nivel de sentimiento, a menudo absorbiendo las atmósferas y emociones que los rodean como una esponja. Esta capacidad los hace increíblemente empáticos, pero también vulnerables al mal humor y a sentirse abrumados. Anhelan seguridad y comodidad, y su principal misión en la vida es crear un 'hogar' seguro, tanto física como emocionalmente, para ellos y sus seres queridos. La lealtad es primordial para ellos; una vez que te ganas su confianza, tienes un defensor de por vida. Sin embargo, si esa confianza se rompe, pueden guardar rencor durante mucho tiempo. Su naturaleza cardinal los impulsa a tomar la iniciativa en asuntos emocionales y domésticos, convirtiéndolos en los pilares de sus familias y círculos de amigos.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Tenaz", "muy imaginativo", "leal", "emocional", "simpático", "persuasivo"],
+      "strengths": [
+        "Tenaz",
+        "muy imaginativo",
+        "leal",
+        "emocional",
+        "simpático",
+        "persuasivo"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Temperamental", "pesimista", "suspicaz", "manipulador", "inseguro"],
+      "weaknesses": [
+        "Temperamental",
+        "pesimista",
+        "suspicaz",
+        "manipulador",
+        "inseguro"
+      ],
       "loveTitle": "Cáncer en el Amor",
-      "love": "En una relación, Cáncer es increíblemente leal, comprometido y afectuoso. Buscan una profunda seguridad emocional y una pareja con la que construir un hogar. Muestran su amor a través de actos de cuidado, cocinando y creando un ambiente acogedor. Sus cambios de humor pueden ser un desafío para una pareja, pero su devoción cuando se sienten seguros es insuperable. Necesitan mucha seguridad y afecto.",
+      "love": "En una relación, Cáncer es el arquetipo del cuidador devoto. Anhelan una conexión emocional profunda y buscan una pareja con la que puedan construir un santuario seguro, un hogar. El amor para Cáncer es sinónimo de seguridad, lealtad y nutrición. Muestran su afecto a través de actos de servicio, cocinando para su ser querido, creando un espacio acogedor y ofreciendo un apoyo emocional incondicional. Sin embargo, su extrema sensibilidad puede ser un desafío. Son propensos a los cambios de humor, influenciados por las fases de la luna y el entorno emocional. Necesitan constantes muestras de afecto y seguridad para no retirarse a su caparazón. Una vez que se sienten seguros, su amor es uno de los más profundos y protectores del zodíaco.",
       "friendshipTitle": "Cáncer en la Amistad",
-      "friendship": "Un amigo Cáncer es como de la familia. Son los que recuerdan tu cumpleaños, te traen sopa cuando estás enfermo y te ofrecen un hombro sobre el que llorar. Son excelentes oyentes y brindan un apoyo emocional increíble. Sin embargo, pueden ser fácilmente heridos y tienden a retirarse si se sienten poco apreciados. Sus amistades son profundas y construidas para toda la vida.",
+      "friendship": "Un amigo Cáncer es el corazón del grupo, el que convierte a los amigos en familia. Su lealtad es legendaria, y siempre recordarán los pequeños detalles que te importan. Son los que te preparan tu comida favorita cuando estás triste y te ofrecen un hombro sobre el que llorar sin juzgar. Prosperan en la intimidad y prefieren las reuniones pequeñas y acogedoras a las grandes fiestas. Sin embargo, su sensibilidad puede hacer que se sientan heridos con facilidad. Un comentario descuidado puede hacer que se retiren a su caparazón durante días. La clave para una amistad duradera con un Cáncer es la paciencia, la empatía y la demostración constante de que valoras su profunda capacidad de cuidar.",
       "workTitle": "Cáncer en el Trabajo",
-      "work": "En el lugar de trabajo, Cáncer prospera en roles que les permiten cuidar de otros o crear un entorno de apoyo. Son excelentes gerentes, enfermeros, maestros y chefs. Su intuición también puede convertirlos en astutos empresarios, ya que tienen un don para sentir las necesidades del mercado. Trabajan mejor cuando se sienten emocionalmente seguros y parte de un equipo unido."
+      "work": "En el entorno laboral, Cáncer prospera en roles que les permiten nutrir y proteger, ya sea a clientes, colegas o una causa. Son excelentes gerentes que crean un ambiente de equipo familiar y solidario. Campos como la enseñanza, la enfermería, el trabajo social, la hostelería y la gestión de recursos humanos son ideales para ellos. Su intuición les da una ventaja en los negocios, ya que pueden 'sentir' las tendencias del mercado y las necesidades de las personas. Sin embargo, necesitan un ambiente de trabajo emocionalmente seguro para dar lo mejor de sí. Un entorno demasiado crítico o competitivo puede hacer que se pongan a la defensiva y pierdan la confianza, afectando su productividad."
     },
     "Leo": {
       "title": "Rasgos de Leo",
       "description": "Regido por el Sol, el centro de nuestro sistema solar, Leo es la realeza radiante y carismática del zodíaco. Llenos de confianza, generosidad y un talento natural para lo dramático, a los Leo les encanta ser el centro de atención e inspirar a otros con su calidez y vitalidad. Tienen un corazón enorme y una creatividad innata que debe ser expresada. Un Leo no entra en una habitación, la conquista. Su presencia es magnética, atrayendo a la gente con su encanto natural y su optimismo contagioso. Poseen una dignidad y un orgullo inherentes que, aunque a veces pueden rayar en la arrogancia, provienen de un profundo sentido de autovaloración. Son ferozmente leales y protectores de su 'reino', ya sea su familia, amigos o equipo de trabajo. La generosidad es una de sus características más destacadas; un Leo disfruta colmando de regalos y afecto a sus seres queridos. Sin embargo, esta necesidad de ser el sol alrededor del cual giran los demás significa que anhelan la admiración y el reconocimiento. Una crítica a su ego puede ser devastadora. En el fondo, un Leo solo quiere amar y ser amado, celebrar la vida y compartir su luz con el mundo.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Creativo", "apasionado", "generoso", "de buen corazón", "alegre", "humorístico"],
+      "strengths": [
+        "Creativo",
+        "apasionado",
+        "generoso",
+        "de buen corazón",
+        "alegre",
+        "humorístico"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Arrogante", "terco", "egocéntrico", "perezoso", "inflexible"],
+      "weaknesses": [
+        "Arrogante",
+        "terco",
+        "egocéntrico",
+        "perezoso",
+        "inflexible"
+      ],
       "loveTitle": "Leo en el Amor",
-      "love": "Como amante, Leo es dramático, juguetón e increíblemente generoso. Aman ser adorados y, a su vez, colmarán a su pareja de afecto y regalos. Su lealtad es inquebrantable, pero necesitan una pareja que no eclipse su brillo y que esté feliz de admirarlos. Una relación con un Leo es siempre entretenida y llena de pasión.",
+      "love": "Amar a un Leo es como tener un asiento en primera fila para un gran espectáculo. Son amantes dramáticos, apasionados y increíblemente generosos. El romance para ellos es una producción teatral, llena de grandes gestos, regalos lujosos y una adoración sin fin. Anhelan ser el centro del universo de su pareja y, a cambio, ofrecen una lealtad y protección feroces. No caminan, se pavonean, y esperan que su pareja admire cada uno de sus movimientos. La relación debe ser divertida, juguetona y llena de elogios. Sin embargo, su necesidad de atención constante puede ser agotadora, y su orgullo herido puede llevar a un drama digno de un Oscar. Necesitan un compañero que sea a la vez su mayor admirador y un igual que no tema desafiar su ego con gracia.",
       "friendshipTitle": "Leo en la Amistad",
-      "friendship": "Un amigo Leo es el líder de la manada, el que organiza las fiestas y se asegura de que todos se diviertan. Son extremadamente leales y defenderán a sus amigos con una determinación feroz. Aman mimar y alentar a sus amigos, pero esperan a cambio aprecio y admiración. La amistad con un Leo es cálida, divertida y siempre un poco teatral.",
+      "friendship": "Un amigo Leo es el sol de tu círculo social. Son los que organizan las fiestas más memorables y se aseguran de que todos se sientan incluidos y celebrados. Su lealtad es inquebrantable; defenderán a sus amigos con la ferocidad de un león defendiendo a sus cachorros. Son increíblemente generosos, tanto con su tiempo como con sus recursos. Sin embargo, una amistad con un Leo requiere que reconozcas su realeza. Aman ser el centro de atención y esperan que sus amigos sean su público más leal. Aunque su corazón es de oro, su orgullo es frágil. Si se sienten ignorados o poco apreciados, su rugido se hará oír. A pesar de esto, su calidez y alegría de vivir hacen que cualquier drama valga la pena.",
       "workTitle": "Leo en el Trabajo",
-      "work": "Leo es un líder y motivador nato. Prosperan en roles que les permiten usar su creatividad y carisma. Son excelentes oradores, artistas, vendedores y gerentes. Necesitan reconocimiento por su trabajo y pueden tener dificultades si no se sienten apreciados. Su capacidad para inspirar a otros es su mayor activo profesional."
+      "work": "En el trabajo, Leo es el líder natural y el motivador del equipo. No necesariamente buscan el poder por el poder mismo, sino la oportunidad de inspirar y liderar con el ejemplo. Prosperan en roles que les permiten brillar, ya sea en el escenario, en la sala de juntas o al frente de un equipo creativo. Son excelentes oradores, artistas, directores y portavoces. Su confianza es contagiosa y tienen una habilidad innata para hacer que la gente crea en una visión. Su principal desafío es la delegación; a veces sienten que nadie puede hacer el trabajo tan bien (o con tanto estilo) como ellos. Necesitan un reconocimiento constante por sus contribuciones y pueden desmotivarse en un entorno que no valora su brillo individual."
     },
     "Virgo": {
       "title": "Rasgos de Virgo",
       "description": "Virgo es el signo del servicio, la pureza y el análisis práctico. Regidos por Mercurio, poseen una mente aguda y un deseo innato de mejorar y organizar el mundo que les rodea. Son detallistas, metódicos y tienen una profunda necesidad de ser útiles. Son los ayudantes silenciosos del zodíaco, trabajando tras bastidores para asegurarse de que todo funcione a la perfección. La mente de un Virgo es un sistema complejo de listas, planes y análisis. Notan los detalles que otros pasan por alto, lo que los convierte en excelentes editores, críticos y artesanos. Este perfeccionismo, sin embargo, es una espada de doble filo. Puede llevarlos a una autocrítica implacable y a una ansiedad constante por no estar a la altura de sus propios estándares imposibles. A pesar de su naturaleza reservada, los Virgo tienen un profundo pozo de cuidado y devoción. Muestran su amor no con grandes gestos, sino con actos de servicio prácticos: arreglando un grifo que gotea, organizando tus finanzas o simplemente estando ahí con un consejo sensato cuando más lo necesitas. Su mayor desafío es aprender a relajarse, a aceptar la imperfección y a entender que son valiosos por lo que son, no solo por lo que hacen por los demás.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Leal", "analítico", "amable", "trabajador", "práctico", "modesto"],
+      "strengths": [
+        "Leal",
+        "analítico",
+        "amable",
+        "trabajador",
+        "práctico",
+        "modesto"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Timidez", "preocupación", "excesivamente crítico consigo mismo y con los demás", "todo trabajo y nada de juego"],
+      "weaknesses": [
+        "Timidez",
+        "preocupación",
+        "excesivamente crítico consigo mismo y con los demás",
+        "todo trabajo y nada de juego"
+      ],
       "loveTitle": "Virgo en el Amor",
-      "love": "En el amor, Virgo muestra su afecto a través de actos de servicio prácticos y una devoción constante, no con grandes gestos románticos. Son cautelosos y se toman su tiempo para abrirse. Buscan una pareja ordenada, inteligente y fiable. Una vez comprometidos, son parejas increíblemente leales y atentas, siempre esforzándose por mejorar la vida de su pareja.",
+      "love": "En el amor, Virgo expresa su afecto de la manera más práctica y tangible posible. Su lenguaje de amor no son los sonetos, sino los actos de servicio: asegurarse de que tengas todo lo que necesitas, organizar tu agenda o preparar una comida saludable. Son cautelosos al principio, analizando cada detalle antes de entregar su corazón. Buscan una pareja que sea limpia, inteligente y confiable. Una vez que se comprometen, son parejas increíblemente leales, atentas y devotas. Su mayor desafío es superar su tendencia a la crítica. Pueden obsesionarse con las imperfecciones de su pareja (y de sí mismos), olvidando que el amor es inherentemente imperfecto. Necesitan un compañero que aprecie su devoción y les ayude a relajarse y a ser menos duros consigo mismos.",
       "friendshipTitle": "Virgo en la Amistad",
-      "friendship": "Virgo es el amigo que siempre tiene un plan, que ayuda con los deberes y que recuerda cómo quitar esa mancha de tu camisa favorita. Son increíblemente fiables y dan los mejores y más prácticos consejos. Muestran su amor ayudando. A veces, su tendencia a 'arreglarlo' todo puede percibirse como una crítica, pero sus intenciones son siempre puras.",
+      "friendship": "Un amigo Virgo es el sistema de apoyo más fiable que puedas imaginar. Son los que recuerdan tus alergias, te ayudan a montar ese mueble complicado y te dan los consejos más prácticos y bien investigados. Su amistad es tranquila, sin dramas y basada en la lealtad y el apoyo mutuo. No son los más expresivos emocionalmente, pero su presencia constante y sus actos de ayuda hablan más que mil palabras. El desafío es que su deseo de 'ayudar' puede a veces convertirse en una crítica no solicitada sobre cómo podrías mejorar tu vida. Si puedes ver más allá de eso y apreciar su intención pura, tendrás un amigo para toda la vida que realmente se preocupa por tu bienestar.",
       "workTitle": "Virgo en el Trabajo",
-      "work": "Virgo es el sueño de todo empleador. Son eficientes, organizados y tienen un ojo inigualable para el detalle. Sobresalen en carreras que requieren análisis, investigación, edición o cualquier forma de trabajo preciso. Son las personas que encuentran los errores que otros pasan por alto y mejoran los sistemas para hacerlos más eficientes. Su perfeccionismo a veces puede convertirlos en su propio peor crítico."
+      "work": "En el entorno laboral, Virgo es el pilar de la eficiencia y la calidad. Son los editores, analistas, investigadores y administradores por excelencia. Tienen un ojo de águila para el detalle y una habilidad innata para encontrar errores y optimizar procesos. Ningún detalle es demasiado pequeño para su escrutinio. Son trabajadores incansables, motivados por un profundo sentido del deber y el deseo de hacer un trabajo perfecto. Pueden ser excelentes gerentes, aunque su estilo es más de liderar con el ejemplo que con un gran carisma. Su mayor desafío es el perfeccionismo paralizante; pueden quedarse atascados en los detalles, perdiendo de vista el panorama general. Necesitan aprender a delegar y a confiar en que 'suficientemente bueno' a veces es, de hecho, suficiente."
     },
     "Libra": {
       "title": "Rasgos de Libra",
       "description": "Gobernado por Venus, Libra es el signo del equilibrio, la armonía y la justicia. Los Libra son seres sociales que prosperan en la asociación y buscan crear equilibrio en todas las áreas de la vida. Tienen un agudo sentido de la belleza y un encanto diplomático natural. Como signo de Aire Cardinal, su misión es iniciar conexiones y fomentar la paz a través de la mediación y la justicia. La mente de un Libra está constantemente sopesando pros y contras, buscando la perspectiva más equilibrada, lo que puede llevar a una notoria indecisión. No es que no sepan lo que quieren, sino que pueden ver la validez en todos los lados de una discusión. Esta habilidad los convierte en excelentes diplomáticos, consejeros y abogados. La estética es fundamental para su bienestar; se sienten atraídos por todo lo bello, ya sea en el arte, la música, la moda o las personas. Un entorno desordenado o conflictivo es físicamente agotador para ellos. Por encima de todo, Libra es el signo de 'nosotros', no de 'yo'. Se sienten más completos cuando están en una asociación, ya sea romántica, de negocios o de amistad, y harán grandes esfuerzos para mantener la paz y la armonía en sus relaciones.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Cooperativo", "diplomático", "cortés", "justo", "social"],
+      "strengths": [
+        "Cooperativo",
+        "diplomático",
+        "cortés",
+        "justo",
+        "social"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Indeciso", "evita las confrontaciones", "guarda rencor", "autocompasión"],
+      "weaknesses": [
+        "Indeciso",
+        "evita las confrontaciones",
+        "guarda rencor",
+        "autocompasión"
+      ],
       "loveTitle": "Libra en el Amor",
-      "love": "En el amor, Libra es un idealista romántico que busca una verdadera asociación. Necesitan equilibrio y armonía, y harán todo lo posible para complacer a su pareja. La comunicación y la conexión intelectual son clave para ellos. Su aversión al conflicto puede llevarlos a evitar discusiones necesarias, pero su objetivo final es siempre una unión justa y amorosa.",
+      "love": "En el amor, Libra es un romántico incurable que busca a su otra mitad. Su objetivo final es una asociación equilibrada, armoniosa y estéticamente agradable. Son amantes atentos, diplomáticos y siempre dispuestos a comprometerse para mantener la paz. La comunicación y la conexión intelectual son vitales para ellos. Sin embargo, su aversión al conflicto puede ser su mayor debilidad; pueden evitar discusiones necesarias para mantener una apariencia de armonía, lo que puede llevar a resentimientos subyacentes. Necesitan un compañero que aprecie su naturaleza romántica y que los anime suavemente a expresar sus verdaderas necesidades, incluso si eso significa perturbar el equilibrio momentáneamente.",
       "friendshipTitle": "Libra en la Amistad",
-      "friendship": "Como amigos, los Libra son encantadores, justos y excelentes oyentes. Son el pegamento social de su grupo, a menudo actuando como mediadores para mantener la paz. Aman asistir a eventos culturales y disfrutar de buenas conversaciones durante una buena comida. Su indecisión puede ser frustrante al planificar actividades, pero su compañía es siempre agradable y equilibrada.",
+      "friendship": "Un amigo Libra es el mediador, el pacificador y el planificador social del grupo. Son encantadores, justos y siempre buscan la equidad. Disfrutan de las interacciones sociales y son excelentes para reunir a la gente. Su compañía es agradable y relajada, siempre buscando el consenso. La desventaja es su legendaria indecisión; elegir un restaurante puede convertirse en un debate de una hora. A pesar de esto, su capacidad para escuchar y ofrecer consejos equilibrados los convierte en amigos valiosos. Siempre se esforzarán por asegurarse de que todos se sientan incluidos y felices.",
       "workTitle": "Libra en el Trabajo",
-      "work": "Los Libra destacan como mediadores, diplomáticos y en cualquier rol que requiera equidad y gracia social. Son grandes jugadores de equipo y prosperan en ambientes de trabajo hermosos y armoniosos, a menudo en las artes, el derecho o las relaciones públicas. Su capacidad para ver todos los lados de un problema los convierte en excelentes estrategas y negociadores."
+      "work": "En el lugar de trabajo, Libra sobresale en roles que requieren diplomacia, negociación y habilidades interpersonales. Son excelentes jugadores de equipo, mediadores, abogados, diseñadores y planificadores de eventos. Prosperan en entornos armoniosos y estéticamente agradables y tienen dificultades en atmósferas competitivas o conflictivas. Su capacidad para ver todos los lados de un problema los convierte en excelentes estrategas, aunque pueden tardar en tomar una decisión final. Son excelentes para construir redes y mantener relaciones profesionales positivas."
     },
     "Scorpio": {
       "title": "Rasgos de Escorpio",
       "description": "Escorpio es el signo de la emoción profunda, el poder y la transformación. Regido por Plutón (y tradicionalmente por Marte), son apasionados, ingeniosos e increíblemente determinados. Los Escorpio son conocidos por su intensidad y su habilidad para ver más allá de la superficie hasta la verdad de cualquier asunto. Viven en un mundo de blanco y negro; para ellos, no hay grises. O todo o nada. Esta intensidad los convierte en seres increíblemente leales y protectores con aquellos que se ganan su confianza, pero también en adversarios formidables si se sienten traicionados. Son los detectives del zodíaco, siempre investigando, cuestionando y buscando las motivaciones ocultas detrás de las acciones de las personas. Su naturaleza acuática les da una profunda intuición y una conexión casi psíquica con el mundo emocional, tanto el suyo como el de los demás. Sin embargo, a menudo ocultan sus propios sentimientos bajo una fachada de calma y control. Temen la vulnerabilidad más que nada, y su mayor desafío es aprender a confiar y a entregarse. La transformación es un tema central en sus vidas; como el ave fénix, un Escorpio está destinado a pasar por múltiples 'muertes' y renacimientos, saliendo de cada crisis más fuerte y más sabio que antes.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Ingenioso", "valiente", "apasionado", "un verdadero amigo", "determinado"],
+      "strengths": [
+        "Ingenioso",
+        "valiente",
+        "apasionado",
+        "un verdadero amigo",
+        "determinado"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Desconfiado", "celoso", "reservado", "puede ser manipulador"],
+      "weaknesses": [
+        "Desconfiado",
+        "celoso",
+        "reservado",
+        "puede ser manipulador"
+      ],
       "loveTitle": "Escorpio en el Amor",
-      "love": "En el amor, Escorpio es todo o nada. Son increíblemente leales, apasionados y protectores, buscando una conexión profunda y que desnude el alma. Requieren confianza absoluta y pueden ser bastante posesivos. Una vez que entregan su corazón, lo hacen de por vida, amando con una intensidad que puede ser a la vez sanadora y abrumadora.",
+      "love": "Amar a un Escorpio es una experiencia transformadora e intensa. No se andan con medias tintas; cuando aman, lo hacen con cada fibra de su ser. Buscan una fusión de almas, una conexión que trascienda lo físico. La lealtad y la confianza son los pilares de su universo romántico; una traición, por pequeña que sea, es casi imperdonable. Son increíblemente apasionados y protectores, pero esta intensidad puede convertirse en celos y posesividad si se sienten inseguros. Necesitan un compañero que no tema su profundidad emocional y que esté dispuesto a explorar los misterios de la vida (y del alma) junto a ellos. Una relación con un Escorpio nunca es superficial; es un viaje a las profundidades del corazón humano.",
       "friendshipTitle": "Escorpio en la Amistad",
-      "friendship": "Tener un Escorpio como amigo significa tener un aliado de por vida. Son extremadamente leales y protectores, pero esperan lo mismo a cambio. Son excelentes guardianes de secretos y dan consejos profundos y perspicaces. Ganarse la confianza de un Escorpio es difícil, pero una vez que la tienes, tienes un amigo que te defenderá contra viento y marea.",
+      "friendship": "Ganarse la amistad de un Escorpio es ganarse un aliado de por vida. No tienen muchos amigos, pero los que tienen son considerados familia. Son los guardianes de los secretos más profundos y los defensores más feroces. Un amigo Escorpio siempre sabrá cuándo algo va mal, incluso si no dices nada, gracias a su penetrante intuición. Son brutalmente honestos, pero su lealtad es inquebrantable. Sin embargo, si traicionas su confianza, prepárate para experimentar el aguijón. No perdonan ni olvidan fácilmente. Su amistad es un pacto sagrado, una fortaleza de confianza y apoyo mutuo.",
       "workTitle": "Escorpio en el Trabajo",
-      "work": "Los Escorpio son excelentes investigadores, científicos y estrategas. Prosperan en roles que les exigen descubrir verdades o ejercer poder, como detectives, científicos o líderes financieros. Su enfoque es láser y su determinación para resolver un problema es inigualable. No se detienen hasta llegar al fondo del asunto."
+      "work": "En el trabajo, Escorpio es el estratega, el investigador y el solucionador de problemas por excelencia. Tienen una capacidad única para concentrarse intensamente en una tarea, ignorando todas las distracciones hasta llegar al fondo del asunto. Prosperan en roles que requieren investigación, análisis profundo y la capacidad de manejar información confidencial, como en finanzas, investigación, psicología o cirugía. Son ambiciosos y no temen al poder. Su determinación es formidable, y no se detendrán ante nada para lograr sus objetivos. Pueden ser reservados y prefieren trabajar solos, pero cuando forman parte de un equipo, su lealtad y compromiso son totales, siempre y cuando respeten a sus colegas."
     },
     "Sagittarius": {
       "title": "Rasgos de Sagitario",
       "description": "El aventurero y filósofo del zodíaco, Sagitario está regido por Júpiter, el planeta de la expansión, la suerte y el conocimiento superior. Son optimistas, amantes de la libertad y tienen una sed insaciable de conocimiento y nuevas experiencias. Para un Sagitario, la vida es una gran aventura, un viaje para explorar el mundo y entender su significado. Su mente está siempre en busca de la verdad, lo que los convierte en estudiantes eternos, siempre matriculados en la universidad de la vida. Poseen un sentido del humor contagioso y una honestidad brutal que, aunque refrescante, a veces puede carecer de tacto. No tienen malas intenciones; simplemente creen en decir las cosas como las ven. Su mayor necesidad es la libertad. Cualquier cosa que los haga sentir atrapados o limitados, ya sea una rutina aburrida o una relación posesiva, los hará huir hacia el horizonte. Son los visionarios del zodíaco, siempre mirando hacia el futuro y creyendo que lo mejor está por venir. Su fe en el universo es inquebrantable, y esta energía optimista a menudo atrae la buena fortuna a sus vidas.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Generoso", "idealista", "gran sentido del humor", "optimista"],
+      "strengths": [
+        "Generoso",
+        "idealista",
+        "gran sentido del humor",
+        "optimista"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Promete más de lo que puede cumplir", "impaciente", "sin tacto"],
+      "weaknesses": [
+        "Promete más de lo que puede cumplir",
+        "impaciente",
+        "sin tacto"
+      ],
       "loveTitle": "Sagitario en el Amor",
-      "love": "Sagitario necesita libertad en el amor. Buscan una pareja que sea también su mejor amigo y compañero de viaje. Pueden ser reacios al compromiso, temiendo que les corte las alas, pero son increíblemente leales una vez que han encontrado a su pareja. Una relación con un Sagitario es una aventura llena de risas, filosofía y crecimiento.",
+      "love": "En el amor, Sagitario busca un compañero de aventuras, alguien que sea tanto su amante como su mejor amigo. Valoran la libertad y la independencia por encima de todo, por lo que una pareja posesiva o celosa los hará huir. Su enfoque del romance es optimista, divertido y filosófico. Les encanta aprender junto a su pareja, ya sea viajando a tierras lejanas o explorando nuevas ideas. Pueden ser reacios al compromiso, no por falta de amor, sino por miedo a perder su libertad. Necesitan un compañero que entienda su necesidad de espacio y que esté dispuesto a crecer y explorar el mundo con ellos.",
       "friendshipTitle": "Sagitario en la Amistad",
-      "friendship": "Un Sagitario es el amigo con el que te vas de viaje espontáneamente. Son divertidos, optimistas y siempre están dispuestos a una aventura. También son brutalmente honestos, lo que puede ser tanto una fortaleza como una debilidad. Necesitan amigos que respeten su libertad y disfruten de sus discusiones filosóficas hasta altas horas de la noche.",
+      "friendship": "Un amigo Sagitario es el que te llama para un viaje improvisado o para un debate filosófico que dura toda la noche. Son el alma de la fiesta, con un sentido del humor contagioso y una visión optimista de la vida. Su honestidad es legendaria; siempre te dirán la verdad, aunque duela un poco. No esperes que recuerden cada detalle de tu vida, pero siempre estarán ahí para animarte a soñar más grande y a vivir más audazmente. Son amigos de bajo mantenimiento que entienden y respetan la necesidad de independencia de los demás.",
       "workTitle": "Sagitario en el Trabajo",
-      "work": "Sagitario sobresale en carreras que involucran viajes, educación, publicaciones o filosofía. Necesitan autonomía y un sentido de propósito, y son maestros y líderes inspiradores. Les aburren las tareas rutinarias y necesitan un trabajo que desafíe su mente y les permita explorar."
+      "work": "En el entorno laboral, Sagitario es el visionario, el maestro y el explorador. Prosperan en carreras que les permiten aprender, enseñar y explorar, como la academia, la publicación, el derecho o el turismo. Odian la rutina y el micromanagement. Necesitan autonomía y la libertad de seguir su curiosidad. Son excelentes para motivar a otros con su visión optimista y su capacidad para ver el panorama general. Su desafío es prestar atención a los detalles y completar las tareas mundanas. Funcionan mejor cuando pueden inspirar y delegar la ejecución detallada."
     },
     "Capricorn": {
       "title": "Rasgos de Capricornio",
       "description": "La cabra ambiciosa y disciplinada del zodíaco. Regido por Saturno, los Capricornio son maestros del autocontrol y tienen la capacidad de liderar el camino, hacer planes sólidos y realistas, y gestionar a muchas personas que trabajan para ellos en cualquier momento. Son maestros de la manifestación. Representan la estructura, la tradición y la ambición. Para Capricornio, la vida es una montaña que hay que escalar, y están dispuestos a trabajar duro y con paciencia para llegar a la cima. Su enfoque es práctico, metódico y siempre con una visión a largo plazo. No creen en los atajos; creen en las reglas, la responsabilidad y la construcción de cimientos sólidos. Aunque pueden parecer serios, distantes o incluso fríos por fuera, poseen un humor seco y un profundo sentido de la lealtad hacia aquellos que se ganan su respeto. Su mayor temor es el fracaso, y esta presión puede hacer que sean demasiado duros consigo mismos y con los demás. Su misión es aprender que el verdadero éxito no solo se mide por los logros externos, sino también por la alegría y la satisfacción encontradas en el viaje. Son las rocas del zodíaco, fiables y capaces de soportar cualquier tormenta.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Responsable", "disciplinado", "autocontrol", "buenos gestores", "leales"],
+      "strengths": [
+        "Responsable",
+        "disciplinado",
+        "autocontrol",
+        "buenos gestores",
+        "leales"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Sabelotodo", "implacable", "condescendiente", "esperando lo peor"],
+      "weaknesses": [
+        "Sabelotodo",
+        "implacable",
+        "condescendiente",
+        "esperando lo peor"
+      ],
       "loveTitle": "Capricornio en el Amor",
-      "love": "Capricornio es una pareja seria y comprometida. Muestran amor a través de actos prácticos y lealtad. Buscan una pareja que sea igualmente ambiciosa y que entienda su necesidad de estructura y seguridad.",
+      "love": "En el amor, Capricornio se toma su tiempo. No se lanzan a las relaciones a la ligera; para ellos, el amor es una inversión a largo plazo. Muestran su afecto no con palabras floridas, sino con actos de servicio, lealtad y compromiso inquebrantable. Buscan una pareja que sea igualmente ambiciosa, responsable y que entienda su necesidad de estructura. Pueden parecer distantes o fríos, pero debajo de su exterior reservado hay un corazón leal que anhela una conexión profunda y duradera. Necesitan un compañero que valore la seguridad y que entienda que su trabajo es también una forma de amar y proveer.",
       "friendshipTitle": "Capricornio en la Amistad",
-      "friendship": "Un amigo Capricornio es a quien llamas cuando necesitas un plan sólido o una dosis de realidad. Son increíblemente leales y fiables, aunque no sean los más expresivos. Muestran su afecto a través de su constancia y su disposición a ayudar en los momentos difíciles. Tienen un humor seco que solo sus amigos más cercanos llegan a ver.",
+      "friendship": "Un amigo Capricornio es el que te da los consejos más prácticos y realistas. No endulzarán la verdad, pero siempre estarán ahí para ayudarte a construir un plan para superar tus problemas. Son increíblemente fiables y leales. Sus amistades se construyen lentamente, basadas en el respeto mutuo y la confianza. Puede que no sean los amigos más expresivos, pero su apoyo es sólido como una roca. Tienen un sorprendente y seco sentido del humor que reservan para su círculo más íntimo. Valoran a los amigos que son igualmente ambiciosos y que entienden su necesidad de estructura.",
       "workTitle": "Capricornio en el Trabajo",
-      "work": "Los Capricornio son los directores ejecutivos del zodíaco. Son trabajadores, orientados a objetivos y excelentes en la gestión de proyectos y personas. Prosperan en entornos donde pueden construir y alcanzar el éxito a largo plazo."
+      "work": "En el trabajo, Capricornio es el CEO del zodíaco. Son la encarnación de la disciplina, la responsabilidad y la ambición. Tienen una habilidad natural para la gestión y la estrategia a largo plazo. Prosperan en entornos estructurados donde pueden subir la escalera del éxito a través del trabajo duro y la dedicación. No temen a la responsabilidad y son excelentes para gestionar tanto proyectos como personas. Su enfoque es incansable, y su objetivo final es siempre construir algo duradero y de alta calidad. Son los pilares de cualquier organización, aportando estabilidad y una ética de trabajo inigualable."
     },
     "Aquarius": {
       "title": "Rasgos de Acuario",
       "description": "El visionario y humanitario del zodíaco. Regido por Urano (y tradicionalmente por Saturno), los Acuario son originales, independientes y orientados al futuro. Marchan a su propio ritmo y están dedicados a hacer del mundo un lugar mejor. Son los rebeldes y los innovadores, siempre cuestionando el status quo y pensando en términos de 'nosotros' en lugar de 'yo'. Su mente es brillante, excéntrica y siempre adelantada a su tiempo. Se sienten más cómodos en el mundo de las ideas y los conceptos que en el de las emociones desordenadas. Esto puede hacer que parezcan distantes o desapegados, pero su preocupación por la humanidad es genuina y profunda. Valoran la amistad por encima de todo y tratan a todos por igual, sin jerarquías. Su mayor necesidad es la libertad: libertad para pensar, para ser diferentes y para perseguir sus ideales sin restricciones. Son los portadores de agua, trayendo conocimiento y nuevas perspectivas para saciar la sed colectiva de progreso.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Progresista", "original", "independiente", "humanitario", "intelectual"],
+      "strengths": [
+        "Progresista",
+        "original",
+        "independiente",
+        "humanitario",
+        "intelectual"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Huye de la expresión emocional", "temperamental", "intransigente", "distante"],
+      "weaknesses": [
+        "Huye de la expresión emocional",
+        "temperamental",
+        "intransigente",
+        "distante"
+      ],
       "loveTitle": "Acuario en el Amor",
-      "love": "En el amor, Acuario necesita una pareja que sea ante todo un amigo. Valoran la conexión intelectual y la libertad. Pueden parecer distantes, pero su amor es genuino y se basa en ideales compartidos.",
+      "love": "En el amor, un Acuario busca ante todo un amigo y un compañero intelectual. Se sienten atraídos por mentes originales y no convencionales. Su enfoque del romance es más cerebral que emocional. Pueden parecer distantes o desapegados, pero su amor es genuino, aunque se exprese de una manera poco tradicional. Valoran la libertad por encima de todo, tanto para ellos como para su pareja. Una relación con un Acuario debe basarse en el respeto mutuo, la independencia y los ideales compartidos. Necesitan un compañero que no intente limitar su necesidad de socializar con una amplia gama de personas.",
       "friendshipTitle": "Acuario en la Amistad",
-      "friendship": "Un amigo Acuario es único, intelectualmente estimulante y siempre dispuesto a una idea poco convencional. Son amigos leales pero necesitan mucho espacio personal. Son excelentes amigos para actividades de grupo y causas sociales. Tratan a todos sus amigos por igual, lo que a veces puede hacer que algunos no se sientan tan especiales.",
+      "friendship": "Como amigo, un Acuario es leal, justo y siempre dispuesto a ayudar en una causa. Son los amigos con los que puedes tener las conversaciones más extrañas y fascinantes. No son posesivos y entienden la necesidad de espacio. Sin embargo, su enfoque en el colectivo puede hacer que sus amigos se sientan a veces como parte de un grupo más grande en lugar de un individuo especial. Valoran las amistades basadas en intereses intelectuales y humanitarios compartidos.",
       "workTitle": "Acuario en el Trabajo",
-      "work": "Acuario sobresale en roles que requieren innovación y pensamiento no convencional, como en tecnología, ciencia o activismo social. Necesitan autonomía y trabajan mejor cuando creen en la causa."
+      "work": "En el trabajo, Acuario es el innovador, el científico y el reformador social. Prosperan en roles que les permiten usar su mente brillante para resolver problemas de manera no convencional. Odian la rutina y la burocracia. Necesitan autonomía y la libertad de experimentar. Son excelentes en campos como la tecnología, la ciencia, el trabajo social y el activismo. Son grandes jugadores de equipo cuando trabajan en proyectos que se alinean con sus ideales humanitarios."
     },
     "Pisces": {
       "title": "Rasgos de Piscis",
       "description": "El místico y soñador del zodíaco. Regido por Neptuno, Piscis es compasivo, artístico y profundamente intuitivo. Es el último signo, una amalgama de todos los que le preceden. Están conectados con el reino espiritual y tienen una capacidad ilimitada para la empatía. Su naturaleza camaleónica les permite adaptarse a cualquier entorno, absorbiendo las emociones y atmósferas que los rodean. Esta sensibilidad es tanto su mayor don como su mayor desafío. Un Piscis vive en un mundo donde la frontera entre la realidad y la fantasía es borrosa, lo que les dota de una inmensa creatividad e imaginación. Son las almas viejas del zodíaco, portadores de una sabiduría que parece venir de otras vidas. Su compasión no conoce límites, y a menudo ponen las necesidades de los demás por encima de las suyas, lo que puede llevarlos a ser aprovechados. Suelen tener una profunda conexión con la música, el arte y cualquier forma de expresión que les permita canalizar su vasto mundo interior. El escapismo es su mecanismo de defensa; cuando el mundo se vuelve demasiado duro, se retiran a su santuario interior de sueños. Aprender a establecer límites saludables y a mantenerse anclados en la realidad sin perder su magia es su gran lección de vida. Son increíblemente románticos, no solo en el amor, sino en su visión de la vida en general, siempre buscando la belleza y la conexión espiritual en todo.",
       "strengthsTitle": "Fortalezas",
-      "strengths": ["Compasivo", "artístico", "intuitivo", "gentil", "sabio"],
+      "strengths": [
+        "Compasivo",
+        "artístico",
+        "intuitivo",
+        "gentil",
+        "sabio"
+      ],
       "weaknessesTitle": "Debilidades",
-      "weaknesses": ["Temeroso", "demasiado confiado", "triste", "deseo de escapar de la realidad", "puede ser una víctima o un mártir"],
+      "weaknesses": [
+        "Temeroso",
+        "demasiado confiado",
+        "triste",
+        "deseo de escapar de la realidad",
+        "puede ser una víctima o un mártir"
+      ],
       "loveTitle": "Piscis en el Amor",
-      "love": "Los Piscis son románticos empedernidos que buscan una conexión mágica y profunda del alma. Son parejas increíblemente desinteresadas y devotas, pero también pueden perderse en la idealización e ignorar las señales de alerta.",
+      "love": "En el amor, Piscis busca una fusión de almas, una conexión que trascienda lo mundano. Son románticos empedernidos, capaces de un nivel de devoción y sacrificio que pocos pueden igualar. Muestran su amor a través de la empatía, la compasión y un deseo de sanar las heridas de su pareja. Sin embargo, su tendencia a idealizar a su pareja puede llevarlos a la desilusión. Necesitan un compañero que sea a la vez fuerte y gentil, alguien que pueda proteger su sensible corazón y anclarlos a la realidad sin destruir sus sueños.",
       "friendshipTitle": "Piscis en la Amistad",
-      "friendship": "Un amigo Piscis es el oyente compasivo al que todos acuden cuando tienen un problema. Son increíblemente solidarios, sin prejuicios, y se entregan por completo para ayudar. Su naturaleza soñadora los convierte en compañeros divertidos y creativos. Sin embargo, deben tener cuidado de no cargar con las cargas emocionales de todos los demás.",
+      "friendship": "Un amigo Piscis es un refugio para el alma. Son los amigos a los que acudes cuando necesitas un oído compasivo sin juicio. Tienen una capacidad asombrosa para sentir lo que sientes y ofrecer consuelo. Son increíblemente leales y desinteresados. Sin embargo, su naturaleza porosa significa que pueden absorber las emociones negativas de los demás, lo que puede ser agotador para ellos. Necesitan amigos que respeten su necesidad de soledad para recargarse y que no se aprovechen de su infinita bondad.",
       "workTitle": "Piscis en el Trabajo",
-      "work": "Los Piscis prosperan en campos creativos y compasivos. Son excelentes artistas, músicos, sanadores y consejeros. Su intuición les da una perspectiva única en todos los roles que desempeñan."
+      "work": "En el trabajo, Piscis prospera en entornos que les permiten usar su creatividad, intuición y compasión. Son excelentes artistas, músicos, terapeutas, sanadores y trabajadores de organizaciones sin fines de lucro. No les motivan el dinero ni el poder, sino el deseo de contribuir a algo más grande que ellos mismos. Su principal desafío es lidiar con entornos de trabajo duros y competitivos. Necesitan un trabajo que tenga significado y que les permita usar sus dones únicos para ayudar a los demás."
     }
   },
   "Share.lunarPhaseTitle": "Fase Lunar Actual de AstroVibes",

@@ -843,171 +843,312 @@
     "polarity": "Polarité",
     "Aries": {
       "title": "Traits du Bélier",
-      "description": "En tant que premier signe du zodiaque, le Bélier est le pionnier, toujours plein d'énergie et d'enthousiasme. Gouverné par Mars, la planète de l'action et de la guerre, le Bélier incarne le courage, l'initiative et un désir incessant de tracer de nouvelles voies. Ils sont l'étincelle qui allume de nouveaux projets, et leur leadership naturel inspire les autres à agir. Un Bélier vit dans l'instant, relevant les défis de front avec une croyance profonde en sa propre force.",
+      "description": "En tant que premier signe du zodiaque, le Bélier est le pionnier, toujours plein d'énergie et d'enthousiasme. Gouverné par Mars, la planète de l'action et de la guerre, le Bélier incarne le courage, l'initiative et un désir incessant de tracer de nouvelles voies. Ils sont l'étincelle qui allume de nouveaux projets, et leur leadership naturel inspire les autres à agir. Un Bélier vit dans l'instant, relevant les défis de front avec une croyance profonde en sa propre force. Ils sont farouchement indépendants et valorisent leur autonomie par-dessus tout. Un Bélier ne demande pas la permission ; il la prend, croyant fermement en son droit de forger son propre destin. Cette nature impulsive en fait des êtres incroyablement dynamiques et spontanés, toujours prêts pour la prochaine aventure.",
       "strengthsTitle": "Forces",
-      "strengths": ["Courageux", "Énergique", "Indépendant", "Passionné", "Optimiste", "Honnête"],
+      "strengths": [
+        "Courageux",
+        "Énergique",
+        "Indépendant",
+        "Passionné",
+        "Optimiste",
+        "Honnête"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Impulsif", "Impatient", "Agressif", "Manque de prévoyance", "Égoïste"],
+      "weaknesses": [
+        "Impulsif",
+        "Impatient",
+        "Agressif",
+        "Manque de prévoyance",
+        "Égoïste"
+      ],
       "loveTitle": "Le Bélier en Amour",
-      "love": "En amour, un Bélier est un partenaire passionné, direct et quelque peu impatient. Ils aiment le frisson de la chasse et recherchent une relation pleine d'aventure et de spontanéité. Ils ont besoin d'un partenaire qui peut suivre leur rythme énergique et qui respecte leur indépendance. Bien que rapides à s'enflammer, leur loyauté est forte une fois engagés, et ils défendront leur partenaire avec un courage inébranlable.",
+      "love": "En amour, un Bélier est une force de la nature. Passionné et impulsif, il se lance dans la romance avec une intensité qui peut être à la fois excitante et écrasante. La phase de séduction est son champ de bataille préféré, où il savoure le frisson de la conquête. Il recherche un partenaire qui n'est pas seulement un amant mais aussi un compagnon d'aventure, quelqu'un prêt à sauter dans le vide avec lui. Son langage d'amour est l'action : il planifiera des escapades surprises et vous défendra farouchement. Cependant, son indépendance est sacrée et il ne tolère pas la possessivité. Son plus grand défi est la patience ; il veut que tout arrive maintenant et peut être frustré si le rythme de la relation est trop lent. Une fois qu'il s'engage vraiment, sa loyauté est inébranlable, devenant le protecteur le plus féroce de son partenaire.",
       "friendshipTitle": "Le Bélier en Amitié",
-      "friendship": "En tant qu'ami, le Bélier est votre supporter le plus enthousiaste et votre compagnon d'aventure. Ils sont farouchement loyaux et vous défendront jusqu'au bout du monde. L'amitié avec un Bélier n'est jamais ennuyeuse ; ils initient constamment de nouvelles activités et vous poussent à essayer de nouvelles choses. Cependant, leur nature compétitive peut parfois faire surface, et leur honnêteté brutale, bien qu'intentionnée, peut parfois piquer. Ils s'épanouissent dans l'action et les expériences partagées, ce qui en fait d'excellents amis pour ceux qui aiment la spontanéité et un bon défi.",
+      "friendship": "Un ami Bélier est le catalyseur de votre vie sociale, celui qui appelle un vendredi après-midi avec un plan fou mais irrésistible. Sa loyauté est légendaire ; il est du genre à 'agir d'abord, poser des questions plus tard' lorsqu'il s'agit de défendre ses amis. Une amitié avec lui est une série d'aventures inoubliables, car il déteste la stagnation et est toujours à la recherche de la prochaine sensation forte. Il vous poussera hors de votre zone de confort et vous mettra au défi d'affronter vos peurs. Cependant, son honnêteté est si directe qu'elle peut être involontairement blessante, et son esprit de compétition peut transformer une soirée de jeux de société en une bataille épique. Mais sa colère est de courte durée et sa générosité est sans bornes, ce qui rend chaque moment de haute énergie valable.",
       "workTitle": "Le Bélier au Travail",
-      "work": "Au travail, le Bélier brille dans les rôles de leadership et en tant qu'entrepreneur. Ils sont excellents pour initier des projets, prendre des risques et motiver les autres avec leur énergie infinie. Ils préfèrent un environnement au rythme rapide où ils peuvent prendre des décisions rapidement. Leur défi réside dans le suivi et les détails minutieux ; ils peuvent perdre leur intérêt une fois l'excitation initiale passée. Ils travaillent mieux lorsqu'ils peuvent définir la vision et laisser l'exécution détaillée à d'autres."
+      "work": "Dans le milieu du travail, le Bélier est le pionnier et l'entrepreneur. Il est excellent pour lancer des projets à partir de zéro, possédant une énergie et un courage qui peuvent inspirer des équipes entières. Il n'a pas peur de prendre des risques calculés et s'épanouit dans des environnements à haute pression où les décisions rapides sont essentielles. Cependant, il n'est pas le meilleur pour la maintenance à long terme ou les tâches répétitives. La microgestion ou une bureaucratie lente peuvent le frustrer immensément. Son plus grand défi est le suivi ; une fois que l'excitation initiale d'un projet s'estompe, il peut être à la recherche de la prochaine 'grande chose'. Il fonctionne mieux dans des rôles de leadership, en tant que fondateur ou chef de projet, où il peut déléguer les détails et se concentrer sur la vision globale et la stratégie."
     },
     "Taurus": {
       "title": "Traits du Taureau",
-      "description": "Le Taureau, gouverné par Vénus, est le signe de la stabilité, de la sensualité et de la persévérance. Ce sont les bâtisseurs du zodiaque, appréciant la beauté du monde matériel et aspirant à la sécurité et au confort. Un Taureau se déplace délibérément et méthodiquement, valorisant la qualité plutôt que la quantité. Leur détermination est inébranlable, et une fois qu'ils ont choisi une voie, il est presque impossible de les en détourner.",
+      "description": "Le Taureau, gouverné par Vénus, est le signe de la stabilité, de la sensualité et de la persévérance. Ce sont les bâtisseurs du zodiaque, appréciant la beauté du monde matériel et aspirant à la sécurité et au confort. Un Taureau se déplace délibérément et méthodiquement, valorisant la qualité plutôt que la quantité. Leur détermination est inébranlable, et une fois qu'ils ont choisi une voie, il est presque impossible de les en détourner. Cette détermination est leur plus grande force et, parfois, leur plus grande faiblesse. Ils sont incroyablement loyaux et fiables, le genre de personne qui construit des fondations durables dans tout ce qu'ils font. Leur quête de sécurité n'est pas seulement matérielle mais aussi émotionnelle, ce qui en fait des partenaires et des amis incroyablement protecteurs et constants.",
       "strengthsTitle": "Forces",
-      "strengths": ["Fiable", "Patient", "Pratique", "Loyal", "Sensuel", "Stable"],
+      "strengths": [
+        "Fiable",
+        "Patient",
+        "Pratique",
+        "Loyal",
+        "Sensuel",
+        "Stable"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Têtu", "Possessif", "Réticent au changement", "Matérialiste"],
+      "weaknesses": [
+        "Têtu",
+        "Possessif",
+        "Réticent au changement",
+        "Matérialiste"
+      ],
       "loveTitle": "Le Taureau en Amour",
-      "love": "En tant qu'amant, le Taureau est patient, sensuel et incroyablement loyal. Ils construisent leurs relations lentement et régulièrement, recherchant un partenaire qui offre sécurité et fiabilité. Ils montrent leur affection par le toucher physique, les cadeaux et la création d'un foyer confortable et magnifique. Leur plus grand défi est leur possessivité, qui découle de leur profond besoin de sécurité.",
+      "love": "En tant qu'amant, le Taureau est l'incarnation de la dévotion et de la sensualité. Il aborde l'amour avec la même patience et le même soin méthodique qu'il applique à tous les domaines de sa vie, recherchant un partenaire qui lui procure un sentiment de sécurité et de stabilité inébranlables. Ses expressions d'affection sont tangibles : il se délecte de dorloter par le toucher, les massages, en préparant des repas somptueux ou en créant un foyer beau et confortable. Pour lui, l'amour est quelque chose que l'on construit. Le défi se présente lorsque son besoin de sécurité se transforme en possessivité. Il a besoin d'un partenaire qui apprécie sa loyauté et qui peut gérer son entêtement occasionnel avec patience.",
       "friendshipTitle": "Le Taureau en Amitié",
-      "friendship": "Un Taureau est le roc de votre groupe d'amis. Ils sont incroyablement fiables, loyaux et l'ami que vous pouvez appeler au milieu de la nuit. Ils préfèrent les rassemblements calmes avec de la bonne nourriture et une bonne compagnie aux fêtes bruyantes. Un ami Taureau vous gâtera avec des conseils pratiques et un soutien indéfectible. Leur entêtement, cependant, peut mener à des conflits s'ils sentent que leurs valeurs sont remises en question.",
+      "friendship": "Un ami Taureau est celui sur qui vous pouvez toujours compter, le rocher au milieu du chaos de la vie. Il est la définition même de la loyauté et de la fiabilité, la personne que vous appelez à 2 heures du matin sans hésitation. Ses amitiés sont fondées sur le confort et les plaisirs partagés : un bon repas, une soirée tranquille avec de la musique ou simplement profiter d'une compagnie paisible. Il offre des conseils pratiques et terre-à-terre, et son soutien est inébranlable. Le seul point de friction est son entêtement ; un désaccord avec un Taureau peut donner l'impression de se battre contre une force immuable, mais sa loyauté garantit qu'il reviendra toujours.",
       "workTitle": "Le Taureau au Travail",
-      "work": "Le Taureau est le coureur de marathon du lieu de travail, pas le sprinter. Ils sont méthodiques, patients et ont une capacité incroyable à mener les projets à terme. Ils excellent dans les rôles qui nécessitent stabilité, souci du détail et une approche pratique, comme dans la finance, le design ou l'agriculture. Ils ne sont pas des preneurs de risques, préférant construire lentement et en toute sécurité."
+      "work": "Sur le lieu de travail, le Taureau est le bâtisseur constant. Il n'est pas intéressé par les gains rapides, mais par la construction de résultats durables et de haute qualité. Il est méthodique, patient et possède une endurance incroyable pour mener les projets à leur terme, bien après que d'autres aient abandonné. Il s'épanouit dans des environnements stables et excelle dans des rôles qui exigent une approche pratique et un œil pour l'esthétique, comme dans la finance, l'architecture, le design ou l'agriculture. Il est le fondement de toute équipe, s'assurant que le travail n'est pas seulement fait, mais bien fait."
     },
     "Gemini": {
       "title": "Traits des Gémeaux",
-      "description": "Les Gémeaux, gouvernés par la planète Mercure, sont les papillons sociaux et les intellectuels du zodiaque. Ils sont naturellement curieux, adaptables et ont une soif insatiable d'information. Leur esprit est en permanence en action, sautant d'une idée à l'autre, ce qui en fait des interlocuteurs fascinants et des apprenants à vie. Leur dualité leur permet de voir plusieurs perspectives à la fois.",
+      "description": "Les Gémeaux, gouvernés par la planète Mercure, sont les papillons sociaux et les intellectuels du zodiaque. Ils sont naturellement curieux, adaptables et ont une soif insatiable d'information. Leur esprit est en permanence en action, sautant d'une idée à l'autre, ce qui en fait des interlocuteurs fascinants et des apprenants à vie. Leur dualité leur permet de voir plusieurs perspectives à la fois. Ils sont les messagers du zodiaque, créant des connexions et diffusant des informations. Leur énergie est juvénile, joueuse et agitée, toujours à la recherche de la prochaine conversation intéressante, du prochain livre ou de la prochaine aventure. Cette quête constante de nouveauté peut aussi les faire paraître dispersés et incohérents. Ils vivent dans un monde de possibilités et ont parfois du mal à s'engager dans une seule voie, de peur de manquer autre chose.",
       "strengthsTitle": "Forces",
-      "strengths": ["Intelligent", "Curieux", "Adaptable", "Sociable", "Spirituel", "Communicatif"],
+      "strengths": [
+        "Intelligent",
+        "Curieux",
+        "Adaptable",
+        "Sociable",
+        "Spirituel",
+        "Communicatif"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Inconsistant", "Indécis", "Nerveux", "Superficiel", "Peu fiable"],
+      "weaknesses": [
+        "Inconsistant",
+        "Indécis",
+        "Nerveux",
+        "Superficiel",
+        "Peu fiable"
+      ],
       "loveTitle": "Les Gémeaux en Amour",
-      "love": "En amour, un Gémeaux a besoin d'un partenaire qui soit son meilleur ami. La stimulation mentale est plus importante que tout le reste. Ils sont joueurs, séducteurs et aiment la variété, ce qui peut parfois être mal interprété comme de l'inconstance. Une relation avec un Gémeaux n'est jamais ennuyeuse mais nécessite un partenaire qui comprend leur liberté et leur besoin de communication constante et d'interaction sociale.",
+      "love": "En amour, une relation avec un Gémeaux est une montagne russe d'esprit, de charme et de gymnastique intellectuelle. Ils ont besoin d'un partenaire qui stimule leur cerveau autant que leur cœur ; la communication est pour eux la forme ultime de préliminaires. Ils sont joueurs, séducteurs et parfois insaisissables, ce qui ne vient pas d'un manque de sentiment mais d'une concentration qui change constamment. Ils ont besoin de variété et de spontanéité pour ne pas s'ennuyer. Un partenaire qui respecte leur liberté et est prêt à explorer de nouvelles idées et de nouveaux lieux avec eux gagnera leur loyauté éternelle et un compagnon qui les fera toujours rire.",
       "friendshipTitle": "Les Gémeaux en Amitié",
-      "friendship": "Un ami Gémeaux est celui qui vous tient au courant des dernières tendances, des potins et des faits fascinants. Ils sont incroyablement sociables et ont un large cercle de connaissances. Une amitié avec eux est pleine de rires, de débats et d'aventures. Ils comprennent le besoin d'espace et d'indépendance, mais peuvent parfois être insaisissables ou difficiles à cerner car ils jonglent constamment entre différents intérêts et groupes sociaux.",
+      "friendship": "Un ami Gémeaux est le centre de votre réseau social. Ils connaissent tout le monde et ont toujours les dernières informations. Les amitiés avec eux sont dynamiques, amusantes et remplies de conversations stimulantes. Ils sont incroyablement adaptables et peuvent s'entendre avec presque tout le monde. Ils apprécient leur indépendance et attendent la même chose de leurs amis. Le défi est de retenir leur attention, car ils jonglent souvent entre différents cercles sociaux et intérêts. Mais quand vous avez besoin d'un ami pour brainstormer une nouvelle idée ou simplement analyser le monde, un Gémeaux est le meilleur allié.",
       "workTitle": "Les Gémeaux au Travail",
-      "work": "Les Gémeaux sont les maîtres du multitâche. Ils s'épanouissent dans des environnements rapides et dynamiques qui nécessitent de la communication, du réseautage et de la génération d'idées. Les rôles dans le marketing, la vente, le journalisme ou l'enseignement leur conviennent parfaitement. Leur plus grand défi est de se concentrer sur une seule tâche, car leur esprit est constamment à la recherche de nouveaux stimuli."
+      "work": "Au travail, les Gémeaux sont des maîtres de la communication et du multitâche. Ils s'épanouissent dans des environnements rapides et dynamiques où ils peuvent utiliser leur agilité mentale pour résoudre des problèmes et générer des idées. Les rôles dans le marketing, la vente, le journalisme, l'enseignement et les relations publiques sont idéaux pour eux. Ce sont d'excellents réseauteurs et peuvent facilement établir des liens entre différents départements ou concepts. Leur plus grand défi est de se concentrer sur des tâches à long terme et axées sur les détails. Ils ont besoin de stimulation et de variété constantes pour donner le meilleur d'eux-mêmes."
     },
     "Cancer": {
       "title": "Traits du Cancer",
-      "description": "Gouverné par la Lune, le Cancer est le cœur profondément émotionnel et intuitif du zodiaque. Ils sont naturellement attentionnés et protecteurs envers ceux qu'ils aiment, valorisant le foyer et la famille par-dessus tout. Leur carapace extérieure peut sembler dure, mais à l'intérieur se cache une immense sensibilité et une riche vie intérieure. Ils ont une mémoire étonnante, surtout pour les événements émotionnels.",
+      "description": "Gouverné par la Lune, le Cancer est le cœur profondément émotionnel et intuitif du zodiaque. Ils sont naturellement attentionnés et protecteurs envers ceux qu'ils aiment, valorisant le foyer et la famille par-dessus tout. Leur carapace extérieure peut sembler dure, mais à l'intérieur se cache une immense sensibilité et une riche vie intérieure. Ils ont une mémoire étonnante, surtout pour les événements émotionnels. Les Cancers opèrent sur un plan sentimental, absorbant souvent les atmosphères et les émotions qui les entourent comme une éponge. Cette capacité les rend incroyablement empathiques mais aussi vulnérables aux sautes d'humeur et au surmenage. Ils aspirent à la sécurité et au confort, et leur mission principale dans la vie est de créer un 'foyer' sûr, à la fois physiquement et émotionnellement, pour eux-mêmes et leurs proches. La loyauté est primordiale pour eux ; une fois que vous avez gagné leur confiance, vous avez un défenseur pour la vie. Cependant, si cette confiance est rompue, ils peuvent garder rancune pendant longtemps. Leur nature cardinale les pousse à prendre l'initiative dans les affaires émotionnelles et domestiques, ce qui en fait les piliers de leurs familles et de leurs cercles d'amis.",
       "strengthsTitle": "Forces",
-      "strengths": ["Tenace", "très imaginatif", "loyal", "émotionnel", "sympathique", "persuasif"],
+      "strengths": [
+        "Tenace",
+        "très imaginatif",
+        "loyal",
+        "émotionnel",
+        "sympathique",
+        "persuasif"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Lunatique", "pessimiste", "méfiant", "manipulateur", "inquiet"],
+      "weaknesses": [
+        "Lunatique",
+        "pessimiste",
+        "méfiant",
+        "manipulateur",
+        "inquiet"
+      ],
       "loveTitle": "Le Cancer en Amour",
-      "love": "Dans une relation, le Cancer est incroyablement loyal, engagé et affectueux. Ils recherchent une sécurité émotionnelle profonde et un partenaire avec qui construire un foyer. Ils montrent leur amour par des actes de soin, la cuisine et la création d'un environnement douillet. Leurs sautes d'humeur peuvent être un défi pour un partenaire, mais leur dévouement lorsqu'ils se sentent en sécurité est inégalé. Ils ont besoin de beaucoup de réconfort et d'affection.",
+      "love": "Dans une relation, le Cancer est l'archétype du gardien dévoué. Il aspire à une connexion émotionnelle profonde et recherche un partenaire avec qui il peut construire un sanctuaire sûr, un foyer. L'amour pour le Cancer est synonyme de sécurité, de loyauté et de nourriture. Il montre son affection par des actes de service, en cuisinant pour son bien-aimé, en créant un espace douillet et en offrant un soutien émotionnel inconditionnel. Cependant, son extrême sensibilité peut être un défi. Il est sujet aux sautes d'humeur, influencé par les phases de la lune et l'environnement émotionnel. Il a besoin de constantes marques d'affection et de sécurité pour ne pas se replier dans sa coquille. Une fois qu'il se sent en sécurité, son amour est l'un des plus profonds et des plus protecteurs du zodiaque.",
       "friendshipTitle": "Le Cancer en Amitié",
-      "friendship": "Un ami Cancer est comme de la famille. Ce sont eux qui se souviennent de votre anniversaire, vous apportent de la soupe quand vous êtes malade et vous offrent une épaule sur laquelle pleurer. Ils sont d'excellents auditeurs et fournissent un soutien émotionnel incroyable. Cependant, ils peuvent être facilement blessés et ont tendance à se replier sur eux-mêmes s'ils ne se sentent pas appréciés. Leurs amitiés sont profondes et construites pour durer toute une vie.",
+      "friendship": "Un ami Cancer est le cœur du groupe, celui qui transforme les amis en famille. Sa loyauté est légendaire, et il se souviendra toujours des petits détails qui comptent pour vous. C'est lui qui vous préparera votre plat préféré lorsque vous êtes triste et vous offrira une épaule sur laquelle pleurer sans jugement. Il s'épanouit dans l'intimité et préfère les petits rassemblements chaleureux aux grandes fêtes. Cependant, sa sensibilité peut le rendre facilement blessé. Un commentaire négligent peut le faire se replier dans sa coquille pendant des jours. La clé d'une amitié durable avec un Cancer est la patience, l'empathie et la démonstration constante que vous appréciez sa profonde capacité à prendre soin des autres.",
       "workTitle": "Le Cancer au Travail",
-      "work": "Au travail, le Cancer s'épanouit dans des rôles qui lui permettent de prendre soin des autres ou de créer un environnement de soutien. Ils font d'excellents gestionnaires, infirmiers, enseignants et chefs. Leur intuition peut également en faire de fins hommes d'affaires, car ils ont le don de sentir les besoins du marché. Ils travaillent mieux lorsqu'ils se sentent émotionnellement en sécurité et font partie d'une équipe soudée."
+      "work": "Dans le milieu du travail, le Cancer s'épanouit dans des rôles qui lui permettent de nourrir et de protéger, que ce soit des clients, des collègues ou une cause. Il fait d'excellents gestionnaires qui créent un environnement d'équipe familial et solidaire. Des domaines comme l'enseignement, les soins infirmiers, le travail social, l'hôtellerie et la gestion des ressources humaines sont idéaux pour lui. Son intuition lui donne un avantage en affaires, car il peut 'ressentir' les besoins du marché et des gens. Il a cependant besoin d'un environnement de travail émotionnellement sûr pour donner le meilleur de lui-même. Une atmosphère trop critique ou compétitive peut le rendre sur la défensive et lui faire perdre confiance, ce qui affecte sa productivité."
     },
     "Leo": {
       "title": "Traits du Lion",
-      "description": "Gouverné par le Soleil, le Lion est la royauté radieuse et charismatique du zodiaque. Débordant de confiance, de générosité et d'un flair naturel pour le dramatique, le Lion aime être le centre de l'attention et inspirer les autres par sa chaleur et sa vitalité. Ils ont un grand cœur et une créativité innée qui doit s'exprimer.",
+      "description": "Gouverné par le Soleil, le centre de notre système solaire, le Lion est la royauté radieuse et charismatique du zodiaque. Débordant de confiance, de générosité et d'un flair naturel pour le dramatique, le Lion aime être le centre de l'attention et inspirer les autres par sa chaleur et sa vitalité. Ils ont un grand cœur et une créativité innée qui doit s'exprimer. Un Lion n'entre pas dans une pièce, il la conquiert. Sa présence est magnétique, attirant les gens avec son charme naturel et son optimisme contagieux. Ils possèdent une dignité et une fierté inhérentes qui, bien que parfois à la limite de l'arrogance, proviennent d'un profond sentiment d'estime de soi. Ils sont farouchement loyaux et protecteurs de leur 'royaume', que ce soit leur famille, leurs amis ou leur équipe de travail. La générosité est l'un de leurs traits les plus saillants ; un Lion aime combler ses proches de cadeaux et d'affection. Cependant, ce besoin d'être le soleil autour duquel les autres tournent signifie qu'ils recherchent l'admiration et la reconnaissance. Un coup porté à leur ego peut être dévastateur. Au fond, un Lion ne veut qu'aimer et être aimé, célébrer la vie et partager sa lumière avec le monde.",
       "strengthsTitle": "Forces",
-      "strengths": ["Créatif", "passionné", "généreux", "chaleureux", "joyeux", "humoristique"],
+      "strengths": [
+        "Créatif",
+        "passionné",
+        "généreux",
+        "chaleureux",
+        "joyeux",
+        "humoristique"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Arrogant", "têtu", "égocentrique", "paresseux", "inflexible"],
+      "weaknesses": [
+        "Arrogant",
+        "têtu",
+        "égocentrique",
+        "paresseux",
+        "inflexible"
+      ],
       "loveTitle": "Le Lion en Amour",
-      "love": "En tant qu'amant, le Lion est dramatique, joueur et incroyablement généreux. Ils aiment être adorés et, en retour, combleront leur partenaire d'affection et de cadeaux. Leur loyauté est inébranlable, mais ils ont besoin d'un partenaire qui ne les éclipsera pas et qui est heureux de les admirer. Une relation avec un Lion est toujours divertissante et pleine de passion.",
+      "love": "Aimer un Lion, c'est comme avoir une place au premier rang pour un grand spectacle. Ce sont des amants dramatiques, passionnés et incroyablement généreux. La romance pour eux est une production théâtrale, remplie de grands gestes, de cadeaux somptueux et d'une adoration sans fin. Ils aspirent à être le centre de l'univers de leur partenaire et, en retour, offrent une loyauté et une protection féroces. Ils ne marchent pas, ils se pavanent, et ils s'attendent à ce que leur partenaire admire chacun de leurs mouvements. La relation doit être amusante, ludique et pleine de louanges. Cependant, leur besoin constant d'attention peut être épuisant, et leur fierté blessée peut conduire à un drame digne d'un Oscar. Ils ont besoin d'un partenaire qui soit à la fois leur plus grand fan et un égal qui n'a pas peur de défier leur ego avec grâce.",
       "friendshipTitle": "Le Lion en Amitié",
-      "friendship": "Un ami Lion est le chef de la meute, celui qui organise les fêtes et s'assure que tout le monde passe un bon moment. Ils sont farouchement loyaux et défendront leurs amis avec une détermination ardente. Ils aiment gâter et encourager leurs amis, mais ils attendent en retour de l'appréciation et de l'admiration. L'amitié avec un Lion est chaleureuse, amusante et toujours un peu théâtrale.",
+      "friendship": "Un ami Lion est le soleil de votre cercle social. Ce sont eux qui organisent les fêtes les plus mémorables et s'assurent que tout le monde se sent inclus et célébré. Leur loyauté est inébranlable ; ils défendront leurs amis avec la férocité d'un lion défendant ses petits. Ils sont incroyablement généreux, tant de leur temps que de leurs ressources. Cependant, une amitié avec un Lion exige que vous reconnaissiez sa royauté. Ils aiment être le centre de l'attention et attendent de leurs amis qu'ils soient leur public le plus loyal. Bien que leur cœur soit d'or, leur fierté est fragile. S'ils se sentent ignorés ou peu appréciés, leur rugissement se fera entendre. Malgré cela, leur chaleur et leur joie de vivre font que tout drame en vaut la peine.",
       "workTitle": "Le Lion au Travail",
-      "work": "Le Lion est un leader et un motivateur né. Ils s'épanouissent dans des rôles qui leur permettent d'utiliser leur créativité et leur charisme. Ils font d'excellents orateurs, artistes, vendeurs et gestionnaires. Ils ont besoin de reconnaissance pour leur travail et peuvent avoir des difficultés s'ils ne se sentent pas appréciés. Leur capacité à inspirer les autres est leur plus grand atout professionnel."
+      "work": "Au travail, le Lion est le leader naturel et le motivateur de l'équipe. Il ne recherche pas nécessairement le pouvoir pour le pouvoir, mais l'opportunité d'inspirer et de diriger par l'exemple. Il s'épanouit dans des rôles qui lui permettent de briller, que ce soit sur scène, dans la salle de conférence ou à la tête d'une équipe créative. Il est un excellent orateur, artiste, metteur en scène et porte-parole. Sa confiance est contagieuse et il a une capacité innée à faire croire les gens en une vision. Son plus grand défi est la délégation ; il a parfois l'impression que personne ne peut faire le travail aussi bien (ou avec autant de panache) que lui. Il a besoin d'une reconnaissance constante pour ses contributions et peut se démotiver dans un environnement qui ne valorise pas son éclat individuel."
     },
     "Virgo": {
       "title": "Traits de la Vierge",
-      "description": "La Vierge est le signe du service, de la pureté et de l'analyse pratique. Gouvernés par Mercure, ils possèdent un esprit vif et un désir inné d'améliorer et d'organiser le monde qui les entoure. Ils sont soucieux des détails, méthodiques et ont un profond besoin d'être utiles. Ce sont les aides silencieux du zodiaque, travaillant en coulisses pour s'assurer que tout fonctionne parfaitement.",
+      "description": "La Vierge est le signe du service, de la pureté et de l'analyse pratique. Gouvernés par Mercure, ils possèdent un esprit vif et un désir inné d'améliorer et d'organiser le monde qui les entoure. Ils sont soucieux des détails, méthodiques et ont un profond besoin d'être utiles. Ce sont les aides silencieux du zodiaque, travaillant en coulisses pour s'assurer que tout fonctionne parfaitement. L'esprit d'une Vierge est un système complexe de listes, de plans et d'analyses. Ils remarquent les détails que les autres ignorent, ce qui en fait d'excellents éditeurs, critiques et artisans. Ce perfectionnisme, cependant, est une épée à double tranchant. Il peut les mener à une autocritique implacable et à une anxiété constante de ne pas être à la hauteur de leurs propres normes impossibles. Malgré leur nature réservée, les Vierges ont un puits profond de soin et de dévotion. Ils montrent leur amour non pas par de grands gestes, mais par des actes de service pratiques : réparer un robinet qui fuit, organiser vos finances, ou simplement être là avec des conseils judicieux lorsque vous en avez le plus besoin. Leur plus grand défi est d'apprendre à se détendre, à accepter l'imperfection et à comprendre qu'ils sont précieux pour ce qu'ils sont, pas seulement pour ce qu'ils font pour les autres.",
       "strengthsTitle": "Forces",
-      "strengths": ["Loyal", "analytique", "gentil", "travailleur", "pratique", "modeste"],
+      "strengths": [
+        "Loyal",
+        "analytique",
+        "gentil",
+        "travailleur",
+        "pratique",
+        "modeste"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Timidité", "inquiétude", "trop critique envers soi-même et les autres", "tout travail et pas de jeu"],
+      "weaknesses": [
+        "Timidité",
+        "inquiétude",
+        "trop critique envers soi-même et les autres",
+        "tout travail et pas de jeu"
+      ],
       "loveTitle": "La Vierge en Amour",
-      "love": "En amour, la Vierge montre son affection par des actes de service pratiques et une dévotion constante, et non par de grands gestes romantiques. Ils sont prudents et prennent du temps pour s'ouvrir. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de prendre soin des détails.",
+      "love": "En amour, la Vierge exprime son affection de la manière la plus pratique et tangible possible. Son langage d'amour n'est pas les sonnets, mais les actes de service : s'assurer que vous avez tout ce dont vous avez besoin, organiser votre emploi du temps ou préparer un repas sain. Elle est prudente au début, analysant chaque détail avant de donner son cœur. Elle recherche un partenaire qui soit propre, intelligent et fiable. Une fois engagée, elle est une partenaire incroyablement loyale, attentive et dévouée. Son plus grand défi est de surmonter sa tendance à la critique. Elle peut se focaliser sur les imperfections de son partenaire (et les siennes), oubliant que l'amour est intrinsèquement imparfait. Elle a besoin d'un compagnon qui apprécie sa dévotion et l'aide à se détendre et à être moins dure avec elle-même.",
       "friendshipTitle": "La Vierge en Amitié",
-      "friendship": "La Vierge est l'ami qui a toujours un plan, qui aide pour les devoirs, et qui se souvient comment enlever cette tache de votre chemise préférée. Ils sont incroyablement fiables et donnent les conseils les plus pratiques. Ils montrent leur amour en aidant. Parfois, leur tendance à 'réparer' tout peut être perçue comme une critique, mais leurs intentions sont toujours pures.",
+      "friendship": "Un ami Vierge est le système de soutien le plus fiable que vous puissiez imaginer. C'est celui qui se souvient de vos allergies, qui vous aide à monter ce meuble compliqué et qui vous donne les conseils les plus pratiques et les mieux documentés. Son amitié est calme, sans drame et basée sur la loyauté et le soutien mutuel. Il n'est pas le plus expressif sur le plan émotionnel, mais sa présence constante et ses actes d'aide parlent plus que mille mots. Le défi est que son désir d'« aider » peut parfois se transformer en critique non sollicitée sur la façon dont vous pourriez améliorer votre vie. Si vous pouvez voir au-delà de cela et apprécier sa pure intention, vous aurez un ami pour la vie qui se soucie vraiment de votre bien-être.",
       "workTitle": "La Vierge au Travail",
-      "work": "La Vierge est le rêve de tout employeur. Ils sont efficaces, organisés et ont un œil inégalé pour les détails. Ils excellent dans les carrières qui nécessitent de l'analyse, de la recherche, de l'édition ou toute forme de travail précis. Ce sont les personnes qui trouvent les erreurs que les autres manquent et améliorent les systèmes pour les rendre plus efficaces. Leur perfectionnisme peut parfois faire d'eux leur propre pire critique."
+      "work": "Dans le milieu professionnel, la Vierge est le pilier de l'efficacité et de la qualité. Elle est l'éditeur, l'analyste, le chercheur et l'administrateur par excellence. Elle a un œil de lynx pour les détails et une capacité innée à trouver les défauts et à optimiser les processus. Aucun détail n'est trop petit pour son examen. C'est une travailleuse infatigable, animée par un profond sens du devoir et le désir de faire un travail parfait. Elle peut être une excellente manager, bien que son style soit plus de diriger par l'exemple que par un grand charisme. Son plus grand défi est le perfectionnisme paralysant ; elle peut se perdre dans les détails, perdant de vue la situation d'ensemble. Elle doit apprendre à déléguer et à faire confiance au fait que « assez bien » est, en fait, parfois suffisant."
     },
     "Libra": {
       "title": "Traits de la Balance",
-      "description": "Gouvernée par Vénus, la Balance est le signe de l'équilibre, de l'harmonie et de la justice. Les Balances sont des êtres sociaux qui s'épanouissent dans le partenariat et cherchent à créer un équilibre dans tous les domaines de la vie. Ils ont un œil vif pour la beauté et un charme diplomatique naturel.",
+      "description": "Gouvernée par Vénus, la Balance est le signe de l'équilibre, de l'harmonie et de la justice. Les Balances sont des êtres sociaux qui s'épanouissent dans le partenariat et cherchent à créer un équilibre dans tous les domaines de la vie. Ils ont un œil vif pour la beauté et un charme diplomatique naturel. En tant que signe d'Air Cardinal, leur mission est d'initier des connexions et de favoriser la paix par la médiation et l'équité. L'esprit d'une Balance pèse constamment le pour et le contre, cherchant la perspective la plus équilibrée, ce qui peut conduire à une indécision notoire. Ce n'est pas qu'ils ne savent pas ce qu'ils veulent, mais qu'ils peuvent voir la validité de tous les côtés d'un argument. Cette capacité en fait d'excellents diplomates, conseillers et avocats. L'esthétique est fondamentale pour leur bien-être ; ils sont attirés par tout ce qui est beau, que ce soit dans l'art, la musique, la mode ou les gens. Un environnement désordonné ou conflictuel est physiquement épuisant pour eux. Par-dessus tout, la Balance est le signe du 'nous', pas du 'moi'. Ils se sentent plus complets lorsqu'ils sont en partenariat, que ce soit romantique, professionnel ou amical, et ils feront de grands efforts pour maintenir la paix et l'harmonie dans leurs relations.",
       "strengthsTitle": "Forces",
-      "strengths": ["Coopératif", "diplomate", "gracieux", "juste", "social"],
+      "strengths": [
+        "Coopératif",
+        "diplomate",
+        "gracieux",
+        "juste",
+        "social"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Indécis", "évite les confrontations", "rancunier", "s'apitoie sur son sort"],
+      "weaknesses": [
+        "Indécis",
+        "évite les confrontations",
+        "rancunier",
+        "s'apitoie sur son sort"
+      ],
       "loveTitle": "La Balance en Amour",
-      "love": "En amour, la Balance est un idéaliste romantique qui recherche un véritable partenariat. Ils ont besoin d'équilibre et d'harmonie, et feront tout leur possible pour plaire à leur partenaire. La communication et la connexion intellectuelle sont essentielles pour eux.",
+      "love": "En amour, la Balance est un romantique incurable qui recherche sa moitié. Son but ultime est un partenariat équilibré, harmonieux et esthétiquement agréable. Ce sont des amants attentifs et diplomates, toujours prêts à faire des compromis pour maintenir la paix. La communication et la connexion intellectuelle sont vitales pour eux. Cependant, leur aversion pour les conflits peut être leur plus grande faiblesse ; ils peuvent éviter les discussions nécessaires pour maintenir une apparence d'harmonie, ce qui peut entraîner des ressentiments sous-jacents. Ils ont besoin d'un partenaire qui apprécie leur nature romantique et les encourage doucement à exprimer leurs vrais besoins, même si cela signifie perturber momentanément l'équilibre.",
       "friendshipTitle": "La Balance en Amitié",
-      "friendship": "En tant qu'amis, les Balances sont charmants, justes et d'excellents auditeurs. Ils sont le ciment social de leur groupe, agissant souvent comme des médiateurs pour maintenir la paix. Ils adorent assister à des événements culturels et profiter de bonnes conversations autour d'un bon repas. Leur indécision peut être frustrante lors de la planification d'activités, mais leur compagnie est toujours agréable.",
+      "friendship": "Un ami Balance est le médiateur, le pacificateur et l'organisateur social du groupe. Ils sont charmants, justes et recherchent toujours l'équité. Ils apprécient les interactions sociales et sont excellents pour rassembler les gens. Leur compagnie est agréable et détendue, visant toujours le consensus. L'inconvénient est leur légendaire indécision ; choisir un restaurant peut devenir un débat d'une heure. Malgré cela, leur capacité à écouter et à offrir des conseils équilibrés en fait des amis précieux. Ils s'efforceront toujours de s'assurer que tout le monde se sent inclus et heureux.",
       "workTitle": "La Balance au Travail",
-      "work": "Les Balances excellent en tant que médiateurs, diplomates et dans tout rôle qui exige de l'équité et de la grâce sociale. Ce sont de grands joueurs d'équipe et ils s'épanouissent dans des environnements de travail beaux et harmonieux, souvent dans les arts, le droit ou les relations publiques."
+      "work": "Sur le lieu de travail, la Balance excelle dans les rôles qui exigent de la diplomatie, de la négociation et des compétences interpersonnelles. Ce sont d'excellents joueurs d'équipe, médiateurs, avocats, designers et organisateurs d'événements. Ils s'épanouissent dans des environnements harmonieux et esthétiquement agréables et ont des difficultés dans des atmosphères compétitives ou conflictuelles. Leur capacité à voir tous les côtés d'un problème en fait d'excellents stratèges, bien qu'ils puissent prendre beaucoup de temps pour prendre une décision finale. Ils sont excellents pour construire des réseaux et entretenir des relations professionnelles positives."
     },
     "Scorpio": {
       "title": "Traits du Scorpion",
-      "description": "Le Scorpion est un signe d'émotion profonde, de pouvoir et de transformation. Gouvernés par Pluton, ils sont passionnés, ingénieux et incroyablement déterminés. Les Scorpions sont connus pour leur intensité et leur capacité à voir au-delà de la surface jusqu'à la vérité de toute chose.",
+      "description": "Le Scorpion est le signe de l'émotion profonde, du pouvoir et de la transformation. Gouvernés par Pluton (et traditionnellement Mars), ils sont passionnés, ingénieux et incroyablement déterminés. Les Scorpions sont connus pour leur intensité et leur capacité à voir au-delà de la surface jusqu'à la vérité de toute chose. Ils vivent dans un monde de noir et de blanc ; pour eux, il n'y a pas de zones grises. C'est tout ou rien. Cette intensité les rend incroyablement loyaux et protecteurs envers ceux qui gagnent leur confiance, mais aussi de redoutables adversaires s'ils se sentent trahis. Ce sont les détectives du zodiaque, toujours en train d'enquêter, de questionner et de chercher les motivations cachées derrière les actions des gens. Leur nature aquatique leur donne une intuition profonde et une connexion presque psychique avec le monde émotionnel, le leur et celui des autres. Cependant, ils cachent souvent leurs propres sentiments sous un vernis de calme et de contrôle. Ils craignent la vulnérabilité plus que tout, et leur plus grand défi est d'apprendre à faire confiance et à lâcher prise. La transformation est un thème central dans leur vie ; comme le phénix, un Scorpion est destiné à passer par de multiples 'morts' et renaissances, sortant de chaque crise plus fort et plus sage qu'auparavant.",
       "strengthsTitle": "Forces",
-      "strengths": ["Ingénieux", "courageux", "passionné", "un véritable ami", "déterminé"],
+      "strengths": [
+        "Ingénieux",
+        "courageux",
+        "passionné",
+        "un véritable ami",
+        "déterminé"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Méfiance", "jaloux", "secret", "peut être manipulateur"],
+      "weaknesses": [
+        "Méfiance",
+        "jaloux",
+        "secret",
+        "peut être manipulateur"
+      ],
       "loveTitle": "Le Scorpion en Amour",
-      "love": "En amour, le Scorpion est tout ou rien. Ils sont incroyablement loyaux, passionnés et protecteurs, recherchant une connexion profonde et révélatrice. Ils exigent une confiance absolue et peuvent être assez possessifs.",
+      "love": "Aimer un Scorpion est une expérience transformatrice et intense. Ils ne font pas les choses à moitié ; quand ils aiment, ils le font avec chaque fibre de leur être. Ils recherchent une fusion des âmes, une connexion qui transcende le physique. La loyauté et la confiance sont les piliers de leur univers romantique ; une trahison, aussi petite soit-elle, est presque impardonnable. Ils sont incroyablement passionnés et protecteurs, mais cette intensité peut se transformer en jalousie et en possessivité s'ils se sentent en insécurité. Ils ont besoin d'un partenaire qui n'a pas peur de leur profondeur émotionnelle et qui est prêt à explorer les mystères de la vie (et de l'âme) avec eux. Une relation avec un Scorpion n'est jamais superficielle ; c'est un voyage dans les profondeurs du cœur humain.",
       "friendshipTitle": "Le Scorpion en Amitié",
-      "friendship": "Avoir un Scorpion comme ami signifie avoir un allié pour la vie. Ils sont farouchement loyaux et protecteurs, mais ils attendent la même chose en retour. Ce sont d'excellents gardiens de secrets et donnent des conseils profonds et perspicaces. Gagner la confiance d'un Scorpion est difficile, mais une fois que vous l'avez, vous avez un ami qui vous défendra contre vents et marées.",
+      "friendship": "Gagner l'amitié d'un Scorpion, c'est gagner un allié pour la vie. Ils n'ont pas beaucoup d'amis, mais ceux qu'ils ont sont considérés comme de la famille. Ils sont les gardiens des secrets les plus profonds et les défenseurs les plus féroces. Un ami Scorpion saura toujours quand quelque chose ne va pas, même si vous ne dites rien, grâce à son intuition pénétrante. Ils sont brutalement honnêtes, mais leur loyauté est inébranlable. Cependant, si vous trahissez leur confiance, préparez-vous à sentir le dard. Ils ne pardonnent ni n'oublient facilement. Leur amitié est un pacte sacré, une forteresse de confiance et de soutien mutuel.",
       "workTitle": "Le Scorpion au Travail",
-      "work": "Les Scorpions sont d'excellents enquêteurs, chercheurs et stratèges. Ils s'épanouissent dans des rôles qui leur demandent de découvrir des vérités ou d'exercer le pouvoir, comme les détectives, les scientifiques ou les dirigeants financiers."
+      "work": "Au travail, le Scorpion est le stratège, l'enquêteur et le solutionneur de problèmes par excellence. Il a une capacité unique à se concentrer intensément sur une tâche, ignorant toutes les distractions jusqu'à ce qu'il aille au fond des choses. Il s'épanouit dans des rôles qui exigent de l'enquête, une analyse approfondie et la gestion d'informations confidentielles, comme dans la finance, la recherche, la psychologie ou la chirurgie. Il est ambitieux et n'a pas peur du pouvoir. Sa détermination est redoutable, et il ne reculera devant rien pour atteindre ses objectifs. Il peut être secret et préfère travailler seul, mais lorsqu'il fait partie d'une équipe, sa loyauté et son engagement sont totaux, tant qu'il respecte ses collègues."
     },
     "Sagittarius": {
       "title": "Traits du Sagittaire",
-      "description": "L'aventurier et philosophe du zodiaque, le Sagittaire est gouverné par Jupiter, la planète de l'expansion et de la chance. Ils sont optimistes, épris de liberté et ont une soif insatiable de connaissances et de nouvelles expériences.",
+      "description": "L'aventurier et philosophe du zodiaque, le Sagittaire est gouverné par Jupiter, la planète de l'expansion, de la chance et de la connaissance supérieure. Ils sont optimistes, épris de liberté et ont une soif insatiable de connaissances et de nouvelles expériences. Pour un Sagittaire, la vie est une grande aventure, un voyage pour explorer le monde et comprendre sa signification. Leur esprit est toujours à la recherche de la vérité, ce qui en fait des étudiants éternels, toujours inscrits à l'université de la vie. Ils possèdent un sens de l'humour contagieux et une honnêteté brutale qui, bien que rafraîchissante, peut parfois manquer de tact. Ils ne veulent pas de mal ; ils croient simplement qu'il faut dire les choses comme ils les voient. Leur plus grand besoin est la liberté. Tout ce qui les fait se sentir piégés ou limités, que ce soit une routine ennuyeuse ou une relation possessive, les fera fuir vers l'horizon. Ce sont les visionnaires du zodiaque, toujours tournés vers l'avenir et croyant que le meilleur est à venir. Leur foi en l'univers est inébranlable, et cette énergie optimiste attire souvent la bonne fortune dans leur vie.",
       "strengthsTitle": "Forces",
-      "strengths": ["Généreux", "idéaliste", "grand sens de l'humour", "optimiste"],
+      "strengths": [
+        "Généreux",
+        "idéaliste",
+        "grand sens de l'humour",
+        "optimiste"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Promet plus qu'il ne peut tenir", "impatient", "sans tact"],
+      "weaknesses": [
+        "Promet plus qu'il ne peut tenir",
+        "impatient",
+        "sans tact"
+      ],
       "loveTitle": "Le Sagittaire en Amour",
-      "love": "Le Sagittaire a besoin de liberté en amour. Ils recherchent un partenaire qui soit également leur meilleur ami et compagnon de voyage. Ils peuvent être méfiants à l'égard de l'engagement, craignant que cela ne leur coupe les ailes, mais sont incroyablement loyaux une fois qu'ils ont trouvé leur partenaire.",
+      "love": "En amour, le Sagittaire recherche un partenaire d'aventure, quelqu'un qui soit à la fois son amant et son meilleur ami. Il valorise la liberté et l'indépendance par-dessus tout, donc un partenaire possessif ou jaloux le fera fuir. Son approche de la romance est optimiste, amusante et philosophique. Il adore apprendre aux côtés de son partenaire, que ce soit en voyageant dans des pays lointains ou en explorant de nouvelles idées. Il peut être réticent à l'engagement, non par manque d'amour, mais par peur de perdre sa liberté. Il a besoin d'un compagnon qui comprenne son besoin d'espace et qui soit prêt à grandir et à explorer le monde avec lui.",
       "friendshipTitle": "Le Sagittaire en Amitié",
-      "friendship": "Un Sagittaire est l'ami avec qui on part spontanément en voyage. Ils sont drôles, optimistes et toujours prêts pour une aventure. Ils sont aussi brutalement honnêtes, ce qui peut être à la fois une force et une faiblesse. Ils ont besoin d'amis qui respectent leur liberté et apprécient leurs discussions philosophiques tard dans la nuit.",
+      "friendship": "Un ami Sagittaire est celui qui vous appelle pour un voyage improvisé ou pour un débat philosophique qui dure toute la nuit. Il est l'âme de la fête, avec un sens de l'humour contagieux et une vision optimiste de la vie. Son honnêteté est légendaire ; il vous dira toujours la vérité, même si cela fait un peu mal. Ne vous attendez pas à ce qu'il se souvienne de chaque détail de votre vie, mais il sera toujours là pour vous encourager à rêver plus grand et à vivre plus audacieusement. C'est un ami peu exigeant qui comprend et respecte le besoin d'indépendance des autres.",
       "workTitle": "Le Sagittaire au Travail",
-      "work": "Le Sagittaire excelle dans les carrières qui impliquent les voyages, l'éducation, l'édition ou la philosophie. Ils ont besoin d'autonomie et d'un sens du but, et ils font des enseignants et des leaders inspirants."
+      "work": "Dans le milieu professionnel, le Sagittaire est le visionnaire, l'enseignant et l'explorateur. Il s'épanouit dans des carrières qui lui permettent d'apprendre, d'enseigner et d'explorer, comme dans le milieu universitaire, l'édition, le droit ou le tourisme. Il déteste la routine et la microgestion. Il a besoin d'autonomie et de la liberté de suivre sa curiosité. Il est excellent pour motiver les autres avec sa vision optimiste et sa capacité à voir la situation dans son ensemble. Son défi est de prêter attention aux détails et d'accomplir les tâches banales. Il travaille mieux lorsqu'il peut inspirer et déléguer l'exécution détaillée."
     },
     "Capricorn": {
       "title": "Traits du Capricorne",
-      "description": "La chèvre ambitieuse et disciplinée du zodiaque. Gouvernés par Saturne, les Capricornes sont maîtres de la maîtrise de soi et ont la capacité de montrer la voie, de faire des plans solides et réalistes, et de gérer de nombreuses personnes qui travaillent pour eux à tout moment. Ce sont des maîtres de la manifestation.",
+      "description": "La chèvre ambitieuse et disciplinée du zodiaque. Gouvernés par Saturne, les Capricornes sont maîtres de la maîtrise de soi et ont la capacité de montrer la voie, de faire des plans solides et réalistes, et de gérer de nombreuses personnes qui travaillent pour eux à tout moment. Ce sont des maîtres de la manifestation. Ils représentent la structure, la tradition et l'ambition. Pour le Capricorne, la vie est une montagne à gravir, et ils sont prêts à travailler dur et avec patience pour atteindre le sommet. Leur approche est pratique, méthodique et toujours avec une vision à long terme. Ils ne croient pas aux raccourcis ; ils croient aux règles, à la responsabilité et à la construction de fondations solides. Bien qu'ils puissent paraître sérieux, distants ou même froids à l'extérieur, ils possèdent un humour pince-sans-rire et un profond sens de la loyauté envers ceux qui gagnent leur respect. Leur plus grande peur est l'échec, et cette pression peut les rendre trop durs avec eux-mêmes et avec les autres. Leur mission est d'apprendre que le véritable succès ne se mesure pas seulement aux réalisations extérieures, mais aussi à la joie et à la satisfaction trouvées sur le chemin. Ce sont les rocs du zodiaque, fiables et capables de résister à n'importe quelle tempête.",
       "strengthsTitle": "Forces",
-      "strengths": ["Responsable", "discipliné", "maîtrise de soi", "bons gestionnaires", "loyal"],
+      "strengths": [
+        "Responsable",
+        "discipliné",
+        "maîtrise de soi",
+        "bons gestionnaires",
+        "loyal"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Je-sais-tout", "impitoyable", "condescendant", "s'attend au pire"],
+      "weaknesses": [
+        "Je-sais-tout",
+        "impitoyable",
+        "condescendant",
+        "s'attend au pire"
+      ],
       "loveTitle": "Le Capricorne en Amour",
-      "love": "Le Capricorne est un partenaire sérieux et engagé. Il montre son amour par des actes pratiques et de la loyauté. Il recherche un partenaire tout aussi ambitieux et qui comprend son besoin de structure et de sécurité.",
+      "love": "En amour, le Capricorne prend son temps. Il ne se précipite pas dans les relations ; pour lui, l'amour est un investissement à long terme. Il montre son affection non pas par des mots fleuris, mais par des actes de service, de la loyauté et un engagement inébranlable. Il recherche un partenaire qui soit tout aussi ambitieux et responsable, et qui comprenne son besoin de structure. Il peut paraître distant ou froid, mais sous son extérieur réservé se cache un cœur loyal qui aspire à une connexion profonde et durable. Il a besoin d'un compagnon qui apprécie la sécurité et qui comprenne que son travail est aussi une forme d'amour et de provision.",
       "friendshipTitle": "Le Capricorne en Amitié",
-      "friendship": "Un ami Capricorne est celui que vous appelez lorsque vous avez besoin d'un plan solide ou d'une dose de réalité. Ils sont incroyablement loyaux et fiables, même s'ils ne sont pas les plus expressifs. Ils montrent leur affection par leur constance et leur volonté d'aider dans les moments difficiles. Ils ont un humour pince-sans-rire que seuls leurs amis les plus proches voient.",
+      "friendship": "Un ami Capricorne est celui que vous appelez lorsque vous avez besoin d'un plan solide ou d'une dose de réalité. Il n'enrobera pas la vérité, mais il sera toujours là pour vous aider à élaborer un plan pour surmonter vos problèmes. Il est incroyablement fiable et loyal. Ses amitiés se construisent lentement, basées sur le respect mutuel et la confiance. Il n'est peut-être pas l'ami le plus expressif, mais son soutien est solide comme le roc. Il a un sens de l'humour surprenant et pince-sans-rire qu'il réserve à son cercle intime. Il apprécie les amis qui sont tout aussi ambitieux et qui comprennent son besoin de structure.",
       "workTitle": "Le Capricorne au Travail",
-      "work": "Les Capricornes sont les PDG du zodiaque. Ils sont travailleurs, axés sur les objectifs et excellents dans la gestion de projets et de personnes. Ils s'épanouissent dans des environnements où ils peuvent construire et atteindre un succès à long terme."
+      "work": "Au travail, le Capricorne est le PDG du zodiaque. Il est l'incarnation de la discipline, de la responsabilité et de l'ambition. Il a un talent naturel pour la gestion et la stratégie à long terme. Il s'épanouit dans des environnements structurés où il peut gravir les échelons du succès par un travail acharné et un dévouement. Il n'a pas peur des responsabilités et est excellent pour gérer à la fois les projets et les personnes. Sa concentration est implacable, et son objectif final est toujours de construire quelque chose de durable et de haute qualité. Il est la pierre angulaire de toute organisation, apportant stabilité et une éthique de travail inégalée."
     },
     "Aquarius": {
       "title": "Traits du Verseau",
-      "description": "Le visionnaire et humanitaire du zodiaque. Gouvernés par Uranus, les Verseaux sont originaux, indépendants et tournés vers l'avenir. Ils suivent leur propre voie et se consacrent à rendre le monde meilleur.",
+      "description": "Le visionnaire et humanitaire du zodiaque. Gouvernés par Uranus (et traditionnellement Saturne), les Verseaux sont originaux, indépendants et tournés vers l'avenir. Ils suivent leur propre voie et se consacrent à rendre le monde meilleur. Ce sont les rebelles et les innovateurs, qui remettent toujours en question le statu quo et pensent en termes de 'nous' au lieu de 'moi'. Leur esprit est brillant, excentrique et toujours en avance sur son temps. Ils sont plus à l'aise dans le monde des idées et des concepts que dans le monde désordonné des émotions. Cela peut les faire paraître distants ou détachés, mais leur préoccupation pour l'humanité est sincère et profonde. Ils valorisent l'amitié par-dessus tout et traitent tout le monde sur un pied d'égalité, sans hiérarchie. Leur plus grand besoin est la liberté : liberté de penser, d'être différent et de poursuivre leurs idéaux sans restriction. Ce sont les porteurs d'eau, apportant la connaissance et de nouvelles perspectives pour étancher la soif collective de progrès.",
       "strengthsTitle": "Forces",
-      "strengths": ["Progressiste", "original", "indépendant", "humanitaire", "intellectuel"],
+      "strengths": [
+        "Progressiste",
+        "original",
+        "indépendant",
+        "humanitaire",
+        "intellectuel"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Fuit l'expression émotionnelle", "colérique", "intransigeant", "distant"],
+      "weaknesses": [
+        "Fuit l'expression émotionnelle",
+        "colérique",
+        "intransigeant",
+        "distant"
+      ],
       "loveTitle": "Le Verseau en Amour",
-      "love": "En amour, le Verseau a besoin d'un partenaire qui soit avant tout un ami. Il valorise la connexion intellectuelle et la liberté. Il peut sembler détaché, mais son amour est sincère et basé sur des idéaux partagés.",
+      "love": "En amour, un Verseau recherche avant tout un ami et un partenaire intellectuel. Il est attiré par les esprits originaux et non conventionnels. Son approche de la romance est plus cérébrale qu'émotionnelle. Il peut sembler distant ou détaché, mais son amour est sincère, bien qu'exprimé de manière non traditionnelle. Il valorise la liberté par-dessus tout, tant pour lui-même que pour son partenaire. Une relation avec un Verseau doit être basée sur le respect mutuel, l'indépendance et des idéaux partagés. Il a besoin d'un compagnon qui n'essaiera pas de restreindre son besoin de socialiser avec un large éventail de personnes.",
       "friendshipTitle": "Le Verseau en Amitié",
-      "friendship": "Un ami Verseau est unique, intellectuellement stimulant et toujours partant pour une idée non conventionnelle. Ce sont des amis loyaux mais qui ont besoin de beaucoup d'espace personnel. Ce sont d'excellents amis pour les activités de groupe et les causes sociales. Ils traitent tous leurs amis de la même manière, ce qui peut parfois faire en sorte que certains ne se sentent pas spéciaux.",
+      "friendship": "En tant qu'ami, un Verseau est loyal, juste et toujours prêt à aider une cause. Ce sont les amis avec qui vous pouvez avoir les conversations les plus étranges et fascinantes. Ils ne sont pas possessifs et comprennent le besoin d'espace. Cependant, leur concentration sur le collectif peut parfois donner l'impression à leurs amis de faire partie d'un groupe plus large plutôt que d'un individu spécial. Ils apprécient les amitiés basées sur des intérêts intellectuels et humanitaires partagés.",
       "workTitle": "Le Verseau au Travail",
-      "work": "Le Verseau excelle dans les rôles qui nécessitent de l'innovation et une pensée non conventionnelle, comme dans la technologie, la science ou l'activisme social. Il a besoin d'autonomie et travaille mieux lorsqu'il croit en la cause."
+      "work": "Au travail, le Verseau est l'innovateur, le scientifique et le réformateur social. Il s'épanouit dans des rôles qui lui permettent d'utiliser son esprit brillant pour résoudre des problèmes de manière non conventionnelle. Il déteste la routine et la bureaucratie. Il a besoin d'autonomie et de la liberté d'expérimenter. Il est excellent dans des domaines comme la technologie, la science, le travail social et l'activisme. C'est un excellent joueur d'équipe lorsqu'il travaille sur des projets qui correspondent à ses idéaux humanitaires."
     },
     "Pisces": {
       "title": "Traits des Poissons",
-      "description": "Le mystique et rêveur du zodiaque. Gouvernés par Neptune, les Poissons sont compatissants, artistiques et profondément intuitifs. Ils sont connectés au royaume spirituel et ont une capacité d'empathie sans limites.",
+      "description": "Le mystique et rêveur du zodiaque. Gouvernés par Neptune, les Poissons sont compatissants, artistiques et profondément intuitifs. C'est le dernier signe, une fusion de tous ceux qui le précèdent. Ils sont connectés au royaume spirituel et ont une capacité d'empathie sans limites. Leur nature caméléon leur permet de s'adapter à n'importe quel environnement, absorbant les émotions et les atmosphères qui les entourent. Cette sensibilité est à la fois leur plus grand don et leur plus grand défi. Un Poisson vit dans un monde où la frontière entre la réalité et le fantasme est floue, ce qui leur confère une immense créativité et imagination. Ce sont les vieilles âmes du zodiaque, porteuses d'une sagesse qui semble venir d'autres vies. Leur compassion ne connaît pas de limites, et ils placent souvent les besoins des autres avant les leurs, ce qui peut les amener à être exploités. Ils ont souvent une connexion profonde avec la musique, l'art et toute forme d'expression qui leur permet de canaliser leur vaste monde intérieur. L'évasion est leur mécanisme de défense ; lorsque le monde devient trop dur, ils se retirent dans leur sanctuaire intérieur de rêves. Apprendre à fixer des limites saines et à rester ancrés dans la réalité sans perdre leur magie est leur grande leçon de vie. Ils sont incroyablement romantiques, non seulement en amour, mais dans leur vision de la vie en général, cherchant toujours la beauté et la connexion spirituelle en tout.",
       "strengthsTitle": "Forces",
-      "strengths": ["Compatissant", "artistique", "intuitif", "doux", "sage"],
+      "strengths": [
+        "Compatissant",
+        "artistique",
+        "intuitif",
+        "doux",
+        "sage"
+      ],
       "weaknessesTitle": "Faiblesses",
-      "weaknesses": ["Craintif", "trop confiant", "triste", "désir d'échapper à la réalité", "peut être une victime ou un martyr"],
+      "weaknesses": [
+        "Craintif",
+        "trop confiant",
+        "triste",
+        "désir d'échapper à la réalité",
+        "peut être une victime ou un martyr"
+      ],
       "loveTitle": "Les Poissons en Amour",
-      "love": "Les Poissons sont des romantiques incurables qui recherchent une connexion magique et profonde de l'âme. Ce sont des partenaires incroyablement altruistes et dévoués, mais ils peuvent aussi se perdre dans l'idéalisation et ignorer les signaux d'alarme.",
+      "love": "En amour, les Poissons recherchent une fusion des âmes, une connexion qui transcende le banal. Ce sont des romantiques invétérés, capables d'un niveau de dévotion et de sacrifice que peu peuvent égaler. Ils montrent leur amour par l'empathie, la compassion et le désir de guérir les blessures de leur partenaire. Cependant, leur tendance à idéaliser leur partenaire peut les conduire à la désillusion. Ils ont besoin d'un partenaire qui soit à la fois fort et doux, quelqu'un qui puisse protéger leur cœur sensible et les ancrer dans la réalité sans détruire leurs rêves.",
       "friendshipTitle": "Les Poissons en Amitié",
-      "friendship": "Un ami Poissons est l'auditeur compatissant vers qui tout le monde se tourne lorsqu'il a un problème. Ils sont incroyablement solidaires, sans jugement et se donnent à fond pour aider. Leur nature rêveuse en fait des compagnons amusants et créatifs. Ils doivent cependant faire attention à ne pas porter les fardeaux émotionnels de tout le monde.",
+      "friendship": "Un ami Poissons est un sanctuaire pour l'âme. C'est l'ami vers qui on se tourne quand on a besoin d'une oreille compatissante sans jugement. Il a une capacité étonnante à ressentir ce que vous ressentez et à offrir du réconfort. Il est incroyablement loyal et désintéressé. Cependant, sa nature poreuse signifie qu'il peut absorber les émotions négatives des autres, ce qui peut être épuisant pour lui. Il a besoin d'amis qui respectent son besoin de solitude pour se ressourcer et qui ne profitent pas de sa gentillesse infinie.",
       "workTitle": "Les Poissons au Travail",
-      "work": "Les Poissons s'épanouissent dans les domaines créatifs et compatissants. Ce sont d'excellents artistes, musiciens, guérisseurs et conseillers. Leur intuition leur donne une perspective unique dans tous les rôles qu'ils entreprennent."
+      "work": "Au travail, les Poissons s'épanouissent dans des environnements qui leur permettent d'utiliser leur créativité, leur intuition et leur compassion. Ce sont d'excellents artistes, musiciens, thérapeutes, guérisseurs et travailleurs d'organisations à but non lucratif. Ils ne sont pas motivés par l'argent ou le pouvoir, mais par le désir de contribuer à quelque chose de plus grand qu'eux-mêmes. Leur principal défi est de faire face à des environnements de travail durs et compétitifs. Ils ont besoin d'un travail qui a du sens et qui leur permet d'utiliser leurs dons uniques pour aider les autres."
     }
   },
   "Share.lunarPhaseTitle": "Phase Lunaire Actuelle d'AstroVibes",
