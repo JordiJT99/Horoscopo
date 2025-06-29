@@ -18,13 +18,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
-import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { Progress } from '@/components/ui/progress';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import MoonPhaseVisualizer from './MoonPhaseVisualizer'; // Import the new component
 
 interface LunarAscendantClientContentProps {
   dictionary: Dictionary;
@@ -177,14 +177,10 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                           exit={{ opacity: 0, scale: 0.8 }}
                           transition={{ duration: 0.5 }}
                         >
-                          <Image
-                            src={lunarData.currentMoonImage}
-                            alt={dictionary['LunarAscendantPage.currentMoonAlt'] || `Current moon phase: ${lunarData.phase}`}
-                            width={72}
-                            height={72}
-                            className="rounded-full bg-slate-700 object-cover"
-                            data-ai-hint="moon phase realistic"
-                            aria-label={`Current moon phase: ${lunarData.phase}, ${lunarData.illumination}% illuminated`}
+                          <MoonPhaseVisualizer
+                            illumination={lunarData.illumination}
+                            phaseKey={lunarData.phaseKey}
+                            size={72}
                           />
                         </motion.div>
                       </AnimatePresence>
@@ -228,13 +224,10 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                         <TooltipTrigger asChild>
                                             <div className="flex flex-col items-center p-1.5 rounded-md w-20 shrink-0 cursor-default">
                                                 <div className={cn("p-1 rounded-full border-2", getPhaseColorClass(phase.phaseKey))}>
-                                                <Image
-                                                    src={phase.iconUrl}
-                                                    alt={dictionary[phase.nameKey] || phase.phaseKey}
-                                                    width={40}
-                                                    height={40}
-                                                    className="rounded-full bg-slate-600 object-cover"
-                                                    data-ai-hint="moon phase icon"
+                                                <MoonPhaseVisualizer
+                                                  illumination={phase.phaseKey === 'new' ? 0 : phase.phaseKey === 'full' ? 100 : 50}
+                                                  phaseKey={phase.phaseKey}
+                                                  size={40}
                                                 />
                                                 </div>
                                                 <p className="text-xs font-semibold text-muted-foreground mt-1.5 truncate">{phase.date}</p>

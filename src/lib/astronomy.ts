@@ -152,9 +152,11 @@ function getJulianDayOfPhase(k: number, phase: number): number {
     const T = k / 1236.85;
     const T2 = T * T;
     const T3 = T * T2;
+    const T4 = T * T3;
 
     // Mean time of the phase
-    let jde = 2451550.09766 + 29.530588861 * k + 0.00015437 * T2 - 0.000000150 * T3 + 0.00000000073 * T2 * T2;
+    let jde = 2451550.09766 + 29.530588861 * k + 0.00015437 * T2 - 0.000000150 * T3 + 0.00000000073 * T4;
+    
     jde += 0.25 * phase * 29.530588861;
 
     // Sun's mean anomaly
@@ -192,37 +194,35 @@ function getJulianDayOfPhase(k: number, phase: number): number {
 
 /**
  * Calculates the primary moon phases for a given month and year.
+ * This function no longer filters by month, allowing the caller to get a continuous stream.
  * @param year The target year.
  * @param month The target month (0-indexed, e.g., 0 for January).
  * @returns An array of objects containing the date and phase key for each primary phase.
  */
 export function computeLunarPhasesForMonth(year: number, month: number): { date: Date, phaseKey: MoonPhaseKey }[] {
     const phases: { date: Date, phaseKey: MoonPhaseKey }[] = [];
-    const jsMonth = (month % 12 + 12) % 12; // Ensure month is 0-11
+    const jsMonth = (month % 12 + 12) % 12;
     const jsYear = year + Math.floor(month / 12);
 
     // Calculate lunation number 'k' for the start of the month
     const k_base = Math.floor((jsYear - 2000) * 12.3685);
 
-    // Check lunations around the calculated k to catch all phases within the month
+    // Check a wider range of lunations to ensure we catch all phases around the target month
     for (let i = -2; i <= 2; i++) {
         const k = k_base + i;
         for (let phase = 0; phase < 4; phase++) {
             const jde = getJulianDayOfPhase(k, phase);
-            // Convert Julian Day to JavaScript Date (which is in UTC)
             const dateUtc = new Date((jde - 2440587.5) * 86400000);
-
-            if (dateUtc.getUTCFullYear() === jsYear && dateUtc.getUTCMonth() === jsMonth) {
-                let phaseKey: MoonPhaseKey = 'unknown';
-                if (phase === 0) phaseKey = 'new';
-                else if (phase === 1) phaseKey = 'firstQuarter';
-                else if (phase === 2) phaseKey = 'full';
-                else if (phase === 3) phaseKey = 'lastQuarter';
-                
-                phases.push({ date: dateUtc, phaseKey });
-            }
+            
+            let phaseKey: MoonPhaseKey = 'unknown';
+            if (phase === 0) phaseKey = 'new';
+            else if (phase === 1) phaseKey = 'firstQuarter';
+            else if (phase === 2) phaseKey = 'full';
+            else if (phase === 3) phaseKey = 'lastQuarter';
+            
+            phases.push({ date: dateUtc, phaseKey });
         }
     }
     
-    return phases.sort((a, b) => a.date.getTime() - b.date.getTime());
+    return phases;
 }
