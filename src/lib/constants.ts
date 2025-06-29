@@ -221,40 +221,42 @@ const mapOpenMeteoPhaseToApp = (
   return { phaseName, illumination, phaseKey };
 };
 
-export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es'): LunarData => {
+function getUpcomingPhases(dictionary: Dictionary, locale: Locale): UpcomingPhase[] {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+
+  // Calculate for current and next month to ensure we have enough future phases
+  const phasesRaw = [
+    ...computeLunarPhasesForMonth(year, month),
+    ...computeLunarPhasesForMonth(year, month + 1),
+  ];
+
+  // Deduplicate and sort
+  const uniquePhases = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
+    phasesRaw.forEach(p => {
+        uniquePhases.set(p.date.toISOString(), p);
+    });
+  const sortedPhases = Array.from(uniquePhases.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
+
+  const futurePhases = sortedPhases
+    .filter(p => p.date.getTime() >= now.getTime())
+    .slice(0, 4);
+
+  return futurePhases.map(p => ({
+    nameKey: `MoonPhase.${p.phaseKey}`,
+    phaseKey: p.phaseKey,
+    date: p.date.toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
+    time: p.date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }),
+    dateObj: p.date
+  }));
+}
+
+
+export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> {
   try {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-
-    // Get a continuous stream of phases around the current month
-    const allPhaseDatesRaw = [
-      ...computeLunarPhasesForMonth(year, month - 1),
-      ...computeLunarPhasesForMonth(year, month),
-      ...computeLunarPhasesForMonth(year, month + 1),
-    ];
     
-    // Deduplicate and sort all calculated phases to ensure a clean, ordered list
-    const uniquePhaseMap = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
-    allPhaseDatesRaw.forEach(p => {
-        uniquePhaseMap.set(p.date.toISOString(), p);
-    });
-    const sortedPhases = Array.from(uniquePhaseMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
-
-
-    const allPhases: UpcomingPhase[] = sortedPhases.map(p => {
-        const dateObj = new Date(p.date); // Ensure it's a new date object
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        return {
-            dateObj: dateObj,
-            phaseKey: p.phaseKey,
-            nameKey: `MoonPhase.${p.phaseKey}`,
-            iconUrl: '', // This will be handled by the SVG visualizer now
-            date: dateObj.toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
-            time: dateObj.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', timeZone }),
-        }
-    });
-
     // 1. Calculate current illumination and phase
     const jd = getJulianDay(today);
     const sunLon = getSunLongitude(jd);
@@ -266,29 +268,39 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
     const moonSign = getMoonSign(today);
 
     // 3. Find the upcoming phases relative to today
-    const upcomingPhases = allPhases
-      .filter(p => p.dateObj.getTime() >= new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime())
-      .slice(0, 4);
+    const upcomingPhases = getUpcomingPhases(dictionary, locale);
 
     // 4. Calculate synodic progress
-    const newMoons = allPhases.filter(p => p.phaseKey === 'new');
-    let lastNewMoon: UpcomingPhase | undefined;
-    let nextNewMoon: UpcomingPhase | undefined;
+    const allPhases = [
+        ...computeLunarPhasesForMonth(today.getFullYear(), today.getMonth() -1),
+        ...computeLunarPhasesForMonth(today.getFullYear(), today.getMonth())
+    ];
+    const uniquePhaseMap = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
+    allPhases.forEach(p => { uniquePhaseMap.set(p.date.toISOString(), p); });
+    const sortedPhases = Array.from(uniquePhaseMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
     
-    // Find the last new moon before or on today, and the next one after
-    for (let i = 0; i < newMoons.length; i++) {
-        if (newMoons[i].dateObj <= today) {
-            lastNewMoon = newMoons[i];
-        } else {
-            nextNewMoon = newMoons[i];
+    let lastNewMoon: { date: Date, phaseKey: MoonPhaseKey } | undefined;
+    for (let i = sortedPhases.length - 1; i >= 0; i--) {
+        if (sortedPhases[i].phaseKey === 'new' && sortedPhases[i].date <= today) {
+            lastNewMoon = sortedPhases[i];
             break;
         }
     }
     
+    let nextNewMoon: { date: Date, phaseKey: MoonPhaseKey } | undefined;
+    const futurePhasesForSynodic = computeLunarPhasesForMonth(today.getFullYear(), today.getMonth() +1);
+    const allFuturePhases = [...upcomingPhases.map(p => ({date:p.dateObj, phaseKey: p.phaseKey})), ...futurePhasesForSynodic].sort((a,b) => a.date.getTime() - b.date.getTime());
+    for (const phase of allFuturePhases) {
+        if (phase.phaseKey === 'new') {
+            nextNewMoon = phase;
+            break;
+        }
+    }
+
     let synodicProgress = 0;
     if (lastNewMoon && nextNewMoon) {
-        const totalCycleMillis = nextNewMoon.dateObj.getTime() - lastNewMoon.dateObj.getTime();
-        const elapsedMillis = today.getTime() - lastNewMoon.dateObj.getTime();
+        const totalCycleMillis = nextNewMoon.date.getTime() - lastNewMoon.date.getTime();
+        const elapsedMillis = today.getTime() - lastNewMoon.date.getTime();
         if (totalCycleMillis > 0) {
           synodicProgress = Math.min(100, (elapsedMillis / totalCycleMillis) * 100);
         }
@@ -306,13 +318,14 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
     };
   } catch (error) {
     console.error("Error calculating local lunar data:", error);
+    const upcomingFallback = getUpcomingPhases(dictionary, locale);
     return {
       phase: dictionary['MoonPhase.unknown'] || "Unknown Phase",
       phaseKey: "unknown",
       illumination: 0,
       synodicProgress: 0,
       currentMoonImage: '',
-      upcomingPhases: [],
+      upcomingPhases: upcomingFallback,
       error: (error as Error).message || "Failed to calculate lunar data",
     };
   }
@@ -320,7 +333,7 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
 
 
 
-export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
+export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string, birthCountry: string): AscendantData | null => {
   // TODO: Implement a proper geocoding service to convert birthCity to lat/lon.
   // Using fixed coordinates for Madrid, Spain as a placeholder.
   const lat = 40.4168;

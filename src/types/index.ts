@@ -94,7 +94,6 @@ export type MoonPhaseKey = 'new' | 'waxingCrescent' | 'firstQuarter' | 'waxingGi
 export interface UpcomingPhase {
   nameKey: string;
   date: string;
-  iconUrl: string;
   phaseKey: MoonPhaseKey;
   dateObj: Date;
   time?: string;
