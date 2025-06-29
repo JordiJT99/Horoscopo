@@ -244,10 +244,9 @@ const mapOpenMeteoPhaseToApp = (
 
 
 export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
-  const today = new Date();
-  const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-  
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&daily=moon_phase&timezone=GMT&start_date=${formattedDate}&end_date=${formattedDate}`;
+  // The API call is simplified by requesting a 1-day forecast, which includes today.
+  // Using timezone=auto is more robust than a fixed timezone.
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&daily=moon_phase&timezone=auto&forecast_days=1`;
 
   try {
     const response = await fetch(apiUrl);
@@ -261,12 +260,18 @@ export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale
       const phaseValueToday = data.daily.moon_phase[0];
       const { phaseName, illumination, phaseKey } = mapOpenMeteoPhaseToApp(phaseValueToday, dictionary);
 
+      // Use the date returned by the API for the moon sign calculation for better accuracy
+      const todayFromApi = new Date(data.daily.time[0] + 'T00:00:00Z'); // Assuming UTC date
+      const moonSign = getMoonSign(todayFromApi);
+      
       return {
         phase: phaseName,
         phaseKey: phaseKey,
         illumination: illumination,
-        currentMoonImage: getMoonImageUrl(phaseKey), 
-        upcomingPhases: getMockUpcomingPhases(dictionary), 
+        currentMoonImage: getMoonImageUrl(phaseKey),
+        moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
+        moonSignIcon: moonSign ? moonSign.name : undefined,
+        upcomingPhases: getMockUpcomingPhases(dictionary),
       };
     } else {
       console.error("Open-Meteo API response missing expected data:", data);
