@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import {
  Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare, Users,
   Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
-  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom
+  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom, ShoppingBag
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 
@@ -101,6 +101,7 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/natalchart", icon: Orbit, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
     { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: false, isPlaceholder: false },
     { href: "/community", icon: Users, titleKey: "CommunityPage.title", newBadge: true, isPlaceholder: false },
+    { href: "/store", icon: ShoppingBag, titleKey: "StorePage.title", newBadge: true, isPlaceholder: false },
     { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
