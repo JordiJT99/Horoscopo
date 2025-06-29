@@ -78,8 +78,12 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
   useEffect(() => {
     if (!hasMounted || !dictionary || Object.keys(dictionary).length === 0) return;
     
-    const data = getCurrentLunarData(dictionary, locale);
-    setLunarData(data);
+    const fetchAndSetLunarData = async () => {
+      const data = await getCurrentLunarData(dictionary, locale);
+      setLunarData(data);
+    };
+    
+    fetchAndSetLunarData();
     
   }, [locale, hasMounted, dictionary]);
 
