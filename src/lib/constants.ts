@@ -240,13 +240,26 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
     const month = today.getMonth();
 
     // Get the exact dates of the 4 main phases for the current, previous, and next months.
-    const currentMonthPhases = computeLunarPhasesForMonth(year, month, locale, dictionary);
-    const prevMonthPhases = computeLunarPhasesForMonth(year, month - 1, locale, dictionary);
-    const nextMonthPhases = computeLunarPhasesForMonth(year, month + 1, locale, dictionary);
+    const prevMonthPhaseDates = computeLunarPhasesForMonth(year, month - 1);
+    const currentMonthPhaseDates = computeLunarPhasesForMonth(year, month);
+    const nextMonthPhaseDates = computeLunarPhasesForMonth(year, month + 1);
 
-    const allPhases = [...prevMonthPhases, ...currentMonthPhases, ...nextMonthPhases]
-      .sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime());
-      
+    const allPhaseDates = [...prevMonthPhaseDates, ...currentMonthPhaseDates, ...nextMonthPhaseDates]
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    const allPhases: UpcomingPhase[] = allPhaseDates.map(p => {
+        const dateObj = new Date(p.date); // Ensure it's a new date object
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        return {
+            dateObj: dateObj,
+            phaseKey: p.phaseKey,
+            nameKey: `MoonPhase.${p.phaseKey}`,
+            iconUrl: getMoonImageUrl(p.phaseKey),
+            date: dateObj.toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
+            time: dateObj.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', timeZone }),
+        }
+    });
+
     // 1. Calculate current illumination and phase
     const jd = getJulianDay(today);
     const sunLon = getSunLongitude(jd);
@@ -259,23 +272,24 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
 
     // 3. Find the upcoming phases relative to today
     const upcomingPhases = allPhases
-      .filter(p => p.dateObj.getTime() >= today.getTime())
+      .filter(p => p.dateObj.getTime() >= new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime())
       .slice(0, 4);
 
     // 4. Calculate synodic progress
     const newMoons = allPhases.filter(p => p.phaseKey === 'new');
     let lastNewMoon: UpcomingPhase | undefined;
     let nextNewMoon: UpcomingPhase | undefined;
-
-    for (const nm of newMoons) {
-        if (nm.dateObj <= today) {
-            lastNewMoon = nm;
+    
+    // Find the last new moon before or on today, and the next one after
+    for (let i = 0; i < newMoons.length; i++) {
+        if (newMoons[i].dateObj <= today) {
+            lastNewMoon = newMoons[i];
         } else {
-            nextNewMoon = nm;
+            nextNewMoon = newMoons[i];
             break;
         }
     }
-
+    
     let synodicProgress = 0;
     if (lastNewMoon && nextNewMoon) {
         const totalCycleMillis = nextNewMoon.dateObj.getTime() - lastNewMoon.dateObj.getTime();
@@ -308,6 +322,7 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
     };
   }
 };
+
 
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
