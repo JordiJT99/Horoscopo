@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -195,6 +196,8 @@
   "LunarAscendantPage.moonInSignText": "en {signName}",
   "LunarAscendantPage.illuminationText": "Iluminación: {percentage}%",
   "LunarAscendantPage.easternTimeNote": "Nota: Todos los horarios ET",
+  "LunarAscendantPage.synodicCycle": "Progreso del Ciclo Sinódico",
+  "LunarAscendantPage.upcomingPhasesTitle": "Próximas Fases",
   "WeeklyHoroscopePage.title": "Horóscopo Semanal",
   "WeeklyHoroscopePage.subtitle": "Tu predicción astrológica para la semana. Selecciona tu signo.",
   "MonthlyHoroscopePage.title": "Horóscopo Mensual",
@@ -529,6 +532,9 @@
   "Share.successTitle": "¡Éxito!",
   "Share.horoscopeSharedSuccess": "Horóscopo compartido con éxito.",
   "Share.errorMessage": "No se pudo compartir el contenido. Por favor, inténtalo de nuevo.",
+  "Share.lunarPhaseTitle": "Fase Lunar Actual de AstroVibes",
+  "Share.lunarPhaseText": "Ahora mismo, la luna es una {phaseName} en {signName} ({illumination}% iluminada). ¡Échale un vistazo en AstroVibes!",
+  "Share.buttonLabelLunar": "Compartir Fase Actual",
   "Error.genericTitle": "Error",
   "Data.notAvailable": "N/D",
   "OnboardingPage.title": "¡Bienvenido/a a AstroVibes!",
@@ -979,6 +985,9 @@
   "ZodiacDetail.Pisces.friendship": "Un amigo Piscis es el oyente compasivo al que todos acuden cuando tienen un problema. Son increíblemente solidarios, sin prejuicios, y se entregan por completo para ayudar. Su naturaleza soñadora los convierte en compañeros divertidos y creativos. Sin embargo, deben tener cuidado de no cargar con las cargas emocionales de todos los demás.",
   "ZodiacDetail.Pisces.workTitle": "Piscis en el Trabajo",
   "ZodiacDetail.Pisces.work": "Los Piscis prosperan en campos creativos y compasivos. Son excelentes artistas, músicos, sanadores y consejeros. Su intuición les da una perspectiva única en todos los roles que desempeñan.",
+  "Share.lunarPhaseTitle": "Fase Lunar Actual de AstroVibes",
+  "Share.lunarPhaseText": "Ahora mismo, la luna es una {phaseName} en {signName} ({illumination}% iluminada). ¡Échale un vistazo en AstroVibes!",
+  "Share.buttonLabelLunar": "Compartir Fase Actual",
   "StorePage.title": "Recomendaciones Cósmicas",
   "StorePage.subtitle": "Artículos seleccionados para mejorar tu viaje espiritual.",
   "StorePage.viewOnAmazon": "Ver en Amazon",
@@ -996,5 +1005,3 @@
   "StoreProducts.incenseHolder.title": "Porta-incienso de Cerámica",
   "StoreProducts.incenseHolder.description": "Un elegante soporte para quemar de forma segura tus varitas de incienso favoritas durante la meditación o la relajación."
 }
-
-    
