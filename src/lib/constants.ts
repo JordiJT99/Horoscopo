@@ -257,8 +257,6 @@ function getUpcomingPhases(dictionary: Dictionary, locale: Locale): UpcomingPhas
 export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> {
   try {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // JS month is 0-indexed
     
     // 1. Calculate current illumination and phase
     const jd = getJulianDay(today);
@@ -274,10 +272,11 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
     const upcomingPhases = getUpcomingPhases(dictionary, locale);
 
     // 4. Calculate synodic progress
-    // Get the exact dates of the 4 main phases for the current, previous, and next months.
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
     const prevMonthPhases = computeLunarPhasesForMonth(year, month - 1);
     const currentMonthPhases = computeLunarPhasesForMonth(year, month);
-    const allPhases = [...prevMonthPhases, ...currentMonthPhases];
+    const allPhases = [...prevMonthPhases, ...currentMonthPhases, ...computeLunarPhasesForMonth(year, month + 1)];
     
     const uniquePhaseMap = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
     allPhases.forEach(p => { uniquePhaseMap.set(p.date.toISOString(), p); });
@@ -292,9 +291,8 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
     }
     
     let nextNewMoon: { date: Date, phaseKey: MoonPhaseKey } | undefined;
-    const futurePhasesForSynodic = upcomingPhases.map(p => ({date:p.dateObj, phaseKey: p.phaseKey}));
-    for (const phase of futurePhasesForSynodic) {
-        if (phase.phaseKey === 'new') {
+    for (const phase of sortedPhases) {
+        if (phase.phaseKey === 'new' && phase.date > today) {
             nextNewMoon = phase;
             break;
         }

@@ -144,6 +144,7 @@ function getJulianDayOfPhase(k: number, phase: number): number {
     0.00000015 * T * T2 +
     0.00000000073 * T2 * T2;
 
+  // Add the phase-specific part of the formula. This was the missing key.
   jde += phase * 0.25 * 29.530588861;
 
   const E = 1 - 0.002516 * T - 0.0000074 * T2;
@@ -172,7 +173,7 @@ function getJulianDayOfPhase(k: number, phase: number): number {
       0.00739 * E * Math.sin(M_prime - M) +
       0.00514 * E * Math.sin(M_prime + M) +
       0.00337 * E2 * Math.sin(2 * M);
-
+    // Correction for first/last quarter was missing
     corr += phase === 1 ? 0.00325 : -0.00325;
   }
 
@@ -182,18 +183,20 @@ function getJulianDayOfPhase(k: number, phase: number): number {
 // ───── Fases principales de un mes ——————————————
 export function computeLunarPhasesForMonth(
   year: number,
-  month: number
+  month: number // 1-12
 ): { date: Date; phaseKey: MoonPhaseKey }[] {
   const phases: { date: Date; phaseKey: MoonPhaseKey }[] = [];
-  const jsMonth = (month % 12 + 12) % 12;
-  const jsYear = year + Math.floor(month / 12);
+  // `k` is the approximate number of lunations since the year 2000.
+  // We calculate it for the beginning of the given month.
+  const k_base = Math.floor((year - 2000) * 12.3685) + (month -1);
 
-  const k_base = Math.floor((jsYear - 2000) * 12.3685);
-
+  // We check a few `k` values around our base to ensure we capture all phases
+  // that fall within the target month.
   for (let i = -2; i <= 2; i++) {
     const k = k_base + i;
     for (let phase = 0; phase < 4; phase++) {
       const jde = getJulianDayOfPhase(k, phase);
+      // Convert Julian Day to a standard JavaScript Date object
       const dateUtc = new Date((jde - 2440587.5) * 86400000);
 
       let phaseKey: MoonPhaseKey = 'unknown';

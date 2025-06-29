@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2, Share2 } from 'lucide-react';
+import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2, Share2, Globe } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -322,16 +322,12 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                 </div>
                  <div>
                     <Label htmlFor="birth-country-lunar-client" className="font-body">{dictionary['birthForm.countryLabel'] || 'Birth Country'}</Label>
-                    <Input
-                      id="birth-country-lunar-client"
-                      type="text"
-                      placeholder={dictionary['OnboardingPage.cityOfBirthPlaceholder'] || 'e.g., United States'}
-                      value={birthCountry}
-                      onChange={(e) => setBirthCountry(e.target.value)}
-                      className="font-body"
-                    />
+                     <div className="flex items-center gap-2">
+                        <Globe className="text-muted-foreground h-5 w-5" />
+                        <Input id="birth-country-lunar-client" type="text" placeholder={dictionary['OnboardingPage.cityOfBirthPlaceholder'] || 'e.g., United States'} value={birthCountry} onChange={(e) => setBirthCountry(e.target.value)} className="font-body" />
+                     </div>
                   </div>
-                <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant || !birthDate || !birthTime || !birthCity} className="w-full font-body">
+                <Button onClick={handleCalculateAscendant} disabled={isLoadingAscendant || !birthDate || !birthTime || !birthCity || !birthCountry} className="w-full font-body">
                   {isLoadingAscendant ? (<><LoadingSpinner className="h-4 w-4 text-primary-foreground mr-2" /> {dictionary['LunarAscendantSection.calculatingButton'] || "Calculating..."}</>) : (dictionary['LunarAscendantSection.calculateButton'] || "Calculate Ascendant")}
                 </Button>
               </div>
