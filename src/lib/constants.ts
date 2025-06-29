@@ -183,18 +183,6 @@ export const getLuckyNumbers = (sign: ZodiacSignName, locale: Locale = 'es'): Lu
   };
 };
 
-export const getMoonImageUrl = (phaseKey: MoonPhaseKey, size: string = '80x80'): string => {
-  const base = 'https://placehold.co';
-  const colors = '2D3748/E2E8F0';
-  let text = phaseKey.substring(0, 2).toUpperCase();
-  if (phaseKey === 'firstQuarter') text = 'FQ';
-  if (phaseKey === 'lastQuarter') text = 'LQ';
-  if (phaseKey === 'new') text = 'NM';
-  if (phaseKey === 'full') text = 'FM';
-  if (phaseKey === 'unknown') text = '??';
-  return `${base}/${size}/${colors}.png?text=${text}`;
-};
-
 const mapOpenMeteoPhaseToApp = (
   phaseValue: number,
   dictionary: Dictionary
@@ -239,13 +227,16 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
     const year = today.getFullYear();
     const month = today.getMonth();
 
-    // Get the exact dates of the 4 main phases for the current, previous, and next months.
-    const prevMonthPhaseDates = computeLunarPhasesForMonth(year, month - 1);
-    const currentMonthPhaseDates = computeLunarPhasesForMonth(year, month);
-    const nextMonthPhaseDates = computeLunarPhasesForMonth(year, month + 1);
+    // Get a continuous stream of phases around the current month
+    const rawPhases = computeLunarPhasesForMonth(year, month);
+    
+    // Deduplicate and sort all calculated phases to ensure a clean, ordered list
+    const uniquePhaseMap = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
+    rawPhases.forEach(p => {
+        uniquePhaseMap.set(p.date.toISOString(), p);
+    });
+    const allPhaseDates = Array.from(uniquePhaseMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
 
-    const allPhaseDates = [...prevMonthPhaseDates, ...currentMonthPhaseDates, ...nextMonthPhaseDates]
-      .sort((a, b) => a.date.getTime() - b.date.getTime());
 
     const allPhases: UpcomingPhase[] = allPhaseDates.map(p => {
         const dateObj = new Date(p.date); // Ensure it's a new date object
@@ -254,7 +245,7 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
             dateObj: dateObj,
             phaseKey: p.phaseKey,
             nameKey: `MoonPhase.${p.phaseKey}`,
-            iconUrl: getMoonImageUrl(p.phaseKey),
+            iconUrl: '', // This will be handled by the SVG visualizer now
             date: dateObj.toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
             time: dateObj.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', timeZone }),
         }
@@ -304,7 +295,7 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
       phaseKey: phaseKey,
       illumination: illumination,
       synodicProgress: synodicProgress,
-      currentMoonImage: getMoonImageUrl(phaseKey),
+      currentMoonImage: '', // Deprecated in favor of the SVG visualizer
       moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
       moonSignIcon: moonSign ? moonSign.name : undefined,
       upcomingPhases,
@@ -316,7 +307,7 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
       phaseKey: "unknown",
       illumination: 0,
       synodicProgress: 0,
-      currentMoonImage: getMoonImageUrl('unknown'),
+      currentMoonImage: '',
       upcomingPhases: [],
       error: (error as Error).message || "Failed to calculate lunar data",
     };
