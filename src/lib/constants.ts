@@ -228,17 +228,21 @@ export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es
     const month = today.getMonth();
 
     // Get a continuous stream of phases around the current month
-    const rawPhases = computeLunarPhasesForMonth(year, month);
+    const allPhaseDatesRaw = [
+      ...computeLunarPhasesForMonth(year, month - 1),
+      ...computeLunarPhasesForMonth(year, month),
+      ...computeLunarPhasesForMonth(year, month + 1),
+    ];
     
     // Deduplicate and sort all calculated phases to ensure a clean, ordered list
     const uniquePhaseMap = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
-    rawPhases.forEach(p => {
+    allPhaseDatesRaw.forEach(p => {
         uniquePhaseMap.set(p.date.toISOString(), p);
     });
-    const allPhaseDates = Array.from(uniquePhaseMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
+    const sortedPhases = Array.from(uniquePhaseMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
 
 
-    const allPhases: UpcomingPhase[] = allPhaseDates.map(p => {
+    const allPhases: UpcomingPhase[] = sortedPhases.map(p => {
         const dateObj = new Date(p.date); // Ensure it's a new date object
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         return {
