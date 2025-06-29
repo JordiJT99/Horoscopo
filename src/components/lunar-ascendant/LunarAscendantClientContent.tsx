@@ -239,7 +239,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             <p className="font-semibold">{dictionary[phase.nameKey] || phase.phaseKey}</p>
-                                            <p className="text-sm text-muted-foreground">{phase.date} &bull; {phase.time}</p>
+                                            <p className="text-sm text-muted-foreground">{phase.date} {phase.time && <> • {phase.time}</>}</p>
                                         </TooltipContent>
                                     </Tooltip>
                                 ))}
@@ -300,7 +300,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                           locale={currentDfnLocale}
                           fromDate={new Date(1900, 0, 1)}
                           toDate={new Date()}
-                          captionLayout="dropdown-buttons" 
+                          captionLayout="dropdown" 
                           fromYear={1900}
                           toYear={currentYearForCalendar}
                           classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
