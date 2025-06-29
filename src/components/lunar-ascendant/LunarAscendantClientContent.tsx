@@ -218,7 +218,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                     </Popover>
                                 ))}
                                 </div>
-                                <ScrollBar orientation="horizontal" />
+                                <ScrollBar orientation="horizontal" className="h-2.5 bg-muted/40" />
                             </ScrollArea>
                     </div>
                      <div className="pt-2 flex justify-center">
