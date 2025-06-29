@@ -1,5 +1,4 @@
 
-
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -866,7 +865,7 @@
   "ZodiacDetail.Taurus.workTitle": "Tauro en el Trabajo",
   "ZodiacDetail.Taurus.work": "Tauro es el corredor de maratón del lugar de trabajo, no el velocista. Son metódicos, pacientes y tienen una increíble capacidad para llevar los proyectos desde el principio hasta el final. Sobresalen en roles que requieren estabilidad, atención al detalle y un enfoque práctico, como en finanzas, diseño o agricultura. No son arriesgados, prefiriendo construir lenta y seguramente.",
   "ZodiacDetail.Gemini.title": "Rasgos de Géminis",
-  "ZodiacDetail.Gemini.description": "Géminis, regido por el planeta Mercurio, es el mariposón social y el intelectual del zodíaco. Son naturalmente curiosos, adaptables y tienen una sed insaciable de información. Su mente está en constante movimiento, saltando de una idea a otra, lo que los convierte en conversadores fascinantes y aprendices de por vida. Su dualidad inherente, simbolizada por los Gemelos, les permite ver múltiples perspectivas a la vez y adaptarse sin esfuerzo a situaciones cambiantes. Son los mensajeros del zodíaco, creando conexiones y difundiendo información. Su energía es juvenil, juguetona e inquieta, siempre en busca de la próxima conversación interesante, el próximo libro o la próxima aventura. Sin embargo, esta búsqueda constante de novedad también puede hacer que parezcan dispersos e inconsistentes. Viven en un mundo de posibilidades y a veces tienen dificultades para comprometerse con un solo camino, por miedo a perderse algo más. Su mayor fortaleza es su agilidad mental, que les permite comunicarse con cualquiera y sentirse a gusto en cualquier entorno.",
+  "ZodiacDetail.Gemini.description": "Géminis, regido por el planeta Mercurio, es el mariposón social y el intelectual del zodíaco. Son naturalmente curiosos, adaptables y tienen una sed insaciable de información. Su mente es como un torbellino, saltando de una idea a otra, lo que los convierte en conversadores fascinantes y aprendices de por vida. Su dualidad inherente, simbolizada por los Gemelos, les permite ver múltiples perspectivas a la vez y adaptarse sin esfuerzo a situaciones cambiantes. Son los mensajeros del zodíaco, creando conexiones y difundiendo información. Su energía es juvenil, juguetona e inquieta, siempre en busca de la próxima conversación interesante, el próximo libro o la próxima aventura. Sin embargo, esta búsqueda constante de novedad también puede hacer que parezcan dispersos e inconsistentes. Viven en un mundo de posibilidades y a veces tienen dificultades para comprometerse con un solo camino, por miedo a perderse algo más. Su mayor fortaleza es su agilidad mental, que les permite comunicarse con cualquiera y sentirse a gusto en cualquier entorno.",
   "ZodiacDetail.Gemini.strengthsTitle": "Fortalezas",
   "ZodiacDetail.Gemini.strengths": ["Inteligente", "Curioso", "Adaptable", "Sociable", "Ingenioso", "Comunicativo"],
   "ZodiacDetail.Gemini.weaknessesTitle": "Debilidades",
@@ -1005,3 +1004,5 @@
   "StoreProducts.incenseHolder.title": "Porta-incienso de Cerámica",
   "StoreProducts.incenseHolder.description": "Un elegante soporte para quemar de forma segura tus varitas de incienso favoritas durante la meditación o la relajación."
 }
+
+    
