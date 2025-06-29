@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Ihre tägliche Quelle für Horoskope und astrologische Einblicke.",
@@ -195,6 +196,7 @@
   "LunarAscendantPage.moonInSignText": "in {signName}",
   "LunarAscendantPage.illuminationText": "Beleuchtung: {percentage}%",
   "LunarAscendantPage.easternTimeNote": "Hinweis: Alle Zeiten ET",
+  "LunarAscendantPage.synodicCycle": "Synodischer Zyklusfortschritt",
   "WeeklyHoroscopePage.title": "Wöchentliches Horoskop",
   "WeeklyHoroscopePage.subtitle": "Ihre astrologische Prognose für die kommende Woche. Wählen Sie Ihr Zeichen.",
   "MonthlyHoroscopePage.title": "Monatliches Horoskop",
@@ -996,5 +998,3 @@
   "StoreProducts.incenseHolder.title": "Keramischer Räucherstäbchenhalter",
   "StoreProducts.incenseHolder.description": "Ein eleganter Halter zur sicheren Verbrennung Ihrer Lieblingsräucherstäbchen während Meditation oder Entspannung."
 }
-
-    

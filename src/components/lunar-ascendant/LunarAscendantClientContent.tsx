@@ -1,10 +1,10 @@
 
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
 import type { LunarData, AscendantData } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
-// getDictionary is not needed here as it's passed as a prop
+import type { Dictionary, Locale, MoonPhaseKey } from '@/types';
 import { getCurrentLunarData, getAscendantSign, ZODIAC_SIGNS } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,8 @@ import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { Progress } from '@/components/ui/progress';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LunarAscendantClientContentProps {
   dictionary: Dictionary;
@@ -33,12 +35,32 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
   fr,
 };
 
+const getPhaseColorClass = (phaseKey: MoonPhaseKey): string => {
+  switch (phaseKey) {
+    case 'new':
+      return 'border-gray-500/50';
+    case 'waxingCrescent':
+    case 'firstQuarter':
+    case 'waxingGibbous':
+      return 'border-green-500/50';
+    case 'full':
+      return 'border-blue-400/60';
+    case 'waningGibbous':
+    case 'lastQuarter':
+    case 'waningCrescent':
+      return 'border-purple-500/50';
+    default:
+      return 'border-transparent';
+  }
+};
+
 export default function LunarAscendantClientContent({ dictionary, locale }: LunarAscendantClientContentProps) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
   const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1990,0,1));
   const [birthTime, setBirthTime] = useState<string>("12:00");
   const [birthCity, setBirthCity] = useState<string>("");
+  const [birthCountry, setBirthCountry] = useState<string>("");
   const [isLoadingAscendant, setIsLoadingAscendant] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
@@ -52,16 +74,14 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
   useEffect(() => {
     if (!hasMounted || !dictionary || Object.keys(dictionary).length === 0) return;
     
-    const fetchAndSetLunarData = async () => {
-      const data = await getCurrentLunarData(dictionary, locale);
-      setLunarData(data);
-    };
-    
-    fetchAndSetLunarData();
+    const data = getCurrentLunarData(dictionary, locale);
+    setLunarData(data);
     
   }, [locale, hasMounted, dictionary]);
 
   const handleCalculateAscendant = () => {
+    // TODO: The getAscendantSign function uses placeholder coordinates.
+    // A geocoding service would be needed here to convert birthCity/birthCountry to lat/lon for accurate results.
     if (!birthDate || !birthTime || !birthCity) {
       alert(dictionary['LunarAscendantSection.fillAllDetails'] || "Please fill in all birth details.");
       return;
@@ -109,14 +129,25 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                 ) : (
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
-                      <Image
-                        src={lunarData.currentMoonImage}
-                        alt={dictionary['LunarAscendantPage.currentMoonAlt'] || `Current moon phase: ${lunarData.phase}`}
-                        width={72}
-                        height={72}
-                        className="rounded-full bg-slate-700 object-cover"
-                        data-ai-hint="moon phase realistic"
-                      />
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={lunarData.phaseKey}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.8 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <Image
+                            src={lunarData.currentMoonImage}
+                            alt={dictionary['LunarAscendantPage.currentMoonAlt'] || `Current moon phase: ${lunarData.phase}`}
+                            width={72}
+                            height={72}
+                            className="rounded-full bg-slate-700 object-cover"
+                            data-ai-hint="moon phase realistic"
+                            aria-label={`Current moon phase: ${lunarData.phase}, ${lunarData.illumination}% illuminated`}
+                          />
+                        </motion.div>
+                      </AnimatePresence>
                       <div className="flex-1">
                         <p className="text-lg sm:text-xl font-semibold text-foreground">{lunarData.phase}</p>
                         {lunarData.moonInSign && lunarData.moonSignIcon && (
@@ -130,27 +161,41 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                             ? (dictionary['LunarAscendantPage.illuminationText'] || "Illumination: {percentage}%").replace('{percentage}', lunarData.illumination.toString())
                             : `${dictionary['LunarAscendantPage.illuminationText']?.split(':')[0] || "Illumination"}: ${dictionary['Data.notAvailable'] || 'N/A'}`}
                         </p>
+                         {lunarData.synodicProgress !== undefined && (
+                          <div className="mt-2">
+                             <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Progress value={lunarData.synodicProgress} className="h-1.5" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{dictionary['LunarAscendantPage.synodicCycle'] || 'Synodic Cycle Progress'}: {Math.round(lunarData.synodicProgress)}%</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
+                        )}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-4 gap-2 text-center">
                       {lunarData.upcomingPhases.map((phase, index) => (
                         <div key={index} className="flex flex-col items-center p-1.5 bg-secondary/20 rounded-md">
-                          <Image
-                            src={phase.iconUrl}
-                            alt={dictionary[phase.nameKey] || phase.nameKey.split('.').pop() || phase.phaseKey}
-                            width={36}
-                            height={36}
-                            className="rounded-full bg-slate-600 object-cover mb-1"
-                            data-ai-hint="moon phase icon"
-                          />
-                          <p className="text-xs text-muted-foreground">{phase.date}</p>
+                           <div className={cn("p-1 rounded-full border-2", getPhaseColorClass(phase.phaseKey))}>
+                            <Image
+                              src={phase.iconUrl}
+                              alt={dictionary[phase.nameKey] || phase.phaseKey}
+                              width={36}
+                              height={36}
+                              className="rounded-full bg-slate-600 object-cover"
+                              data-ai-hint="moon phase icon"
+                            />
+                           </div>
+                          <p className="text-xs font-semibold text-muted-foreground mt-1.5">{phase.date}</p>
+                          <p className="text-xs text-muted-foreground/80">{phase.time}</p>
                         </div>
                       ))}
                     </div>
-                    <p className="text-xs text-muted-foreground/80 text-center pt-2">
-                      {dictionary['LunarAscendantPage.easternTimeNote'] || "Note: All times ET"}
-                    </p>
                   </div>
                 )
               ) : (
@@ -196,7 +241,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                           locale={currentDfnLocale}
                           fromDate={new Date(1900, 0, 1)}
                           toDate={new Date()}
-                          captionLayout="dropdown" 
+                          captionLayout="dropdown-buttons" 
                           fromYear={1900}
                           toYear={currentYearForCalendar}
                           classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
