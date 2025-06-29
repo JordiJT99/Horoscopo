@@ -20,7 +20,7 @@ import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { Progress } from '@/components/ui/progress';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -56,6 +56,21 @@ const getPhaseColorClass = (phaseKey: MoonPhaseKey): string => {
       return 'border-transparent';
   }
 };
+
+const getIlluminationForPhaseKey = (phaseKey: MoonPhaseKey): number => {
+  switch (phaseKey) {
+    case 'new': return 0;
+    case 'full': return 100;
+    case 'firstQuarter':
+    case 'lastQuarter': return 50;
+    case 'waxingCrescent': return 25;
+    case 'waningCrescent': return 25;
+    case 'waxingGibbous': return 75;
+    case 'waningGibbous': return 75;
+    default: return 50;
+  }
+};
+
 
 export default function LunarAscendantClientContent({ dictionary, locale }: LunarAscendantClientContentProps) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
@@ -173,8 +188,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                 ) : (
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 sm:gap-4 p-3 bg-secondary/30 rounded-lg">
-                      <AnimatePresence mode="wait">
-                        <motion.div
+                      <motion.div
                           key={lunarData.phaseKey}
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -187,7 +201,6 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                             size={72}
                           />
                         </motion.div>
-                      </AnimatePresence>
                       <div className="flex-1">
                         <p className="text-lg sm:text-xl font-semibold text-foreground">{lunarData.phase}</p>
                         {lunarData.moonInSign && lunarData.moonSignIcon && (
@@ -226,19 +239,18 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                 {lunarData.upcomingPhases.map((phase, index) => (
                                     <Tooltip key={index} delayDuration={100}>
                                         <TooltipTrigger asChild>
-                                            <div className="flex flex-col items-center p-1.5 rounded-md w-20 shrink-0 cursor-default">
-                                                <div className={cn("p-1 rounded-full border-2", getPhaseColorClass(phase.phaseKey))}>
+                                            <div className="flex flex-col items-center p-1.5 rounded-md w-24 shrink-0 cursor-default">
                                                 <MoonPhaseVisualizer
-                                                  illumination={phase.phaseKey === 'new' ? 0 : phase.phaseKey === 'full' ? 100 : 50}
+                                                  illumination={getIlluminationForPhaseKey(phase.phaseKey)}
                                                   phaseKey={phase.phaseKey}
-                                                  size={40}
+                                                  size={48}
                                                 />
-                                                </div>
-                                                <p className="text-xs font-semibold text-muted-foreground mt-1.5 truncate">{phase.date}</p>
+                                                <p className="text-xs font-semibold text-foreground mt-1.5 truncate">{dictionary[phase.nameKey]}</p>
+                                                <p className="text-xs text-muted-foreground">{phase.date}</p>
                                             </div>
                                         </TooltipTrigger>
                                         <TooltipContent>
-                                            <p className="font-semibold">{dictionary[phase.nameKey] || phase.phaseKey}</p>
+                                            <p className="font-semibold">{dictionary[phase.nameKey]}</p>
                                             <p className="text-sm text-muted-foreground">{phase.date}{phase.time && <> • {phase.time}</>}</p>
                                         </TooltipContent>
                                     </Tooltip>

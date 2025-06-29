@@ -268,9 +268,6 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
     // 2. Determine Moon Sign
     const moonSign = getMoonSign(today);
 
-    // 3. Find the upcoming phases relative to today
-    const upcomingPhases = getUpcomingPhases(dictionary, locale);
-
     // 4. Calculate synodic progress
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
@@ -315,18 +312,17 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
       currentMoonImage: '', // Deprecated in favor of the SVG visualizer
       moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
       moonSignIcon: moonSign ? moonSign.name : undefined,
-      upcomingPhases,
+      upcomingPhases: getUpcomingPhases(dictionary, locale),
     };
   } catch (error) {
     console.error("Error calculating local lunar data:", error);
-    const upcomingFallback = getUpcomingPhases(dictionary, locale);
     return {
       phase: dictionary['MoonPhase.unknown'] || "Unknown Phase",
       phaseKey: "unknown",
       illumination: 0,
       synodicProgress: 0,
       currentMoonImage: '',
-      upcomingPhases: upcomingFallback,
+      upcomingPhases: getUpcomingPhases(dictionary, locale),
       error: (error as Error).message || "Failed to calculate lunar data",
     };
   }
