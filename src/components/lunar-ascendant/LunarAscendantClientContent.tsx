@@ -38,40 +38,6 @@ const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | ty
   fr,
 };
 
-const getPhaseColorClass = (phaseKey: MoonPhaseKey): string => {
-  switch (phaseKey) {
-    case 'new':
-      return 'border-gray-500/50';
-    case 'waxingCrescent':
-    case 'firstQuarter':
-    case 'waxingGibbous':
-      return 'border-green-500/50';
-    case 'full':
-      return 'border-blue-400/60';
-    case 'waningGibbous':
-    case 'lastQuarter':
-    case 'waningCrescent':
-      return 'border-purple-500/50';
-    default:
-      return 'border-transparent';
-  }
-};
-
-const getIlluminationForPhaseKey = (phaseKey: MoonPhaseKey): number => {
-  switch (phaseKey) {
-    case 'new': return 0;
-    case 'full': return 100;
-    case 'firstQuarter':
-    case 'lastQuarter': return 50;
-    case 'waxingCrescent': return 25;
-    case 'waningCrescent': return 25;
-    case 'waxingGibbous': return 75;
-    case 'waningGibbous': return 75;
-    default: return 50;
-  }
-};
-
-
 export default function LunarAscendantClientContent({ dictionary, locale }: LunarAscendantClientContentProps) {
   const [lunarData, setLunarData] = useState<LunarData | null>(null);
   const [ascendantData, setAscendantData] = useState<AscendantData | null>(null);
@@ -241,7 +207,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                         <TooltipTrigger asChild>
                                             <div className="flex flex-col items-center p-1.5 rounded-md w-24 shrink-0 cursor-default">
                                                 <MoonPhaseVisualizer
-                                                  illumination={getIlluminationForPhaseKey(phase.phaseKey)}
+                                                  illumination={phase.illumination || 0}
                                                   phaseKey={phase.phaseKey}
                                                   size={48}
                                                 />

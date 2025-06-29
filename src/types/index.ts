@@ -1,5 +1,4 @@
 
-
 import type { DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
 import type { TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
@@ -97,6 +96,7 @@ export interface UpcomingPhase {
   phaseKey: MoonPhaseKey;
   dateObj: Date;
   time?: string;
+  illumination?: number;
 }
 
 export interface LunarData {

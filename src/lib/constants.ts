@@ -221,11 +221,24 @@ const mapOpenMeteoPhaseToApp = (
   return { phaseName, illumination, phaseKey };
 };
 
+const getIlluminationForPhaseKey = (phaseKey: MoonPhaseKey): number => {
+    switch (phaseKey) {
+        case 'new': return 0;
+        case 'full': return 100;
+        case 'firstQuarter': return 50;
+        case 'lastQuarter': return 50;
+        case 'waxingCrescent': return 25;
+        case 'waningCrescent': return 25;
+        case 'waxingGibbous': return 75;
+        case 'waningGibbous': return 75;
+        default: return 50;
+    }
+};
+
 function getUpcomingPhases(dictionary: Dictionary, locale: Locale): UpcomingPhase[] {
   const now = new Date();
   const year = now.getFullYear();
-  // JS month is 0-indexed, but our function expects 1-12
-  const month = now.getMonth() + 1; 
+  const month = now.getMonth() + 1; // 1-indexed for my function
 
   // Calculate for current and next month to ensure we always have enough future phases
   const phasesRaw = [
@@ -250,6 +263,7 @@ function getUpcomingPhases(dictionary: Dictionary, locale: Locale): UpcomingPhas
     date: p.date.toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
     time: p.date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }),
     dateObj: p.date,
+    illumination: getIlluminationForPhaseKey(p.phaseKey),
   }));
 }
 
@@ -315,7 +329,6 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
       upcomingPhases: getUpcomingPhases(dictionary, locale),
     };
   } catch (error) {
-    console.error("Error calculating local lunar data:", error);
     return {
       phase: dictionary['MoonPhase.unknown'] || "Unknown Phase",
       phaseKey: "unknown",
