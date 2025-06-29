@@ -21,7 +21,6 @@ import { cn } from "@/lib/utils";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { Progress } from '@/components/ui/progress';
 import { motion } from 'framer-motion';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import MoonPhaseVisualizer from './MoonPhaseVisualizer'; // Import the new component
@@ -182,16 +181,14 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                         </p>
                          {lunarData.synodicProgress !== undefined && (
                           <div className="mt-2">
-                             <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Progress value={lunarData.synodicProgress} className="h-1.5" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>{dictionary['LunarAscendantPage.synodicCycle'] || 'Synodic Cycle Progress'}: {Math.round(lunarData.synodicProgress)}%</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
+                             <Popover>
+                              <PopoverTrigger asChild>
+                                <Progress value={lunarData.synodicProgress} className="h-1.5 cursor-pointer" />
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-2 text-xs">
+                                <p>{dictionary['LunarAscendantPage.synodicCycle'] || 'Synodic Cycle Progress'}: {Math.round(lunarData.synodicProgress)}%</p>
+                              </PopoverContent>
+                            </Popover>
                           </div>
                         )}
                       </div>
@@ -199,13 +196,12 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
 
                     <div className="space-y-2">
                         <h4 className="font-headline text-lg text-primary text-center">{dictionary['LunarAscendantPage.upcomingPhasesTitle'] || "Upcoming Phases"}</h4>
-                        <TooltipProvider>
                             <ScrollArea className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
                                 <div className="flex w-max space-x-4">
                                 {lunarData.upcomingPhases.map((phase, index) => (
-                                    <Tooltip key={index} delayDuration={100}>
-                                        <TooltipTrigger asChild>
-                                            <div className="flex flex-col items-center p-1.5 rounded-md w-24 shrink-0 cursor-default">
+                                    <Popover key={index}>
+                                        <PopoverTrigger asChild>
+                                            <div className="flex flex-col items-center p-1.5 rounded-md w-24 shrink-0 cursor-pointer hover:bg-muted/50 transition-colors">
                                                 <MoonPhaseVisualizer
                                                   illumination={phase.illumination || 0}
                                                   phaseKey={phase.phaseKey}
@@ -214,17 +210,16 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                                 <p className="text-xs font-semibold text-foreground mt-1.5 truncate">{dictionary[phase.nameKey]}</p>
                                                 <p className="text-xs text-muted-foreground">{phase.date}</p>
                                             </div>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-2 text-center">
                                             <p className="font-semibold">{dictionary[phase.nameKey]}</p>
                                             <p className="text-sm text-muted-foreground">{phase.date}{phase.time && <> • {phase.time}</>}</p>
-                                        </TooltipContent>
-                                    </Tooltip>
+                                        </PopoverContent>
+                                    </Popover>
                                 ))}
                                 </div>
                                 <ScrollBar orientation="horizontal" />
                             </ScrollArea>
-                        </TooltipProvider>
                     </div>
                      <div className="pt-2 flex justify-center">
                         <Button onClick={handleShare} variant="outline" size="sm">
