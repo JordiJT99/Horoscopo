@@ -1,3 +1,7 @@
+// astronomy.ts
+
+import type { Dictionary, Locale, MoonPhaseKey, UpcomingPhase } from '@/types';
+
 // Helper functions for degree/radian conversion
 const degToRad = (degrees: number): number => degrees * (Math.PI / 180);
 const radToDeg = (radians: number): number => radians * (180 / Math.PI);
@@ -17,18 +21,20 @@ export function getJulianDay(date: Date): number {
     const minute = date.getUTCMinutes();
     const second = date.getUTCSeconds();
 
-    const a = Math.floor((14 - month) / 12);
-    const y = year + 4800 - a;
-    const m = month + 12 * a - 3;
+    let a = Math.floor((14 - month) / 12);
+    let y = year + 4800 - a;
+    let m = month + 12 * a - 3;
 
     let jd = day + Math.floor((153 * m + 2) / 5) +
              365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) -
-             32045.5; // .5 to start from midnight instead of noon
-
-    jd += (hour / 24) + (minute / 1440) + (second / 86400);
+             32045;
+    
+    // Add fractional day
+    jd += (hour - 12) / 24 + minute / 1440 + second / 86400;
     
     return jd;
 }
+
 
 /**
  * Calculates the Ecliptic Longitude of the Sun using a more accurate algorithm.
@@ -134,4 +140,89 @@ export function getAscendantLongitude(jd: number, lat: number, lon: number): num
     let ascendantRad = Math.atan2(Y, X);
     
     return normalizeAngle(radToDeg(ascendantRad));
+}
+
+/**
+ * Computes the Julian Day for a specific lunar phase using Meeus' algorithm.
+ * @param k The lunation number.
+ * @param phase The phase to calculate (0=New, 1=FirstQ, 2=Full, 3=LastQ).
+ * @returns The Julian Day of the specified phase.
+ */
+function getJulianDayOfPhase(k: number, phase: number): number {
+    const T = k / 1236.85;
+    const T2 = T * T;
+    const T3 = T * T2;
+
+    // Mean time of the phase
+    let jde = 2451550.09766 + 29.530588861 * k + 0.00015437 * T2 - 0.000000150 * T3 + 0.00000000073 * T2 * T2;
+    jde += 0.25 * phase * 29.530588861;
+
+    // Sun's mean anomaly
+    const M = degToRad(normalizeAngle(2.5534 + 29.10535670 * k));
+    // Moon's mean anomaly
+    const Mprime = degToRad(normalizeAngle(201.5643 + 385.81693528 * k));
+    // Moon's argument of latitude
+    const F = degToRad(normalizeAngle(160.7108 + 390.67050284 * k));
+
+    let corrections = 0;
+    if (phase === 0 || phase === 2) { // New and Full Moon
+        corrections += (
+            -0.40720 * Math.sin(Mprime) +
+            0.17241 * Math.sin(M) +
+            0.01608 * Math.sin(2 * Mprime) +
+            0.01039 * Math.sin(2 * F) +
+            0.00739 * Math.sin(Mprime - M) -
+            0.00514 * Math.sin(Mprime + M) +
+            0.00208 * Math.sin(2 * M)
+        );
+    } else if (phase === 1 || phase === 3) { // First and Last Quarter
+         corrections += (
+            -0.62801 * Math.sin(Mprime) +
+            0.17302 * Math.sin(M) -
+            0.01179 * Math.sin(2 * Mprime) +
+            0.01043 * Math.sin(2 * F) -
+            0.00739 * Math.sin(Mprime + M) +
+            0.00679 * Math.sin(Mprime - M) +
+            0.00337 * Math.sin(2 * M)
+        );
+    }
+    
+    return jde + corrections;
+}
+
+/**
+ * Calculates the primary moon phases for a given month and year.
+ * @param year The target year.
+ * @param month The target month (0-indexed, e.g., 0 for January).
+ * @returns An array of objects containing the date and phase key for each primary phase.
+ */
+export function computeLunarPhasesForMonth(year: number, month: number): { date: Date, phaseKey: MoonPhaseKey }[] {
+    const phases: { date: Date, phaseKey: MoonPhaseKey }[] = [];
+    const jsMonth = (month % 12 + 12) % 12; // Ensure month is 0-11
+    const jsYear = year + Math.floor(month / 12);
+
+    // Calculate lunation number 'k' for the start of the month
+    const k_base = Math.floor((jsYear - 2000) * 12.3685);
+
+    // Check lunations around the calculated k to catch all phases within the month
+    for (let i = -2; i <= 2; i++) {
+        const k = k_base + i;
+        for (let phase = 0; phase < 4; phase++) {
+            const jde = getJulianDayOfPhase(k, phase);
+            // Convert Julian Day to JavaScript Date (which is in UTC)
+            const dateUtc = new Date((jde - 2440587.5) * 86400000);
+
+            if (dateUtc.getUTCFullYear() === jsYear && dateUtc.getUTCMonth() === jsMonth) {
+                let phaseKey: MoonPhaseKey = 'unknown';
+                if (phase === 0) phaseKey = 'new';
+                else if (phase === 1) phaseKey = 'firstQuarter';
+                else if (phase === 2) phaseKey = 'full';
+                else if (phase === 3) phaseKey = 'lastQuarter';
+                
+                phases.push({ date: dateUtc, phaseKey });
+            }
+        }
+    }
+    
+    return phases.sort((a, b) => a.date.getTime() - b.date.getTime());
 }
