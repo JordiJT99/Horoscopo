@@ -238,24 +238,68 @@ const getIlluminationForPhaseKey = (phaseKey: MoonPhaseKey): number => {
 function getUpcomingPhases(dictionary: Dictionary, locale: Locale): UpcomingPhase[] {
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth() + 1; // 1-indexed for my function
+  const month = now.getMonth() + 1; // 1-indexed
 
-  // Calculate for current and next month to ensure we always have enough future phases
-  const phasesRaw = [
+  // Calculate for a wider range to ensure we can find pairs
+  const mainPhasesRaw = [
+    ...computeLunarPhasesForMonth(year, month - 1),
     ...computeLunarPhasesForMonth(year, month),
     ...computeLunarPhasesForMonth(year, month + 1),
+    ...computeLunarPhasesForMonth(year, month + 2), // Add another month for safety
   ];
 
   // Deduplicate and sort
-  const uniquePhases = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
-  phasesRaw.forEach(p => {
-    uniquePhases.set(p.date.toISOString(), p);
+  const uniqueMainPhases = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
+  mainPhasesRaw.forEach(p => {
+    // Deduplicate by date string to avoid floating point issues from different calculation runs
+    uniqueMainPhases.set(p.date.toISOString().slice(0, 13), p);
   });
-  const sortedPhases = Array.from(uniquePhases.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
+  
+  const sortedMainPhases = Array.from(uniqueMainPhases.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
 
-  const futurePhases = sortedPhases
+  const allPhases: { date: Date, phaseKey: MoonPhaseKey }[] = [];
+
+  // Iterate through main phases and insert intermediate ones
+  for (let i = 0; i < sortedMainPhases.length - 1; i++) {
+    const currentMainPhase = sortedMainPhases[i];
+    const nextMainPhase = sortedMainPhases[i + 1];
+
+    // Add the main phase itself
+    allPhases.push(currentMainPhase);
+
+    // Calculate and add the intermediate phase
+    const intermediateTime = (currentMainPhase.date.getTime() + nextMainPhase.date.getTime()) / 2;
+    const intermediateDate = new Date(intermediateTime);
+    let intermediatePhaseKey: MoonPhaseKey = 'unknown';
+
+    const mainPhasePair = `${currentMainPhase.phaseKey}-${nextMainPhase.phaseKey}`;
+
+    switch (mainPhasePair) {
+        case 'new-firstQuarter':
+            intermediatePhaseKey = 'waxingCrescent';
+            break;
+        case 'firstQuarter-full':
+            intermediatePhaseKey = 'waxingGibbous';
+            break;
+        case 'full-lastQuarter':
+            intermediatePhaseKey = 'waningGibbous';
+            break;
+        case 'lastQuarter-new':
+            intermediatePhaseKey = 'waningCrescent';
+            break;
+    }
+
+    if (intermediatePhaseKey !== 'unknown') {
+      allPhases.push({ date: intermediateDate, phaseKey: intermediatePhaseKey });
+    }
+  }
+
+  // Sort all phases again to ensure correct order
+  allPhases.sort((a, b) => a.date.getTime() - b.date.getTime());
+  
+  const futurePhases = allPhases
     .filter(p => p.date.getTime() >= now.getTime())
-    .slice(0, 4);
+    .slice(0, 8); // Get more phases to show in the scroll area
 
   return futurePhases.map(p => ({
     nameKey: `MoonPhase.${p.phaseKey}`,
@@ -287,10 +331,10 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
     const month = today.getMonth() + 1;
     const prevMonthPhases = computeLunarPhasesForMonth(year, month - 1);
     const currentMonthPhases = computeLunarPhasesForMonth(year, month);
-    const allPhases = [...prevMonthPhases, ...currentMonthPhases, ...computeLunarPhasesForMonth(year, month + 1)];
+    const allPhasesCalc = [...prevMonthPhases, ...currentMonthPhases, ...computeLunarPhasesForMonth(year, month + 1)];
     
     const uniquePhaseMap = new Map<string, { date: Date, phaseKey: MoonPhaseKey }>();
-    allPhases.forEach(p => { uniquePhaseMap.set(p.date.toISOString(), p); });
+    allPhasesCalc.forEach(p => { uniquePhaseMap.set(p.date.toISOString(), p); });
     const sortedPhases = Array.from(uniquePhaseMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
     
     let lastNewMoon: { date: Date, phaseKey: MoonPhaseKey } | undefined;
