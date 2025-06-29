@@ -333,7 +333,7 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
 
 
 
-export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string, birthCountry: string): AscendantData | null => {
+export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
   // TODO: Implement a proper geocoding service to convert birthCity to lat/lon.
   // Using fixed coordinates for Madrid, Spain as a placeholder.
   const lat = 40.4168;
