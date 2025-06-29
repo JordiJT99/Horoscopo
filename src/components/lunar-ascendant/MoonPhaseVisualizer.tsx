@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useId } from 'react';
@@ -6,7 +5,7 @@ import { cn } from '@/lib/utils';
 import type { MoonPhaseKey } from '@/types';
 
 interface MoonPhaseVisualizerProps {
-  illumination: number; // Ignored for the 4 main phases, used for others
+  illumination: number; // Used to refine crescent/gibbous, but phaseKey is primary
   phaseKey: MoonPhaseKey;
   size?: number;
   className?: string;
@@ -54,7 +53,7 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
 
   switch (phaseKey) {
     case 'new':
-      // The base dark moon is all that's needed
+      // Correct: Only the base dark moon is needed. litElement remains null.
       break;
     case 'full':
       litElement = (
@@ -65,7 +64,6 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
       );
       break;
     case 'firstQuarter':
-      // Right half lit
       litElement = (
         <g>
           <path d={`M ${r},0 V ${size} H ${size} V 0 Z`} fill={lightForeground} />
@@ -74,7 +72,6 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
       );
       break;
     case 'lastQuarter':
-      // Left half lit
       litElement = (
         <g>
           <path d={`M 0,0 V ${size} H ${r} V 0 Z`} fill={lightForeground} />
@@ -82,26 +79,27 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
         </g>
       );
       break;
-    default:
-       // Fallback for crescent/gibbous - shows a simple representation
-      const isWaxing = phaseKey.startsWith('waxing');
+    default: // Handles crescent and gibbous phases by overlaying a shadow
+      const isWaxing = phaseKey.includes('waxing');
+      const isCrescent = phaseKey.includes('Crescent');
+      
+      // The horizontal offset of the shadow circle's center
+      // A smaller offset for gibbous (revealing more light), larger for crescent (revealing less light)
+      const shadowOffset = isCrescent ? r * 0.5 : r * 1.5;
+      const shadowCx = isWaxing ? r + shadowOffset : r - shadowOffset;
+
       litElement = (
         <g>
+          {/* Base lit moon with craters */}
           <circle cx={r} cy={r} r={r} fill={lightForeground} />
-          <circle cx={isWaxing ? r - r / 2 : r + r / 2} cy={r} r={r / 1.5} fill={darkBackground} />
+          {lightCraters}
+          
+          {/* Occluding shadow circle that creates the phase shape */}
+          <circle cx={shadowCx} cy={r} r={r} fill={darkBackground} />
         </g>
       );
-      if (phaseKey.includes('Gibbous')) {
-          litElement = (
-              <g>
-                  <circle cx={r} cy={r} r={r} fill={lightForeground} />
-                  <circle cx={isWaxing ? r + r / 2 : r - r / 2} cy={r} r={r / 1.5} fill={darkBackground} />
-              </g>
-          )
-      }
       break;
   }
-
 
   return (
     <div className={cn('relative', className)} style={{ width: size, height: size }}>
@@ -123,7 +121,6 @@ const MoonPhaseVisualizer: React.FC<MoonPhaseVisualizerProps> = ({
           {baseDarkMoon}
           {litElement}
         </g>
-
       </svg>
     </div>
   );
