@@ -927,7 +927,10 @@
   "ZodiacDetail.Virgo.strengths": ["Loyal", "Analytical", "Kind", "Hardworking", "Practical", "Modest"],
   "ZodiacDetail.Virgo.weaknessesTitle": "Weaknesses",
   "ZodiacDetail.Virgo.weaknesses": ["Shyness", "Worry", "Overly critical of self and others", "All work and no play"],
-  "ZodiacDetail.Virgo.loveTitle": "La Vierge exprime le amour à travers des actes de service et une dévotion silencieuse. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de prendre soin des détails.",
+  "ZodiacDetail.Virgo.loveTitle": "Virgo in Love",
+  "ZodiacDetail.Virgo.love": "In love, Virgo shows affection through practical acts of service and constant devotion, not grand romantic gestures. They are cautious and take time to open up. They seek a partner who is neat, intelligent, and reliable. Once committed, they are incredibly loyal and caring partners, always striving to improve their partner's life.",
+  "ZodiacDetail.Virgo.friendshipTitle": "Virgo in Friendship",
+  "ZodiacDetail.Virgo.friendship": "Virgo is the friend who always has a plan, who helps with homework, and who remembers how to get that stain out of your favorite shirt. They are incredibly dependable and give the best, most practical advice. They show their love by helping. Sometimes their tendency to 'fix' everything can be perceived as criticism, but their intentions are always pure.",
   "ZodiacDetail.Virgo.workTitle": "Virgo at Work",
   "ZodiacDetail.Virgo.work": "Virgo is an employer's dream. They are efficient, organized, and have an unparalleled eye for detail. They excel in careers that require analysis, research, editing, or any form of precise work. They are the people who find the mistakes others miss and improve systems to make them more efficient. Their perfectionism can sometimes make them their own worst critic.",
   "ZodiacDetail.Libra.title": "Libra Traits",
@@ -1006,32 +1009,18 @@
   "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
   "StorePage.viewOnAmazon": "View on Amazon",
   "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
-  "StoreProducts": {
-    "classicTarotDeck": {
-      "title": "Classic Tarot Deck",
-      "description": "A timeless Rider-Waite tarot deck, perfect for beginners and experts alike to seek insight and guidance."
-    },
-    "astrologyIntroBook": {
-      "title": "Intro to Astrology Book",
-      "description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners."
-    },
-    "healingCrystalsSet": {
-      "title": "Healing Crystals Set",
-      "description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies."
-    },
-    "moonLamp": {
-      "title": "3D Moon Lamp",
-      "description": "Bring the mystical glow of the moon into your home with this realistic and calming night lamp."
-    },
-    "zodiacJournal": {
-      "title": "Zodiac Constellation Journal",
-      "description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations."
-    },
-    "incenseHolder": {
-      "title": "Ceramic Incense Holder",
-      "description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
-    }
-  }
+  "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
+  "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for beginners and experts alike to seek insight and guidance.",
+  "StoreProducts.astrologyIntroBook.title": "Intro to Astrology Book",
+  "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
+  "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
+  "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
+  "StoreProducts.moonLamp.title": "3D Moon Lamp",
+  "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and calming night lamp.",
+  "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
+  "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
+  "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
+  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
 }
 
     

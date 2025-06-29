@@ -927,7 +927,10 @@
   "ZodiacDetail.Virgo.strengths": ["Loyal", "analytisch", "freundlich", "fleißig", "praktisch", "bescheiden"],
   "ZodiacDetail.Virgo.weaknessesTitle": "Schwächen",
   "ZodiacDetail.Virgo.weaknesses": ["Schüchternheit", "Sorgen", "übermäßig kritisch gegenüber sich selbst und anderen", "nur Arbeit und kein Vergnügen"],
-  "ZodiacDetail.Virgo.loveTitle": "La Vierge exprime le amour à travers des actes de service et une dévotion silencieuse. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de prendre soin des détails.",
+  "ZodiacDetail.Virgo.loveTitle": "Jungfrau in der Liebe",
+  "ZodiacDetail.Virgo.love": "In der Liebe zeigt die Jungfrau ihre Zuneigung durch praktische Dienstleistungen und ständige Hingabe, nicht durch große romantische Gesten. Sie sind vorsichtig und brauchen Zeit, um sich zu öffnen. Sie suchen einen Partner, der ordentlich, intelligent und zuverlässig ist. Einmal engagiert, sind sie unglaublich treue und aufmerksame Partner, die sich immer bemühen, das Leben ihres Partners zu verbessern.",
+  "ZodiacDetail.Virgo.friendshipTitle": "Jungfrau in Freundschaft",
+  "ZodiacDetail.Virgo.friendship": "Die Jungfrau ist die Freundin, die immer einen Plan hat, die bei den Hausaufgaben hilft und die sich daran erinnert, wie man den Fleck aus dem Lieblingshemd bekommt. Sie sind unglaublich zuverlässig und geben die besten, praktischsten Ratschläge. Sie zeigen ihre Liebe, indem sie helfen. Manchmal kann ihre Neigung, alles zu 'reparieren', als Kritik empfunden werden, aber ihre Absichten sind immer rein.",
   "ZodiacDetail.Virgo.workTitle": "Jungfrau bei der Arbeit",
   "ZodiacDetail.Virgo.work": "Die Jungfrau ist der Traum eines jeden Arbeitgebers. Sie sind effizient, organisiert und haben ein unübertroffenes Auge für Details. Sie zeichnen sich in Berufen aus, die Analyse, Forschung, Bearbeitung oder jede Form von präziser Arbeit erfordern. Sie sind die Menschen, die Fehler finden, die andere übersehen, und Systeme verbessern, um sie effizienter zu machen. Ihr Perfektionismus kann sie manchmal zu ihrem eigenen schlimmsten Kritiker machen.",
   "ZodiacDetail.Libra.title": "Eigenschaften der Waage",
@@ -1006,32 +1009,18 @@
   "StorePage.subtitle": "Ausgewählte Artikel zur Verbesserung Ihrer spirituellen Reise.",
   "StorePage.viewOnAmazon": "Bei Amazon ansehen",
   "StorePage.affiliateDisclaimer": "Als Amazon-Partner verdienen wir an qualifizierten Käufen. Dies unterstützt unsere App ohne zusätzliche Kosten für Sie.",
-  "StoreProducts": {
-    "classicTarotDeck": {
-      "title": "Klassisches Tarot-Deck",
-      "description": "Ein zeitloses Rider-Waite-Tarot-Deck, perfekt für Anfänger und Experten gleichermaßen, um Einblicke und Führung zu suchen."
-    },
-    "astrologyIntroBook": {
-      "title": "Einführung in die Astrologie",
-      "description": "Ein umfassendes Buch, das die Grundlagen der Astrologie, der Zeichen, Planeten und Häuser abdeckt."
-    },
-    "healingCrystalsSet": {
-      "title": "Heilkristalle-Set",
-      "description": "Ein Starter-Set mit verschiedenen Trommelsteinen wie Amethyst und Rosenquarz, um Energien auszugleichen."
-    },
-    "moonLamp": {
-      "title": "3D-Mondlampe",
-      "description": "Bringen Sie die mystische Leuchtkraft des Mondes mit dieser realistischen und beruhigenden Nachtlampe in Ihr Zuhause."
-    },
-    "zodiacJournal": {
-      "title": "Sternzeichen-Tagebuch",
-      "description": "Ein wunderschön gestaltetes Notizbuch, um Ihre Gedanken, Träume und astrologischen Beobachtungen festzuhalten."
-    },
-    "incenseHolder": {
-      "title": "Keramischer Räucherstäbchenhalter",
-      "description": "Ein eleganter Halter zur sicheren Verbrennung Ihrer Lieblingsräucherstäbchen während Meditation oder Entspannung."
-    }
-  }
+  "StoreProducts.classicTarotDeck.title": "Klassisches Tarot-Deck",
+  "StoreProducts.classicTarotDeck.description": "Ein zeitloses Rider-Waite-Tarot-Deck, perfekt für Anfänger und Experten gleichermaßen, um Einblicke und Führung zu suchen.",
+  "StoreProducts.astrologyIntroBook.title": "Einführung in die Astrologie",
+  "StoreProducts.astrologyIntroBook.description": "Ein umfassendes Buch, das die Grundlagen der Astrologie, der Zeichen, Planeten und Häuser abdeckt.",
+  "StoreProducts.healingCrystalsSet.title": "Heilkristalle-Set",
+  "StoreProducts.healingCrystalsSet.description": "Ein Starter-Set mit verschiedenen Trommelsteinen wie Amethyst und Rosenquarz, um Energien auszugleichen.",
+  "StoreProducts.moonLamp.title": "3D-Mondlampe",
+  "StoreProducts.moonLamp.description": "Bringen Sie die mystische Leuchtkraft des Mondes mit dieser realistischen und beruhigenden Nachtlampe in Ihr Zuhause.",
+  "StoreProducts.zodiacJournal.title": "Sternzeichen-Tagebuch",
+  "StoreProducts.zodiacJournal.description": "Ein wunderschön gestaltetes Notizbuch, um Ihre Gedanken, Träume und astrologischen Beobachtungen festzuhalten.",
+  "StoreProducts.incenseHolder.title": "Keramischer Räucherstäbchenhalter",
+  "StoreProducts.incenseHolder.description": "Ein eleganter Halter zur sicheren Verbrennung Ihrer Lieblingsräucherstäbchen während Meditation oder Entspannung."
 }
 
     
