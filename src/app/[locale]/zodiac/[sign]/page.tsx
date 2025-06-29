@@ -5,7 +5,7 @@ import { ZODIAC_SIGNS } from '@/lib/constants';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { notFound } from 'next/navigation';
-import { Flame, Mountain, Wind, Droplets, Layers, Anchor, RefreshCw, Sun, Shield, Heart, Briefcase, Sparkles } from 'lucide-react';
+import { Flame, Mountain, Wind, Droplets, Layers, Anchor, RefreshCw, Sun, Shield, Heart, Briefcase, Sparkles, Users } from 'lucide-react';
 import type { AstrologicalElement, AstrologicalModality, AstrologicalPolarity } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -173,6 +173,17 @@ export default async function ZodiacDetailPage({ params }: { params: { locale: L
                     <p className="font-body text-card-foreground/90 leading-relaxed">{detailDict.love || "Love characteristics not available."}</p>
                 </CardContent>
             </Card>
+
+            <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-lg">
+                <CardHeader className="flex flex-row items-center gap-3">
+                    <Users className="w-6 h-6 text-primary" />
+                    <CardTitle className="text-xl text-primary font-headline">{detailDict.friendshipTitle || "In Friendship"}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                     <p className="font-body text-card-foreground/90 leading-relaxed">{detailDict.friendship || "Friendship characteristics not available."}</p>
+                </CardContent>
+            </Card>
+
              <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-lg">
                 <CardHeader className="flex flex-row items-center gap-3">
                     <Briefcase className="w-6 h-6 text-primary" />
