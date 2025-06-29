@@ -1,4 +1,3 @@
-
 // Helper functions for degree/radian conversion
 const degToRad = (degrees: number): number => degrees * (Math.PI / 180);
 const radToDeg = (radians: number): number => radians * (180 / Math.PI);
@@ -32,58 +31,78 @@ export function getJulianDay(date: Date): number {
 }
 
 /**
- * Calculates the Ecliptic Longitude of the Sun.
- * Uses a simplified algorithm from the US Naval Observatory, valid for ~200 years from J2000.
+ * Calculates the Ecliptic Longitude of the Sun using a more accurate algorithm.
+ * Based on Jean Meeus' "Astronomical Algorithms".
  * @param jd The Julian Day in UT.
  * @returns The Sun's ecliptic longitude in degrees.
  */
 export function getSunLongitude(jd: number): number {
-    const D = jd - 2451545.0; // Days from J2000.0
+    const T = (jd - 2451545.0) / 36525; // Julian centuries
 
-    // Mean anomaly of the Sun
-    const g = normalizeAngle(357.529 + 0.98560028 * D);
-    
     // Mean longitude of the Sun
-    const q = normalizeAngle(280.459 + 0.98564736 * D);
+    const L0 = normalizeAngle(280.46646 + 36000.76983 * T + 0.0003032 * T * T);
+    
+    // Mean anomaly of the Sun
+    const M = normalizeAngle(357.52911 + 35999.05029 * T - 0.0001537 * T * T);
 
-    // Ecliptic longitude
-    const lambda = q + 1.915 * Math.sin(degToRad(g)) + 0.020 * Math.sin(degToRad(2 * g));
+    // Equation of the center
+    const C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(degToRad(M))
+            + (0.019993 - 0.000101 * T) * Math.sin(degToRad(2 * M))
+            + 0.000289 * Math.sin(degToRad(3 * M));
+    
+    // True longitude
+    const lambda = L0 + C;
 
     return normalizeAngle(lambda);
 }
 
+
 /**
- * Calculates the Ecliptic Longitude of the Moon.
- * Uses a simplified version of Meeus' formulas with the main perturbation terms.
- * Accuracy is sufficient to determine the zodiac sign.
+ * Calculates the Ecliptic Longitude of the Moon with improved accuracy.
+ * Uses a more complete version of Meeus' formulas with major perturbation terms.
  * @param jd The Julian Day in UT.
  * @returns The Moon's ecliptic longitude in degrees.
  */
 export function getMoonLongitude(jd: number): number {
-    const D = jd - 2451545.0; // Days from J2000.0
+    const T = (jd - 2451545.0) / 36525;      // Julian centuries since J2000.0
 
-    // Moon's mean longitude
-    const L = normalizeAngle(218.316 + 13.176396 * D);
-    // Moon's mean anomaly
-    const M = normalizeAngle(134.963 + 13.064993 * D);
-    // Moon's argument of latitude
-    const F = normalizeAngle(93.272 + 13.229350 * D);
-    // Sun's mean anomaly
-    const Ms = normalizeAngle(357.529 + 0.98560028 * D);
-    // Moon's mean elongation
-    const D_moon = normalizeAngle(297.850 + 12.190749 * D);
+    // Moon's mean longitude (L')
+    const L_prime = normalizeAngle(218.3164477 + 481267.88123421 * T - 0.0015786 * T*T + T*T*T / 538841 - T*T*T*T / 65194000);
 
+    // Sun's mean anomaly (M_sun)
+    const M_sun = normalizeAngle(357.5291092 + 35999.0502909 * T - 0.0001536 * T*T + T*T*T / 24490000);
 
-    let lambda = L;
-    // Add major perturbations
-    lambda += 6.289 * Math.sin(degToRad(M));
-    lambda += 1.274 * Math.sin(degToRad(2 * D_moon - M));
-    lambda += 0.658 * Math.sin(degToRad(2 * D_moon));
-    lambda += 0.214 * Math.sin(degToRad(2 * M));
-    lambda -= 0.186 * Math.sin(degToRad(Ms));
-    lambda -= 0.114 * Math.sin(degToRad(2 * F));
+    // Moon's mean anomaly (M')
+    const M_prime = normalizeAngle(134.9633964 + 477198.8675055 * T + 0.0087414 * T*T + T*T*T / 69199 - T*T*T*T / 14712000);
 
-    return normalizeAngle(lambda);
+    // Moon's mean elongation from the Sun (D_moon)
+    const D_moon = normalizeAngle(297.8501921 + 445267.1114034 * T - 0.0018819 * T*T + T*T*T / 545868 - T*T*T*T / 113065000);
+
+    // Moon's argument of latitude (F)
+    const F = normalizeAngle(93.2720950 + 483202.0175233 * T - 0.0036539 * T*T - T*T*T / 3526000 + T*T*T*T / 863310000);
+
+    // Sum of major perturbations (in degrees)
+    let sum = 0;
+    sum += -1.274 * Math.sin(degToRad(M_prime - 2 * D_moon));
+    sum += +6.289 * Math.sin(degToRad(M_prime));
+    sum += -0.658 * Math.sin(degToRad(2 * D_moon));
+    sum += +0.214 * Math.sin(degToRad(2 * M_prime));
+    sum += -0.186 * Math.sin(degToRad(M_sun));
+    sum += -0.114 * Math.sin(degToRad(2 * F));
+    sum += +0.059 * Math.sin(degToRad(2 * M_prime - 2 * D_moon));
+    sum += +0.057 * Math.sin(degToRad(M_prime - 2 * D_moon + M_sun));
+    sum += +0.053 * Math.sin(degToRad(M_prime + 2 * D_moon));
+    sum += +0.046 * Math.sin(degToRad(2 * D_moon - M_sun));
+    sum += +0.041 * Math.sin(degToRad(M_prime - M_sun));
+    sum += -0.035 * Math.sin(degToRad(D_moon));
+    sum += -0.031 * Math.sin(degToRad(M_prime + M_sun));
+    sum += -0.015 * Math.sin(degToRad(2 * F - 2 * D_moon));
+    sum += +0.011 * Math.sin(degToRad(M_prime + 2 * F));
+
+    // True ecliptic longitude of the Moon
+    const lambda_moon = L_prime + sum;
+
+    return normalizeAngle(lambda_moon);
 }
 
 /**
