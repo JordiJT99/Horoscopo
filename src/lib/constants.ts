@@ -243,53 +243,41 @@ const mapOpenMeteoPhaseToApp = (
 };
 
 
-export const getCurrentLunarData = async (dictionary: Dictionary, locale: Locale = 'es'): Promise<LunarData> => {
-  // Construct the API URL with explicit start and end dates for today.
-  const today = new Date();
-  const todayStr = today.toISOString().split('T')[0];
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=-34.61&longitude=-58.38&daily=moon_phase&timezone=auto&start_date=${todayStr}&end_date=${todayStr}`;
-
+export const getCurrentLunarData = (dictionary: Dictionary, locale: Locale = 'es'): LunarData => {
   try {
-    const response = await fetch(apiUrl, { cache: 'no-store' }); // Added no-store cache to avoid stale data issues
-    if (!response.ok) {
-      console.error("Open-Meteo API request failed:", response.status, response.statusText);
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-    const data = await response.json();
+    const today = new Date();
+    const jd = getJulianDay(today);
+    const sunLon = getSunLongitude(jd);
+    const moonLon = getMoonLongitude(jd);
 
-    if (data.daily && data.daily.moon_phase && data.daily.moon_phase.length > 0) {
-      const phaseValueToday = data.daily.moon_phase[0];
-      const { phaseName, illumination, phaseKey } = mapOpenMeteoPhaseToApp(phaseValueToday, dictionary);
+    // Calculate phase value (0=new, 0.25=first quarter, 0.5=full, etc.)
+    const phaseValue = ((moonLon - sunLon + 360) % 360) / 360;
 
-      // Use the date returned by the API for the moon sign calculation for better accuracy
-      const todayFromApi = new Date(data.daily.time[0] + 'T00:00:00Z'); // Assuming UTC date
-      const moonSign = getMoonSign(todayFromApi);
-      
-      return {
-        phase: phaseName,
-        phaseKey: phaseKey,
-        illumination: illumination,
-        currentMoonImage: getMoonImageUrl(phaseKey),
-        moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
-        moonSignIcon: moonSign ? moonSign.name : undefined,
-        upcomingPhases: getMockUpcomingPhases(dictionary),
-      };
-    } else {
-      console.error("Open-Meteo API response missing expected data:", data);
-      throw new Error("Invalid API response structure");
-    }
+    const { phaseName, illumination, phaseKey } = mapOpenMeteoPhaseToApp(phaseValue, dictionary);
+    const moonSign = getMoonSign(today);
+
+    return {
+      phase: phaseName,
+      phaseKey: phaseKey,
+      illumination: illumination,
+      currentMoonImage: getMoonImageUrl(phaseKey),
+      moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
+      moonSignIcon: moonSign ? moonSign.name : undefined,
+      upcomingPhases: getMockUpcomingPhases(dictionary),
+    };
   } catch (error) {
-    console.error("Error fetching or processing lunar data:", error);
+    console.error("Error calculating local lunar data:", error);
     return {
       phase: dictionary['MoonPhase.unknown'] || "Unknown Phase",
       phaseKey: "unknown",
       illumination: 0,
       currentMoonImage: getMoonImageUrl('unknown'),
       upcomingPhases: getMockUpcomingPhases(dictionary),
-      error: (error as Error).message || "Failed to load lunar data",
+      error: (error as Error).message || "Failed to calculate lunar data",
     };
   }
 };
+
 
 
 export const getAscendantSign = (birthDate: Date, birthTime: string, birthCity: string): AscendantData | null => {
