@@ -869,8 +869,7 @@
   "ZodiacDetail.Cancer.friendshipTitle": "Le Cancer en Amitié",
   "ZodiacDetail.Cancer.friendship": "Un ami Cancer est comme de la famille. Ce sont eux qui se souviennent de votre anniversaire, vous apportent de la soupe quand vous êtes malade et vous offrent une épaule sur laquelle pleurer. Ils sont d'excellents auditeurs et fournissent un soutien émotionnel incroyable. Cependant, ils peuvent être facilement blessés et ont tendance à se replier sur eux-mêmes s'ils ne se sentent pas appréciés. Leurs amitiés sont profondes et construites pour durer toute une vie.",
   "ZodiacDetail.Cancer.workTitle": "Le Cancer au Travail",
-  "ZodiacDetail.Cancer.work": "Au travail, le Cancer s'épanouit dans des rôles qui lui permettent de prendre soin des autres ou de créer un environnement de soutien. Ils font d'excellents gestionnaires, infirmiers, enseignants et chefs. Leur intuition peut également en faire de fins hommes d'affaires, car ils ont le don de sentir les besoins du marché. Ils travaillent mieux lorsqu'ils se sentent émotionnellement en sécurité et font partie d'une équipe soudée."
-  },
+  "ZodiacDetail.Cancer.work": "Au travail, le Cancer s'épanouit dans des rôles qui lui permettent de prendre soin des autres ou de créer un environnement de soutien. Ils font d'excellents gestionnaires, infirmiers, enseignants et chefs. Leur intuition peut également en faire de fins hommes d'affaires, car ils ont le don de sentir les besoins du marché. Ils travaillent mieux lorsqu'ils se sentent émotionnellement en sécurité et font partie d'une équipe soudée.",
   "ZodiacDetail.Leo.title": "Traits du Lion",
   "ZodiacDetail.Leo.description": "Gouverné par le Soleil, le Lion est la royauté radieuse et charismatique du zodiaque. Débordant de confiance, de générosité et d'un flair naturel pour le dramatique, le Lion aime être le centre de l'attention et inspirer les autres par sa chaleur et sa vitalité. Ils ont un grand cœur et une créativité innée qui doit s'exprimer.",
   "ZodiacDetail.Leo.strengthsTitle": "Forces",
@@ -882,8 +881,7 @@
   "ZodiacDetail.Leo.friendshipTitle": "Le Lion en Amitié",
   "ZodiacDetail.Leo.friendship": "Un ami Lion est le chef de la meute, celui qui organise les fêtes et s'assure que tout le monde passe un bon moment. Ils sont farouchement loyaux et défendront leurs amis avec une détermination ardente. Ils aiment gâter et encourager leurs amis, mais ils attendent en retour de l'appréciation et de l'admiration. L'amitié avec un Lion est chaleureuse, amusante et toujours un peu théâtrale.",
   "ZodiacDetail.Leo.workTitle": "Le Lion au Travail",
-  "ZodiacDetail.Leo.work": "Le Lion est un leader et un motivateur né. Ils s'épanouissent dans des rôles qui leur permettent d'utiliser leur créativité et leur charisme. Ils font d'excellents orateurs, artistes, vendeurs et gestionnaires. Ils ont besoin de reconnaissance pour leur travail et peuvent avoir des difficultés s'ils ne se sentent pas appréciés. Leur capacité à inspirer les autres est leur plus grand atout professionnel."
-  },
+  "ZodiacDetail.Leo.work": "Le Lion est un leader et un motivateur né. Ils s'épanouissent dans des rôles qui leur permettent d'utiliser leur créativité et leur charisme. Ils font d'excellents orateurs, artistes, vendeurs et gestionnaires. Ils ont besoin de reconnaissance pour leur travail et peuvent avoir des difficultés s'ils ne se sentent pas appréciés. Leur capacité à inspirer les autres est leur plus grand atout professionnel.",
   "ZodiacDetail.Virgo.title": "Traits de la Vierge",
   "ZodiacDetail.Virgo.description": "La Vierge est le signe du service, de la pureté et de l'analyse pratique. Gouvernés par Mercure, ils possèdent un esprit vif et un désir inné d'améliorer et d'organiser le monde qui les entoure. Ils sont soucieux des détails, méthodiques et ont un profond besoin d'être utiles. Ce sont les aides silencieux du zodiaque, travaillant en coulisses pour s'assurer que tout fonctionne parfaitement.",
   "ZodiacDetail.Virgo.strengthsTitle": "Forces",
@@ -891,10 +889,11 @@
   "ZodiacDetail.Virgo.weaknessesTitle": "Faiblesses",
   "ZodiacDetail.Virgo.weaknesses": ["Timidez", "preocupación", "excesivamente crítico consigo mismo y con los demás", "todo trabajo y nada de juego"],
   "ZodiacDetail.Virgo.loveTitle": "La Vierge en Amour",
-  "ZodiacDetail.Virgo.love": "En amour, la Vierge montre son affection par des actes de service pratiques et une dévotion constante, et non par de grands gestes romantiques. Ils sont prudents et prennent du temps pour s'ouvrir. Ils recherchent un partenaire intelligent, ordonné et fiable. Une fois engagés, ils sont des partenaires incroyablement loyaux et attentionnés, s'efforçant toujours d'améliorer la vie de leur partenaire.",
+  "ZodiacDetail.Virgo.love": "En amour, la Vierge montre son affection par des actes de service pratiques et une dévotion constante, et non par de grands gestes romantiques. Ils sont prudents et prennent du temps pour s'ouvrir. Ils recherchent un partenaire soigné, intelligent et qui apprécie leur désir de prendre soin des détails.",
+  "ZodiacDetail.Virgo.friendshipTitle": "La Vierge en Amitié",
+  "ZodiacDetail.Virgo.friendship": "La Vierge est l'ami qui a toujours un plan, qui aide pour les devoirs, et qui se souvient comment enlever cette tache de votre chemise préférée. Ils sont incroyablement fiables et donnent les conseils les plus pratiques. Ils montrent leur amour en aidant. Parfois, leur tendance à 'réparer' tout peut être perçue comme une critique, mais leurs intentions sont toujours pures.",
   "ZodiacDetail.Virgo.workTitle": "La Vierge au Travail",
-  "ZodiacDetail.Virgo.work": "La Vierge est le rêve de tout employeur. Ils sont efficaces, organisés et ont un œil inégalé pour les détails. Ils excellent dans les carrières qui nécessitent de l'analyse, de la recherche, de l'édition ou toute forme de travail précis. Ce sont les personnes qui trouvent les erreurs que les autres manquent et améliorent les systèmes pour les rendre plus efficaces. Leur perfectionnisme peut parfois faire d'eux leur propre pire critique."
-  },
+  "ZodiacDetail.Virgo.work": "La Vierge est le rêve de tout employeur. Ils sont efficaces, organisés et ont un œil inégalé pour les détails. Ils excellent dans les carrières qui nécessitent de l'analyse, de la recherche, de l'édition ou toute forme de travail précis. Ce sont les personnes qui trouvent les erreurs que les autres manquent et améliorent les systèmes pour les rendre plus efficaces. Leur perfectionnisme peut parfois faire d'eux leur propre pire critique.",
   "ZodiacDetail.Libra.title": "Traits de la Balance",
   "ZodiacDetail.Libra.description": "Gouvernée par Vénus, la Balance est le signe de l'équilibre, de l'harmonie et de la justice. Les Balances sont des êtres sociaux qui s'épanouissent dans le partenariat et cherchent à créer un équilibre dans tous les domaines de la vie. Ils ont un œil vif pour la beauté et un charme diplomatique naturel.",
   "ZodiacDetail.Libra.strengthsTitle": "Forces",
@@ -906,8 +905,7 @@
   "ZodiacDetail.Libra.friendshipTitle": "La Balance en Amitié",
   "ZodiacDetail.Libra.friendship": "En tant qu'amis, les Balances sont charmants, justes et d'excellents auditeurs. Ils sont le ciment social de leur groupe, agissant souvent comme des médiateurs pour maintenir la paix. Ils adorent assister à des événements culturels et profiter de bonnes conversations autour d'un bon repas. Leur indécision peut être frustrante lors de la planification d'activités, mais leur compagnie est toujours agréable.",
   "ZodiacDetail.Libra.workTitle": "La Balance au Travail",
-  "ZodiacDetail.Libra.work": "Les Balances excellent en tant que médiateurs, diplomates et dans tout rôle qui exige de l'équité et de la grâce sociale. Ce sont de grands joueurs d'équipe et ils s'épanouissent dans des environnements de travail beaux et harmonieux, souvent dans les arts, le droit ou les relations publiques."
-  },
+  "ZodiacDetail.Libra.work": "Les Balances excellent en tant que médiateurs, diplomates et dans tout rôle qui exige de l'équité et de la grâce sociale. Ce sont de grands joueurs d'équipe et ils s'épanouissent dans des environnements de travail beaux et harmonieux, souvent dans les arts, le droit ou les relations publiques.",
   "ZodiacDetail.Scorpio.title": "Traits du Scorpion",
   "ZodiacDetail.Scorpio.description": "Le Scorpion est un signe d'émotion profonde, de pouvoir et de transformation. Gouvernés par Pluton, ils sont passionnés, ingénieux et incroyablement déterminés. Les Scorpions sont connus pour leur intensité et leur capacité à voir au-delà de la surface jusqu'à la vérité de toute chose.",
   "ZodiacDetail.Scorpio.strengthsTitle": "Forces",
@@ -919,8 +917,7 @@
   "ZodiacDetail.Scorpio.friendshipTitle": "Le Scorpion en Amitié",
   "ZodiacDetail.Scorpio.friendship": "Avoir un Scorpion comme ami signifie avoir un allié pour la vie. Ils sont farouchement loyaux et protecteurs, mais ils attendent la même chose en retour. Ce sont d'excellents gardiens de secrets et donnent des conseils profonds et perspicaces. Gagner la confiance d'un Scorpion est difficile, mais une fois que vous l'avez, vous avez un ami qui vous défendra contre vents et marées.",
   "ZodiacDetail.Scorpio.workTitle": "Le Scorpion au Travail",
-  "ZodiacDetail.Scorpio.work": "Les Scorpions sont d'excellents enquêteurs, chercheurs et stratèges. Ils s'épanouissent dans des rôles qui leur demandent de découvrir des vérités ou d'exercer le pouvoir, comme les détectives, les scientifiques ou les dirigeants financiers."
-  },
+  "ZodiacDetail.Scorpio.work": "Les Scorpions sont d'excellents enquêteurs, chercheurs et stratèges. Ils s'épanouissent dans des rôles qui leur demandent de découvrir des vérités ou d'exercer le pouvoir, comme les détectives, les scientifiques ou les dirigeants financiers.",
   "ZodiacDetail.Sagittarius.title": "Traits du Sagittaire",
   "ZodiacDetail.Sagittarius.description": "L'aventurier et philosophe du zodiaque, le Sagittaire est gouverné par Jupiter, la planète de l'expansion et de la chance. Ils sont optimistes, épris de liberté et ont une soif insatiable de connaissances et de nouvelles expériences.",
   "ZodiacDetail.Sagittarius.strengthsTitle": "Forces",
@@ -932,8 +929,7 @@
   "ZodiacDetail.Sagittarius.friendshipTitle": "Le Sagittaire en Amitié",
   "ZodiacDetail.Sagittarius.friendship": "Un Sagittaire est l'ami avec qui on part spontanément en voyage. Ils sont drôles, optimistes et toujours prêts pour une aventure. Ils sont aussi brutalement honnêtes, ce qui peut être à la fois une force et une faiblesse. Ils ont besoin d'amis qui respectent leur liberté et apprécient leurs discussions philosophiques tard dans la nuit.",
   "ZodiacDetail.Sagittarius.workTitle": "Le Sagittaire au Travail",
-  "ZodiacDetail.Sagittarius.work": "Le Sagittaire excelle dans les carrières qui impliquent les voyages, l'éducation, l'édition ou la philosophie. Ils ont besoin d'autonomie et d'un sens du but, et ils font des enseignants et des leaders inspirants."
-  },
+  "ZodiacDetail.Sagittarius.work": "Le Sagittaire excelle dans les carrières qui impliquent les voyages, l'éducation, l'édition ou la philosophie. Ils ont besoin d'autonomie et d'un sens du but, et ils font des enseignants et des leaders inspirants.",
   "ZodiacDetail.Capricorn.title": "Traits du Capricorne",
   "ZodiacDetail.Capricorn.description": "La chèvre ambitieuse et disciplinée du zodiaque. Gouvernés par Saturne, les Capricornes sont maîtres de la maîtrise de soi et ont la capacité de montrer la voie, de faire des plans solides et réalistes, et de gérer de nombreuses personnes qui travaillent pour eux à tout moment. Ce sont des maîtres de la manifestation.",
   "ZodiacDetail.Capricorn.strengthsTitle": "Forces",
@@ -945,8 +941,7 @@
   "ZodiacDetail.Capricorn.friendshipTitle": "Le Capricorne en Amitié",
   "ZodiacDetail.Capricorn.friendship": "Un ami Capricorne est celui que vous appelez lorsque vous avez besoin d'un plan solide ou d'une dose de réalité. Ils sont incroyablement loyaux et fiables, même s'ils ne sont pas les plus expressifs. Ils montrent leur affection par leur constance et leur volonté d'aider dans les moments difficiles. Ils ont un humour pince-sans-rire que seuls leurs amis les plus proches voient.",
   "ZodiacDetail.Capricorn.workTitle": "Le Capricorne au Travail",
-  "ZodiacDetail.Capricorn.work": "Les Capricornes sont les PDG du zodiaque. Ils sont travailleurs, axés sur les objectifs et excellents dans la gestion de projets et de personnes. Ils s'épanouissent dans des environnements où ils peuvent construire et atteindre un succès à long terme."
-  },
+  "ZodiacDetail.Capricorn.work": "Les Capricornes sont les PDG du zodiaque. Ils sont travailleurs, axés sur les objectifs et excellents dans la gestion de projets et de personnes. Ils s'épanouissent dans des environnements où ils peuvent construire et atteindre un succès à long terme.",
   "ZodiacDetail.Aquarius.title": "Traits du Verseau",
   "ZodiacDetail.Aquarius.description": "Le visionnaire et humanitaire du zodiaque. Gouvernés par Uranus, les Verseaux sont originaux, indépendants et tournés vers l'avenir. Ils suivent leur propre voie et se consacrent à rendre le monde meilleur.",
   "ZodiacDetail.Aquarius.strengthsTitle": "Forces",
@@ -958,8 +953,7 @@
   "ZodiacDetail.Aquarius.friendshipTitle": "Le Verseau en Amitié",
   "ZodiacDetail.Aquarius.friendship": "Un ami Verseau est unique, intellectuellement stimulant et toujours partant pour une idée non conventionnelle. Ce sont des amis loyaux mais qui ont besoin de beaucoup d'espace personnel. Ce sont d'excellents amis pour les activités de groupe et les causes sociales. Ils traitent tous leurs amis de la même manière, ce qui peut parfois faire en sorte que certains ne se sentent pas spéciaux.",
   "ZodiacDetail.Aquarius.workTitle": "Le Verseau au Travail",
-  "ZodiacDetail.Aquarius.work": "Le Verseau excelle dans les rôles qui nécessitent de l'innovation et une pensée non conventionnelle, comme dans la technologie, la science ou l'activisme social. Il a besoin d'autonomie et travaille mieux lorsqu'il croit en la cause."
-  },
+  "ZodiacDetail.Aquarius.work": "Le Verseau excelle dans les rôles qui nécessitent de l'innovation et une pensée non conventionnelle, comme dans la technologie, la science ou l'activisme social. Il a besoin d'autonomie et travaille mieux lorsqu'il croit en la cause.",
   "ZodiacDetail.Pisces.title": "Traits des Poissons",
   "ZodiacDetail.Pisces.description": "Le mystique et rêveur du zodiaque. Gouvernés par Neptune, les Poissons sont compatissants, artistiques et profondément intuitifs. Ils sont connectés au royaume spirituel et ont une capacité d'empathie sans limites.",
   "ZodiacDetail.Pisces.strengthsTitle": "Forces",
@@ -976,32 +970,18 @@
   "StorePage.subtitle": "Articles triés sur le volet pour enrichir votre voyage spirituel.",
   "StorePage.viewOnAmazon": "Voir sur Amazon",
   "StorePage.affiliateDisclaimer": "En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises. Cela aide à soutenir notre application sans coût supplémentaire pour vous.",
-  "StoreProducts": {
-    "classicTarotDeck": {
-      "title": "Jeu de Tarot Classique",
-      "description": "Un jeu de tarot Rider-Waite intemporel, parfait pour les débutants et les experts qui cherchent des aperçus et des conseils."
-    },
-    "astrologyIntroBook": {
-      "title": "Livre d'Introduction à l'Astrologie",
-      "description": "Un livre complet couvrant les bases de l'astrologie, des signes, des planètes et des maisons pour les nouveaux apprenants."
-    },
-    "healingCrystalsSet": {
-      "title": "Ensemble de Cristaux de Guérison",
-      "description": "Un kit de démarrage de diverses pierres roulées comme l'améthyste et le quartz rose pour aider à équilibrer vos énergies."
-    },
-    "moonLamp": {
-      "title": "Lampe Lune 3D",
-      "description": "Apportez la lueur mystique de la lune dans votre maison avec cette veilleuse réaliste et apaisante."
-    },
-    "zodiacJournal": {
-      "title": "Journal de Constellation du Zodiaque",
-      "description": "Un carnet magnifiquement conçu pour chroniquer vos pensées, vos rêves et vos observations astrologiques."
-    },
-    "incenseHolder": {
-      "title": "Porte-Encens en Céramique",
-      "description": "Un support élégant pour brûler en toute sécurité vos bâtonnets d'encens préférés pendant la méditation ou la relaxation."
-    }
-  }
+  "StoreProducts.classicTarotDeck.title": "Jeu de Tarot Classique",
+  "StoreProducts.classicTarotDeck.description": "Un jeu de tarot Rider-Waite intemporel, parfait pour les débutants et les experts qui cherchent des aperçus et des conseils.",
+  "StoreProducts.astrologyIntroBook.title": "Livre d'Introduction à l'Astrologie",
+  "StoreProducts.astrologyIntroBook.description": "Un livre complet couvrant les bases de l'astrologie, des signes, des planètes et des maisons pour les nouveaux apprenants.",
+  "StoreProducts.healingCrystalsSet.title": "Ensemble de Cristaux de Guérison",
+  "StoreProducts.healingCrystalsSet.description": "Un kit de démarrage de diverses pierres roulées comme l'améthyste et le quartz rose pour aider à équilibrer vos énergies.",
+  "StoreProducts.moonLamp.title": "Lampe Lune 3D",
+  "StoreProducts.moonLamp.description": "Apportez la lueur mystique de la lune dans votre maison avec cette veilleuse réaliste et apaisante.",
+  "StoreProducts.zodiacJournal.title": "Journal de Constellation du Zodiaque",
+  "StoreProducts.zodiacJournal.description": "Un carnet magnifiquement conçu pour chroniquer vos pensées, vos rêves et vos observations astrologiques.",
+  "StoreProducts.incenseHolder.title": "Porte-Encens en Céramique",
+  "StoreProducts.incenseHolder.description": "Un support élégant pour brûler en toute sécurité vos bâtonnets d'encens préférés pendant la méditation ou la relaxation."
 }
 
     
