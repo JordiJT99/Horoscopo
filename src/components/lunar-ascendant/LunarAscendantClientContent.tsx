@@ -3,8 +3,8 @@
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
-import type { LunarData, AscendantData } from '@/types';
-import type { Dictionary, Locale, MoonPhaseKey, UpcomingPhase } from '@/types';
+import type { LunarData, AscendantData, MoonPhaseKey } from '@/types';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getCurrentLunarData, getAscendantSign, ZODIAC_SIGNS } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -239,7 +239,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             <p className="font-semibold">{dictionary[phase.nameKey] || phase.phaseKey}</p>
-                                            <p className="text-sm text-muted-foreground">{phase.date} {phase.time && <> • {phase.time}</>}</p>
+                                            <p className="text-sm text-muted-foreground">{phase.date}{phase.time && <> • {phase.time}</>}</p>
                                         </TooltipContent>
                                     </Tooltip>
                                 ))}
