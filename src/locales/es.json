@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -67,7 +68,7 @@
   "HomePage.yourHoroscopeToday": "Tu Horóscopo de Hoy",
   "HomePage.yourHoroscopeTomorrow": "Tu Horóscopo para Mañana",
   "HomePage.yourHoroscopeYesterday": "Tu Horóscopo de Ayer",
-  "HomePage.horoscopeTitleToday": "Tu Horóscopo de Hoy",
+  "HomePage.horoscopeTitleToday": "Horóscopo de Hoy",
   "HomePage.horoscopeTitleTomorrow": "Horóscopo para Mañana",
   "HomePage.horoscopeTitleYesterday": "Horóscopo de Ayer",
   "HomePage.horoscopeTitleWeekly": "Horóscopo Semanal",
@@ -345,77 +346,57 @@
   "MayanSign.Etznab.description": "El reflejo, la verdad y la claridad.",
   "MayanSign.Cauac.description": "La transformación, la purificación y el renacimiento.",
   "MayanSign.Ahau.description": "La iluminación, el amor incondicional y la unión.",
-  "MayanSign.Imix.interpretation": "Imix es el comienzo primordial, la energía misma de la creación. Los nacidos bajo este sello son iniciadores, una fuente de nuevas ideas. Su desafío es desarrollar la confianza en el universo y aprender a recibir apoyo, ya que a menudo intentan hacerlo todo solos. Son proveedores naturales, pero también tienen tendencia a abarcar demasiado. Imix te invita a conectar con la fuente y a darte cuenta de que siempre estás sostenido.",
-  "MayanSign.Ik.interpretation": "Ik representa la comunicación, el aliento y el espíritu. Los nacidos bajo este sello son comunicadores natos, mensajeros y, a menudo, muy espirituales. Son adaptables y versátiles, pero también pueden ser indecisos o dispersos. Su desafío es anclar sus ideas y hablar la verdad con responsabilidad. Ik te anima a expresar tu verdad y a escuchar las fuerzas invisibles que te guían.",
-  "MayanSign.Akbal.interpretation": "Akbal es el reino de los sueños, la intuición y el subconsciente. Los nacidos bajo este sello son introspectivos, misteriosos y tienen acceso a una profunda sabiduría interior. Encuentran la fuerza en el silencio y la soledad. Su desafío es enfrentar sus miedos internos y encontrar la luz dentro de su oscuridad. Akbal te invita a abrazar tu intuición y a explorar los tesoros que se esconden en tu interior.",
-  "MayanSign.Kan.interpretation": "Kan es la semilla del potencial. Los nacidos bajo este signo son dinámicos, llenos de energía y tienen la capacidad de manifestar crecimiento y abundancia. Son líderes naturales que se esfuerzan por florecer y alcanzar su máximo potencial. Su desafío es aprender la paciencia y confiar en los ciclos naturales del crecimiento. Kan te anima a sembrar tus intenciones con cuidado y a nutrir tu potencial con conciencia.",
-  "MayanSign.Chicchan.interpretation": "Chicchan es la energía de la fuerza vital, el instinto y la sabiduría del cuerpo. Los nacidos bajo este sello son apasionados, carismáticos y profundamente conectados con sus instintos físicos. Tienen una fuerte capacidad de supervivencia. Su desafío es integrar y transformar su poderosa energía, en lugar de ser controlados por ella. Chicchan te invita a escuchar tu cuerpo, a abrazar tu pasión y a desprenderte de la vieja piel para renacer.",
-  "MayanSign.Cimi.interpretation": "Cimi representa la muerte como transformación, la capacidad de soltar lo viejo para dar paso a lo nuevo. Los nacidos bajo este signo son resilientes, intuitivos y tienen la capacidad de navegar grandes cambios. Son puentes entre los mundos. Su desafío es aceptar el desapego y confiar en el proceso de renovación. Cimi te invita a liberar lo que ya no te sirve y a abrazar las oportunidades que ofrece cada final.",
-  "MayanSign.Manik.interpretation": "Manik es el sello de la sanación, el conocimiento y la realización. Los nacidos bajo este signo son sanadores naturales, pacíficos y, a menudo, muy hábiles con sus manos. Tienen la capacidad de completar proyectos y de traer conocimiento al mundo. Su desafío es reconocer sus propias necesidades de sanación. Manik te anima a usar tus dones para sanar y completar, y a reconocer la belleza del cumplimiento.",
-  "MayanSign.Lamat.interpretation": "Lamat es la energía de la armonía, la belleza y la elegancia. Los nacidos bajo este signo son artísticos, sociales y se esfuerzan por crear belleza y equilibrio en su entorno. Son las semillas estelares, aquí para embellecer el mundo. Su desafío es encontrar su propia armonía interior, en lugar de buscarla solo externamente. Lamat te invita a irradiar tu propia belleza y a crear armonía en todo lo que haces.",
-  "MayanSign.Muluc.interpretation": "Muluc es el sello del agua universal y la purificación emocional. Los nacidos bajo este signo son emocionales, intuitivos y tienen una fuerte conexión con sus sentimientos. Son purificadores y comunicadores naturales. Su desafío es dejar que sus emociones fluyan sin ser arrastrados por ellas. Muluc te invita a honrar tus emociones, a purificarte y a confiar en el fluir de la vida.",
-  "MayanSign.Oc.interpretation": "Oc es la energía de la lealtad, el amor y el corazón. Los nacidos bajo este sello son compañeros leales, valientes y profundamente conectados con sus 'manadas' (familia y amigos). Son líderes del corazón. Su desafío es sanar sus propias heridas emocionales y aprender a darse a sí mismos la misma lealtad que dan a los demás. Oc te anima a vivir desde el corazón, a ser leal y a guiar el camino con amor.",
-  "MayanSign.Chuen.interpretation": "Chuen es el pícaro divino, el artista y el mago. Los nacidos bajo este signo son creativos, juguetones, espontáneos y tienen un gran sentido del humor. Están aquí para recordarnos que no debemos tomar la vida demasiado en serio. Su desafío es enfocar su energía y usar su creatividad de manera constructiva. Chuen te invita a jugar, a crear y a encontrar la magia en lo cotidiano.",
-  "MayanSign.Eb.interpretation": "Eb es el sello del libre albedrío y la influencia humana en el mundo. Los nacidos bajo este signo son cariñosos, generosos y se esfuerzan por crear abundancia y prosperidad. Son los administradores de la Tierra. Su desafío es tomar decisiones sabias y dirigir su energía de una manera que beneficie a todos. Eb te anima a elegir tu camino conscientemente y a cosechar la abundancia de la vida.",
-  "MayanSign.Ben.interpretation": "Ben es el caminante del cielo, el puente entre el cielo y la tierra. Los nacidos bajo este signo son exploradores valientes que desafían la autoridad y las convenciones. Son pilares de fuerza para sus comunidades. Su desafío es aceptar su vulnerabilidad y encontrar un equilibrio entre su mundo interior y exterior. Ben te invita a explorar nuevos horizontes y a ser un pilar firme en tu propia vida.",
-  "MayanSign.Ix.interpretation": "Ix es el mago, el chamán y el vidente. Los nacidos bajo este signo son intuitivos, misteriosos y tienen acceso a niveles superiores de conciencia. Son los guardianes de la magia y la atemporalidad. Su desafío es confiar plenamente en su intuición y usar su poder con integridad. Ix te anima a abrazar la magia que llevas dentro y a vivir en el momento sagrado del presente.",
-  "MayanSign.Men.interpretation": "Men es el águila, el visionario con la capacidad de ver el panorama general. Los nacidos bajo este signo son independientes, ambiciosos y tienen una mente que se eleva más allá de los límites de lo ordinario. Están aquí para elevar la conciencia colectiva. Su desafío es mantenerse anclados y convertir sus visiones en realidad. Men te invita a desplegar tus alas y a crear desde una perspectiva superior.",
-  "MayanSign.Cib.interpretation": "Cib es el guardián de la sabiduría antigua y la biblioteca cósmica. Los nacidos bajo este signo son serios, inteligentes y tienen la capacidad de romper viejos patrones y de perdonar. Son los sabios consejeros. Su desafío es perdonarse a sí mismos y dejar atrás el pasado. Cib te anima a conectar con tu sabiduría interior y a usar el poder liberador del perdón.",
-  "MayanSign.Caban.interpretation": "Caban es la energía de la Tierra, el poder de la sincronicidad y la habilidad de la navegación. Los nacidos bajo este signo son mentalmente activos, prácticos y profundamente conectados con los ritmos de la Tierra. Son los grandes sincronizadores. Su desafío es confiar en su sincronización interna y aprender a navegar con el flujo de los acontecimientos. Caban te invita a prestar atención a las señales y a dejar que la Tierra te guíe.",
-  "MayanSign.Etznab.interpretation": "Etznab es el espejo de la verdad, el cuchillo que corta las ilusiones. Los nacidos bajo este signo son valientes, directos y buscan la claridad y la verdad en todas las cosas. Tienen la capacidad de discernir lo que es real. Su desafío es decir su verdad con compasión y aprender a mirarse en el espejo. Etznab te anima a liberar todas las ilusiones y a vivir en la claridad de tu propio reflejo.",
-  "MayanSign.Cauac.interpretation": "Cauac es la tormenta que limpia y transforma. Los nacidos bajo este signo son enérgicos, amigables y catalizadores naturales del cambio. Traen las lluvias purificadoras que permiten la renovación y el renacimiento. Su desafío es abrazar su propia transformación y aprender las lecciones que trae la tormenta. Cauac te invita a aceptar los cambios en tu vida y a saber que después de cada tormenta viene la calma.",
-  "MayanSign.Ahau.interpretation": "Ahau es el sello de la iluminación, la culminación de la evolución. Los nacidos bajo este signo son amorosos, artísticos, visionarios y llevan la luz del sol dentro de ellos. Están aquí para irradiar amor incondicional y para reconocer la unión de toda vida. Su desafío es trascender su propio ego y vivir al servicio del todo. Ahau te invita a reconocer tu propia luz y a compartirla incondicionalmente con el mundo.",
   "GalacticTone.Magnetic.name": "Magnético",
   "GalacticTone.Magnetic.keyword": "Unidad",
   "GalacticTone.Magnetic.question": "¿Cuál es mi propósito?",
-  "GalacticTone.Magnetic.interpretation": "El Tono Magnético es el principio, el que atrae el propósito. Unifica todas las partes de tu ser para enfocarse en un objetivo claro. Hoy, pregúntate: ¿Cuál es mi verdadera intención? ¿Qué quiero atraer a mi vida?",
   "GalacticTone.Lunar.name": "Lunar",
   "GalacticTone.Lunar.keyword": "Desafío",
   "GalacticTone.Lunar.question": "¿Cuáles son mis desafíos?",
-  "GalacticTone.Lunar.interpretation": "El Tono Lunar revela la dualidad y los desafíos. Te ayuda a identificar los obstáculos que necesitas superar para alcanzar tu propósito. Hoy, reflexiona: ¿Qué polaridades existen en mi situación? ¿Cuáles son los desafíos que me fortalecen?",
   "GalacticTone.Electric.name": "Eléctrico",
   "GalacticTone.Electric.keyword": "Servicio",
   "GalacticTone.Electric.question": "¿Cómo puedo servir mejor?",
-  "GalacticTone.Electric.interpretation": "El Tono Eléctrico activa el servicio. Es energía en movimiento, la chispa que enciende la acción. Te pregunta cómo puedes poner tus talentos al servicio de un propósito mayor. Hoy, considera: ¿Cómo puedo activar mis recursos? ¿De qué manera mi servicio beneficia a otros?",
   "GalacticTone.SelfExisting.name": "Auto-Existente",
   "GalacticTone.SelfExisting.keyword": "Forma",
   "GalacticTone.SelfExisting.question": "¿Cuál es la forma de la acción?",
-  "GalacticTone.SelfExisting.interpretation": "El Tono Auto-Existente define la forma de la acción. Da estructura y medida a tu propósito. Te ayuda a establecer las bases y a entender cómo manifestar tus ideas. Hoy, piensa: ¿Cuál es la forma más efectiva para mi acción? ¿Qué patrones y medidas necesito establecer?",
   "GalacticTone.Overtone.name": "Entonado",
   "GalacticTone.Overtone.keyword": "Resplandor",
   "GalacticTone.Overtone.question": "¿Cómo puedo empoderarme?",
-  "GalacticTone.Overtone.interpretation": "El Tono Entonado comanda el resplandor y el poder interior. Reúne recursos y te da la autoridad para brillar. Hoy, enfócate en: ¿Cómo puedo reunir mis fuerzas y recursos? ¿De qué manera irradio mi poder personal?",
   "GalacticTone.Rhythmic.name": "Rítmico",
   "GalacticTone.Rhythmic.keyword": "Igualdad",
   "GalacticTone.Rhythmic.question": "¿Cómo me organizo para la igualdad?",
-  "GalacticTone.Rhythmic.interpretation": "El Tono Rítmico organiza para la igualdad y el equilibrio. Te ayuda a encontrar el equilibrio en el flujo de la vida y a manejar los desafíos de forma orgánica. Hoy, busca: ¿Cómo puedo equilibrar mi vida y mis acciones? ¿Cómo organizo mi entorno para la armonía?",
   "GalacticTone.Resonant.name": "Resonante",
   "GalacticTone.Resonant.keyword": "Sintonización",
   "GalacticTone.Resonant.question": "¿Cómo puedo sintonizar mi servicio con los demás?",
-  "GalacticTone.Resonant.interpretation": "El Tono Resonante canaliza la sintonización y la inspiración. Te conecta con la fuente de la sabiduría y te permite vibrar en armonía con el universo. Hoy, sintoniza: ¿Qué me inspira realmente? ¿Cómo puedo alinear mi ser con mi propósito más elevado?",
   "GalacticTone.Galactic.name": "Galáctico",
   "GalacticTone.Galactic.keyword": "Integridad",
   "GalacticTone.Galactic.question": "¿Vivo lo que creo?",
-  "GalacticTone.Galactic.interpretation": "El Tono Galáctico modela la integridad y la armonía. Te invita a vivir de acuerdo con tus creencias y a actuar con coherencia. Hoy, examina: ¿Mis acciones reflejan mis valores? ¿Vivo en integridad con mi verdad?",
   "GalacticTone.Solar.name": "Solar",
   "GalacticTone.Solar.keyword": "Intención",
   "GalacticTone.Solar.question": "¿Cómo logro mi propósito?",
-  "GalacticTone.Solar.interpretation": "El Tono Solar pulsa la intención y la realización. Te da el empujón final para manifestar tu propósito y alcanzar tus metas. Hoy, pregúntate: ¿Cómo puedo dirigir mi energía hacia la realización de mi intención? ¿Qué pasos concretos debo tomar?",
   "GalacticTone.Planetary.name": "Planetario",
   "GalacticTone.Planetary.keyword": "Manifestación",
   "GalacticTone.Planetary.question": "¿Cómo perfecciono lo que hago?",
-  "GalacticTone.Planetary.interpretation": "El Tono Planetario perfecciona la manifestación. Produce lo que has intencionado, haciendo tangible tu visión. Hoy, enfócate en: ¿Cómo puedo mejorar y perfeccionar mi creación? ¿Qué se está manifestando a través de mí?",
   "GalacticTone.Spectral.name": "Espectral",
   "GalacticTone.Spectral.keyword": "Liberación",
   "GalacticTone.Spectral.question": "¿Cómo libero y dejo ir?",
-  "GalacticTone.Spectral.interpretation": "El Tono Espectral disuelve y libera. Te ayuda a soltar lo que ya no sirve, a desintegrar viejas estructuras y a abrir espacio para lo nuevo. Hoy, considera: ¿Qué necesito liberar en mi vida? ¿Cómo puedo soltar ataduras y limitaciones?",
   "GalacticTone.Crystal.name": "Cristal",
   "GalacticTone.Crystal.keyword": "Cooperación",
   "GalacticTone.Crystal.question": "¿Cómo puedo dedicarme a la cooperación?",
-  "GalacticTone.Crystal.interpretation": "El Tono Cristal se dedica a la cooperación y la universalización. Te enseña a compartir tus dones y a trabajar en conjunto por un bien mayor. Hoy, reflexiona: ¿Cómo puedo colaborar con otros? ¿De qué manera mis acciones contribuyen a la comunidad?",
   "GalacticTone.Cosmic.name": "Cósmico",
   "GalacticTone.Cosmic.keyword": "Presencia",
   "GalacticTone.Cosmic.question": "¿Cómo expando mi alegría y mi amor?",
+  "GalacticTone.Magnetic.interpretation": "El Tono Magnético es el principio, el que atrae el propósito. Unifica todas las partes de tu ser para enfocarse en un objetivo claro. Hoy, pregúntate: ¿Cuál es mi verdadera intención? ¿Qué quiero atraer a mi vida?",
+  "GalacticTone.Lunar.interpretation": "El Tono Lunar revela la dualidad y los desafíos. Te ayuda a identificar los obstáculos que necesitas superar para alcanzar tu propósito. Hoy, reflexiona: ¿Qué polaridades existen en mi situación? ¿Cuáles son los desafíos que me fortalecen?",
+  "GalacticTone.Electric.interpretation": "El Tono Eléctrico activa el servicio. Es energía en movimiento, la chispa que enciende la acción. Te pregunta cómo puedes poner tus talentos al servicio de un propósito mayor. Hoy, considera: ¿Cómo puedo activar mis recursos? ¿De qué manera mi servicio beneficia a otros?",
+  "GalacticTone.SelfExisting.interpretation": "El Tono Auto-Existente define la forma de la acción. Da estructura y medida a tu propósito. Te ayuda a establecer las bases y a entender cómo manifestar tus ideas. Hoy, piensa: ¿Cuál es la forma más efectiva para mi acción? ¿Qué patrones y medidas necesito establecer?",
+  "GalacticTone.Overtone.interpretation": "El Tono Entonado comanda el resplandor y el poder interior. Reúne recursos y te da la autoridad para brillar. Hoy, enfócate en: ¿Cómo puedo reunir mis fuerzas y recursos? ¿De qué manera irradio mi poder personal?",
+  "GalacticTone.Rhythmic.interpretation": "El Tono Rítmico organiza para la igualdad y el equilibrio. Te ayuda a encontrar el equilibrio en el flujo de la vida y a manejar los desafíos de forma orgánica. Hoy, busca: ¿Cómo puedo equilibrar mi vida y mis acciones? ¿Cómo organizo mi entorno para la armonía?",
+  "GalacticTone.Resonant.interpretation": "El Tono Resonante canaliza la sintonización y la inspiración. Te conecta con la fuente de la sabiduría y te permite vibrar en armonía con el universo. Hoy, sintoniza: ¿Qué me inspira realmente? ¿Cómo puedo alinear mi ser con mi propósito más elevado?",
+  "GalacticTone.Galactic.interpretation": "El Tono Galáctico modela la integridad y la armonía. Te invita a vivir de acuerdo con tus creencias y a actuar con coherencia. Hoy, examina: ¿Mis acciones reflejan mis valores? ¿Vivo en integridad con mi verdad?",
+  "GalacticTone.Solar.interpretation": "El Tono Solar pulsa la intención y la realización. Te da el empujón final para manifestar tu propósito y alcanzar tus metas. Hoy, pregúntate: ¿Cómo puedo dirigir mi energía hacia la realización de mi intención? ¿Qué pasos concretos debo tomar?",
+  "GalacticTone.Planetary.interpretation": "El Tono Planetario perfecciona la manifestación. Produce lo que has intencionado, haciendo tangible tu visión. Hoy, enfócate en: ¿Cómo puedo mejorar y perfeccionar mi creación? ¿Qué se está manifestando a través de mí?",
+  "GalacticTone.Spectral.interpretation": "El Tono Espectral disuelve y libera. Te ayuda a soltar lo que ya no sirve, a desintegrar viejas estructuras y a abrir espacio para lo nuevo. Hoy, considera: ¿Qué necesito liberar en mi vida? ¿Cómo puedo soltar ataduras y limitaciones?",
+  "GalacticTone.Crystal.interpretation": "El Tono Cristal se dedica a la cooperación y la universalización. Te enseña a compartir tus dones y a trabajar en conjunto por un bien mayor. Hoy, reflexiona: ¿Cómo puedo colaborar con otros? ¿De qué manera mis acciones contribuyen a la comunidad?",
   "GalacticTone.Cosmic.interpretation": "El Tono Cósmico trasciende con presencia y perseverancia. Es el regreso al origen y la expansión de la conciencia. Te invita a vivir plenamente en el presente y a irradiar amor y alegría. Hoy, experimenta: ¿Cómo puedo estar más presente? ¿Cómo expando mi alegría y mi amor sin límites?",
   "MoonPhase.new": "Luna Nueva",
   "MoonPhase.waxingCrescent": "Luna Creciente",
@@ -898,122 +879,6 @@
   "Toast.adWatchedDescription": "Has ganado {amount} de Polvo Estelar.",
   "Toast.alreadyRated": "Ya has reclamado esta recompensa.",
   "Toast.dailyReactionStardust": "¡+{amount} 💫 por tu primera reacción del día!",
-  "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!",
-  "MayanSign.Imix.interpretation": "Imix es el comienzo primordial, la energía misma de la creación. Los nacidos bajo este sello son iniciadores, una fuente de nuevas ideas. Su desafío es desarrollar la confianza en el universo y aprender a recibir apoyo, ya que a menudo intentan hacerlo todo solos. Son proveedores naturales, pero también tienen tendencia a abarcar demasiado. Imix te invita a conectar con la fuente y a darte cuenta de que siempre estás sostenido.",
-  "MayanSign.Ik.interpretation": "Ik representa la comunicación, el aliento y el espíritu. Los nacidos bajo este sello son comunicadores natos, mensajeros y, a menudo, muy espirituales. Son adaptables y versátiles, pero también pueden ser indecisos o dispersos. Su desafío es anclar sus ideas y hablar la verdad con responsabilidad. Ik te anima a expresar tu verdad y a escuchar las fuerzas invisibles que te guían.",
-  "MayanSign.Akbal.interpretation": "Akbal es el reino de los sueños, la intuición y el subconsciente. Los nacidos bajo este sello son introspectivos, misteriosos y tienen acceso a una profunda sabiduría interior. Encuentran la fuerza en el silencio y la soledad. Su desafío es enfrentar sus miedos internos y encontrar la luz dentro de su oscuridad. Akbal te invita a abrazar tu intuición y a explorar los tesoros que se esconden en tu interior.",
-  "MayanSign.Kan.interpretation": "Kan es la semilla del potencial. Los nacidos bajo este signo son dinámicos, llenos de energía y tienen la capacidad de manifestar crecimiento y abundancia. Son líderes naturales que se esfuerzan por florecer y alcanzar su máximo potencial. Su desafío es aprender la paciencia y confiar en los ciclos naturales del crecimiento. Kan te anima a sembrar tus intenciones con cuidado y a nutrir tu potencial con conciencia.",
-  "MayanSign.Chicchan.interpretation": "Chicchan es la energía de la fuerza vital, el instinto y la sabiduría del cuerpo. Los nacidos bajo este sello son apasionados, carismáticos y profundamente conectados con sus instintos físicos. Tienen una fuerte capacidad de supervivencia. Su desafío es integrar y transformar su poderosa energía, en lugar de ser controlados por ella. Chicchan te invita a escuchar tu cuerpo, a abrazar tu pasión y a desprenderte de la vieja piel para renacer.",
-  "MayanSign.Cimi.interpretation": "Cimi representa la muerte como transformación, la capacidad de soltar lo viejo para dar paso a lo nuevo. Los nacidos bajo este signo son resilientes, intuitivos y tienen la capacidad de navegar grandes cambios. Son puentes entre los mundos. Su desafío es aceptar el desapego y confiar en el proceso de renovación. Cimi te invita a liberar lo que ya no te sirve y a abrazar las oportunidades que ofrece cada final.",
-  "MayanSign.Manik.interpretation": "Manik es el sello de la sanación, el conocimiento y la realización. Los nacidos bajo este signo son sanadores naturales, pacíficos y, a menudo, muy hábiles con sus manos. Tienen la capacidad de completar proyectos y de traer conocimiento al mundo. Su desafío es reconocer sus propias necesidades de sanación. Manik te anima a usar tus dones para sanar y completar, y a reconocer la belleza del cumplimiento.",
-  "MayanSign.Lamat.interpretation": "Lamat es la energía de la armonía, la belleza y la elegancia. Los nacidos bajo este signo son artísticos, sociales y se esfuerzan por crear belleza y equilibrio en su entorno. Son las semillas estelares, aquí para embellecer el mundo. Su desafío es encontrar su propia armonía interior, en lugar de buscarla solo externamente. Lamat te invita a irradiar tu propia belleza y a crear armonía en todo lo que haces.",
-  "MayanSign.Muluc.interpretation": "Muluc es el sello del agua universal y la purificación emocional. Los nacidos bajo este signo son emocionales, intuitivos y tienen una fuerte conexión con sus sentimientos. Son purificadores y comunicadores naturales. Su desafío es dejar que sus emociones fluyan sin ser arrastrados por ellas. Muluc te invita a honrar tus emociones, a purificarte y a confiar en el fluir de la vida.",
-  "MayanSign.Oc.interpretation": "Oc es la energía de la lealtad, el amor y el corazón. Los nacidos bajo este sello son compañeros leales, valientes y profundamente conectados con sus 'manadas' (familia y amigos). Son líderes del corazón. Su desafío es sanar sus propias heridas emocionales y aprender a darse a sí mismos la misma lealtad que dan a los demás. Oc te anima a vivir desde el corazón, a ser leal y a guiar el camino con amor.",
-  "MayanSign.Chuen.interpretation": "Chuen es el pícaro divino, el artista y el mago. Los nacidos bajo este signo son creativos, juguetones, espontáneos y tienen un gran sentido del humor. Están aquí para recordarnos que no debemos tomar la vida demasiado en serio. Su desafío es enfocar su energía y usar su creatividad de manera constructiva. Chuen te invita a jugar, a crear y a encontrar la magia en lo cotidiano.",
-  "MayanSign.Eb.interpretation": "Eb es el sello del libre albedrío y la influencia humana en el mundo. Los nacidos bajo este signo son cariñosos, generosos y se esfuerzan por crear abundancia y prosperidad. Son los administradores de la Tierra. Su desafío es tomar decisiones sabias y dirigir su energía de una manera que beneficie a todos. Eb te anima a elegir tu camino conscientemente y a cosechar la abundancia de la vida.",
-  "MayanSign.Ben.interpretation": "Ben es el caminante del cielo, el puente entre el cielo y la tierra. Los nacidos bajo este signo son exploradores valientes que desafían la autoridad y las convenciones. Son pilares de fuerza para sus comunidades. Su desafío es aceptar su vulnerabilidad y encontrar un equilibrio entre su mundo interior y exterior. Ben te invita a explorar nuevos horizontes y a ser un pilar firme en tu propia vida.",
-  "MayanSign.Ix.interpretation": "Ix es el mago, el chamán y el vidente. Los nacidos bajo este signo son intuitivos, misteriosos y tienen acceso a niveles superiores de conciencia. Son los guardianes de la magia y la atemporalidad. Su desafío es confiar plenamente en su intuición y usar su poder con integridad. Ix te anima a abrazar la magia que llevas dentro y a vivir en el momento sagrado del presente.",
-  "MayanSign.Men.interpretation": "Men es el águila, el visionario con la capacidad de ver el panorama general. Los nacidos bajo este signo son independientes, ambiciosos y tienen una mente que se eleva más allá de los límites de lo ordinario. Están aquí para elevar la conciencia colectiva. Su desafío es mantenerse anclados y convertir sus visiones en realidad. Men te invita a desplegar tus alas y a crear desde una perspectiva superior.",
-  "MayanSign.Cib.interpretation": "Cib es el guardián de la sabiduría antigua y la biblioteca cósmica. Los nacidos bajo este signo son serios, inteligentes y tienen la capacidad de romper viejos patrones y de perdonar. Son los sabios consejeros. Su desafío es perdonarse a sí mismos y dejar atrás el pasado. Cib te anima a conectar con tu sabiduría interior y a usar el poder liberador del perdón.",
-  "MayanSign.Caban.interpretation": "Caban es la energía de la Tierra, el poder de la sincronicidad y la habilidad de la navegación. Los nacidos bajo este signo son mentalmente activos, prácticos y profundamente conectados con los ritmos de la Tierra. Son los grandes sincronizadores. Su desafío es confiar en su sincronización interna y aprender a navegar con el flujo de los acontecimientos. Caban te invita a prestar atención a las señales y a dejar que la Tierra te guíe.",
-  "MayanSign.Etznab.interpretation": "Etznab es el espejo de la verdad, el cuchillo que corta las ilusiones. Los nacidos bajo este signo son valientes, directos y buscan la claridad y la verdad en todas las cosas. Tienen la capacidad de discernir lo que es real. Su desafío es decir su verdad con compasión y aprender a mirarse en el espejo. Etznab te anima a liberar todas las ilusiones y a vivir en la claridad de tu propio reflejo.",
-  "MayanSign.Cauac.interpretation": "Cauac es la tormenta que limpia y transforma. Los nacidos bajo este signo son enérgicos, amigables y catalizadores naturales del cambio. Traen las lluvias purificadoras que permiten la renovación y el renacimiento. Su desafío es abrazar su propia transformación y aprender las lecciones que trae la tormenta. Cauac te invita a aceptar los cambios en tu vida y a saber que después de cada tormenta viene la calma.",
-  "MayanSign.Ahau.interpretation": "Ahau es el sello de la iluminación, la culminación de la evolución. Los nacidos bajo este signo son amorosos, artísticos, visionarios y llevan la luz del sol dentro de ellos. Están aquí para irradiar amor incondicional y para reconocer la unión de toda vida. Su desafío es trascender su propio ego y vivir al servicio del todo. Ahau te invita a reconocer tu propia luz y a compartirla incondicionalmente con el mundo.",
-  "LunarPhaseDescriptions": {
-    "new": {
-      "description": "La Luna Nueva marca un nuevo comienzo. Es un tiempo de introspección, para plantar las semillas de la intención para el ciclo que viene. La energía es baja, ideal para descansar y visualizar lo que deseas manifestar.",
-      "insights": [
-        "Establece intenciones claras para el próximo mes.",
-        "Es un momento poderoso para la meditación y la visualización.",
-        "Suelta lo viejo para hacer espacio a lo nuevo."
-      ]
-    },
-    "waxingCrescent": {
-      "description": "La Luna Creciente simboliza un período de crecimiento y fortalecimiento. A medida que la luna comienza a iluminar el cielo nocturno con mayor brillo, es momento de actuar y manifestar las intenciones establecidas durante la luna nueva. Tu energía aumenta gradualmente, haciendo este período perfecto para comenzar a implementar tus planes. Es un momento en el que podrías sentir un impulso de energía creativa e inspiración. Esta fase es particularmente favorable para aprender cosas nuevas, establecer conexiones y formar hábitos beneficiosos. Podrías notar que tu confianza crece junto con tu capacidad para superar obstáculos en el camino hacia tus objetivos.",
-      "insights": [
-        "Tu energía emocional está creciendo.",
-        "Un excelente momento para nutrir nuevos patrones emocionales que se alineen con la expresión de tu Luna natal.",
-        "Enfoca tu atención en construir gradualmente una seguridad emocional que resuene con tu naturaleza."
-      ]
-    },
-    "firstQuarter": {
-      "description": "El Cuarto Creciente es un punto crítico. Tus intenciones se encuentran con sus primeros desafíos, requiriendo acción y toma de decisiones. Es un momento para superar obstáculos, ajustar tus planes y volver a comprometerte con tus objetivos. La energía es activa y a veces tensa. Es importante mantenerse decidido y no rendirse ante la primera resistencia. Resuelve los problemas que surjan y reafirma tu compromiso con las intenciones que estableciste durante la luna nueva.",
-      "insights": [
-        "Toma decisiones, aunque sean difíciles.",
-        "Ahora es el momento de ajustar y refinar tus estrategias.",
-        "Confía en tu capacidad para superar cualquier desafío."
-      ]
-    },
-    "waxingGibbous": {
-      "description": "La fase de la Luna Gibosa Creciente es un tiempo de refinamiento y perfeccionamiento. Has superado los desafíos iniciales, y ahora es el momento de ajustar y mejorar tus planes. La energía es alta, y el impulso se está construyendo. Es un excelente momento para enfocarse en los detalles, organizar tus esfuerzos y prepararte para la culminación que traerá la luna llena. Analiza lo que está funcionando y haz los ajustes necesarios para asegurar el éxito.",
-      "insights": [
-        "Presta atención a los detalles y optimiza tus planes.",
-        "La energía es alta; úsala para avanzar.",
-        "La perseverancia durante esta fase es clave para el éxito."
-      ]
-    },
-    "full": {
-      "description": "La Luna Llena es el clímax del ciclo lunar. Las intenciones que plantaste durante la luna nueva alcanzan su punto culminante. Es un tiempo de cosecha, celebración e iluminación. La verdad sale a la luz, y las emociones están en su apogeo. Es un momento poderoso para la gratitud y el reconocimiento de tus progresos. La energía está al máximo, lo que puede llevar a insomnio o a una sensibilidad elevada. Usa esta luz para ver qué ha llegado a su plenitud en tu vida.",
-      "insights": [
-        "Celebra tus logros, por pequeños que sean.",
-        "Expresa gratitud por lo que has manifestado.",
-        "Sé consciente de tus emociones, ya que estarán amplificadas."
-      ]
-    },
-    "waningGibbous": {
-      "description": "Después del pico de la Luna Llena, comienza la fase de la Luna Gibosa Menguante. Es un tiempo para compartir lo que has aprendido y cosechado. Es una fase de distribución, enseñanza y comunicación. Reflexiona sobre tus éxitos y considera cómo tus experiencias pueden beneficiar a otros. La energía comienza a disminuir, favoreciendo la introspección y el análisis de los resultados del ciclo.",
-      "insights": [
-        "Comparte tu conocimiento y experiencias con otros.",
-        "Reflexiona sobre el ciclo que acaba de concluir.",
-        "Comienza a pensar en lo que necesitas soltar en el próximo ciclo."
-      ]
-    },
-    "lastQuarter": {
-      "description": "El Cuarto Menguante es un momento de liberación y de soltar. Al igual que el Primer Cuarto, representa una crisis, pero esta vez es una crisis de conciencia. Es hora de dejar ir lo que no funcionó, de abandonar viejos patrones y de limpiarte de relaciones o situaciones que ya no te sirven. Puede ser una fase difícil, pero es necesaria para hacer espacio para lo nuevo.",
-      "insights": [
-        "Suelta lo que ya no te sirve.",
-        "Perdónate a ti mismo y a los demás para poder avanzar.",
-        "Limpia tu espacio físico y emocional."
-      ]
-    },
-    "waningCrescent": {
-      "description": "La Luna Menguante es la fase final antes de la luna nueva. Es un tiempo de rendición, descanso y recuperación. La energía está en su punto más bajo, invitando a la introspección y a la conexión espiritual. Es un momento para retirarse, meditar y prepararse para el próximo ciclo. Sueña, escucha tu intuición y deja que el universo tome el control. No es un tiempo para la acción, sino para ser.",
-      "insights": [
-        "Descansa y recarga tu energía.",
-        "Escucha tu intuición y tus sueños.",
-        "Libera cualquier tensión restante y ríndete al flujo."
-      ]
-    }
-  },
-  "ChineseHoroscopeDetail": {
-    "traitsTitle": "Traits de {signName}",
-    "Rat": { "interpretation": "Vif d'esprit, charmant et ambitieux. Les Rats sont ingénieux et peuvent se sortir de n'importe quel problème. Ils sont sociables mais peuvent être critiques et opportunistes. Ils sont farouchement loyaux envers leur famille et leurs amis proches." },
-    "Ox": { "interpretation": "Diligent, fiable et fort. Les Bœufs sont méthodiques et patients, et croient au travail acharné pour atteindre leurs objectifs. Ils n'aiment pas le changement et peuvent être très têtus, mais leur fiabilité est inégalée." },
-    "Tiger": { "interpretation": "Courageux, confiant et un leader né. Les Tigres sont passionnés et énergiques, toujours à la recherche d'un défi. Ils peuvent être rebelles et imprévisibles, mais leur charisme et leur courage inspirent les autres." },
-    "Rabbit": { "interpretation": "Doux, calme et élégant. Les Lapins sont pleins de tact et diplomates, recherchant la paix et l'harmonie par-dessus tout. Ils sont prudents et peuvent être perçus comme réservés, mais ils sont aussi perspicaces et ont un fort sens des responsabilités." },
-    "Dragon": { "interpretation": "Puissant, ambitieux et charismatique. Les Dragons sont des leaders nés, pleins d'énergie et d'enthousiasme. Ils sont confiants et n'ont pas peur de prendre des risques. Leur fierté peut parfois friser l'arrogance, mais ils ont un cœur généreux." },
-    "Snake": { "interpretation": "Sage, intuitif et mystérieux. Les Serpents sont des penseurs profonds, préférant se fier à leur propre jugement plutôt qu'aux conseils des autres. Ils sont charmants et sophistiqués mais peuvent être possessifs et garder leurs émotions pour eux." },
-    "Horse": { "interpretation": "Énergique, indépendant et épris de liberté. Les Chevaux aiment l'aventure et être au cœur de l'action. Ils sont sociables et ont un grand sens de l'humour, mais ils peuvent être impatients et avoir peur de l'engagement." },
-    "Goat": { "interpretation": "Doux, compatissant et artistique. Les Chèvres sont des rêveurs créatifs qui apprécient la paix et la beauté. Elles sont empathiques et ont bon cœur mais peuvent être indécises et avoir besoin de beaucoup de soutien émotionnel de leurs proches." },
-    "Monkey": { "interpretation": "Intelligent, espiègle et un génie pour résoudre les problèmes. Les Singes sont intellectuellement curieux et ont un grand sens de l'humour. Ils sont maîtres de l'improvisation mais peuvent être perçus comme peu fiables ou manipulateurs." },
-    "Rooster": { "interpretation": "Confiant, observateur et travailleur. Les Coqs sont des perfectionnistes qui ont un œil vif pour les détails. Ils sont directs et honnêtes, mais leur franchise peut parfois passer pour de la critique ou de l'arrogance." },
-    "Dog": { "interpretation": "Loyal, honnête et juste. Les Chiens sont des compagnons dignes de confiance qui protégeront farouchement leurs proches. Ils ont un fort sens du bien et du mal mais peuvent être sujets à l'anxiété et au pessimisme." },
-    "Pig": { "interpretation": "Gentil, généreux et facile à vivre. Les Cochons aiment les bonnes choses de la vie et ne sont pas du genre à chercher les conflits. Ils sont diligents et honnêtes, et leur bonne nature en fait de merveilleux amis, bien qu'ils puissent être un peu naïfs." }
-  },
-  "StorePage.title": "Recommandations Cosmiques",
-  "StorePage.subtitle": "Articles sélectionnés pour améliorer votre voyage spirituel.",
-  "StorePage.viewOnAmazon": "Voir sur Amazon",
-  "StorePage.affiliateDisclaimer": "En tant que Partenaire Amazon, nous gagnons sur les achats qualifiés. Cela aide à soutenir notre application sans frais supplémentaires pour vous.",
-  "StoreProducts.classicTarotDeck.title": "Jeu de Tarot Classique",
-  "StoreProducts.classicTarotDeck.description": "Un jeu de tarot Rider-Waite intemporel, parfait pour les débutants comme pour les experts pour chercher des aperçus et des conseils.",
-  "StoreProducts.astrologyIntroBook.title": "Livre d'Introduction à l'Astrologie",
-  "StoreProducts.astrologyIntroBook.description": "Un livre complet couvrant les bases de l'astrologie, des signes, des planètes et des maisons pour les nouveaux apprenants.",
-  "StoreProducts.healingCrystalsSet.title": "Ensemble de Cristaux de Guérison",
-  "StoreProducts.healingCrystalsSet.description": "Un ensemble de départ de diverses pierres roulées comme l'améthyste et le quartz rose pour aider à équilibrer vos énergies.",
-  "StoreProducts.moonLamp.title": "Lampe Lunaire 3D",
-  "StoreProducts.moonLamp.description": "Apportez la lueur mystique de la lune dans votre maison avec cette lampe de nuit réaliste et apaisante.",
-  "StoreProducts.zodiacJournal.title": "Journal des Constellations du Zodiaque",
-  "StoreProducts.zodiacJournal.description": "Un carnet magnifiquement conçu pour que vous puissiez enregistrer vos pensées, vos rêves et vos observations astrologiques.",
-  "StoreProducts.incenseHolder.title": "Porte-Encens en Céramique",
-  "StoreProducts.incenseHolder.description": "Un support élégant pour brûler en toute sécurité vos bâtonnets d'encens préférés pendant la méditation ou la relaxation."
+  "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!"
 }
+
