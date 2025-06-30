@@ -1,3 +1,4 @@
+
 // Server Component - Detail page for a specific Mayan Sign
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
@@ -30,7 +31,7 @@ export default async function MayanHoroscopeDetailPage({ params }: { params: { l
 
   const translatedSignName = dictionary[signData.nameKey] || signData.name;
   const description = dictionary[signData.descriptionKey] || 'Description not available.';
-  const detailedInterpretation = dictionary.MayanSign?.[signData.name]?.interpretation || "Detailed interpretation coming soon.";
+  const detailedInterpretation = dictionary[signData.detailedInterpretationKey] || "Detailed interpretation coming soon.";
   const Icon = signData.icon;
 
   return (
