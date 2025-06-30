@@ -624,3 +624,4 @@ export const getDailyTransit = (date: Date): DailyTransit => {
   return transits[dayOfYear % transits.length];
 };
 
+
