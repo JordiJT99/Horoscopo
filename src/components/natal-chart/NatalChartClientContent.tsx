@@ -1,7 +1,7 @@
 
 'use client';
 
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/lib/dictionaries'; // Import Locale
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
 import { useToast } from '@/hooks/use-toast';
@@ -24,6 +24,7 @@ interface BirthData {
 
 interface NatalChartClientContentProps {
   dictionary: Dictionary;
+  locale: Locale; // Add locale prop
   birthData: BirthData;
   user: AuthUser | null;
   onReset: () => void;
@@ -85,6 +86,7 @@ function SectionExplanation({
 
 export default function NatalChartClientContent({
   dictionary,
+  locale, // receive locale
   birthData,
   user,
   onReset,
@@ -151,7 +153,7 @@ export default function NatalChartClientContent({
         } else {
           const flowInput = {
             detailLevel,
-            locale: dictionary.locale || 'es',
+            locale: locale, // Use locale prop
             birthDate: birthData.date,
             birthTime: birthData.time,
             birthCity: birthData.city,
@@ -184,7 +186,7 @@ export default function NatalChartClientContent({
     };
   
     fetchChartData();
-  }, [detailLevel, birthData, dictionary, toast, user]);
+  }, [detailLevel, birthData, dictionary, toast, user, locale]); // add locale to dependencies
 
 
   const detailExplanationSections = [

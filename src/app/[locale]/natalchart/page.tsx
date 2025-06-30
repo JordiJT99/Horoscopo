@@ -35,7 +35,7 @@ export default async function NatalChartPage({ params }: NatalChartPageProps) {
             <p className="mt-4">Loading Natal Chart...</p>
           </div>
         }>
-          <NatalChartClientWrapper dictionary={dictionary} />
+          <NatalChartClientWrapper dictionary={dictionary} locale={params.locale} />
         </Suspense>
       </main>
     </>
