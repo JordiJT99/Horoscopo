@@ -273,6 +273,8 @@
   "Metal": "Métal",
   "MayanHoroscopePage.title": "Horoscope Maya",
   "MayanHoroscopePage.subtitle": "Découvrez les anciennes perspectives de l'astrologie maya.",
+  "MayanHoroscopePage.discoverKinButton": "Découvrez votre Kin",
+  "MayanHoroscopePage.discoverKinSubtitle": "Trouvez votre signe & ton galactique",
   "MayanHoroscopePage.comingSoon": "Plus d'outils et de calculs mayas à venir !",
   "MayanHoroscopePage.description": "Signification Brève :",
   "MayanHoroscopePage.detailedInterpretation": "Interprétation Détaillée :",
@@ -302,6 +304,7 @@
   "MayanHoroscopePage.calcExplainStep4": "Sceau Solaire (Nahual) : Dérivé du numéro de Kin en utilisant le modulo 20 : (Kin - 1) % 20.",
   "MayanHoroscopePage.calcExplainStep5": "Ton Galactique : Dérivé du numéro de Kin en utilisant le modulo 13 : (Kin - 1) % 13.",
   "MayanHoroscopePage.calcExplainNote": "Ceci est une interprétation moderne (Dreamspell) du Tzolkin Maya. D'autres décomptes traditionnels existent.",
+  "MayanHoroscopeDetailPage.aboutTitle": "À propos de {signName}",
   "MayanSign.Imix.name": "Imix (Dragon/Crocodile)",
   "MayanSign.Ik.name": "Ik (Vent)",
   "MayanSign.Akbal.name": "Akbal (Nuit/Maison)",
@@ -516,6 +519,7 @@
   "MorePage.notifications": "Notifications",
   "MorePage.comingSoon": "Bientôt disponible",
   "MorePage.zodiacSigns": "Signes du Zodiaque",
+  "MorePage.natalChart": "Thème Natal",
   "Language.es": "Español",
   "Language.en": "English",
   "Language.de": "Deutsch",
@@ -869,5 +873,109 @@
     "Rooster": { "interpretation": "Confiant, observateur et travailleur. Les Coqs sont des perfectionnistes qui ont un œil vif pour les détails. Ils sont directs et honnêtes, mais leur franchise peut parfois passer pour de la critique ou de l'arrogance." },
     "Dog": { "interpretation": "Loyal, honnête et juste. Les Chiens sont des compagnons dignes de confiance qui protégeront farouchement leurs proches. Ils ont un fort sens du bien et du mal mais peuvent être sujets à l'anxiété et au pessimisme." },
     "Pig": { "interpretation": "Gentil, généreux et facile à vivre. Les Cochons aiment les bonnes choses de la vie et ne sont pas du genre à chercher les conflits. Ils sont diligents et honnêtes, et leur bonne nature en fait de merveilleux amis, bien qu'ils puissent être un peu naïfs." }
+  },
+  "MayanSign": {
+    "Imix": { "name": "Imix (Dragon/Crocodile)", "description": "La source de vie, la nourriture primordiale.", "interpretation": "Imix est le début primordial, l'énergie de la création elle-même. Ceux qui sont nés sous ce signe sont des initiateurs, une source de nouvelles idées. Leur défi est de développer la confiance dans l'univers et d'apprendre à recevoir du soutien, car ils essaient souvent de tout faire seuls. Ce sont des pourvoyeurs naturels, mais ils ont aussi tendance à en prendre trop sur eux. Imix vous invite à vous connecter à la source et à réaliser que vous êtes toujours soutenu." },
+    "Ik": { "name": "Ik (Vent)", "description": "Le souffle de l'esprit, de la communication et de la vérité.", "interpretation": "Ik représente la communication, le souffle et l'esprit. Ceux qui sont nés sous ce sceau sont des communicateurs naturels, des messagers et souvent très spirituels. Ils sont adaptables et polyvalents, mais peuvent aussi être indécis ou dispersés. Leur défi est d'ancrer leurs idées et de dire la vérité avec responsabilité. Ik vous encourage à exprimer votre vérité et à écouter les forces invisibles qui vous guident." },
+    "Akbal": { "name": "Akbal (Nuit/Maison)", "description": "Le sanctuaire, le voyage intérieur et le temps du rêve.", "interpretation": "Akbal est le royaume des rêves, de l'intuition et du subconscient. Ceux qui sont nés sous ce sceau sont introspectifs, mystérieux et ont accès à une profonde sagesse intérieure. Ils trouvent la force dans le silence et la solitude. Leur défi est de faire face à leurs peurs intérieures et de trouver la lumière dans leur obscurité. Akbal vous invite à embrasser votre intuition et à explorer les trésors cachés en vous." },
+    "Kan": { "name": "Kan (Graine/Lézard)", "description": "Le potentiel, la croissance et la conscience ciblée.", "interpretation": "Kan est la graine du potentiel. Ceux qui sont nés sous ce signe sont dynamiques, pleins d'énergie et ont la capacité de manifester la croissance et l'abondance. Ce sont des leaders naturels qui s'efforcent de s'épanouir et de réaliser leur plein potentiel. Leur défi est d'apprendre la patience et de faire confiance aux cycles naturels de la croissance. Kan vous encourage à planter vos intentions avec soin et à cultiver votre potentiel avec conscience." },
+    "Chicchan": { "name": "Chicchan (Serpent)", "description": "La force vitale, l'instinct et la connexion au corps.", "interpretation": "Chicchan est l'énergie de la force vitale, de l'instinct et de la sagesse du corps. Ceux qui sont nés sous ce sceau sont passionnés, charismatiques et profondément connectés à leurs instincts physiques. Ils ont une forte capacité de survie. Leur défi est d'intégrer et de transformer leur puissante énergie, plutôt que d'être contrôlés par elle. Chicchan vous invite à écouter votre corps, à embrasser votre passion et à vous défaire de l'ancien pour renaître." },
+    "Cimi": { "name": "Cimi (Mort/Transformateur)", "description": "La transformation, le lâcher-prise et l'abandon.", "interpretation": "Cimi représente la mort en tant que transformation, la capacité de lâcher l'ancien pour faire place au nouveau. Ceux qui sont nés sous ce signe sont résilients, intuitifs et ont la capacité de gérer de grands changements. Ils sont des ponts entre les mondes. Leur défi est d'accepter le lâcher-prise et de faire confiance au processus de renouveau. Cimi vous invite à vous défaire de ce qui ne vous sert plus et à saisir les opportunités que chaque fin offre." },
+    "Manik": { "name": "Manik (Cerf/Main)", "description": "La guérison, la connaissance et l'accomplissement.", "interpretation": "Manik est le sceau de la guérison, de la connaissance et de l'accomplissement. Ceux qui sont nés sous ce signe sont des guérisseurs naturels, pacifiques et souvent très habiles de leurs mains. Ils ont la capacité de mener à bien des projets et d'apporter la connaissance au monde. Leur défi est de reconnaître leurs propres besoins de guérison. Manik vous encourage à utiliser vos dons pour guérir et accomplir, et à reconnaître la beauté de l'achèvement." },
+    "Lamat": { "name": "Lamat (Étoile/Lapin)", "description": "L'harmonie, la beauté et la semence d'étoile.", "interpretation": "Lamat est l'énergie de l'harmonie, de la beauté et de l'élégance. Ceux qui sont nés sous ce signe sont artistiques, sociaux et s'efforcent de créer la beauté et l'équilibre dans leur environnement. Ce sont les semences d'étoiles qui sont ici pour embellir le monde. Leur défi est de trouver leur propre harmonie intérieure, plutôt que de la chercher uniquement à l'extérieur. Lamat vous invite à rayonner votre propre beauté et à créer l'harmonie dans tout ce que vous faites." },
+    "Muluc": { "name": "Muluc (Eau/Lune)", "description": "L'eau universelle, les émotions purifiées et le flux.", "interpretation": "Muluc est le sceau de l'eau universelle et de la purification émotionnelle. Ceux qui sont nés sous ce signe sont émotionnels, intuitifs et ont une forte connexion avec leurs sentiments. Ce sont des purificateurs et des communicateurs naturels. Leur défi est de laisser leurs émotions couler sans être emportés par elles. Muluc vous invite à honorer vos émotions, à vous purifier et à faire confiance au flux de la vie." },
+    "Oc": { "name": "Oc (Chien)", "description": "La loyauté, le cœur et les liens émotionnels.", "interpretation": "Oc est l'énergie de la loyauté, de l'amour et du cœur. Ceux qui sont nés sous ce sceau sont des compagnons fidèles, courageux et profondément connectés à leurs 'meutes' (famille et amis). Ce sont des leaders du cœur. Leur défi est de guérir leurs propres blessures émotionnelles et d'apprendre à se donner la même loyauté qu'ils donnent aux autres. Oc vous encourage à vivre avec votre cœur, à être loyal et à guider le chemin avec amour." },
+    "Chuen": { "name": "Chuen (Singe)", "description": "Le jeu, la magie et l'illusion divine.", "interpretation": "Chuen est le farceur divin, l'artiste et le magicien. Ceux qui sont nés sous ce signe sont créatifs, joueurs, spontanés et ont un grand sens de l'humour. Ils sont ici pour nous rappeler de ne pas prendre la vie trop au sérieux. Leur défi est de concentrer leur énergie et d'utiliser leur créativité de manière constructive. Chuen vous invite à jouer, à créer et à trouver la magie dans le quotidien." },
+    "Eb": { "name": "Eb (Route/Herbe)", "description": "Le libre arbitre, l'influence humaine et l'abondance.", "interpretation": "Eb est le sceau du libre arbitre et de l'influence humaine sur le monde. Ceux qui sont nés sous ce signe sont attentionnés, généreux et s'efforcent de créer l'abondance et la prospérité. Ils sont les gardiens de la Terre. Leur défi est de prendre des décisions sages et de diriger leur énergie d'une manière qui profite à tous. Eb vous encourage à choisir votre chemin consciemment et à récolter l'abondance de la vie." },
+    "Ben": { "name": "Ben (Roseau/Voyageur du Ciel)", "description": "Le pilier du Ciel et de la Terre, la connexion et le voyage dans l'espace-temps.", "interpretation": "Ben est le voyageur du ciel, le pont entre le ciel et la terre. Ceux qui sont nés sous ce signe sont des explorateurs courageux qui défient l'autorité et les conventions. Ce sont des piliers de force pour leurs communautés. Leur défi est d'accepter leur vulnérabilité et de trouver un équilibre entre leur monde intérieur et extérieur. Ben vous invite à explorer de nouveaux horizons et à être un pilier solide dans votre propre vie." },
+    "Ix": { "name": "Ix (Jaguar/Sorcier)", "description": "La magie, l'intemporalité et le pouvoir chamanique.", "interpretation": "Ix est le magicien, le chaman et le voyant. Ceux qui sont nés sous ce signe sont intuitifs, mystérieux et ont accès à des niveaux de conscience plus élevés. Ils sont les gardiens de la magie et de l'intemporalité. Leur défi est de faire pleinement confiance à leur intuition et d'utiliser leur pouvoir avec intégrité. Ix vous encourage à embrasser la magie en vous et à vivre dans le moment sacré du présent." },
+    "Men": { "name": "Men (Aigle)", "description": "La vision collective, l'esprit supérieur et la conscience.", "interpretation": "Men est l'aigle, le visionnaire capable de voir la situation dans son ensemble. Ceux qui sont nés sous ce signe sont indépendants, ambitieux et ont un esprit qui vole au-delà des limites de l'ordinaire. Ils sont ici pour élever la conscience collective. Leur défi est de rester ancrés et de transformer leurs visions en réalité. Men vous invite à déployer vos ailes et à créer à partir d'une perspective plus élevée." },
+    "Cib": { "name": "Cib (Vautour/Chouette)", "description": "La sagesse cosmique, le pardon et la voix intérieure.", "interpretation": "Cib est le gardien de la sagesse ancienne et de la bibliothèque cosmique. Ceux qui sont nés sous ce signe sont sérieux, intelligents et ont la capacité de briser les anciens schémas et de pardonner. Ce sont les sages conseillers. Leur défi est de se pardonner à eux-mêmes et de laisser le passé derrière eux. Cib vous encourage à vous connecter à votre sagesse intérieure et à utiliser le pouvoir libérateur du pardon." },
+    "Caban": { "name": "Caban (Terre/Tremblement de Terre)", "description": "La synchronicité, la force d'ancrage et la navigation.", "interpretation": "Caban est l'énergie de la Terre, la puissance de la synchronicité et la capacité de navigation. Ceux qui sont nés sous ce signe sont mentalement actifs, pratiques et profondément connectés aux rythmes de la Terre. Ce sont les grands synchroniseurs. Leur défi est de faire confiance à leur timing intérieur et d'apprendre à naviguer avec le flux des événements. Caban vous invite à prêter attention aux signes et à vous laisser guider par la Terre." },
+    "Etznab": { "name": "Etznab (Silex/Couteau)", "description": "La réflexion, la vérité et la clarté.", "interpretation": "Etznab est le miroir de la vérité, le couteau qui tranche les illusions. Ceux qui sont nés sous ce signe sont courageux, directs et recherchent la clarté et la vérité en toutes choses. Ils ont la capacité de discerner ce qui est réel. Leur défi est de dire leur vérité avec compassion et d'apprendre à se regarder dans le miroir. Etznab vous encourage à abandonner toutes les illusions et à vivre dans la clarté de votre propre reflet." },
+    "Cauac": { "name": "Cauac (Tempête/Pluie)", "description": "La transformation, la purification et la renaissance.", "interpretation": "Cauac est la tempête qui purifie et transforme. Ceux qui sont nés sous ce signe sont énergiques, amicaux et des catalyseurs naturels de changement. Ils apportent les pluies purificatrices qui permettent le renouveau et la renaissance. Leur défi est d'embrasser leur propre transformation et d'apprendre les leçons que la tempête apporte. Cauac vous invite à accepter les changements dans votre vie et à savoir qu'après chaque tempête vient le calme." },
+    "Ahau": { "name": "Ahau (Soleil/Fleur/Seigneur)", "description": "L'illumination, l'amour inconditionnel et l'union.", "interpretation": "Ahau est le sceau de l'illumination, le summum de l'évolution. Ceux qui sont nés sous ce signe sont aimants, artistiques, visionnaires et portent la lumière du soleil en eux. Ils sont ici pour rayonner l'amour inconditionnel et reconnaître l'union de toute vie. Leur défi est de transcender leur propre ego et de vivre au service de la totalité. Ahau vous invite à reconnaître votre propre lumière et à la partager inconditionnellement avec le monde." }
+  },
+  "LunarPhaseDescriptions": {
+    "new": {
+      "description": "La Nouvelle Lune marque un nouveau départ. C'est un moment d'introspection, pour planter les graines de l'intention pour le cycle à venir. L'énergie est basse, idéale pour se reposer et visualiser ce que vous souhaitez manifester.",
+      "insights": [
+        "Fixez des intentions claires pour le mois à venir.",
+        "C'est un moment puissant pour la méditation et la visualisation.",
+        "Lâchez l'ancien pour faire de la place au nouveau."
+      ]
+    },
+    "waxingCrescent": {
+      "description": "Le Premier Croissant symbolise une période de croissance et de renforcement. Alors que la lune commence à illuminer le ciel nocturne avec plus de luminosité, il est temps d'agir et de manifester les intentions fixées lors de la nouvelle lune. Votre énergie augmente progressivement, rendant cette période parfaite pour commencer à mettre en œuvre vos plans. C'est un moment où vous pourriez ressentir une montée d'énergie créative et d'inspiration. Cette phase est particulièrement favorable pour apprendre de nouvelles choses, établir des connexions et former des habitudes bénéfiques. Vous pourriez remarquer que votre confiance grandit en même temps que votre capacité à surmonter les obstacles sur le chemin de vos objectifs.",
+      "insights": [
+        "Votre énergie émotionnelle est en croissance.",
+        "Un excellent moment pour nourrir de nouveaux schémas émotionnels qui s'alignent avec l'expression de votre Lune natale.",
+        "Concentrez votre attention sur la construction progressive d'une sécurité émotionnelle qui résonne avec votre nature."
+      ]
+    },
+    "firstQuarter": {
+      "description": "Le Premier Quartier est un tournant critique. Vos intentions rencontrent leurs premiers défis, nécessitant action et prise de décision. C'est un moment pour surmonter les obstacles, ajuster vos plans et vous réengager envers vos objectifs. L'énergie est active et parfois tendue. Il est important de rester déterminé et de ne pas abandonner au premier signe de résistance. Résolvez les problèmes qui se présentent et réaffirmez votre engagement envers les intentions que vous avez fixées lors de la nouvelle lune.",
+      "insights": [
+        "Prenez des décisions, même si elles sont difficiles.",
+        "C'est le moment d'ajuster et d'affiner vos stratégies.",
+        "Ayez confiance en votre capacité à surmonter tous les défis."
+      ]
+    },
+    "waxingGibbous": {
+      "description": "La phase de la Lune Gibbeuse Croissante est un temps de raffinement et de perfectionnement. Vous avez surmonté les défis initiaux, et il est maintenant temps d'ajuster et d'améliorer vos plans. L'énergie est élevée, et l'élan se construit. C'est un excellent moment pour se concentrer sur les détails, organiser vos efforts et vous préparer à l'aboutissement que la pleine lune apportera. Analysez ce qui fonctionne et faites les ajustements nécessaires pour assurer le succès.",
+      "insights": [
+        "Portez attention aux détails et optimisez vos plans.",
+        "L'énergie est élevée ; utilisez-la pour avancer.",
+        "La persévérance pendant cette phase est la clé du succès."
+      ]
+    },
+    "full": {
+      "description": "La Pleine Lune est le point culminant du cycle lunaire. Les intentions que vous avez plantées lors de la nouvelle lune atteignent leur apogée. C'est un temps de récolte, de célébration et d'illumination. Les vérités éclatent au grand jour, et les émotions sont à leur paroxysme. C'est un moment puissant pour la gratitude et la reconnaissance de vos progrès. L'énergie est à son maximum, ce qui peut entraîner de l'insomnie ou une sensibilité accrue. Utilisez cette lumière pour voir ce qui a porté ses fruits dans votre vie.",
+      "insights": [
+        "Célébrez vos réussites, aussi petites soient-elles.",
+        "Exprimez votre gratitude pour ce que vous avez manifesté.",
+        "Soyez conscient de vos émotions, car elles seront amplifiées."
+      ]
+    },
+    "waningGibbous": {
+      "description": "Après le pic de la Pleine Lune, commence la phase de la Lune Gibbeuse Décroissante. C'est un temps pour partager ce que vous avez appris et récolté. C'est une phase de distribution, d'enseignement et de communication. Réfléchissez à vos succès et considérez comment vos expériences peuvent bénéficier aux autres. L'énergie commence à diminuer, favorisant l'introspection et l'analyse des résultats du cycle.",
+      "insights": [
+        "Partagez vos connaissances et expériences avec les autres.",
+        "Réfléchissez au cycle qui vient de se terminer.",
+        "Commencez à penser à ce que vous devez lâcher dans le prochain cycle."
+      ]
+    },
+    "lastQuarter": {
+      "description": "Le Dernier Quartier est un moment de libération et de lâcher-prise. Comme le Premier Quartier, il représente une crise, mais cette fois, c'est une crise de conscience. Il est temps de laisser aller ce qui n'a pas fonctionné, d'abandonner les anciens schémas et de vous purifier des relations ou des situations qui ne vous servent plus. Ce peut être une phase difficile, mais elle est nécessaire pour faire de la place au nouveau.",
+      "insights": [
+        "Lâchez ce qui ne vous sert plus.",
+        "Pardonnez-vous et pardonnez aux autres pour pouvoir avancer.",
+        "Nettoyez votre espace physique et émotionnel."
+      ]
+    },
+    "waningCrescent": {
+      "description": "La Lune Décroissante est la phase finale avant la nouvelle lune. C'est un temps de reddition, de repos et de récupération. L'énergie est à son plus bas, invitant à l'introspection et à la connexion spirituelle. C'est un moment pour se retirer, méditer et se préparer pour le prochain cycle. Rêvez, écoutez votre intuition et laissez l'univers prendre le contrôle. Ce n'est pas un temps pour l'action, mais pour l'être.",
+      "insights": [
+        "Reposez-vous et rechargez votre énergie.",
+        "Écoutez votre intuition et vos rêves.",
+        "Libérez toute tension restante et abandonnez-vous au flux."
+      ]
+    }
+  },
+  "ChineseHoroscopeDetail": {
+    "traitsTitle": "Traits de {signName}",
+    "Rat": { "interpretation": "Vif d'esprit, charmant et ambitieux. Les Rats sont ingénieux et peuvent se sortir de n'importe quel problème. Ils sont sociables mais peuvent être critiques et opportunistes. Ils sont farouchement loyaux envers leur famille et leurs amis proches." },
+    "Ox": { "interpretation": "Diligent, fiable et fort. Les Bœufs sont méthodiques et patients, et croient au travail acharné pour atteindre leurs objectifs. Ils n'aiment pas le changement et peuvent être très têtus, mais leur fiabilité est inégalée." },
+    "Tiger": { "interpretation": "Courageux, confiant et un leader né. Les Tigres sont passionnés et énergiques, toujours à la recherche d'un défi. Ils peuvent être rebelles et imprévisibles, mais leur charisme et leur courage inspirent les autres." },
+    "Rabbit": { "interpretation": "Doux, calme et élégant. Les Lapins sont pleins de tact et diplomates, recherchant la paix et l'harmonie par-dessus tout. Ils sont prudents et peuvent être perçus comme réservés, mais ils sont aussi perspicaces et ont un fort sens des responsabilités." },
+    "Dragon": { "interpretation": "Puissant, ambitieux et charismatique. Les Dragons sont des leaders nés, pleins d'énergie et d'enthousiasme. Ils sont confiants et n'ont pas peur de prendre des risques. Leur fierté peut parfois friser l'arrogance, mais ils ont un cœur généreux." },
+    "Snake": { "interpretation": "Sage, intuitif et mystérieux. Les Serpents sont des penseurs profonds, préférant se fier à leur propre jugement plutôt qu'aux conseils des autres. Ils sont charmants et sophistiqués mais peuvent être possessifs et garder leurs émotions pour eux." },
+    "Horse": { "interpretation": "Énergique, indépendant et épris de liberté. Les Chevaux aiment l'aventure et être au cœur de l'action. Ils sont sociables et ont un grand sens de l'humour, mais ils peuvent être impatients et avoir peur de l'engagement." },
+    "Goat": { "interpretation": "Doux, compatissant et artistique. Les Chèvres sont des rêveurs créatifs qui apprécient la paix et la beauté. Elles sont empathiques et ont bon cœur mais peuvent être indécises et avoir besoin de beaucoup de soutien émotionnel de leurs proches." },
+    "Monkey": { "interpretation": "Intelligent, espiègle et un génie pour résoudre les problèmes. Les Singes sont intellectuellement curieux et ont un grand sens de l'humour. Ils sont maîtres de l'improvisation mais peuvent être perçus comme peu fiables ou manipulateurs." },
+    "Rooster": { "interpretation": "Confiant, observateur et travailleur. Les Coqs sont des perfectionnistes qui ont un œil vif pour les détails. Ils sont directs et honnêtes, mais leur franchise peut parfois passer pour de la critique ou de l'arrogance." },
+    "Dog": { "interpretation": "Loyal, honnête et juste. Les Chiens sont des compagnons dignes de confiance qui protégeront farouchement leurs proches. Ils ont un fort sens du bien et du mal mais peuvent être sujets à l'anxiété et au pessimisme." },
+    "Pig": { "interpretation": "Gentil, généreux et facile à vivre. Les Cochons aiment les bonnes choses de la vie et ne sont pas du genre à chercher les conflits. Ils sont diligents et honnêtes, et leur bonne nature en fait de merveilleux amis, bien qu'ils puissent être un peu naïfs." }
   }
 }
+
