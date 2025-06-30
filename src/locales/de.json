@@ -509,7 +509,6 @@
   "MorePage.inviteAndEarn": "Einladen & Verdienen",
   "MorePage.notifications": "Benachrichtigungen",
   "MorePage.comingSoon": "Demnächst",
-  "MorePage.natalChart": "Geburtskarte",
   "MorePage.zodiacSigns": "Sternzeichen",
   "Language.es": "Español",
   "Language.en": "English",
@@ -706,13 +705,17 @@
       "noPlacementsFound": "Keine signifikanten Hausplatzierungen gefunden."
     }
   },
-  "birthForm.dateLabel": "Geburtsdatum",
-  "birthForm.timeLabel": "Geburtszeit",
-  "birthForm.cityLabel": "Geburtsstadt",
-  "birthForm.countryLabel": "Geburtsland",
-  "birthForm.submitButton": "Geburtskarte erstellen",
-  "birthForm.validationErrors.required": "Dieses Feld ist erforderlich.",
-  "birthForm.pickDate": "Wähle ein Datum",
+  "birthForm": {
+    "dateLabel": "Geburtsdatum",
+    "timeLabel": "Geburtszeit",
+    "cityLabel": "Geburtsstadt",
+    "countryLabel": "Geburtsland",
+    "submitButton": "Geburtskarte erstellen",
+    "validationErrors": {
+      "required": "Dieses Feld ist erforderlich."
+    },
+    "pickDate": "Wähle ein Datum"
+  },
   "PsychicChatPage.title": "Psychic Chat",
   "PsychicChatPage.psychicNotFound": "Hellseher nicht gefunden",
   "PsychicChatPage.psychicNotFoundMessage": "Der gesuchte Hellseher konnte nicht gefunden werden.",
@@ -1138,7 +1141,7 @@
     },
     "Pisces": {
       "title": "Traits of the Pisces",
-      "description": "Pisces are compassionate, artistic, and deeply intuitive, the last sign of the zodiac with a boundless capacity for empathy. Pisces are connected to the spiritual realm and have a boundless capacity for empathy. Their chameleon-like nature allows them to adapt to any environment, absorbing the emotions and atmospheres around them. This sensitivity is both their greatest gift and their biggest challenge. Pisces live in a world where the line between reality and fantasy is blurred, endowing them with immense creativity and imagination. These are the old souls of the zodiac, bearers of a wisdom that seems to come from other lifetimes. They are kind and giving and often put the needs of others above their own, which can lead to them being taken advantage of. They often have a deep connection to music, art, and any form of expression that allows them to channel their vast inner world. Escapism is their defense mechanism, and when the world becomes too harsh, they retreat into their inner sanctuary of dreams. Learning to set healthy boundaries and to stay grounded in reality without losing their magic is a great life lesson. They are incredibly romantic, not just in love, but in their outlook on life in general, always seeking beauty and spiritual connection in everything.",
+      "description": "The mystic and dreamer of the zodiac. Ruled by Neptune, Pisces are compassionate, artistic, and deeply intuitive. It is the final sign, an amalgamation of all those that came before it. They are connected to the spiritual realm and have a boundless capacity for empathy. Their chameleonic nature allows them to adapt to any environment, absorbing the emotions and atmospheres around them. This sensitivity is both their greatest gift and their biggest challenge. A Pisces lives in a world where the line between reality and fantasy is blurred, which endows them with immense creativity and imagination. They are the old souls of the zodiac, bearers of a wisdom that seems to come from other lifetimes. Their compassion knows no bounds, and they often put the needs of others above their own, which can lead to them being taken advantage of. They often have a deep connection to music, art, and any form of expression that allows them to channel their vast inner world. Escapism is their defense mechanism; when the world becomes too harsh, they retreat into their inner sanctuary of dreams. Learning to set healthy boundaries and to stay grounded in reality without losing their magic is their great life lesson. They are incredibly romantic, not just in love, but in their outlook on life in general, always seeking beauty and spiritual connection in everything.",
       "strengthsTitle": "Strengths",
       "strengths": [
         "Compassionate",
@@ -1167,24 +1170,21 @@
   "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
   "Share.buttonLabelLunar": "Share Current Phase",
   "StorePage.title": "Cosmic Recommendations",
-  "Share.lunarPhaseTitle": "Current Moon Phase from AstroVibes",
-  "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
-  "Share.buttonLabelLunar": "Share Current Phase",
-    "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
+  "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
   "StorePage.viewOnAmazon": "View on Amazon",
   "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
-    "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
-    "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for beginners and experts alike to seek insight and guidance.",
-    "StoreProducts.astrologyIntroBook.title": "Intro to Astrology Book",
-    "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
-    "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
-    "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
-    "StoreProducts.moonLamp.title": "3D Moon Lamp",
-    "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and calming night lamp.",
-    "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
-    "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
-    "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-    "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
+  "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
+  "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for beginners and experts alike to seek insight and guidance.",
+  "StoreProducts.astrologyIntroBook.title": "Intro to Astrology Book",
+  "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
+  "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
+  "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
+  "StoreProducts.moonLamp.title": "3D Moon Lamp",
+  "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and calming night lamp.",
+  "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
+  "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
+  "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
+  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
 }
 
     

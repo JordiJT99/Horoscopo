@@ -705,13 +705,17 @@
       "noPlacementsFound": "No significant house placements found."
     }
   },
-  "birthForm.dateLabel": "Birth Date",
-  "birthForm.timeLabel": "Birth Time",
-  "birthForm.cityLabel": "Birth City",
-  "birthForm.countryLabel": "Birth Country",
-  "birthForm.submitButton": "Generate Natal Chart",
-  "birthForm.validationErrors.required": "This field is required.",
-  "birthForm.pickDate": "Pick a date",
+  "birthForm": {
+    "dateLabel": "Birth Date",
+    "timeLabel": "Birth Time",
+    "cityLabel": "Birth City",
+    "countryLabel": "Birth Country",
+    "submitButton": "Generate Natal Chart",
+    "validationErrors": {
+      "required": "This field is required."
+    },
+    "pickDate": "Pick a date"
+  },
   "PsychicChatPage.title": "Psychic Chat",
   "PsychicChatPage.psychicNotFound": "Psychic not found",
   "PsychicChatPage.psychicNotFoundMessage": "The psychic you are looking for could not be found.",
