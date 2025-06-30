@@ -84,15 +84,6 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 4
   },
-  "Tiger-Dragon": {
-    report: {
-      es: "Una combinación de dos de los signos más poderosos. La relación es una alianza de titanes, llena de energía y ambición. El Dragón admira el coraje del Tigre, mientras que el Tigre se siente atraído por el liderazgo del Dragón. El principal desafío es el choque de egos; ambos quieren liderar. Si aprenden a colaborar como un equipo, su potencial es ilimitado.",
-      en: "A combination of two of the most powerful signs. The relationship is an alliance of titans, full of energy and ambition. The Dragon admires the Tiger's courage, while the Tiger is drawn to the Dragon's leadership. The main challenge is the clash of egos; both want to lead. If they learn to collaborate as a team, their potential is limitless.",
-      de: "Eine Kombination aus zwei der mächtigsten Zeichen. Die Beziehung ist ein Bündnis von Titanen, voller Energie und Ehrgeiz. Der Drache bewundert den Mut des Tigers, während der Tiger von der Führung des Drachen angezogen wird. Die größte Herausforderung ist der Kampf der Egos; beide wollen führen. Wenn sie lernen, als Team zusammenzuarbeiten, ist ihr Potenzial grenzenlos.",
-      fr: "Une combinaison de deux des signes les plus puissants. La relation est une alliance de titans, pleine d'énergie et d'ambition. Le Dragon admire le courage du Tigre, tandis que le Tigre est attiré par le leadership du Dragon. Le principal défi est le choc des ego; tous deux veulent diriger. S'ils apprennent à collaborer en équipe, leur potentiel est illimité."
-    },
-    score: 4
-  },
   "Horse-Dog": {
     report: {
         es: "Una pareja feliz, honesta y llena de calidez. El Caballo encuentra en el Perro un compañero leal que entiende su necesidad de libertad. El Perro, por su parte, se siente inspirado por el optimismo y la energía del Caballo. Comparten una visión de la vida honesta y directa, y su comunicación es excelente. Es una relación basada en la amistad y el apoyo mutuo.",
@@ -254,6 +245,24 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 4
   },
+    "Rat-Tiger": {
+    report: {
+      es: "El poderoso Tigre y la astuta Rata forman una pareja intrigante. La Rata admira el coraje del Tigre, mientras que el Tigre se siente atraído por el ingenio de la Rata. Pueden ser excelentes socios si el Tigre escucha los consejos estratégicos de la Rata y la Rata confía en el liderazgo del Tigre.",
+      en: "The powerful Tiger and the cunning Rat make an intriguing pair. The Rat admires the Tiger's courage, while the Tiger is attracted to the Rat's quick wit. They can be excellent partners if the Tiger listens to the Rat's strategic advice and the Rat trusts the Tiger's leadership.",
+      de: "Der mächtige Tiger und die schlaue Ratte bilden ein faszinierendes Paar. Die Ratte bewundert den Mut des Tigers, während der Tiger vom schnellen Witz der Ratte angezogen wird. Sie können ausgezeichnete Partner sein, wenn der Tiger auf den strategischen Rat der Ratte hört und die Ratte der Führung des Tigers vertraut.",
+      fr: "Le puissant Tigre et le rusé Rat forment une paire intrigante. Le Rat admire le courage du Tigre, tandis que le Tigre est attiré par la vivacité d'esprit du Rat. Ils peuvent être d'excellents partenaires si le Tigre écoute les conseils stratégiques du Rat et si le Rat fait confiance au leadership du Tigre."
+    },
+    score: 3
+  },
+  "Rabbit-Rat": {
+    report: {
+      es: "Esta combinación, conocida como la 'penalidad de la falta de cortesía', presenta desafíos. La naturaleza directa de la Rata puede herir al sensible Conejo. Para que funcione, la Rata debe aprender el arte del tacto, y el Conejo debe desarrollar una piel un poco más gruesa.",
+      en: "This combination, known as the 'penalty of incivility,' presents challenges. The Rat's direct nature can hurt the sensitive Rabbit. For it to work, the Rat must learn the art of tact, and the Rabbit must develop a thicker skin.",
+      de: "Diese Kombination, bekannt als die 'Strafe der Unhöflichkeit', birgt Herausforderungen. Die direkte Art der Ratte kann das empfindliche Kaninchen verletzen. Damit es funktioniert, muss die Ratte die Kunst des Taktes lernen und das Kaninchen eine dickere Haut entwickeln.",
+      fr: "Cette combinaison, connue sous le nom de 'pénalité de l'incivilité', présente des défis. La nature directe du Rat peut blesser le Lapin sensible. Pour que cela fonctionne, le Rat doit apprendre l'art du tact, et le Lapin doit développer une peau un peu plus épaisse."
+    },
+    score: 2
+  },
   "Rat-Snake": {
     report: {
         es: "Una combinación intrigante y magnética de astucia y sabiduría. La Rata se siente fascinada por la mente profunda de la Serpiente. La Serpiente respeta la inteligencia rápida de la Rata. Son una excelente pareja para la estrategia, aunque la naturaleza social de la Rata puede chocar con la posesividad de la Serpiente.",
@@ -299,14 +308,75 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 4
   },
-
-  // --- Combinaciones del Tigre ---
-  "Tiger-Rat": {
+  "Ox-Ox": {
     report: {
-      es: "El poderoso Tigre y la astuta Rata forman una pareja intrigante. La Rata admira el coraje del Tigre, mientras que el Tigre se siente atraído por el ingenio de la Rata. Pueden ser excelentes socios si el Tigre escucha los consejos estratégicos de la Rata y la Rata confía en el liderazgo del Tigre.",
-      en: "The powerful Tiger and the cunning Rat make an intriguing pair. The Rat admires the Tiger's courage, while the Tiger is attracted to the Rat's quick wit. They can be excellent partners if the Tiger listens to the Rat's strategic advice and the Rat trusts the Tiger's leadership.",
-      de: "Der mächtige Tiger und die schlaue Ratte bilden ein faszinierendes Paar. Die Ratte bewundert den Mut des Tigers, während der Tiger vom schnellen Witz der Ratte angezogen wird. Sie können ausgezeichnete Partner sein, wenn der Tiger auf den strategischen Rat der Ratte hört und die Ratte der Führung des Tigers vertraut.",
-      fr: "Le puissant Tigre et le rusé Rat forment une paire intrigante. Le Rat admire le courage du Tigre, tandis que le Tigre est attiré par la vivacité d'esprit du Rat. Ils peuvent être d'excellents partenaires si le Tigre écoute les conseils stratégiques du Rat et si le Rat fait confiance au leadership du Tigre."
+        es: "Una unión de pura fuerza y estabilidad. Dos Bueyes juntos forman una pareja increíblemente fiable y trabajadora, con valores compartidos y un profundo respeto por la tradición. Sin embargo, su terquedad combinada puede llevar a un punto muerto si no están de acuerdo. Es una relación sólida, pero necesita un esfuerzo consciente para evitar caer en la rutina.",
+        en: "A union of pure strength and stability. Two Oxen together form an incredibly reliable and hardworking couple, with shared values and a deep respect for tradition. However, their combined stubbornness can lead to a stalemate if they disagree. It's a solid relationship but needs a conscious effort to avoid falling into a routine.",
+        de: "Eine Vereinigung reiner Stärke und Stabilität. Zwei Ochsen zusammen bilden ein unglaublich zuverlässiges und fleißiges Paar mit gemeinsamen Werten und tiefem Respekt vor der Tradition. Ihre kombinierte Sturheit kann jedoch zu einem Patt führen, wenn sie anderer Meinung sind. Es ist eine solide Beziehung, die jedoch bewusste Anstrengungen erfordert, um nicht in Routine zu verfallen.",
+        fr: "Une union de pure force et de stabilité. Deux Bœufs ensemble forment un couple incroyablement fiable et travailleur, avec des valeurs partagées et un profond respect pour la tradition. Cependant, leur entêtement combiné peut mener à une impasse s'ils ne sont pas d'accord. C'est une relation solide, mais elle nécessite un effort conscient pour éviter de tomber dans la routine."
+    },
+    score: 4
+  },
+  "Ox-Tiger": {
+    report: {
+        es: "Una relación de voluntades fuertes. El Buey es metódico, el Tigre es impulsivo. El Tigre se siente frustrado por la lentitud del Buey, y el Buey se exaspera con la imprudencia del Tigre. El respeto es posible si logran objetivos juntos, pero la armonía en la vida cotidiana es un desafío.",
+        en: "A relationship of strong wills. The Ox is methodical, the Tiger is impulsive. The Tiger feels frustrated by the Ox's slowness, and the Ox is exasperated by the Tiger's recklessness. Respect is possible if they achieve goals together, but harmony in daily life is a challenge.",
+        de: "Eine Beziehung starker Willen. Der Ochse ist methodisch, der Tiger ist impulsiv. Der Tiger ist frustriert von der Langsamkeit des Ochsen, und der Ochse ist über die Tollkühnheit des Tigers verärgert. Respekt ist möglich, wenn sie gemeinsam Ziele erreichen, aber Harmonie im täglichen Leben ist eine Herausforderung.",
+        fr: "Une relation de volontés fortes. Le Bœuf est méthodique, le Tigre est impulsif. Le Tigre se sent frustré par la lenteur du Bœuf, et le Bœuf est exaspéré par l'imprudence du Tigre. Le respect est possible s'ils atteignent des objectifs ensemble, mais l'harmonie dans la vie quotidienne est un défi."
+    },
+    score: 2
+  },
+  "Rabbit-Ox": {
+    report: {
+        es: "El Buey firme ofrece un ancla de seguridad que el ansioso Conejo encuentra reconfortante. El Conejo aporta una gracia social que suaviza la vida del pragmático Buey. Su comunicación puede ser un desafío, pero el respeto por sus diferentes ritmos es crucial para una pareja sólida.",
+        en: "The firm Ox offers an anchor of security that the anxious Rabbit finds comforting. The Rabbit brings a social grace that softens the pragmatic Ox's life. Their communication can be a challenge, but respect for their different rhythms is crucial for a solid partnership.",
+        de: "Der feste Ochse bietet einen Anker der Sicherheit, den das ängstliche Kaninchen beruhigend findet. Das Kaninchen bringt eine soziale Anmut mit, die das Leben des pragmatischen Ochsen weicher macht. Ihre Kommunikation kann eine Herausforderung sein, aber Respekt für ihre unterschiedlichen Rhythmen ist entscheidend für eine solide Partnerschaft.",
+        fr: "Le Bœuf ferme offre une ancre de sécurité que le Lapin anxieux trouve réconfortante. Le Lapin apporte une grâce sociale qui adoucit la vie du Bœuf pragmatique. Leur communication peut être un défi, mais le respect de leurs rythmes différents est crucial pour un partenariat solide."
+    },
+    score: 3
+  },
+  "Dragon-Ox": {
+    report: {
+      es: "El carismático Dragón se encuentra con el pragmático Buey. Es una unión de poder y estabilidad, pero también de voluntades fuertes. El Dragón, audaz, puede encontrar al Buey demasiado conservador. El Buey puede ver al Dragón como imprudente. Si alinean sus metas, son un equipo formidable.",
+      en: "The charismatic Dragon meets the pragmatic Ox. It's a union of power and stability, but also of strong wills. The bold Dragon may find the Ox too conservative. The Ox may see the Dragon as reckless. If they align their goals, they are a formidable team.",
+      de: "Der charismatische Drache trifft auf den pragmatischen Ochsen. Es ist eine Vereinigung von Macht und Stabilität, aber auch von starken Willen. Der kühne Drache mag den Ochsen als zu konservativ empfinden. Der Ochse mag den Drachen als rücksichtslos ansehen. Wenn sie ihre Ziele aufeinander abstimmen, sind sie ein beeindruckendes Team.",
+      fr: "Le Dragon charismatique rencontre le Bœuf pragmatique. C'est une union de pouvoir et de stabilité, mais aussi de volontés fortes. Le Dragon audacieux peut trouver le Bœuf trop conservateur. Le Bœuf peut voir le Dragon comme imprudent. S'ils alignent leurs objectifs, ils forment une équipe redoutable."
+    },
+    score: 3
+  },
+  "Ox-Horse": {
+    report: {
+        es: "Una combinación difícil. El metódico y hogareño Buey encuentra frustrante la necesidad de aventura y libertad del Caballo. El Caballo se siente limitado por la naturaleza conservadora del Buey. Requiere un gran compromiso para que funcione.",
+        en: "A difficult combination. The methodical and home-loving Ox finds the Horse's need for adventure and freedom frustrating. The Horse feels limited by the Ox's conservative nature. It requires a great deal of commitment to work.",
+        de: "Eine schwierige Kombination. Der methodische und häusliche Ochse findet das Bedürfnis des Pferdes nach Abenteuer und Freiheit frustrierend. Das Pferd fühlt sich durch die konservative Natur des Ochsen eingeschränkt. Es erfordert viel Engagement, damit es funktioniert.",
+        fr: "Une combinaison difficile. Le Bœuf méthodique et casanier trouve frustrant le besoin d'aventure et de liberté du Cheval. Le Cheval se sent limité par la nature conservatrice du Bœuf. Cela demande un grand engagement pour fonctionner."
+    },
+    score: 2
+  },
+  "Ox-Monkey": {
+    report: {
+        es: "El Buey serio puede sentirse intrigado por el ingenio y la alegría del Mono. El Mono, a su vez, se beneficia de la estabilidad que ofrece el Buey. Si el Buey aprende a relajarse y el Mono a ser un poco más serio, pueden disfrutar de una relación divertida y equilibrada.",
+        en: "The serious Ox can be intrigued by the Monkey's wit and joy. The Monkey, in turn, benefits from the stability the Ox offers. If the Ox learns to relax and the Monkey to be a bit more serious, they can enjoy a fun and balanced relationship.",
+        de: "Der ernste Ochse kann von dem Witz und der Freude des Affen fasziniert sein. Der Affe wiederum profitiert von der Stabilität, die der Ochse bietet. Wenn der Ochse lernt, sich zu entspannen, und der Affe, etwas ernster zu sein, können sie eine unterhaltsame und ausgewogene Beziehung genießen.",
+        fr: "Le Bœuf sérieux peut être intrigué par l'esprit et la joie du Singe. Le Singe, à son tour, bénéficie de la stabilité que le Bœuf offre. Si le Bœuf apprend à se détendre et le Singe à être un peu plus sérieux, ils peuvent profiter d'une relation amusante et équilibrée."
+    },
+    score: 3
+  },
+  "Ox-Dog": {
+    report: {
+        es: "Ambos son leales y fiables, pero sus enfoques difieren. El Buey es práctico y conservador, mientras que el Perro es idealista y a veces ansioso. Pueden formar una base sólida si el Perro valora la estabilidad del Buey y el Buey respeta la lealtad del Perro.",
+        en: "Both are loyal and reliable, but their approaches differ. The Ox is practical and conservative, while the Dog is idealistic and sometimes anxious. They can form a solid foundation if the Dog values the Ox's stability and the Ox respects the Dog's loyalty.",
+        de: "Beide sind loyal und zuverlässig, aber ihre Ansätze unterscheiden sich. Der Ochse ist praktisch und konservativ, während der Hund idealistisch und manchmal ängstlich ist. Sie können eine solide Grundlage bilden, wenn der Hund die Stabilität des Ochsen schätzt und der Ochse die Loyalität des Hundes respektiert.",
+        fr: "Tous deux sont loyaux et fiables, mais leurs approches diffèrent. Le Bœuf est pratique et conservateur, tandis que le Chien est idéaliste et parfois anxieux. Ils peuvent former une base solide si le Chien apprécie la stabilité du Bœuf et si le Bœuf respecte la loyauté du Chien."
+    },
+    score: 3
+  },
+  "Ox-Pig": {
+    report: {
+        es: "Una buena combinación. El Buey aprecia la naturaleza bondadosa y sin pretensiones del Cerdo. El Cerdo disfruta de la seguridad y el confort que el trabajador Buey proporciona. Ambos disfrutan de la vida hogareña, creando una relación pacífica y satisfactoria.",
+        en: "A good combination. The Ox appreciates the Pig's kind and unpretentious nature. The Pig enjoys the security and comfort the hardworking Ox provides. Both enjoy home life, creating a peaceful and satisfying relationship.",
+        de: "Eine gute Kombination. Der Ochse schätzt die freundliche und unprätentiöse Natur des Schweins. Das Schwein genießt die Sicherheit und den Komfort, den der fleißige Ochse bietet. Beide genießen das häusliche Leben und schaffen eine friedliche und befriedigende Beziehung.",
+        fr: "Une bonne combinaison. Le Bœuf apprécie la nature bienveillante et sans prétention du Cochon. Le Cochon apprécie la sécurité et le confort que le Bœuf travailleur lui procure. Tous deux apprécient la vie de famille, créant une relation paisible et satisfaisante."
     },
     score: 3
   },
@@ -318,6 +388,33 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
       fr: "Deux Tigres ensemble sont une force de la nature, mais aussi une recette pour le conflit. L'attraction est instantanée, mais la lutte pour le leadership est inévitable. S'ils apprennent à fonctionner en équipe, ils sont imparables, mais s'ils rivalisent, la relation peut être destructrice."
     },
     score: 3
+  },
+  "Rabbit-Tiger": {
+    report: {
+      es: "Una combinación de poder y gentileza que requiere un cuidado delicado. El sensible Conejo puede sentirse abrumado por la naturaleza poderosa del Tigre. Si el Tigre actúa como un protector gentil en lugar de un depredador, y el Conejo expresa sus límites, pueden encontrar un equilibrio.",
+      en: "A combination of power and gentleness that requires delicate care. The sensitive Rabbit can feel overwhelmed by the Tiger's powerful nature. If the Tiger acts as a gentle protector instead of a predator, and the Rabbit expresses its boundaries, they can find a balance.",
+      de: "Eine Kombination aus Macht und Sanftheit, die eine sensible Pflege erfordert. Das empfindliche Kaninchen kann sich von der mächtigen Natur des Tigers überfordert fühlen. Wenn der Tiger als sanfter Beschützer anstelle eines Raubtiers auftritt und das Kaninchen seine Grenzen zum Ausdruck bringt, können sie ein Gleichgewicht finden.",
+      fr: "Une combinaison de puissance et de douceur qui nécessite un soin délicat. Le Lapin sensible peut se sentir dépassé par la nature puissante du Tigre. Si le Tigre agit comme un protecteur doux plutôt que comme un prédateur, et si le Lapin exprime ses limites, ils peuvent trouver un équilibre."
+    },
+    score: 2
+  },
+  "Tiger-Dragon": {
+    report: {
+      es: "Una combinación de dos de los signos más poderosos. La relación es una alianza de titanes, llena de energía y ambición. El Dragón admira el coraje del Tigre, mientras que el Tigre se siente atraído por el liderazgo del Dragón. El principal desafío es el choque de egos; ambos quieren liderar. Si aprenden a colaborar como un equipo, su potencial es ilimitado.",
+      en: "A combination of two of the most powerful signs. The relationship is an alliance of titans, full of energy and ambition. The Dragon admires the Tiger's courage, while the Tiger is drawn to the Dragon's leadership. The main challenge is the clash of egos; both want to lead. If they learn to collaborate as a team, their potential is limitless.",
+      de: "Eine Kombination aus zwei der mächtigsten Zeichen. Die Beziehung ist ein Bündnis von Titanen, voller Energie und Ehrgeiz. Der Drache bewundert den Mut des Tigers, während der Tiger von der Führung des Drachen angezogen wird. Die größte Herausforderung ist der Kampf der Egos; beide wollen führen. Wenn sie lernen, als Team zusammenzuarbeiten, ist ihr Potenzial grenzenlos.",
+      fr: "Une combinaison de deux des signes les plus puissants. La relation est une alliance de titans, pleine d'énergie et d'ambition. Le Dragon admire le courage du Tigre, tandis que le Tigre est attiré par le leadership du Dragon. Le principal défi est le choc des ego; tous deux veulent diriger. S'ils apprennent à collaborer en équipe, leur potentiel est illimité."
+    },
+    score: 4
+  },
+  "Tiger-Snake": {
+    report: {
+        es: "Una combinación de tensión y desconfianza. El Tigre es abierto y directo, la Serpiente es reservada y calculadora. El Tigre no confía en la naturaleza sigilosa de la Serpiente, y la Serpiente ve al Tigre como ruidoso y poco sofisticado. Una relación cercana es muy difícil.",
+        en: "A combination of tension and mistrust. The Tiger is open and direct, the Snake is reserved and calculating. The Tiger distrusts the Snake's stealthy nature, and the Snake sees the Tiger as loud and unsophisticated. A close relationship is very difficult.",
+        de: "Eine Kombination aus Spannung und Misstrauen. Der Tiger ist offen und direkt, die Schlange ist zurückhaltend und berechnend. Der Tiger misstraut der heimlichen Natur der Schlange, und die Schlange sieht den Tiger als laut und unkultiviert an. Eine enge Beziehung ist sehr schwierig.",
+        fr: "Une combinaison de tension et de méfiance. Le Tigre est ouvert et direct, le Serpent est réservé et calculateur. Le Tigre se méfie de la nature furtive du Serpent, et le Serpent voit le Tigre comme bruyant et peu sophistiqué. Une relation proche est très difficile."
+    },
+    score: 2
   },
   "Tiger-Goat": {
     report: {
@@ -337,41 +434,30 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 2
   },
-
-  // --- Combinaciones del Conejo ---
-  "Rabbit-Rat": {
-    report: {
-      es: "Esta combinación, conocida como la 'penalidad de la falta de cortesía', presenta desafíos. La naturaleza directa de la Rata puede herir al sensible Conejo. Para que funcione, la Rata debe aprender el arte del tacto, y el Conejo debe desarrollar una piel un poco más gruesa.",
-      en: "This combination, known as the 'penalty of incivility,' presents challenges. The Rat's direct nature can hurt the sensitive Rabbit. For it to work, the Rat must learn the art of tact, and the Rabbit must develop a thicker skin.",
-      de: "Diese Kombination, bekannt als die 'Strafe der Unhöflichkeit', birgt Herausforderungen. Die direkte Art der Ratte kann das empfindliche Kaninchen verletzen. Damit es funktioniert, muss die Ratte die Kunst des Taktes lernen und das Kaninchen eine dickere Haut entwickeln.",
-      fr: "Cette combinaison, connue sous le nom de 'pénalité de l'incivilité', présente des défis. La nature directe du Rat peut blesser le Lapin sensible. Pour que cela fonctionne, le Rat doit apprendre l'art du tact, et le Lapin doit développer une peau un peu plus épaisse."
-    },
-    score: 2
-  },
-  "Rabbit-Tiger": {
-    report: {
-      es: "Una combinación de poder y gentileza que requiere un cuidado delicado. El sensible Conejo puede sentirse abrumado por la naturaleza poderosa del Tigre. Si el Tigre actúa como un protector gentil en lugar de un depredador, y el Conejo expresa sus límites, pueden encontrar un equilibrio.",
-      en: "A combination of power and gentleness that requires delicate care. The sensitive Rabbit can feel overwhelmed by the Tiger's powerful nature. If the Tiger acts as a gentle protector instead of a predator, and the Rabbit expresses its boundaries, they can find a balance.",
-      de: "Eine Kombination aus Macht und Sanftheit, die eine sensible Pflege erfordert. Das empfindliche Kaninchen kann sich von der mächtigen Natur des Tigers überfordert fühlen. Wenn der Tiger als sanfter Beschützer anstelle eines Raubtiers auftritt und das Kaninchen seine Grenzen zum Ausdruck bringt, können sie ein Gleichgewicht finden.",
-      fr: "Une combinaison de puissance et de douceur qui nécessite un soin délicat. Le Lapin sensible peut se sentir dépassé par la nature puissante du Tigre. Si le Tigre agit comme un protecteur doux plutôt que comme un prédateur, et si le Lapin exprime ses limites, ils peuvent trouver un équilibre."
-    },
-    score: 2
-  },
-  "Rabbit-Ox": {
-    report: {
-      es: "El Buey firme ofrece un ancla de seguridad que el ansioso Conejo encuentra reconfortante. El Conejo aporta una gracia social que suaviza la vida del pragmático Buey. Su comunicación puede ser un desafío, pero el respeto por sus diferentes ritmos es crucial para una pareja sólida.",
-      en: "The firm Ox offers an anchor of security that the anxious Rabbit finds comforting. The Rabbit brings a social grace that softens the pragmatic Ox's life. Their communication can be a challenge, but respect for their different rhythms is crucial for a solid partnership.",
-      de: "Der feste Ochse bietet einen Anker der Sicherheit, den das ängstliche Kaninchen beruhigend findet. Das Kaninchen bringt eine soziale Anmut mit, die das Leben des pragmatischen Ochsen weicher macht. Ihre Kommunikation kann eine Herausforderung sein, aber Respekt für ihre unterschiedlichen Rhythmen ist entscheidend für eine solide Partnerschaft.",
-      fr: "Le Bœuf ferme offre une ancre de sécurité que le Lapin anxieux trouve réconfortante. Le Lapin apporte une grâce sociale qui adoucit la vie du Bœuf pragmatique. Leur communication peut être un défi, mais le respect de leurs rythmes différents est crucial pour un partenariat solide."
-    },
-    score: 3
-  },
   "Rabbit-Rabbit": {
     report: {
       es: "Dos Conejos juntos es la encarnación de la paz y el confort. Se entienden a un nivel profundo, pero su aversión compartida al conflicto es su mayor debilidad. Pueden barrer los problemas debajo de la alfombra hasta que se vuelven insuperables. Deben abordar los problemas de frente.",
       en: "Two Rabbits together is the embodiment of peace and comfort. They understand each other on a deep level, but their shared aversion to conflict is their greatest weakness. They might sweep problems under the rug until they become insurmountable. They must address issues head-on.",
       de: "Zwei Kaninchen zusammen sind die Verkörperung von Frieden und Komfort. Sie verstehen sich auf einer tiefen Ebene, aber ihre gemeinsame Abneigung gegen Konflikte ist ihre größte Schwäche. Sie könnten Probleme unter den Teppich kehren, bis sie unüberwindbar werden. Sie müssen Probleme direkt angehen.",
       fr: "Deux Lapins ensemble, c'est l'incarnation de la paix et du confort. Ils se comprennent à un niveau profond, mais leur aversion commune pour les conflits est leur plus grande faiblesse. Ils pourraient balayer les problèmes sous le tapis jusqu'à ce qu'ils deviennent insurmontables. Ils doivent aborder les problèmes de front."
+    },
+    score: 4
+  },
+  "Rabbit-Dragon": {
+    report: {
+      es: "Una combinación fascinante. El Conejo astuto puede manejar el ego del poderoso Dragón. El Dragón se siente atraído por la inteligencia y el buen gusto del Conejo. El Conejo es el estratega perfecto detrás del trono. El Dragón debe aprender a escuchar y valorar los consejos de su sabio compañero.",
+      en: "A fascinating combination. The cunning Rabbit can handle the powerful Dragon's ego. The Dragon is attracted to the Rabbit's intelligence and good taste. The Rabbit is the perfect strategist behind the throne. The Dragon must learn to listen and value its wise partner's advice.",
+      de: "Eine faszinierende Kombination. Das schlaue Kaninchen kann mit dem Ego des mächtigen Drachen umgehen. Der Drache fühlt sich von der Intelligenz und dem guten Geschmack des Kaninchens angezogen. Das Kaninchen ist der perfekte Stratege hinter dem Thron. Der Drache muss lernen, zuzuhören und den Rat seines weisen Partners zu schätzen.",
+      fr: "Une combinaison fascinante. Le Lapin rusé peut gérer l'ego du puissant Dragon. Le Dragon est attiré par l'intelligence et le bon goût du Lapin. Le Lapin est le stratège parfait derrière le trône. Le Dragon doit apprendre à écouter et à apprécier les conseils de son sage partenaire."
+    },
+    score: 3
+  },
+  "Rabbit-Snake": {
+    report: {
+      es: "Una pareja elegante, inteligente y muy compatible. Ambos son refinados y sabios. Comparten un amor por el arte y un ambiente tranquilo. Se comunican a menudo en un nivel no verbal. La confianza es fundamental. Una vez establecida, su vínculo es profundo y duradero.",
+      en: "An elegant, intelligent, and very compatible pair. Both are refined and wise. They share a love for art and a quiet environment. They often communicate on a non-verbal level. Trust is fundamental. Once established, their bond is deep and lasting.",
+      de: "Ein elegantes, intelligentes und sehr kompatibles Paar. Beide sind raffiniert und weise. Sie teilen die Liebe zur Kunst und einer ruhigen Umgebung. Sie kommunizieren oft auf einer nonverbalen Ebene. Vertrauen ist fundamental. Einmal hergestellt, ist ihre Bindung tief und dauerhaft.",
+      fr: "Un couple élégant, intelligent et très compatible. Tous deux sont raffinés et sages. Ils partagent un amour pour l'art et un environnement calme. Ils communiquent souvent à un niveau non verbal. La confiance est fondamentale. Une fois établie, leur lien est profond et durable."
     },
     score: 4
   },
@@ -392,26 +478,6 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
       fr: "Le diplomate rusé rencontre le génie espiègle. Ils peuvent partager un humour vif, mais la nature perturbatrice du Singe dérange la paix dont le Lapin a besoin. Le Singe peut voir le Lapin comme ennuyeux, et le Lapin peut trouver le Singe épuisant."
     },
     score: 2
-  },
-
-  // --- Combinaciones del Dragón (Nuevas) ---
-  "Dragon-Ox": {
-    report: {
-      es: "El carismático Dragón se encuentra con el pragmático Buey. Es una unión de poder y estabilidad, pero también de voluntades fuertes. El Dragón, audaz, puede encontrar al Buey demasiado conservador. El Buey puede ver al Dragón como imprudente. Si alinean sus metas, son un equipo formidable.",
-      en: "The charismatic Dragon meets the pragmatic Ox. It's a union of power and stability, but also of strong wills. The bold Dragon may find the Ox too conservative. The Ox may see the Dragon as reckless. If they align their goals, they are a formidable team.",
-      de: "Der charismatische Drache trifft auf den pragmatischen Ochsen. Es ist eine Vereinigung von Macht und Stabilität, aber auch von starken Willen. Der kühne Drache mag den Ochsen als zu konservativ empfinden. Der Ochse mag den Drachen als rücksichtslos ansehen. Wenn sie ihre Ziele aufeinander abstimmen, sind sie ein beeindruckendes Team.",
-      fr: "Le Dragon charismatique rencontre le Bœuf pragmatique. C'est une union de pouvoir et de stabilité, mais aussi de volontés fortes. Le Dragon audacieux peut trouver le Bœuf trop conservateur. Le Bœuf peut voir le Dragon comme imprudent. S'ils alignent leurs objectifs, ils forment une équipe redoutable."
-    },
-    score: 3
-  },
-  "Rabbit-Dragon": {
-    report: {
-      es: "Una combinación fascinante. El Conejo astuto puede manejar el ego del poderoso Dragón. El Dragón se siente atraído por la inteligencia y el buen gusto del Conejo. El Conejo es el estratega perfecto detrás del trono. El Dragón debe aprender a escuchar y valorar los consejos de su sabio compañero.",
-      en: "A fascinating combination. The cunning Rabbit can handle the powerful Dragon's ego. The Dragon is attracted to the Rabbit's intelligence and good taste. The Rabbit is the perfect strategist behind the throne. The Dragon must learn to listen and value its wise partner's advice.",
-      de: "Eine faszinierende Kombination. Das schlaue Kaninchen kann mit dem Ego des mächtigen Drachen umgehen. Der Drache fühlt sich von der Intelligenz und dem guten Geschmack des Kaninchens angezogen. Das Kaninchen ist der perfekte Stratege hinter dem Thron. Der Drache muss lernen, zuzuhören und den Rat seines weisen Partners zu schätzen.",
-      fr: "Une combinaison fascinante. Le Lapin rusé peut gérer l'ego du puissant Dragon. Le Dragon est attiré par l'intelligence et le bon goût du Lapin. Le Lapin est le stratège parfait derrière le trône. Le Dragon doit apprendre à écouter et à apprécier les conseils de son sage partenaire."
-    },
-    score: 3
   },
   "Dragon-Dragon": {
     report: {
@@ -458,17 +524,6 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 4
   },
-  
-  // --- Combinaciones de la Serpiente (Nuevas) ---
-  "Rabbit-Snake": {
-    report: {
-      es: "Una pareja elegante, inteligente y muy compatible. Ambos son refinados y sabios. Comparten un amor por el arte y un ambiente tranquilo. Se comunican a menudo en un nivel no verbal. La confianza es fundamental. Una vez establecida, su vínculo es profundo y duradero.",
-      en: "An elegant, intelligent, and very compatible pair. Both are refined and wise. They share a love for art and a quiet environment. They often communicate on a non-verbal level. Trust is fundamental. Once established, their bond is deep and lasting.",
-      de: "Ein elegantes, intelligentes und sehr kompatibles Paar. Beide sind raffiniert und weise. Sie teilen die Liebe zur Kunst und einer ruhigen Umgebung. Sie kommunizieren oft auf einer nonverbalen Ebene. Vertrauen ist fundamental. Einmal hergestellt, ist ihre Bindung tief und dauerhaft.",
-      fr: "Un couple élégant, intelligent et très compatible. Tous deux sont raffinés et sages. Ils partagent un amour pour l'art et un environnement calme. Ils communiquent souvent à un niveau non verbal. La confiance est fondamentale. Une fois établie, leur lien est profond et durable."
-    },
-    score: 4
-  },
   "Snake-Snake": {
     report: {
       es: "Una unión de almas gemelas misteriosas. Dos Serpientes juntas crean una conexión profunda e intelectual. Se entienden a la perfección, pero su naturaleza desconfiada puede volverse en su contra, generando celos. Si confían, su vínculo es indestructible.",
@@ -505,33 +560,157 @@ export const chineseCompatibilityPairings: Record<string, ChineseCompatibilityRe
     },
     score: 3
   },
-
-  // Combinaciones restantes
-  "Ox-Tiger": {
+  "Horse-Horse": {
     report: {
-        es: "Una relación de voluntades fuertes. El Buey es metódico, el Tigre es impulsivo. El Tigre se siente frustrado por la lentitud del Buey, y el Buey se exaspera con la imprudencia del Tigre. El respeto es posible si logran objetivos juntos, pero la armonía en la vida cotidiana es un desafío.",
-        en: "A relationship of strong wills. The Ox is methodical, the Tiger is impulsive. The Tiger feels frustrated by the Ox's slowness, and the Ox is exasperated by the Tiger's recklessness. Respect is possible if they achieve goals together, but harmony in daily life is a challenge.",
-        de: "Eine Beziehung starker Willen. Der Ochse ist methodisch, der Tiger ist impulsiv. Der Tiger ist frustriert von der Langsamkeit des Ochsen, und der Ochse ist über die Tollkühnheit des Tigers verärgert. Respekt ist möglich, wenn sie gemeinsam Ziele erreichen, aber Harmonie im täglichen Leben ist eine Herausforderung.",
-        fr: "Une relation de volontés fortes. Le Bœuf est méthodique, le Tigre est impulsif. Le Tigre se sent frustré par la lenteur du Bœuf, et le Bœuf est exaspéré par l'imprudence du Tigre. Le respect est possible s'ils atteignent des objectifs ensemble, mais l'harmonie dans la vie quotidienne est un défi."
+        es: "Dos Caballos juntos son una aventura constante. Su vida está llena de energía, viajes y eventos sociales. Se entienden en su necesidad de libertad. El desafío es la falta de estabilidad; ambos pueden ser reacios al compromiso y a las responsabilidades del día a día.",
+        en: "Two Horses together are a constant adventure. Their life is full of energy, travel, and social events. They understand each other's need for freedom. The challenge is the lack of stability; both can be reluctant to commit and to daily responsibilities.",
+        de: "Zwei Pferde zusammen sind ein ständiges Abenteuer. Ihr Leben ist voller Energie, Reisen und gesellschaftlicher Ereignisse. Sie verstehen das Bedürfnis des anderen nach Freiheit. Die Herausforderung ist der Mangel an Stabilität; beide können sich scheuen, sich zu binden und alltägliche Verantwortung zu übernehmen.",
+        fr: "Deux Chevaux ensemble sont une aventure constante. Leur vie est pleine d'énergie, de voyages et d'événements sociaux. Ils se comprennent dans leur besoin de liberté. Le défi est le manque de stabilité ; tous deux peuvent être réticents à s'engager et aux responsabilités quotidiennes."
+    },
+    score: 3
+  },
+  "Horse-Monkey": {
+    report: {
+        es: "Una pareja muy animada y entretenida. Ambos son sociables, inteligentes y aman la diversión. El ingenio del Mono mantiene al Caballo entretenido, y la energía del Caballo inspira al Mono. Nunca se aburren juntos.",
+        en: "A very lively and entertaining couple. Both are sociable, intelligent, and love fun. The Monkey's wit keeps the Horse entertained, and the Horse's energy inspires the Monkey. They are never bored together.",
+        de: "Ein sehr lebhaftes und unterhaltsames Paar. Beide sind gesellig, intelligent und lieben den Spaß. Der Witz des Affen unterhält das Pferd, und die Energie des Pferdes inspiriert den Affen. Sie langweilen sich nie zusammen.",
+        fr: "Un couple très animé et divertissant. Tous deux sont sociables, intelligents et aiment s'amuser. L'esprit du Singe divertit le Cheval, et l'énergie du Cheval inspire le Singe. Ils ne s'ennuient jamais ensemble."
+    },
+    score: 4
+  },
+  "Horse-Pig": {
+    report: {
+        es: "Una unión complicada. El sociable y aventurero Caballo tiene poco en común con el hogareño y tranquilo Cerdo. El Caballo puede ver al Cerdo como perezoso, y el Cerdo puede ver al Caballo como egoísta e inquieto. La armonía requiere un gran esfuerzo de ambas partes.",
+        en: "A complicated union. The sociable and adventurous Horse has little in common with the home-loving and calm Pig. The Horse may see the Pig as lazy, and the Pig may see the Horse as selfish and restless. Harmony requires great effort from both sides.",
+        de: "Eine komplizierte Vereinigung. Das gesellige und abenteuerlustige Pferd hat wenig gemeinsam mit dem häuslichen und ruhigen Schwein. Das Pferd mag das Schwein als faul ansehen, und das Schwein mag das Pferd als egoistisch und ruhelos ansehen. Harmonie erfordert große Anstrengungen von beiden Seiten.",
+        fr: "Une union compliquée. Le Cheval sociable et aventureux a peu en commun avec le Cochon casanier et calme. Le Cheval peut voir le Cochon comme paresseux, et le Cochon peut voir le Cheval comme égoïste et agité. L'harmonie demande un grand effort des deux côtés."
     },
     score: 2
   },
-  "Tiger-Snake": {
+  "Goat-Goat": {
     report: {
-        es: "Una combinación de tensión y desconfianza. El Tigre es abierto y directo, la Serpiente es reservada y calculadora. El Tigre no confía en la naturaleza sigilosa de la Serpiente, y la Serpiente ve al Tigre como ruidoso y poco sofisticado. Una relación cercana es muy difícil.",
-        en: "A combination of tension and mistrust. The Tiger is open and direct, the Snake is reserved and calculating. The Tiger distrusts the Snake's stealthy nature, and the Snake sees the Tiger as loud and unsophisticated. A close relationship is very difficult.",
-        de: "Eine Kombination aus Spannung und Misstrauen. Der Tiger ist offen und direkt, die Schlange ist zurückhaltend und berechnend. Der Tiger misstraut der heimlichen Natur der Schlange, und die Schlange sieht den Tiger als laut und unkultiviert an. Eine enge Beziehung ist sehr schwierig.",
-        fr: "Une combinaison de tension et de méfiance. Le Tigre est ouvert et direct, le Serpent est réservé et calculateur. Le Tigre se méfie de la nature furtive du Serpent, et le Serpent voit le Tigre comme bruyant et peu sophistiqué. Une relation proche est très difficile."
+        es: "Dos Cabras juntas crean un mundo de ensueño, lleno de arte, sensibilidad y compasión. Se entienden a un nivel emocional profundo. El peligro es que pueden ser demasiado pasivos e indecisos, evitando las responsabilidades de la vida real.",
+        en: "Two Goats together create a dream world, full of art, sensitivity, and compassion. They understand each other on a deep emotional level. The danger is that they can be too passive and indecisive, avoiding real-life responsibilities.",
+        de: "Zwei Ziegen zusammen schaffen eine Traumwelt voller Kunst, Sensibilität und Mitgefühl. Sie verstehen sich auf einer tiefen emotionalen Ebene. Die Gefahr ist, dass sie zu passiv und unentschlossen sein können und die Verantwortlichkeiten des wirklichen Lebens meiden.",
+        fr: "Deux Chèvres ensemble créent un monde de rêve, plein d'art, de sensibilité et de compassion. Elles se comprennent à un niveau émotionnel profond. Le danger est qu'elles peuvent être trop passives et indécises, évitant les responsabilités de la vie réelle."
+    },
+    score: 4
+  },
+  "Goat-Monkey": {
+    report: {
+        es: "El Mono, inteligente y divertido, sabe cómo animar a la sensible Cabra. La Cabra, a su vez, se siente fascinada por el ingenio del Mono. Pueden tener una relación muy divertida, aunque el Mono debe tener cuidado de no herir los sentimientos de la Cabra con sus bromas.",
+        en: "The intelligent and fun Monkey knows how to cheer up the sensitive Goat. The Goat, in turn, is fascinated by the Monkey's wit. They can have a very fun relationship, although the Monkey must be careful not to hurt the Goat's feelings with its jokes.",
+        de: "Der intelligente und lustige Affe weiß, wie man die empfindliche Ziege aufmuntert. Die Ziege wiederum ist vom Witz des Affen fasziniert. Sie können eine sehr lustige Beziehung haben, obwohl der Affe aufpassen muss, die Gefühle der Ziege nicht mit seinen Witzen zu verletzen.",
+        fr: "Le Singe intelligent et amusant sait comment remonter le moral de la Chèvre sensible. La Chèvre, à son tour, est fascinée par l'esprit du Singe. Ils peuvent avoir une relation très amusante, bien que le Singe doive faire attention à ne pas blesser les sentiments de la Chèvre avec ses blagues."
+    },
+    score: 4
+  },
+  "Goat-Rooster": {
+    report: {
+        es: "Una combinación muy difícil. El Gallo, crítico y perfeccionista, no puede evitar señalar los defectos, lo que hiere profundamente a la sensible Cabra. La Cabra se siente juzgada, y el Gallo se frustra con la falta de practicidad de la Cabra.",
+        en: "A very difficult combination. The critical and perfectionist Rooster can't help but point out flaws, which deeply hurts the sensitive Goat. The Goat feels judged, and the Rooster gets frustrated with the Goat's lack of practicality.",
+        de: "Eine sehr schwierige Kombination. Der kritische und perfektionistische Hahn kann nicht umhin, Fehler aufzuzeigen, was die empfindliche Ziege tief verletzt. Die Ziege fühlt sich beurteilt, und der Hahn ist frustriert über den Mangel an Praktikabilität der Ziege.",
+        fr: "Une combinaison très difficile. Le Coq, critique et perfectionniste, ne peut s'empêcher de souligner les défauts, ce qui blesse profondément la Chèvre sensible. La Chèvre se sent jugée, et le Coq est frustré par le manque de praticité de la Chèvre."
     },
     score: 2
   },
-  "Horse-Rooster": {
+  "Goat-Dog": {
     report: {
-        es: "Una pareja con potencial para la irritación mutua. El Caballo odia ser criticado, y el Gallo no puede evitar señalar los defectos. El Gallo ve al Caballo como desorganizado, y el Caballo ve al Gallo como un fastidioso. La crítica constante del Gallo agotará la paciencia del Caballo.",
-        en: "A couple with potential for mutual irritation. The Horse hates being criticized, and the Rooster can't help but point out flaws. The Rooster sees the Horse as disorganized, and the Horse sees the Rooster as a nuisance. The Rooster's constant criticism will exhaust the Horse's patience.",
-        de: "Ein Paar mit Potenzial für gegenseitige Irritationen. Das Pferd hasst es, kritisiert zu werden, und der Hahn kann nicht umhin, Fehler aufzuzeigen. Der Hahn sieht das Pferd als unorganisiert an, und das Pferd sieht den Hahn als lästig an. Die ständige Kritik des Hahns wird die Geduld des Pferdes erschöpfen.",
-        fr: "Un couple avec un potentiel d'irritation mutuelle. Le Cheval déteste être critiqué, et le Coq ne peut s'empêcher de souligner les défauts. Le Coq voit le Cheval comme désorganisé, et le Cheval voit le Coq comme une nuisance. La critique constante du Coq épuisera la patience du Cheval."
+        es: "Una relación complicada. Ambos pueden ser propensos a la ansiedad y el pesimismo. El Perro, leal, puede irritarse con la indecisión de la Cabra. La Cabra puede sentirse abrumada por la necesidad del Perro de que todo sea justo y correcto. Requiere mucha paciencia.",
+        en: "A complicated relationship. Both can be prone to anxiety and pessimism. The loyal Dog can get irritated with the Goat's indecisiveness. The Goat can feel overwhelmed by the Dog's need for everything to be fair and right. It requires a lot of patience.",
+        de: "Eine komplizierte Beziehung. Beide können zu Angst und Pessimismus neigen. Der loyale Hund kann sich über die Unentschlossenheit der Ziege ärgern. Die Ziege kann sich von dem Bedürfnis des Hundes, dass alles fair und richtig ist, überfordert fühlen. Es erfordert viel Geduld.",
+        fr: "Une relation compliquée. Tous deux peuvent être sujets à l'anxiété et au pessimisme. Le Chien loyal peut s'irriter de l'indécision de la Chèvre. La Chèvre peut se sentir dépassée par le besoin du Chien que tout soit juste et correct. Cela demande beaucoup de patience."
     },
     score: 2
+  },
+  "Monkey-Monkey": {
+    report: {
+        es: "Una explosión de ingenio, diversión y travesuras. Dos Monos juntos nunca se aburren. El problema es que la relación puede carecer de profundidad emocional y de seriedad. ¿Quién se ocupa de las responsabilidades? Es una amistad fantástica, pero una relación romántica necesita más sustancia.",
+        en: "An explosion of wit, fun, and mischief. Two Monkeys together are never bored. The problem is that the relationship can lack emotional depth and seriousness. Who takes care of the responsibilities? It's a fantastic friendship, but a romantic relationship needs more substance.",
+        de: "Eine Explosion von Witz, Spaß und Unfug. Zwei Affen zusammen langweilen sich nie. Das Problem ist, dass der Beziehung an emotionaler Tiefe und Ernsthaftigkeit mangeln kann. Wer kümmert sich um die Verantwortlichkeiten? Es ist eine fantastische Freundschaft, aber eine romantische Beziehung braucht mehr Substanz.",
+        fr: "Une explosion d'esprit, d'amusement et de malice. Deux Singes ensemble ne s'ennuient jamais. Le problème est que la relation peut manquer de profondeur émotionnelle et de sérieux. Qui s'occupe des responsabilités ? C'est une amitié fantastique, mais une relation amoureuse a besoin de plus de substance."
+    },
+    score: 4
+  },
+  "Monkey-Rooster": {
+    report: {
+        es: "Ambos son inteligentes y capaces, pero sus estilos chocan. El Gallo es organizado y crítico, mientras que el Mono es flexible y juguetón. El Gallo puede ver al Mono como poco serio, y el Mono puede ver al Gallo como aburrido y quisquilloso. El respeto mutuo por sus habilidades es la clave.",
+        en: "Both are intelligent and capable, but their styles clash. The Rooster is organized and critical, while the Monkey is flexible and playful. The Rooster may see the Monkey as not serious, and the Monkey may see the Rooster as boring and picky. Mutual respect for their abilities is the key.",
+        de: "Beide sind intelligent und fähig, aber ihre Stile kollidieren. Der Hahn ist organisiert und kritisch, während der Affe flexibel und verspielt ist. Der Hahn mag den Affen als nicht ernsthaft ansehen, und der Affe mag den Hahn als langweilig und wählerisch ansehen. Gegenseitiger Respekt für ihre Fähigkeiten ist der Schlüssel.",
+        fr: "Tous deux sont intelligents et capables, mais leurs styles s'affrontent. Le Coq est organisé et critique, tandis que le Singe est flexible et joueur. Le Coq peut voir le Singe comme peu sérieux, et le Singe peut voir le Coq comme ennuyeux et pointilleux. Le respect mutuel de leurs capacités est la clé."
+    },
+    score: 3
+  },
+  "Monkey-Dog": {
+    report: {
+        es: "Una combinación desafiante. El Perro es leal y moralista, mientras que el Mono es un bromista que a veces cruza los límites. El Perro puede ver al Mono como poco fiable, y el Mono puede sentirse juzgado por la seriedad del Perro. El entendimiento mutuo es difícil de lograr.",
+        en: "A challenging combination. The Dog is loyal and moralistic, while the Monkey is a prankster who sometimes crosses the line. The Dog may see the Monkey as unreliable, and the Monkey may feel judged by the Dog's seriousness. Mutual understanding is difficult to achieve.",
+        de: "Eine herausfordernde Kombination. Der Hund ist loyal und moralisch, während der Affe ein Witzbold ist, der manchmal die Grenzen überschreitet. Der Hund mag den Affen als unzuverlässig ansehen, und der Affe mag sich von der Ernsthaftigkeit des Hundes beurteilt fühlen. Gegenseitiges Verständnis ist schwer zu erreichen.",
+        fr: "Une combinaison difficile. Le Chien est loyal et moraliste, tandis que le Singe est un farceur qui dépasse parfois les bornes. Le Chien peut voir le Singe comme peu fiable, et le Singe peut se sentir jugé par le sérieux du Chien. La compréhension mutuelle est difficile à atteindre."
+    },
+    score: 2
+  },
+  "Monkey-Pig": {
+    report: {
+        es: "Una excelente pareja para la diversión. El Cerdo, de buen corazón, se divierte con las travesuras del Mono y no se ofende fácilmente. El Mono aprecia la naturaleza generosa y tolerante del Cerdo. Juntos, disfrutan de los placeres de la vida sin complicaciones.",
+        en: "An excellent couple for fun. The good-hearted Pig is amused by the Monkey's mischief and is not easily offended. The Monkey appreciates the Pig's generous and tolerant nature. Together, they enjoy life's pleasures without complications.",
+        de: "Ein ausgezeichnetes Paar für Spaß. Das gutherzige Schwein amüsiert sich über die Streiche des Affen und ist nicht leicht beleidigt. Der Affe schätzt die großzügige und tolerante Natur des Schweins. Zusammen genießen sie die Freuden des Lebens ohne Komplikationen.",
+        fr: "Un excellent couple pour s'amuser. Le Cochon au bon cœur s'amuse des espiègleries du Singe et ne s'offense pas facilement. Le Singe apprécie la nature généreuse et tolérante du Cochon. Ensemble, ils profitent des plaisirs de la vie sans complications."
+    },
+    score: 4
+  },
+  "Rooster-Rooster": {
+    report: {
+        es: "Dos Gallos juntos pueden ser un campo de batalla de críticas y egos. Ambos son perfeccionistas y creen que su manera es la correcta. Las discusiones son frecuentes. Si pueden canalizar su energía en un proyecto común, pueden ser muy eficientes, pero la armonía personal es rara.",
+        en: "Two Roosters together can be a battlefield of criticism and egos. Both are perfectionists and believe their way is the right way. Arguments are frequent. If they can channel their energy into a common project, they can be very efficient, but personal harmony is rare.",
+        de: "Zwei Hähne zusammen können ein Schlachtfeld der Kritik und der Egos sein. Beide sind Perfektionisten und glauben, dass ihr Weg der richtige ist. Auseinandersetzungen sind häufig. Wenn sie ihre Energie in ein gemeinsames Projekt kanalisieren können, können sie sehr effizient sein, aber persönliche Harmonie ist selten.",
+        fr: "Deux Coqs ensemble peuvent être un champ de bataille de critiques et d'ego. Tous deux sont des perfectionnistes et croient que leur manière est la bonne. Les disputes sont fréquentes. S'ils peuvent canaliser leur énergie dans un projet commun, ils peuvent être très efficaces, mais l'harmonie personnelle est rare."
+    },
+    score: 2
+  },
+  "Rooster-Dog": {
+    report: {
+        es: "Una relación tensa. El Perro, leal pero ansioso, se siente estresado por la naturaleza crítica del Gallo. El Gallo, a su vez, puede ver al Perro como demasiado pesimista. Ambos son honestos, pero su forma de expresar la verdad puede crear conflictos constantes.",
+        en: "A tense relationship. The loyal but anxious Dog feels stressed by the Rooster's critical nature. The Rooster, in turn, can see the Dog as too pessimistic. Both are honest, but their way of expressing the truth can create constant conflicts.",
+        de: "Eine angespannte Beziehung. Der loyale, aber ängstliche Hund fühlt sich von der kritischen Natur des Hahns gestresst. Der Hahn wiederum kann den Hund als zu pessimistisch ansehen. Beide sind ehrlich, aber ihre Art, die Wahrheit auszudrücken, kann ständige Konflikte verursachen.",
+        fr: "Une relation tendue. Le Chien, loyal mais anxieux, se sent stressé par la nature critique du Coq. Le Coq, à son tour, peut voir le Chien comme trop pessimiste. Tous deux sont honnêtes, mais leur façon d'exprimer la vérité peut créer des conflits constants."
+    },
+    score: 2
+  },
+  "Rooster-Pig": {
+    report: {
+        es: "El Cerdo, paciente y tolerante, puede manejar bien la naturaleza crítica del Gallo. El Gallo, a su vez, aprecia la honestidad y la falta de pretensiones del Cerdo. El Gallo puede ayudar a organizar la vida del Cerdo, y el Cerdo puede enseñar al Gallo a relajarse. Una combinación decente.",
+        en: "The patient and tolerant Pig can handle the Rooster's critical nature well. The Rooster, in turn, appreciates the Pig's honesty and lack of pretense. The Rooster can help organize the Pig's life, and the Pig can teach the Rooster to relax. A decent combination.",
+        de: "Das geduldige und tolerante Schwein kann gut mit der kritischen Natur des Hahns umgehen. Der Hahn wiederum schätzt die Ehrlichkeit und die fehlende Anmaßung des Schweins. Der Hahn kann helfen, das Leben des Schweins zu organisieren, und das Schwein kann dem Hahn beibringen, sich zu entspannen. Eine anständige Kombination.",
+        fr: "Le Cochon, patient et tolérant, peut bien gérer la nature critique du Coq. Le Coq, à son tour, apprécie l'honnêteté et le manque de prétention du Cochon. Le Coq peut aider à organiser la vie du Cochon, et le Cochon peut apprendre au Coq à se détendre. Une combinaison décente."
+    },
+    score: 3
+  },
+  "Dog-Dog": {
+    report: {
+        es: "Dos Perros juntos forman un vínculo de lealtad inquebrantable. Se entienden en su necesidad de justicia y honestidad. Son protectores el uno del otro. El único desafío es que pueden caer en un ciclo de ansiedad y preocupación mutua, viendo problemas en todas partes.",
+        en: "Two Dogs together form a bond of unwavering loyalty. They understand each other's need for justice and honesty. They are protective of each other. The only challenge is that they can fall into a cycle of mutual anxiety and worry, seeing problems everywhere.",
+        de: "Zwei Hunde zusammen bilden eine Bindung unerschütterlicher Loyalität. Sie verstehen das Bedürfnis des anderen nach Gerechtigkeit und Ehrlichkeit. Sie beschützen sich gegenseitig. Die einzige Herausforderung besteht darin, dass sie in einen Kreislauf gegenseitiger Angst und Sorge geraten können und überall Probleme sehen.",
+        fr: "Deux Chiens ensemble forment un lien de loyauté indéfectible. Ils se comprennent dans leur besoin de justice et d'honnêteté. Ils se protègent mutuellement. Le seul défi est qu'ils peuvent tomber dans un cycle d'anxiété et d'inquiétude mutuelles, voyant des problèmes partout."
+    },
+    score: 4
+  },
+  "Dog-Pig": {
+    report: {
+        es: "Una combinación muy feliz y armoniosa. El Cerdo, optimista y de buen corazón, calma las ansiedades del Perro. El Perro se siente seguro con la lealtad y la naturaleza amable del Cerdo. Ambos valoran el hogar y la comodidad, creando una relación pacífica y de apoyo mutuo.",
+        en: "A very happy and harmonious combination. The optimistic and good-hearted Pig calms the Dog's anxieties. The Dog feels secure with the Pig's loyalty and kind nature. Both value home and comfort, creating a peaceful and mutually supportive relationship.",
+        de: "Eine sehr glückliche und harmonische Kombination. Das optimistische und gutherzige Schwein beruhigt die Ängste des Hundes. Der Hund fühlt sich bei der Loyalität und der freundlichen Natur des Schweins sicher. Beide schätzen das Zuhause und den Komfort und schaffen eine friedliche und sich gegenseitig unterstützende Beziehung.",
+        fr: "Une combinaison très heureuse et harmonieuse. Le Cochon, optimiste et au bon cœur, calme les angoisses du Chien. Le Chien se sent en sécurité avec la loyauté et la nature bienveillante du Cochon. Tous deux apprécient le foyer et le confort, créant une relation paisible et de soutien mutuel."
+    },
+    score: 4
+  },
+  "Pig-Pig": {
+    report: {
+        es: "Una pareja de puro disfrute y comodidad. Dos Cerdos juntos se entienden perfectamente en su amor por los placeres de la vida: buena comida, una casa cómoda y buena compañía. Son generosos y amables el uno con el otro. Su relación es pacífica y feliz, aunque pueden tener dificultades con la autodisciplina.",
+        en: "A couple of pure enjoyment and comfort. Two Pigs together understand each other perfectly in their love for life's pleasures: good food, a comfortable home, and good company. They are generous and kind to each other. Their relationship is peaceful and happy, although they may have difficulties with self-discipline.",
+        de: "Ein Paar puren Genusses und Komforts. Zwei Schweine zusammen verstehen sich perfekt in ihrer Liebe zu den Freuden des Lebens: gutes Essen, ein komfortables Zuhause und gute Gesellschaft. Sie sind großzügig und freundlich zueinander. Ihre Beziehung ist friedlich und glücklich, obwohl sie Schwierigkeiten mit der Selbstdisziplin haben können.",
+        fr: "Un couple de pur plaisir et de confort. Deux Cochons ensemble se comprennent parfaitement dans leur amour des plaisirs de la vie : bonne nourriture, une maison confortable et bonne compagnie. Ils sont généreux et gentils l'un envers l'autre. Leur relation est paisible et heureuse, bien qu'ils puissent avoir des difficultés avec l'autodiscipline."
+    },
+    score: 5
   }
 };
