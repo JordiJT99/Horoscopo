@@ -11,7 +11,7 @@ import {
   Calculator as CalculatorIcon,
   HelpCircle,
   Briefcase,
-  Waves,
+  Route,
   Wind,
   Sun,
   Moon,
@@ -33,7 +33,6 @@ import {
   Heart,
   Hand,
   RefreshCw,
-  Waypoints,
   Baseline,
   Scissors,
   Eye,
@@ -532,14 +531,14 @@ export const MAYAN_ZODIAC_SIGNS: MayanZodiacSign[] = [
   { name: "Ik", nameKey: "MayanSign.Ik.name", icon: Wind, descriptionKey: "MayanSign.Ik.description", detailedInterpretationKey: "MayanSign.Ik.interpretation", associatedColor: "Blanco" },
   { name: "Akbal", nameKey: "MayanSign.Akbal.name", icon: Moon, descriptionKey: "MayanSign.Akbal.description", detailedInterpretationKey: "MayanSign.Akbal.interpretation", associatedColor: "Negro/Azul" },
   { name: "Kan", nameKey: "MayanSign.Kan.name", icon: Leaf, descriptionKey: "MayanSign.Kan.description", detailedInterpretationKey: "MayanSign.Kan.interpretation", associatedColor: "Amarillo" },
-  { name: "Chicchan", nameKey: "MayanSign.Chicchan.name", icon: Waves, descriptionKey: "MayanSign.Chicchan.description", detailedInterpretationKey: "MayanSign.Chicchan.interpretation", associatedColor: "Rojo" },
+  { name: "Chicchan", nameKey: "MayanSign.Chicchan.name", icon: Worm, descriptionKey: "MayanSign.Chicchan.description", detailedInterpretationKey: "MayanSign.Chicchan.interpretation", associatedColor: "Rojo" },
   { name: "Cimi", nameKey: "MayanSign.Cimi.name", icon: RefreshCw, descriptionKey: "MayanSign.Cimi.description", detailedInterpretationKey: "MayanSign.Cimi.interpretation", associatedColor: "Blanco" },
   { name: "Manik", nameKey: "MayanSign.Manik.name", icon: Hand, descriptionKey: "MayanSign.Manik.description", detailedInterpretationKey: "MayanSign.Manik.interpretation", associatedColor: "Azul/Negro" },
   { name: "Lamat", nameKey: "MayanSign.Lamat.name", icon: StarIcon, descriptionKey: "MayanSign.Lamat.description", detailedInterpretationKey: "MayanSign.Lamat.interpretation", associatedColor: "Amarillo" },
   { name: "Muluc", nameKey: "MayanSign.Muluc.name", icon: Droplets, descriptionKey: "MayanSign.Muluc.description", detailedInterpretationKey: "MayanSign.Muluc.interpretation", associatedColor: "Rojo" },
   { name: "Oc", nameKey: "MayanSign.Oc.name", icon: DogIcon, descriptionKey: "MayanSign.Oc.description", detailedInterpretationKey: "MayanSign.Oc.interpretation", associatedColor: "Blanco" },
   { name: "Chuen", nameKey: "MayanSign.Chuen.name", icon: Banana, descriptionKey: "MayanSign.Chuen.description", detailedInterpretationKey: "MayanSign.Chuen.interpretation", associatedColor: "Azul/Negro" },
-  { name: "Eb", nameKey: "MayanSign.Eb.name", icon: Waypoints, descriptionKey: "MayanSign.Eb.description", detailedInterpretationKey: "MayanSign.Eb.interpretation", associatedColor: "Amarillo" },
+  { name: "Eb", nameKey: "MayanSign.Eb.name", icon: Route, descriptionKey: "MayanSign.Eb.description", detailedInterpretationKey: "MayanSign.Eb.interpretation", associatedColor: "Amarillo" },
   { name: "Ben", nameKey: "MayanSign.Ben.name", icon: Baseline, descriptionKey: "MayanSign.Ben.description", detailedInterpretationKey: "MayanSign.Ben.interpretation", associatedColor: "Rojo" },
   { name: "Ix", nameKey: "MayanSign.Ix.name", icon: Cat, descriptionKey: "MayanSign.Ix.description", detailedInterpretationKey: "MayanSign.Ix.interpretation", associatedColor: "Blanco" },
   { name: "Men", nameKey: "MayanSign.Men.name", icon: BirdIcon, descriptionKey: "MayanSign.Men.description", detailedInterpretationKey: "MayanSign.Men.interpretation", associatedColor: "Azul/Negro" },
@@ -624,3 +623,4 @@ export const getDailyTransit = (date: Date): DailyTransit => {
   const dayOfYear = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
   return transits[dayOfYear % transits.length];
 };
+
