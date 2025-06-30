@@ -1260,17 +1260,17 @@
   },
   "ChineseHoroscopeDetail": {
     "traitsTitle": "Rasgos de {signName}",
-    "Rat": { "interpretation": "[Interpretación detallada de la Rata en español]" },
-    "Ox": { "interpretation": "[Interpretación detallada del Buey en español]" },
-    "Tiger": { "interpretation": "[Interpretación detallada del Tigre en español]" },
-    "Rabbit": { "interpretation": "[Interpretación detallada del Conejo en español]" },
-    "Dragon": { "interpretation": "[Interpretación detallada del Dragón en español]" },
-    "Snake": { "interpretation": "[Interpretación detallada de la Serpiente en español]" },
-    "Horse": { "interpretation": "[Interpretación detallada del Caballo en español]" },
-    "Goat": { "interpretation": "[Interpretación detallada de la Cabra en español]" },
-    "Monkey": { "interpretation": "[Interpretación detallada del Mono en español]" },
-    "Rooster": { "interpretation": "[Interpretación detallada del Gallo en español]" },
-    "Dog": { "interpretation": "[Interpretación detallada del Perro en español]" },
-    "Pig": { "interpretation": "[Interpretación detallada del Cerdo en español]" }
+    "Rat": { "interpretation": "De mente rápida, encantadores y ambiciosos. Las Ratas son ingeniosas y pueden encontrar una salida a cualquier problema. Son sociables pero pueden ser críticas y oportunistas. Son ferozmente leales a su familia y amigos cercanos." },
+    "Ox": { "interpretation": "Diligentes, confiables y fuertes. Los Bueyes son metódicos y pacientes, y creen en el trabajo duro para alcanzar sus metas. No les gustan los cambios y pueden ser muy tercos, pero su fiabilidad es inigualable." },
+    "Tiger": { "interpretation": "Valientes, seguros de sí mismos y líderes natos. Los Tigres son apasionados y enérgicos, siempre en busca de un desafío. Pueden ser rebeldes e impredecibles, pero su carisma y coraje son inspiradores para los demás." },
+    "Rabbit": { "interpretation": "Gentiles, tranquilos y elegantes. Los Conejos son diplomáticos y tienen tacto, buscando la paz y la armonía por encima de todo. Son cautelosos y pueden ser vistos como reservados, pero también son astutos y tienen un fuerte sentido de la responsabilidad." },
+    "Dragon": { "interpretation": "Poderosos, ambiciosos y carismáticos. Los Dragones son líderes natos, llenos de energía y entusiasmo. Son seguros de sí mismos y no temen correr riesgos. Su orgullo puede a veces rayar en la arrogancia, pero tienen un corazón generoso." },
+    "Snake": { "interpretation": "Sabias, intuitivas y misteriosas. Las Serpientes son pensadoras profundas que prefieren confiar en su propio juicio en lugar de en los consejos de los demás. Son encantadoras y sofisticadas, pero pueden ser posesivas y reservadas con sus emociones." },
+    "Horse": { "interpretation": "Enérgicos, independientes y de espíritu libre. A los Caballos les encanta la aventura y estar en medio de la acción. Son sociables y tienen un gran sentido del humor, pero pueden ser impacientes y tener miedo al compromiso." },
+    "Goat": { "interpretation": "Amables, compasivas y artísticas. Las Cabras son soñadoras creativas que valoran la paz y la belleza. Son empáticas y de buen corazón, pero pueden ser indecisas y necesitar mucho apoyo emocional de sus seres queridos." },
+    "Monkey": { "interpretation": "Inteligentes, traviesos y geniales para resolver problemas. Los Monos son intelectualmente curiosos y tienen un gran sentido del humor. Son maestros de la improvisación, pero pueden ser vistos como poco fiables o manipuladores." },
+    "Rooster": { "interpretation": "Confiados, observadores y trabajadores. Los Gallos son perfeccionistas que tienen un ojo agudo para los detalles. Son directos y honestos, pero su franqueza a veces puede parecer crítica o arrogante." },
+    "Dog": { "interpretation": "Leales, honestos y justos. Los Perros son compañeros de confianza que protegerán ferozmente a sus seres queridos. Tienen un fuerte sentido del bien y del mal, pero pueden ser propensos a la ansiedad y al pesimismo." },
+    "Pig": { "interpretation": "Amables, generosos y tranquilos. Los Cerdos disfrutan de las cosas buenas de la vida y no les gustan los conflictos. Son diligentes y honestos, y su buena naturaleza los convierte en maravillosos amigos, aunque pueden ser un poco ingenuos." }
   }
 }
