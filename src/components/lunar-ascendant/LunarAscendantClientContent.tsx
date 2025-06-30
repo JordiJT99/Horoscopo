@@ -272,7 +272,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                           locale={currentDfnLocale}
                           fromDate={new Date(1900, 0, 1)}
                           toDate={new Date()}
-                          captionLayout="dropdown" 
+                          captionLayout="dropdown-buttons"
                           fromYear={1900}
                           toYear={currentYearForCalendar}
                           classNames={{ caption_dropdowns: "flex gap-1 py-1", dropdown_month: "text-sm", dropdown_year: "text-sm" }}
