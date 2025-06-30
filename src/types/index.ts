@@ -139,6 +139,8 @@ export interface ChineseZodiacSign {
   years: number[];
   element: string;
   description?: string;
+  descriptionKey?: string;
+  detailedInterpretationKey?: string;
 }
 
 export interface ChineseZodiacResult {
