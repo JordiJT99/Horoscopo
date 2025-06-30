@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/lib/dictionaries';
 import BirthDataForm from './BirthDataForm';
 import NatalChartClientContent from './NatalChartClientContent';
 import { useAuth } from '@/context/AuthContext';
@@ -15,7 +15,12 @@ interface BirthData {
   country: string;
 }
 
-const NatalChartClientWrapper: React.FC<{ dictionary: Dictionary }> = ({ dictionary }) => {
+interface NatalChartClientWrapperProps {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dictionary, locale }) => {
   const { user, isLoading: authLoading } = useAuth();
   const [birthData, setBirthData] = useState<BirthData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -90,11 +95,12 @@ const NatalChartClientWrapper: React.FC<{ dictionary: Dictionary }> = ({ diction
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
       {!birthData ? (
-        <BirthDataForm onSubmit={handleFormSubmit} dictionary={birthFormDictionary} locale={dictionary.locale} />
+        <BirthDataForm onSubmit={handleFormSubmit} dictionary={birthFormDictionary} locale={locale} />
       ) : (
         <NatalChartClientContent 
           birthData={birthData} 
-          dictionary={dictionary} 
+          dictionary={dictionary}
+          locale={locale} 
           user={user}
           onReset={handleReset} 
         />
