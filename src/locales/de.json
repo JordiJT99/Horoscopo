@@ -678,22 +678,34 @@
   "CommunityPage.shareTarotSuccess": "Deine Tarot-Lesung wurde mit der Community geteilt.",
   "CommunityPage.dreamPostTitle": "Hat eine Traumdeutung geteilt",
   "CommunityPage.tarotPostTitle": "Hat eine Tarotkarte geteilt",
-  "NatalChartPage.title": "Ihre Geburtskarte",
-  "NatalChartPage.underDevelopmentMessage": "Diese Funktion befindet sich in aktiver Entwicklung. Planetenpositionen sind illustrativ und sollten nicht als astronomisch genau betrachtet werden.",
-  "NatalChartPage.detailLevel.label": "Detailgrad",
-  "NatalChartPage.detailLevel.basic": "Grundlegend",
-  "NatalChartPage.detailLevel.advanced": "Fortgeschritten",
-  "NatalChartPage.detailLevel.spiritual": "Spirituell",
-  "NatalChartPage.sunTitle": "Die Sonne: Ihre Kernidentität",
-  "NatalChartPage.moonTitle": "Der Mond: Ihre emotionale Welt",
-  "NatalChartPage.ascendantTitle": "Der Aszendent: Ihre soziale Maske",
-  "NatalChartPage.personalPlanetsTitle": "Persönliche Planeten: Ihre Persönlichkeit",
-  "NatalChartPage.transpersonalPlanetsTitle": "Transpersonale Planeten: Ihre Generationsreise",
-  "NatalChartPage.housesTitle": "Die Häuser: Bereiche Ihres Lebens",
-  "NatalChartPage.aspectsTitle": "Aspekte: Die planetarischen Gespräche",
-  "NatalChartPage.detailsTab": "Details",
-  "NatalChartPage.aspectsTab": "Aspekte",
-  "NatalChartPage.housesTab": "Häuser",
+  "NatalChartPage": {
+    "title": "Ihre Geburtskarte",
+    "subtitle": "Entdecken Sie die Planetenpositionen zum genauen Zeitpunkt Ihrer Geburt.",
+    "newChartButton": "Neue Karte",
+    "underDevelopmentMessage": "Diese Funktion befindet sich in aktiver Entwicklung. Planetenpositionen sind illustrativ und sollten nicht als astronomisch genau betrachtet werden.",
+    "detailLevel": {
+      "label": "Detailgrad",
+      "basic": "Grundlegend",
+      "advanced": "Fortgeschritten",
+      "spiritual": "Spirituell"
+    },
+    "sunTitle": "Die Sonne: Ihre Kernidentität",
+    "moonTitle": "Der Mond: Ihre emotionale Welt",
+    "ascendantTitle": "Der Aszendent: Ihre soziale Maske",
+    "personalPlanetsTitle": "Persönliche Planeten: Ihre Persönlichkeit",
+    "transpersonalPlanetsTitle": "Transpersonale Planeten: Ihre Generationsreise",
+    "housesTitle": "Die Häuser: Bereiche Ihres Lebens",
+    "aspectsTitle": "Aspekte: Die planetarischen Gespräche",
+    "detailsTab": "Details",
+    "aspectsTab": "Aspekte",
+    "housesTab": "Häuser",
+    "aspectsDetails": {
+      "noAspectsFound": "Keine signifikanten Aspekte in diesem Horoskop gefunden."
+    },
+    "housesDetails": {
+      "noPlacementsFound": "Keine signifikanten Hausplatzierungen gefunden."
+    }
+  },
   "birthForm.dateLabel": "Geburtsdatum",
   "birthForm.timeLabel": "Geburtszeit",
   "birthForm.cityLabel": "Geburtsstadt",
@@ -888,11 +900,11 @@
         "Materialistisch"
       ],
       "loveTitle": "Stier in der Liebe",
-      "love": "Als Liebhaber ist der Stier die Verkörperung von Hingabe und Sinnlichkeit. Er nähert sich der Liebe mit der gleichen Geduld und Methodik, die er auf alle Bereiche seines Lebens anwendet. Er sucht einen Partner, der ihm ein Gefühl von unerschütterlicher Sicherheit und Stabilität vermittelt. Ihre Zuneigungsbekundungen sind greifbar: Sie lieben es, durch Berührungen, Massagen, durch das Kochen üppiger Mahlzeiten oder durch die Schaffung eines schönen und komfortablen Zuhauses zu verwöhnen. Für sie ist Liebe etwas, das man baut. Die Herausforderung entsteht, wenn ihr Bedürfnis nach Sicherheit in Besitzgier umschlägt. Sie brauchen einen Partner, der ihre Loyalität schätzt und ihre gelegentliche Sturheit mit Geduld behandelt.",
+      "love": "Als Liebhaber ist der Stier die Verkörperung von Hingabe und Sinnlichkeit. Er nähert sich der Liebe mit der gleichen Geduld und Methodik, die er auf alle Bereiche seines Lebens anwendet. Er sucht einen Partner, der ihm ein Gefühl von unerschütterlicher Sicherheit und Stabilität vermittelt. Seine Zuneigungsbekundungen sind greifbar: Sie lieben es, durch Berührungen, Massagen, durch das Kochen üppiger Mahlzeiten oder durch die Schaffung eines schönen und komfortablen Zuhauses zu verwöhnen. Für sie ist Liebe etwas, das man baut. Die Herausforderung entsteht, wenn ihr Bedürfnis nach Sicherheit in Besitzgier umschlägt. Sie brauchen einen Partner, der ihre Loyalität schätzt und ihre gelegentliche Sturheit mit Geduld behandelt.",
       "friendshipTitle": "Stier in Freundschaft",
       "friendship": "Ein Stier ist der Freund, auf den man sich immer verlassen kann, der Fels in der Brandung inmitten des Chaos des Lebens. Sie sind der Inbegriff von Loyalität und Zuverlässigkeit. Sie erscheinen vielleicht nicht bei jeder lauten Party, aber sie sind diejenigen, die ohne zu zögern mitten in der Nacht ans Telefon gehen. Ihre Freundschaften basieren auf Komfort und gemeinsamen Freuden: ein gutes Abendessen, ein ruhiger Abend mit Musik oder einfach nur das Genießen einer friedlichen Gesellschaft. Sie bieten praktische, bodenständige Ratschläge und ihre Unterstützung ist unerschütterlich. Der einzige Konfliktpunkt ist ihre Sturheit. Eine Meinungsverschiedenheit mit einem Stier kann sich wie ein Kampf mit einer unbeweglichen Kraft anfühlen, aber ihre Loyalität sorgt dafür, dass sie immer wieder zurückkommen.",
       "workTitle": "Stier bei der Arbeit",
-      "work": "Am Arbeitsplatz ist der Stier der beständige Erbauer. Sie sind nicht an schnellen Erfolgen interessiert, sondern am Aufbau dauerhafter, qualitativ hochwertiger Ergebnisse. Sie sind methodisch, geduldig und haben eine unglaubliche Ausdauer, um Projekte abzuschließen, die andere aufgeben würden. Sie gedeihen in stabilen Umgebungen und zeichnen sich in Rollen aus, die einen praktischen Ansatz und ein Auge für Ästhetik erfordern, wie z. B. in den Bereichen Finanzen, Architektur, Design oder Landwirtschaft. Sie sind das Fundament jedes Teams und sorgen dafür, dass die Arbeit nicht nur erledigt wird, sondern auch gut erledigt wird. Ihre Abneigung gegen Risiken kann sie manchmal daran hindern, Innovationen anzunehmen, aber ihre Zuverlässigkeit macht sie zu einem unschätzbaren Gut."
+      "work": "Am Arbeitsplatz ist der Stier der beständige Erbauer. Sie sind nicht an schnellen Erfolgen interessiert, sondern am Aufbau dauerhafter, qualitativ hochwertiger Ergebnisse. Sie sind methodisch, geduldig und haben eine unglaubliche Ausdauer, um Projekte abzuschließen, die andere aufgeben würden. Sie gedeihen in stabilen Umgebungen und zeichnen sich in Rollen aus, die einen praktischen Ansatz und ein Auge für Ästhetik erfordern, wie z. B. in den Bereichen Finanzen, Architektur, Design oder Landwirtschaft. Sie sind das Fundament jedes Teams und sorgen dafür, dass die Arbeit nicht nur erledigt wird, sondern auch gut erledigt wird."
     },
     "Gemini": {
       "title": "Eigenschaften der Zwillinge",
@@ -922,254 +934,257 @@
       "work": "Am Arbeitsplatz ist der Zwilling ein Meister der Kommunikation und des Multitaskings. Sie gedeihen in schnelllebigen, dynamischen Umgebungen, in denen sie ihre geistige Beweglichkeit einsetzen können, um Probleme zu lösen und Ideen zu generieren. Rollen in den Bereichen Marketing, Vertrieb, Journalismus, Lehre und Öffentlichkeitsarbeit sind ideal für sie. Sie sind ausgezeichnete Netzwerker und können leicht Verbindungen zwischen verschiedenen Abteilungen oder Konzepten herstellen. Ihre größte Herausforderung ist es, sich auf langfristige, detailorientierte Aufgaben zu konzentrieren. Sie brauchen ständige Anregung und Abwechslung, um ihr Bestes zu geben."
     },
     "Cancer": {
-      "title": "Eigenschaften des Krebses",
-      "description": "Vom Mond regiert, ist der Krebs das tief emotionale und intuitive Herz des Tierkreises. Sie sind von Natur aus fürsorglich und beschützend gegenüber denen, die sie lieben, und schätzen Heimat und Familie über alles. Ihre äußere Schale mag hart erscheinen, aber im Inneren verbirgt sich eine immense Sensibilität und ein reiches inneres Leben. Sie haben ein unheimliches Gedächtnis, besonders für emotionale Ereignisse. Krebse agieren auf einer Gefühlsebene, oft nehmen sie die Atmosphären und Emotionen um sie herum wie ein Schwamm auf. Diese Fähigkeit macht sie unglaublich empathisch, aber auch anfällig für Stimmungsschwankungen und Überforderung. Sie sehnen sich nach Sicherheit und Trost, und ihre Hauptaufgabe im Leben ist es, ein sicheres \"Zuhause\" zu schaffen, sowohl physisch als auch emotional, für sich und ihre Lieben. Loyalität ist für sie von größter Bedeutung; sobald Sie ihr Vertrauen gewonnen haben, haben Sie einen lebenslangen Verteidiger. Wenn dieses Vertrauen jedoch gebrochen wird, können sie lange nachtragend sein. Ihre kardinale Natur treibt sie an, die Initiative in emotionalen und häuslichen Angelegenheiten zu ergreifen, was sie zu den Säulen ihrer Familien und Freundeskreise macht.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Cancer",
+      "description": "Ruled by the Moon, Cancer is the deeply emotional and intuitive heart of the zodiac. They are naturally nurturing and protective of those they love, valuing home and family above all else. Their outer shell may seem tough, but inside lies immense sensitivity and a rich inner life. They have an uncanny memory, especially for emotional events. Cancers operate on a feeling level, often absorbing the atmospheres and emotions around them like a sponge. This ability makes them incredibly empathetic but also vulnerable to moodiness and being overwhelmed. They crave security and comfort, and their main mission in life is to create a safe 'home,' both physically and emotionally, for themselves and their loved ones. Loyalty is paramount to them; once you earn their trust, you have a defender for life. However, if that trust is broken, they can hold a grudge for a long time. Their cardinal nature drives them to take initiative in emotional and domestic matters, making them the pillars of their families and friend circles.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Hartnäckig",
-        "sehr einfallsreich",
-        "loyal",
-        "emotional",
-        "sympathisch",
-        "überzeugend"
+        "Tenacious",
+        "Highly imaginative",
+        "Loyal",
+        "Emotional",
+        "Sympathetic",
+        "Persuasive"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Launisch",
-        "pessimistisch",
-        "misstrauisch",
-        "manipulativ",
-        "unsicher"
+        "Moody",
+        "Pessimistic",
+        "Suspicious",
+        "Manipulative",
+        "Insecure"
       ],
-      "loveTitle": "Krebs in der Liebe",
-      "love": "In einer Beziehung ist der Krebs der Inbegriff des hingebungsvollen Betreuers. Sie sehnen sich nach einer tiefen emotionalen Verbindung und suchen einen Partner, mit dem sie ein sicheres Heiligtum, ein Zuhause, aufbauen können. Liebe ist für den Krebs gleichbedeutend mit Sicherheit, Loyalität und Pflege. Sie zeigen ihre Zuneigung durch Dienstleistungen, indem sie für ihre Liebsten kochen, einen gemütlichen Raum schaffen und bedingungslose emotionale Unterstützung bieten. Ihre extreme Sensibilität kann jedoch eine Herausforderung sein. Sie neigen zu Stimmungsschwankungen, die von den Mondphasen und der emotionalen Umgebung beeinflusst werden. Sie brauchen ständige Zuneigungsbekundungen und Sicherheit, um sich nicht in ihre Schale zurückzuziehen. Sobald sie sich sicher fühlen, ist ihre Liebe eine der tiefsten und schützendsten des Tierkreises.",
-      "friendshipTitle": "Krebs in Freundschaft",
-      "friendship": "Ein Krebs-Freund ist das Herz der Gruppe, derjenige, der Freunde in Familie verwandelt. Ihre Loyalität ist legendär, und sie werden sich immer an die kleinen Details erinnern, die Ihnen wichtig sind. Sie sind diejenigen, die Ihnen Ihr Lieblingsessen kochen, wenn Sie traurig sind, und Ihnen eine Schulter zum Ausweinen ohne Urteil bieten. Sie gedeihen in der Intimität und bevorzugen kleine, gemütliche Zusammenkünfte gegenüber großen Partys. Ihre Sensibilität kann sie jedoch leicht verletzlich machen. Ein unbedachter Kommentar kann sie dazu bringen, sich tagelang in ihre Schale zurückzuziehen. Der Schlüssel zu einer dauerhaften Freundschaft mit einem Krebs ist Geduld, Empathie und die ständige Demonstration, dass Sie seine tiefe Fähigkeit zur Fürsorge schätzen.",
-      "workTitle": "Krebs bei der Arbeit",
-      "work": "Im Arbeitsumfeld gedeiht der Krebs in Rollen, die es ihm ermöglichen, zu pflegen und zu schützen, sei es Kunden, Kollegen oder eine Sache. Sie sind ausgezeichnete Manager, die ein familiäres und unterstützendes Teamumfeld schaffen. Bereiche wie Lehre, Krankenpflege, Sozialarbeit, Gastgewerbe und Personalmanagement sind ideal für sie. Ihre Intuition verschafft ihnen einen Vorteil im Geschäftsleben, da sie die Bedürfnisse des Marktes und der Menschen \"fühlen\" können. Sie benötigen jedoch ein emotional sicheres Arbeitsumfeld, um ihr Bestes zu geben. Eine zu kritische oder wettbewerbsorientierte Umgebung kann sie in die Defensive treiben und ihr Vertrauen beeinträchtigen, was ihre Produktivität beeinträchtigt."
+      "loveTitle": "Cancer in Love",
+      "love": "In a relationship, Cancer is the archetype of the devoted caretaker. They long for a deep emotional connection and seek a partner with whom they can build a safe sanctuary, a home. Love for Cancer is synonymous with security, loyalty, and nourishment. They show their affection through acts of service, cooking for their loved one, creating a cozy space, and offering unconditional emotional support. However, their extreme sensitivity can be a challenge. They are prone to mood swings, influenced by the phases of the moon and the emotional environment. They need constant reassurance and affection to avoid retreating into their shell. Once they feel secure, their love is one of the deepest and most protective of the zodiac.",
+      "friendshipTitle": "Cancer in Friendship",
+      "friendship": "A Cancer friend is the heart of the group, the one who turns friends into family. Their loyalty is legendary, and they will always remember the little details that matter to you. They are the ones who will cook your favorite meal when you're sad and offer a shoulder to cry on without judgment. They thrive on intimacy and prefer small, cozy gatherings to large parties. However, their sensitivity can make them easily hurt. A careless comment can cause them to withdraw into their shell for days. The key to a lasting friendship with a Cancer is patience, empathy, and constantly showing that you value their deep capacity for care.",
+      "workTitle": "Cancer at Work",
+      "work": "In the workplace, Cancer thrives in roles that allow them to nurture and protect, whether it's clients, colleagues, or a cause. They make excellent managers who create a family-like, supportive team environment. Fields like teaching, nursing, social work, hospitality, and human resources are ideal for them. Their intuition gives them an edge in business, as they can 'feel' the needs of the market and people. However, they need an emotionally safe work environment to perform at their best. An overly critical or competitive atmosphere can make them defensive and lose confidence, affecting their productivity."
     },
     "Leo": {
-      "title": "Eigenschaften des Löwen",
-      "description": "Vom der Sonne regiert, dem Zentrum unseres Sonnensystems, ist der Löwe der strahlende, charismatische König des Tierkreises. Voller Selbstvertrauen, Großzügigkeit und einem natürlichen Flair für das Dramatische, liebt es der Löwe, im Mittelpunkt zu stehen und andere mit seiner Wärme und Vitalität zu inspirieren. Sie haben ein großes Herz und eine angeborene Kreativität, die einen Ausdruck finden muss. Ein Löwe betritt keinen Raum, er erobert ihn. Seine Anwesenheit ist magnetisch und zieht die Menschen mit seinem natürlichen Charme und seinem ansteckenden Optimismus an. Sie besitzen eine angeborene Würde und einen Stolz, der, obwohl er manchmal an Arroganz grenzen kann, aus einem tiefen Gefühl der Selbstachtung stammt. Sie sind äußerst loyal und beschützen ihr \"Königreich\", sei es ihre Familie, ihre Freunde oder ihr Arbeitsteam. Großzügigkeit ist eine ihrer herausragendsten Eigenschaften; ein Löwe genießt es, seine Lieben mit Geschenken und Zuneigung zu überschütten. Dieses Bedürfnis, die Sonne zu sein, um die sich die anderen drehen, bedeutet jedoch, dass sie sich nach Bewunderung und Anerkennung sehnen. Eine Kritik an ihrem Ego kann verheerend sein. Im Grunde genommen will ein Löwe nur lieben und geliebt werden, das Leben feiern und sein Licht mit der Welt teilen.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Leo",
+      "description": "Ruled by the Sun, the center of our solar system, Leo is the radiant, charismatic royalty of the zodiac. Brimming with confidence, generosity, and a natural flair for the dramatic, Leo loves to be the center of attention and inspire others with their warmth and vitality. They have a big heart and an innate creativity that must be expressed. A Leo doesn't just enter a room; they conquer it. Their presence is magnetic, drawing people in with their natural charm and infectious optimism. They possess an inherent dignity and pride that, while sometimes bordering on arrogance, stems from a deep sense of self-worth. They are fiercely loyal and protective of their 'kingdom,' whether it's their family, friends, or work team. Generosity is one of their most prominent traits; a Leo enjoys showering their loved ones with gifts and affection. However, this need to be the sun around which others revolve means they crave admiration and recognition. A blow to their ego can be devastating. At their core, a Leo just wants to love and be loved, to celebrate life, and to share their light with the world.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Kreativ",
-        "leidenschaftlich",
-        "großzügig",
-        "warmherzig",
-        "fröhlich",
-        "humorvoll"
+        "Creative",
+        "Passionate",
+        "Generous",
+        "Warm-hearted",
+        "Cheerful",
+        "Humorous"
       ],
-
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
         "Arrogant",
-        "stur",
-        "egozentrisch",
-        "faul",
-        "inflexibel"
+        "Stubborn",
+        "Self-centered",
+        "Lazy",
+        "Inflexible"
       ],
-      "loveTitle": "Löwe in der Liebe",
-      "love": "Einen Löwen zu lieben ist wie ein Platz in der ersten Reihe für eine große Show. Sie sind dramatische, leidenschaftliche und unglaublich großzügige Liebhaber. Die Romanze ist für sie eine Theaterproduktion, voller großer Gesten, luxuriöser Geschenke und endloser Anbetung. Sie sehnen sich danach, das Zentrum des Universums ihres Partners zu sein, und im Gegenzug bieten sie eine wilde Loyalität und Schutz. Sie gehen nicht, sie stolzieren, und sie erwarten, dass ihr Partner jede ihrer Bewegungen bewundert. Die Beziehung muss lustig, verspielt und voller Komplimente sein. Ihre Notwendigkeit ständiger Aufmerksamkeit kann jedoch anstrengend sein, und ihr verletzter Stolz kann zu einem Drama führen, das eines Oscars würdig ist. Sie brauchen einen Partner, der sowohl ihr größter Bewunderer als auch ein Gleichgestellter ist, der keine Angst hat, ihr Ego mit Anmut herauszufordern.",
-      "friendshipTitle": "Löwe in Freundschaft",
-      "friendship": "Ein Löwe-Freund ist die Sonne Ihres sozialen Kreises. Sie sind diejenigen, die die denkwürdigsten Partys organisieren und dafür sorgen, dass sich alle einbezogen und gefeiert fühlen. Ihre Loyalität ist unerschütterlich; sie werden ihre Freunde mit der Wildheit eines Löwen verteidigen, der seine Jungen schützt. Sie sind unglaublich großzügig, sowohl mit ihrer Zeit als auch mit ihren Ressourcen. Eine Freundschaft mit einem Löwen erfordert jedoch, dass Sie ihre Königlichkeit anerkennen. Sie lieben es, im Mittelpunkt der Aufmerksamkeit zu stehen und erwarten von ihren Freunden, dass sie ihr treuestes Publikum sind. Obwohl ihr Herz aus Gold ist, ist ihr Stolz zerbrechlich. Wenn sie sich ignoriert oder nicht geschätzt fühlen, wird ihr Brüllen zu hören sein. Trotzdem machen ihre Wärme und Lebensfreude jedes Drama lohnenswert.",
-      "workTitle": "Löwe bei der Arbeit",
-      "work": "Bei der Arbeit ist der Löwe der natürliche Anführer und der Motivator des Teams. Sie suchen nicht unbedingt die Macht um der Macht willen, sondern die Möglichkeit, mit gutem Beispiel voranzugehen und zu inspirieren. Sie gedeihen in Rollen, die es ihnen ermöglichen, zu glänzen, sei es auf der Bühne, im Sitzungssaal oder an der Spitze eines kreativen Teams. Sie sind ausgezeichnete Redner, Künstler, Regisseure und Sprecher. Ihr Vertrauen ist ansteckend und sie haben die angeborene Fähigkeit, Menschen an eine Vision glauben zu lassen. Ihre größte Herausforderung ist die Delegation; sie haben manchmal das Gefühl, dass niemand die Arbeit so gut (oder mit so viel Stil) machen kann wie sie. Sie brauchen ständige Anerkennung für ihre Beiträge und können demotiviert werden, wenn ihr individueller Glanz nicht geschätzt wird."
+      "loveTitle": "Leo in Love",
+      "love": "Loving a Leo is like having a front-row seat to a grand performance. They are dramatic, passionate, and incredibly generous lovers. Romance for them is a theatrical production, filled with grand gestures, lavish gifts, and endless adoration. They long to be the center of their partner's universe and, in return, offer fierce loyalty and protection. They don't walk; they strut, and they expect their partner to admire their every move. The relationship must be fun, playful, and full of praise. However, their need for constant attention can be exhausting, and their bruised pride can lead to Oscar-worthy drama. They need a partner who is both their biggest fan and an equal who isn't afraid to challenge their ego with grace.",
+      "friendshipTitle": "Leo in Friendship",
+      "friendship": "A Leo friend is the sun of your social circle. They are the ones who organize the most memorable parties and make sure everyone feels included and celebrated. Their loyalty is unwavering; they will defend their friends with the ferocity of a lion defending its cubs. They are incredibly generous, both with their time and their resources. However, a friendship with a Leo requires you to acknowledge their royalty. They love being the center of attention and expect their friends to be their most loyal audience. Though their heart is golden, their pride is fragile. If they feel ignored or unappreciated, their roar will be heard. Despite this, their warmth and zest for life make any drama worthwhile.",
+      "workTitle": "Leo at Work",
+      "work": "At work, Leo is the natural leader and the team's motivator. They don't necessarily seek power for its own sake, but for the opportunity to inspire and lead by example. They thrive in roles that allow them to shine, whether on stage, in the boardroom, or at the helm of a creative team. They are excellent speakers, performers, directors, and spokespeople. Their confidence is contagious, and they have an innate ability to make people believe in a vision. Their biggest challenge is delegation; they sometimes feel that no one can do the job as well (or with as much flair) as they can. They need constant recognition for their contributions and can become demotivated in an environment that doesn't value their individual sparkle."
     },
     "Virgo": {
-      "title": "Eigenschaften der Jungfrau",
-      "description": "Die Jungfrau ist das Zeichen für Dienst, Reinheit und praktische Analyse. Vom Merkur regiert, besitzen sie einen scharfen Verstand und einen angeborenen Wunsch, die Welt um sich herum zu verbessern und zu organisieren. Sie sind detailorientiert, methodisch und haben ein tiefes Bedürfnis, nützlich zu sein. Sie sind die stillen Helfer des Tierkreises, die im Hintergrund arbeiten, um sicherzustellen, dass alles perfekt funktioniert. Der Verstand einer Jungfrau ist ein komplexes System aus Listen, Plänen und Analysen. Sie bemerken die Details, die andere übersehen, was sie zu exzellenten Redakteuren, Kritikern und Handwerkern macht. Dieser Perfektionismus ist jedoch ein zweischneidiges Schwert. Er kann sie zu einer unerbittlichen Selbstkritik und einer ständigen Angst führen, ihren eigenen unmöglichen Standards nicht gerecht zu werden. Trotz ihrer zurückhaltenden Natur haben Jungfrauen einen tiefen Brunnen der Fürsorge und Hingabe. Sie zeigen ihre Liebe nicht mit großen Gesten, sondern mit praktischen Dienstleistungen: einen tropfenden Wasserhahn reparieren, Ihre Finanzen organisieren oder einfach nur mit einem vernünftigen Rat zur Seite stehen, wenn Sie ihn am meisten brauchen. Ihre größte Herausforderung ist es, zu lernen, sich zu entspannen, Unvollkommenheit zu akzeptieren und zu verstehen, dass sie wertvoll sind für das, was sie sind, nicht nur für das, was sie für andere tun.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Virgo",
+      "description": "Virgo is the sign of service, purity, and practical analysis. Ruled by Mercury, they possess a sharp mind and an innate desire to improve and organize the world around them. They are detail-oriented, methodical, and have a deep-seated need to be useful. They are the quiet helpers of the zodiac, working behind the scenes to ensure everything runs perfectly. A Virgo's mind is a complex system of lists, plans, and analysis. They notice the details that others overlook, which makes them excellent editors, critics, and artisans. This perfectionism, however, is a double-edged sword. It can lead them to relentless self-criticism and a constant anxiety about not living up to their own impossible standards. Despite their reserved nature, Virgos have a deep well of care and devotion. They show their love not with grand gestures, but with practical acts of service: fixing a leaky faucet, organizing your finances, or simply being there with sensible advice when you need it most. Their greatest challenge is learning to relax, to accept imperfection, and to understand that they are valuable for who they are, not just for what they do for others.",
+      "strengthsTitle": "Strengths",
       "strengths": [
         "Loyal",
-        "analytisch",
-        "freundlich",
-        "fleißig",
-        "praktisch",
-        "bescheiden"
+        "Analytical",
+        "Kind",
+        "Hardworking",
+        "Practical",
+        "Modest"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Schüchternheit",
-        "Sorgen",
-        "übermäßig kritisch gegenüber sich selbst und anderen",
-        "nur Arbeit und kein Vergnügen"
+        "Shyness",
+        "Worry",
+        "Overly critical of self and others",
+        "All work and no play"
       ],
-
-      "loveTitle": "Jungfrau in der Liebe",
-      "love": "In der Liebe drückt die Jungfrau ihre Zuneigung auf die praktischste und greifbarste Weise aus. Ihre Liebessprache sind keine Sonette, sondern Dienstleistungen: sicherstellen, dass Sie alles haben, was Sie brauchen, Ihren Terminkalender organisieren oder eine gesunde Mahlzeit zubereiten. Sie sind anfangs vorsichtig und analysieren jedes Detail, bevor sie ihr Herz hingeben. Sie suchen einen Partner, der ordentlich, intelligent und zuverlässig ist. Sobald sie sich engagieren, sind sie unglaublich loyale, aufmerksame und hingebungsvolle Partner. Ihre größte Herausforderung ist es, ihre Tendenz zur Kritik zu überwinden. Sie können sich auf die Unvollkommenheiten ihres Partners (und ihrer selbst) fixieren und vergessen, dass Liebe von Natur aus unvollkommen ist. Sie brauchen einen Begleiter, der ihre Hingabe schätzt und ihnen hilft, sich zu entspannen und weniger hart zu sich selbst zu sein.",
-      "friendshipTitle": "Jungfrau in Freundschaft",
-      "friendship": "Ein Jungfrau-Freund ist das zuverlässigste Unterstützungssystem, das Sie sich vorstellen können. Sie sind diejenigen, die sich an Ihre Allergien erinnern, Ihnen beim Zusammenbau komplizierter Möbel helfen und Ihnen die praktischsten und am besten recherchierten Ratschläge geben. Ihre Freundschaft ist ruhig, dramafrei und basiert auf Loyalität und gegenseitiger Unterstützung. Sie sind nicht die emotional ausdrucksstärksten, aber ihre ständige Anwesenheit und ihre Hilfsbereitschaft sprechen mehr als tausend Worte. Die Herausforderung besteht darin, dass ihr Wunsch zu 'helfen' manchmal zu unaufgeforderter Kritik darüber werden kann, wie Sie Ihr Leben verbessern könnten. Wenn Sie darüber hinwegsehen und ihre reine Absicht schätzen können, haben Sie einen lebenslangen Freund, der sich wirklich um Ihr Wohlergehen kümmert.",
-      "workTitle": "Jungfrau bei der Arbeit",
-      "work": "Im Arbeitsumfeld ist die Jungfrau die Säule der Effizienz und Qualität. Sie sind die Redakteure, Analysten, Forscher und Verwalter par excellence. Sie haben ein Adlerauge für Details und die angeborene Fähigkeit, Fehler zu finden und Prozesse zu optimieren. Kein Detail ist zu klein für ihre Prüfung. Sie sind unermüdliche Arbeiter, angetrieben von einem tiefen Pflichtbewusstsein und dem Wunsch, perfekte Arbeit zu leisten. Sie können ausgezeichnete Manager sein, obwohl ihr Stil eher darin besteht, mit gutem Beispiel voranzugehen, als mit großem Charisma. Ihre größte Herausforderung ist der lähmende Perfektionismus; sie können sich in Details verstricken und das große Ganze aus den Augen verlieren. Sie müssen lernen zu delegieren und darauf zu vertrauen, dass 'gut genug' manchmal tatsächlich ausreicht."
+      "loveTitle": "Virgo in Love",
+      "love": "In love, Virgo expresses their affection in the most practical and tangible ways. Their love language isn't sonnets, but acts of service: making sure you have everything you need, organizing your schedule, or preparing a healthy meal. They are cautious at first, analyzing every detail before giving their heart away. They seek a partner who is clean, intelligent, and reliable. Once they commit, they are incredibly loyal, attentive, and devoted partners. Their biggest challenge is overcoming their tendency to be critical. They can become fixated on their partner's (and their own) imperfections, forgetting that love is inherently imperfect. They need a companion who appreciates their devotion and helps them to relax and be less hard on themselves.",
+      "friendshipTitle": "Virgo in Friendship",
+      "friendship": "A Virgo friend is the most dependable support system you can imagine. They are the ones who remember your allergies, help you assemble that complicated piece of furniture, and give you the most practical, well-researched advice. Their friendship is quiet, drama-free, and built on loyalty and mutual support. They aren't the most emotionally expressive, but their constant presence and acts of help speak louder than a thousand words. The challenge is that their desire to 'help' can sometimes turn into unsolicited criticism about how you could improve your life. If you can see past that and appreciate their pure intention, you'll have a lifelong friend who truly cares about your well-being.",
+      "workTitle": "Virgo at Work",
+      "work": "In the workplace, Virgo is the pillar of efficiency and quality. They are the editors, analysts, researchers, and administrators par excellence. They have an eagle eye for detail and an innate ability to find flaws and optimize processes. No detail is too small for their scrutiny. They are tireless workers, driven by a deep sense of duty and a desire to do a perfect job. They can be excellent managers, though their style is more about leading by example than with grand charisma. Their biggest challenge is paralyzing perfectionism; they can get stuck in the details, losing sight of the bigger picture. They need to learn to delegate and trust that 'good enough' is, in fact, sometimes enough."
     },
     "Libra": {
-      "title": "Eigenschaften der Waage",
-      "description": "Regiert von Venus, ist die Waage das Zeichen für Gleichgewicht, Harmonie und Gerechtigkeit. Waagen sind soziale Wesen, die in Partnerschaften aufblühen und danach streben, in allen Lebensbereichen ein Gleichgewicht zu schaffen. Sie haben ein feines Gespür für Schönheit und einen natürlichen diplomatischen Charme. Als kardinales Luftzeichen ist ihre Mission, Verbindungen zu initiieren und den Frieden durch Vermittlung und Gerechtigkeit zu fördern. Der Verstand einer Waage wägt ständig Vor- und Nachteile ab und sucht nach der ausgewogensten Perspektive, was zu einer berüchtigten Unentschlossenheit führen kann. Es ist nicht so, dass sie nicht wissen, was sie wollen, sondern dass sie die Gültigkeit aller Seiten einer Diskussion erkennen können. Diese Fähigkeit macht sie zu exzellenten Diplomaten, Beratern und Anwälten. Ästhetik ist für ihr Wohlbefinden von grundlegender Bedeutung; sie fühlen sich von allem Schönen angezogen, sei es in der Kunst, Musik, Mode oder bei Menschen. Eine unordentliche oder konfliktreiche Umgebung ist für sie körperlich anstrengend. Vor allem ist die Waage das Zeichen des 'Wir', nicht des 'Ich'. Sie fühlen sich am vollständigsten, wenn sie in einer Partnerschaft sind, sei es romantisch, geschäftlich oder freundschaftlich, und sie werden große Anstrengungen unternehmen, um den Frieden und die Harmonie in ihren Beziehungen zu erhalten.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Libra",
+      "description": "Ruled by Venus, Libra is the sign of balance, harmony, and justice. Librans are social beings who thrive on partnership and seek to create equilibrium in all areas of life. They have a keen eye for beauty and a natural diplomatic charm. As a Cardinal Air sign, their mission is to initiate connections and foster peace through mediation and fairness. A Libra's mind is constantly weighing pros and cons, seeking the most balanced perspective, which can lead to notorious indecisiveness. It's not that they don't know what they want, but that they can see the validity in all sides of an argument. This ability makes them excellent diplomats, counselors, and lawyers. Aesthetics are fundamental to their well-being; they are drawn to all things beautiful, whether in art, music, fashion, or people. A cluttered or conflict-ridden environment is physically draining for them. Above all, Libra is the sign of 'we,' not 'me.' They feel most whole when in a partnership, be it romantic, business, or friendship, and they will go to great lengths to maintain peace and harmony in their relationships.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Kooperativ",
-        "diplomatisch",
-        "liebenswürdig",
-        "gerecht",
-        "sozial"
+        "Cooperative",
+        "diplomatic",
+        "gracious",
+        "fair-minded",
+        "social"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Unentschlossen",
-        "vermeidet Konfrontationen",
-        "nachtragend",
-        "selbstmitleidig"
+        "Indecisive",
+        "avoids confrontations",
+        "carries a grudge",
+        "self-pity"
       ],
-      "loveTitle": "Waage in der Liebe",
-      "love": "In der Liebe ist die Waage ein romantischer Idealist, der nach seiner anderen Hälfte sucht. Ihr Endziel ist eine ausgeglichene, harmonische und ästhetisch ansprechende Partnerschaft. Sie sind aufmerksame, diplomatische Liebhaber, die immer bereit sind, Kompromisse einzugehen, um den Frieden zu wahren. Kommunikation und intellektuelle Verbindung sind für sie von entscheidender Bedeutung. Ihre Abneigung gegen Konflikte kann jedoch ihre größte Schwäche sein; sie können notwendige Diskussionen vermeiden, um eine scheinbare Harmonie aufrechtzuerhalten, was zu unterschwelligen Ressentiments führen kann. Sie brauchen einen Partner, der ihre romantische Natur schätzt und sie sanft ermutigt, ihre wahren Bedürfnisse auszudrücken, auch wenn dies bedeutet, das Gleichgewicht vorübergehend zu stören.",
-      "friendshipTitle": "Waage in Freundschaft",
-      "friendship": "Ein Waage-Freund ist der Vermittler, der Friedensstifter und der soziale Planer der Gruppe. Sie sind charmant, fair und suchen immer nach Gerechtigkeit. Sie genießen soziale Interaktionen und sind hervorragend darin, Menschen zusammenzubringen. Ihre Gesellschaft ist angenehm und entspannt, immer auf der Suche nach Konsens. Der Nachteil ist ihre legendäre Unentschlossenheit; die Wahl eines Restaurants kann zu einer einstündigen Debatte werden. Trotzdem macht ihre Fähigkeit, zuzuhören und ausgewogene Ratschläge zu geben, sie zu wertvollen Freunden. Sie werden sich immer bemühen sicherzustellen, dass sich alle einbezogen und glücklich fühlen.",
-      "workTitle": "Waage bei der Arbeit",
-      "work": "Am Arbeitsplatz zeichnet sich die Waage in Rollen aus, die Diplomatie, Verhandlungsgeschick und soziale Kompetenz erfordern. Sie sind hervorragende Teamplayer, Vermittler, Anwälte, Designer und Veranstaltungsplaner. Sie gedeihen in harmonischen und ästhetisch ansprechenden Umgebungen und haben Schwierigkeiten in wettbewerbsorientierten oder konfliktreichen Atmosphären. Ihre Fähigkeit, alle Seiten eines Problems zu sehen, macht sie zu exzellenten Strategen, obwohl sie möglicherweise lange brauchen, um eine endgültige Entscheidung zu treffen. Sie sind hervorragend darin, Netzwerke aufzubauen und positive berufliche Beziehungen zu pflegen."
+      "loveTitle": "Libra in Love",
+      "love": "In love, Libra is a hopeless romantic who seeks their other half. Their ultimate goal is a balanced, harmonious, and aesthetically pleasing partnership. They are attentive, diplomatic lovers who are always willing to compromise to keep the peace. Communication and intellectual connection are vital for them. However, their aversion to conflict can be their greatest weakness; they may avoid necessary discussions to maintain an appearance of harmony, which can lead to underlying resentments. They need a partner who appreciates their romantic nature and gently encourages them to express their true needs, even if it means momentarily upsetting the balance.",
+      "friendshipTitle": "Libra in Friendship",
+      "friendship": "A Libra friend is the mediator, the peacemaker, and the social planner of the group. They are charming, fair, and always seek equity. They enjoy social interactions and are excellent at bringing people together. Their company is pleasant and relaxed, always aiming for consensus. The downside is their legendary indecisiveness; choosing a restaurant can become an hour-long debate. Despite this, their ability to listen and offer balanced advice makes them valuable friends. They will always strive to make sure everyone feels included and happy.",
+      "workTitle": "Libra at Work",
+      "work": "In the workplace, Libra excels in roles that require diplomacy, negotiation, and interpersonal skills. They are great team players, mediators, lawyers, designers, and event planners. They thrive in harmonious and aesthetically pleasing environments and struggle in competitive or conflict-ridden atmospheres. Their ability to see all sides of an issue makes them excellent strategists, though they may take a long time to make a final decision. They are excellent at building networks and maintaining positive professional relationships."
     },
     "Scorpio": {
-      "title": "Eigenschaften des Skorpions",
-      "description": "Skorpion ist das Zeichen der tiefen Emotion, Macht und Transformation. Regiert von Pluto (und traditionell von Mars), sind sie leidenschaftlich, einfallsreich und unglaublich entschlossen. Skorpione sind bekannt für ihre Intensität und ihre Fähigkeit, unter die Oberfläche zu blicken, um die Wahrheit in jeder Angelegenheit zu erkennen. Sie leben in einer Welt von Schwarz und Weiß; für sie gibt es keine Grautöne. Alles oder nichts. Diese Intensität macht sie unglaublich loyal und beschützend gegenüber denen, die ihr Vertrauen gewinnen, aber auch zu beeindruckenden Gegnern, wenn sie sich verraten fühlen. Sie sind die Detektive des Tierkreises, immer investigativ, fragend und auf der Suche nach den verborgenen Motiven hinter den Handlungen der Menschen. Ihre Wasser-Natur verleiht ihnen eine tiefe Intuition und eine fast übersinnliche Verbindung zur emotionalen Welt, sowohl ihrer eigenen als auch der anderer. Sie verbergen jedoch oft ihre eigenen Gefühle hinter einer Fassade der Ruhe und Kontrolle. Sie fürchten die Verletzlichkeit mehr als alles andere, und ihre größte Herausforderung ist es, zu lernen, zu vertrauen und sich hinzugeben. Transformation ist ein zentrales Thema in ihrem Leben; wie der Phönix ist ein Skorpion dazu bestimmt, mehrere 'Tode' und Wiedergeburten zu durchlaufen und aus jeder Krise stärker und weiser hervorzugehen als zuvor.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Scorpio",
+      "description": "Scorpio is the sign of deep emotion, power, and transformation. Ruled by Pluto (and traditionally Mars), they are passionate, resourceful, and incredibly determined. Scorpios are known for their intensity and their ability to see beneath the surface to the truth of any matter. They live in a world of black and white; for them, there are no gray areas. It's all or nothing. This intensity makes them incredibly loyal and protective of those who earn their trust, but also formidable adversaries if they feel betrayed. They are the detectives of the zodiac, always investigating, questioning, and seeking the hidden motives behind people's actions. Their watery nature gives them deep intuition and an almost psychic connection to the emotional world, both their own and others'. However, they often hide their own feelings under a veneer of calm and control. They fear vulnerability more than anything, and their greatest challenge is learning to trust and let go. Transformation is a central theme in their lives; like the phoenix, a Scorpio is destined to go through multiple 'deaths' and rebirths, emerging from each crisis stronger and wiser than before.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Einfallsreich",
-        "mutig",
-        "leidenschaftlich",
-        "ein wahrer Freund",
-        "entschlossen"
+        "Resourceful",
+        "brave",
+        "passionate",
+        "a true friend",
+        "determined"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Misstrauisch",
-        "eifersüchtig",
-        "geheimniskrämerisch",
-        "kann manipulativ sein"
+        "Distrusting",
+        "jealous",
+        "secretive",
+        "can be manipulative"
       ],
-      "loveTitle": "Skorpion in der Liebe",
-      "love": "Einen Skorpion zu lieben ist eine transformative und intensive Erfahrung. Sie machen keine halben Sachen; wenn sie lieben, tun sie es mit jeder Faser ihres Seins. Sie suchen eine Verschmelzung der Seelen, eine Verbindung, die das Physische übersteigt. Loyalität und Vertrauen sind die Säulen ihres romantischen Universums; ein Verrat, wie klein auch immer, ist fast unverzeihlich. Sie sind unglaublich leidenschaftlich und beschützend, aber diese Intensität kann sich in Eifersucht und Besitzgier verwandeln, wenn sie sich unsicher fühlen. Sie brauchen einen Partner, der ihre emotionale Tiefe nicht fürchtet und bereit ist, die Geheimnisse des Lebens (und der Seele) mit ihnen zu erforschen. Eine Beziehung mit einem Skorpion ist niemals oberflächlich; sie ist eine Reise in die Tiefen des menschlichen Herzens.",
-      "friendshipTitle": "Skorpion in Freundschaft",
-      "friendship": "Die Freundschaft eines Skorpions zu gewinnen bedeutet, einen lebenslangen Verbündeten zu gewinnen. Sie haben nicht viele Freunde, aber diejenigen, die sie haben, werden als Familie betrachtet. Sie sind die Hüter der tiefsten Geheimnisse und die wildesten Verteidiger. Ein Skorpion-Freund wird immer wissen, wenn etwas nicht stimmt, auch wenn Sie nichts sagen, dank seiner durchdringenden Intuition. Sie sind brutal ehrlich, aber ihre Loyalität ist unerschütterlich. Wenn Sie jedoch ihr Vertrauen verraten, bereiten Sie sich darauf vor, den Stachel zu spüren. Sie vergeben und vergessen nicht leicht. Ihre Freundschaft ist ein heiliger Pakt, eine Festung des Vertrauens und der gegenseitigen Unterstützung.",
-      "workTitle": "Skorpion bei der Arbeit",
-      "work": "Bei der Arbeit ist der Skorpion der Stratege, der Ermittler und der Problemlöser par excellence. Sie haben die einzigartige Fähigkeit, sich intensiv auf eine Aufgabe zu konzentrieren und alle Ablenkungen zu ignorieren, bis sie der Sache auf den Grund gegangen sind. Sie gedeihen in Rollen, die Ermittlungen, tiefgehende Analysen und den Umgang mit vertraulichen Informationen erfordern, wie in den Bereichen Finanzen, Forschung, Psychologie oder Chirurgie. Sie sind ehrgeizig und haben keine Angst vor Macht. Ihre Entschlossenheit ist beeindruckend, und sie werden vor nichts zurückschrecken, um ihre Ziele zu erreichen. Sie können zurückhaltend sein und lieber allein arbeiten, aber wenn sie Teil eines Teams sind, sind ihre Loyalität und ihr Engagement total, solange sie ihre Kollegen respektieren."
+      "loveTitle": "Scorpio in Love",
+      "love": "Loving a Scorpio is a transformative and intense experience. They don't do things by halves; when they love, they do so with every fiber of their being. They seek a merging of souls, a connection that transcends the physical. Loyalty and trust are the pillars of their romantic universe; a betrayal, no matter how small, is almost unforgivable. They are incredibly passionate and protective, but this intensity can turn into jealousy and possessiveness if they feel insecure. They need a partner who is not afraid of their emotional depth and who is willing to explore the mysteries of life (and the soul) with them. A relationship with a Scorpio is never superficial; it is a journey into the depths of the human heart.",
+      "friendshipTitle": "Scorpio in Friendship",
+      "friendship": "To gain a Scorpio's friendship is to gain a lifelong ally. They do not have many friends, but those they do have are considered family. They are the keepers of the deepest secrets and the fiercest defenders. A Scorpio friend will always know when something is wrong, even if you say nothing, thanks to their penetrating intuition. They are brutally honest, but their loyalty is unwavering. However, if you betray their trust, be prepared to feel the sting. They do not forgive or forget easily. Their friendship is a sacred pact, a fortress of trust and mutual support.",
+      "workTitle": "Scorpio at Work",
+      "work": "At work, Scorpio is the strategist, the investigator, and the problem-solver par excellence. They have a unique ability to focus intensely on a task, ignoring all distractions until they get to the bottom of the matter. They thrive in roles that require investigation, deep analysis, and handling of confidential information, such as in finance, research, psychology, or surgery. They are ambitious and not afraid of power. Their determination is formidable, and they will stop at nothing to achieve their goals. They can be secretive and prefer to work alone, but when they are part of a team, their loyalty and commitment are total, as long as they respect their colleagues."
     },
     "Sagittarius": {
-      "title": "Eigenschaften des Schützen",
-      "description": "Der Abenteurer und Philosoph des Tierkreises, der Schütze wird von Jupiter regiert, dem Planeten der Expansion, des Glücks und des höheren Wissens. Sie sind optimistisch, freiheitsliebend und haben einen unstillbaren Durst nach Wissen und neuen Erfahrungen. Für einen Schützen ist das Leben ein großes Abenteuer, eine Reise, um die Welt zu erkunden und ihre Bedeutung zu verstehen. Ihr Verstand ist immer auf der Suche nach der Wahrheit, was sie zu ewigen Studenten macht, die immer an der Universität des Lebens eingeschrieben sind. Sie besitzen einen ansteckenden Humor und eine brutale Ehrlichkeit, die, obwohl erfrischend, manchmal taktlos sein kann. Sie haben keine schlechten Absichten; sie glauben einfach daran, die Dinge so zu sagen, wie sie sie sehen. Ihr größtes Bedürfnis ist die Freiheit. Alles, was sie sich gefangen oder eingeschränkt fühlen lässt, sei es eine langweilige Routine oder eine besitzergreifende Beziehung, wird sie zum Horizont fliehen lassen. Sie sind die Visionäre des Tierkreises, immer in die Zukunft blickend und glaubend, dass das Beste noch bevorsteht. Ihr Glaube an das Universum ist unerschütterlich, und diese optimistische Energie zieht oft das Glück in ihr Leben.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Sagittarius",
+      "description": "The adventurer and philosopher of the zodiac, Sagittarius is ruled by Jupiter, the planet of expansion, luck, and higher knowledge. They are optimistic, freedom-loving, and have an insatiable thirst for knowledge and new experiences. For a Sagittarius, life is a grand adventure, a journey to explore the world and understand its meaning. Their mind is always in search of truth, which makes them eternal students, forever enrolled in the university of life. They possess an infectious sense of humor and a brutal honesty that, while refreshing, can sometimes lack tact. They mean no harm; they simply believe in telling it like it is. Their greatest need is freedom: anything that makes them feel trapped or limited, whether it's a boring routine or a possessive relationship, will have them running for the horizon. They are the visionaries of the zodiac, always looking to the future and believing that the best is yet to come. Their faith in the universe is unwavering, and this optimistic energy often attracts good fortune into their lives.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Großzügig",
-        "idealistisch",
-        "großartiger Sinn für Humor",
-        "optimistisch"
+        "Generous",
+        "idealistic",
+        "great sense of humor",
+        "optimistic"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Verspricht mehr, als er halten kann",
-        "ungeduldig",
-        "taktlos"
+        "Promises more than can deliver",
+        "impatient",
+        "tactless"
       ],
-      "loveTitle": "Schütze in der Liebe",
-      "love": "In der Liebe sucht der Schütze einen Abenteuerpartner, jemanden, der sowohl sein Liebhaber als auch sein bester Freund ist. Sie schätzen Freiheit und Unabhängigkeit über alles, daher wird ein besitzergreifender oder eifersüchtiger Partner sie zur Flucht veranlassen. Ihre Herangehensweise an die Romantik ist optimistisch, lustig und philosophisch. Sie lieben es, an der Seite ihres Partners zu lernen, sei es auf Reisen in ferne Länder oder bei der Erforschung neuer Ideen. Sie können sich vor Verpflichtungen scheuen, nicht aus Mangel an Liebe, sondern aus Angst, ihre Freiheit zu verlieren. Sie brauchen einen Begleiter, der ihr Bedürfnis nach Freiraum versteht und bereit ist, mit ihnen die Welt zu wachsen und zu erkunden.",
-      "friendshipTitle": "Schütze in Freundschaft",
-      "friendship": "Ein Schütze-Freund ist derjenige, mit dem man spontan einen Roadtrip unternimmt oder eine philosophische Debatte führt, die die ganze Nacht dauert. Sie sind die Seele der Party, mit einem ansteckenden Humor und einer optimistischen Lebenseinstellung. Ihre Ehrlichkeit ist legendär; sie werden Ihnen immer die Wahrheit sagen, auch wenn es ein wenig weh tut. Erwarten Sie nicht, dass sie sich jedes Detail Ihres Lebens merken, aber sie werden immer da sein, um Sie zu ermutigen, größer zu träumen und kühner zu leben. Sie sind pflegeleichte Freunde, die das Bedürfnis der anderen nach Unabhängigkeit verstehen und respektieren.",
-      "workTitle": "Schütze bei der Arbeit",
-      "work": "Im Arbeitsumfeld ist der Schütze der Visionär, der Lehrer und der Entdecker. Sie gedeihen in Karrieren, die es ihnen ermöglichen, zu lernen, zu lehren und zu erforschen, wie in der Wissenschaft, im Verlagswesen, im Recht oder im Tourismus. Sie hassen Routine und Mikromanagement. Sie brauchen Autonomie und die Freiheit, ihrer Neugier zu folgen. Sie sind ausgezeichnet darin, andere mit ihrer optimistischen Vision und ihrer Fähigkeit, das große Ganze zu sehen, zu motivieren. Ihre Herausforderung besteht darin, auf Details zu achten und alltägliche Aufgaben zu erledigen. Sie funktionieren am besten, wenn sie inspirieren und die detaillierte Ausführung delegieren können."
+      "loveTitle": "Sagittarius in Love",
+      "love": "In love, Sagittarius seeks a partner in adventure, someone who is both their lover and their best friend. They value freedom and independence above all else, so a possessive or jealous partner will send them running. Their approach to romance is optimistic, fun, and philosophical. They love learning alongside their partner, whether it's by traveling to faraway lands or exploring new ideas. They can be wary of commitment, not for a lack of love, but for fear of losing their freedom. They need a companion who understands their need for space and who is willing to grow and explore the world with them.",
+      "friendshipTitle": "Sagittarius in Friendship",
+      "friendship": "A Sagittarius friend is the one who calls you for a spontaneous road trip or a late-night philosophical debate. They are the life of the party, with an infectious sense of humor and an optimistic outlook on life. Their honesty is legendary; they will always tell you the truth, even if it stings a little. Don't expect them to remember every detail of your life, but they will always be there to encourage you to dream bigger and live more boldly. They are low-maintenance friends who understand and respect others' need for independence.",
+      "workTitle": "Sagittarius at Work",
+      "work": "At work, Sagittarius is the visionary, the teacher, and the explorer. They thrive in roles that allow them to learn, teach, and explore, such as academia, publishing, law, or tourism. They hate routine and micromanagement. They need autonomy and the freedom to follow their curiosity. They are excellent at motivating others with their optimistic vision and their ability to see the big picture. Their challenge is paying attention to details and completing mundane tasks. They work best when they can inspire and delegate the detailed execution."
     },
     "Capricorn": {
-      "title": "Eigenschaften des Steinbocks",
-      "description": "Die ehrgeizige und disziplinierte Ziege des Tierkreises. Regiert von Saturn, sind Steinböcke Meister der Selbstkontrolle und haben die Fähigkeit, den Weg zu weisen, solide und realistische Pläne zu machen und viele Menschen zu führen, die für sie arbeiten. Sie sind Meister der Manifestation. Sie repräsentieren Struktur, Tradition und Ehrgeiz. Für den Steinbock ist das Leben ein Berg, den es zu erklimmen gilt, und sie sind bereit, hart und geduldig zu arbeiten, um den Gipfel zu erreichen. Ihr Ansatz ist praktisch, methodisch und immer mit einer langfristigen Vision. Sie glauben nicht an Abkürzungen; sie glauben an Regeln, Verantwortung und den Aufbau solider Grundlagen. Obwohl sie von außen ernst, distanziert oder sogar kalt wirken können, besitzen sie einen trockenen Humor und ein tiefes Gefühl der Loyalität gegenüber denen, die ihren Respekt verdienen. Ihre größte Angst ist das Scheitern, und dieser Druck kann sie dazu bringen, zu hart mit sich selbst und anderen zu sein. Ihre Mission ist es zu lernen, dass wahrer Erfolg nicht nur an äußeren Errungenschaften gemessen wird, sondern auch an der Freude und Zufriedenheit, die auf der Reise gefunden werden. Sie sind die Felsen des Tierkreises, zuverlässig und fähig, jeden Sturm zu überstehen.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Capricorn",
+      "description": "The ambitious and disciplined goat of the zodiac. Ruled by Saturn, Capricorns are masters of self-control and have the ability to lead the way, make solid and realistic plans, and manage many people who work for them at any time. They are masters of manifestation. They represent structure, tradition, and ambition. For Capricorn, life is a mountain to be climbed, and they are willing to work hard and patiently to reach the summit. Their approach is practical, methodical, and always with a long-term vision. They don't believe in shortcuts; they believe in rules, responsibility, and building solid foundations. Though they may seem serious, distant, or even cold on the outside, they possess a dry wit and a deep sense of loyalty to those who earn their respect. Their greatest fear is failure, and this pressure can make them too hard on themselves and others. Their mission is to learn that true success is not just measured by external achievements but also by the joy and satisfaction found in the journey. They are the rocks of the zodiac, dependable and capable of weathering any storm.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Verantwortungsbewusst",
-        "diszipliniert",
-        "Selbstkontrolle",
-        "gute Manager",
+        "Responsible",
+        "disciplined",
+        "self-control",
+        "good managers",
         "loyal"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Besserwisserisch",
-        "unversöhnlich",
-        "herablassend",
-        "erwartet das Schlimmste"
+        "Know-it-all",
+        "unforgiving",
+        "condescending",
+        "expecting the worst"
       ],
-      "loveTitle": "Steinbock in der Liebe",
-      "love": "In der Liebe nimmt sich der Steinbock Zeit. Sie stürzen sich nicht leichtfertig in Beziehungen; für sie ist die Liebe eine langfristige Investition. Sie zeigen ihre Zuneigung nicht mit blumigen Worten, sondern mit Taten, Loyalität und unerschütterlichem Engagement. Sie suchen einen Partner, der ebenso ehrgeizig und verantwortungsbewusst ist und ihr Bedürfnis nach Struktur versteht. Sie mögen distanziert oder kühl wirken, aber unter ihrer zurückhaltenden Fassade verbirgt sich ein treues Herz, das sich nach einer tiefen und dauerhaften Verbindung sehnt. Sie brauchen einen Begleiter, der Sicherheit schätzt und versteht, dass ihre Arbeit auch eine Form der Liebe und Versorgung ist.",
-      "friendshipTitle": "Steinbock in Freundschaft",
-      "friendship": "Ein Steinbock-Freund ist derjenige, den man anruft, wenn man einen soliden Plan oder einen realistischen Rat braucht. Sie versüßen die Wahrheit nicht, aber sie werden immer da sein, um Ihnen zu helfen, einen Plan zu erstellen, um Ihre Probleme zu überwinden. Sie sind unglaublich zuverlässig und loyal. Ihre Freundschaften bauen sich langsam auf, basierend auf gegenseitigem Respekt und Vertrauen. Sie sind vielleicht nicht die ausdrucksstärksten Freunde, aber ihre Unterstützung ist felsenfest. Sie haben einen überraschenden und trockenen Sinn für Humor, den sie ihrem engsten Kreis vorbehalten. Sie schätzen Freunde, die ebenso ehrgeizig sind und ihr Bedürfnis nach Struktur verstehen.",
-      "workTitle": "Steinbock bei der Arbeit",
-      "work": "Bei der Arbeit ist der Steinbock der CEO des Tierkreises. Sie sind die Verkörperung von Disziplin, Verantwortung und Ehrgeiz. Sie haben eine natürliche Begabung für Management und langfristige Strategie. Sie gedeihen in strukturierten Umgebungen, in denen sie durch harte Arbeit und Hingabe die Erfolgsleiter erklimmen können. Sie haben keine Angst vor Verantwortung und sind hervorragend darin, sowohl Projekte als auch Menschen zu managen. Ihr Fokus ist unermüdlich, und ihr Endziel ist es immer, etwas Dauerhaftes und von hoher Qualität aufzubauen. Sie sind die Säulen jeder Organisation und bringen Stabilität und eine unübertroffene Arbeitsmoral mit."
+      "loveTitle": "Capricorn in Love",
+      "love": "In love, Capricorn takes their time. They do not rush into relationships; for them, love is a long-term investment. They show their affection not with flowery words, but with acts of service, loyalty, and unwavering commitment. They seek a partner who is equally ambitious and responsible, and who understands their need for structure. They may seem distant or cool, but beneath their reserved exterior is a loyal heart that longs for a deep and lasting connection. They need a companion who values security and understands that their work is also a form of love and provision.",
+      "friendshipTitle": "Capricorn in Friendship",
+      "friendship": "A Capricorn friend is the one you call when you need a solid plan or a dose of reality. They won't sugarcoat the truth, but they will always be there to help you build a plan to overcome your problems. They are incredibly dependable and loyal. Their friendships are built slowly, based on mutual respect and trust. They may not be the most expressive friends, but their support is rock-solid. They have a surprising and dry sense of humor that they reserve for their inner circle. They value friends who are equally ambitious and who understand their need for structure.",
+      "workTitle": "Capricorn at Work",
+      "work": "At work, Capricorn is the CEO of the zodiac. They are the embodiment of discipline, responsibility, and ambition. They have a natural talent for management and long-term strategy. They thrive in structured environments where they can climb the ladder of success through hard work and dedication. They are not afraid of responsibility and are excellent at managing both projects and people. Their focus is relentless, and their end goal is always to build something lasting and of high quality. They are the cornerstones of any organization, bringing stability and an unparalleled work ethic."
     },
     "Aquarius": {
-      "title": "Eigenschaften des Wassermanns",
-      "description": "Der Visionär und Humanist des Tierkreises. Regiert von Uranus (und traditionell von Saturn), sind Wassermänner originell, unabhängig und zukunftsorientiert. Sie gehen ihren eigenen Weg und setzen sich dafür ein, die Welt zu einem besseren Ort zu machen. Sie sind die Rebellen und Innovatoren, die den Status quo immer in Frage stellen und in Begriffen von 'wir' statt 'ich' denken. Ihr Verstand ist brillant, exzentrisch und immer seiner Zeit voraus. Sie fühlen sich wohler in der Welt der Ideen und Konzepte als in der der unordentlichen Emotionen. Dies kann sie distanziert oder unnahbar erscheinen lassen, aber ihre Sorge um die Menschheit ist echt und tief. Sie schätzen Freundschaft über alles und behandeln alle gleich, ohne Hierarchien. Ihr größtes Bedürfnis ist die Freiheit: Freiheit zu denken, anders zu sein und ihre Ideale ohne Einschränkungen zu verfolgen. Sie sind die Wasserträger, die Wissen und neue Perspektiven bringen, um den kollektiven Durst nach Fortschritt zu stillen.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Aquarius",
+      "description": "The visionary and humanitarian of the zodiac. Ruled by Uranus (and traditionally Saturn), Aquarians are original, independent, and forward-thinking. They march to the beat of their own drum and are dedicated to making the world a better place. They are the rebels and the innovators, always questioning the status quo and thinking in terms of 'we' instead of 'me.' Their mind is brilliant, eccentric, and always ahead of its time. They are more comfortable in the world of ideas and concepts than in the messy world of emotions. This can make them seem aloof or detached, but their concern for humanity is genuine and deep. They value friendship above all and treat everyone as equals, with no hierarchies. Their greatest need is freedom: freedom to think, to be different, and to pursue their ideals without restriction. They are the water-bearers, bringing knowledge and new perspectives to quench the collective thirst for progress.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Fortschrittlich",
-        "originell",
-        "unabhängig",
-        "humanitär",
-        "intellektuell"
+        "Progressive",
+        "original",
+        "independent",
+        "humanitarian",
+        "intellectual"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Flüchtet vor emotionalem Ausdruck",
-        "temperamentvoll",
-        "kompromisslos",
-        "distanziert"
+        "Runs from emotional expression",
+        "temperamental",
+        "uncompromising",
+        "aloof"
       ],
-      "loveTitle": "Wassermann in der Liebe",
-      "love": "In der Liebe braucht ein Wassermann vor allem einen Freund und intellektuellen Partner. Sie fühlen sich von originellen und unkonventionellen Köpfen angezogen. Ihr Ansatz zur Romantik ist eher zerebral als emotional. Sie mögen distanziert oder unnahbar wirken, aber ihre Liebe ist echt, wenn auch auf unkonventionelle Weise ausgedrückt. Sie schätzen Freiheit über alles, sowohl für sich selbst als auch für ihren Partner. Eine Beziehung mit einem Wassermann muss auf gegenseitigem Respekt, Unabhängigkeit und gemeinsamen Idealen basieren. Sie brauchen einen Begleiter, der nicht versucht, ihr Bedürfnis nach Geselligkeit mit einer Vielzahl von Menschen einzuschränken.",
-      "friendshipTitle": "Wassermann in Freundschaft",
-      "friendship": "Als Freund ist ein Wassermann loyal, fair und immer bereit, bei einer Sache zu helfen. Sie sind die Freunde, mit denen man die seltsamsten und faszinierendsten Gespräche führen kann. Sie sind nicht besitzergreifend und verstehen das Bedürfnis nach Freiraum. Ihr Fokus auf das Kollektiv kann jedoch dazu führen, dass sich ihre Freunde manchmal wie Teil einer größeren Gruppe fühlen, anstatt als besonderes Individuum. Sie schätzen Freundschaften, die auf gemeinsamen intellektuellen und humanitären Interessen basieren.",
-      "workTitle": "Wassermann bei der Arbeit",
-      "work": "Bei der Arbeit ist der Wassermann der Innovator, der Wissenschaftler und der Sozialreformer. Sie gedeihen in Rollen, die es ihnen ermöglichen, ihren brillanten Verstand zur unkonventionellen Lösung von Problemen einzusetzen. Sie hassen Routine und Bürokratie. Sie brauchen Autonomie und die Freiheit zu experimentieren. Sie sind hervorragend in Bereichen wie Technologie, Wissenschaft, Sozialarbeit und Aktivismus. Sie sind großartige Teamplayer, wenn sie an Projekten arbeiten, die mit ihren humanitären Idealen übereinstimmen."
+      "loveTitle": "Aquarius in Love",
+      "love": "In love, an Aquarius seeks a friend and intellectual partner above all. They are attracted to original and unconventional minds. Their approach to romance is more cerebral than emotional. They may seem distant or detached, but their love is genuine, though expressed in a non-traditional way. They value freedom above all else, both for themselves and for their partner. A relationship with an Aquarius must be based on mutual respect, independence, and shared ideals. They need a companion who won't try to curtail their need to socialize with a wide range of people.",
+      "friendshipTitle": "Aquarius in Friendship",
+      "friendship": "As a friend, an Aquarius is loyal, fair, and always ready to help a cause. They are the friends you can have the weirdest and most fascinating conversations with. They are not possessive and understand the need for space. However, their focus on the collective can sometimes make their friends feel like part of a larger group rather than a special individual. They value friendships based on shared intellectual and humanitarian interests.",
+      "workTitle": "Aquarius at Work",
+      "work": "At work, Aquarius is the innovator, the scientist, and the social reformer. They thrive in roles that allow them to use their brilliant mind to solve problems in unconventional ways. They hate routine and bureaucracy. They need autonomy and the freedom to experiment. They are excellent in fields like technology, science, social work, and activism. They are great team players when working on projects that align with their humanitarian ideals."
     },
     "Pisces": {
-      "title": "Eigenschaften der Fische",
-      "description": "Der Mystiker und Träumer des Tierkreises. Regiert von Neptun, sind Fische mitfühlend, künstlerisch und zutiefst intuitiv. Sie sind mit der spirituellen Welt verbunden und haben eine grenzenlose Fähigkeit zur Empathie. Ihre chamäleonartige Natur ermöglicht es ihnen, sich an jede Umgebung anzupassen und die Emotionen und Atmosphären um sie herum aufzusaugen. Diese Sensibilität ist sowohl ihre größte Gabe als auch ihre größte Herausforderung. Ein Fisch lebt in einer Welt, in der die Grenze zwischen Realität und Fantasie verschwommen ist, was ihnen eine immense Kreativität und Vorstellungskraft verleiht. Sie sind die alten Seelen des Tierkreises, Träger einer Weisheit, die aus anderen Leben zu stammen scheint. Ihr Mitgefühl kennt keine Grenzen, und sie stellen oft die Bedürfnisse anderer über ihre eigenen, was dazu führen kann, dass sie ausgenutzt werden. Sie haben oft eine tiefe Verbindung zu Musik, Kunst und jeder Ausdrucksform, die es ihnen ermöglicht, ihre riesige innere Welt zu kanalisieren. Eskapismus ist ihr Abwehrmechanismus; wenn die Welt zu hart wird, ziehen sie sich in ihr inneres Heiligtum der Träume zurück. Zu lernen, gesunde Grenzen zu setzen und in der Realität verankert zu bleiben, ohne ihre Magie zu verlieren, ist ihre große Lebenslektion. Sie sind unglaublich romantisch, nicht nur in der Liebe, sondern in ihrer Lebenseinstellung im Allgemeinen, immer auf der Suche nach Schönheit und spiritueller Verbindung in allem.",
-      "strengthsTitle": "Stärken",
+      "title": "Traits of the Pisces",
+      "description": "Pisces are compassionate, artistic, and deeply intuitive, the last sign of the zodiac with a boundless capacity for empathy. Pisces are connected to the spiritual realm and have a boundless capacity for empathy. Their chameleon-like nature allows them to adapt to any environment, absorbing the emotions and atmospheres around them. This sensitivity is both their greatest gift and their biggest challenge. Pisces live in a world where the line between reality and fantasy is blurred, endowing them with immense creativity and imagination. These are the old souls of the zodiac, bearers of a wisdom that seems to come from other lifetimes. They are kind and giving and often put the needs of others above their own, which can lead to them being taken advantage of. They often have a deep connection to music, art, and any form of expression that allows them to channel their vast inner world. Escapism is their defense mechanism, and when the world becomes too harsh, they retreat into their inner sanctuary of dreams. Learning to set healthy boundaries and to stay grounded in reality without losing their magic is a great life lesson. They are incredibly romantic, not just in love, but in their outlook on life in general, always seeking beauty and spiritual connection in everything.",
+      "strengthsTitle": "Strengths",
       "strengths": [
-        "Mitfühlend",
-        "künstlerisch",
-        "intuitiv",
-        "sanft",
-        "weise"
+        "Compassionate",
+        "artistic",
+        "intuitive",
+        "gentle",
+        "wise"
       ],
-      "weaknessesTitle": "Schwächen",
+      "weaknessesTitle": "Weaknesses",
       "weaknesses": [
-        "Ängstlich",
-        "übermäßig vertrauensvoll",
-        "traurig",
-        "Wunsch, der Realität zu entfliehen",
-        "kann ein Opfer oder ein Märtyrer sein"
+        "Fearful",
+        "overly trusting",
+        "sad",
+        "desire to escape reality",
+        "can be a victim or a martyr"
       ],
-      "loveTitle": "Fische in der Liebe",
-      "love": "In der Liebe suchen Fische eine Verschmelzung der Seelen, eine Verbindung, die das Alltägliche übersteigt. Sie sind hoffnungslose Romantiker, fähig zu einem Maß an Hingabe und Opferbereitschaft, das nur wenige erreichen können. Sie zeigen ihre Liebe durch Empathie, Mitgefühl und den Wunsch, die Wunden ihres Partners zu heilen. Ihre Tendenz, ihren Partner zu idealisieren, kann sie jedoch zur Enttäuschung führen. Sie brauchen einen Partner, der sowohl stark als auch sanft ist, jemanden, der ihr empfindsames Herz schützen und sie in der Realität verankern kann, ohne ihre Träume zu zerstören.",
-      "friendshipTitle": "Fische in Freundschaft",
-      "friendship": "Ein Fische-Freund ist ein Zufluchtsort für die Seele. Sie sind die Freunde, zu denen man geht, wenn man ein mitfühlendes Ohr ohne Urteil braucht. Sie haben die erstaunliche Fähigkeit, zu fühlen, was Sie fühlen, und Trost zu spenden. Sie sind unglaublich loyal und selbstlos. Ihre durchlässige Natur bedeutet jedoch, dass sie die negativen Emotionen anderer aufsaugen können, was für sie anstrengend sein kann. Sie brauchen Freunde, die ihr Bedürfnis nach Einsamkeit zum Aufladen respektieren und ihre unendliche Güte nicht ausnutzen.",
-      "workTitle": "Fische bei der Arbeit",
-      "work": "Bei der Arbeit gedeihen Fische in Umgebungen, die es ihnen ermöglichen, ihre Kreativität, Intuition und ihr Mitgefühl einzusetzen. Sie sind ausgezeichnete Künstler, Musiker, Therapeuten, Heiler und Mitarbeiter in gemeinnützigen Organisationen. Sie werden nicht von Geld oder Macht angetrieben, sondern von dem Wunsch, zu etwas Größerem als sich selbst beizutragen. Ihre größte Herausforderung ist der Umgang mit harten, wettbewerbsorientierten Arbeitsumgebungen. Sie brauchen eine Arbeit, die Sinn hat und es ihnen ermöglicht, ihre einzigartigen Gaben zu nutzen, um anderen zu helfen."
+      "loveTitle": "Pisces in Love",
+      "love": "In love, Pisces seeks a merging of souls, a connection that transcends the mundane. They are hopeless romantics, capable of a level of devotion and self-sacrifice that few can match. They show their love through empathy, compassion, and a desire to heal their partner's wounds. However, their tendency to idealize their partner can lead to disillusionment. They need a partner who is both strong and gentle, someone who can protect their sensitive heart and anchor them to reality without destroying their dreams.",
+      "friendshipTitle": "Pisces in Friendship",
+      "friendship": "A Pisces friend is a sanctuary for the soul. They are the friends you go to when you need a compassionate ear without judgment. They have an amazing ability to feel what you feel and offer comfort. They are incredibly loyal and selfless. However, their porous nature means they can absorb the negative emotions of others, which can be draining for them. They need friends who respect their need for solitude to recharge and who won't take advantage of their boundless kindness.",
+      "workTitle": "Pisces at Work",
+      "work": "At work, Pisces thrives in environments that allow them to use their creativity, intuition, and compassion. They are excellent artists, musicians, therapists, healers, and non-profit workers. They are not motivated by money or power, but by a desire to contribute to something greater than themselves. Their main challenge is dealing with harsh, competitive work environments. They need a job that has meaning and allows them to use their unique gifts to help others."
     }
   },
-  "Share.lunarPhaseTitle": "Aktuelle Mondphase von AstroVibes",
-  "Share.lunarPhaseText": "Gerade jetzt ist der Mond ein {phaseName} in {signName} ({illumination}% beleuchtet). Schau es dir auf AstroVibes an!",
-  "Share.buttonLabelLunar": "Aktuelle Phase teilen",
-  "StorePage.title": "Kosmische Empfehlungen",
-  "StorePage.subtitle": "Ausgewählte Artikel zur Verbesserung Ihrer spirituellen Reise.",
-  "StorePage.viewOnAmazon": "Bei Amazon ansehen",
-  "StorePage.affiliateDisclaimer": "Als Amazon-Partner verdienen wir an qualifizierten Käufen. Dies unterstützt unsere App ohne zusätzliche Kosten für Sie.",
-  "StoreProducts.classicTarotDeck.title": "Klassisches Tarot-Deck",
-  "StoreProducts.classicTarotDeck.description": "Ein zeitloses Rider-Waite-Tarot-Deck, perfekt für Anfänger und Experten gleichermaßen, um Einblicke und Führung zu suchen.",
-  "StoreProducts.astrologyIntroBook.title": "Einführung in die Astrologie",
-  "StoreProducts.astrologyIntroBook.description": "Ein umfassendes Buch, das die Grundlagen der Astrologie, der Zeichen, Planeten und Häuser abdeckt.",
-  "StoreProducts.healingCrystalsSet.title": "Heilkristalle-Set",
-  "StoreProducts.healingCrystalsSet.description": "Ein Starter-Set mit verschiedenen Trommelsteinen wie Amethyst und Rosenquarz, um Energien auszugleichen.",
-  "StoreProducts.moonLamp.title": "3D-Mondlampe",
-  "StoreProducts.moonLamp.description": "Bringen Sie die mystische Leuchtkraft des Mondes mit dieser realistischen und beruhigenden Nachtlampe in Ihr Zuhause.",
-  "StoreProducts.zodiacJournal.title": "Sternzeichen-Tagebuch",
-  "StoreProducts.zodiacJournal.description": "Ein wunderschön gestaltetes Notizbuch, um Ihre Gedanken, Träume und astrologischen Beobachtungen festzuhalten.",
-  "StoreProducts.incenseHolder.title": "Keramischer Räucherstäbchenhalter",
-  "StoreProducts.incenseHolder.description": "Ein eleganter Halter zur sicheren Verbrennung Ihrer Lieblingsräucherstäbchen während Meditation oder Entspannung."
+  "Share.lunarPhaseTitle": "Current Moon Phase from AstroVibes",
+  "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
+  "Share.buttonLabelLunar": "Share Current Phase",
+  "StorePage.title": "Cosmic Recommendations",
+  "Share.lunarPhaseTitle": "Current Moon Phase from AstroVibes",
+  "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
+  "Share.buttonLabelLunar": "Share Current Phase",
+    "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
+  "StorePage.viewOnAmazon": "View on Amazon",
+  "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
+    "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
+    "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for beginners and experts alike to seek insight and guidance.",
+    "StoreProducts.astrologyIntroBook.title": "Intro to Astrology Book",
+    "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
+    "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
+    "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
+    "StoreProducts.moonLamp.title": "3D Moon Lamp",
+    "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and calming night lamp.",
+    "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
+    "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
+    "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
+    "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
 }
+
+    

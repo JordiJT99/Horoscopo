@@ -509,7 +509,6 @@
   "MorePage.inviteAndEarn": "Invite & Earn",
   "MorePage.notifications": "Notifications",
   "MorePage.comingSoon": "Coming Soon",
-  "MorePage.natalChart": "Natal Chart",
   "MorePage.zodiacSigns": "Zodiac Signs",
   "Language.es": "Español",
   "Language.en": "English",
@@ -678,22 +677,34 @@
   "CommunityPage.shareTarotSuccess": "Your tarot reading has been shared.",
   "CommunityPage.dreamPostTitle": "Shared a Dream Interpretation",
   "CommunityPage.tarotPostTitle": "Shared a Tarot Card",
-  "NatalChartPage.title": "Your Natal Chart",
-  "NatalChartPage.underDevelopmentMessage": "This feature is in active development. Planetary positions are illustrative and should not be considered astronomically accurate.",
-  "NatalChartPage.detailLevel.label": "Detail Level",
-  "NatalChartPage.detailLevel.basic": "Basic",
-  "NatalChartPage.detailLevel.advanced": "Advanced",
-  "NatalChartPage.detailLevel.spiritual": "Spiritual",
-  "NatalChartPage.sunTitle": "The Sun: Your Core Identity",
-  "NatalChartPage.moonTitle": "The Moon: Your Emotional World",
-  "NatalChartPage.ascendantTitle": "The Ascendant: Your Social Mask",
-  "NatalChartPage.personalPlanetsTitle": "Personal Planets: Your Personality",
-  "NatalChartPage.transpersonalPlanetsTitle": "Transpersonal Planets: Your Generational Journey",
-  "NatalChartPage.housesTitle": "The Houses: Areas of Your Life",
-  "NatalChartPage.aspectsTitle": "Aspects: The Planetary Conversations",
-  "NatalChartPage.detailsTab": "Details",
-  "NatalChartPage.aspectsTab": "Aspects",
-  "NatalChartPage.housesTab": "Houses",
+  "NatalChartPage": {
+    "title": "Your Natal Chart",
+    "subtitle": "Discover the planetary positions at your exact time of birth.",
+    "newChartButton": "New Chart",
+    "underDevelopmentMessage": "This feature is in active development. Planetary positions are illustrative and should not be considered astronomically accurate.",
+    "detailLevel": {
+      "label": "Detail Level",
+      "basic": "Basic",
+      "advanced": "Advanced",
+      "spiritual": "Spiritual"
+    },
+    "sunTitle": "The Sun: Your Core Identity",
+    "moonTitle": "The Moon: Your Emotional World",
+    "ascendantTitle": "The Ascendant: Your Social Mask",
+    "personalPlanetsTitle": "Personal Planets: Your Personality",
+    "transpersonalPlanetsTitle": "Transpersonal Planets: Your Generational Journey",
+    "housesTitle": "The Houses: Areas of Your Life",
+    "aspectsTitle": "Aspects: The Planetary Conversations",
+    "detailsTab": "Details",
+    "aspectsTab": "Aspects",
+    "housesTab": "Houses",
+    "aspectsDetails": {
+      "noAspectsFound": "No significant aspects found in this chart."
+    },
+    "housesDetails": {
+      "noPlacementsFound": "No significant house placements found."
+    }
+  },
   "birthForm.dateLabel": "Birth Date",
   "birthForm.timeLabel": "Birth Time",
   "birthForm.cityLabel": "Birth City",
@@ -973,7 +984,6 @@
       "friendshipTitle": "Leo in Friendship",
       "friendship": "A Leo friend is the sun of your social circle. They are the ones who organize the most memorable parties and make sure everyone feels included and celebrated. Their loyalty is unwavering; they will defend their friends with the ferocity of a lion defending its cubs. They are incredibly generous, both with their time and their resources. However, a friendship with a Leo requires you to acknowledge their royalty. They love being the center of attention and expect their friends to be their most loyal audience. Though their heart is golden, their pride is fragile. If they feel ignored or unappreciated, their roar will be heard. Despite this, their warmth and zest for life make any drama worthwhile.",
       "workTitle": "Leo at Work",
-
       "work": "At work, Leo is the natural leader and the team's motivator. They don't necessarily seek power for its own sake, but for the opportunity to inspire and lead by example. They thrive in roles that allow them to shine, whether on stage, in the boardroom, or at the helm of a creative team. They are excellent speakers, performers, directors, and spokespeople. Their confidence is contagious, and they have an innate ability to make people believe in a vision. Their biggest challenge is delegation; they sometimes feel that no one can do the job as well (or with as much flair) as they can. They need constant recognition for their contributions and can become demotivated in an environment that doesn't value their individual sparkle."
     },
     "Virgo": {
@@ -1054,7 +1064,7 @@
     },
     "Sagittarius": {
       "title": "Traits of the Sagittarius",
-      "description": "The adventurer and philosopher of the zodiac, Sagittarius is ruled by Jupiter, the planet of expansion, luck, and higher knowledge. They are optimistic, freedom-loving, and have an insatiable thirst for knowledge and new experiences. For a Sagittarius, life is a grand adventure, a journey to explore the world and understand its meaning. Their mind is always in search of truth, which makes them eternal students, forever enrolled in the university of life. They possess an infectious sense of humor and a brutal honesty that, while refreshing, can sometimes lack tact. They mean no harm; they simply believe in telling it like it is. Their greatest need is freedom. Anything that makes them feel trapped or limited, whether it's a boring routine or a possessive relationship, will have them running for the horizon. They are the visionaries of the zodiac, always looking to the future and believing that the best is yet to come. Their faith in the universe is unwavering, and this optimistic energy often attracts good fortune into their lives.",
+      "description": "The adventurer and philosopher of the zodiac, Sagittarius is ruled by Jupiter, the planet of expansion, luck, and higher knowledge. They are optimistic, freedom-loving, and have an insatiable thirst for knowledge and new experiences. For a Sagittarius, life is a grand adventure, a journey to explore the world and understand its meaning. Their mind is always in search of truth, which makes them eternal students, forever enrolled in the university of life. They possess an infectious sense of humor and a brutal honesty that, while refreshing, can sometimes lack tact. They mean no harm; they simply believe in telling it like it is. Their greatest need is freedom: anything that makes them feel trapped or limited, whether it's a boring routine or a possessive relationship, will have them running for the horizon. They are the visionaries of the zodiac, always looking to the future and believing that the best is yet to come. Their faith in the universe is unwavering, and this optimistic energy often attracts good fortune into their lives.",
       "strengthsTitle": "Strengths",
       "strengths": [
         "Generous",
@@ -1073,7 +1083,7 @@
       "friendshipTitle": "Sagittarius in Friendship",
       "friendship": "A Sagittarius friend is the one who calls you for a spontaneous road trip or a late-night philosophical debate. They are the life of the party, with an infectious sense of humor and an optimistic outlook on life. Their honesty is legendary; they will always tell you the truth, even if it stings a little. Don't expect them to remember every detail of your life, but they will always be there to encourage you to dream bigger and live more boldly. They are low-maintenance friends who understand and respect others' need for independence.",
       "workTitle": "Sagittarius at Work",
-      "work": "In the workplace, Sagittarius is the visionary, the teacher, and the explorer. They thrive in careers that allow them to learn, teach, and explore, such as academia, publishing, law, or tourism. They hate routine and micromanagement. They need autonomy and the freedom to follow their curiosity. They are excellent at motivating others with their optimistic vision and their ability to see the big picture. Their challenge is paying attention to details and completing mundane tasks. They work best when they can inspire and delegate the detailed execution."
+      "work": "At work, Sagittarius is the visionary, the teacher, and the explorer. They thrive in roles that allow them to learn, teach, and explore, such as academia, publishing, law, or tourism. They hate routine and micromanagement. They need autonomy and the freedom to follow their curiosity. They are excellent at motivating others with their optimistic vision and their ability to see the big picture. Their challenge is paying attention to details and completing mundane tasks. They work best when they can inspire and delegate the detailed execution."
     },
     "Capricorn": {
       "title": "Traits of the Capricorn",
@@ -1127,7 +1137,7 @@
     },
     "Pisces": {
       "title": "Traits of the Pisces",
-      "description": "The mystic and dreamer of the zodiac. Ruled by Neptune, Pisces are compassionate, artistic, and deeply intuitive. They are connected to the spiritual realm and have a boundless capacity for empathy. Their chameleonic nature allows them to adapt to any environment, absorbing the emotions and atmospheres around them. This sensitivity is both their greatest gift and their biggest challenge. A Pisces lives in a world where the line between reality and fantasy is blurred, which endows them with immense creativity and imagination. They are the old souls of the zodiac, bearers of a wisdom that seems to come from other lifetimes. Their compassion knows no bounds, and they often put the needs of others above their own, which can lead to them being taken advantage of. They often have a deep connection to music, art, and any form of expression that allows them to channel their vast inner world. Escapism is their defense mechanism; when the world becomes too harsh, they retreat into their inner sanctuary of dreams. Learning to set healthy boundaries and to stay grounded in reality without losing their magic is their great life lesson. They are incredibly romantic, not just in love, but in their outlook on life in general, always seeking beauty and spiritual connection in everything.",
+      "description": "The mystic and dreamer of the zodiac. Ruled by Neptune, Pisces are compassionate, artistic, and deeply intuitive. It is the final sign, an amalgamation of all those that came before it. They are connected to the spiritual realm and have a boundless capacity for empathy. Their chameleonic nature allows them to adapt to any environment, absorbing the emotions and atmospheres around them. This sensitivity is both their greatest gift and their biggest challenge. A Pisces lives in a world where the line between reality and fantasy is blurred, which endows them with immense creativity and imagination. They are the old souls of the zodiac, bearers of a wisdom that seems to come from other lifetimes. Their compassion knows no bounds, and they often put the needs of others above their own, which can lead to them being taken advantage of. They often have a deep connection to music, art, and any form of expression that allows them to channel their vast inner world. Escapism is their defense mechanism; when the world becomes too harsh, they retreat into their inner sanctuary of dreams. Learning to set healthy boundaries and to stay grounded in reality without losing their magic is their great life lesson. They are incredibly romantic, not just in love, but in their outlook on life in general, always seeking beauty and spiritual connection in everything.",
       "strengthsTitle": "Strengths",
       "strengths": [
         "Compassionate",
@@ -1172,3 +1182,5 @@
   "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
   "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
 }
+
+    
