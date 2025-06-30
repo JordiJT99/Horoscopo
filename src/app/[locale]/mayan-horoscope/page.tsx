@@ -1,11 +1,12 @@
 // Server Component - The new main gallery page for Mayan Horoscope
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
-import { MAYAN_ZODIAC_SIGNS, MayanAstrologyIcon, KinCalculatorIcon } from '@/lib/constants';
+import { MAYAN_ZODIAC_SIGNS, MayanAstrologyIcon, KinCalculatorIcon, GALACTIC_TONES } from '@/lib/constants';
 import SectionTitle from '@/components/shared/SectionTitle';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Layers } from 'lucide-react';
 import type { MayanZodiacSign } from '@/types';
 
 export async function generateStaticParams() {
@@ -62,6 +63,32 @@ export default async function MayanHoroscopeGalleryPage({ params }: MayanHorosco
                 </CardContent>
               </Card>
             </Link>
+          );
+        })}
+      </div>
+
+      {/* Galactic Tones Section */}
+      <SectionTitle
+        title={dictionary.MayanHoroscopePage?.galacticTonesTitle || "The 13 Galactic Tones"}
+        icon={Layers}
+        className="mt-16 mb-8 text-2xl"
+      />
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        {GALACTIC_TONES.map((tone) => {
+          const translatedToneName = dictionary[`GalacticTone.${tone.nameKey}.name`] || tone.nameKey;
+          const translatedKeyword = dictionary[`GalacticTone.${tone.nameKey}.keyword`] || tone.keywordKey;
+
+          return (
+            <Card key={tone.id} className="h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg">
+              <CardContent className="p-3 sm:p-4 flex flex-col items-center justify-center text-center">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-3 text-primary flex items-center justify-center border-2 border-primary/20 rounded-full bg-background/30">
+                  <span className="text-4xl sm:text-5xl font-bold font-headline">{tone.id}</span>
+                </div>
+                <h3 className="font-headline text-base sm:text-lg font-semibold text-foreground">{translatedToneName}</h3>
+                <p className="text-xs text-muted-foreground uppercase tracking-widest">{translatedKeyword}</p>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
