@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Your daily source for horoscopes and astrological insights.",
@@ -348,54 +349,54 @@
   "GalacticTone.Magnetic.name": "Magnetic",
   "GalacticTone.Magnetic.keyword": "Unity",
   "GalacticTone.Magnetic.question": "What is my purpose?",
-  "GalacticTone.Magnetic.interpretation": "The Magnetic Tone is the beginning, the one that attracts purpose. It unifies all parts of your being to focus on a clear goal. Today, ask yourself: What is my true intention? What do I want to attract into my life?",
   "GalacticTone.Lunar.name": "Lunar",
   "GalacticTone.Lunar.keyword": "Challenge",
   "GalacticTone.Lunar.question": "What are my challenges?",
-  "GalacticTone.Lunar.interpretation": "The Lunar Tone reveals duality and challenges. It helps you identify the obstacles you need to overcome to achieve your purpose. Today, reflect: What polarities exist in my situation? What are the challenges that strengthen me?",
   "GalacticTone.Electric.name": "Electric",
   "GalacticTone.Electric.keyword": "Service",
   "GalacticTone.Electric.question": "How can I best serve?",
-  "GalacticTone.Electric.interpretation": "The Electric Tone activates service. It is energy in motion, the spark that ignites action. It asks you how you can put your talents at the service of a greater purpose. Today, consider: How can I activate my resources? In what way does my service benefit others?",
   "GalacticTone.SelfExisting.name": "Self-Existing",
   "GalacticTone.SelfExisting.keyword": "Form",
   "GalacticTone.SelfExisting.question": "What is the form of action?",
-  "GalacticTone.SelfExisting.interpretation": "The Self-Existing Tone defines the form of action. It gives structure and measure to your purpose. It helps you establish the foundations and understand how to manifest your ideas. Today, think: What is the most effective form for my action? What patterns and measures do I need to establish?",
   "GalacticTone.Overtone.name": "Overtone",
   "GalacticTone.Overtone.keyword": "Radiance",
   "GalacticTone.Overtone.question": "How can I empower myself?",
-  "GalacticTone.Overtone.interpretation": "The Overtone Tone commands radiance and inner power. It gathers resources and gives you the authority to shine. Today, focus on: How can I gather my strengths and resources? In what way do I radiate my personal power?",
   "GalacticTone.Rhythmic.name": "Rhythmic",
   "GalacticTone.Rhythmic.keyword": "Equality",
   "GalacticTone.Rhythmic.question": "How do I organize for equality?",
-  "GalacticTone.Rhythmic.interpretation": "The Rhythmic Tone organizes for equality and balance. It helps you find balance in the flow of life and manage challenges organically. Today, seek: How can I balance my life and my actions? How do I organize my environment for harmony?",
   "GalacticTone.Resonant.name": "Resonant",
   "GalacticTone.Resonant.keyword": "Attunement",
   "GalacticTone.Resonant.question": "How can I attune my service to others?",
-  "GalacticTone.Resonant.interpretation": "The Resonant Tone channels attunement and inspiration. It connects you to the source of wisdom and allows you to vibrate in harmony with the universe. Today, attune to: What truly inspires me? How can I align my being with my highest purpose?",
   "GalacticTone.Galactic.name": "Galactic",
   "GalacticTone.Galactic.keyword": "Integrity",
   "GalacticTone.Galactic.question": "Do I live what I believe?",
-  "GalacticTone.Galactic.interpretation": "The Galactic Tone models integrity and harmony. It invites you to live according to your beliefs and act with coherence. Today, examine: Do my actions reflect my values? Am I living in integrity with my truth?",
   "GalacticTone.Solar.name": "Solar",
   "GalacticTone.Solar.keyword": "Intention",
   "GalacticTone.Solar.question": "How do I achieve my purpose?",
-  "GalacticTone.Solar.interpretation": "The Solar Tone pulses intention and realization. It gives you the final push to manifest your purpose and achieve your goals. Today, ask yourself: How can I direct my energy towards the realization of my intention? What concrete steps should I take?",
   "GalacticTone.Planetary.name": "Planetary",
   "GalacticTone.Planetary.keyword": "Manifestation",
   "GalacticTone.Planetary.question": "How do I perfect what I do?",
-  "GalacticTone.Planetary.interpretation": "The Planetary Tone perfects manifestation. It produces what you have intended, making your vision tangible. Today, focus on: How can I improve and perfect my creation? What is manifesting through me?",
   "GalacticTone.Spectral.name": "Spectral",
   "GalacticTone.Spectral.keyword": "Liberation",
   "GalacticTone.Spectral.question": "How do I release and let go?",
-  "GalacticTone.Spectral.interpretation": "The Spectral Tone dissolves and liberates. It helps you release what no longer serves, disintegrate old structures, and open space for the new. Today, consider: What do I need to release in my life? How can I let go of ties and limitations?",
   "GalacticTone.Crystal.name": "Crystal",
   "GalacticTone.Crystal.keyword": "Cooperation",
   "GalacticTone.Crystal.question": "How can I dedicate to cooperation?",
-  "GalacticTone.Crystal.interpretation": "The Crystal Tone dedicates to cooperation and universalization. It teaches you to share your gifts and work together for a greater good. Today, reflect: How can I collaborate with others? In what way do my actions contribute to the community?",
   "GalacticTone.Cosmic.name": "Cosmic",
   "GalacticTone.Cosmic.keyword": "Presence",
   "GalacticTone.Cosmic.question": "How do I expand my joy and love?",
+  "GalacticTone.Magnetic.interpretation": "The Magnetic Tone is the beginning, the one that attracts purpose. It unifies all parts of your being to focus on a clear goal. Today, ask yourself: What is my true intention? What do I want to attract into my life?",
+  "GalacticTone.Lunar.interpretation": "The Lunar Tone reveals duality and challenges. It helps you identify the obstacles you need to overcome to achieve your purpose. Today, reflect: What polarities exist in my situation? What are the challenges that strengthen me?",
+  "GalacticTone.Electric.interpretation": "The Electric Tone activates service. It is energy in motion, the spark that ignites action. It asks you how you can put your talents at the service of a greater purpose. Today, consider: How can I activate my resources? In what way does my service benefit others?",
+  "GalacticTone.SelfExisting.interpretation": "The Self-Existing Tone defines the form of action. It gives structure and measure to your purpose. It helps you establish the foundations and understand how to manifest your ideas. Today, think: What is the most effective form for my action? What patterns and measures do I need to establish?",
+  "GalacticTone.Overtone.interpretation": "The Overtone Tone commands radiance and inner power. It gathers resources and gives you the authority to shine. Today, focus on: How can I gather my strengths and resources? In what way do I radiate my personal power?",
+  "GalacticTone.Rhythmic.interpretation": "The Rhythmic Tone organizes for equality and balance. It helps you find balance in the flow of life and manage challenges organically. Today, seek: How can I balance my life and my actions? How do I organize my environment for harmony?",
+  "GalacticTone.Resonant.interpretation": "The Resonant Tone channels attunement and inspiration. It connects you to the source of wisdom and allows you to vibrate in harmony with the universe. Today, attune to: What truly inspires me? How can I align my being with my highest purpose?",
+  "GalacticTone.Galactic.interpretation": "The Galactic Tone models integrity and harmony. It invites you to live according to your beliefs and act with coherence. Today, examine: Do my actions reflect my values? Am I living in integrity with my truth?",
+  "GalacticTone.Solar.interpretation": "The Solar Tone pulses intention and realization. It gives you the final push to manifest your purpose and achieve your goals. Today, ask yourself: How can I direct my energy towards the realization of my intention? What concrete steps should I take?",
+  "GalacticTone.Planetary.interpretation": "The Planetary Tone perfects manifestation. It produces what you have intended, making your vision tangible. Today, focus on: How can I improve and perfect my creation? What is manifesting through me?",
+  "GalacticTone.Spectral.interpretation": "The Spectral Tone dissolves and liberates. It helps you release what no longer serves, disintegrate old structures, and open space for the new. Today, consider: What do I need to release in my life? How can I let go of ties and limitations?",
+  "GalacticTone.Crystal.interpretation": "The Crystal Tone dedicates to cooperation and universalization. It teaches you to share your gifts and work together for a greater good. Today, reflect: How can I collaborate with others? In what way do my actions contribute to the community?",
   "GalacticTone.Cosmic.interpretation": "The Cosmic Tone transcends with presence and endurance. It is the return to the origin and the expansion of the consciousness. It invites you to live fully in the present and to radiate love and joy. Today, experience: How can I be more present? How do I expand my joy and my love without limits?",
   "MoonPhase.new": "New Moon",
   "MoonPhase.waxingCrescent": "Waxing Crescent",
@@ -878,146 +879,6 @@
   "Toast.adWatchedDescription": "You've earned {amount} Stardust.",
   "Toast.alreadyRated": "You have already claimed this reward.",
   "Toast.dailyReactionStardust": "+{amount} 💫 for your first reaction of the day!",
-  "Toast.dailyCommentStardust": "+{amount} 💫 for your first comment of the day!",
-  "MayanSign.Imix.interpretation": "Imix is the primal beginning, the very energy of creation. Those born under this seal are initiators, a source of new ideas. Their challenge is to develop trust in the universe and learn to receive support, as they often try to do everything alone. They are natural providers but also have a tendency to take on too much. Imix invites you to connect with the source and realize that you are always supported.",
-  "MayanSign.Ik.interpretation": "Ik represents communication, breath, and spirit. Those born under this seal are natural communicators, messengers, and often very spiritual. They are adaptable and versatile but can also be indecisive or scattered. Their challenge is to ground their ideas and speak the truth with responsibility. Ik encourages you to express your truth and listen to the unseen forces that guide you.",
-  "MayanSign.Akbal.interpretation": "Akbal is the realm of dreams, intuition, and the subconscious. Those born under this seal are introspective, mysterious, and have access to deep inner wisdom. They find strength in silence and solitude. Their challenge is to face their inner fears and find the light within their darkness. Akbal invites you to embrace your intuition and explore the treasures hidden within you.",
-  "MayanSign.Kan.interpretation": "Kan is the seed of potential. Those born under this sign are dynamic, full of energy, and have the ability to manifest growth and abundance. They are natural leaders who strive to flourish and reach their full potential. Their challenge is to learn patience and to trust the natural cycles of growth. Kan encourages you to plant your intentions carefully and to nurture your potential with awareness.",
-  "MayanSign.Chicchan.interpretation": "Chicchan is the energy of life force, instinct, and the wisdom of the body. Those born under this seal are passionate, charismatic, and deeply connected to their physical instincts. They have a strong survival ability. Their challenge is to integrate and transform their powerful energy, rather than being controlled by it. Chicchan invites you to listen to your body, embrace your passion, and shed the old skin to be reborn.",
-  "MayanSign.Cimi.interpretation": "Cimi represents death as transformation, the ability to let go of the old to make way for the new. Those born under this sign are resilient, intuitive, and have the ability to navigate great changes. They are bridges between worlds. Their challenge is to accept letting go and to trust in the process of renewal. Cimi invites you to release what no longer serves you and to embrace the opportunities that every ending offers.",
-  "MayanSign.Manik.interpretation": "Manik is the seal of healing, knowledge, and accomplishment. Those born under this sign are natural healers, peaceful, and often very skilled with their hands. They have the ability to complete projects and to bring knowledge into the world. Their challenge is to recognize their own needs for healing. Manik encourages you to use your gifts to heal and complete, and to recognize the beauty of accomplishment.",
-  "MayanSign.Lamat.interpretation": "Lamat is the energy of harmony, beauty, and elegance. Those born under this sign are artistic, social, and strive to create beauty and balance in their environment. They are the star-seeds, here to beautify the world. Their challenge is to find their own inner harmony, rather than just seeking it externally. Lamat invites you to radiate your own beauty and to create harmony in all that you do.",
-  "MayanSign.Muluc.interpretation": "Muluc is the seal of the universal water and emotional purification. Those born under this sign are emotional, intuitive, and have a strong connection to their feelings. They are natural purifiers and communicators. Their challenge is to let their emotions flow without being swept away by them. Muluc invites you to honor your emotions, to purify yourself, and to trust in the flow of life.",
-  "MayanSign.Oc.interpretation": "Oc is the energy of loyalty, love, and the heart. Those born under this seal are loyal companions, brave, and deeply connected to their 'packs' (family and friends). They are leaders of the heart. Their challenge is to heal their own emotional wounds and to learn to give themselves the same loyalty they give to others. Oc encourages you to live from the heart, to be loyal, and to guide the way with love.",
-  "MayanSign.Chuen.interpretation": "Chuen is the divine trickster, the artist, and the magician. Those born under this sign are creative, playful, spontaneous, and have a great sense of humor. They are here to remind us not to take life too seriously. Their challenge is to focus their energy and use their creativity constructively. Chuen invites you to play, to create, and to find the magic in the everyday.",
-  "MayanSign.Eb.interpretation": "Eb is the seal of free will and human influence on the world. Those born under this sign are caring, generous, and strive to create abundance and prosperity. They are the stewards of the Earth. Their challenge is to make wise choices and to direct their energy in a way that benefits all. Eb encourages you to choose your path consciously and to harvest the abundance of life.",
-  "MayanSign.Ben.interpretation": "Ben is the sky-walker, the bridge between heaven and earth. Those born under this sign are courageous explorers who challenge authority and conventions. They are pillars of strength for their communities. Their challenge is to accept their vulnerability and to find a balance between their inner and outer worlds. Ben invites you to explore new horizons and to be a firm pillar in your own life.",
-  "MayanSign.Ix.interpretation": "Ix is the magician, the shaman, and the seer. Those born under this sign are intuitive, mysterious, and have access to higher levels of consciousness. They are the keepers of magic and timelessness. Their challenge is to fully trust their intuition and to use their power with integrity. Ix encourages you to embrace the magic within you and to live in the sacred moment of the present.",
-  "MayanSign.Men.interpretation": "Men is the eagle, the visionary with the ability to see the big picture. Those born under this sign are independent, ambitious, and have a mind that soars beyond the limits of the ordinary. They are here to elevate the collective consciousness. Their challenge is to stay grounded and to bring their visions into reality. Men invites you to spread your wings and to create from a higher perspective.",
-  "MayanSign.Cib.interpretation": "Cib is the guardian of ancient wisdom and the cosmic library. Those born under this sign are serious, intelligent, and have the ability to break old patterns and to forgive. They are the wise counselors. Their challenge is to forgive themselves and to let go of the past. Cib encourages you to connect with your inner wisdom and to use the liberating power of forgiveness.",
-  "MayanSign.Caban.interpretation": "Caban is the energy of the Earth, the power of synchronicity, and the skill of navigation. Those born under this sign are mentally active, practical, and deeply connected to the rhythms of the Earth. They are the great synchronizers. Their challenge is to trust their inner timing and to learn to navigate with the flow of events. Caban invites you to pay attention to the signs and to let the Earth guide you.",
-  "MayanSign.Etznab.interpretation": "Etznab is the mirror of truth, the knife that cuts through illusions. Those born under this sign are brave, direct, and seek clarity and truth in all things. They have the ability to discern what is real. Their challenge is to speak their truth with compassion and to learn to look at themselves in the mirror. Etznab encourages you to release all illusions and to live in the clarity of your own reflection.",
-  "MayanSign.Cauac.interpretation": "Cauac is the storm that cleanses and transforms. Those born under this sign are energetic, friendly, and natural catalysts for change. They bring the purifying rains that allow for renewal and rebirth. Their challenge is to embrace their own transformation and to learn the lessons that the storm brings. Cauac invites you to accept the changes in your life and to know that after every storm comes calm.",
-  "MayanSign.Ahau.interpretation": "Ahau is the seal of enlightenment, the culmination of evolution. Those born under this sign are loving, artistic, visionary, and carry the light of the sun within them. They are here to radiate unconditional love and to recognize the union of all life. Their challenge is to transcend their own ego and to live in service to the whole. Ahau invites you to recognize your own light and to share it unconditionally with the world.",
-  "LunarPhaseDescriptions": {
-    "new": {
-      "description": "The New Moon marks a fresh start. It's a time for introspection, to plant the seeds of intention for the cycle ahead. The energy is low, ideal for resting and visualizing what you wish to manifest.",
-      "insights": [
-        "Set clear intentions for the upcoming month.",
-        "It's a powerful time for meditation and visualization.",
-        "Release the old to make space for the new."
-      ]
-    },
-    "waxingCrescent": {
-      "description": "The Waxing Crescent symbolizes a period of growth and strengthening. As the moon begins to light up the night sky with greater brightness, it's time to act and manifest the intentions set during the new moon. Your energy gradually increases, making this period perfect for starting to implement your plans. It's a time when you might feel a surge of creative energy and inspiration. This phase is particularly favorable for learning new things, establishing connections, and forming beneficial habits. You might notice your confidence growing along with your ability to overcome obstacles on the path to your goals.",
-      "insights": [
-        "Your emotional energy is growing.",
-        "An excellent time to nurture new emotional patterns that align with your natal Moon's expression.",
-        "Focus your attention on gradually building emotional security that resonates with your nature."
-      ]
-    },
-    "firstQuarter": {
-      "description": "The First Quarter is a critical turning point. Your intentions meet their first challenges, requiring action and decision-making. It's a time to overcome obstacles, adjust your plans, and recommit to your goals. The energy is active and sometimes tense. It is important to stay determined and not give up at the first sign of resistance. Resolve the issues that arise and reaffirm your commitment to the intentions you set during the new moon.",
-      "insights": [
-        "Make decisions, even if they are difficult.",
-        "Now is the time to adjust and refine your strategies.",
-        "Trust in your ability to overcome any challenges."
-      ]
-    },
-    "waxingGibbous": {
-      "description": "The Waxing Gibbous phase is a time of refinement and perfection. You have overcome the initial challenges, and now is the time to adjust and improve your plans. The energy is high, and momentum is building. It is an excellent time to focus on the details, organize your efforts, and prepare for the culmination that the full moon will bring. Analyze what is working and make the necessary adjustments to ensure success.",
-      "insights": [
-        "Pay attention to details and optimize your plans.",
-        "Energy is high; use it to move forward.",
-        "Perseverance during this phase is key to success."
-      ]
-    },
-    "full": {
-      "description": "The Full Moon is the climax of the lunar cycle. The intentions you planted during the new moon reach their peak. It is a time of harvest, celebration, and illumination. Truths come to light, and emotions are at their peak. It is a powerful time for gratitude and acknowledging your progress. Energy is at its maximum, which can lead to insomnia or heightened sensitivity. Use this light to see what has come to fruition in your life.",
-      "insights": [
-        "Celebrate your achievements, no matter how small.",
-        "Express gratitude for what you have manifested.",
-        "Be mindful of your emotions, as they will be amplified."
-      ]
-    },
-    "waningGibbous": {
-      "description": "After the peak of the Full Moon, the Waning Gibbous phase begins. It is a time to share what you have learned and harvested. It is a phase of distribution, teaching, and communication. Reflect on your successes and consider how your experiences can benefit others. The energy begins to decrease, favoring introspection and analysis of the cycle's results.",
-      "insights": [
-        "Share your knowledge and experiences with others.",
-        "Reflect on the cycle that has just concluded.",
-        "Begin to think about what you need to release in the next cycle."
-      ]
-    },
-    "lastQuarter": {
-      "description": "The Last Quarter is a time of release and letting go. Like the First Quarter, it represents a crisis, but this time it is a crisis of consciousness. It's time to let go of what didn't work, to abandon old patterns, and to cleanse yourself of relationships or situations that no longer serve you. It can be a difficult phase, but it is necessary to make space for the new.",
-      "insights": [
-        "Let go of what no longer serves you.",
-        "Forgive yourself and others to be able to move forward.",
-        "Cleanse your physical and emotional space."
-      ]
-    },
-    "waningCrescent": {
-      "description": "The Waning Crescent is the final phase before the new moon. It is a time of surrender, rest, and recovery. The energy is at its lowest, inviting introspection and spiritual connection. It is a time to withdraw, meditate, and prepare for the next cycle. Dream, listen to your intuition, and let the universe take control. It is not a time for action, but for being.",
-      "insights": [
-        "Rest and recharge your energy.",
-        "Listen to your intuition and your dreams.",
-        "Release any remaining tension and surrender to the flow."
-      ]
-    }
-  },
-  "ChineseHoroscopeDetail": {
-    "traitsTitle": "Traits of {signName}",
-    "Rat": {
-      "interpretation": "People born in the Year of the Rat are known for their sharp wit, charm, and ambitious nature. They are incredibly resourceful, able to find solutions and opportunities where others see none. As social creatures, they thrive in company and can be very persuasive, but this same cleverness can sometimes manifest as criticism or opportunism. Despite this, their loyalty to family and close friends is unwavering. They are meticulous planners and have a knack for saving and managing resources, always thinking about the future. Their intelligence and curiosity make them lifelong learners, always seeking new information and challenges."
-    },
-    "Ox": {
-      "interpretation": "The Ox symbolizes diligence, dependability, and strength. Those born under this sign are methodical and patient, firm believers that hard work and perseverance are the keys to success. They are not fond of sudden changes, preferring a stable and well-organized environment. This can make them appear stubborn, but it is a reflection of their unwavering determination. Once they set a goal, they will see it through to the end. Their reliability is their greatest virtue, making them trustworthy friends and colleagues who provide a solid foundation for those around them."
-    },
-    "Tiger": {
-      "interpretation": "Tigers are the embodiment of courage, confidence, and natural leadership. Fueled by passion and a boundless energy, they are constantly seeking new challenges and adventures. Their magnetic charisma and daring spirit are deeply inspiring to others, often placing them in positions of authority. However, this same energy can make them rebellious and unpredictable. They live life on their own terms and have little patience for conventions. A Tiger's heart is filled with a love for justice and a fierce desire to protect the underdog, making them powerful allies and formidable opponents."
-    },
-    "Rabbit": {
-      "interpretation": "The Rabbit is a symbol of gentleness, elegance, and peace. People born in this year are known for their diplomacy and tact, skillfully navigating social situations to avoid conflict. They crave a harmonious and tranquil environment and are meticulous in creating a beautiful and comfortable home. While they may appear quiet or reserved, they possess a sharp mind and keen observation skills. They are not fond of taking risks, preferring a cautious and well-considered approach to life. Their sense of responsibility towards their loved ones is profound, making them deeply caring and supportive partners and friends."
-    },
-    "Dragon": {
-      "interpretation": "The Dragon is the most powerful and auspicious sign in the Chinese zodiac, representing ambition, charisma, and good fortune. Dragons are natural-born leaders, radiating a confidence and enthusiasm that captivates all who meet them. They are not afraid to take risks and pursue their grand visions with unwavering determination. This powerful energy and self-assurance can sometimes be perceived as arrogance, but it is tempered by a genuinely generous and noble heart. Dragons are destined for success and are driven by a desire to make a significant impact on the world."
-    },
-    "Snake": {
-      "interpretation": "Endowed with wisdom, intuition, and a mysterious aura, the Snake is the philosopher of the zodiac. They are deep thinkers who trust their own instincts and judgments above all else. Snakes possess a natural charm and sophistication that can be mesmerizing. However, they are also intensely private and guard their emotions closely, revealing their true selves only to a select few. This can make them seem possessive or jealous in relationships. Their methodical and strategic mind allows them to navigate complex situations with grace and cunning, always planning several steps ahead."
-    },
-    "Horse": {
-      "interpretation": "The Horse is a symbol of energy, independence, and a free spirit. Those born under this sign are animated by a love for adventure and a desire to be where the action is. They are incredibly sociable, with a great sense of humor that makes them popular in any crowd. Their greatest need is freedom; they cannot stand to be tied down by rules or routines. This love of independence can sometimes translate into a fear of commitment and a tendency to be impatient. A Horse is always on the move, chasing the next horizon with unbridled optimism."
-    },
-    "Goat": {
-      "interpretation": "The Goat is the artist and dreamer of the zodiac, known for its gentle, compassionate, and creative nature. People born in this year have a deep appreciation for beauty and seek to create harmony in their surroundings. They are highly empathetic and kind-hearted, but this sensitivity can also make them prone to worry and indecisiveness. Goats thrive in a peaceful environment and require a great deal of emotional support and reassurance from their loved ones. When they feel secure, their creativity blossoms, and they can produce works of great beauty."
-    },
-    "Monkey": {
-      "interpretation": "The Monkey is a sign of cleverness, curiosity, and mischievous genius. People born in this year are brilliant problem-solvers, able to find unconventional solutions to the most difficult challenges. Their minds are constantly working, fueled by an insatiable curiosity and a great sense of humor. They are masters of improvisation and can adapt to any situation. However, this same cleverness can sometimes lead them to be seen as unreliable or manipulative. A Monkey's life is a playground of intellectual challenges and fun."
-    },
-    "Rooster": {
-      "interpretation": "The Rooster is a symbol of confidence, observance, and hard work. People born in this year are natural perfectionists with a sharp eye for detail. They are highly organized and take great pride in their appearance and their work. Roosters are straightforward and honest, but their directness can sometimes be perceived as critical or boastful. They are not afraid to speak their mind and stand up for what they believe is right. Their diligence and talent often lead them to success in their chosen fields."
-    },
-    "Dog": {
-      "interpretation": "The Dog embodies loyalty, honesty, and a strong sense of justice. People born in this year are trustworthy and will fiercely protect their loved ones. They possess a clear understanding of right and wrong and are always willing to fight for a just cause. While their loyalty is unwavering, they can also be prone to anxiety and pessimism, often worrying about the well-being of others. A Dog's friendship is one of the most precious gifts, offering unwavering support and a safe harbor in any storm."
-    },
-    "Pig": {
-      "interpretation": "The Pig is a symbol of kindness, generosity, and an easygoing nature. People born in this year have a deep love for the pleasures of life, such as good food, comfort, and good company. They are diligent and honest, but their primary goal is to live in peace and harmony. Their good-hearted nature makes them wonderful and supportive friends, though their trusting disposition can sometimes border on naivety. A Pig's presence brings a sense of contentment and well-being to any situation."
-    }
-  },
-  "StorePage.title": "Cosmic Recommendations",
-  "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
-  "StorePage.viewOnAmazon": "View on Amazon",
-  "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
-  "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
-  "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for both beginners and experts to seek insight and guidance.",
-  "StoreProducts.astrologyIntroBook.title": "Astrology Introduction Book",
-  "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
-  "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
-  "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
-  "StoreProducts.moonLamp.title": "3D Moon Lamp",
-  "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and soothing night lamp.",
-  "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
-  "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for you to record your thoughts, dreams, and astrological observations.",
-  "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
+  "Toast.dailyCommentStardust": "+{amount} 💫 for your first comment of the day!"
 }
+

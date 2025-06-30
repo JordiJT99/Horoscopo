@@ -80,15 +80,17 @@ export default async function MayanHoroscopeGalleryPage({ params }: MayanHorosco
           const translatedKeyword = dictionary[`GalacticTone.${tone.nameKey}.keyword`] || tone.keywordKey;
 
           return (
-            <Card key={tone.id} className="h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg">
-              <CardContent className="p-3 sm:p-4 flex flex-col items-center justify-center text-center">
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-3 text-primary flex items-center justify-center border-2 border-primary/20 rounded-full bg-background/30">
-                  <span className="text-4xl sm:text-5xl font-bold font-headline">{tone.id}</span>
-                </div>
-                <h3 className="font-headline text-base sm:text-lg font-semibold text-foreground">{translatedToneName}</h3>
-                <p className="text-xs text-muted-foreground uppercase tracking-widest">{translatedKeyword}</p>
-              </CardContent>
-            </Card>
+            <Link key={tone.id} href={`/${params.locale}/mayan-horoscope/tone/${tone.id}`} className="group block">
+              <Card className="h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg hover:shadow-primary/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1">
+                <CardContent className="p-3 sm:p-4 flex flex-col items-center justify-center text-center">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-3 text-primary flex items-center justify-center border-2 border-primary/20 rounded-full bg-background/30 group-hover:border-primary/50 transition-colors">
+                    <span className="text-4xl sm:text-5xl font-bold font-headline">{tone.id}</span>
+                  </div>
+                  <h3 className="font-headline text-base sm:text-lg font-semibold text-foreground">{translatedToneName}</h3>
+                  <p className="text-xs text-muted-foreground uppercase tracking-widest">{translatedKeyword}</p>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </div>

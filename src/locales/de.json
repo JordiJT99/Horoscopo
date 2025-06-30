@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Ihre tägliche Quelle für Horoskope und astrologische Einblicke.",
@@ -348,54 +349,54 @@
   "GalacticTone.Magnetic.name": "Magnetisch",
   "GalacticTone.Magnetic.keyword": "Einheit",
   "GalacticTone.Magnetic.question": "Was ist mein Ziel?",
-  "GalacticTone.Magnetic.interpretation": "Der magnetische Ton ist der Anfang, der das Ziel anzieht. Er vereint alle Teile deines Seins, um sich auf ein klares Ziel zu konzentrieren. Frage dich heute: Was ist meine wahre Absicht? Was möchte ich in mein Leben ziehen?",
   "GalacticTone.Lunar.name": "Lunar",
   "GalacticTone.Lunar.keyword": "Herausforderung",
   "GalacticTone.Lunar.question": "Was sind meine Herausforderungen?",
-  "GalacticTone.Lunar.interpretation": "Der lunare Ton offenbart Dualität und Herausforderungen. Er hilft dir, die Hindernisse zu erkennen, die du überwinden musst, um dein Ziel zu erreichen. Reflektiere heute: Welche Polaritäten gibt es in meiner Situation? Welche Herausforderungen stärken mich?",
   "GalacticTone.Electric.name": "Elektrisch",
   "GalacticTone.Electric.keyword": "Dienst",
   "GalacticTone.Electric.question": "Wie kann ich am besten dienen?",
-  "GalacticTone.Electric.interpretation": "Der elektrische Ton aktiviert den Dienst. Es ist Energie in Bewegung, der Funke, der die Aktion entzündet. Er fragt dich, wie du deine Talente in den Dienst eines größeren Zwecks stellen kannst. Überlege heute: Wie kann ich meine Ressourcen aktivieren? Inwiefern nützt mein Dienst anderen?",
   "GalacticTone.SelfExisting.name": "Selbst-Existent",
   "GalacticTone.SelfExisting.keyword": "Form",
   "GalacticTone.SelfExisting.question": "Was ist die Form der Handlung?",
-  "GalacticTone.SelfExisting.interpretation": "Der selbst-existente Ton definiert die Form der Handlung. Er gibt deinem Zweck Struktur und Maß. Er hilft dir, die Grundlagen zu schaffen und zu verstehen, wie du deine Ideen manifestieren kannst. Denke heute: Was ist die effektivste Form für mein Handeln? Welche Muster und Maßnahmen muss ich etablieren?",
   "GalacticTone.Overtone.name": "Oberton",
   "GalacticTone.Overtone.keyword": "Ausstrahlung",
   "GalacticTone.Overtone.question": "Wie kann ich mich ermächtigen?",
-  "GalacticTone.Overtone.interpretation": "Der Oberton befiehlt Ausstrahlung und innere Kraft. Er sammelt Ressourcen und gibt dir die Autorität zu glänzen. Konzentriere dich heute darauf: Wie kann ich meine Kräfte und Ressourcen sammeln? Auf welche Weise strahle ich meine persönliche Kraft aus?",
   "GalacticTone.Rhythmic.name": "Rhythmisch",
   "GalacticTone.Rhythmic.keyword": "Gleichheit",
   "GalacticTone.Rhythmic.question": "Wie organisiere ich mich für Gleichheit?",
-  "GalacticTone.Rhythmic.interpretation": "Der rhythmische Ton organisiert für Gleichheit und Gleichgewicht. Er hilft dir, das Gleichgewicht im Fluss des Lebens zu finden und Herausforderungen organisch zu bewältigen. Suche heute: Wie kann ich mein Leben und meine Handlungen ausbalancieren? Wie organisiere ich meine Umgebung für Harmonie?",
   "GalacticTone.Resonant.name": "Resonant",
   "GalacticTone.Resonant.keyword": "Einstimmung",
   "GalacticTone.Resonant.question": "Wie stimme ich meinen Dienst auf andere ab?",
-  "GalacticTone.Resonant.interpretation": "Der resonante Ton kanalisiert Einstimmung und Inspiration. Er verbindet dich mit der Quelle der Weisheit und ermöglicht es dir, in Harmonie mit dem Universum zu schwingen. Stimme dich heute ein: Was inspiriert mich wirklich? Wie kann ich mein Sein mit meinem höchsten Zweck in Einklang bringen?",
   "GalacticTone.Galactic.name": "Galaktisch",
   "GalacticTone.Galactic.keyword": "Integrität",
   "GalacticTone.Galactic.question": "Lebe ich, was ich glaube?",
-  "GalacticTone.Galactic.interpretation": "Der galaktische Ton modelliert Integrität und Harmonie. Er lädt dich ein, nach deinen Überzeugungen zu leben und kohärent zu handeln. Untersuche heute: Spiegelt mein Handeln meine Werte wider? Lebe ich in Integrität mit meiner Wahrheit?",
   "GalacticTone.Solar.name": "Solar",
   "GalacticTone.Solar.keyword": "Absicht",
   "GalacticTone.Solar.question": "Wie erreiche ich mein Ziel?",
-  "GalacticTone.Solar.interpretation": "Der solare Ton pulsiert Absicht und Verwirklichung. Er gibt dir den letzten Anstoß, um dein Ziel zu manifestieren und deine Ziele zu erreichen. Frage dich heute: Wie kann ich meine Energie auf die Verwirklichung meiner Absicht lenken? Welche konkreten Schritte sollte ich unternehmen?",
   "GalacticTone.Planetary.name": "Planetarisch",
   "GalacticTone.Planetary.keyword": "Manifestation",
   "GalacticTone.Planetary.question": "Wie vervollkommne ich, was ich tue?",
-  "GalacticTone.Planetary.interpretation": "Der planetare Ton vervollkommnet die Manifestation. Er produziert, was du beabsichtigt hast, und macht deine Vision greifbar. Konzentriere dich heute darauf: Wie kann ich meine Schöpfung verbessern und vervollkommnen? Was manifestiert sich durch mich?",
   "GalacticTone.Spectral.name": "Spektral",
   "GalacticTone.Spectral.keyword": "Befreiung",
   "GalacticTone.Spectral.question": "Wie lasse ich los?",
-  "GalacticTone.Spectral.interpretation": "Der spektrale Ton löst auf und befreit. Er hilft dir, loszulassen, was nicht mehr dient, alte Strukturen aufzulösen und Raum für Neues zu schaffen. Überlege heute: Was muss ich in meinem Leben loslassen? Wie kann ich Fesseln und Einschränkungen loslassen?",
   "GalacticTone.Crystal.name": "Kristall",
   "GalacticTone.Crystal.keyword": "Zusammenarbeit",
   "GalacticTone.Crystal.question": "Wie kann ich mich der Zusammenarbeit widmen?",
-  "GalacticTone.Crystal.interpretation": "Der Kristallton widmet sich der Zusammenarbeit und Universalisierung. Er lehrt dich, deine Gaben zu teilen und für ein höheres Gut zusammenzuarbeiten. Reflektiere heute: Wie kann ich mit anderen zusammenarbeiten? Inwiefern tragen meine Handlungen zur Gemeinschaft bei?",
   "GalacticTone.Cosmic.name": "Kosmisch",
   "GalacticTone.Cosmic.keyword": "Gegenwart",
   "GalacticTone.Cosmic.question": "Wie erweitere ich meine Freude und Liebe?",
+  "GalacticTone.Magnetic.interpretation": "Der magnetische Ton ist der Anfang, der das Ziel anzieht. Er vereint alle Teile deines Seins, um sich auf ein klares Ziel zu konzentrieren. Frage dich heute: Was ist meine wahre Absicht? Was möchte ich in mein Leben ziehen?",
+  "GalacticTone.Lunar.interpretation": "Der lunare Ton offenbart Dualität und Herausforderungen. Er hilft dir, die Hindernisse zu erkennen, die du überwinden musst, um dein Ziel zu erreichen. Reflektiere heute: Welche Polaritäten gibt es in meiner Situation? Welche Herausforderungen stärken mich?",
+  "GalacticTone.Electric.interpretation": "Der elektrische Ton aktiviert den Dienst. Es ist Energie in Bewegung, der Funke, der die Aktion entzündet. Er fragt dich, wie du deine Talente in den Dienst eines größeren Zwecks stellen kannst. Überlege heute: Wie kann ich meine Ressourcen aktivieren? Inwiefern nützt mein Dienst anderen?",
+  "GalacticTone.SelfExisting.interpretation": "Der selbst-existente Ton definiert die Form der Handlung. Er gibt deinem Zweck Struktur und Maß. Er hilft dir, die Grundlagen zu schaffen und zu verstehen, wie du deine Ideen manifestieren kannst. Denke heute: Was ist die effektivste Form für mein Handeln? Welche Muster und Maßnahmen muss ich etablieren?",
+  "GalacticTone.Overtone.interpretation": "Der Oberton befiehlt Ausstrahlung und innere Kraft. Er sammelt Ressourcen und gibt dir die Autorität zu glänzen. Konzentriere dich heute darauf: Wie kann ich meine Kräfte und Ressourcen sammeln? Auf welche Weise strahle ich meine persönliche Kraft aus?",
+  "GalacticTone.Rhythmic.interpretation": "Der rhythmische Ton organisiert für Gleichheit und Gleichgewicht. Er hilft dir, das Gleichgewicht im Fluss des Lebens zu finden und Herausforderungen organisch zu bewältigen. Suche heute: Wie kann ich mein Leben und meine Handlungen ausbalancieren? Wie organisiere ich meine Umgebung für Harmonie?",
+  "GalacticTone.Resonant.interpretation": "Der resonante Ton kanalisiert Einstimmung und Inspiration. Er verbindet dich mit der Quelle der Weisheit und ermöglicht es dir, in Harmonie mit dem Universum zu schwingen. Stimme dich heute ein: Was inspiriert mich wirklich? Wie kann ich mein Sein mit meinem höchsten Zweck in Einklang bringen?",
+  "GalacticTone.Galactic.interpretation": "Der galaktische Ton modelliert Integrität und Harmonie. Er lädt dich ein, nach deinen Überzeugungen zu leben und kohärent zu handeln. Untersuche heute: Spiegelt mein Handeln meine Werte wider? Lebe ich in Integrität mit meiner Wahrheit?",
+  "GalacticTone.Solar.interpretation": "Der solare Ton pulsiert Absicht und Verwirklichung. Er gibt dir den letzten Anstoß, um dein Ziel zu manifestieren und deine Ziele zu erreichen. Frage dich heute: Wie kann ich meine Energie auf die Verwirklichung meiner Absicht lenken? Welche konkreten Schritte sollte ich unternehmen?",
+  "GalacticTone.Planetary.interpretation": "Der planetare Ton vervollkommnet die Manifestation. Er produziert, was du beabsichtigt hast, und macht deine Vision greifbar. Konzentriere dich heute darauf: Wie kann ich meine Schöpfung verbessern und vervollkommnen? Was manifestiert sich durch mich?",
+  "GalacticTone.Spectral.interpretation": "Der spektrale Ton löst auf und befreit. Er hilft dir, loszulassen, was nicht mehr dient, alte Strukturen aufzulösen und Raum für Neues zu schaffen. Überlege heute: Was muss ich in meinem Leben loslassen? Wie kann ich Fesseln und Einschränkungen loslassen?",
+  "GalacticTone.Crystal.interpretation": "Der Kristallton widmet sich der Zusammenarbeit und Universalisierung. Er lehrt dich, deine Gaben zu teilen und für ein höheres Gut zusammenzuarbeiten. Reflektiere heute: Wie kann ich mit anderen zusammenarbeiten? Inwiefern tragen meine Handlungen zur Gemeinschaft bei?",
   "GalacticTone.Cosmic.interpretation": "Der kosmische Ton transzendiert mit Gegenwart und Ausdauer. Es ist die Rückkehr zum Ursprung und die Erweiterung des Bewusstseins. Er lädt dich ein, vollständig in der Gegenwart zu leben und Liebe und Freude auszustrahlen. Erlebe heute: Wie kann ich präsenter sein? Wie erweitere ich meine Freude und meine Liebe ohne Grenzen?",
   "MoonPhase.new": "Neumond",
   "MoonPhase.waxingCrescent": "Zunehmender Sichelmond",
@@ -878,122 +879,6 @@
   "Toast.adWatchedDescription": "Du hast {amount} Sternenstaub verdient.",
   "Toast.alreadyRated": "Du hast diese Belohnung bereits beansprucht.",
   "Toast.dailyReactionStardust": "+{amount} 💫 für deine erste Reaktion des Tages!",
-  "Toast.dailyCommentStardust": "+{amount} 💫 für deinen ersten Kommentar des Tages!",
-  "MayanSign.Imix.interpretation": "Imix ist der uranfängliche Beginn, die Energie der Schöpfung selbst. Die unter diesem Siegel Geborenen sind Initiatoren, eine Quelle neuer Ideen. Ihre Herausforderung besteht darin, Vertrauen in das Universum zu entwickeln und zu lernen, Unterstützung zu erhalten, da sie oft versuchen, alles alleine zu machen. Sie sind natürliche Versorger, haben aber auch die Tendenz, sich zu viel vorzunehmen. Imix lädt dich ein, dich mit der Quelle zu verbinden und zu erkennen, dass du immer unterstützt wirst.",
-  "MayanSign.Ik.interpretation": "Ik repräsentiert Kommunikation, Atem und Geist. Die unter diesem Siegel Geborenen sind natürliche Kommunikatoren, Boten und oft sehr spirituell. Sie sind anpassungsfähig und vielseitig, können aber auch unentschlossen oder zerstreut sein. Ihre Herausforderung besteht darin, ihre Ideen zu erden und die Wahrheit mit Verantwortung zu sprechen. Ik ermutigt dich, deine Wahrheit auszudrücken und auf die unsichtbaren Kräfte zu hören, die dich leiten.",
-  "MayanSign.Akbal.interpretation": "Akbal ist das Reich der Träume, der Intuition und des Unterbewusstseins. Die unter diesem Siegel Geborenen sind introspektiv, mysteriös und haben Zugang zu einer tiefen inneren Weisheit. Sie finden Stärke in der Stille und Einsamkeit. Ihre Herausforderung besteht darin, ihren inneren Ängsten zu begegnen und das Licht in ihrer Dunkelheit zu finden. Akbal lädt dich ein, deine Intuition anzunehmen und die Schätze zu erkunden, die in deinem Inneren verborgen sind.",
-  "MayanSign.Kan.interpretation": "Kan ist das Samenkorn des Potenzials. Die unter diesem Zeichen Geborenen sind dynamisch, voller Energie und haben die Fähigkeit, Wachstum und Fülle zu manifestieren. Sie sind natürliche Führer, die danach streben, zu blühen und ihr volles Potenzial zu entfalten. Ihre Herausforderung besteht darin, Geduld zu lernen und den natürlichen Zyklen des Wachstums zu vertrauen. Kan ermutigt dich, deine Absichten sorgfältig zu pflanzen und dein Potenzial mit Bewusstsein zu pflegen.",
-  "MayanSign.Chicchan.interpretation": "Chicchan ist die Energie der Lebenskraft, des Instinkts und der Weisheit des Körpers. Die unter diesem Siegel Geborenen sind leidenschaftlich, charismatisch und tief mit ihren körperlichen Instinkten verbunden. Sie haben eine starke Überlebensfähigkeit. Ihre Herausforderung besteht darin, ihre kraftvolle Energie zu integrieren und zu transformieren, anstatt von ihr kontrolliert zu werden. Chicchan lädt dich ein, auf deinen Körper zu hören, deine Leidenschaft anzunehmen und Altes abzuwerfen, um neu geboren zu werden.",
-  "MayanSign.Cimi.interpretation": "Cimi repräsentiert den Tod als Transformation, die Fähigkeit, das Alte loszulassen, um Platz für das Neue zu schaffen. Die unter diesem Zeichen Geborenen sind widerstandsfähig, intuitiv und haben die Fähigkeit, große Veränderungen zu bewältigen. Sie sind Brücken zwischen den Welten. Ihre Herausforderung besteht darin, das Loslassen zu akzeptieren und auf den Prozess der Erneuerung zu vertrauen. Cimi lädt dich ein, loszulassen, was dir nicht mehr dient, und die Chancen zu nutzen, die jede Endung bietet.",
-  "MayanSign.Manik.interpretation": "Manik ist das Siegel der Heilung, des Wissens und der Vollendung. Die unter diesem Zeichen Geborenen sind natürliche Heiler, friedlich und oft sehr geschickt mit ihren Händen. Sie haben die Fähigkeit, Projekte abzuschließen und Wissen in die Welt zu bringen. Ihre Herausforderung besteht darin, ihre eigenen Bedürfnisse nach Heilung zu erkennen. Manik ermutigt dich, deine Gaben zu nutzen, um zu heilen und zu vervollständigen, und die Schönheit der Vollendung zu erkennen.",
-  "MayanSign.Lamat.interpretation": "Lamat ist die Energie der Harmonie, der Schönheit und der Eleganz. Die unter diesem Zeichen Geborenen sind künstlerisch, sozial und streben danach, Schönheit und Gleichgewicht in ihrer Umgebung zu schaffen. Sie sind die Sternensamen, die hier sind, um die Welt zu verschönern. Ihre Herausforderung besteht darin, ihre eigene innere Harmonie zu finden, anstatt sie nur im Außen zu suchen. Lamat lädt dich ein, deine eigene Schönheit auszustrahlen und Harmonie in allem, was du tust, zu schaffen.",
-  "MayanSign.Muluc.interpretation": "Muluc ist das Siegel des universellen Wassers und der emotionalen Reinigung. Die unter diesem Zeichen Geborenen sind emotional, intuitiv und haben eine starke Verbindung zu ihren Gefühlen. Sie sind natürliche Reiniger und Kommunikatoren. Ihre Herausforderung besteht darin, ihre Emotionen fließen zu lassen, ohne von ihnen mitgerissen zu werden. Muluc lädt dich ein, deine Emotionen zu ehren, dich zu reinigen und mit dem Fluss des Lebens zu vertrauen.",
-  "MayanSign.Oc.interpretation": "Oc ist die Energie der Loyalität, der Liebe und des Herzens. Die unter diesem Siegel Geborenen sind treue Begleiter, mutig und zutiefst mit ihren 'Rudeln' (Familie und Freunden) verbunden. Sie sind Führer des Herzens. Ihre Herausforderung besteht darin, ihre eigenen emotionalen Wunden zu heilen und zu lernen, sich selbst die gleiche Loyalität zu schenken, die sie anderen geben. Oc ermutigt dich, aus dem Herzen zu leben, loyal zu sein und den Weg mit Liebe zu führen.",
-  "MayanSign.Chuen.interpretation": "Chuen ist der göttliche Schelm, der Künstler und der Magier. Die unter diesem Zeichen Geborenen sind kreativ, verspielt, spontan und haben einen großartigen Sinn für Humor. Sie sind hier, um uns daran zu erinnern, das Leben nicht zu ernst zu nehmen. Ihre Herausforderung besteht darin, ihre Energie zu fokussieren und ihre Kreativität konstruktiv zu nutzen. Chuen lädt dich ein, zu spielen, zu erschaffen und die Magie im Alltäglichen zu finden.",
-  "MayanSign.Eb.interpretation": "Eb ist das Siegel des freien Willens und der menschliche Einfluss auf die Welt. Die unter diesem Zeichen Geborenen sind fürsorglich, großzügig und streben danach, Fülle und Wohlstand zu schaffen. Sie sind die Verwalter der Erde. Ihre Herausforderung besteht darin, weise Entscheidungen zu treffen und ihre Energie auf eine Weise zu lenken, die allen zugute kommt. Eb ermutigt dich, deinen Weg bewusst zu wählen und die Fülle des Lebens zu ernten.",
-  "MayanSign.Ben.interpretation": "Ben ist der Himmelswanderer, die Brücke zwischen Himmel und Erde. Die unter diesem Zeichen Geborenen sind mutige Entdecker, die Autorität und Konventionen herausfordern. Sie sind Säulen der Stärke für ihre Gemeinschaften. Ihre Herausforderung besteht darin, ihre Verletzlichkeit zu akzeptieren und einen Ausgleich zwischen ihrer inneren und äußeren Welt zu finden. Ben lädt dich ein, neue Horizonte zu erkunden und eine feste Säule in deinem eigenen Leben zu sein.",
-  "MayanSign.Ix.interpretation": "Ix ist der Magier, der Schamane und der Seher. Die unter diesem Zeichen Geborenen sind intuitiv, geheimnisvoll und haben Zugang zu höheren Bewusstseinsebenen. Sie sind die Hüter der Magie und der Zeitlosigkeit. Ihre Herausforderung besteht darin, ihrer Intuition voll zu vertrauen und ihre Macht mit Integrität zu nutzen. Ix ermutigt dich, die Magie in dir zu umarmen und im heiligen Moment der Gegenwart zu leben.",
-  "MayanSign.Men.interpretation": "Men ist der Adler, der Visionär mit der Fähigkeit, das große Ganze zu sehen. Die unter diesem Zeichen Geborenen sind unabhängig, ehrgeizig und haben einen Geist, der über die Grenzen des Gewöhnlichen hinausfliegt. Sie sind hier, um das kollektive Bewusstsein zu heben. Ihre Herausforderung besteht darin, geerdet zu bleiben und ihre Visionen in die Realität umzusetzen. Men lädt dich ein, deine Flügel auszubreiten und aus einer höheren Perspektive zu erschaffen.",
-  "MayanSign.Cib.interpretation": "Cib ist der Hüter der alten Weisheit und der kosmischen Bibliothek. Die unter diesem Zeichen Geborenen sind ernsthaft, intelligent und haben die Fähigkeit, alte Muster zu durchbrechen und zu vergeben. Sie sind die weisen Berater. Ihre Herausforderung besteht darin, sich selbst zu vergeben und die Vergangenheit loszulassen. Cib ermutigt dich, dich mit deiner inneren Weisheit zu verbinden und die befreiende Kraft der Vergebung zu nutzen.",
-  "MayanSign.Caban.interpretation": "Caban ist die Energie der Erde, die Kraft der Synchronizität und die Fähigkeit zur Navigation. Die unter diesem Zeichen Geborenen sind mental aktiv, praktisch und tief mit den Rhythmen der Erde verbunden. Sie sind die großen Synchronisierer. Ihre Herausforderung besteht darin, ihrem inneren Timing zu vertrauen und zu lernen, mit dem Fluss der Ereignisse zu navigieren. Caban lädt dich ein, auf die Zeichen zu achten und dich von der Erde leiten zu lassen.",
-  "MayanSign.Etznab.interpretation": "Etznab ist der Spiegel der Wahrheit, das Messer, das Illusionen durchschneidet. Die unter diesem Zeichen Geborenen sind mutig, direkt und suchen Klarheit und Wahrheit in allen Dingen. Sie haben die Fähigkeit, zu unterscheiden, was real ist. Ihre Herausforderung besteht darin, ihre Wahrheit mit Mitgefühl zu sprechen und zu lernen, sich selbst im Spiegel zu betrachten. Etznab ermutigt dich, alle Illusionen loszulassen und in der Klarheit deines eigenen Spiegelbildes zu leben.",
-  "MayanSign.Cauac.interpretation": "Cauac ist der Sturm, der reinigt und transformiert. Die unter diesem Zeichen Geborenen sind energiegeladen, freundlich und natürliche Katalysatoren für Veränderungen. Sie bringen die reinigenden Regen, die Erneuerung und Wiedergeburt ermöglichen. Ihre Herausforderung besteht darin, ihre eigene Transformation anzunehmen und die Lektionen zu lernen, die der Sturm bringt. Cauac lädt dich ein, die Veränderungen in deinem Leben anzunehmen und zu wissen, dass nach jedem Sturm Ruhe kommt.",
-  "MayanSign.Ahau.interpretation": "Ahau ist das Siegel der Erleuchtung, der Höhepunkt der Evolution. Die unter diesem Zeichen Geborenen sind liebevoll, künstlerisch, visionär und tragen das Licht der Sonne in sich. Sie sind hier, um bedingungslose Liebe auszustrahlen und die Vereinigung allen Lebens zu erkennen. Ihre Herausforderung besteht darin, ihr eigenes Ego zu transzendieren und im Dienst der Gesamtheit zu leben. Ahau lädt dich ein, dein eigenes Licht zu erkennen und es bedingungslos mit der Welt zu teilen.",
-  "LunarPhaseDescriptions": {
-    "new": {
-      "description": "Die Neumondphase markiert einen Neuanfang. Es ist eine Zeit der Selbstbeobachtung, um die Samen der Absicht für den kommenden Zyklus zu säen. Die Energie ist niedrig, ideal zum Ausruhen und Visualisieren dessen, was du manifestieren möchtest.",
-      "insights": [
-        "Setze klare Absichten für den kommenden Monat.",
-        "Es ist eine kraftvolle Zeit für Meditation und Visualisierung.",
-        "Lass Altes los, um Platz für Neues zu schaffen."
-      ]
-    },
-    "waxingCrescent": {
-      "description": "Der zunehmende Sichelmond symbolisiert eine Phase des Wachstums und der Stärkung. Wenn der Mond beginnt, den Nachthimmel mit größerer Helligkeit zu erleuchten, ist es Zeit zu handeln und die während des Neumondes gesetzten Absichten zu manifestieren. Deine Energie nimmt allmählich zu, was diese Phase perfekt macht, um mit der Umsetzung deiner Pläne zu beginnen. Es ist eine Zeit, in der du einen Schub an kreativer Energie und Inspiration spüren könntest. Diese Phase ist besonders günstig, um Neues zu lernen, Verbindungen herzustellen und vorteilhafte Gewohnheiten zu etablieren. Du könntest feststellen, dass dein Vertrauen zusammen mit deiner Fähigkeit, Hindernisse auf dem Weg zu deinen Zielen zu überwinden, wächst.",
-      "insights": [
-        "Deine emotionale Energie wächst.",
-        "Eine ausgezeichnete Zeit, um neue emotionale Muster zu fördern, die mit dem Ausdruck deines Geburtsmondes übereinstimmen.",
-        "Konzentriere deine Aufmerksamkeit darauf, schrittweise emotionale Sicherheit aufzubauen, die mit deiner Natur im Einklang steht."
-      ]
-    },
-    "firstQuarter": {
-      "description": "Das erste Viertel ist ein kritischer Wendepunkt. Deine Absichten stoßen auf ihre ersten Herausforderungen und erfordern Handeln und Entscheidungsfindung. Es ist eine Zeit, Hindernisse zu überwinden, deine Pläne anzupassen und dich erneut deinen Zielen zu verpflichten. Die Energie ist aktiv und manchmal angespannt. Es ist wichtig, entschlossen zu bleiben und beim ersten Anzeichen von Widerstand nicht aufzugeben. Löse die auftretenden Probleme und bekräftige dein Engagement für die Absichten, die du während des Neumondes gesetzt hast.",
-      "insights": [
-        "Triff Entscheidungen, auch wenn sie schwierig sind.",
-        "Jetzt ist die Zeit, deine Strategien anzupassen und zu verfeinern.",
-        "Vertraue auf deine Fähigkeit, alle Herausforderungen zu meistern."
-      ]
-    },
-    "waxingGibbous": {
-      "description": "Die zunehmende Mondphase ist eine Zeit der Verfeinerung und Perfektionierung. Du hast die anfänglichen Herausforderungen überwunden, und jetzt ist es an der Zeit, deine Pläne anzupassen und zu verbessern. Die Energie ist hoch, und der Schwung baut sich auf. Es ist eine ausgezeichnete Zeit, sich auf die Details zu konzentrieren, deine Bemühungen zu organisieren und dich auf den Höhepunkt vorzubereiten, den der Vollmond bringen wird. Analysiere, was funktioniert, und nimm die notwendigen Anpassungen vor, um den Erfolg zu sichern.",
-      "insights": [
-        "Achte auf Details und optimiere deine Pläne.",
-        "Die Energie ist hoch; nutze sie, um voranzukommen.",
-        "Beharrlichkeit in dieser Phase ist der Schlüssel zum Erfolg."
-      ]
-    },
-    "full": {
-      "description": "Der Vollmond ist der Höhepunkt des Mondzyklus. Die Absichten, die du während des Neumondes gepflanzt hast, erreichen ihren Höhepunkt. Es ist eine Zeit der Ernte, der Feier und der Erleuchtung. Wahrheiten kommen ans Licht, und die Emotionen sind auf ihrem Höhepunkt. Es ist eine kraftvolle Zeit für Dankbarkeit und die Anerkennung deiner Fortschritte. Die Energie ist auf ihrem Maximum, was zu Schlaflosigkeit oder erhöhter Sensibilität führen kann. Nutze dieses Licht, um zu sehen, was in deinem Leben Früchte getragen hat.",
-      "insights": [
-        "Feiere deine Erfolge, egal wie klein sie sind.",
-        "Drücke Dankbarkeit für das aus, was du manifestiert hast.",
-        "Sei dir deiner Emotionen bewusst, da sie verstärkt werden."
-      ]
-    },
-    "waningGibbous": {
-      "description": "Nach dem Höhepunkt des Vollmonds beginnt die abnehmende Mondphase. Es ist eine Zeit, um zu teilen, was du gelernt und geerntet hast. Es ist eine Phase der Verteilung, des Lehrens und der Kommunikation. Reflektiere über deine Erfolge und überlege, wie deine Erfahrungen anderen zugute kommen können. Die Energie beginnt abzunehmen, was die Selbstbeobachtung und die Analyse der Ergebnisse des Zyklus begünstigt.",
-      "insights": [
-        "Teile dein Wissen und deine Erfahrungen mit anderen.",
-        "Reflektiere über den gerade abgeschlossenen Zyklus.",
-        "Beginne darüber nachzudenken, was du im nächsten Zyklus loslassen musst."
-      ]
-    },
-    "lastQuarter": {
-      "description": "Das letzte Viertel ist eine Zeit des Loslassens und des Freigebens. Wie das erste Viertel stellt es eine Krise dar, aber diesmal ist es eine Krise des Bewusstseins. Es ist Zeit, loszulassen, was nicht funktioniert hat, alte Muster aufzugeben und dich von Beziehungen oder Situationen zu reinigen, die dir nicht mehr dienen. Es kann eine schwierige Phase sein, aber sie ist notwendig, um Platz für Neues zu schaffen.",
-      "insights": [
-        "Lass los, was dir nicht mehr dient.",
-        "Vergib dir selbst und anderen, um vorwärts zu kommen.",
-        "Reinige deinen physischen und emotionalen Raum."
-      ]
-    },
-    "waningCrescent": {
-      "description": "Der abnehmende Sichelmond ist die letzte Phase vor dem Neumond. Es ist eine Zeit der Hingabe, der Ruhe und der Erholung. Die Energie ist auf ihrem niedrigsten Stand und lädt zur Selbstbeobachtung und spirituellen Verbindung ein. Es ist eine Zeit, sich zurückzuziehen, zu meditieren und sich auf den nächsten Zyklus vorzubereiten. Träume, höre auf deine Intuition und lass das Universum die Kontrolle übernehmen. Es ist keine Zeit für Aktion, sondern für Sein.",
-      "insights": [
-        "Ruhe dich aus und lade deine Energie wieder auf.",
-        "Höre auf deine Intuition und deine Träume.",
-        "Löse alle verbleibenden Spannungen und gib dich dem Fluss hin."
-      ]
-    }
-  },
-  "ChineseHoroscopeDetail": {
-    "traitsTitle": "Eigenschaften von {signName}",
-    "Rat": { "interpretation": "Scharfsinnig, charmant und ehrgeizig. Ratten sind einfallsreich und finden aus jeder Schwierigkeit einen Ausweg. Sie sind gesellig, können aber kritisch und opportunistisch sein. Sie sind ihrer Familie und engen Freunden gegenüber äußerst loyal." },
-    "Ox": { "interpretation": "Sorgfältig, zuverlässig und stark. Ochsen sind methodisch und geduldig und glauben an harte Arbeit, um ihre Ziele zu erreichen. Sie mögen keine Veränderungen und können sehr stur sein, aber ihre Zuverlässigkeit ist unübertroffen." },
-    "Tiger": { "interpretation": "Mutig, selbstbewusst und ein geborener Anführer. Tiger sind leidenschaftlich und energisch und suchen immer nach einer Herausforderung. Sie können rebellisch und unberechenbar sein, aber ihr Charisma und ihr Mut sind für andere inspirierend." },
-    "Rabbit": { "interpretation": "Sanft, ruhig und elegant. Kaninchen sind taktvoll und diplomatisch und suchen vor allem Frieden und Harmonie. Sie sind vorsichtig und können als zurückhaltend angesehen werden, sind aber auch scharfsinnig und haben ein starkes Verantwortungsbewusstsein." },
-    "Dragon": { "interpretation": "Mächtig, ehrgeizig und charismatisch. Drachen sind geborene Anführer, voller Energie und Enthusiasmus. Sie sind selbstbewusst und haben keine Angst, Risiken einzugehen. Ihr Stolz kann manchmal an Arroganz grenzen, aber sie haben ein großzügiges Herz." },
-    "Snake": { "interpretation": "Weise, intuitiv und geheimnisvoll. Schlangen sind tiefgründige Denker, die sich lieber auf ihr eigenes Urteil als auf den Rat anderer verlassen. Sie sind charmant und kultiviert, können aber besitzergreifend sein und ihre Gefühle hüten." },
-    "Horse": { "interpretation": "Energisch, unabhängig und freigeistig. Pferde lieben Abenteuer und sind gerne mitten im Geschehen. Sie sind gesellig und haben einen großartigen Sinn für Humor, können aber ungeduldig sein und haben Angst vor Bindungen." },
-    "Goat": { "interpretation": "Sanft, mitfühlend und künstlerisch. Ziegen sind kreative Träumer, die Frieden und Schönheit schätzen. Sie sind einfühlsam und gutherzig, können aber unentschlossen sein und brauchen viel emotionale Unterstützung von ihren Lieben." },
-    "Monkey": { "interpretation": "Klug, schelmisch und ein genialer Problemlöser. Affen sind intellektuell neugierig und haben einen großartigen Sinn für Humor. Sie sind Meister der Improvisation, können aber als unzuverlässig oder manipulativ angesehen werden." },
-    "Rooster": { "interpretation": "Selbstbewusst, aufmerksam und fleißig. Hähne sind Perfektionisten, die ein scharfes Auge für Details haben. Sie sind direkt und ehrlich, aber ihre Direktheit kann manchmal als kritisch oder arrogant empfunden werden." },
-    "Dog": { "interpretation": "Loyal, ehrlich und gerecht. Hunde sind vertrauenswürdige Begleiter, die ihre Lieben erbittert beschützen. Sie haben einen starken Sinn für Richtig und Falsch, können aber zu Angst und Pessimismus neigen." },
-    "Pig": { "interpretation": "Freundlich, großzügig und gelassen. Schweine genießen die guten Dinge des Lebens und mögen keine Konflikte. Sie sind fleißig und ehrlich, und ihre gute Natur macht sie zu wundervollen Freunden, obwohl sie etwas naiv sein können." }
-  },
-  "StorePage.title": "Kosmische Empfehlungen",
-  "StorePage.subtitle": "Ausgewählte Artikel zur Verbesserung Ihrer spirituellen Reise.",
-  "StorePage.viewOnAmazon": "Auf Amazon ansehen",
-  "StorePage.affiliateDisclaimer": "Als Amazon-Partner verdienen wir an qualifizierten Käufen. Dies hilft, unsere App ohne zusätzliche Kosten für Sie zu unterstützen.",
-  "StoreProducts.classicTarotDeck.title": "Klassisches Tarotdeck",
-  "StoreProducts.classicTarotDeck.description": "Ein zeitloses Rider-Waite-Tarotdeck, perfekt für Anfänger und Experten, um Einsicht und Führung zu suchen.",
-  "StoreProducts.astrologyIntroBook.title": "Einführungsbuch in die Astrologie",
-  "StoreProducts.astrologyIntroBook.description": "Ein umfassendes Buch, das die Grundlagen der Astrologie, Zeichen, Planeten und Häuser für neue Lernende behandelt.",
-  "StoreProducts.healingCrystalsSet.title": "Heilsteine-Set",
-  "StoreProducts.healingCrystalsSet.description": "Ein Starter-Set mit verschiedenen Trommelsteinen wie Amethyst und Rosenquarz, um Ihre Energien auszugleichen.",
-  "StoreProducts.moonLamp.title": "3D-Mondlampe",
-  "StoreProducts.moonLamp.description": "Bringen Sie das mystische Leuchten des Mondes mit dieser realistischen und beruhigenden Nachtlampe in Ihr Zuhause.",
-  "StoreProducts.zodiacJournal.title": "Sternzeichen-Tagebuch",
-  "StoreProducts.zodiacJournal.description": "Ein wunderschön gestaltetes Notizbuch, in dem Sie Ihre Gedanken, Träume und astrologischen Beobachtungen festhalten können.",
-  "StoreProducts.incenseHolder.title": "Keramik-Räucherstäbchenhalter",
-  "StoreProducts.incenseHolder.description": "Ein eleganter Halter zum sicheren Verbrennen Ihrer Lieblingsräucherstäbchen während der Meditation oder Entspannung."
+  "Toast.dailyCommentStardust": "+{amount} 💫 für deinen ersten Kommentar des Tages!"
 }
+
