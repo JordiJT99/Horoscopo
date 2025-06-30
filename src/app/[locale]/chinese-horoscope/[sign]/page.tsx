@@ -66,7 +66,7 @@ export default async function ChineseHoroscopeDetailPage({ params }: { params: {
 
         <Card className="max-w-3xl mx-auto bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
             <CardHeader>
-                <CardTitle className="text-2xl text-primary font-headline">{dictionary['ChineseHoroscopeDetail.traitsTitle']?.replace('{signName}', translatedSignName) || `Traits of the ${translatedSignName}`}</CardTitle>
+                <CardTitle className="text-2xl text-primary font-headline">{dictionary.ChineseHoroscopeDetail?.traitsTitle?.replace('{signName}', translatedSignName) || `Traits of ${translatedSignName}`}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
