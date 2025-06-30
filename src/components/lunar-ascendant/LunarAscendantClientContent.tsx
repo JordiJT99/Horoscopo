@@ -194,6 +194,34 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                       </div>
                     </div>
 
+                     <div className="space-y-2">
+                        <h4 className="font-headline text-lg text-primary text-center">{dictionary['LunarAscendantPage.upcomingPhasesTitle'] || "Upcoming Phases"}</h4>
+                            <ScrollArea type="always" className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
+                                <div className="flex w-max space-x-4">
+                                {lunarData.upcomingPhases.map((phase, index) => (
+                                    <Popover key={index}>
+                                        <PopoverTrigger asChild>
+                                            <div className="flex flex-col items-center p-1.5 rounded-md w-24 shrink-0 cursor-pointer hover:bg-muted/50 transition-colors">
+                                                <MoonPhaseVisualizer
+                                                  illumination={phase.illumination || 0}
+                                                  phaseKey={phase.phaseKey}
+                                                  size={48}
+                                                />
+                                                <p className="text-xs font-semibold text-foreground mt-1.5 truncate">{dictionary[phase.nameKey]}</p>
+                                                <p className="text-xs text-muted-foreground">{phase.date}</p>
+                                            </div>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-2 text-center">
+                                            <p className="font-semibold">{dictionary[phase.nameKey]}</p>
+                                            <p className="text-sm text-muted-foreground">{phase.date}{phase.time && <> • {phase.time}</>}</p>
+                                        </PopoverContent>
+                                    </Popover>
+                                ))}
+                                </div>
+                                <ScrollBar orientation="horizontal" className="h-3" />
+                            </ScrollArea>
+                    </div>
+
                     {lunarData.description && (
                         <div className="mt-4 p-3 bg-secondary/30 rounded-lg">
                           <AnimatePresence>
@@ -229,34 +257,6 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                         </div>
                     )}
 
-
-                    <div className="space-y-2">
-                        <h4 className="font-headline text-lg text-primary text-center">{dictionary['LunarAscendantPage.upcomingPhasesTitle'] || "Upcoming Phases"}</h4>
-                            <ScrollArea type="always" className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
-                                <div className="flex w-max space-x-4">
-                                {lunarData.upcomingPhases.map((phase, index) => (
-                                    <Popover key={index}>
-                                        <PopoverTrigger asChild>
-                                            <div className="flex flex-col items-center p-1.5 rounded-md w-24 shrink-0 cursor-pointer hover:bg-muted/50 transition-colors">
-                                                <MoonPhaseVisualizer
-                                                  illumination={phase.illumination || 0}
-                                                  phaseKey={phase.phaseKey}
-                                                  size={48}
-                                                />
-                                                <p className="text-xs font-semibold text-foreground mt-1.5 truncate">{dictionary[phase.nameKey]}</p>
-                                                <p className="text-xs text-muted-foreground">{phase.date}</p>
-                                            </div>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-2 text-center">
-                                            <p className="font-semibold">{dictionary[phase.nameKey]}</p>
-                                            <p className="text-sm text-muted-foreground">{phase.date}{phase.time && <> • {phase.time}</>}</p>
-                                        </PopoverContent>
-                                    </Popover>
-                                ))}
-                                </div>
-                                <ScrollBar orientation="horizontal" className="h-3" />
-                            </ScrollArea>
-                    </div>
                      <div className="pt-2 flex justify-center">
                         <Button onClick={handleShare} variant="outline" size="sm">
                             <Share2 className="mr-2 h-4 w-4" />
