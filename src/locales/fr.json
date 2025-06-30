@@ -773,7 +773,7 @@
   "PsychicSpecialty.careerFinance": "Carrière & Finances",
   "PsychicSpecialty.spiritualityGrowth": "Spiritualité & Croissance",
   "PsychicSpecialty.generalReading": "Lecture Générale",
-  "PsychicPhrase.esmeralda": "Votre cœur connaît le chemin ; je ne fais qu'éclairer la voie.",
+  "PsychicPhrase.esmeralda": "Ton cœur connaît le chemin ; je ne fais qu'éclairer la voie.",
   "PsychicPhrase.zephyr": "L'avenir n'est pas gravé dans la pierre, mais dans le vent. Écoutons ensemble.",
   "PsychicPhrase.seraphina": "Les étoiles murmurent des secrets à ceux qui osent écouter.",
   "PsychicPhrase.aurora": "Dans chaque aube se trouve une nouvelle réponse. Laissez-moi vous aider à la voir.",
@@ -857,17 +857,17 @@
   "Toast.dailyCommentStardust": "+{amount} 💫 pour votre premier commentaire de la journée !",
   "ChineseHoroscopeDetail": {
     "traitsTitle": "Traits de {signName}",
-    "Rat": { "interpretation": "[Interprétation détaillée du Rat en français]" },
-    "Ox": { "interpretation": "[Interprétation détaillée du Bœuf en français]" },
-    "Tiger": { "interpretation": "[Interprétation détaillée du Tigre en français]" },
-    "Rabbit": { "interpretation": "[Interprétation détaillée du Lapin en français]" },
-    "Dragon": { "interpretation": "[Interprétation détaillée du Dragon en français]" },
-    "Snake": { "interpretation": "[Interprétation détaillée du Serpent en français]" },
-    "Horse": { "interpretation": "[Interprétation détaillée du Cheval en français]" },
-    "Goat": { "interpretation": "[Interprétation détaillée de la Chèvre en français]" },
-    "Monkey": { "interpretation": "[Interprétation détaillée du Singe en français]" },
-    "Rooster": { "interpretation": "[Interprétation détaillée du Coq en français]" },
-    "Dog": { "interpretation": "[Interprétation détaillée du Chien en français]" },
-    "Pig": { "interpretation": "[Interprétation détaillée du Cochon en français]" }
+    "Rat": { "interpretation": "Vif d'esprit, charmant et ambitieux. Les Rats sont ingénieux et peuvent se sortir de n'importe quel problème. Ils sont sociables mais peuvent être critiques et opportunistes. Ils sont farouchement loyaux envers leur famille et leurs amis proches." },
+    "Ox": { "interpretation": "Diligent, fiable et fort. Les Bœufs sont méthodiques et patients, croyant au travail acharné pour atteindre leurs objectifs. Ils n'aiment pas le changement et peuvent être très têtus, mais leur fiabilité est inégalée." },
+    "Tiger": { "interpretation": "Courageux, confiant et un leader né. Les Tigres sont passionnés et énergiques, toujours à la recherche d'un défi. Ils peuvent être rebelles et imprévisibles, mais leur charisme et leur courage inspirent les autres." },
+    "Rabbit": { "interpretation": "Doux, calme et élégant. Les Lapins sont pleins de tact et diplomates, recherchant la paix et l'harmonie par-dessus tout. Ils sont prudents et peuvent être perçus comme réservés, mais ils sont aussi perspicaces et ont un fort sens des responsabilités." },
+    "Dragon": { "interpretation": "Puissant, ambitieux et charismatique. Les Dragons sont des leaders nés, pleins d'énergie et d'enthousiasme. Ils sont confiants et n'ont pas peur de prendre des risques. Leur fierté peut parfois friser l'arrogance, mais ils ont un cœur généreux." },
+    "Snake": { "interpretation": "Sage, intuitif et mystérieux. Les Serpents sont des penseurs profonds, préférant se fier à leur propre jugement plutôt qu'aux conseils des autres. Ils sont charmants et sophistiqués mais peuvent être possessifs et garder leurs émotions pour eux." },
+    "Horse": { "interpretation": "Énergique, indépendant et épris de liberté. Les Chevaux aiment l'aventure et être au cœur de l'action. Ils sont sociables et ont un grand sens de l'humour, mais ils peuvent être impatients et avoir peur de l'engagement." },
+    "Goat": { "interpretation": "Doux, compatissant et artistique. Les Chèvres sont des rêveurs créatifs qui apprécient la paix et la beauté. Elles sont empathiques et ont bon cœur mais peuvent être indécises et avoir besoin de beaucoup de soutien émotionnel de leurs proches." },
+    "Monkey": { "interpretation": "Intelligent, espiègle et un génie pour résoudre les problèmes. Les Singes sont intellectuellement curieux et ont un grand sens de l'humour. Ils sont maîtres de l'improvisation mais peuvent être perçus comme peu fiables ou manipulateurs." },
+    "Rooster": { "interpretation": "Confiant, observateur et travailleur. Les Coqs sont des perfectionnistes qui ont un œil vif pour les détails. Ils sont directs et honnêtes, mais leur franchise peut parfois passer pour de la critique ou de l'arrogance." },
+    "Dog": { "interpretation": "Loyal, honnête et juste. Les Chiens sont des compagnons dignes de confiance qui protégeront farouchement leurs proches. Ils ont un fort sens du bien et du mal mais peuvent être sujets à l'anxiété et au pessimisme." },
+    "Pig": { "interpretation": "Gentil, généreux et facile à vivre. Les Cochons aiment les bonnes choses de la vie et ne sont pas du genre à chercher les conflits. Ils sont diligents et honnêtes, et leur bonne nature en fait de merveilleux amis, bien qu'ils puissent être un peu naïfs." }
   }
 }
