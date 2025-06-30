@@ -49,7 +49,9 @@ export default async function ChineseHoroscopeDetailPage({ params }: { params: {
   const translatedSignName = dictionary[signData.name] || signData.name;
   const translatedElement = dictionary[signData.element] || signData.element;
   const descriptionKey = signData.descriptionKey || `ChineseHoroscopePage.descriptions.${signData.name}`;
-  const interpretationKey = signData.detailedInterpretationKey || `ChineseHoroscopeDetail.${signData.name}.interpretation`;
+  const briefDescription = dictionary[descriptionKey] || signData.description;
+  const detailedInterpretation = dictionary.ChineseHoroscopeDetail?.[signData.name]?.interpretation;
+
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -79,8 +81,8 @@ export default async function ChineseHoroscopeDetailPage({ params }: { params: {
                 </div>
 
                 <div className="text-base text-foreground/90 leading-relaxed space-y-4">
-                    <p className="italic">{dictionary[descriptionKey] || signData.description}</p>
-                    <p>{dictionary[interpretationKey] || "Detailed interpretation coming soon."}</p>
+                    <p className="italic">{briefDescription}</p>
+                    <p>{detailedInterpretation || "Detailed interpretation coming soon."}</p>
                 </div>
             </CardContent>
         </Card>
