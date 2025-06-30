@@ -73,15 +73,15 @@ const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dicti
   };
 
   const birthFormDictionary = {
-    dateLabel: dictionary['birthForm.dateLabel'] || 'Birth Date',
-    timeLabel: dictionary['birthForm.timeLabel'] || 'Birth Time',
-    cityLabel: dictionary['birthForm.cityLabel'] || 'Birth City',
-    countryLabel: dictionary['birthForm.countryLabel'] || 'Birth Country',
-    submitButton: dictionary['birthForm.submitButton'] || 'Generate Natal Chart',
+    dateLabel: dictionary.birthForm?.dateLabel || 'Birth Date',
+    timeLabel: dictionary.birthForm?.timeLabel || 'Birth Time',
+    cityLabel: dictionary.birthForm?.cityLabel || 'Birth City',
+    countryLabel: dictionary.birthForm?.countryLabel || 'Birth Country',
+    submitButton: dictionary.birthForm?.submitButton || 'Generate Natal Chart',
     validationErrors: {
-      required: dictionary['birthForm.validationErrors.required'] || 'This field is required.',
+      required: dictionary.birthForm?.validationErrors?.required || 'This field is required.',
     },
-    pickDate: dictionary['birthForm.pickDate'] || 'Pick a date',
+    pickDate: dictionary.birthForm?.pickDate || 'Pick a date',
   };
 
   if (isLoading) {
