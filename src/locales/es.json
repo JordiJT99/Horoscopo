@@ -1168,91 +1168,89 @@
       "work": "At work, Pisces thrives in environments that allow them to use their creativity, intuition, and compassion. They are excellent artists, musicians, therapists, healers, and non-profit workers. They are not motivated by money or power, but by a desire to contribute to something greater than themselves. Their main challenge is dealing with harsh, competitive work environments. They need a job that has meaning and allows them to use their unique gifts to help others."
     }
   },
-  "Share.lunarPhaseTitle": "Current Moon Phase from AstroVibes",
-  "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
-  "Share.buttonLabelLunar": "Share Current Phase",
-  "StorePage.title": "Cosmic Recommendations",
-  "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
-  "StorePage.viewOnAmazon": "View on Amazon",
-  "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
-  "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
-  "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for beginners and experts alike to seek insight and guidance.",
-  "StoreProducts.astrologyIntroBook.title": "Intro to Astrology Book",
-  "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
-  "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
-  "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
-  "StoreProducts.moonLamp.title": "3D Moon Lamp",
-  "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and calming night lamp.",
-  "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
-  "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
-  "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation.",
+  "Share.lunarPhaseTitle": "Fase Lunar Actual de AstroVibes",
+  "Share.lunarPhaseText": "Ahora mismo, la luna es una {phaseName} en {signName} ({illumination}% iluminada). ¡Échale un vistazo en AstroVibes!",
+  "Share.buttonLabelLunar": "Compartir Fase Actual",
+  "StorePage.title": "Recomendaciones Cósmicas",
+  "StorePage.subtitle": "Artículos seleccionados para mejorar tu viaje espiritual.",
+  "StorePage.viewOnAmazon": "Ver en Amazon",
+  "StorePage.affiliateDisclaimer": "Como Afiliado de Amazon, ganamos con las compras que califican. Esto ayuda a mantener nuestra aplicación sin costo adicional para ti.",
+  "StoreProducts.classicTarotDeck.title": "Baraja de Tarot Clásica",
+  "StoreProducts.classicTarotDeck.description": "Una baraja de tarot Rider-Waite atemporal, perfecta tanto para principiantes como para expertos para buscar perspicacia y guía.",
+  "StoreProducts.astrologyIntroBook.title": "Libro de Introducción a la Astrología",
+  "StoreProducts.astrologyIntroBook.description": "Un libro completo que cubre los conceptos básicos de la astrología, los signos, los planetas y las casas para los nuevos aprendices.",
+  "StoreProducts.healingCrystalsSet.title": "Set de Cristales de Sanación",
+  "StoreProducts.healingCrystalsSet.description": "Un set de inicio de varias piedras pulidas como amatista y cuarzo rosa para ayudar a equilibrar tus energías.",
+  "StoreProducts.moonLamp.title": "Lámpara de Luna 3D",
+  "StoreProducts.moonLamp.description": "Lleva el brillo místico de la luna a tu hogar con esta lámpara de noche realista y relajante.",
+  "StoreProducts.zodiacJournal.title": "Diario de Constelaciones del Zodiaco",
+  "StoreProducts.zodiacJournal.description": "Un cuaderno bellamente diseñado para registrar tus pensamientos, sueños y observaciones astrológicas.",
+  "StoreProducts.incenseHolder.title": "Portaincienso de Cerámica",
+  "StoreProducts.incenseHolder.description": "Un elegante soporte para quemar de forma segura tus varitas de incienso favoritas durante la meditación o la relajación.",
   "LunarPhaseDescriptions": {
     "new": {
-      "description": "La Nouvelle Lune marque un nouveau départ. C'est un moment d'introspection, pour planter les graines d'intention pour le cycle à venir. L'énergie est basse, idéale pour se reposer et visualiser ce que vous souhaitez manifester.",
+      "description": "La Luna Nueva marca un nuevo comienzo. Es un tiempo de introspección, para plantar las semillas de la intención para el ciclo que viene. La energía es baja, ideal para descansar y visualizar lo que deseas manifestar.",
       "insights": [
-        "Fixez des intentions claires pour le mois à venir.",
-        "C'est un moment puissant pour la méditation et la visualisation.",
-        "Lâchez l'ancien pour faire place au nouveau."
+        "Establece intenciones claras para el próximo mes.",
+        "Es un momento poderoso para la meditación y la visualización.",
+        "Suelta lo viejo para hacer espacio a lo nuevo."
       ]
     },
     "waxingCrescent": {
-      "description": "Le Premier Croissant symbolise une période de croissance et de renforcement. Alors que la lune commence à illuminer le ciel nocturne avec plus d'éclat, il est temps d'agir et de manifester les intentions établies lors de la nouvelle lune. Votre énergie augmente progressivement, ce qui rend cette période parfaite pour commencer à mettre en œuvre vos plans. C'est un moment où vous pourriez ressentir une poussée d'énergie créative et d'inspiration. Cette phase est particulièrement favorable pour apprendre de nouvelles choses, établir des liens et former des habitudes bénéfiques. Vous pourriez remarquer que votre confiance grandit en même temps que votre capacité à surmonter les obstacles sur le chemin de vos objectifs.",
+      "description": "La Luna Creciente simboliza un período de crecimiento y fortalecimiento. A medida que la luna comienza a iluminar el cielo nocturno con mayor brillo, es momento de actuar y manifestar las intenciones establecidas durante la luna nueva. Tu energía aumenta gradualmente, haciendo este período perfecto para comenzar a implementar tus planes. Es un momento en el que podrías sentir un impulso de energía creativa e inspiración. Esta fase es particularmente favorable para aprender cosas nuevas, establecer conexiones y formar hábitos beneficiosos. Podrías notar que tu confianza crece junto con tu capacidad para superar obstáculos en el camino hacia tus objetivos.",
       "insights": [
-        "Votre énergie émotionnelle est en croissance.",
-        "Un excellent moment pour nourrir de nouveaux schémas émotionnels qui s'alignent sur l'expression de votre Lune natale.",
-        "Concentrez votre attention sur la construction progressive d'une sécurité émotionnelle qui résonne avec votre nature."
+        "Tu energía emocional está creciendo.",
+        "Un excelente momento para nutrir nuevos patrones emocionales que se alineen con la expresión de tu Luna natal.",
+        "Enfoca tu atención en construir gradualmente una seguridad emocional que resuene con tu naturaleza."
       ]
     },
     "firstQuarter": {
-      "description": "Le Premier Quartier est un point critique. Vos intentions rencontrent leurs premiers défis, nécessitant action et prise de décision. C'est le moment de surmonter les obstacles, d'ajuster vos plans et de vous réengager envers vos objectifs. L'énergie est active et parfois tendue. Il est important de rester déterminé et de ne pas abandonner face à la première résistance. Résolvez les problèmes qui se présentent et réaffirmez votre engagement envers les intentions que vous avez définies lors de la nouvelle lune.",
+      "description": "El Cuarto Creciente es un punto crítico. Tus intenciones se encuentran con sus primeros desafíos, requiriendo acción y toma de decisiones. Es un momento para superar obstáculos, ajustar tus planes y volver a comprometerte con tus objetivos. La energía es activa y a veces tensa. Es importante mantenerse decidido y no rendirse ante la primera resistencia. Resuelve los problemas que surjan y reafirma tu compromiso con las intenciones que estableciste durante la luna nueva.",
       "insights": [
-        "Prenez des décisions, même si elles sont difficiles.",
-        "Il est maintenant temps d'ajuster et d'affiner vos stratégies.",
-        "Ayez confiance en votre capacité à surmonter n'importe quel défi."
+        "Toma decisiones, aunque sean difíciles.",
+        "Ahora es el momento de ajustar y refinar tus estrategias.",
+        "Confía en tu capacidad para superar cualquier desafío."
       ]
     },
     "waxingGibbous": {
-      "description": "La phase de la Lune Gibbeuse Croissante est un temps de raffinement et de perfectionnement. Vous avez surmonté les premiers défis, et il est maintenant temps d'ajuster et d'améliorer vos plans. L'énergie est élevée, et l'élan se construit. C'est un excellent moment pour se concentrer sur les détails, organiser vos efforts et vous préparer à l'apogée que la pleine lune apportera. Analysez ce qui fonctionne et faites les ajustements nécessaires pour assurer le succès.",
+      "description": "La fase de la Luna Gibosa Creciente es un tiempo de refinamiento y perfeccionamiento. Has superado los desafíos iniciales, y ahora es el momento de ajustar y mejorar tus planes. La energía es alta, y el impulso se está construyendo. Es un excelente momento para enfocarse en los detalles, organizar tus esfuerzos y prepararte para la culminación que traerá la luna llena. Analiza lo que está funcionando y haz los ajustes necesarios para asegurar el éxito.",
       "insights": [
-        "Portez attention aux détails et optimisez vos plans.",
-        "L'énergie est élevée ; utilisez-la pour avancer.",
-        "La persévérance pendant cette phase est la clé du succès."
+        "Presta atención a los detalles y optimiza tus planes.",
+        "La energía es alta; úsala para avanzar.",
+        "La perseverancia durante esta fase es clave para el éxito."
       ]
     },
     "full": {
-      "description": "La Pleine Lune est le point culminant du cycle lunaire. Les intentions que vous avez plantées lors de la nouvelle lune atteignent leur apogée. C'est un temps de récolte, de célébration et d'illumination. La vérité éclate au grand jour, et les émotions sont à leur paroxysme. C'est un moment puissant pour la gratitude et la reconnaissance de vos progrès. L'énergie est à son maximum, ce qui peut entraîner de l'insomnie ou une sensibilité accrue. Utilisez cette lumière pour voir ce qui est parvenu à son terme dans votre vie.",
+      "description": "La Luna Llena es el clímax del ciclo lunar. Las intenciones que plantaste durante la luna nueva alcanzan su punto culminante. Es un tiempo de cosecha, celebración e iluminación. La verdad sale a la luz, y las emociones están en su apogeo. Es un momento poderoso para la gratitud y el reconocimiento de tus progresos. La energía está al máximo, lo que puede llevar a insomnio o a una sensibilidad elevada. Usa esta luz para ver qué ha llegado a su plenitud en tu vida.",
       "insights": [
-        "Célébrez vos réussites, aussi petites soient-elles.",
-        "Exprimez votre gratitude pour ce que vous avez manifesté.",
-        "Soyez conscient de vos émotions car elles seront amplifiées."
+        "Celebra tus logros, por pequeños que sean.",
+        "Expresa gratitud por lo que has manifestado.",
+        "Sé consciente de tus emociones, ya que estarán amplificadas."
       ]
     },
     "waningGibbous": {
-      "description": "Après le pic de la Pleine Lune, la phase de la Lune Gibbeuse Décroissante commence. C'est un moment pour partager ce que vous avez appris et récolté. C'est une phase de distribution, d'enseignement et de communication. Réfléchissez à vos succès et considérez comment vos expériences peuvent profiter aux autres. L'énergie commence à décliner, favorisant l'introspection et l'analyse des résultats du cycle.",
+      "description": "Después del pico de la Luna Llena, comienza la fase de la Luna Gibosa Menguante. Es un tiempo para compartir lo que has aprendido y cosechado. Es una fase de distribución, enseñanza y comunicación. Reflexiona sobre tus éxitos y considera cómo tus experiencias pueden beneficiar a otros. La energía comienza a disminuir, favoreciendo la introspección y el análisis de los resultados del ciclo.",
       "insights": [
-        "Partagez vos connaissances et vos expériences avec les autres.",
-        "Réfléchissez au cycle qui vient de se terminer.",
-        "Commencez à penser à ce que vous devez lâcher dans le prochain cycle."
+        "Comparte tu conocimiento y experiencias con otros.",
+        "Reflexiona sobre el ciclo que acaba de concluir.",
+        "Comienza a pensar en lo que necesitas soltar en el próximo ciclo."
       ]
     },
     "lastQuarter": {
-      "description": "Le Dernier Quartier est un moment de libération et de lâcher-prise. Tout comme le Premier Quartier, il représente une crise, mais cette fois, c'est une crise de conscience. Il est temps de laisser aller ce qui n'a pas fonctionné, d'abandonner les anciens schémas et de vous purifier des relations ou des situations qui ne vous servent plus. Ce peut être une phase difficile, mais elle est nécessaire pour faire de la place au nouveau.",
+      "description": "El Cuarto Menguante es un momento de liberación y de soltar. Al igual que el Primer Cuarto, representa una crisis, pero esta vez es una crisis de conciencia. Es hora de dejar ir lo que no funcionó, de abandonar viejos patrones y de limpiarte de relaciones o situaciones que ya no te sirven. Puede ser una fase difícil, pero es necesaria para hacer espacio para lo nuevo.",
       "insights": [
-        "Lâchez ce qui ne vous sert plus.",
-        "Pardonnez-vous et pardonnez aux autres pour avancer.",
-        "Purifiez votre espace physique et émotionnel."
+        "Suelta lo que ya no te sirve.",
+        "Perdónate a ti mismo y a los demás para poder avanzar.",
+        "Limpia tu espacio físico y emocional."
       ]
     },
     "waningCrescent": {
-      "description": "Le Dernier Croissant est la phase finale avant la nouvelle lune. C'est un temps d'abandon, de repos et de récupération. L'énergie est à son point le plus bas, invitant à l'introspection et à la connexion spirituelle. C'est un moment pour se retirer, méditer et se préparer pour le prochain cycle. Rêvez, écoutez votre intuition et laissez l'univers prendre le contrôle. Ce n'est pas le moment d'agir, mais d'être.",
+      "description": "La Luna Menguante es la fase final antes de la luna nueva. Es un tiempo de rendición, descanso y recuperación. La energía está en su punto más bajo, invitando a la introspección y a la conexión espiritual. Es un momento para retirarse, meditar y prepararse para el próximo ciclo. Sueña, escucha tu intuición y deja que el universo tome el control. No es un tiempo para la acción, sino para ser.",
       "insights": [
-        "Reposez-vous et rechargez votre énergie.",
-        "Écoutez votre intuition et vos rêves.",
-        "Libérez toute tension restante et abandonnez-vous au courant."
+        "Descansa y recarga tu energía.",
+        "Escucha tu intuición y tus sueños.",
+        "Libera cualquier tensión restante y ríndete al flujo."
       ]
     }
   }
 }
-
-    
