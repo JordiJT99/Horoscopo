@@ -197,6 +197,8 @@
   "LunarAscendantPage.easternTimeNote": "Note : Toutes les heures ET",
   "LunarAscendantPage.synodicCycle": "Progression du Cycle Synodal",
   "LunarAscendantPage.upcomingPhasesTitle": "Phases à Venir",
+  "LunarAscendantPage.readLess": "Lire Moins",
+  "LunarAscendantPage.readMore": "Lire Plus",
   "WeeklyHoroscopePage.title": "Horoscope Hebdomadaire",
   "WeeklyHoroscopePage.subtitle": "Vos prévisions astrologiques pour la semaine à venir. Sélectionnez votre signe.",
   "MonthlyHoroscopePage.title": "Horoscope Mensuel",
@@ -533,8 +535,8 @@
   "Share.lunarPhaseTitle": "Aktuelle Mondphase von AstroVibes",
   "Share.lunarPhaseText": "Gerade jetzt ist der Mond ein {phaseName} in {signName} ({illumination}% beleuchtet). Schau es dir auf AstroVibes an!",
   "Share.buttonLabelLunar": "Aktuelle Phase teilen",
-  "Error.genericTitle": "Fehler",
-  "Data.notAvailable": "N/V",
+  "Error.genericTitle": "Erreur",
+  "Data.notAvailable": "N/D",
   "OnboardingPage.title": "Willkommen bei AstroVibes!",
   "OnboardingPage.subtitleStep": "Schritt {currentStep} von {totalSteps}: Lass uns dich kennenlernen",
   "OnboardingPage.loadingOnboarding": "Lade Onboarding...",
@@ -1184,7 +1186,73 @@
   "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
   "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
   "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
+  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation.",
+  "LunarPhaseDescriptions": {
+    "new": {
+      "description": "La Nouvelle Lune marque un nouveau départ. C'est un moment d'introspection, pour planter les graines d'intention pour le cycle à venir. L'énergie est basse, idéale pour se reposer et visualiser ce que vous souhaitez manifester.",
+      "insights": [
+        "Fixez des intentions claires pour le mois à venir.",
+        "C'est un moment puissant pour la méditation et la visualisation.",
+        "Lâchez l'ancien pour faire place au nouveau."
+      ]
+    },
+    "waxingCrescent": {
+      "description": "Le Premier Croissant symbolise une période de croissance et de renforcement. Alors que la lune commence à illuminer le ciel nocturne avec plus d'éclat, il est temps d'agir et de manifester les intentions établies lors de la nouvelle lune. Votre énergie augmente progressivement, ce qui rend cette période parfaite pour commencer à mettre en œuvre vos plans. C'est un moment où vous pourriez ressentir une poussée d'énergie créative et d'inspiration. Cette phase est particulièrement favorable pour apprendre de nouvelles choses, établir des liens et former des habitudes bénéfiques. Vous pourriez remarquer que votre confiance grandit en même temps que votre capacité à surmonter les obstacles sur le chemin de vos objectifs.",
+      "insights": [
+        "Votre énergie émotionnelle est en croissance.",
+        "Un excellent moment pour nourrir de nouveaux schémas émotionnels qui s'alignent sur l'expression de votre Lune natale.",
+        "Concentrez votre attention sur la construction progressive d'une sécurité émotionnelle qui résonne avec votre nature."
+      ]
+    },
+    "firstQuarter": {
+      "description": "Le Premier Quartier est un point critique. Vos intentions rencontrent leurs premiers défis, nécessitant action et prise de décision. C'est le moment de surmonter les obstacles, d'ajuster vos plans et de vous réengager envers vos objectifs. L'énergie est active et parfois tendue. Il est important de rester déterminé et de ne pas abandonner face à la première résistance. Résolvez les problèmes qui se présentent et réaffirmez votre engagement envers les intentions que vous avez définies lors de la nouvelle lune.",
+      "insights": [
+        "Prenez des décisions, même si elles sont difficiles.",
+        "Il est maintenant temps d'ajuster et d'affiner vos stratégies.",
+        "Ayez confiance en votre capacité à surmonter n'importe quel défi."
+      ]
+    },
+    "waxingGibbous": {
+      "description": "La phase de la Lune Gibbeuse Croissante est un temps de raffinement et de perfectionnement. Vous avez surmonté les premiers défis, et il est maintenant temps d'ajuster et d'améliorer vos plans. L'énergie est élevée, et l'élan se construit. C'est un excellent moment pour se concentrer sur les détails, organiser vos efforts et vous préparer à l'apogée que la pleine lune apportera. Analysez ce qui fonctionne et faites les ajustements nécessaires pour assurer le succès.",
+      "insights": [
+        "Portez attention aux détails et optimisez vos plans.",
+        "L'énergie est élevée ; utilisez-la pour avancer.",
+        "La persévérance pendant cette phase est la clé du succès."
+      ]
+    },
+    "full": {
+      "description": "La Pleine Lune est le point culminant du cycle lunaire. Les intentions que vous avez plantées lors de la nouvelle lune atteignent leur apogée. C'est un temps de récolte, de célébration et d'illumination. La vérité éclate au grand jour, et les émotions sont à leur paroxysme. C'est un moment puissant pour la gratitude et la reconnaissance de vos progrès. L'énergie est à son maximum, ce qui peut entraîner de l'insomnie ou une sensibilité accrue. Utilisez cette lumière pour voir ce qui est parvenu à son terme dans votre vie.",
+      "insights": [
+        "Célébrez vos réussites, aussi petites soient-elles.",
+        "Exprimez votre gratitude pour ce que vous avez manifesté.",
+        "Soyez conscient de vos émotions car elles seront amplifiées."
+      ]
+    },
+    "waningGibbous": {
+      "description": "Après le pic de la Pleine Lune, la phase de la Lune Gibbeuse Décroissante commence. C'est un moment pour partager ce que vous avez appris et récolté. C'est une phase de distribution, d'enseignement et de communication. Réfléchissez à vos succès et considérez comment vos expériences peuvent profiter aux autres. L'énergie commence à décliner, favorisant l'introspection et l'analyse des résultats du cycle.",
+      "insights": [
+        "Partagez vos connaissances et vos expériences avec les autres.",
+        "Réfléchissez au cycle qui vient de se terminer.",
+        "Commencez à penser à ce que vous devez lâcher dans le prochain cycle."
+      ]
+    },
+    "lastQuarter": {
+      "description": "Le Dernier Quartier est un moment de libération et de lâcher-prise. Tout comme le Premier Quartier, il représente une crise, mais cette fois, c'est une crise de conscience. Il est temps de laisser aller ce qui n'a pas fonctionné, d'abandonner les anciens schémas et de vous purifier des relations ou des situations qui ne vous servent plus. Ce peut être une phase difficile, mais elle est nécessaire pour faire de la place au nouveau.",
+      "insights": [
+        "Lâchez ce qui ne vous sert plus.",
+        "Pardonnez-vous et pardonnez aux autres pour avancer.",
+        "Purifiez votre espace physique et émotionnel."
+      ]
+    },
+    "waningCrescent": {
+      "description": "Le Dernier Croissant est la phase finale avant la nouvelle lune. C'est un temps d'abandon, de repos et de récupération. L'énergie est à son point le plus bas, invitant à l'introspection et à la connexion spirituelle. C'est un moment pour se retirer, méditer et se préparer pour le prochain cycle. Rêvez, écoutez votre intuition et laissez l'univers prendre le contrôle. Ce n'est pas le moment d'agir, mais d'être.",
+      "insights": [
+        "Reposez-vous et rechargez votre énergie.",
+        "Écoutez votre intuition et vos rêves.",
+        "Libérez toute tension restante et abandonnez-vous au courant."
+      ]
+    }
+  }
 }
 
     

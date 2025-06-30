@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2, Share2, Globe } from 'lucide-react';
+import { Moon as MoonIconLucide, Sunrise, Calendar as CalendarIconLucide, Clock, Wand2, Share2, Globe, ChevronUp } from 'lucide-react';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -19,7 +19,7 @@ import { es, enUS, de, fr } from 'date-fns/locale';
 import { cn } from "@/lib/utils";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { Progress } from '@/components/ui/progress';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import MoonPhaseVisualizer from './MoonPhaseVisualizer'; // Import the new component
@@ -47,6 +47,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
   const [hasMounted, setHasMounted] = useState(false);
   const { toast } = useToast();
   const currentYearForCalendar = useMemo(() => new Date().getFullYear(), []);
+  const [isDescriptionVisible, setIsDescriptionVisible] = useState(true);
 
   const currentDfnLocale = dateFnsLocalesMap[locale] || enUS;
 
@@ -193,6 +194,42 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                       </div>
                     </div>
 
+                    {lunarData.description && (
+                        <div className="mt-4 p-3 bg-secondary/30 rounded-lg">
+                          <AnimatePresence>
+                            {isDescriptionVisible && (
+                              <motion.div
+                                key="lunar-description"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                className="overflow-hidden"
+                              >
+                                <p className="font-body text-sm text-card-foreground/90 mb-3">{lunarData.description}</p>
+                                <ul className="space-y-1 list-none">
+                                  {lunarData.insights?.map((insight, index) => (
+                                    <li key={index} className="flex items-start text-sm">
+                                      <span className="text-primary mr-2 mt-1">&#8226;</span>
+                                      <span className="text-card-foreground/80">{insight}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                           <Button 
+                            variant="link" 
+                            onClick={() => setIsDescriptionVisible(!isDescriptionVisible)} 
+                            className="text-primary mt-2 p-0 h-auto font-semibold text-xs"
+                          >
+                            {isDescriptionVisible ? dictionary['LunarAscendantPage.readLess'] : dictionary['LunarAscendantPage.readMore']}
+                            <ChevronUp className={cn("ml-1 h-4 w-4 transition-transform", !isDescriptionVisible && "rotate-180")} />
+                          </Button>
+                        </div>
+                    )}
+
+
                     <div className="space-y-2">
                         <h4 className="font-headline text-lg text-primary text-center">{dictionary['LunarAscendantPage.upcomingPhasesTitle'] || "Upcoming Phases"}</h4>
                             <ScrollArea type="always" className="w-full whitespace-nowrap rounded-md border border-border/30 bg-background/30 p-2">
@@ -217,7 +254,7 @@ export default function LunarAscendantClientContent({ dictionary, locale }: Luna
                                     </Popover>
                                 ))}
                                 </div>
-                                <ScrollBar orientation="horizontal" className="h-3 bg-muted" />
+                                <ScrollBar orientation="horizontal" className="h-3" />
                             </ScrollArea>
                     </div>
                      <div className="pt-2 flex justify-center">

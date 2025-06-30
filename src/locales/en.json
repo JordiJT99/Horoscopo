@@ -197,6 +197,8 @@
   "LunarAscendantPage.easternTimeNote": "Note: All times ET",
   "LunarAscendantPage.synodicCycle": "Synodic Cycle Progress",
   "LunarAscendantPage.upcomingPhasesTitle": "Upcoming Phases",
+  "LunarAscendantPage.readLess": "Read Less",
+  "LunarAscendantPage.readMore": "Read More",
   "WeeklyHoroscopePage.title": "Weekly Horoscope",
   "WeeklyHoroscopePage.subtitle": "Your astrological forecast for the week ahead. Select your sign.",
   "MonthlyHoroscopePage.title": "Monthly Horoscope",
@@ -1184,7 +1186,73 @@
   "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
   "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
   "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
+  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation.",
+  "LunarPhaseDescriptions": {
+    "new": {
+      "description": "The New Moon marks a fresh start. It's a time of introspection, for planting the seeds of intention for the cycle ahead. Energy is low, ideal for resting and visualizing what you wish to manifest.",
+      "insights": [
+        "Set clear intentions for the upcoming month.",
+        "It's a powerful moment for meditation and visualization.",
+        "Release the old to make space for the new."
+      ]
+    },
+    "waxingCrescent": {
+      "description": "The Waxing Crescent symbolizes a period of growth and strengthening. As the moon begins to illuminate the night sky with greater brightness, it's time to act and manifest the intentions set during the new moon. Your energy gradually increases, making this period perfect for starting to implement your plans. It's a moment when you might feel a surge of creative energy and inspiration. This phase is particularly favorable for learning new things, establishing connections, and forming beneficial habits. You might notice your confidence growing along with your ability to overcome obstacles on the path to your goals.",
+      "insights": [
+        "Your emotional energy is growing.",
+        "An excellent moment to nurture new emotional patterns that align with the expression of your natal Moon.",
+        "Focus your attention on gradually building emotional security in a way that resonates with your nature."
+      ]
+    },
+    "firstQuarter": {
+      "description": "The First Quarter is a critical point. Your intentions meet their first challenges, requiring action and decision-making. It's a time to push through obstacles, adjust your plans, and recommit to your goals. The energy is active and sometimes tense. It's important to remain determined and not give up when you face initial resistance. Solve the problems that arise and reaffirm your commitment to the intentions you set during the new moon.",
+      "insights": [
+        "Make decisions, even if they are difficult.",
+        "Now is the time to adjust and refine your strategies.",
+        "Trust in your ability to overcome any challenge."
+      ]
+    },
+    "waxingGibbous": {
+      "description": "The Waxing Gibbous phase is a time of refinement and perfection. You have overcome the initial challenges, and now it's time to adjust and improve your plans. The energy is high, and momentum is building. It is an excellent moment to focus on the details, organize your efforts, and prepare for the culmination that the full moon will bring. Analyze what is working and make the necessary adjustments to ensure success.",
+      "insights": [
+        "Pay attention to the details and optimize your plans.",
+        "Energy is high; use it to move forward.",
+        "Perseverance during this phase is key to success."
+      ]
+    },
+    "full": {
+      "description": "The Full Moon is the peak of the lunar cycle. The intentions you planted during the new moon reach their culmination. It's a time of harvest, celebration, and illumination. The truth comes to light, and emotions are at their peak. It is a powerful moment for gratitude and acknowledging your progress. Energy is at its maximum, which can lead to insomnia or heightened sensitivity. Use this light to see what has come to fruition in your life.",
+      "insights": [
+        "Celebrate your achievements, no matter how small.",
+        "Express gratitude for what you have manifested.",
+        "Be aware of your emotions as they will be amplified."
+      ]
+    },
+    "waningGibbous": {
+      "description": "After the peak of the Full Moon, the Waning Gibbous phase begins. It's a time to share what you have learned and harvested. It is a phase of distribution, teaching, and communication. Reflect on your successes and consider how your experiences can benefit others. The energy begins to wane, favoring introspection and analysis of the cycle's results.",
+      "insights": [
+        "Share your knowledge and experiences with others.",
+        "Reflect on the cycle that has just concluded.",
+        "Begin to think about what you need to release in the next cycle."
+      ]
+    },
+    "lastQuarter": {
+      "description": "The Last Quarter is a moment of release and letting go. Just like the First Quarter, it represents a crisis, but this time it is a crisis of consciousness. It's time to let go of what didn't work, to give up old patterns, and to cleanse yourself of relationships or situations that no longer serve you. It can be a difficult phase, but it is necessary to make space for the new.",
+      "insights": [
+        "Let go of what no longer serves you.",
+        "Forgive yourself and others to move forward.",
+        "Cleanse your physical and emotional space."
+      ]
+    },
+    "waningCrescent": {
+      "description": "The Waning Crescent is the final phase before the new moon. It is a time of surrender, rest, and recovery. Energy is at its lowest point, inviting introspection and spiritual connection. It is a time to retreat, meditate, and prepare for the next cycle. Dream, listen to your intuition, and let the universe take control. It is not a time for action, but for being.",
+      "insights": [
+        "Rest and recharge your energy.",
+        "Listen to your intuition and your dreams.",
+        "Release any remaining tension and surrender to the flow."
+      ]
+    }
+  }
 }
 
     

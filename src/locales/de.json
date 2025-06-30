@@ -197,6 +197,8 @@
   "LunarAscendantPage.easternTimeNote": "Hinweis: Alle Zeiten ET",
   "LunarAscendantPage.synodicCycle": "Synodischer Zyklusfortschritt",
   "LunarAscendantPage.upcomingPhasesTitle": "Kommende Phasen",
+  "LunarAscendantPage.readLess": "Weniger lesen",
+  "LunarAscendantPage.readMore": "Mehr lesen",
   "WeeklyHoroscopePage.title": "Wöchentliches Horoskop",
   "WeeklyHoroscopePage.subtitle": "Ihre astrologische Prognose für die kommende Woche. Wählen Sie Ihr Zeichen.",
   "MonthlyHoroscopePage.title": "Monatliches Horoskop",
@@ -1184,7 +1186,73 @@
   "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
   "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for chronicling your thoughts, dreams, and astrological observations.",
   "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
+  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation.",
+  "LunarPhaseDescriptions": {
+    "new": {
+      "description": "Der Neumond markiert einen Neuanfang. Es ist eine Zeit der Einkehr, um Absichten für den nächsten Zyklus zu säen. Die Energie ist niedrig, ideal zum Ausruhen und Visualisieren dessen, was Sie manifestieren möchten.",
+      "insights": [
+        "Setzen Sie klare Absichten für den kommenden Monat.",
+        "Es ist ein kraftvoller Moment für Meditation und Visualisierung.",
+        "Lassen Sie Altes los, um Platz für Neues zu schaffen."
+      ]
+    },
+    "waxingCrescent": {
+      "description": "Die zunehmende Mondsichel symbolisiert eine Zeit des Wachstums und der Stärkung. Während der Mond den Nachthimmel mit größerer Helligkeit zu erleuchten beginnt, ist es Zeit zu handeln und die während des Neumonds gesetzten Absichten zu manifestieren. Ihre Energie nimmt allmählich zu, was diese Zeit perfekt macht, um mit der Umsetzung Ihrer Pläne zu beginnen. Es ist ein Moment, in dem Sie einen Schub an kreativer Energie und Inspiration spüren könnten. Diese Phase ist besonders günstig, um neue Dinge zu lernen, Verbindungen zu knüpfen und nützliche Gewohnheiten zu bilden. Sie könnten feststellen, dass Ihr Selbstvertrauen zusammen mit Ihrer Fähigkeit wächst, Hindernisse auf dem Weg zu Ihren Zielen zu überwinden.",
+      "insights": [
+        "Ihre emotionale Energie wächst.",
+        "Ein ausgezeichneter Moment, um neue emotionale Muster zu pflegen, die mit dem Ausdruck Ihres Geburtsmondes übereinstimmen.",
+        "Konzentrieren Sie Ihre Aufmerksamkeit darauf, allmählich emotionale Sicherheit aufzubauen, die mit Ihrer Natur in Resonanz steht."
+      ]
+    },
+    "firstQuarter": {
+      "description": "Das erste Viertel ist ein kritischer Punkt. Ihre Absichten stoßen auf erste Herausforderungen, die Maßnahmen und Entscheidungen erfordern. Es ist eine Zeit, um Hindernisse zu überwinden, Ihre Pläne anzupassen und sich wieder auf Ihre Ziele zu konzentrieren. Die Energie ist aktiv und manchmal angespannt. Es ist wichtig, entschlossen zu bleiben und nicht aufzugeben, wenn der erste Widerstand auftaucht. Lösen Sie die Probleme, die sich stellen, und bekräftigen Sie Ihr Engagement für die während des Neumonds gesetzten Absichten.",
+      "insights": [
+        "Treffen Sie Entscheidungen, auch wenn sie schwierig sind.",
+        "Jetzt ist es an der Zeit, Ihre Strategien anzupassen und zu verfeinern.",
+        "Vertrauen Sie auf Ihre Fähigkeit, jede Herausforderung zu meistern."
+      ]
+    },
+    "waxingGibbous": {
+      "description": "Die zunehmende Mondphase ist eine Zeit des Verfeinerns und Perfektionierens. Sie haben die ersten Herausforderungen gemeistert, und jetzt ist es an der Zeit, Ihre Pläne anzupassen und zu verbessern. Die Energie ist hoch und der Schwung baut sich auf. Es ist ein ausgezeichneter Moment, um sich auf die Details zu konzentrieren, Ihre Bemühungen zu organisieren und sich auf den Höhepunkt vorzubereiten, den die Vollmondphase bringen wird. Analysieren Sie, was funktioniert, und nehmen Sie die notwendigen Anpassungen vor, um den Erfolg sicherzustellen.",
+      "insights": [
+        "Achten Sie auf die Details und optimieren Sie Ihre Pläne.",
+        "Die Energie ist hoch; nutzen Sie sie, um voranzukommen.",
+        "Die Ausdauer in dieser Phase ist entscheidend für den Erfolg."
+      ]
+    },
+    "full": {
+      "description": "Der Vollmond ist der Höhepunkt des Mondzyklus. Die Absichten, die Sie während des Neumonds gesät haben, erreichen ihren Höhepunkt. Es ist eine Zeit der Ernte, der Feier und der Erleuchtung. Die Wahrheit kommt ans Licht, und die Emotionen sind an ihrem Höhepunkt. Es ist ein kraftvoller Moment für Dankbarkeit und die Anerkennung Ihrer Fortschritte. Die Energie ist maximal, was zu Schlaflosigkeit oder erhöhter Sensibilität führen kann. Nutzen Sie dieses Licht, um zu sehen, was in Ihrem Leben seinen Höhepunkt erreicht hat.",
+      "insights": [
+        "Feiern Sie Ihre Erfolge, egal wie klein.",
+        "Drücken Sie Dankbarkeit für das aus, was Sie manifestiert haben.",
+        "Seien Sie sich Ihrer Emotionen bewusst, da diese verstärkt werden."
+      ]
+    },
+    "waningGibbous": {
+      "description": "Nach dem Höhepunkt des Vollmonds beginnt die abnehmende Mondphase. Es ist eine Zeit, um zu teilen, was Sie gelernt und geerntet haben. Es ist eine Phase der Verteilung, des Lehrens und des Kommunizierens. Reflektieren Sie über Ihre Erfolge und denken Sie darüber nach, wie Ihre Erfahrungen anderen zugutekommen können. Die Energie beginnt abzunehmen, was die Introspektion und die Analyse der Ergebnisse des Zyklus begünstigt.",
+      "insights": [
+        "Teilen Sie Ihr Wissen und Ihre Erfahrungen mit anderen.",
+        "Reflektieren Sie über den gerade abgeschlossenen Zyklus.",
+        "Beginnen Sie, darüber nachzudenken, was Sie im nächsten Zyklus loslassen müssen."
+      ]
+    },
+    "lastQuarter": {
+      "description": "Das letzte Viertel ist ein Moment der Befreiung und des Loslassens. Genau wie das erste Viertel stellt es eine Krise dar, aber diesmal ist es eine Krise des Bewusstseins. Es ist Zeit, loszulassen, was nicht funktioniert hat, alte Muster aufzugeben und sich von Beziehungen oder Situationen zu reinigen, die Sie nicht mehr weiterbringen. Es kann eine schwierige Phase sein, aber sie ist notwendig, um Platz für das Neue zu schaffen.",
+      "insights": [
+        "Lassen Sie los, was Ihnen nicht mehr dient.",
+        "Vergeben Sie sich selbst und anderen, um voranzukommen.",
+        "Reinigen Sie Ihren physischen und emotionalen Raum."
+      ]
+    },
+    "waningCrescent": {
+      "description": "Die abnehmende Mondsichel ist die letzte Phase vor dem Neumond. Es ist eine Zeit der Hingabe, des Ausruhens und der Erholung. Die Energie ist an ihrem niedrigsten Punkt, was zu Introspektion und spiritueller Verbindung einlädt. Es ist eine Zeit, um sich zurückzuziehen, zu meditieren und sich auf den nächsten Zyklus vorzubereiten. Träumen Sie, hören Sie auf Ihre Intuition und lassen Sie das Universum die Kontrolle übernehmen. Es ist nicht die Zeit zum Handeln, sondern zum Sein.",
+      "insights": [
+        "Ruhen Sie sich aus und laden Sie Ihre Energie wieder auf.",
+        "Hören Sie auf Ihre Intuition und Ihre Träume.",
+        "Lassen Sie alle verbleibenden Spannungen los und ergeben Sie sich dem Fluss."
+      ]
+    }
+  }
 }
 
     

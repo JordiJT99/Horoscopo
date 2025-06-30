@@ -326,6 +326,9 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
     // 2. Determine Moon Sign
     const moonSign = getMoonSign(today);
 
+    // 3. Get phase description and insights from dictionary
+    const phaseContent = dictionary.LunarPhaseDescriptions?.[phaseKey] || { description: '', insights: [] };
+
     // 4. Calculate synodic progress
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
@@ -371,6 +374,8 @@ export async function getCurrentLunarData(dictionary: Dictionary, locale: Locale
       moonInSign: moonSign ? (dictionary[moonSign.name] || moonSign.name) : (dictionary['Data.notAvailable'] || 'N/A'),
       moonSignIcon: moonSign ? moonSign.name : undefined,
       upcomingPhases: getUpcomingPhases(dictionary, locale),
+      description: phaseContent.description,
+      insights: phaseContent.insights,
     };
   } catch (error) {
     return {

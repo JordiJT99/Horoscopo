@@ -110,6 +110,8 @@ export interface LunarData {
   upcomingPhases: UpcomingPhase[];
   error?: string;
   synodicProgress?: number;
+  description?: string;
+  insights?: string[];
 }
 
 
