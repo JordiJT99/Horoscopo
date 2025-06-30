@@ -107,7 +107,7 @@
   "Zodiac.risingSign": "Rising Sign",
   "Zodiac.element": "Element",
   "Zodiac.polarity": "Polarity",
-  "Zodiac.modality": "Modalité",
+  "Zodiac.modality": "Modality",
   "Zodiac.sunSignShort": "Sun",
   "Zodiac.moonSignShort": "Moon",
   "Zodiac.risingSignShort": "Asc",
@@ -325,6 +325,26 @@
   "MayanSign.Etznab.name": "Etznab (Flint/Knife)",
   "MayanSign.Cauac.name": "Cauac (Storm/Rain)",
   "MayanSign.Ahau.name": "Ahau (Sun/Flower/Lord)",
+  "MayanSign.Imix.description": "The source of life, primal nourishment.",
+  "MayanSign.Ik.description": "The breath of spirit, communication, and truth.",
+  "MayanSign.Akbal.description": "The sanctuary, the journey inward, and dreamtime.",
+  "MayanSign.Kan.description": "The potential, the growth, and targeted awareness.",
+  "MayanSign.Chicchan.description": "The life force, instinct, and connection to the body.",
+  "MayanSign.Cimi.description": "The transformation, letting go, and surrender.",
+  "MayanSign.Manik.description": "The healing, knowledge, and accomplishment.",
+  "MayanSign.Lamat.description": "The harmony, beauty, and star-seed.",
+  "MayanSign.Muluc.description": "The universal water, purified emotions, and flow.",
+  "MayanSign.Oc.description": "The loyalty, the heart, and emotional bonds.",
+  "MayanSign.Chuen.description": "The play, the magic, and divine illusion.",
+  "MayanSign.Eb.description": "The free will, human influence, and abundance.",
+  "MayanSign.Ben.description": "The pillar of heaven and earth, connection, and time-space travel.",
+  "MayanSign.Ix.description": "The magic, timelessness, and shamanic power.",
+  "MayanSign.Men.description": "The collective vision, the higher mind, and consciousness.",
+  "MayanSign.Cib.description": "The cosmic wisdom, forgiveness, and inner voice.",
+  "MayanSign.Caban.description": "The synchronicity, the grounding force, and navigation.",
+  "MayanSign.Etznab.description": "The reflection, truth, and clarity.",
+  "MayanSign.Cauac.description": "The transformation, purification, and rebirth.",
+  "MayanSign.Ahau.description": "The enlightenment, unconditional love, and union.",
   "GalacticTone.Magnetic.name": "Magnetic",
   "GalacticTone.Magnetic.keyword": "Unity",
   "GalacticTone.Magnetic.question": "What is my purpose?",
@@ -859,343 +879,26 @@
   "Toast.alreadyRated": "You have already claimed this reward.",
   "Toast.dailyReactionStardust": "+{amount} 💫 for your first reaction of the day!",
   "Toast.dailyCommentStardust": "+{amount} 💫 for your first comment of the day!",
-  "ZodiacGalleryPage.title": "Zodiac Signs",
-  "ZodiacGalleryPage.subtitle": "Explore the characteristics of each astrological sign.",
-  "ZodiacDetail": {
-    "title": "Details for {signName}",
-    "element": "Element",
-    "modality": "Modality",
-    "polarity": "Polarity",
-    "Aries": {
-      "title": "Traits of Aries",
-      "description": "As the first sign of the zodiac, Aries represents the dawn, the primal impulse, and the spark that starts it all. Ruled by Mars, the planet of war, action, and desire, an Aries is the embodiment of energy in its purest, most direct form. They know no fear when it comes to forging new paths; they are the pioneers, the explorers, and the warriors who dive headfirst into the unknown, often where others dare not tread. Their spirit is that of a natural leader, not because they seek followers, but because their confidence and unwavering faith in themselves are contagious. They live in the moment, with an urgency that can be both inspiring and overwhelming. An Aries does not contemplate failure, for to them, every attempt is a victory in itself. This impulsive nature makes them incredibly dynamic and spontaneous beings, always ready for the next adventure. However, this same quality can lead them to impatience and a lack of foresight. Their motto could be 'act first, ask questions later,' which gets them into trouble as often as it opens doors for them. They are fiercely independent and value their autonomy above all else. An Aries doesn't ask for permission—they take it, firmly believing in their right to forge their own destiny.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Courageous",
-        "Energetic",
-        "Independent",
-        "Passionate",
-        "Optimistic",
-        "Honest"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Impulsive",
-        "Impatient",
-        "Aggressive",
-        "Short-sighted",
-        "Selfish"
-      ],
-      "loveTitle": "Aries in Love",
-      "love": "In love, an Aries is a force of nature. Passionate and impulsive, they throw themselves into romance with an intensity that can be both thrilling and overwhelming. The courtship phase is their favorite battleground, where they relish the thrill of the chase. They seek a partner who is not just a lover but a fellow adventurer, someone willing to take a leap of faith with them. Their love language is action: they will plan surprise getaways and defend you fiercely. However, their independence is sacred, and they do not tolerate possessiveness. Their biggest challenge is patience; they want everything to happen now, and can get frustrated if the relationship's pace is too slow. Once they truly commit, their loyalty is unwavering, becoming their partner's fiercest protector.",
-      "friendshipTitle": "Aries in Friendship",
-      "friendship": "An Aries friend is the catalyst of your social life, the one who calls you on a Friday afternoon with a wild but irresistible plan. Their loyalty is legendary; they are the 'act first, ask questions later' type when it comes to defending their friends. A friendship with them is a series of unforgettable adventures, as they hate stagnation and are always seeking the next thrill. They will push you out of your comfort zone and challenge you to face your fears. However, their honesty is so direct it can be unintentionally hurtful, and their competitive spirit can turn a board game night into an epic battle. But their anger is short-lived and their generosity knows no bounds, making every high-energy moment worthwhile.",
-      "workTitle": "Aries at Work",
-      "work": "In the workplace, Aries is the pioneer and the entrepreneur. They are excellent at starting projects from scratch, with an energy and courage that can inspire entire teams. They are not afraid to take calculated risks and thrive in high-pressure environments where quick decisions are key. However, they are not the best at long-term maintenance or repetitive tasks. Micromanagement or slow-moving bureaucracy can frustrate them immensely. Their biggest challenge is follow-through; once the initial excitement of a project wanes, they may be looking for the next 'big thing'. They function best in leadership roles, such as founders or project heads, where they can delegate the details and focus on the overall vision and strategy."
-    },
-    "Taurus": {
-      "title": "Traits of Taurus",
-      "description": "Taurus, ruled by Venus, is the embodiment of quiet strength, perseverance, and a sensual connection to the physical world. As a fixed Earth sign, they are the builders of the zodiac, grounded in reality and endowed with almost infinite patience. Their mission is to bring beauty, stability, and security into the material world. A Taurus does not rush; they move with a deliberate, methodical pace, carefully assessing every step. For them, quality always trumps quantity, whether in their possessions, their relationships, or their projects. They deeply value sensory pleasures: the taste of a fine meal, the texture of a soft fabric, the sound of harmonious music. This connection to the tangible gives them a solid foundation but can also manifest as a legendary stubbornness. Once a Taurus has made up their mind, they are almost impossible to move, like trying to move a mountain. This determination is their greatest strength and, at times, their greatest weakness. They are incredibly loyal and reliable, the type of person who builds lasting foundations in everything they do. Their quest for security is not just material but also emotional, making them incredibly protective and steadfast partners and friends.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Reliable",
-        "Patient",
-        "Practical",
-        "Loyal",
-        "Sensual",
-        "Stable"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Stubborn",
-        "Possessive",
-        "Resistant to change",
-        "Materialistic"
-      ],
-      "loveTitle": "Taurus in Love",
-      "love": "As a lover, Taurus is the personification of devotion and sensuality. They approach love with the same patience and methodical care they apply to all areas of their life, seeking a partner who provides an unwavering sense of security and stability. Their demonstrations of affection are tangible: they delight in pampering through touch, massages, cooking sumptuous meals, or creating a beautiful, comfortable home. For them, love is something that is built. The challenge arises when their need for security turns into possessiveness. They need a partner who values their loyalty and can handle their occasional stubbornness with patience.",
-      "friendshipTitle": "Taurus in Friendship",
-      "friendship": "A Taurus friend is the one you can always count on, the rock in the chaos of life. They are the definition of loyalty and reliability, the person you call at 2 AM without hesitation. Their friendships are built on comfort and shared pleasures: a good dinner, a quiet evening with music, or simply enjoying peaceful company. They offer practical, down-to-earth advice, and their support is unwavering. The only friction point is their stubbornness. A disagreement with a Taurus can feel like a battle with an immovable force, but their loyalty ensures they always come back.",
-      "workTitle": "Taurus at Work",
-      "work": "In the workplace, Taurus is the steady builder. They are not interested in quick wins but in constructing high-quality, lasting results. They are methodical, patient, and have an incredible endurance to see projects through to completion, long after others have given up. They thrive in stable environments and excel in roles that require a practical approach and an eye for aesthetics, such as in finance, architecture, design, or agriculture. They are the bedrock of any team, ensuring that work is not just done, but done well."
-    },
-    "Gemini": {
-      "title": "Traits of Gemini",
-      "description": "Gemini, ruled by the planet Mercury, is the social butterfly and intellectual of the zodiac. They are endlessly curious, adaptable, and have an insatiable thirst for information. Their mind is in constant motion, flitting from one idea to the next, making them fascinating conversationalists and lifelong learners. Their innate duality, symbolized by the Twins, allows them to see multiple perspectives at once. They are the messengers of the zodiac, creating connections and disseminating information. Their energy is youthful, playful, and restless, always in search of the next interesting conversation, the next book, or the next adventure. This constant quest for novelty can also make them appear scattered and inconsistent. They live in a world of possibilities and sometimes struggle to commit to a single path, for fear of missing out on something else.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Intelligent",
-        "Curious",
-        "Adaptable",
-        "Sociable",
-        "Witty",
-        "Communicative"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Inconsistent",
-        "Indecisive",
-        "Nervous",
-        "Superficial",
-        "Unreliable"
-      ],
-      "loveTitle": "Gemini in Love",
-      "love": "In love, a relationship with a Gemini is a rollercoaster of wit, charm, and intellectual gymnastics. They need a partner who stimulates their brain as much as their heart; communication is the ultimate form of foreplay for them. They are playful, flirtatious, and sometimes elusive, which is not due to a lack of feeling, but to a constantly shifting focus. They need variety and spontaneity to avoid boredom. A partner who respects their freedom and is willing to explore new ideas and places with them will win their eternal loyalty and a companion who will always make them laugh.",
-      "friendshipTitle": "Gemini in Friendship",
-      "friendship": "A Gemini friend is the hub of your social network. They know everyone and always have the latest information. Friendships with them are dynamic, fun, and filled with stimulating conversations. They are incredibly adaptable and can get along with almost anyone. They value their independence and expect the same from their friends. The challenge is holding their attention, as they often juggle different social circles and interests. But when you need a friend to brainstorm with or just analyze the world, a Gemini is the best ally.",
-      "workTitle": "Gemini at Work",
-      "work": "At work, Gemini is a master of communication and multitasking. They thrive in dynamic, fast-paced environments where they can use their mental agility to solve problems and generate ideas. Roles in marketing, sales, journalism, teaching, and public relations are ideal for them. They are excellent networkers and can easily make connections between different departments or concepts. Their biggest challenge is focusing on long-term, detail-oriented tasks. They need constant stimulation and variety to perform at their best."
-    },
-    "Cancer": {
-      "title": "Traits of Cancer",
-      "description": "Ruled by the Moon, Cancer is the deeply emotional and intuitive heart of the zodiac. They are naturally protective and nurturing of their loved ones, valuing home and family above all else. Their outer shell may seem tough, but within lies immense sensitivity and a rich inner life. They have an amazing memory, especially for emotional events. Cancers operate on a feeling level, often absorbing the atmospheres and emotions around them like a sponge. This ability makes them incredibly empathetic but also vulnerable to melancholy and feeling overwhelmed. They crave security and comfort, and their primary mission in life is to create a safe 'home,' both physically and emotionally, for themselves and their loved ones. Loyalty is paramount to them; once you earn their trust, you have a defender for life. However, if that trust is broken, they can hold a grudge for a long time. Their cardinal nature drives them to take the initiative in emotional and domestic matters, making them the pillars of their families and friend circles.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Tenacious",
-        "Highly imaginative",
-        "Loyal",
-        "Emotional",
-        "Sympathetic",
-        "Persuasive"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Moody",
-        "Pessimistic",
-        "Suspicious",
-        "Manipulative",
-        "Insecure"
-      ],
-      "loveTitle": "Cancer in Love",
-      "love": "In a relationship, Cancer is the archetype of the devoted caretaker. They crave a deep emotional connection and seek a partner with whom they can build a safe sanctuary, a home. Love for Cancer is synonymous with security, loyalty, and nurturing. They show their affection through acts of service, cooking for their loved one, creating a cozy space, and offering unconditional emotional support. However, their extreme sensitivity can be a challenge. They are prone to mood swings, influenced by the phases of the moon and the emotional environment. They need constant reassurance and affection to avoid retreating into their shell. Once they feel secure, their love is one of the deepest and most protective in the zodiac.",
-      "friendshipTitle": "Cancer in Friendship",
-      "friendship": "A Cancer friend is the heart of the group, the one who turns friends into family. Their loyalty is legendary, and they will always remember the little details that matter to you. They are the ones who will cook you your favorite meal when you're sad and offer a shoulder to cry on without judgment. They thrive on intimacy and prefer small, cozy gatherings to large parties. However, their sensitivity can make them easily hurt. A careless comment can cause them to retreat into their shell for days. The key to a lasting friendship with a Cancer is patience, empathy, and consistently showing that you value their deep capacity for care.",
-      "workTitle": "Cancer at Work",
-      "work": "In the workplace, Cancer thrives in roles that allow them to care for and protect, whether it's clients, colleagues, or a cause. They make excellent managers who create a supportive, family-like team environment. Fields like teaching, nursing, social work, hospitality, and human resources are ideal for them. Their intuition gives them an edge in business, as they can 'feel' the needs of the market and of people. However, they need an emotionally safe work environment to perform at their best. An overly critical or competitive atmosphere can make them defensive and lose confidence, affecting their productivity."
-    },
-    "Leo": {
-      "title": "Traits of Leo",
-      "description": "Ruled by the Sun, the center of our solar system, Leo is the radiant and charismatic royalty of the zodiac. Brimming with confidence, generosity, and a natural flair for the dramatic, Leo loves to be the center of attention and to inspire others with their warmth and vitality. They have a big heart and an innate creativity that must be expressed. A Leo doesn't just enter a room; they conquer it. Their presence is magnetic, drawing people in with their natural charm and infectious optimism. They possess an inherent dignity and pride that, while sometimes bordering on arrogance, stems from a deep sense of self-worth. They are fiercely loyal and protective of their 'kingdom,' be it their family, friends, or work team. Generosity is one of their most prominent traits; a Leo loves to shower their loved ones with gifts and affection. However, this need to be the sun around which others revolve means they crave admiration and recognition. A blow to their ego can be devastating. Deep down, a Leo just wants to love and be loved, to celebrate life, and to share their light with the world.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Creative",
-        "Passionate",
-        "Generous",
-        "Warm-hearted",
-        "Cheerful",
-        "Humorous"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Arrogant",
-        "Stubborn",
-        "Self-centered",
-        "Lazy",
-        "Inflexible"
-      ],
-      "loveTitle": "Leo in Love",
-      "love": "Loving a Leo is like having a front-row seat to a grand performance. They are dramatic, passionate, and incredibly generous lovers. Romance for them is a theatrical production, filled with grand gestures, lavish gifts, and endless adoration. They long to be the center of their partner's universe and, in return, offer fierce loyalty and protection. They don't just walk, they strut, and they expect their partner to admire their every move. The relationship must be fun, playful, and filled with praise. However, their constant need for attention can be exhausting, and their wounded pride can lead to Oscar-worthy drama. They need a partner who is both their biggest fan and an equal who isn't afraid to challenge their ego with grace.",
-      "friendshipTitle": "Leo in Friendship",
-      "friendship": "A Leo friend is the sun of your social circle. They are the ones who throw the most memorable parties and make sure everyone feels included and celebrated. Their loyalty is unwavering; they will defend their friends with the ferocity of a lion defending its cubs. They are incredibly generous, both with their time and their resources. However, a friendship with a Leo requires you to acknowledge their royalty. They love being the center of attention and expect their friends to be their most loyal audience. Though their heart is gold, their pride is fragile. If they feel ignored or unappreciated, their roar will be heard. Despite this, their warmth and zest for life make any drama worthwhile.",
-      "workTitle": "Leo at Work",
-      "work": "At work, Leo is the natural leader and team motivator. They don't necessarily seek power for its own sake, but for the opportunity to inspire and lead by example. They thrive in roles that allow them to shine, whether on stage, in the boardroom, or at the head of a creative team. They are excellent public speakers, performers, managers, and spokespeople. Their confidence is contagious, and they have an innate ability to make people believe in a vision. Their biggest challenge is delegation; they sometimes feel that no one can do the job as well (or with as much flair) as they can. They need constant recognition for their contributions and can become unmotivated in an environment that doesn't value their individual shine."
-    },
-    "Virgo": {
-      "title": "Traits of Virgo",
-      "description": "Virgo is the sign of service, purity, and practical analysis. Ruled by Mercury, they possess a sharp mind and an innate desire to improve and organize the world around them. They are detail-oriented, methodical, and have a deep need to be useful. They are the silent helpers of the zodiac, working behind the scenes to ensure everything runs perfectly. A Virgo's mind is a complex system of lists, plans, and analysis. They notice the details that others miss, which makes them excellent editors, critics, and artisans. This perfectionism, however, is a double-edged sword. It can lead them to relentless self-criticism and a constant anxiety about not living up to their own impossible standards. Despite their reserved nature, Virgos have a deep well of care and devotion. They show their love not with grand gestures, but with practical acts of service: fixing a leaky faucet, organizing your finances, or just being there with sensible advice when you need it most. Their greatest challenge is learning to relax, to accept imperfection, and to understand that they are valuable for who they are, not just for what they do for others.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Loyal",
-        "Analytical",
-        "Kind",
-        "Hardworking",
-        "Practical",
-        "Modest"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Shyness",
-        "Worry",
-        "Overly critical of self and others",
-        "All work and no play"
-      ],
-      "loveTitle": "Virgo in Love",
-      "love": "In love, Virgo expresses their affection in the most practical and tangible ways. Their love language is not sonnets, but acts of service: ensuring you have everything you need, organizing your schedule, or preparing a healthy meal. They are cautious at first, analyzing every detail before giving their heart. They look for a partner who is neat, intelligent, and reliable. Once they commit, they are incredibly loyal, attentive, and devoted partners. Their biggest challenge is overcoming their tendency to be critical. They can become fixated on their partner's imperfections (and their own), forgetting that love is inherently imperfect. They need a companion who appreciates their devotion and helps them to relax and be less hard on themselves.",
-      "friendshipTitle": "Virgo in Friendship",
-      "friendship": "A Virgo friend is the most reliable support system you can imagine. They are the ones who remember your allergies, help you assemble that complicated piece of furniture, and give you the most practical, well-researched advice. Their friendship is quiet, drama-free, and built on loyalty and mutual support. They are not the most emotionally expressive, but their steady presence and helpful acts speak louder than a thousand words. The challenge is that their desire to 'help' can sometimes turn into unsolicited criticism about how you could improve your life. If you can see past that to their pure intention, you'll have a lifelong friend who truly cares about your well-being.",
-      "workTitle": "Virgo at Work",
-      "work": "In the workplace, Virgo is the pillar of efficiency and quality. They are the quintessential editors, analysts, researchers, and administrators. They have an eagle eye for detail and an innate ability to find flaws and optimize processes. No detail is too small for their scrutiny. They are tireless workers, driven by a deep sense of duty and a desire to do a perfect job. They can be excellent managers, though their style is more about leading by example than with grand charisma. Their biggest challenge is paralyzing perfectionism; they can get stuck in the details, losing sight of the bigger picture. They need to learn to delegate and to trust that 'good enough' is, in fact, sometimes enough."
-    },
-    "Libra": {
-      "title": "Traits of Libra",
-      "description": "Ruled by Venus, Libra is the sign of balance, harmony, and justice. Libras are social beings who thrive in partnership and seek to create equilibrium in all areas of life. They have a keen sense of beauty and a natural diplomatic charm. As a Cardinal Air sign, their mission is to initiate connections and foster peace through mediation and fairness. A Libra's mind is constantly weighing pros and cons, seeking the most balanced perspective, which can lead to notorious indecisiveness. It's not that they don't know what they want, but that they can see the validity in all sides of an argument. This ability makes them excellent diplomats, counselors, and lawyers. Aesthetics are fundamental to their well-being; they are drawn to all things beautiful, whether in art, music, fashion, or people. A messy or conflict-ridden environment is physically draining for them. Above all, Libra is the sign of 'we,' not 'me.' They feel most whole when in a partnership, whether romantic, business, or friendship, and they will go to great lengths to maintain peace and harmony in their relationships.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Cooperative",
-        "diplomatic",
-        "gracious",
-        "fair-minded",
-        "social"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Indecisive",
-        "avoids confrontations",
-        "will carry a grudge",
-        "self-pity"
-      ],
-      "loveTitle": "Libra in Love",
-      "love": "In love, Libra is a hopeless romantic searching for their other half. Their ultimate goal is a balanced, harmonious, and aesthetically pleasing partnership. They are attentive and diplomatic lovers who are always willing to compromise to keep the peace. Communication and intellectual connection are vital for them. However, their aversion to conflict can be their biggest weakness; they may avoid necessary discussions to maintain a semblance of harmony, which can lead to underlying resentment. They need a partner who appreciates their romantic nature and gently encourages them to express their true needs, even if it means momentarily disturbing the balance.",
-      "friendshipTitle": "Libra in Friendship",
-      "friendship": "A Libra friend is the mediator, the peacemaker, and the social planner of the group. They are charming, fair, and always seeking equity. They enjoy social interactions and are excellent at bringing people together. Their company is pleasant and relaxed, always seeking consensus. The downside is their legendary indecisiveness; choosing a restaurant can turn into an hour-long debate. Despite this, their ability to listen and offer balanced advice makes them valuable friends. They will always strive to make sure everyone feels included and happy.",
-      "workTitle": "Libra at Work",
-      "work": "In the workplace, Libra excels in roles that require diplomacy, negotiation, and interpersonal skills. They are excellent team players, mediators, lawyers, designers, and event planners. They thrive in harmonious, aesthetically pleasing environments and struggle in competitive or confrontational atmospheres. Their ability to see all sides of an issue makes them excellent strategists, though they can be slow to make a final decision. They are great at building networks and maintaining positive professional relationships."
-    },
-    "Scorpio": {
-      "title": "Traits of Scorpio",
-      "description": "Scorpio is the sign of deep emotion, power, and transformation. Ruled by Pluto (and traditionally Mars), they are passionate, resourceful, and incredibly determined. Scorpios are known for their intensity and their ability to see beneath the surface to uncover the truth of any matter. They live in a world of black and white; for them, there are no gray areas. It's all or nothing. This intensity makes them incredibly loyal and protective of those who earn their trust, but also formidable adversaries if they feel betrayed. They are the detectives of the zodiac, always investigating, questioning, and seeking the hidden motives behind people's actions. Their watery nature gives them a deep intuition and an almost psychic connection to the emotional world, both their own and that of others. However, they often hide their own feelings beneath a calm and controlled demeanor. They fear vulnerability more than anything, and their greatest challenge is learning to trust and let go. Transformation is a core theme in their lives; like the phoenix, a Scorpio is destined to go through multiple 'deaths' and rebirths, emerging from each crisis stronger and wiser than before.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Resourceful",
-        "brave",
-        "passionate",
-        "a true friend",
-        "determined"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Distrusting",
-        "jealous",
-        "secretive",
-        "can be manipulative"
-      ],
-      "loveTitle": "Scorpio in Love",
-      "love": "Loving a Scorpio is a transformative and intense experience. They don't do things by halves; when they love, they do so with every fiber of their being. They seek a merging of souls, a connection that transcends the physical. Loyalty and trust are the pillars of their romantic universe; a betrayal, no matter how small, is almost unforgivable. They are incredibly passionate and protective, but this intensity can turn into jealousy and possessiveness if they feel insecure. They need a partner who is not afraid of their emotional depth and who is willing to explore the mysteries of life (and the soul) with them. A relationship with a Scorpio is never superficial; it is a journey into the depths of the human heart.",
-      "friendshipTitle": "Scorpio in Friendship",
-      "friendship": "To earn a Scorpio's friendship is to gain a lifelong ally. They do not have many friends, but those they do have are considered family. They are the keepers of the deepest secrets and the fiercest defenders. A Scorpio friend will always know when something is wrong, even if you don't say a word, thanks to their piercing intuition. They are brutally honest, but their loyalty is unwavering. However, if you betray their trust, be prepared to feel the sting. They do not forgive or forget easily. Their friendship is a sacred pact, a fortress of trust and mutual support.",
-      "workTitle": "Scorpio at Work",
-      "work": "At work, Scorpio is the quintessential strategist, investigator, and problem-solver. They have a unique ability to focus intensely on a task, shutting out all distractions until they get to the bottom of things. They thrive in roles that require research, deep analysis, and handling of confidential information, such as in finance, investigation, psychology, or surgery. They are ambitious and not afraid of power. Their determination is formidable, and they will stop at nothing to achieve their goals. They can be secretive and prefer to work alone, but when they are part of a team, their loyalty and commitment are total, as long as they respect their colleagues."
-    },
-    "Sagittarius": {
-      "title": "Traits of Sagittarius",
-      "description": "The adventurer and philosopher of the zodiac, Sagittarius is ruled by Jupiter, the planet of expansion, luck, and higher knowledge. They are optimistic, freedom-loving, and have an insatiable thirst for knowledge and new experiences. For a Sagittarius, life is a grand adventure, a journey to explore the world and understand its meaning. Their mind is always in search of truth, which makes them eternal students, forever enrolled in the university of life. They possess a contagious sense of humor and a brutal honesty that, while refreshing, can sometimes lack tact. They mean no harm; they simply believe in telling it like it is. Their greatest need is freedom: anything that makes them feel trapped or limited, whether it's a boring routine or a possessive relationship, will have them running for the horizon. They are the visionaries of the zodiac, always looking to the future and believing that the best is yet to come. Their faith in the universe is unshakable, and this optimistic energy often attracts good fortune into their lives.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Generous",
-        "idealistic",
-        "great sense of humor",
-        "optimistic"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Promises more than can deliver",
-        "impatient",
-        "undeniably tactless"
-      ],
-      "loveTitle": "Sagittarius in Love",
-      "love": "In love, Sagittarius seeks a partner in adventure, someone who is both their lover and their best friend. They value freedom and independence above all else, so a possessive or jealous partner will send them running. Their approach to romance is optimistic, fun, and philosophical. They love to learn alongside their partner, whether it's by traveling to faraway lands or exploring new ideas. They can be wary of commitment, not for a lack of love, but for a fear of losing their freedom. They need a companion who understands their need for space and is willing to grow and explore the world with them.",
-      "friendshipTitle": "Sagittarius in Friendship",
-      "friendship": "A Sagittarius friend is the one who calls you for a spontaneous road trip or a late-night philosophical debate. They are the life of the party, with a contagious sense of humor and an optimistic outlook on life. Their honesty is legendary; they will always tell you the truth, even if it stings a little. Don't expect them to remember every detail of your life, but they will always be there to encourage you to dream bigger and live more boldly. They are low-maintenance friends who understand and respect others' need for independence.",
-      "workTitle": "Sagittarius at Work",
-      "work": "At work, Sagittarius is the visionary, the teacher, and the explorer. They thrive in roles that allow them to learn, teach, and explore, such as in academia, publishing, law, or tourism. They hate routine and micromanagement. They need autonomy and the freedom to follow their curiosity. They are excellent at motivating others with their optimistic vision and their ability to see the big picture. Their challenge is paying attention to details and completing mundane tasks. They work best when they can inspire and delegate the detailed execution."
-    },
-    "Capricorn": {
-      "title": "Traits of Capricorn",
-      "description": "The ambitious and disciplined goat of the zodiac. Ruled by Saturn, Capricorns are masters of self-control and have the ability to lead, make solid and realistic plans, and manage many people who work for them at any given time. They are masters of manifestation. They represent structure, tradition, and ambition. For Capricorn, life is a mountain to be climbed, and they are willing to work hard and patiently to reach the top. Their approach is practical, methodical, and always with a long-term view. They don't believe in shortcuts; they believe in rules, responsibility, and building solid foundations. While they may seem serious, distant, or even cold on the outside, they possess a dry wit and a deep sense of loyalty to those who earn their respect. Their greatest fear is failure, and this pressure can make them too hard on themselves and others. Their mission is to learn that true success is not measured only by external achievements but also by the joy and satisfaction found in the journey. They are the rocks of the zodiac, reliable and capable of weathering any storm.",
-      "strengthsTitle": "Strengths",
-
-      "strengths": [
-        "Responsible",
-        "disciplined",
-        "self-control",
-        "good managers",
-        "loyal"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Know-it-all",
-        "unforgiving",
-        "condescending",
-        "expecting the worst"
-      ],
-      "loveTitle": "Capricorn in Love",
-      "love": "In love, Capricorn takes their time. They do not rush into relationships; for them, love is a long-term investment. They show their affection not with flowery words, but with acts of service, loyalty, and unwavering commitment. They seek a partner who is equally ambitious and responsible, and who understands their need for structure. They may seem distant or cold, but beneath their reserved exterior is a loyal heart that longs for a deep and lasting connection. They need a companion who values security and understands that their work is also a form of love and provision.",
-      "friendshipTitle": "Capricorn in Friendship",
-      "friendship": "A Capricorn friend is the one you call when you need a solid plan or a dose of reality. They won't sugarcoat the truth, but they will always be there to help you build a plan to overcome your problems. They are incredibly reliable and loyal. Their friendships are built slowly, based on mutual respect and trust. They may not be the most expressive friends, but their support is rock-solid. They have a surprising and dry sense of humor that they reserve for their inner circle. They value friends who are equally ambitious and who understand their need for structure.",
-      "workTitle": "Capricorn at Work",
-      "work": "At work, Capricorn is the CEO of the zodiac. They are the embodiment of discipline, responsibility, and ambition. They have a natural talent for management and long-term strategy. They thrive in structured environments where they can climb the ladder of success through hard work and dedication. They are not afraid of responsibility and are excellent at managing both projects and people. Their focus is relentless, and their ultimate goal is always to build something lasting and of high quality. They are the cornerstones of any organization, bringing stability and an unparalleled work ethic."
-    },
-    "Aquarius": {
-      "title": "Traits of Aquarius",
-      "description": "The visionary and humanitarian of the zodiac. Ruled by Uranus (and traditionally Saturn), Aquarians are original, independent, and forward-thinking. They march to the beat of their own drum and are dedicated to making the world a better place. They are the rebels and the innovators, always questioning the status quo and thinking in terms of 'we' rather than 'me'. Their mind is brilliant, eccentric, and always ahead of its time. They are more comfortable in the world of ideas and concepts than in the messy world of emotions. This can make them seem aloof or detached, but their concern for humanity is genuine and deep. They value friendship above all else and treat everyone as an equal, without hierarchies. Their greatest need is freedom: freedom to think, to be different, and to pursue their ideals without restriction. They are the water-bearers, bringing knowledge and new perspectives to quench the collective thirst for progress.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Progressive",
-        "original",
-        "independent",
-        "humanitarian",
-        "intellectual"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Runs from emotional expression",
-        "temperamental",
-        "uncompromising",
-        "aloof"
-      ],
-      "loveTitle": "Aquarius in Love",
-      "love": "In love, an Aquarius seeks a friend and an intellectual companion above all. They are attracted to original and unconventional minds. Their approach to romance is more cerebral than emotional. They can seem distant or detached, but their love is genuine, though expressed in a non-traditional way. They value freedom above all else, both for themselves and for their partner. A relationship with an Aquarius must be based on mutual respect, independence, and shared ideals. They need a partner who will not try to curtail their need to socialize with a wide range of people.",
-      "friendshipTitle": "Aquarius in Friendship",
-      "friendship": "As a friend, an Aquarius is loyal, fair, and always willing to help a cause. They are the friends with whom you can have the most bizarre and fascinating conversations. They are not possessive and understand the need for space. However, their focus on the collective can sometimes make their friends feel like part of a larger group rather than a special individual. They value friendships based on shared intellectual and humanitarian interests.",
-      "workTitle": "Aquarius at Work",
-      "work": "At work, Aquarius is the innovator, the scientist, and the social reformer. They thrive in roles that allow them to use their brilliant minds to solve problems in unconventional ways. They hate routine and bureaucracy. They need autonomy and the freedom to experiment. They are excellent in fields like technology, science, social work, and activism. They are great team players when working on projects that align with their humanitarian ideals."
-    },
-    "Pisces": {
-      "title": "Traits of Pisces",
-      "description": "The mystic and dreamer of the zodiac. Ruled by Neptune, Pisces are compassionate, artistic, and deeply intuitive. It is the last sign, an amalgamation of all that came before it. They are connected to the spiritual realm and have a boundless capacity for empathy. Their chameleon-like nature allows them to adapt to any environment, absorbing the emotions and atmospheres around them. This sensitivity is both their greatest gift and their greatest challenge. A Pisces lives in a world where the line between reality and fantasy is blurred, which endows them with immense creativity and imagination. They are the old souls of the zodiac, bearers of a wisdom that seems to come from other lifetimes. Their compassion knows no bounds, and they often put the needs of others before their own, which can lead to them being taken advantage of. They often have a deep connection to music, art, and any form of expression that allows them to channel their vast inner world. Escapism is their defense mechanism; when the world becomes too harsh, they retreat into their inner sanctuary of dreams. Learning to set healthy boundaries and to stay grounded in reality without losing their magic is their great life lesson. They are incredibly romantic, not just in love, but in their outlook on life in general, always seeking beauty and spiritual connection in everything.",
-      "strengthsTitle": "Strengths",
-      "strengths": [
-        "Compassionate",
-        "artistic",
-        "intuitive",
-        "gentle",
-        "wise"
-      ],
-      "weaknessesTitle": "Weaknesses",
-      "weaknesses": [
-        "Fearful",
-        "overly trusting",
-        "sad",
-        "desire to escape reality",
-        "can be a victim or a martyr"
-      ],
-      "loveTitle": "Pisces in Love",
-      "love": "In love, Pisces seeks a merging of souls, a connection that transcends the mundane. They are hopeless romantics, capable of a level of devotion and self-sacrifice that few can match. They show their love through empathy, compassion, and a desire to heal their partner's wounds. However, their tendency to idealize their partner can lead to disillusionment. They need a partner who is both strong and gentle, someone who can protect their sensitive heart and anchor them to reality without destroying their dreams.",
-      "friendshipTitle": "Pisces in Friendship",
-      "friendship": "A Pisces friend is a sanctuary for the soul. They are the friends you go to when you need a compassionate ear without judgment. They have an incredible ability to feel what you feel and offer comfort. They are incredibly loyal and selfless. However, their porous nature means they can absorb the negative emotions of others, which can be draining for them. They need friends who respect their need for solitude to recharge and who won't take advantage of their boundless kindness.",
-      "workTitle": "Pisces at Work",
-      "work": "At work, Pisces thrives in environments that allow them to use their creativity, intuition, and compassion. They are excellent artists, musicians, therapists, healers, and non-profit workers. They are not motivated by money or power, but by a desire to contribute to something greater than themselves. Their main challenge is dealing with harsh, competitive work environments. They need a job that is meaningful and allows them to use their unique gifts to help others."
-    }
-  },
-  "Share.lunarPhaseTitle": "Current Moon Phase from AstroVibes",
-  "Share.lunarPhaseText": "Right now, the moon is a {phaseName} in {signName} ({illumination}% illuminated). Check it out on AstroVibes!",
-  "Share.buttonLabelLunar": "Share Current Phase",
-  "StorePage.title": "Cosmic Recommendations",
-  "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
-  "StorePage.viewOnAmazon": "View on Amazon",
-  "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
-  "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
-  "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for both beginners and experts to seek insight and guidance.",
-  "StoreProducts.astrologyIntroBook.title": "Astrology Introduction Book",
-  "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
-  "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
-  "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
-  "StoreProducts.moonLamp.title": "3D Moon Lamp",
-  "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and soothing night lamp.",
-  "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
-  "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for you to record your thoughts, dreams, and astrological observations.",
-  "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
-  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation.",
+  "MayanSign.Imix.interpretation": "Imix is the primal beginning, the very energy of creation. Those born under this seal are initiators, a source of new ideas. Their challenge is to develop trust in the universe and learn to receive support, as they often try to do everything alone. They are natural providers but also have a tendency to take on too much. Imix invites you to connect with the source and realize that you are always supported.",
+  "MayanSign.Ik.interpretation": "Ik represents communication, breath, and spirit. Those born under this seal are natural communicators, messengers, and often very spiritual. They are adaptable and versatile but can also be indecisive or scattered. Their challenge is to ground their ideas and speak the truth with responsibility. Ik encourages you to express your truth and listen to the unseen forces that guide you.",
+  "MayanSign.Akbal.interpretation": "Akbal is the realm of dreams, intuition, and the subconscious. Those born under this seal are introspective, mysterious, and have access to deep inner wisdom. They find strength in silence and solitude. Their challenge is to face their inner fears and find the light within their darkness. Akbal invites you to embrace your intuition and explore the treasures hidden within you.",
+  "MayanSign.Kan.interpretation": "Kan is the seed of potential. Those born under this sign are dynamic, full of energy, and have the ability to manifest growth and abundance. They are natural leaders who strive to flourish and reach their full potential. Their challenge is to learn patience and to trust the natural cycles of growth. Kan encourages you to plant your intentions carefully and to nurture your potential with awareness.",
+  "MayanSign.Chicchan.interpretation": "Chicchan is the energy of life force, instinct, and the wisdom of the body. Those born under this seal are passionate, charismatic, and deeply connected to their physical instincts. They have a strong survival ability. Their challenge is to integrate and transform their powerful energy, rather than being controlled by it. Chicchan invites you to listen to your body, embrace your passion, and shed the old skin to be reborn.",
+  "MayanSign.Cimi.interpretation": "Cimi represents death as transformation, the ability to let go of the old to make way for the new. Those born under this sign are resilient, intuitive, and have the ability to navigate great changes. They are bridges between worlds. Their challenge is to accept letting go and to trust in the process of renewal. Cimi invites you to release what no longer serves you and to embrace the opportunities that every ending offers.",
+  "MayanSign.Manik.interpretation": "Manik is the seal of healing, knowledge, and accomplishment. Those born under this sign are natural healers, peaceful, and often very skilled with their hands. They have the ability to complete projects and to bring knowledge into the world. Their challenge is to recognize their own needs for healing. Manik encourages you to use your gifts to heal and complete, and to recognize the beauty of accomplishment.",
+  "MayanSign.Lamat.interpretation": "Lamat is the energy of harmony, beauty, and elegance. Those born under this sign are artistic, social, and strive to create beauty and balance in their environment. They are the star-seeds, here to beautify the world. Their challenge is to find their own inner harmony, rather than just seeking it externally. Lamat invites you to radiate your own beauty and to create harmony in all that you do.",
+  "MayanSign.Muluc.interpretation": "Muluc is the seal of the universal water and emotional purification. Those born under this sign are emotional, intuitive, and have a strong connection to their feelings. They are natural purifiers and communicators. Their challenge is to let their emotions flow without being swept away by them. Muluc invites you to honor your emotions, to purify yourself, and to trust in the flow of life.",
+  "MayanSign.Oc.interpretation": "Oc is the energy of loyalty, love, and the heart. Those born under this seal are loyal companions, brave, and deeply connected to their 'packs' (family and friends). They are leaders of the heart. Their challenge is to heal their own emotional wounds and to learn to give themselves the same loyalty they give to others. Oc encourages you to live from the heart, to be loyal, and to guide the way with love.",
+  "MayanSign.Chuen.interpretation": "Chuen is the divine trickster, the artist, and the magician. Those born under this sign are creative, playful, spontaneous, and have a great sense of humor. They are here to remind us not to take life too seriously. Their challenge is to focus their energy and use their creativity constructively. Chuen invites you to play, to create, and to find the magic in the everyday.",
+  "MayanSign.Eb.interpretation": "Eb is the seal of free will and human influence on the world. Those born under this sign are caring, generous, and strive to create abundance and prosperity. They are the stewards of the Earth. Their challenge is to make wise choices and to direct their energy in a way that benefits all. Eb encourages you to choose your path consciously and to harvest the abundance of life.",
+  "MayanSign.Ben.interpretation": "Ben is the sky-walker, the bridge between heaven and earth. Those born under this sign are courageous explorers who challenge authority and conventions. They are pillars of strength for their communities. Their challenge is to accept their vulnerability and to find a balance between their inner and outer worlds. Ben invites you to explore new horizons and to be a firm pillar in your own life.",
+  "MayanSign.Ix.interpretation": "Ix is the magician, the shaman, and the seer. Those born under this sign are intuitive, mysterious, and have access to higher levels of consciousness. They are the keepers of magic and timelessness. Their challenge is to fully trust their intuition and to use their power with integrity. Ix encourages you to embrace the magic within you and to live in the sacred moment of the present.",
+  "MayanSign.Men.interpretation": "Men is the eagle, the visionary with the ability to see the big picture. Those born under this sign are independent, ambitious, and have a mind that soars beyond the limits of the ordinary. They are here to elevate the collective consciousness. Their challenge is to stay grounded and to bring their visions into reality. Men invites you to spread your wings and to create from a higher perspective.",
+  "MayanSign.Cib.interpretation": "Cib is the guardian of ancient wisdom and the cosmic library. Those born under this sign are serious, intelligent, and have the ability to break old patterns and to forgive. They are the wise counselors. Their challenge is to forgive themselves and to let go of the past. Cib encourages you to connect with your inner wisdom and to use the liberating power of forgiveness.",
+  "MayanSign.Caban.interpretation": "Caban is the energy of the Earth, the power of synchronicity, and the skill of navigation. Those born under this sign are mentally active, practical, and deeply connected to the rhythms of the Earth. They are the great synchronizers. Their challenge is to trust their inner timing and to learn to navigate with the flow of events. Caban invites you to pay attention to the signs and to let the Earth guide you.",
+  "MayanSign.Etznab.interpretation": "Etznab is the mirror of truth, the knife that cuts through illusions. Those born under this sign are brave, direct, and seek clarity and truth in all things. They have the ability to discern what is real. Their challenge is to speak their truth with compassion and to learn to look at themselves in the mirror. Etznab encourages you to release all illusions and to live in the clarity of your own reflection.",
+  "MayanSign.Cauac.interpretation": "Cauac is the storm that cleanses and transforms. Those born under this sign are energetic, friendly, and natural catalysts for change. They bring the purifying rains that allow for renewal and rebirth. Their challenge is to embrace their own transformation and to learn the lessons that the storm brings. Cauac invites you to accept the changes in your life and to know that after every storm comes calm.",
+  "MayanSign.Ahau.interpretation": "Ahau is the seal of enlightenment, the culmination of evolution. Those born under this sign are loving, artistic, visionary, and carry the light of the sun within them. They are here to radiate unconditional love and to recognize the union of all life. Their challenge is to transcend their own ego and to live in service to the whole. Ahau invites you to recognize your own light and to share it unconditionally with the world.",
   "LunarPhaseDescriptions": {
     "new": {
       "description": "The New Moon marks a fresh start. It's a time for introspection, to plant the seeds of intention for the cycle ahead. The energy is low, ideal for resting and visualizing what you wish to manifest.",
@@ -1300,6 +1003,21 @@
     "Pig": {
       "interpretation": "The Pig is a symbol of kindness, generosity, and an easygoing nature. People born in this year have a deep love for the pleasures of life, such as good food, comfort, and good company. They are diligent and honest, but their primary goal is to live in peace and harmony. Their good-hearted nature makes them wonderful and supportive friends, though their trusting disposition can sometimes border on naivety. A Pig's presence brings a sense of contentment and well-being to any situation."
     }
-  }
+  },
+  "StorePage.title": "Cosmic Recommendations",
+  "StorePage.subtitle": "Handpicked items to enhance your spiritual journey.",
+  "StorePage.viewOnAmazon": "View on Amazon",
+  "StorePage.affiliateDisclaimer": "As an Amazon Associate, we earn from qualifying purchases. This helps support our app at no extra cost to you.",
+  "StoreProducts.classicTarotDeck.title": "Classic Tarot Deck",
+  "StoreProducts.classicTarotDeck.description": "A timeless Rider-Waite tarot deck, perfect for both beginners and experts to seek insight and guidance.",
+  "StoreProducts.astrologyIntroBook.title": "Astrology Introduction Book",
+  "StoreProducts.astrologyIntroBook.description": "A comprehensive book covering the basics of astrology, signs, planets, and houses for new learners.",
+  "StoreProducts.healingCrystalsSet.title": "Healing Crystals Set",
+  "StoreProducts.healingCrystalsSet.description": "A starter set of various tumbled stones like amethyst and rose quartz to help balance your energies.",
+  "StoreProducts.moonLamp.title": "3D Moon Lamp",
+  "StoreProducts.moonLamp.description": "Bring the mystical glow of the moon into your home with this realistic and soothing night lamp.",
+  "StoreProducts.zodiacJournal.title": "Zodiac Constellation Journal",
+  "StoreProducts.zodiacJournal.description": "A beautifully designed notebook for you to record your thoughts, dreams, and astrological observations.",
+  "StoreProducts.incenseHolder.title": "Ceramic Incense Holder",
+  "StoreProducts.incenseHolder.description": "An elegant holder to safely burn your favorite incense sticks during meditation or relaxation."
 }
-
