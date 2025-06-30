@@ -273,6 +273,8 @@
   "Metal": "Metall",
   "MayanHoroscopePage.title": "Maya-Horoskop",
   "MayanHoroscopePage.subtitle": "Entdecken Sie die alten Erkenntnisse der Maya-Astrologie.",
+  "MayanHoroscopePage.discoverKinButton": "Entdecke dein Kin",
+  "MayanHoroscopePage.discoverKinSubtitle": "Finde dein Zeichen & galaktischen Ton",
   "MayanHoroscopePage.comingSoon": "Weitere Maya-Werkzeuge und Berechnungen folgen in Kürze!",
   "MayanHoroscopePage.description": "Kurze Bedeutung:",
   "MayanHoroscopePage.detailedInterpretation": "Detaillierte Interpretation:",
@@ -302,6 +304,7 @@
   "MayanHoroscopePage.calcExplainStep4": "Sonnensiegel (Nahual): Abgeleitet von der Kin-Nummer mit Modulo 20: (Kin - 1) % 20.",
   "MayanHoroscopePage.calcExplainStep5": "Galaktischer Ton: Abgeleitet von der Kin-Nummer mit Modulo 13: (Kin - 1) % 13.",
   "MayanHoroscopePage.calcExplainNote": "Dies ist eine moderne Interpretation (Dreamspell) des Maya-Tzolkin. Es existieren andere traditionelle Zählweisen.",
+  "MayanHoroscopeDetailPage.aboutTitle": "Über {signName}",
   "MayanSign.Imix.name": "Imix (Drache/Krokodil)",
   "MayanSign.Ik.name": "Ik (Wind)",
   "MayanSign.Akbal.name": "Akbal (Nacht/Haus)",
@@ -516,6 +519,7 @@
   "MorePage.notifications": "Benachrichtigungen",
   "MorePage.comingSoon": "Demnächst",
   "MorePage.zodiacSigns": "Sternzeichen",
+  "MorePage.natalChart": "Geburtskarte",
   "Language.es": "Español",
   "Language.en": "English",
   "Language.de": "Deutsch",
@@ -869,5 +873,109 @@
     "Rooster": { "interpretation": "Selbstbewusst, aufmerksam und fleißig. Hähne sind Perfektionisten, die ein scharfes Auge für Details haben. Sie sind direkt und ehrlich, aber ihre Direktheit kann manchmal als kritisch oder arrogant empfunden werden." },
     "Dog": { "interpretation": "Loyal, ehrlich und gerecht. Hunde sind vertrauenswürdige Begleiter, die ihre Lieben erbittert beschützen. Sie haben einen starken Sinn für Richtig und Falsch, können aber zu Angst und Pessimismus neigen." },
     "Pig": { "interpretation": "Freundlich, großzügig und gelassen. Schweine genießen die guten Dinge des Lebens und mögen keine Konflikte. Sie sind fleißig und ehrlich, und ihre gute Natur macht sie zu wundervollen Freunden, obwohl sie etwas naiv sein können." }
+  },
+  "MayanSign": {
+    "Imix": { "name": "Imix (Drache/Krokodil)", "description": "Die Quelle des Lebens, der Nährstoff der Urquelle.", "interpretation": "Imix ist der Ur-Anfang, die Energie der Schöpfung selbst. Wer unter diesem Zeichen geboren ist, ist ein Initiator, eine Quelle neuer Ideen. Ihre Herausforderung besteht darin, Vertrauen in das Universum zu entwickeln und zu lernen, Unterstützung zu empfangen, da sie oft versuchen, alles alleine zu machen. Sie sind natürliche Versorger, haben aber auch die Tendenz, zu viel zu übernehmen. Imix lädt dich ein, dich mit der Quelle zu verbinden und zu erkennen, dass du immer unterstützt wirst." },
+    "Ik": { "name": "Ik (Wind)", "description": "Der Atem des Geistes, der Kommunikation und der Wahrheit.", "interpretation": "Ik repräsentiert die Kommunikation, den Atem und den Geist. Die unter diesem Siegel Geborenen sind natürliche Kommunikatoren, Boten und oft sehr spirituell. Sie sind anpassungsfähig und vielseitig, können aber auch unentschlossen oder zerstreut sein. Ihre Herausforderung besteht darin, ihre Ideen zu erden und die Wahrheit mit Verantwortung zu sprechen. Ik ermutigt dich, deine Wahrheit auszudrücken und auf die unsichtbaren Kräfte zu hören, die dich leiten." },
+    "Akbal": { "name": "Akbal (Nacht/Haus)", "description": "Das Heiligtum, die Reise ins Innere und die Traumzeit.", "interpretation": "Akbal ist das Reich der Träume, der Intuition und des Unterbewusstseins. Die unter diesem Siegel Geborenen sind introspektiv, mysteriös und haben Zugang zu einer tiefen inneren Weisheit. Sie finden Stärke in der Stille und Einsamkeit. Ihre Herausforderung besteht darin, ihren inneren Ängsten zu begegnen und das Licht in ihrer Dunkelheit zu finden. Akbal lädt dich ein, deine Intuition anzunehmen und die Schätze zu erkunden, die in deinem Inneren verborgen sind." },
+    "Kan": { "name": "Kan (Samen/Eidechse)", "description": "Das Potenzial, das Wachstum und das gezielte Bewusstsein.", "interpretation": "Kan ist das Samenkorn des Potenzials. Die unter diesem Zeichen Geborenen sind dynamisch, voller Energie und haben die Fähigkeit, Wachstum und Fülle zu manifestieren. Sie sind natürliche Führer, die danach streben, zu blühen und ihr volles Potenzial zu entfalten. Ihre Herausforderung besteht darin, Geduld zu lernen und den natürlichen Zyklen des Wachstums zu vertrauen. Kan ermutigt dich, deine Absichten sorgfältig zu pflanzen und dein Potenzial mit Bewusstsein zu pflegen." },
+    "Chicchan": { "name": "Chicchan (Schlange)", "description": "Die Lebenskraft, der Instinkt und die Verbindung zum Körper.", "interpretation": "Chicchan ist die Energie der Lebenskraft, der Instinkt und die Weisheit des Körpers. Die unter diesem Siegel Geborenen sind leidenschaftlich, charismatisch und tief mit ihren körperlichen Instinkten verbunden. Sie haben eine starke Überlebensfähigkeit. Ihre Herausforderung besteht darin, ihre kraftvolle Energie zu integrieren und zu transformieren, anstatt von ihr kontrolliert zu werden. Chicchan lädt dich ein, auf deinen Körper zu hören, deine Leidenschaft anzunehmen und Altes abzuwerfen, um neu geboren zu werden." },
+    "Cimi": { "name": "Cimi (Tod/Verwandler)", "description": "Die Transformation, das Loslassen und die Hingabe.", "interpretation": "Cimi repräsentiert den Tod als Transformation, die Fähigkeit, das Alte loszulassen, um Platz für das Neue zu schaffen. Die unter diesem Zeichen Geborenen sind widerstandsfähig, intuitiv und haben die Fähigkeit, große Veränderungen zu bewältigen. Sie sind Brücken zwischen den Welten. Ihre Herausforderung besteht darin, das Loslassen zu akzeptieren und auf den Prozess der Erneuerung zu vertrauen. Cimi lädt dich ein, loszulassen, was dir nicht mehr dient, und die Chancen zu nutzen, die jede Endung bietet." },
+    "Manik": { "name": "Manik (Hirsch/Hand)", "description": "Die Heilung, das Wissen und die Vollendung.", "interpretation": "Manik ist das Siegel der Heilung, des Wissens und der Vollendung. Die unter diesem Zeichen Geborenen sind natürliche Heiler, friedlich und oft sehr geschickt mit ihren Händen. Sie haben die Fähigkeit, Projekte abzuschließen und Wissen in die Welt zu bringen. Ihre Herausforderung besteht darin, ihre eigenen Bedürfnisse nach Heilung zu erkennen. Manik ermutigt dich, deine Gaben zu nutzen, um zu heilen und zu vervollständigen, und die Schönheit der Vollendung zu erkennen." },
+    "Lamat": { "name": "Lamat (Stern/Hase)", "description": "Die Harmonie, die Schönheit und der Sternensamen.", "interpretation": "Lamat ist die Energie der Harmonie, der Schönheit und der Eleganz. Die unter diesem Zeichen Geborenen sind künstlerisch, sozial und streben danach, Schönheit und Gleichgewicht in ihrer Umgebung zu schaffen. Sie sind die Sternensamen, die hier sind, um die Welt zu verschönern. Ihre Herausforderung besteht darin, ihre eigene innere Harmonie zu finden, anstatt sie nur im Außen zu suchen. Lamat lädt dich ein, deine eigene Schönheit auszustrahlen und Harmonie in allem, was du tust, zu schaffen." },
+    "Muluc": { "name": "Muluc (Wasser/Mond)", "description": "Die universelle Wasser, die gereinigten Emotionen und der Fluss.", "interpretation": "Muluc ist das Siegel des universellen Wassers und der emotionalen Reinigung. Die unter diesem Zeichen Geborenen sind emotional, intuitiv und haben eine starke Verbindung zu ihren Gefühlen. Sie sind natürliche Reiniger und Kommunikatoren. Ihre Herausforderung besteht darin, ihre Emotionen fließen zu lassen, ohne von ihnen mitgerissen zu werden. Muluc lädt dich ein, deine Emotionen zu ehren, dich zu reinigen und mit dem Fluss des Lebens zu vertrauen." },
+    "Oc": { "name": "Oc (Hund)", "description": "Die Loyalität, das Herz und die emotionalen Bindungen.", "interpretation": "Oc ist die Energie der Loyalität, der Liebe und des Herzens. Die unter diesem Siegel Geborenen sind treue Begleiter, mutig und zutiefst mit ihren 'Rudeln' (Familie und Freunden) verbunden. Sie sind Führer des Herzens. Ihre Herausforderung besteht darin, ihre eigenen emotionalen Wunden zu heilen und zu lernen, sich selbst die gleiche Loyalität zu schenken, die sie anderen geben. Oc ermutigt dich, aus dem Herzen zu leben, loyal zu sein und den Weg mit Liebe zu führen." },
+    "Chuen": { "name": "Chuen (Affe)", "description": "Das Spiel, die Magie und die göttliche Illusion.", "interpretation": "Chuen ist der göttliche Schelm, der Künstler und der Magier. Die unter diesem Zeichen Geborenen sind kreativ, verspielt, spontan und haben einen großartigen Sinn für Humor. Sie sind hier, um uns daran zu erinnern, das Leben nicht zu ernst zu nehmen. Ihre Herausforderung besteht darin, ihre Energie zu fokussieren und ihre Kreativität konstruktiv zu nutzen. Chuen lädt dich ein, zu spielen, zu erschaffen und die Magie im Alltäglichen zu finden." },
+    "Eb": { "name": "Eb (Weg/Gras)", "description": "Die freie Wille, der menschliche Einfluss und die Fülle.", "interpretation": "Eb ist das Siegel des freien Willens und des menschlichen Einflusses auf die Welt. Die unter diesem Zeichen Geborenen sind fürsorglich, großzügig und streben danach, Fülle und Wohlstand zu schaffen. Sie sind die Verwalter der Erde. Ihre Herausforderung besteht darin, weise Entscheidungen zu treffen und ihre Energie auf eine Weise zu lenken, die allen zugute kommt. Eb ermutigt dich, deinen Weg bewusst zu wählen und die Fülle des Lebens zu ernten." },
+    "Ben": { "name": "Ben (Schilfrohr/Himmelswanderer)", "description": "Die Säule von Himmel und Erde, die Verbindung und die Zeit-Raum-Reise.", "interpretation": "Ben ist der Himmelswanderer, die Brücke zwischen Himmel und Erde. Die unter diesem Zeichen Geborenen sind mutige Entdecker, die Autorität und Konventionen herausfordern. Sie sind Säulen der Stärke für ihre Gemeinschaften. Ihre Herausforderung besteht darin, ihre Verletzlichkeit zu akzeptieren und einen Ausgleich zwischen ihrer inneren und äußeren Welt zu finden. Ben lädt dich ein, neue Horizonte zu erkunden und eine feste Säule in deinem eigenen Leben zu sein." },
+    "Ix": { "name": "Ix (Jaguar/Magier)", "description": "Die Magie, die Zeitlosigkeit und die schamanische Kraft.", "interpretation": "Ix ist der Magier, der Schamane und der Seher. Die unter diesem Zeichen Geborenen sind intuitiv, geheimnisvoll und haben Zugang zu höheren Bewusstseinsebenen. Sie sind die Hüter der Magie und der Zeitlosigkeit. Ihre Herausforderung besteht darin, ihrer Intuition voll zu vertrauen und ihre Macht mit Integrität zu nutzen. Ix ermutigt dich, die Magie in dir zu umarmen und im heiligen Moment der Gegenwart zu leben." },
+    "Men": { "name": "Men (Adler)", "description": "Die kollektive Vision, der höhere Geist und das Bewusstsein.", "interpretation": "Men ist der Adler, der Visionär mit der Fähigkeit, das große Ganze zu sehen. Die unter diesem Zeichen Geborenen sind unabhängig, ehrgeizig und haben einen Geist, der über die Grenzen des Gewöhnlichen hinausfliegt. Sie sind hier, um das kollektive Bewusstsein zu heben. Ihre Herausforderung besteht darin, geerdet zu bleiben und ihre Visionen in die Realität umzusetzen. Men lädt dich ein, deine Flügel auszubreiten und aus einer höheren Perspektive zu erschaffen." },
+    "Cib": { "name": "Cib (Geier/Eule)", "description": "Die kosmische Weisheit, das Verzeihen und die innere Stimme.", "interpretation": "Cib ist der Hüter der alten Weisheit und der kosmischen Bibliothek. Die unter diesem Zeichen Geborenen sind ernsthaft, intelligent und haben die Fähigkeit, alte Muster zu durchbrechen und zu vergeben. Sie sind die weisen Berater. Ihre Herausforderung besteht darin, sich selbst zu vergeben und die Vergangenheit loszulassen. Cib ermutigt dich, dich mit deiner inneren Weisheit zu verbinden und die befreiende Kraft der Vergebung zu nutzen." },
+    "Caban": { "name": "Caban (Erde/Erdbeben)", "description": "Die Synchronizität, die Erdungskraft und die Navigation.", "interpretation": "Caban ist die Energie der Erde, die Kraft der Synchronizität und die Fähigkeit zur Navigation. Die unter diesem Zeichen Geborenen sind mental aktiv, praktisch und tief mit den Rhythmen der Erde verbunden. Sie sind die großen Synchronisierer. Ihre Herausforderung besteht darin, ihrem inneren Timing zu vertrauen und zu lernen, mit dem Fluss der Ereignisse zu navigieren. Caban lädt dich ein, auf die Zeichen zu achten und dich von der Erde leiten zu lassen." },
+    "Etznab": { "name": "Etznab (Feuerstein/Messer)", "description": "Die Reflexion, die Wahrheit und die Klarheit.", "interpretation": "Etznab ist der Spiegel der Wahrheit, das Messer, das Illusionen durchschneidet. Die unter diesem Zeichen Geborenen sind mutig, direkt und suchen Klarheit und Wahrheit in allen Dingen. Sie haben die Fähigkeit, zu unterscheiden, was real ist. Ihre Herausforderung besteht darin, ihre Wahrheit mit Mitgefühl zu sprechen und zu lernen, sich selbst im Spiegel zu betrachten. Etznab ermutigt dich, alle Illusionen loszulassen und in der Klarheit deines eigenen Spiegelbildes zu leben." },
+    "Cauac": { "name": "Cauac (Sturm/Regen)", "description": "Die Transformation, die Reinigung und die Wiedergeburt.", "interpretation": "Cauac ist der Sturm, der reinigt und transformiert. Die unter diesem Zeichen Geborenen sind energiegeladen, freundlich und natürliche Katalysatoren für Veränderungen. Sie bringen die reinigenden Regen, die Erneuerung und Wiedergeburt ermöglichen. Ihre Herausforderung besteht darin, ihre eigene Transformation anzunehmen und die Lektionen zu lernen, die der Sturm bringt. Cauac lädt dich ein, die Veränderungen in deinem Leben anzunehmen und zu wissen, dass nach jedem Sturm Ruhe kommt." },
+    "Ahau": { "name": "Ahau (Sonne/Blume/Herr)", "description": "Die Erleuchtung, die bedingungslose Liebe und die Vereinigung.", "interpretation": "Ahau ist das Siegel der Erleuchtung, der Höhepunkt der Evolution. Die unter diesem Zeichen Geborenen sind liebevoll, künstlerisch, visionär und tragen das Licht der Sonne in sich. Sie sind hier, um bedingungslose Liebe auszustrahlen und die Vereinigung allen Lebens zu erkennen. Ihre Herausforderung besteht darin, ihr eigenes Ego zu transzendieren und im Dienst der Gesamtheit zu leben. Ahau lädt dich ein, dein eigenes Licht zu erkennen und es bedingungslos mit der Welt zu teilen." }
+  },
+  "LunarPhaseDescriptions": {
+    "new": {
+      "description": "Die Neumondphase markiert einen Neuanfang. Es ist eine Zeit der Selbstbeobachtung, um die Samen der Absicht für den kommenden Zyklus zu säen. Die Energie ist niedrig, ideal zum Ausruhen und Visualisieren dessen, was du manifestieren möchtest.",
+      "insights": [
+        "Setze klare Absichten für den kommenden Monat.",
+        "Es ist eine kraftvolle Zeit für Meditation und Visualisierung.",
+        "Lass Altes los, um Platz für Neues zu schaffen."
+      ]
+    },
+    "waxingCrescent": {
+      "description": "Der zunehmende Sichelmond symbolisiert eine Phase des Wachstums und der Stärkung. Wenn der Mond beginnt, den Nachthimmel mit größerer Helligkeit zu erleuchten, ist es Zeit zu handeln und die während des Neumondes gesetzten Absichten zu manifestieren. Deine Energie nimmt allmählich zu, was diese Phase perfekt macht, um mit der Umsetzung deiner Pläne zu beginnen. Es ist eine Zeit, in der du einen Schub an kreativer Energie und Inspiration spüren könntest. Diese Phase ist besonders günstig, um Neues zu lernen, Verbindungen herzustellen und vorteilhafte Gewohnheiten zu etablieren. Du könntest feststellen, dass dein Vertrauen zusammen mit deiner Fähigkeit, Hindernisse auf dem Weg zu deinen Zielen zu überwinden, wächst.",
+      "insights": [
+        "Deine emotionale Energie wächst.",
+        "Eine ausgezeichnete Zeit, um neue emotionale Muster zu fördern, die mit dem Ausdruck deines Geburtsmondes übereinstimmen.",
+        "Konzentriere deine Aufmerksamkeit darauf, schrittweise emotionale Sicherheit aufzubauen, die mit deiner Natur im Einklang steht."
+      ]
+    },
+    "firstQuarter": {
+      "description": "Das erste Viertel ist ein kritischer Wendepunkt. Deine Absichten stoßen auf ihre ersten Herausforderungen und erfordern Handeln und Entscheidungsfindung. Es ist eine Zeit, Hindernisse zu überwinden, deine Pläne anzupassen und dich erneut deinen Zielen zu verpflichten. Die Energie ist aktiv und manchmal angespannt. Es ist wichtig, entschlossen zu bleiben und beim ersten Anzeichen von Widerstand nicht aufzugeben. Löse die auftretenden Probleme und bekräftige dein Engagement für die Absichten, die du während des Neumondes gesetzt hast.",
+      "insights": [
+        "Triff Entscheidungen, auch wenn sie schwierig sind.",
+        "Jetzt ist die Zeit, deine Strategien anzupassen und zu verfeinern.",
+        "Vertraue auf deine Fähigkeit, alle Herausforderungen zu meistern."
+      ]
+    },
+    "waxingGibbous": {
+      "description": "Die zunehmende Mondphase ist eine Zeit der Verfeinerung und Perfektionierung. Du hast die anfänglichen Herausforderungen überwunden, und jetzt ist es an der Zeit, deine Pläne anzupassen und zu verbessern. Die Energie ist hoch, und der Schwung baut sich auf. Es ist eine ausgezeichnete Zeit, sich auf die Details zu konzentrieren, deine Bemühungen zu organisieren und dich auf den Höhepunkt vorzubereiten, den der Vollmond bringen wird. Analysiere, was funktioniert, und nimm die notwendigen Anpassungen vor, um den Erfolg zu sichern.",
+      "insights": [
+        "Achte auf Details und optimiere deine Pläne.",
+        "Die Energie ist hoch; nutze sie, um voranzukommen.",
+        "Beharrlichkeit in dieser Phase ist der Schlüssel zum Erfolg."
+      ]
+    },
+    "full": {
+      "description": "Der Vollmond ist der Höhepunkt des Mondzyklus. Die Absichten, die du während des Neumondes gepflanzt hast, erreichen ihren Höhepunkt. Es ist eine Zeit der Ernte, der Feier und der Erleuchtung. Wahrheiten kommen ans Licht, und die Emotionen sind auf ihrem Höhepunkt. Es ist eine kraftvolle Zeit für Dankbarkeit und die Anerkennung deiner Fortschritte. Die Energie ist auf ihrem Maximum, was zu Schlaflosigkeit oder erhöhter Sensibilität führen kann. Nutze dieses Licht, um zu sehen, was in deinem Leben Früchte getragen hat.",
+      "insights": [
+        "Feiere deine Erfolge, egal wie klein sie sind.",
+        "Drücke Dankbarkeit für das aus, was du manifestiert hast.",
+        "Sei dir deiner Emotionen bewusst, da sie verstärkt werden."
+      ]
+    },
+    "waningGibbous": {
+      "description": "Nach dem Höhepunkt des Vollmonds beginnt die abnehmende Mondphase. Es ist eine Zeit, um zu teilen, was du gelernt und geerntet hast. Es ist eine Phase der Verteilung, des Lehrens und der Kommunikation. Reflektiere über deine Erfolge und überlege, wie deine Erfahrungen anderen zugute kommen können. Die Energie beginnt abzunehmen, was die Selbstbeobachtung und die Analyse der Ergebnisse des Zyklus begünstigt.",
+      "insights": [
+        "Teile dein Wissen und deine Erfahrungen mit anderen.",
+        "Reflektiere über den gerade abgeschlossenen Zyklus.",
+        "Beginne darüber nachzudenken, was du im nächsten Zyklus loslassen musst."
+      ]
+    },
+    "lastQuarter": {
+      "description": "Das letzte Viertel ist eine Zeit des Loslassens und des Freigebens. Wie das erste Viertel stellt es eine Krise dar, aber diesmal ist es eine Krise des Bewusstseins. Es ist Zeit, loszulassen, was nicht funktioniert hat, alte Muster aufzugeben und dich von Beziehungen oder Situationen zu reinigen, die dir nicht mehr dienen. Es kann eine schwierige Phase sein, aber sie ist notwendig, um Platz für Neues zu schaffen.",
+      "insights": [
+        "Lass los, was dir nicht mehr dient.",
+        "Vergib dir selbst und anderen, um vorwärts zu kommen.",
+        "Reinige deinen physischen und emotionalen Raum."
+      ]
+    },
+    "waningCrescent": {
+      "description": "Der abnehmende Sichelmond ist die letzte Phase vor dem Neumond. Es ist eine Zeit der Hingabe, der Ruhe und der Erholung. Die Energie ist auf ihrem niedrigsten Stand und lädt zur Selbstbeobachtung und spirituellen Verbindung ein. Es ist eine Zeit, sich zurückzuziehen, zu meditieren und sich auf den nächsten Zyklus vorzubereiten. Träume, höre auf deine Intuition und lass das Universum die Kontrolle übernehmen. Es ist keine Zeit für Aktion, sondern für Sein.",
+      "insights": [
+        "Ruhe dich aus und lade deine Energie wieder auf.",
+        "Höre auf deine Intuition und deine Träume.",
+        "Löse alle verbleibenden Spannungen und gib dich dem Fluss hin."
+      ]
+    }
+  },
+  "ChineseHoroscopeDetail": {
+    "traitsTitle": "Eigenschaften von {signName}",
+    "Rat": { "interpretation": "Scharfsinnig, charmant und ehrgeizig. Ratten sind einfallsreich und finden aus jeder Schwierigkeit einen Ausweg. Sie sind gesellig, können aber kritisch und opportunistisch sein. Sie sind ihrer Familie und engen Freunden gegenüber äußerst loyal." },
+    "Ox": { "interpretation": "Sorgfältig, zuverlässig und stark. Ochsen sind methodisch und geduldig und glauben an harte Arbeit, um ihre Ziele zu erreichen. Sie mögen keine Veränderungen und können sehr stur sein, aber ihre Zuverlässigkeit ist unübertroffen." },
+    "Tiger": { "interpretation": "Mutig, selbstbewusst und ein geborener Anführer. Tiger sind leidenschaftlich und energisch und suchen immer nach einer Herausforderung. Sie können rebellisch und unberechenbar sein, aber ihr Charisma und ihr Mut sind für andere inspirierend." },
+    "Rabbit": { "interpretation": "Sanft, ruhig und elegant. Kaninchen sind taktvoll und diplomatisch und suchen vor allem Frieden und Harmonie. Sie sind vorsichtig und können als zurückhaltend angesehen werden, sind aber auch scharfsinnig und haben ein starkes Verantwortungsbewusstsein." },
+    "Dragon": { "interpretation": "Mächtig, ehrgeizig und charismatisch. Drachen sind geborene Anführer, voller Energie und Enthusiasmus. Sie sind selbstbewusst und haben keine Angst, Risiken einzugehen. Ihr Stolz kann manchmal an Arroganz grenzen, aber sie haben ein großzügiges Herz." },
+    "Snake": { "interpretation": "Weise, intuitiv und geheimnisvoll. Schlangen sind tiefgründige Denker, die sich lieber auf ihr eigenes Urteil als auf den Rat anderer verlassen. Sie sind charmant und kultiviert, können aber besitzergreifend sein und ihre Gefühle hüten." },
+    "Horse": { "interpretation": "Energisch, unabhängig und freigeistig. Pferde lieben Abenteuer und sind gerne mitten im Geschehen. Sie sind gesellig und haben einen großartigen Sinn für Humor, können aber ungeduldig sein und haben Angst vor Bindungen." },
+    "Goat": { "interpretation": "Sanft, mitfühlend und künstlerisch. Ziegen sind kreative Träumer, die Frieden und Schönheit schätzen. Sie sind einfühlsam und gutherzig, können aber unentschlossen sein und brauchen viel emotionale Unterstützung von ihren Lieben." },
+    "Monkey": { "interpretation": "Klug, schelmisch und ein genialer Problemlöser. Affen sind intellektuell neugierig und haben einen großartigen Sinn für Humor. Sie sind Meister der Improvisation, können aber als unzuverlässig oder manipulativ angesehen werden." },
+    "Rooster": { "interpretation": "Selbstbewusst, aufmerksam und fleißig. Hähne sind Perfektionisten, die ein scharfes Auge für Details haben. Sie sind direkt und ehrlich, aber ihre Direktheit kann manchmal als kritisch oder arrogant empfunden werden." },
+    "Dog": { "interpretation": "Loyal, ehrlich und gerecht. Hunde sind vertrauenswürdige Begleiter, die ihre Lieben erbittert beschützen. Sie haben einen starken Sinn für Richtig und Falsch, können aber zu Angst und Pessimismus neigen." },
+    "Pig": { "interpretation": "Freundlich, großzügig und gelassen. Schweine genießen die guten Dinge des Lebens und mögen keine Konflikte. Sie sind fleißig und ehrlich, und ihre gute Natur macht sie zu wundervollen Freunden, obwohl sie etwas naiv sein können." }
   }
 }
+

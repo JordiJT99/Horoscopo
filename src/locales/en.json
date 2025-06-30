@@ -273,6 +273,8 @@
   "Metal": "Metal",
   "MayanHoroscopePage.title": "Mayan Horoscope",
   "MayanHoroscopePage.subtitle": "Discover the ancient insights of Mayan astrology.",
+  "MayanHoroscopePage.discoverKinButton": "Discover Your Kin",
+  "MayanHoroscopePage.discoverKinSubtitle": "Find your sign & galactic tone",
   "MayanHoroscopePage.comingSoon": "More Mayan tools and calculations coming soon!",
   "MayanHoroscopePage.description": "Brief Meaning:",
   "MayanHoroscopePage.detailedInterpretation": "Detailed Interpretation:",
@@ -302,6 +304,7 @@
   "MayanHoroscopePage.calcExplainStep4": "Solar Seal (Nahual): Derived from the Kin number using modulo 20: (Kin - 1) % 20.",
   "MayanHoroscopePage.calcExplainStep5": "Galactic Tone: Derived from the Kin number using modulo 13: (Kin - 1) % 13.",
   "MayanHoroscopePage.calcExplainNote": "This is a modern interpretation (Dreamspell) of the Mayan Tzolkin. Other traditional counts exist.",
+  "MayanHoroscopeDetailPage.aboutTitle": "About {signName}",
   "MayanSign.Imix.name": "Imix (Dragon/Crocodile)",
   "MayanSign.Ik.name": "Ik (Wind)",
   "MayanSign.Akbal.name": "Akbal (Night/House)",
@@ -516,6 +519,7 @@
   "MorePage.notifications": "Notifications",
   "MorePage.comingSoon": "Coming Soon",
   "MorePage.zodiacSigns": "Zodiac Signs",
+  "MorePage.natalChart": "Natal Chart",
   "Language.es": "Español",
   "Language.en": "English",
   "Language.de": "Deutsch",
@@ -1298,3 +1302,4 @@
     }
   }
 }
+
