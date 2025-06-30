@@ -13,6 +13,7 @@ import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { Edit } from 'lucide-react';
 
 interface BirthData {
   date: string;
@@ -25,6 +26,7 @@ interface NatalChartClientContentProps {
   dictionary: Dictionary;
   birthData: BirthData;
   user: AuthUser | null;
+  onReset: () => void;
 }
 
 type DetailLevel = 'basic' | 'advanced' | 'spiritual';
@@ -85,7 +87,17 @@ export default function NatalChartClientContent({
   dictionary,
   birthData,
   user,
+  onReset,
 }: NatalChartClientContentProps) {
+  
+  if (!dictionary.NatalChartPage) {
+    return (
+       <div className="flex justify-center items-center h-64">
+        <LoadingSpinner className="h-12 w-12 text-primary" />
+      </div>
+    );
+  }
+
   const {
     title,
     underDevelopmentMessage,
@@ -97,6 +109,7 @@ export default function NatalChartClientContent({
     transpersonalPlanetsTitle,
     housesTitle,
     aspectsTitle,
+    newChartButton,
   } = dictionary.NatalChartPage;
 
   const [detailLevel, setDetailLevel] = useState<DetailLevel>('basic');
@@ -125,7 +138,7 @@ export default function NatalChartClientContent({
           }
         } catch (e) {
           console.error("Failed to parse cached text data, fetching new data.", e);
-          localStorage.removeItem(textCacheKey);
+          if (textCacheKey) localStorage.removeItem(textCacheKey);
         }
       }
 
@@ -184,10 +197,16 @@ export default function NatalChartClientContent({
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl sm:text-4xl font-headline font-semibold text-primary text-center mb-4">
-        {title}
-      </h2>
+    <div className="container mx-auto px-0 sm:px-4 py-8">
+       <div className="flex justify-center items-center text-center mb-4 gap-4">
+          <h2 className="text-3xl sm:text-4xl font-headline font-semibold text-primary">
+            {title}
+          </h2>
+          <Button onClick={onReset} variant="outline" size="sm">
+            <Edit className="h-4 w-4 mr-2" />
+            {newChartButton || 'Nueva Carta'}
+          </Button>
+       </div>
 
       <div className="flex justify-center mt-4 mb-8">
         <label htmlFor="detailLevel" className="mr-2 self-center">
