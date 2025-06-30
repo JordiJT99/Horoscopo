@@ -430,18 +430,18 @@ export const TarotPersonalityTestIcon = HelpCircle;
 
 
 export const CHINESE_ZODIAC_SIGNS: ChineseZodiacSign[] = [
-  { name: "Rat", icon: RatIcon, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Water", description: "Inventiva, ingeniosa, encantadora y persuasiva." },
-  { name: "Ox", icon: Gitlab, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Earth", description: "Diligente, confiable, fuerte y determinado." },
-  { name: "Tiger", icon: Cat, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", description: "Valiente, seguro de sí mismo, competitivo e impredecible." },
-  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Wood", description: "Gentil, tranquilo, elegante y alerta; rápido y hábil." },
-  { name: "Dragon", icon: Flame, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Earth", description: "Seguro de sí mismo, inteligente, entusiasta y un líder natural." },
-  { name: "Snake", icon: Worm, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fire", description: "Enigmática, inteligente, sabia e intuitiva." },
-  { name: "Horse", icon: PawPrint, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fire", description: "Vivaz, activo, enérgico y le encanta estar entre la multitud." },
-  { name: "Goat", icon: MountainIcon, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Earth", description: "Amable, de buenos modales, tímida, estable, comprensiva y amigable." },
-  { name: "Monkey", icon: Banana, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", description: "Agudo, inteligente, curioso y travieso." },
-  { name: "Rooster", icon: BirdIcon, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", description: "Observador, trabajador, ingenioso, valiente y talentoso." },
-  { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Earth", description: "Leal, honesto, amable, bondadoso, cauteloso y prudente." },
-  { name: "Pig", icon: Shell, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Water", description: "Diligente, compasivo, generoso y de trato fácil." },
+  { name: "Rat", icon: RatIcon, years: [2020, 2008, 1996, 1984, 1972, 1960, 1948, 1936, 1924, 2032], element: "Water", descriptionKey: "ChineseHoroscopePage.descriptions.Rat", detailedInterpretationKey: "ChineseHoroscopeDetail.Rat.interpretation" },
+  { name: "Ox", icon: Gitlab, years: [2021, 2009, 1997, 1985, 1973, 1961, 1949, 1937, 1925, 2033], element: "Earth", descriptionKey: "ChineseHoroscopePage.descriptions.Ox", detailedInterpretationKey: "ChineseHoroscopeDetail.Ox.interpretation" },
+  { name: "Tiger", icon: Cat, years: [2022, 2010, 1998, 1986, 1974, 1962, 1950, 1938, 1926, 2034], element: "Wood", descriptionKey: "ChineseHoroscopePage.descriptions.Tiger", detailedInterpretationKey: "ChineseHoroscopeDetail.Tiger.interpretation" },
+  { name: "Rabbit", icon: RabbitIcon, years: [2023, 2011, 1999, 1987, 1975, 1963, 1951, 1939, 1927, 2035], element: "Wood", descriptionKey: "ChineseHoroscopePage.descriptions.Rabbit", detailedInterpretationKey: "ChineseHoroscopeDetail.Rabbit.interpretation" },
+  { name: "Dragon", icon: Flame, years: [2024, 2012, 2000, 1988, 1976, 1964, 1952, 1940, 1928, 2036], element: "Earth", descriptionKey: "ChineseHoroscopePage.descriptions.Dragon", detailedInterpretationKey: "ChineseHoroscopeDetail.Dragon.interpretation" },
+  { name: "Snake", icon: Worm, years: [2025, 2013, 2001, 1989, 1977, 1965, 1953, 1941, 1929, 2037], element: "Fire", descriptionKey: "ChineseHoroscopePage.descriptions.Snake", detailedInterpretationKey: "ChineseHoroscopeDetail.Snake.interpretation" },
+  { name: "Horse", icon: PawPrint, years: [2026, 2014, 2002, 1990, 1978, 1966, 1954, 1942, 1930, 2038], element: "Fire", descriptionKey: "ChineseHoroscopePage.descriptions.Horse", detailedInterpretationKey: "ChineseHoroscopeDetail.Horse.interpretation" },
+  { name: "Goat", icon: MountainIcon, years: [2027, 2015, 2003, 1991, 1979, 1967, 1955, 1943, 1931, 2039], element: "Earth", descriptionKey: "ChineseHoroscopePage.descriptions.Goat", detailedInterpretationKey: "ChineseHoroscopeDetail.Goat.interpretation" },
+  { name: "Monkey", icon: Banana, years: [2028, 2016, 2004, 1992, 1980, 1968, 1956, 1944, 1932, 2040], element: "Metal", descriptionKey: "ChineseHoroscopePage.descriptions.Monkey", detailedInterpretationKey: "ChineseHoroscopeDetail.Monkey.interpretation" },
+  { name: "Rooster", icon: BirdIcon, years: [2029, 2017, 2005, 1993, 1981, 1969, 1957, 1945, 1933, 2041], element: "Metal", descriptionKey: "ChineseHoroscopePage.descriptions.Rooster", detailedInterpretationKey: "ChineseHoroscopeDetail.Rooster.interpretation" },
+  { name: "Dog", icon: DogIcon, years: [2030, 2018, 2006, 1994, 1982, 1970, 1958, 1946, 1934, 2042], element: "Earth", descriptionKey: "ChineseHoroscopePage.descriptions.Dog", detailedInterpretationKey: "ChineseHoroscopeDetail.Dog.interpretation" },
+  { name: "Pig", icon: Shell, years: [2031, 2019, 2007, 1995, 1983, 1971, 1959, 1947, 1935, 2043], element: "Water", descriptionKey: "ChineseHoroscopePage.descriptions.Pig", detailedInterpretationKey: "ChineseHoroscopeDetail.Pig.interpretation" },
 ];
 export const ALL_CHINESE_SIGN_NAMES = CHINESE_ZODIAC_SIGNS.map(s => s.name as string) as [string, ...string[]];
 
