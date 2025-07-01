@@ -25,7 +25,6 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const [revelation, setRevelation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const crystalBallGifPath = "/gifs/crystal-ball.gif";
 
   const { user } = useAuth();
   const { addEnergyPoints } = useCosmicEnergy();
@@ -143,7 +142,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
           <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44">
             <div className="w-full h-full rounded-full overflow-hidden shadow-inner bg-background">
               <Image
-                src={crystalBallGifPath}
+                src="https://placehold.co/180x180.png"
                 alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
                 width={180}
                 height={180}
