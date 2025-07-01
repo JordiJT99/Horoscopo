@@ -142,7 +142,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
           <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44">
             <div className="w-full h-full rounded-full overflow-hidden shadow-inner bg-background">
               <Image
-                src="https://placehold.co/180x180.png"
+                src="/custom_assets/crystal_ball_animation.gif"
                 alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
                 width={180}
                 height={180}
