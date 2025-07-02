@@ -51,30 +51,37 @@ let store: {
 } | null = null;
 
 
-const getInitialState = (): CosmicEnergyState => ({
+const initialState: CosmicEnergyState = {
     points: 0,
     level: 1,
     freeChats: 0,
     stardust: 0,
     lastGained: {} as Record<GameActionId, string>,
-    hasRatedApp: false, // New state for one-time reward
-});
+    hasRatedApp: false,
+};
+
+const getInitialState = (): CosmicEnergyState => initialState;
 
 const createStore = (userId: string) => {
     const listeners = new Set<() => void>();
     
     const localStorageKey = `cosmicEnergy_v4_${userId}`; // Updated version
-    let currentState: CosmicEnergyState = getInitialState();
+    let currentState: CosmicEnergyState;
 
     try {
         const storedState = localStorage.getItem(localStorageKey);
         if (storedState) {
             const parsedState = JSON.parse(storedState);
-            // Ensure all fields exist to avoid issues with older state formats
-            currentState = { ...getInitialState(), ...parsedState };
+            // Ensure all fields exist to avoid issues with older state formats by merging with a fresh initial state
+            currentState = { ...initialState, ...parsedState };
+        } else {
+            // If no stored state, create a fresh copy of the initial state
+            currentState = { ...initialState };
         }
     } catch (error) {
         console.error("Failed to parse cosmic energy state from localStorage", error);
+        // Fallback to a fresh copy on error
+        currentState = { ...initialState };
     }
 
     const getState = () => currentState;
