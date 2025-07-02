@@ -20,6 +20,7 @@ import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
 import PromotionCard from '@/components/shared/PromotionCard';
 import DailyTransitWidget from './DailyTransitWidget';
+import DailyTipWidget from './DailyTipWidget';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Share2, Heart, CircleDollarSign, Activity } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -449,6 +450,7 @@ export default function AstroVibesHomePageContent({
       <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden">
         
         <DailyTransitWidget dictionary={dictionary} />
+        <DailyTipWidget dictionary={dictionary} locale={locale} />
 
         <SignSelectorHorizontalScroll
           dictionary={dictionary}

@@ -918,5 +918,12 @@
   "Toast.alreadyRated": "You have already claimed this reward.",
   "Toast.dailyReactionStardust": "+{amount} 💫 for your first reaction of the day!",
   "Toast.dailyCommentStardust": "+{amount} 💫 for your first comment of the day!",
-  "ZodiacDetail": {}
+  "ZodiacDetail": {},
+  "DailyTip": {
+    "title": "Tip of the Day",
+    "subtitle": "A dose of cosmic wisdom for your journey.",
+    "revealButton": "Reveal tip",
+    "loading": "Consulting the cosmos...",
+    "error": "The skies are cloudy. Please try again later."
+  }
 }
