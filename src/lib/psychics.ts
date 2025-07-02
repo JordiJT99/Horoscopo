@@ -16,7 +16,7 @@ export const psychics: Psychic[] = [
   {
     id: 'shenaya',
     name: 'Shenaya',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/shenaya.png',
     aiHint: 'woman portrait confident',
     specialty: 'PsychicSpecialty.loveRelationships',
     phrase: 'PsychicPhrase.esmeralda',
@@ -28,7 +28,7 @@ export const psychics: Psychic[] = [
   {
     id: 'missmia',
     name: 'Miss Mia',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/missmia.png',
     aiHint: 'woman portrait friendly',
     specialty: 'PsychicSpecialty.careerFinance',
     phrase: 'PsychicPhrase.zephyr',
@@ -40,7 +40,7 @@ export const psychics: Psychic[] = [
   {
     id: 'seraphina',
     name: 'Seraphina',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/seraphina.png',
     aiHint: 'woman portrait ethereal',
     specialty: 'PsychicSpecialty.spiritualityGrowth',
     phrase: 'PsychicPhrase.seraphina',
@@ -52,7 +52,7 @@ export const psychics: Psychic[] = [
   {
     id: 'aurora',
     name: 'Aurora',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/aurora.png',
     aiHint: 'woman portrait mystical',
     specialty: 'PsychicSpecialty.loveRelationships',
     phrase: 'PsychicPhrase.aurora',
@@ -64,7 +64,7 @@ export const psychics: Psychic[] = [
   {
     id: 'orion',
     name: 'Orion',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/orion.png',
     aiHint: 'man portrait wise',
     specialty: 'PsychicSpecialty.careerFinance',
     phrase: 'PsychicPhrase.orion',
@@ -76,7 +76,7 @@ export const psychics: Psychic[] = [
   {
     id: 'luna',
     name: 'Luna',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/luna.png',
     aiHint: 'woman portrait gentle',
     specialty: 'PsychicSpecialty.spiritualityGrowth',
     phrase: 'PsychicPhrase.seraphina',
@@ -88,7 +88,7 @@ export const psychics: Psychic[] = [
   {
     id: 'kaelen',
     name: 'Kaelen',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/kaelen.png',
     aiHint: 'man portrait serene',
     specialty: 'PsychicSpecialty.spiritualityGrowth',
     phrase: 'PsychicPhrase.kaelen',
@@ -100,7 +100,7 @@ export const psychics: Psychic[] = [
   {
     id: 'isolde',
     name: 'Isolde',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/isolde.png',
     aiHint: 'woman portrait romantic',
     specialty: 'PsychicSpecialty.loveRelationships',
     phrase: 'PsychicPhrase.isolde',
@@ -112,7 +112,7 @@ export const psychics: Psychic[] = [
   {
     id: 'rohan',
     name: 'Rohan',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/rohan.png',
     aiHint: 'man portrait sharp business',
     specialty: 'PsychicSpecialty.careerFinance',
     phrase: 'PsychicPhrase.rohan',
@@ -124,7 +124,7 @@ export const psychics: Psychic[] = [
   {
     id: 'lyra',
     name: 'Lyra',
-    image: 'https://placehold.co/200x200.png',
+    image: '/custom_assets/psychics/lyra.png',
     aiHint: 'woman portrait vibrant musical',
     specialty: 'PsychicSpecialty.generalReading',
     phrase: 'PsychicPhrase.lyra',
