@@ -921,59 +921,59 @@
   "ZodiacDetail": {
     "Aries": {
       "title": "The Fearless Ram: {signName}",
-      "description": "Aries is the first spark of the zodiac, a sign of pure energy, courage, and impulse. Ruled by Mars, the planet of action and desire, Arians are natural-born leaders, pioneers, and warriors. They approach life with a fiery enthusiasm and an uncomplicated directness, always ready to take on a new challenge. Their spirit is one of beginnings, and they possess an inspiring confidence that can motivate everyone around them.",
+      "description": "Aries is the first spark of the zodiac, a sign of pure energy, courage, and impulse. Ruled by Mars, the planet of action and desire, Arians are natural-born leaders, pioneers, and warriors. They approach life with a fiery enthusiasm and an uncomplicated directness, always ready to take on a new challenge. Their spirit is one of beginnings, and they possess an inspiring confidence that can motivate everyone around them. Their essence is all about taking initiative and turning potential into reality.",
       "strengthsTitle": "Strengths",
       "strengths": ["Brave", "Determined", "Confident", "Enthusiastic", "Optimistic", "Honest", "Passionate"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Impatient", "Moody", "Short-tempered", "Impulsive", "Aggressive"],
       "loveTitle": "In Love",
-      "love": "In love, Aries is passionate, direct, and a bit of a chaser. They love the thrill of pursuit and are not afraid to make the first move. They need a partner who can match their energy and independence. While fiercely loyal, they can be a bit selfish and need to learn to consider their partner's needs. A relationship with an Aries is never boring.",
+      "love": "In love, Aries is a fiery and direct lover. They are captivated by the chase and express their affection with a passion that is both exhilarating and straightforward. There are no mind games here; if an Aries is interested, you will know it. They seek a partner who is not just an admirer, but an equal playmate—someone who can match their energy, challenge them, and cherish their independence. While their focus can sometimes seem self-centered, their loyalty is fierce. A relationship with Aries is a thrilling adventure, filled with spontaneity and a love that burns brightly and passionately.",
       "friendshipTitle": "In Friendship",
-      "friendship": "As friends, Arians are loyal, fun, and always up for an adventure. They are the friend who will push you to try new things and defend you fiercely. They value honesty and directness, so there are no mind games. However, their competitive nature can sometimes surface, but it's usually in good fun.",
+      "friendship": "As friends, Arians are loyal, fun, and always up for an adventure. They are the friend who will push you to try new things and defend you fiercely. They value honesty and directness, so they aren't one for subtle hints or passive aggression. Their competitive nature can sometimes surface, but it's usually in good fun and serves to motivate everyone involved. They will always be at the forefront, cheering their friends on.",
       "workTitle": "At Work",
-      "work": "At work, Aries is a natural leader and a \"go-getter\". They thrive in competitive environments and are not afraid to take risks to achieve their goals. They work best when they have autonomy and can see a direct path to success. Their challenge is to finish what they start, as they can lose interest once the initial excitement fades."
+      "work": "At work, Aries is a natural leader and a \"go-getter\". They thrive in competitive environments and are not afraid to take risks to achieve their goals. They work best when they have autonomy and can see a direct path to success. Their challenge is to finish what they start, as they can lose interest once the initial excitement fades. They are the ideal starters, bringing the energy and momentum to get any new project off the ground."
     },
     "Taurus": {
       "title": "The Steadfast Bull: {signName}",
-      "description": "Taurus is the anchor of the zodiac, a sign of stability, patience, and earthly pleasures. Ruled by Venus, the planet of love and beauty, Taureans have a deep appreciation for the good things in life: good food, beautiful surroundings, and physical comfort. They are reliable, practical, and possess an immense well of inner strength and determination. Once they set their mind on a goal, they are unstoppable.",
+      "description": "Taurus is the anchor of the zodiac, a sign of stability, patience, and earthly pleasures. Ruled by Venus, the planet of love and beauty, Taureans have a deep appreciation for the good things in life: good food, beautiful surroundings, and physical comfort. They are reliable, practical, and possess an immense well of inner strength and determination. Once they set their mind on a goal, they are unstoppable, methodically building their lives on a solid foundation.",
       "strengthsTitle": "Strengths",
       "strengths": ["Reliable", "Patient", "Practical", "Devoted", "Responsible", "Stable"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Stubborn", "Possessive", "Uncompromising", "Materialistic"],
       "loveTitle": "In Love",
-      "love": "In a relationship, Taurus is a sensual, loyal, and devoted partner. They show their love through physical affection and by creating a secure and beautiful life for their loved one. They are not into games; they seek a stable and long-term connection. Their possessive nature can be a challenge, as they need to feel secure in their partner's love.",
+      "love": "In a relationship, Taurus is a sensual, loyal, and devoted partner. They show their love through physical affection, thoughtful gifts, and by creating a secure and beautiful life for their loved one. They are not into games; they seek a stable and long-term connection. Their possessive nature can be a challenge, as they need to feel secure in their partner's love, but this springs from a deep desire for security and commitment.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Taurus is the friend you can always count on. They are incredibly loyal, reliable, and will be there for you through thick and thin. They enjoy calm activities with their friends, like a good meal or a movie night. They may not have a huge circle of friends, but the ones they have are for life.",
+      "friendship": "Taurus is the friend you can always count on, the shoulder to lean on. They are incredibly loyal, reliable, and will be there for you through thick and thin. They enjoy calm activities with their friends, like a good meal or a movie night, valuing quality over quantity. They may not have a huge circle of friends, but the ones they have are for life and are treated like family.",
       "workTitle": "At Work",
-      "work": "In the workplace, Taurus is the methodical and hardworking employee. They are patient, reliable, and will see a project through to the end. They work well in teams and provide a calming, stable presence. They are motivated by security and the promise of a tangible reward for their hard work."
+      "work": "In the workplace, Taurus is the methodical and hardworking employee. They are patient, reliable, and will see a project through to the end, no matter how long it takes. They work well in teams and provide a calming, stable presence. They are motivated by security and the promise of a tangible reward for their hard work. They are the builders of the office, ensuring the foundations are solid."
     },
     "Gemini": {
       "title": "The Curious Twins: {signName}",
-      "description": "Gemini is the social butterfly of the zodiac, a sign of communication, curiosity, and intellectual agility. Ruled by Mercury, the planet of the mind, Geminis are eternally youthful and endlessly curious about everything. They are quick-witted, adaptable, and can see a situation from multiple perspectives. Their mind is always racing with new ideas, making them fascinating conversationalists.",
+      "description": "Gemini is the social butterfly of the zodiac, a sign of communication, curiosity, and intellectual agility. Ruled by Mercury, the planet of the mind, Geminis are eternally youthful and endlessly curious about everything. They are quick-witted, adaptable, and can see a situation from multiple perspectives. Their mind is always racing with new ideas, making them fascinating conversationalists and natural networkers. They gather information and love to share it.",
       "strengthsTitle": "Strengths",
       "strengths": ["Gentle", "Affectionate", "Curious", "Adaptable", "Quick learners"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Nervous", "Inconsistent", "Indecisive", "Superficial"],
       "loveTitle": "In Love",
-      "love": "A relationship with a Gemini is never dull. They need constant mental stimulation and communication. They are flirtatious, charming, and love to keep things light and fun. For a relationship to last, their partner must be a great friend and an intellectual equal. They need freedom and variety, and can feel trapped by too much emotional intensity.",
+      "love": "A relationship with a Gemini is never dull. They need constant mental stimulation and communication. They are flirtatious, charming, and love to keep things light and fun. For a relationship to last, their partner must be a great friend and an intellectual equal. They need freedom and variety, and can feel trapped by too much emotional intensity. Their love is expressed through words and shared experiences.",
       "friendshipTitle": "In Friendship",
-      "friendship": "As friends, Geminis are fun, entertaining, and always have the latest gossip. They have a wide circle of acquaintances and love to be out and about. They are the friend you call for a fun night out or a stimulating debate. Their challenge is to maintain deep, long-lasting friendships amidst their ever-changing interests.",
+      "friendship": "As friends, Geminis are fun, entertaining, and always have the latest gossip. They have a wide circle of acquaintances and love to be out and about. They are the friend you call for a fun night out or a stimulating debate. Their challenge is to maintain deep, long-lasting friendships amidst their ever-changing interests. They are great at bringing people together.",
       "workTitle": "At Work",
-      "work": "Gemini thrives in fast-paced, dynamic work environments. They are excellent communicators, writers, and marketers. They are great at multitasking and can juggle several projects at once. They get bored easily, so they need a job that offers variety and constant mental challenges to stay engaged."
+      "work": "Gemini thrives in fast-paced, dynamic work environments that require a lot of interaction. They are excellent communicators, writers, and marketers. They are great at multitasking and can juggle several projects at once. They get bored easily, so they need a job that offers variety and constant mental challenges to stay engaged. Monotony is their kryptonite."
     },
     "Cancer": {
       "title": "The Protective Crab: {signName}",
-      "description": "Cancer is the nurturer of the zodiac, a sign of deep emotions, intuition, and the need for security. Ruled by the Moon, their moods can change like the tides. Cancers are deeply connected to home and family, and their primary drive is to protect and care for their loved ones. They have a tough outer shell, but underneath lies a soft, sensitive, and incredibly compassionate heart.",
+      "description": "Cancer is the nurturer of the zodiac, a sign of deep emotions, intuition, and the need for security. Ruled by the Moon, their moods can change like the tides. Cancers are deeply connected to home and family, and their primary drive is to protect and care for their loved ones. They have a tough outer shell, but underneath lies a soft, sensitive, and incredibly compassionate heart. They remember everything, both kindnesses and hurts.",
       "strengthsTitle": "Strengths",
       "strengths": ["Tenacious", "Highly imaginative", "Loyal", "Emotional", "Sympathetic", "Persuasive"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Moody", "Pessimistic", "Suspicious", "Manipulative", "Insecure"],
       "loveTitle": "In Love",
-      "love": "In love, Cancer is a deeply caring, loyal, and protective partner. They seek emotional security above all else and want to create a safe and loving home with their partner. They can be moody and sensitive, and need a partner who understands their emotional depths and can offer reassurance. Once a Cancer loves you, they will care for you unconditionally.",
+      "love": "In love, Cancer is a deeply caring, loyal, and protective partner. They seek emotional security above all else and want to create a safe and loving home with their partner. They can be moody and sensitive, and need a partner who understands their emotional depths and can offer reassurance. Once a Cancer loves you, they will care for you unconditionally, nurture you, and make you their family.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Cancers are the 'mom' of the friend group. They are incredibly nurturing, loyal, and will always offer a shoulder to cry on. They prefer small, intimate gatherings at home over large parties. If you earn their trust, you have a friend for life who will treat you like family.",
+      "friendship": "Cancers are the 'mom' of the friend group. They are incredibly nurturing, loyal, and will always offer a shoulder to cry on. They prefer small, intimate gatherings at home over large parties. If you earn their trust, you have a friend for life who will treat you like family, remembering your birthday and your favorite foods.",
       "workTitle": "At Work",
-      "work": "At work, Cancers are responsible and dedicated. They thrive in environments where they can care for others or manage resources. They are intuitive and can often sense the undercurrents of an office. They need to feel secure and appreciated to do their best work, and they work hard to create a harmonious team environment."
+      "work": "At work, Cancers are responsible and dedicated. They thrive in environments where they can care for others or manage resources. They are intuitive and can often sense the undercurrents of an office. They need to feel secure and appreciated to do their best work, and they work hard to create a harmonious team environment. They are the quiet pillars of support that make sure everyone feels cared for."
     },
     "Leo": {
       "title": "The Majestic Lion: {signName}",
@@ -983,109 +983,111 @@
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Arrogant", "Stubborn", "Self-centered", "Lazy", "Inflexible"],
       "loveTitle": "In Love",
-      "love": "In a relationship, Leo is a passionate, fun-loving, and extremely generous partner. They love grand romantic gestures and want to make their partner feel like royalty. They need a partner who is their biggest fan and who will not try to dim their shine. In return, they offer a fierce loyalty and a love that is big and warm.",
+      "love": "In a relationship, Leo is a passionate, fun-loving, and extremely generous partner. They love grand romantic gestures and want to make their partner feel like royalty. They need a partner who is their biggest fan and who will not try to dim their shine. In return, they offer a fierce loyalty and a love that is big and warm. They are players who enjoy the playful aspect of love.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Leos are fun, loyal, and generous friends. They are the life of the party and love to treat their friends to good times. They are great cheerleaders, always celebrating their friends' successes. They expect loyalty in return and can be hurt by a perceived betrayal.",
+      "friendship": "Leos are fun, loyal, and generous friends. They are the life of the party and love to treat their friends to good times. They are great cheerleaders, always celebrating their friends' successes with genuine enthusiasm. They expect loyalty in return and can be deeply hurt by a perceived betrayal, though their pride may not let them show it.",
       "workTitle": "At Work",
-      "work": "Leo is a natural-born leader in the workplace. They are ambitious, creative, and can inspire a team to achieve great things. They thrive in roles where they can be in the spotlight and receive recognition for their efforts. They are not afraid to take charge and make big decisions."
+      "work": "Leo is a natural-born leader in the workplace. They are ambitious, creative, and can inspire a team to achieve great things. They thrive in roles where they can be in the spotlight and receive recognition for their efforts. They are not afraid to take charge and make big decisions. They motivate others through their infectious enthusiasm and their ability to see the potential in everyone."
     },
     "Virgo": {
       "title": "The Meticulous Maiden: {signName}",
-      "description": "Virgo is the perfectionist of the zodiac, a sign of practicality, service, and attention to detail. Ruled by Mercury, Virgos have a sharp, analytical mind and a deep-seated desire to be helpful. They are methodical, hardworking, and have a keen eye for what is out of place. Their goal is to improve themselves, others, and the world around them, one small, practical step at a time.",
+      "description": "Virgo is the perfectionist of the zodiac, a sign of practicality, service, and attention to detail. Ruled by Mercury, Virgos have a sharp, analytical mind and a deep-seated desire to be helpful. They are methodical, hardworking, and have a keen eye for what is out of place. Their goal is to improve themselves, others, and the world around them, one small, practical step at a time. They find joy in bringing order to chaos.",
       "strengthsTitle": "Strengths",
       "strengths": ["Loyal", "Analytical", "Kind", "Hardworking", "Practical"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Shyness", "Worry", "Overly critical of self and others", "All work and no play"],
       "loveTitle": "In Love",
-      "love": "In a relationship, Virgo shows their love through acts of service and practical support. They are not the most demonstrative of signs, but their devotion is deep and unwavering. They need a partner who appreciates their efforts and can help them to relax and not worry so much. They are loyal and dedicated partners who will do anything to help the one they love.",
+      "love": "In a relationship, Virgo shows their love through acts of service and practical support. They are not the most demonstrative of signs, but their devotion is deep and unwavering. They need a partner who appreciates their efforts and can help them to relax and not worry so much. They are loyal and dedicated partners who will do anything to help the one they love, often by fixing problems their partner hasn't even noticed.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Virgo is the friend who will help you organize your closet, edit your resume, and give you sensible advice. They are incredibly reliable and loyal friends. They may not be the life of the party, but they are the ones you call when you really need help. They appreciate friends who are intelligent and down-to-earth.",
+      "friendship": "Virgo is the friend who will help you organize your closet, edit your resume, and give you sensible advice. They are incredibly reliable and loyal friends. They may not be the life of the party, but they are the ones you call when you really need help. They appreciate friends who are intelligent and down-to-earth, and they will always remember small details about you that show they care.",
       "workTitle": "At Work",
-      "work": "Virgo is the ideal employee. They are hardworking, efficient, and have an incredible eye for detail. They excel in roles that require analysis, organization, and precision. They are humble and happy to work behind the scenes to make sure everything runs perfectly. Their biggest challenge is their own perfectionism, which can lead to anxiety."
+      "work": "Virgo is the ideal employee. They are hardworking, efficient, and have an incredible eye for detail. They excel in roles that require analysis, organization, and precision. They are humble and happy to work behind the scenes to make sure everything runs perfectly. Their biggest challenge is their own perfectionism, which can lead to anxiety and overwork if they are not careful."
     },
     "Libra": {
       "title": "The Harmonious Scales: {signName}",
-      "description": "Libra is the diplomat of the zodiac, a sign of balance, harmony, and justice. Ruled by Venus, Libras have a deep appreciation for beauty, art, and partnership. They are natural peacekeepers who loathe conflict and will go to great lengths to create a harmonious environment. They are charming, sociable, and have a strong sense of fairness. Their life is a constant search for balance and connection.",
+      "description": "Libra is the diplomat of the zodiac, a sign of balance, harmony, and justice. Ruled by Venus, Libras have a deep appreciation for beauty, art, and partnership. They are natural peacekeepers who loathe conflict and will go to great lengths to create a harmonious environment. They are charming, sociable, and have a strong sense of fairness. Their life is a constant search for balance and connection, both within themselves and in their relationships.",
       "strengthsTitle": "Strengths",
       "strengths": ["Cooperative", "Diplomatic", "Gracious", "Fair-minded", "Social"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Indecisive", "Avoids confrontations", "Will carry a grudge", "Self-pity"],
       "loveTitle": "In Love",
-      "love": "For Libra, partnership is everything. They are at their best in a committed, balanced relationship. They are romantic, charming, and will do anything to make their partner happy. Their biggest challenge is their indecisiveness and their aversion to conflict, which can lead to problems being swept under the rug. They need a partner who is both a lover and a best friend.",
+      "love": "For Libra, partnership is everything. They are at their best in a committed, balanced relationship. They are romantic, charming, and will do anything to make their partner happy. Their biggest challenge is their indecisiveness and their aversion to conflict, which can lead to problems being swept under the rug. They need a partner who is both a lover and a best friend, with whom they can talk about anything and everything.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Libras are wonderful, sociable friends. They are great listeners and give balanced advice. They love to connect with others and are often the social glue of their friend group. They enjoy cultural activities, beautiful settings, and good conversation. Their only flaw as a friend is their difficulty in making a decision on where to go for dinner!",
+      "friendship": "Libras are wonderful, sociable friends. They are great listeners and give balanced advice. They love to connect with others and are often the social glue of their friend group. They enjoy cultural activities, beautiful settings, and good conversation. Their only flaw as a friend is their difficulty in making a decision on where to go for dinner! They value harmony in their friendships above all else.",
       "workTitle": "At Work",
-      "work": "In the workplace, Libra excels in roles that require diplomacy, negotiation, and teamwork. They are fair-minded leaders and mediators. They thrive in beautiful, harmonious work environments. Their ability to see all sides of an issue makes them great strategists, but can also lead to indecisiveness when a quick decision is needed."
+      "work": "In the workplace, Libra excels in roles that require diplomacy, negotiation, and teamwork. They are fair-minded leaders and mediators. They thrive in beautiful, harmonious work environments. Their ability to see all sides of an issue makes them great strategists, but can also lead to indecisiveness when a quick decision is needed. They are the ideal partners in a business venture."
     },
     "Scorpio": {
       "title": "The Intense Scorpion: {signName}",
-      "description": "Scorpio is the most intense and mysterious sign of the zodiac. A sign of transformation, power, and deep emotions, Scorpios are not to be taken lightly. Ruled by Pluto, the planet of death and rebirth, they are unafraid of the darker aspects of life. They are passionate, resourceful, and possess a powerful intuition. What you see is never what you get; there are always hidden depths.",
+      "description": "Scorpio is the most intense and mysterious sign of the zodiac. A sign of transformation, power, and deep emotions, Scorpios are not to be taken lightly. Ruled by Pluto, the planet of death and rebirth, they are unafraid of the darker aspects of life. They are passionate, resourceful, and possess a powerful intuition. What you see is never what you get; there are always hidden depths that they reveal only to a select few.",
       "strengthsTitle": "Strengths",
       "strengths": ["Resourceful", "Brave", "Passionate", "Stubborn", "A true friend"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Distrusting", "Jealous", "Secretive", "Violent"],
       "loveTitle": "In Love",
-      "love": "A relationship with a Scorpio is an all-or-nothing, transformative experience. They are incredibly passionate, loyal, and possessive partners. They seek a deep, soul-level connection and will not settle for anything superficial. Trust is everything to a Scorpio, and a betrayal is almost impossible to forgive. They are fiercely protective of their loved ones.",
+      "love": "A relationship with a Scorpio is an all-or-nothing, transformative experience. They are incredibly passionate, loyal, and possessive partners. They seek a deep, soul-level connection and will not settle for anything superficial. Trust is everything to a Scorpio, and a betrayal is almost impossible to forgive. They are fiercely protective of their loved ones and love with an intensity that can be both exhilarating and overwhelming.",
       "friendshipTitle": "In Friendship",
       "friendship": "As friends, Scorpios are incredibly loyal and protective. They are the ones you call at 3 AM with a crisis, and they will be there without question. They don't do superficial friendships; if they consider you a friend, it's a bond for life. They value deep conversations and shared secrets, and will fiercely defend those they care about. However, betray their trust, and you'll feel their sting.",
       "workTitle": "At Work",
-      "work": "Scorpios are focused, determined, and excellent problem-solvers. They are great at uncovering hidden information and getting to the bottom of any issue. They thrive in roles that require investigation, strategy, and a deep understanding of human psychology. They are powerful leaders, but prefer to work behind the scenes."
+      "work": "Scorpios are focused, determined, and excellent problem-solvers. They are great at uncovering hidden information and getting to the bottom of any issue. They thrive in roles that require investigation, strategy, and a deep understanding of human psychology. They are powerful leaders, but prefer to work behind the scenes, where they can pull the strings without being in the spotlight."
     },
     "Sagittarius": {
       "title": "The Adventurous Archer: {signName}",
-      "description": "Sagittarius is the explorer of the zodiac, a sign of optimism, freedom, and a thirst for knowledge. Ruled by Jupiter, the planet of expansion and good fortune, Sagittarians are on a constant quest for meaning. They are philosophical, fun-loving, and have a great sense of humor. Their spirit is adventurous, and they cannot stand to be tied down.",
+      "description": "Sagittarius is the explorer of the zodiac, a sign of optimism, freedom, and a thirst for knowledge. Ruled by Jupiter, the planet of expansion and good fortune, Sagittarians are on a constant quest for meaning. They are philosophical, fun-loving, and have a great sense of humor. Their spirit is adventurous, and they cannot stand to be tied down, either physically or intellectually. They are always seeking the next great truth.",
       "strengthsTitle": "Strengths",
       "strengths": ["Generous", "Idealistic", "Great sense of humor", "Philosophical"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Promises more than can deliver", "Very impatient", "Will say anything no matter how undiplomatic"],
       "loveTitle": "In Love",
-      "love": "In a relationship, Sagittarius needs a partner who is also their best friend and travel companion. They need freedom and adventure to be happy. They are honest, optimistic, and fun-loving partners. They can be afraid of commitment if they feel it will limit their freedom, so they need a partner who understands and shares their need for exploration.",
+      "love": "In a relationship, Sagittarius needs a partner who is also their best friend and travel companion. They need freedom and adventure to be happy. They are honest, optimistic, and fun-loving partners. They can be afraid of commitment if they feel it will limit their freedom, so they need a partner who understands and shares their need for exploration. Their love is a shared adventure.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Sagittarius is the fun-loving, adventurous friend who is always planning the next trip. They are great to have around for their optimism and their ability to make you laugh. They are honest to a fault and will always tell you the truth, even if it's not what you want to hear. They are wonderful companions for exploring the world and the world of ideas.",
+      "friendship": "Sagittarius is the fun-loving, adventurous friend who is always planning the next trip. They are great to have around for their optimism and their ability to make you laugh. They are honest to a fault and will always tell you the truth, even if it's not what you want to hear. They are wonderful companions for exploring the world and the world of ideas. A conversation with them can leave you with new perspectives.",
       "workTitle": "At Work",
-      "work": "In the workplace, Sagittarius thrives in roles that offer variety, freedom, and the opportunity to learn. They are great at sales, marketing, and teaching. They are big-picture thinkers and can inspire a team with their optimistic vision. They get bored with routine and need constant challenges to stay motivated."
+      "work": "In the workplace, Sagittarius thrives in roles that offer variety, freedom, and the opportunity to learn. They are great at sales, marketing, and teaching. They are big-picture thinkers and can inspire a team with their optimistic vision. They get bored with routine and need constant challenges to stay motivated. They are the ideal employees to explore new markets or develop new ideas."
     },
     "Capricorn": {
       "title": "The Resilient Goat: {signName}",
-      "description": "Capricorn is the master planner of the zodiac, a sign of ambition, discipline, and tradition. Ruled by Saturn, the planet of responsibility and hard work, Capricorns are determined to reach the top of any mountain they set their sights on. They are practical, patient, and have a strong sense of duty. They may seem serious or reserved, but they have a dry sense of humor that surprises many.",
+      "description": "Capricorn is the master planner of the zodiac, a sign of ambition, discipline, and tradition. Ruled by Saturn, the planet of responsibility and hard work, Capricorns are determined to reach the top of any mountain they set their sights on. They are practical, patient, and have a strong sense of duty. They may seem serious or reserved, but they have a dry sense of humor that surprises many. They build their lives brick by brick.",
       "strengthsTitle": "Strengths",
       "strengths": ["Responsible", "Disciplined", "Self-control", "Good managers"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Know-it-all", "Unforgiving", "Condescending", "Expecting the worst"],
       "loveTitle": "In Love",
-      "love": "Capricorn may not be the most outwardly romantic sign, but they show their love through loyalty, commitment, and by building a secure future for their partner. They take relationships very seriously and are looking for a long-term partner who shares their values and ambitions. They need a partner who understands that their work is often a form of love and dedication to their family.",
+      "love": "Capricorn may not be the most outwardly romantic sign, but they show their love through loyalty, commitment, and by building a secure future for their partner. They take relationships very seriously and are looking for a long-term partner who shares their values and ambitions. They need a partner who understands that their work is often a form of love and dedication to their family. Their love is an investment that grows with time.",
       "friendshipTitle": "In Friendship",
-      "friendship": "As friends, Capricorns are loyal, reliable, and will be there for you for a lifetime. They may not have a large group of friends, but the ones they have are carefully chosen. They are the friend who gives you practical, no-nonsense advice and helps you achieve your goals. They appreciate friends who are as ambitious and responsible as they are.",
+      "friendship": "As friends, Capricorns are loyal, reliable, and will be there for you for a lifetime. They may not have a large group of friends, but the ones they have are carefully chosen. They are the friend who gives you practical, no-nonsense advice and helps you achieve your goals. They appreciate friends who are as ambitious and responsible as they are, and they will always be there to help you climb your own mountain.",
       "workTitle": "At Work",
-      "work": "In the workplace, Capricorn is the ultimate professional. They are hardworking, disciplined, and have a natural talent for management and strategy. They are willing to put in the long hours to achieve their goals and are incredibly reliable. They have high standards for themselves and others, and are destined to climb to a position of leadership."
+      "work": "In the workplace, Capricorn is the ultimate professional. They are hardworking, disciplined, and have a natural talent for management and strategy. They are willing to put in the long hours to achieve their goals and are incredibly reliable. They have high standards for themselves and others, and are destined to climb to a position of leadership. They are the architects of any successful organization."
     },
     "Aquarius": {
       "title": "The Visionary Water-Bearer: {signName}",
-      "description": "Aquarius is the humanitarian and innovator of the zodiac. A sign of friendship, ideals, and future-thinking, Aquarians are here to change the world. Ruled by Uranus, the planet of rebellion and originality, they march to the beat of their own drum. They are intellectual, independent, and care deeply about social causes. They are the rebels and visionaries of the cosmos.",
+      "description": "Aquarius is the humanitarian and innovator of the zodiac. A sign of friendship, ideals, and future-thinking, Aquarians are here to change the world. Ruled by Uranus, the planet of rebellion and originality, they march to the beat of their own drum. They are intellectual, independent, and care deeply about social causes. They are the rebels and visionaries of the cosmos, always one step ahead.",
       "strengthsTitle": "Strengths",
       "strengths": ["Progressive", "Original", "Independent", "Humanitarian"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Runs from emotional expression", "Temperamental", "Uncompromising", "Aloof"],
       "loveTitle": "In Love",
-      "love": "In a relationship, an Aquarian needs a partner who is first and foremost their best friend. They need intellectual connection and freedom. They are not overly demonstrative with their emotions, showing their love through stimulating conversations and shared ideals. They need a partner who respects their independence and their wide circle of friends.",
+      "love": "In a relationship, an Aquarian needs a partner who is first and foremost their best friend. They need intellectual connection and freedom. They are not overly demonstrative with their emotions, showing their love through stimulating conversations and shared ideals. They need a partner who respects their independence and their wide circle of friends, and who doesn't try to box them in.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Friendship is everything to an Aquarius. They have a large and diverse group of friends and are incredibly loyal to their 'tribe'. They are the friend you go to for a unique, objective perspective on a problem. They love to connect with people who are intelligent, open-minded, and a little bit quirky.",
+      "friendship": "Friendship is everything to an Aquarius. They have a large and diverse group of friends and are incredibly loyal to their 'tribe'. They are the friend you go to for a unique, objective perspective on a problem. They love to connect with people who are intelligent, open-minded, and a little bit quirky, and they often value friendship more than romantic love.",
       "workTitle": "At Work",
-      "work": "Aquarius thrives in roles that allow them to innovate and work for a greater cause. They are brilliant at technology, science, and social activism. They are team players but need the freedom to work in their own unconventional way. They are not motivated by money, but by the desire to make a difference in the world."
+      "work": "Aquarius thrives in roles that allow them to innovate and work for a greater cause. They are brilliant at technology, science, and social activism. They are team players but need the freedom to work in their own unconventional way. They are not motivated by money, but by the desire to make a difference in the world and shape the future."
     },
     "Pisces": {
       "title": "The Mystical Fish: {signName}",
-      "description": "Pisces is the dreamer and healer of the zodiac, a sign of compassion, intuition, and spiritual connection. Ruled by Neptune, the planet of illusion and dreams, Pisceans are deeply connected to the mystical and unseen realms. They are incredibly empathetic, often feeling the emotions of others as if they were their own. Their soul is gentle, artistic, and endlessly compassionate.",
+      "description": "Pisces is the dreamer and healer of the zodiac, a sign of compassion, intuition, and spiritual connection. Ruled by Neptune, the planet of illusion and dreams, Pisceans are deeply connected to the mystical and unseen realms. They are incredibly empathetic, often feeling the emotions of others as if they were their own. Their soul is gentle, artistic, and endlessly compassionate. They are the old souls of the zodiac.",
       "strengthsTitle": "Strengths",
       "strengths": ["Compassionate", "Artistic", "Intuitive", "Gentle", "Wise", "Musical"],
       "weaknessesTitle": "Weaknesses",
       "weaknesses": ["Fearful", "Overly trusting", "Sad", "Desire to escape reality", "Can be a victim or a martyr"],
       "loveTitle": "In Love",
-      "love": "A relationship with a Pisces is a deep, soulful, and romantic experience. They are devoted and selfless partners who seek a magical, transcendent connection. They are incredibly romantic and will do anything for the one they love. Their challenge is to maintain healthy boundaries and not lose themselves completely in their partner. They need a partner who can protect their sensitive heart.",
+      "love": "A relationship with a Pisces is a deep, soulful, and romantic experience. They are devoted and selfless partners who seek a magical, transcendent connection. They are incredibly romantic and will do anything for the one they love. Their challenge is to maintain healthy boundaries and not lose themselves completely in their partner. They need a partner who can protect their sensitive heart and help them stay grounded.",
       "friendshipTitle": "In Friendship",
-      "friendship": "Pisces is the most compassionate friend you will ever have. They are incredible listeners and will always offer a shoulder to cry on, feeling your pain as their own. They are gentle souls who need friends who understand their need for solitude and dreaming. They are wonderful companions for creative and spiritual pursuits.",
+      "friendship": "Pisces is the most compassionate friend you will ever have. They are incredible listeners and will always offer a shoulder to cry on, feeling your pain as their own. They are gentle souls who need friends who understand their need for solitude and dreaming. They are wonderful companions for creative and spiritual pursuits, who will always greet you with an open heart.",
       "workTitle": "At Work",
-      "work": "In the workplace, Pisces excels in roles that allow them to use their intuition, creativity, and compassion. They are wonderful artists, healers, and counselors. They are not suited for high-pressure, competitive environments. They work best when they feel they are making a difference and can use their unique gifts to help others."
+      "work": "In the workplace, Pisces excels in roles that allow them to use their intuition, creativity, and compassion. They are wonderful artists, healers, and counselors. They are not suited for high-pressure, competitive environments. They work best when they feel they are making a difference and can use their unique gifts to help others. Their imagination is their greatest professional asset."
     }
   }
 }
+
+  
