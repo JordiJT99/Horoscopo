@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
@@ -5,6 +6,17 @@ import { AuthProvider } from '@/context/AuthContext';
 import AppStructure from '@/components/shared/AppStructure';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import '../globals.css';
+
+export const metadata: Metadata = {
+  title: 'AstroVibes',
+  description: 'Your daily source for horoscopes and astrological insights.',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+};
 
 interface LocaleLayoutParams {
   locale: Locale;
