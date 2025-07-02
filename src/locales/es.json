@@ -608,7 +608,7 @@
   "OnboardingPage.subtitleStep": "Paso {currentStep} de {totalSteps}: Vamos a conocerte",
   "OnboardingPage.loadingOnboarding": "Cargando onboarding...",
   "OnboardingPage.step1Title": "Tu Nombre",
-  "OnboardingPage.step1Description": "¿Cómo deberíamos llamarte? Este será tu nombre público en la app.",
+  "OnboardingPage.step1Description": "Este será tu nombre público en la app.",
   "OnboardingPage.step2Title": "Tu Género",
   "OnboardingPage.step2Description": "Esto nos ayuda a personalizar las lecturas para ti.",
   "OnboardingPage.step3Title": "Tu Fecha de Nacimiento",
@@ -931,7 +931,7 @@
       "friendshipTitle": "En la Amistad",
       "friendship": "Como amigos, los arianos son leales, divertidos y siempre están listos para una aventura. Son el amigo que te empujará a probar cosas nuevas y te defenderá ferozmente. Valoran la honestidad y la franqueza, por lo que no hay juegos mentales. Sin embargo, su naturaleza competitiva a veces puede aflorar, pero generalmente es en buena lid.",
       "workTitle": "En el Trabajo",
-      "work": "En el trabajo, Aries es un líder natural y un emprendedor. Prosperan en entornos competitivos y no temen asumir riesgos para alcanzar sus metas. Trabajan mejor cuando tienen autonomía y pueden ver un camino directo hacia el éxito. Su desafío es terminar lo que empiezan, ya que pueden perder interés una vez que la emoción inicial se desvanece."
+      "work": "En el trabajo, Aries es un líder natural y un \"hacedor\". Prosperan en entornos competitivos y no temen asumir riesgos para alcanzar sus metas. Trabajan mejor cuando tienen autonomía y pueden ver un camino directo hacia el éxito. Su desafío es terminar lo que empiezan, ya que pueden perder interés una vez que la emoción inicial se desvanece."
     },
     "Taurus": {
       "title": "El Toro Firme: {signName}",
@@ -1076,7 +1076,7 @@
     "Pisces": {
       "title": "El Pez Místico: {signName}",
       "description": "Piscis es el soñador y sanador del zodiaco, un signo de compasión, intuición y conexión espiritual. Regidos por Neptuno, el planeta de la ilusión y los sueños, los Piscis están profundamente conectados con los reinos místicos e invisibles. Son increíblemente empáticos, a menudo sintiendo las emociones de los demás como si fueran las suyas. Su alma es gentil, artística e infinitamente compasiva.",
-      "strengthsTitle": "Strengths",
+      "strengthsTitle": "Fortalezas",
       "strengths": ["Compasivo", "Artístico", "Intuitivo", "Gentil", "Sabio", "Musical"],
       "weaknessesTitle": "Debilidades",
       "weaknesses": ["Temeroso", "Demasiado confiado", "Triste", "Deseo de escapar de la realidad", "Puede ser una víctima o un mártir"],
@@ -1089,5 +1089,3 @@
     }
   }
 }
-
-  
