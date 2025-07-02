@@ -918,5 +918,12 @@
   "Toast.alreadyRated": "Vous avez déjà réclamé cette récompense.",
   "Toast.dailyReactionStardust": "+{amount} 💫 pour votre première réaction de la journée !",
   "Toast.dailyCommentStardust": "+{amount} 💫 pour votre premier commentaire de la journée !",
-  "ZodiacDetail": {}
+  "ZodiacDetail": {},
+  "DailyTip": {
+    "title": "Conseil du Jour",
+    "subtitle": "Une dose de sagesse cosmique pour votre journée.",
+    "revealButton": "Révéler le conseil",
+    "loading": "Consultation du cosmos...",
+    "error": "Les cieux sont nuageux. Veuillez réessayer plus tard."
+  }
 }
