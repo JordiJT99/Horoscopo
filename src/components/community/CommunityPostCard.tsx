@@ -11,7 +11,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { es, enUS, de, fr } from 'date-fns/locale';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send } from 'lucide-react';
+import { Brain, Hash, MessageCircle, Smile, Users, MapPin, Feather, Sparkles, Send, Star, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -32,6 +32,7 @@ import {
   deleteField,
   Timestamp,
 } from 'firebase/firestore';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface CommunityPostCardProps {
   post: CommunityPost;
@@ -99,6 +100,7 @@ const ExpandableText = ({ text, dictionary }: { text: string; dictionary: Dictio
 export default function CommunityPostCard({ post, dictionary, locale }: CommunityPostCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { addEnergyPoints, awardStardustForAction, level: currentUserLevel } = useCosmicEnergy();
   
   const [reactions, setReactions] = useState<Record<string, string>>(post.reactions || {});
   const [commentCount, setCommentCount] = useState(post.commentCount || 0);
@@ -150,6 +152,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
     }
 
     const originalReactions = { ...reactions };
+    const hadReaction = !!originalReactions[user.uid];
     const newReactions = { ...reactions };
     const postRef = doc(db, 'community-posts', post.id);
     const userReactionField = `reactions.${user.uid}`;
@@ -168,6 +171,15 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       setReactions(newReactions);
       try {
         await updateDoc(postRef, { [userReactionField]: emoji });
+        if (!hadReaction) {
+            const stardustResult = awardStardustForAction('react_to_post', 1);
+            if (stardustResult.success) {
+                toast({
+                    title: `✨ ${dictionary['CosmicEnergy.stardust'] || 'Stardust'}!`,
+                    description: (dictionary['Toast.dailyReactionStardust'] || "+{amount} 💫 for your first reaction of the day!").replace('{amount}', stardustResult.amount.toString()),
+                });
+            }
+        }
       } catch (error: any) {
         setReactions(originalReactions);
         toast({ title: dictionary['Error.genericTitle'], description: error.message, variant: 'destructive' });
@@ -197,6 +209,31 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       batch.update(postRef, { commentCount: increment(1) });
       await batch.commit();
       
+      const energyResult = addEnergyPoints('add_community_comment', 10);
+      if (energyResult.pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+        });
+         if (energyResult.leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
+
+      const stardustResult = awardStardustForAction('add_community_comment', 1);
+      if (stardustResult.success) {
+          toast({
+              title: `✨ ${dictionary['CosmicEnergy.stardust'] || 'Stardust'}!`,
+              description: (dictionary['Toast.dailyCommentStardust'] || "+{amount} 💫 for your first comment of the day!").replace('{amount}', stardustResult.amount.toString()),
+          });
+      }
+
+
       const optimisticComment: Comment = {
         id: newCommentRef.id,
         ...commentData,
@@ -219,12 +256,25 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
     }
   };
   
+  const handleInsertExclusiveEmoji = (emoji: string) => {
+    setNewComment(prev => prev + emoji);
+  };
+
   const reactionCounts = Object.values(reactions).reduce((acc, emoji) => {
     acc[emoji] = (acc[emoji] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
   const sortedReactions = Object.entries(reactionCounts).sort(([, a], [, b]) => b - a);
+  
+  const getUserTitle = (level: number): string | null => {
+    if (level >= 10) return dictionary['Reward.titleEnlightened'] || 'Iluminado/a';
+    if (level >= 9) return dictionary['Reward.titleSupernova'] || 'Supernova';
+    if (level >= 5) return dictionary['Reward.titleGuidingStar'] || 'Estrella Guía';
+    return null;
+  };
+  const userTitle = getUserTitle(post.authorLevel || 1);
+
 
   const renderPostContent = () => {
     switch (post.postType) {
@@ -288,13 +338,23 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
           <AvatarImage src={post.authorAvatarUrl} alt={post.authorName} />
           <AvatarFallback>{post.authorName.charAt(0)}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
-          <CardTitle className="text-base font-semibold font-body leading-tight">
-            {post.authorName}
-          </CardTitle>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-base font-semibold font-body leading-tight">
+              {post.authorName}
+            </CardTitle>
+            {userTitle && (
+              <Badge variant="destructive" className="text-xs px-1.5 py-0.5">
+                <Star className="w-3 h-3 mr-1"/>
+                {userTitle}
+              </Badge>
+            )}
+          </div>
           <div className="flex items-center text-xs text-muted-foreground">
             <ZodiacSignIcon signName={post.authorZodiacSign} className="w-3.5 h-3.5 mr-1" />
             <span>{dictionary[post.authorZodiacSign] || post.authorZodiacSign}</span>
+             <span className="mx-1.5">·</span>
+             <span>{dictionary['ProfilePage.levelLabel'] || 'Level'} {post.authorLevel || 1}</span>
           </div>
         </div>
       </CardHeader>
@@ -357,10 +417,24 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
                   rows={1}
                   disabled={isPostingComment}
                 />
-                <Button type="submit" size="sm" className="mt-2" disabled={!newComment.trim() || isPostingComment}>
-                   {isPostingComment ? <LoadingSpinner className="h-3 w-3 mr-2" /> : <Send className="mr-2 h-3 w-3" />}
-                  {dictionary['CommunityPage.postCommentButton'] || 'Post Comment'}
-                </Button>
+                 <div className="flex justify-between items-center mt-2">
+                    <Button type="submit" size="sm" disabled={!newComment.trim() || isPostingComment}>
+                      {isPostingComment ? <LoadingSpinner className="h-3 w-3 mr-2" /> : <Send className="mr-2 h-3 w-3" />}
+                      {dictionary['CommunityPage.postCommentButton'] || 'Post Comment'}
+                    </Button>
+                    <div className="flex items-center gap-1">
+                        {currentUserLevel >= 3 && (
+                            <Button type="button" variant="ghost" size="icon" onClick={() => handleInsertExclusiveEmoji('🌙')} aria-label={dictionary['Reward.lunarSticker'] || "Insert moon sticker"} className="h-8 w-8">
+                                <span className="font-bold text-lg">🌙</span>
+                            </Button>
+                        )}
+                        {currentUserLevel >= 5 && (
+                            <Button type="button" variant="ghost" size="icon" onClick={() => handleInsertExclusiveEmoji('🔯')} aria-label={dictionary['CommunityPage.exclusiveEmojiAria'] || "Insert exclusive emoji"} className="h-8 w-8">
+                                <span className="font-bold text-lg">🔯</span>
+                            </Button>
+                        )}
+                    </div>
+                 </div>
               </div>
             </form>
           )}

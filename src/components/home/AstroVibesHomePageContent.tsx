@@ -1,15 +1,17 @@
 
+
 "use client";
 
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData } from '@/types';
-import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon } from '@/lib/constants';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData, UserAstrologyProfile } from '@/types';
+import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon, getMoonSign, getAscendantSign } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
 import { motion, type PanInfo } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
 import SelectedSignDisplay from '@/components/shared/SelectedSignDisplay';
@@ -17,6 +19,8 @@ import SubHeaderTabs, { type HoroscopePeriod } from '@/components/shared/SubHead
 import FeatureLinkCards from '@/components/shared/FeatureLinkCards';
 import HoroscopeCategoriesSummary from '@/components/shared/HoroscopeCategoriesSummary';
 import PromotionCard from '@/components/shared/PromotionCard';
+import DailyTransitWidget from './DailyTransitWidget';
+import DailyTipWidget from './DailyTipWidget';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Share2, Heart, CircleDollarSign, Activity } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -62,6 +66,8 @@ export default function AstroVibesHomePageContent({
   const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const { toast } = useToast();
+  const { addEnergyPoints } = useCosmicEnergy();
+
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
@@ -83,6 +89,17 @@ export default function AstroVibesHomePageContent({
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
   const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true);
+
+  const userAstrologyProfile: UserAstrologyProfile = useMemo(() => {
+    if (!onboardingData?.dateOfBirth) return { sun: null, moon: null, ascendant: null };
+    const birthDate = new Date(onboardingData.dateOfBirth);
+    const sun = getSunSignFromDate(birthDate);
+    const moon = getMoonSign(birthDate);
+    const ascendantSignObject = onboardingData.timeOfBirth ? getAscendantSign(birthDate, onboardingData.timeOfBirth, onboardingData.cityOfBirth || '') : null;
+    const ascendant = ascendantSignObject ? ZODIAC_SIGNS.find(s => s.name === ascendantSignObject.sign) || null : null;
+
+    return { sun, moon, ascendant };
+  }, [onboardingData]);
 
 
   useEffect(() => {
@@ -167,6 +184,31 @@ export default function AstroVibesHomePageContent({
         if (result && typeof result === 'object' && result.daily && result.weekly && result.monthly) {
           setFullHoroscopeData(result);
           setCurrentDisplayHoroscope(result[displayPeriod]);
+          
+          if (user?.uid) {
+            const actionTypeMap: Record<typeof displayPeriod, 'read_daily_horoscope' | 'read_weekly_horoscope' | 'read_monthly_horoscope'> = {
+              daily: 'read_daily_horoscope',
+              weekly: 'read_weekly_horoscope',
+              monthly: 'read_monthly_horoscope',
+            };
+            const energyResult = addEnergyPoints(actionTypeMap[displayPeriod], 5);
+
+            if (energyResult.pointsAdded > 0) {
+              toast({
+                  title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+                  description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+              });
+              if (energyResult.leveledUp) {
+                  setTimeout(() => {
+                      toast({
+                          title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                          description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                      });
+                  }, 500);
+              }
+            }
+          }
+
         } else {
           console.error("Error fetching horoscope: getHoroscopeFlow returned invalid data or no result.", result);
           setFullHoroscopeData(null);
@@ -196,7 +238,7 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive]);
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive, addEnergyPoints, user]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -406,6 +448,10 @@ export default function AstroVibesHomePageContent({
   return (
     <div className="flex flex-col">
       <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden">
+        
+        <DailyTransitWidget dictionary={dictionary} />
+        <DailyTipWidget dictionary={dictionary} locale={locale} />
+
         <SignSelectorHorizontalScroll
           dictionary={dictionary}
           locale={locale}
@@ -440,6 +486,8 @@ export default function AstroVibesHomePageContent({
               dictionary={dictionary}
               locale={locale}
               selectedSign={selectedDisplaySign}
+              isPersonalized={isPersonalizedRequestActive && !!user}
+              userProfile={userAstrologyProfile}
             />
           </motion.div>
 
@@ -515,7 +563,7 @@ export default function AstroVibesHomePageContent({
                       <Skeleton className="h-4 w-3/4 font-body" />
                     </div>
                   ) : (
-                    <p className={cn("font-body text-sm text-foreground/80 leading-relaxed")}>
+                    <p className="font-body text-sm text-foreground/80 leading-relaxed">
                       {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
                     </p>
                   )}

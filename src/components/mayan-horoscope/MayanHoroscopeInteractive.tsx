@@ -1,20 +1,16 @@
 
+
 "use client";
 
 import { useState, useEffect } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import type { MayanKinInfo, MayanZodiacSign, GalacticTone } from '@/types';
+import type { MayanKinInfo } from '@/types';
 import {
-  MAYAN_ZODIAC_SIGNS,
-  GALACTIC_TONES,
-  GalacticTonesIcon,
   KinCalculatorIcon,
-  MayanAstrologyIcon,
   calculateMayanKin
 } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarIconLucide, HelpCircle } from "lucide-react";
@@ -84,7 +80,7 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
   
   return (
     <>
-      <Card className="mb-12 shadow-lg">
+      <Card className="mb-12 shadow-lg max-w-2xl mx-auto">
         <CardHeader>
           <SectionTitle
             title={dictionary['MayanHoroscopePage.kinCalculatorTitle']}
@@ -156,13 +152,12 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                   <h4 className="font-semibold text-lg text-accent-foreground mb-1">{dictionary['MayanHoroscopePage.yourDaySign']}</h4>
                   <div className="flex items-center gap-2">
                      <mayanKin.daySign.icon className="w-8 h-8 text-primary" />
-                    <span className="font-bold text-xl">{dictionary[mayanKin.daySign.name] || mayanKin.daySign.name}</span>
+                    <span className="font-bold text-xl">{dictionary[mayanKin.daySign.nameKey] || mayanKin.daySign.name}</span>
                   </div>
                   <p className="text-sm mt-1 text-muted-foreground">{dictionary[mayanKin.daySign.descriptionKey]}</p>
-                  <p className="text-sm mt-2">{dictionary[mayanKin.daySign.detailedInterpretationKey]}</p>
                 </div>
-                <Separator />
-                <div>
+                
+                <div className="mt-4">
                   <h4 className="font-semibold text-lg text-accent-foreground mb-1">{dictionary['MayanHoroscopePage.yourGalacticTone']}</h4>
                    <div className="flex items-center gap-2">
                     <span className="font-bold text-xl">
@@ -175,14 +170,14 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
                   <p className="text-sm italic mt-1 text-muted-foreground">
                     <strong>{dictionary['MayanHoroscopePage.question']}</strong> {dictionary[`GalacticTone.${mayanKin.tone.nameKey}.question`] || mayanKin.tone.questionKey}
                   </p>
-                  <p className="text-sm mt-2">{dictionary[mayanKin.tone.detailedInterpretationKey]}</p>
                 </div>
+
                 <div className="mt-4 text-center">
                   <Button variant="link" onClick={() => setShowCalculationExplanation(!showCalculationExplanation)} className="text-sm text-primary hover:underline">
                     <HelpCircle size={16} className="mr-1" />
                     {showCalculationExplanation 
-                      ? (dictionary['MayanHoroscopePage.hideCalculationExplanation'] || "Ocultar explicación") 
-                      : (dictionary['MayanHoroscopePage.showCalculationExplanation'] || "Ver cómo se calcula tu Kin")}
+                      ? (dictionary['MayanHoroscopePage.hideCalculationExplanation'] || "Hide explanation") 
+                      : (dictionary['MayanHoroscopePage.showCalculationExplanation'] || "See how your Kin is calculated")}
                   </Button>
                 </div>
                 {showCalculationExplanation && (
@@ -206,87 +201,6 @@ export default function MayanHoroscopeInteractive({ dictionary, locale }: MayanH
           )}
         </CardContent>
       </Card>
-
-      <Separator className="my-12" />
-
-      <SectionTitle
-        title={dictionary['MayanHoroscopePage.signsTitle'] || "The 20 Solar Seals (Nahuales)"}
-        icon={MayanAstrologyIcon}
-        className="mb-8"
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-        {MAYAN_ZODIAC_SIGNS.map((sign) => {
-          const SignIcon = sign.icon;
-          const translatedSignName = dictionary[sign.name] || sign.name;
-          const translatedDescription = dictionary[sign.descriptionKey] || sign.descriptionKey;
-          const translatedInterpretation = dictionary[sign.detailedInterpretationKey] || sign.detailedInterpretationKey;
-          return (
-            <Card key={sign.name} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
-              <CardHeader className="items-center text-center">
-                <SignIcon className="w-12 h-12 text-primary mb-2" />
-                <CardTitle className="font-headline text-xl text-primary">{translatedSignName}</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow space-y-2">
-                <div>
-                    <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.description']}</p>
-                    <p className="text-sm font-body text-card-foreground/90">{translatedDescription}</p>
-                </div>
-                 <div>
-                    <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.detailedInterpretation']}</p>
-                    <p className="text-xs font-body text-card-foreground/80 leading-relaxed">{translatedInterpretation}</p>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
-      <Separator className="my-12" />
-
-      <SectionTitle
-        title={dictionary['MayanHoroscopePage.galacticTonesTitle']}
-        icon={GalacticTonesIcon}
-        className="mb-8"
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {GALACTIC_TONES.map((tone) => {
-          const translatedToneName = dictionary[`GalacticTone.${tone.nameKey}.name`] || tone.nameKey;
-          const translatedKeyword = dictionary[`GalacticTone.${tone.nameKey}.keyword`] || tone.keywordKey;
-          const translatedQuestion = dictionary[`GalacticTone.${tone.nameKey}.question`] || tone.questionKey;
-          const translatedInterpretation = dictionary[tone.detailedInterpretationKey] || tone.detailedInterpretationKey;
-          const toneLabel = `${dictionary['MayanHoroscopePage.tone'] || 'Tone'} ${tone.id}:`;
-
-          return (
-            <Card key={tone.id} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
-              <CardHeader className="text-center">
-                <CardTitle className="font-headline text-xl text-primary">
-                  {toneLabel} <span className="font-bold">{translatedToneName}</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow space-y-3">
-                <div>
-                  <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.keyword']}</p>
-                  <p className="text-md font-body text-card-foreground/90">{translatedKeyword}</p>
-                </div>
-                <div>
-                  <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.question']}</p>
-                  <p className="text-sm font-body text-card-foreground/90 italic">{translatedQuestion}</p>
-                </div>
-                 <div>
-                    <p className="font-semibold text-sm text-muted-foreground">{dictionary['MayanHoroscopePage.detailedInterpretation']}</p>
-                    <p className="text-xs font-body text-card-foreground/80 leading-relaxed">{translatedInterpretation}</p>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
-      <div className="text-center mt-12 p-6 bg-secondary/30 rounded-lg shadow">
-        <p className="text-lg text-muted-foreground font-body">
-          {dictionary['MayanHoroscopePage.comingSoon']}
-        </p>
-      </div>
     </>
   );
 }

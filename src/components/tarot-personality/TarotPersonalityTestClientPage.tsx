@@ -12,11 +12,13 @@ import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSignName, CommunityPost } from '@/types';
+import type { OnboardingFormData, ZodiacSignName, NewPostData } from '@/types';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { addCommunityPost } from '@/lib/community-posts';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { getSunSignFromDate } from '@/lib/constants';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
@@ -31,6 +33,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { addEnergyPoints, level: userLevel } = useCosmicEnergy();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -61,6 +64,21 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
       };
       const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
       setResult(flowResult);
+      const { pointsAdded, leveledUp, newLevel } = addEnergyPoints('draw_personality_card', 15);
+      if (pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${pointsAdded} EC!`,
+        });
+         if (leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
       setIsFlipped(true); // Trigger the flip animation
     } catch (err) {
       console.error("Error getting daily tarot card:", err);
@@ -83,7 +101,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   };
   
   const handleShareToCommunity = async () => {
-    if (!user) {
+    if (!user || !db) {
       toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToPost'], variant: 'destructive' });
       return;
     }
@@ -110,17 +128,21 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
       }
     }
     
-    const postData = {
+    const postData: NewPostData = {
       authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
+      authorLevel: userLevel,
       postType: 'tarot_personality' as const,
       tarotPersonalityData: result,
     };
 
     try {
-      await addCommunityPost(postData);
+      await addDoc(collection(db, 'community-posts'), {
+        ...postData,
+        timestamp: serverTimestamp(),
+      });
       toast({ title: dictionary['CommunityPage.shareSuccessTitle'] || "Success!", description: dictionary['CommunityPage.shareTarotSuccess'] || "Your tarot card has been shared." });
       router.push(`/${locale}/community`);
     } catch (error) {
