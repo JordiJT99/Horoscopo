@@ -1,4 +1,5 @@
-'use client';
+
+"use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -12,10 +13,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, UserCircle } from 'lucide-react';
+import { Send, UserCircle, Gem } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface Message {
   text: string;
@@ -61,6 +63,8 @@ const TopicSelector = ({ dictionary, onTopicSelect, psychic }: { dictionary: Dic
   );
 };
 
+const MESSAGE_COST = 10;
+
 export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicChatUIProps) {
   const searchParams = useSearchParams();
   const [selectedTopic, setSelectedTopic] = useState<{ key: string, name: string } | null>(null);
@@ -69,6 +73,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const [isSending, setIsSending] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
+  const { stardust, freeChats, useFreeChat, spendStardust } = useCosmicEnergy();
   const scrollViewportRef = useRef<HTMLDivElement>(null);
 
   const topicKeyMapping: { [key: string]: string } = {
@@ -79,14 +84,17 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   };
 
   const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
-    const initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
+    let initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
       .replace('{psychicName}', psychic.name)
       .replace('{topicName}', topicName);
+
+    if (freeChats > 0) {
+      initialMessage += `\n\n✨ ${(dictionary['PsychicChatPage.freeChatAvailable'] || "You have a free reading credit. Your first message is on me!")}`;
+    }
     
     setMessages([{ text: initialMessage, sender: 'ai' }]);
     setSelectedTopic({ key: topicKey, name: topicName });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dictionary, psychic.name]);
+  }, [dictionary, psychic.name, freeChats]);
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
@@ -97,7 +105,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
             handleTopicSelect(topicDictKey, topicName);
         }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
 
   const scrollToBottom = () => {
@@ -112,6 +119,24 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isSending || !selectedTopic) return;
+
+    if (freeChats > 0) {
+      useFreeChat();
+      toast({
+        title: `🎁 ${dictionary['PsychicChatPage.freeChatUsedTitle'] || 'Free Reading Used'}`,
+        description: dictionary['PsychicChatPage.freeChatUsedDescription'] || 'Your free reading credit has been applied.',
+      });
+    } else {
+      if (stardust < MESSAGE_COST) {
+        toast({
+          title: dictionary['PsychicChatPage.notEnoughStardustTitle'] || 'Not Enough Stardust',
+          description: (dictionary['PsychicChatPage.notEnoughStardustDescription'] || 'You need {cost} Stardust to send a message.').replace('{cost}', MESSAGE_COST.toString()),
+          variant: 'destructive',
+        });
+        return;
+      }
+      spendStardust(MESSAGE_COST);
+    }
 
     const newUserMessage: Message = { text: inputMessage, sender: 'user' };
     const updatedMessagesForUI = [...messages, newUserMessage];
@@ -134,7 +159,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       );
       const newAiMessage: Message = { text: aiResponse, sender: 'ai' };
       
-      const randomDelay = Math.floor(Math.random() * 3000) + 3500;
+      const randomDelay = Math.floor(Math.random() * 2500) + 1500;
       setTimeout(() => {
         setMessages(prev => [...prev, newAiMessage]);
         setIsSending(false);
@@ -209,6 +234,10 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         </ScrollArea>
       </CardContent>
       <div className="flex items-center p-2 sm:p-3 border-t border-border/30 bg-background/50">
+        <div className="flex items-center mr-2 bg-input/50 rounded-full px-3 py-1 text-xs font-semibold">
+          <Gem className="w-4 h-4 text-cyan-400 mr-1.5"/>
+          {stardust}
+        </div>
         <Input
           className="flex-grow mr-2 bg-input/50"
           placeholder={dictionary['PsychicChatClient.inputPlaceholder'] || 'Type your message...'}

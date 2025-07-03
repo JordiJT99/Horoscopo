@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState } from 'react';
@@ -108,7 +109,7 @@ const BirthDataForm: React.FC<BirthDataFormProps> = ({ onSubmit, dictionary, loc
                   locale={localeObj}
                   fromYear={1900}
                   toYear={new Date().getFullYear()}
-                  captionLayout="dropdown"
+                  captionLayout="dropdown-buttons"
                 />
               </PopoverContent>
             </Popover>

@@ -14,9 +14,11 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
-import { addCommunityPost } from '@/lib/community-posts';
-import type { CommunityPost, ZodiacSignName } from '@/types';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import type { NewPostData, ZodiacSignName } from '@/types';
 import { getSunSignFromDate } from '@/lib/constants';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface TarotReadingClientProps {
   dictionary: Dictionary;
@@ -33,6 +35,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { addEnergyPoints, level: userLevel } = useCosmicEnergy();
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   
@@ -54,6 +57,21 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
+      const { pointsAdded, leveledUp, newLevel } = addEnergyPoints('draw_tarot_card', 15);
+      if (pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${pointsAdded} EC!`,
+        });
+         if (leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
     } catch (err) {
       console.error("Error getting tarot reading:", err);
       setError(dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.");
@@ -68,7 +86,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   };
 
   const handleShareToCommunity = async () => {
-    if (!user) {
+    if (!user || !db) {
       toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToPost'], variant: 'destructive' });
       return;
     }
@@ -95,17 +113,21 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       }
     }
     
-    const postData = {
+    const postData: NewPostData = {
       authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
+      authorLevel: userLevel,
       postType: 'tarot_reading' as const,
       tarotReadingData: reading,
     };
 
     try {
-      await addCommunityPost(postData);
+      await addDoc(collection(db, 'community-posts'), {
+        ...postData,
+        timestamp: serverTimestamp(),
+      });
       toast({ title: dictionary['CommunityPage.shareSuccessTitle'] || "Success!", description: dictionary['CommunityPage.shareTarotSuccess'] || "Your tarot reading has been shared." });
       router.push(`/${locale}/community`);
     } catch (error) {

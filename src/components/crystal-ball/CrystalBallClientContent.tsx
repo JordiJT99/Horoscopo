@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -12,6 +13,7 @@ import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData } from '@/types';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 interface CrystalBallClientContentProps {
   dictionary: Dictionary;
@@ -23,9 +25,9 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const [revelation, setRevelation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const crystalBallGifPath = "/gifs/crystal-ball.gif";
 
   const { user } = useAuth();
+  const { addEnergyPoints } = useCosmicEnergy();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -58,6 +60,21 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
       };
       const result: CrystalBallRevelationOutput = await getCrystalBallRevelation(input);
       setRevelation(result.revelation);
+      const energyResult = addEnergyPoints('use_crystal_ball', 10);
+      if (energyResult.pointsAdded > 0) {
+        toast({
+            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+        });
+         if (energyResult.leveledUp) {
+            setTimeout(() => {
+                toast({
+                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                });
+            }, 500);
+        }
+      }
     } catch (err) {
       console.error("Error consulting crystal ball:", err);
       toast({
@@ -125,7 +142,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
           <div className="dynamic-orb-halo w-36 h-36 sm:w-44 sm:h-44">
             <div className="w-full h-full rounded-full overflow-hidden shadow-inner bg-background">
               <Image
-                src={crystalBallGifPath}
+                src="/custom_assets/crystal_ball_animation.gif"
                 alt={dictionary['CrystalBallPage.title'] || "Crystal Ball"}
                 width={180}
                 height={180}

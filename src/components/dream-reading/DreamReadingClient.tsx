@@ -13,13 +13,15 @@ import { Slider } from '@/components/ui/slider';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch, ChevronLeft, ChevronRight, Feather, Home, Users, Drama, BookHeart, BarChart3, MessageCircle } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput, type DreamWizardData } from '@/ai/flows/dream-interpretation-flow';
-import type { StoredDream, ZodiacSignName, CommunityPost } from '@/types';
+import type { StoredDream, ZodiacSignName, NewPostData } from '@/types';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import DreamTrends from './DreamTrends';
 import { useAuth } from '@/context/AuthContext';
-import { addCommunityPost } from '@/lib/community-posts';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { getSunSignFromDate } from '@/lib/constants';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 
 const TOTAL_STEPS = 6;
@@ -63,6 +65,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   const searchParams = useSearchParams();
   const { toast } = useToast();
   const { user } = useAuth();
+  const { level: userLevel } = useCosmicEnergy();
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);
@@ -124,7 +127,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   };
 
   const handleShareToCommunity = async () => {
-    if (!user) {
+    if (!user || !db) {
       toast({ title: dictionary['Auth.notLoggedInTitle'], description: dictionary['CommunityPage.loginToPost'], variant: 'destructive' });
       return;
     }
@@ -153,17 +156,21 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       }
     }
     
-    const postData = {
+    const postData: NewPostData = {
       authorId: user.uid,
       authorName: user.displayName || 'Anonymous Astro-Fan',
       authorAvatarUrl: user.photoURL || `https://placehold.co/64x64/7c3aed/ffffff.png?text=${(user.displayName || 'A').charAt(0)}`,
       authorZodiacSign: authorZodiacSign,
+      authorLevel: userLevel,
       postType: 'dream' as const,
       dreamData: interpretationResult
     };
 
     try {
-      await addCommunityPost(postData);
+      await addDoc(collection(db, 'community-posts'), {
+        ...postData,
+        timestamp: serverTimestamp(),
+      });
       toast({ title: dictionary['CommunityPage.shareSuccessTitle'] || "Success!", description: dictionary['CommunityPage.shareDreamSuccess'] || "Your dream has been shared with the community." });
       router.push(`/${locale}/community`);
     } catch (error) {

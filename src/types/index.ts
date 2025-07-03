@@ -92,20 +92,26 @@ export type MoonPhaseKey = 'new' | 'waxingCrescent' | 'firstQuarter' | 'waxingGi
 
 
 export interface UpcomingPhase {
-  nameKey: string; // e.g., "MoonPhase.FirstQuarter" for translation
-  date: string;    // e.g., "Jun 2"
-  iconUrl: string;
+  nameKey: string;
+  date: string;
   phaseKey: MoonPhaseKey;
+  dateObj: Date;
+  time?: string;
+  illumination?: number;
 }
+
 export interface LunarData {
-  phase: string; // e.g., "Full Moon", "New Moon", "Waxing Crescent" (translated)
-  phaseKey: MoonPhaseKey; // Key for the main current phase
-  illumination: number; // Percentage
-  currentMoonImage: string; // URL for the large moon image
-  moonInSign?: string; // e.g., "Acuario" (translated) - No longer optional
-  moonSignIcon?: ZodiacSignName; // e.g., "Aquarius" - No longer optional
+  phase: string;
+  phaseKey: MoonPhaseKey;
+  illumination: number;
+  currentMoonImage: string;
+  moonInSign?: string;
+  moonSignIcon?: ZodiacSignName;
   upcomingPhases: UpcomingPhase[];
-  error?: string; // Optional error message for API failures
+  error?: string;
+  synodicProgress?: number;
+  description?: string;
+  insights?: string[];
 }
 
 
@@ -133,6 +139,8 @@ export interface ChineseZodiacSign {
   years: number[];
   element: string;
   description?: string;
+  descriptionKey?: string;
+  detailedInterpretationKey?: string;
 }
 
 export interface ChineseZodiacResult {
@@ -159,6 +167,7 @@ export type MayanSignName =
 export interface MayanZodiacSign {
   name: MayanSignName;
   icon: React.ElementType;
+  nameKey: string;
   descriptionKey: string;
   detailedInterpretationKey: string;
   associatedColor?: string;
@@ -271,8 +280,6 @@ export interface Psychic {
   rating: number;
   reviews: number;
   experience: number; 
-  price: number | null; 
-  isFree: boolean;
   status: "Available" | "Busy" | "Meditating";
   aiHint: string;
 }
@@ -286,9 +293,8 @@ export interface NewPostData {
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
+  authorLevel?: number; // Added author's level at time of posting
   postType: PostType;
-  reactions: Record<string, string>;
-  commentCount: number;
   // Optional content fields
   textContent?: string;
   dreamData?: DreamInterpretationOutput;
@@ -308,4 +314,44 @@ export interface Comment {
 export interface CommunityPost extends NewPostData {
   id: string;
   timestamp: string;
+  reactions: Record<string, string>;
+  commentCount: number;
+}
+
+// Gamification Types
+export type GameActionId = 
+  | 'read_daily_horoscope'
+  | 'read_weekly_horoscope'
+  | 'read_monthly_horoscope'
+  | 'complete_profile'
+  | 'draw_tarot_card'
+  | 'draw_personality_card'
+  | 'use_crystal_ball'
+  | 'add_community_comment'
+  | 'react_to_post';
+
+export interface CosmicEnergyState {
+  points: number;
+  level: number;
+  stardust: number;
+  freeChats: number;
+  lastGained: Record<GameActionId, string>;
+  hasRatedApp: boolean;
+}
+
+export interface DailyTransit {
+  titleKey: string;
+  descriptionKey: string;
+  icon: React.ElementType;
+}
+
+export interface UserAstrologyProfile {
+  sun: ZodiacSign | null;
+  moon: ZodiacSign | null;
+  ascendant: ZodiacSign | null;
+}
+
+export interface AwardStardustResult {
+    success: boolean;
+    amount: number;
 }

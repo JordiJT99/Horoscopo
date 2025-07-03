@@ -10,6 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import type { ZodiacSignName } from '@/types'; // Import ZodiacSignName
+import { getSignFromDegree } from '@/lib/constants'; // Import the helper
 
 // Input schema remains the same
 const NatalChartInputSchema = z.object({
@@ -115,23 +116,6 @@ Para CADA UNA de las 8 secciones, escribe una explicación PROFUNDA y PERSONALIZ
 Genera el objeto JSON completo en el idioma {{locale}}.
 `
 });
-
-// Helper function to get sign based on absolute degree
-const getSignFromDegree = (degree: number): ZodiacSignName => {
-  const d = degree % 360;
-  if (d < 30) return 'Aries';
-  if (d < 60) return 'Taurus';
-  if (d < 90) return 'Gemini';
-  if (d < 120) return 'Cancer';
-  if (d < 150) return 'Leo';
-  if (d < 180) return 'Virgo';
-  if (d < 210) return 'Libra';
-  if (d < 240) return 'Scorpio';
-  if (d < 270) return 'Sagittarius';
-  if (d < 300) return 'Capricorn';
-  if (d < 330) return 'Aquarius';
-  return 'Pisces';
-};
 
 // Helper function to get the house for a planet using the Whole Sign House system
 const getHouseForDegree = (planetDegree: number, ascendantDegree: number): number => {

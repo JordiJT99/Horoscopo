@@ -21,6 +21,7 @@ import { CalendarIcon, User, VenetianMask, Edit, ChevronRight, ChevronLeft, Spar
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 const dateFnsLocalesMap: Record<Locale, typeof es | typeof enUS | typeof de | typeof fr> = {
   es,
@@ -48,6 +49,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
   const router = useRouter();
   const { user, isLoading: authLoading, markOnboardingAsComplete } = useAuth();
   const { toast } = useToast();
+  const { addEnergyPoints } = useCosmicEnergy();
 
   const [currentStep, setCurrentStep] = useState(1);
   const initialDateOfBirth = new Date(1995, 5, 15);
@@ -174,6 +176,21 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
     if (user) {
       markOnboardingAsComplete();
       localStorage.setItem(`onboardingData_${user.uid}`, JSON.stringify(formData));
+      const energyResult = addEnergyPoints('complete_profile', 50); // Award points for completing profile
+        if (energyResult.pointsAdded > 0) {
+            toast({
+                title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
+                description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${energyResult.pointsAdded} EC!`,
+            });
+             if (energyResult.leveledUp) {
+                setTimeout(() => {
+                    toast({
+                        title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
+                        description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', energyResult.newLevel.toString())}`,
+                    });
+                }, 500);
+            }
+        }
     }
 
     toast({
@@ -357,7 +374,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
                     onChange={(e) => handleChange('timeOfBirth', e.target.value)}
                     className="font-body"
                   />
-                  <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.timeOfBirthHelper'] || "Knowing your birth time helps in more accurate astrological calculations like your ascendant sign."}</p>
+                  <p className="text-xs text-muted-foreground">{dictionary['OnboardingPage.timeOfBirthHelper'] || "Knowing your birth time helps in more accurate astrological calculations like your rising sign."}</p>
                 </div>
               )}
 
