@@ -1,10 +1,9 @@
-import type { CapacitorConfig } from '@capacitor/core';
+import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.astrovibes.app',
-  appName: 'AstroVibes',
-  webDir: 'out',
-  bundledWebRuntime: false
+  appId: 'com.astromistica.app',
+  appName: 'AstroMística : Tarot, Horóscopo y Carta Natal',
+  webDir: 'public'
 };
 
 export default config;
