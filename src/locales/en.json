@@ -1065,6 +1065,35 @@
       "friendship": "Capricorn friends are loyal and offer the most practical, no-nonsense advice. They may have a small circle of friends, but their loyalty is for life. They are the friend who will help you build your resume or plan your financial future.",
       "workTitle": "At Work",
       "work": "Professionally, Capricorns are the ultimate managers and CEOs. They are incredibly disciplined, goal-oriented, and have an innate understanding of structure and long-term strategy. They are destined to be in positions of authority."
+    },
+    "Aquarius": {
+      "title": "The Visionary Water-Bearer",
+      "description": "Aquarius is the humanitarian of the zodiac. They are forward-thinking, independent, and intellectual, always striving to make the world a better place. They march to the beat of their own drum.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Progressive", "Original", "Independent", "Humanitarian", "Intellectual"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Runs from emotional expression", "Temperamental", "Uncompromising", "Aloof", "Detached"],
+      "loveTitle": "In Love",
+      "love": "In love, Aquarius needs a partner who is first and foremost a friend. They value intellectual connection and freedom. They can seem detached, but their love is genuine. They need space and are not fans of overly emotional displays.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "As friends, Aquarians are loyal and will stand by you. They have a wide circle of friends and enjoy conversations about social causes and futuristic ideas. They are the friend who will challenge your thinking and introduce you to new concepts.",
+      "workTitle": "At Work",
+      "work": "At work, Aquarius excels in roles that involve innovation, technology, and social change. They are team players who bring original ideas to the table. They dislike rigid structures and need the freedom to experiment."
+    },
+    "Pisces": {
+      "title": "The Compassionate Fish",
+      "description": "Pisces, the final sign, is the most empathetic and intuitive of the zodiac. A Water sign, they are deeply connected to the emotional and spiritual realms, often possessing artistic and psychic abilities.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Compassionate", "Artistic", "Intuitive", "Gentle", "Wise"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Fearful", "Overly trusting", "Sad", "Desire to escape reality", "Can be a victim or a martyr"],
+      "loveTitle": "In Love",
+      "love": "In a relationship, Pisces is a hopeless romantic, seeking a magical, soul-deep connection. They are incredibly selfless and devoted partners. They need someone who can protect their sensitive heart and appreciate their dreamy nature.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Pisces friends are the most compassionate and understanding you'll ever find. They are always there to listen without judgment and offer emotional support. They are the friend you go to when you need to feel understood on a soul level.",
+      "workTitle": "At Work",
+      "work": "Pisces thrive in creative and healing professions. They are excellent artists, musicians, therapists, and healers. They need a work environment that is not high-pressure and allows them to use their intuition and creativity."
     }
   }
 }
+
