@@ -106,11 +106,14 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
         };
         const storedDreamsRaw = localStorage.getItem('dreamJournal');
         const storedDreams: StoredDream[] = storedDreamsRaw ? JSON.parse(storedDreamsRaw) : [];
-        const updatedDreams = [newDreamRecord, ...storedDreams].slice(0, 100);
+        // Reduced from 100 to 20 to prevent quota errors
+        const updatedDreams = [newDreamRecord, ...storedDreams].slice(0, 20);
         localStorage.setItem('dreamJournal', JSON.stringify(updatedDreams));
         setNewDreamTrigger(Date.now());
       } catch(e) {
-        console.error("Could not save dream to journal:", e);
+        // Prevent crash on quota exceeded, but don't bother the user with a toast.
+        // The main functionality (seeing the interpretation) has already succeeded.
+        console.error("Could not save dream to journal (likely quota exceeded):", e);
       }
 
       setViewMode('result');
@@ -203,7 +206,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(s => s - 1);
+      setCurrentStep(s => s + 1);
     }
   };
 

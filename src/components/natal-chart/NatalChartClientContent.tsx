@@ -123,49 +123,19 @@ export default function NatalChartClientContent({
   const staticChartImageUrl = '/custom_assets/natal_chart_bg.png';
 
   useEffect(() => {
- 
     const fetchChartData = async () => {
-
       setIsLoading(true);
       
-      const birthDataString = JSON.stringify(birthData);
-      const textCacheKey = user ? `natalChart_text_${user.uid}_${birthDataString}_${detailLevel}` : null;
-      let cachedText: NatalChartOutput | null = null;
-      
-      if (textCacheKey) {
-        try {
-          const cachedItem = localStorage.getItem(textCacheKey);
-          if (cachedItem) {
-            cachedText = JSON.parse(cachedItem);
-          }
-        } catch (e) {
-          console.error("Failed to parse cached text data, fetching new data.", e);
-          if (textCacheKey) localStorage.removeItem(textCacheKey);
-        }
-      }
-
       try {
-
-        let textData: NatalChartOutput;
-        if (cachedText) {
-          console.log("Loaded natal chart text from cache.");
-          textData = cachedText;
-        } else {
-          const flowInput = {
-            detailLevel,
-            locale: locale, // Use locale prop
-            birthDate: birthData.date,
-            birthTime: birthData.time,
-            birthCity: birthData.city,
-            birthCountry: birthData.country,
-          };
-          textData = await natalChartFlow(flowInput);
-          if (textCacheKey) {
-            localStorage.setItem(textCacheKey, JSON.stringify(textData));
-            console.log("Saved natal chart text data to cache.");
-
-          }
-        }
+        const flowInput = {
+          detailLevel,
+          locale: locale,
+          birthDate: birthData.date,
+          birthTime: birthData.time,
+          birthCity: birthData.city,
+          birthCountry: birthData.country,
+        };
+        const textData = await natalChartFlow(flowInput);
         
         if (textData) {
           setExplanations(textData);
@@ -186,7 +156,7 @@ export default function NatalChartClientContent({
     };
   
     fetchChartData();
-  }, [detailLevel, birthData, dictionary, toast, user, locale]); // add locale to dependencies
+  }, [detailLevel, birthData, dictionary, toast, locale]);
 
 
   const detailExplanationSections = [
