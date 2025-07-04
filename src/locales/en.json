@@ -918,7 +918,36 @@
   "Toast.alreadyRated": "You have already claimed this reward.",
   "Toast.dailyReactionStardust": "+{amount} 💫 for your first reaction of the day!",
   "Toast.dailyCommentStardust": "+{amount} 💫 for your first comment of the day!",
-  "ZodiacDetail": {},
+  "ZodiacDetail": {
+    "Aries": {
+      "title": "The Trailblazing Ram",
+      "description": "Aries, the first sign of the zodiac, is the trailblazer. Bold, ambitious, and a natural leader, Aries dives headfirst into challenges with an optimistic and fiery spirit.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Brave", "Determined", "Confident", "Enthusiastic", "Honest"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Impatient", "Moody", "Short-tempered", "Impulsive", "Aggressive"],
+      "loveTitle": "In Love",
+      "love": "In love, Aries is passionate, direct, and straightforward. They enjoy the thrill of the chase and are not afraid to make the first move. They need a partner who can match their energy and appreciate their independent nature.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "As a friend, Aries is loyal, fun, and always up for an adventure. They are the ones who will push you to try new things and will defend you fiercely. Their friendships are built on action and shared experiences.",
+      "workTitle": "At Work",
+      "work": "At work, Aries is a natural leader and a motivated self-starter. They thrive in competitive environments and are not afraid to take risks. They work best when they have the autonomy to take charge and see a project through from start to finish."
+    },
+    "Taurus": {
+      "title": "The Steadfast Bull",
+      "description": "Taurus, an Earth sign, values stability and comfort above all else. They are known for their reliability, patience, and a sensual, down-to-earth nature. They are the builders of the zodiac.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Reliable", "Patient", "Practical", "Devoted", "Responsible"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Stubborn", "Possessive", "Uncompromising", "Hedonistic", "Lazy"],
+      "loveTitle": "In Love",
+      "love": "In relationships, Taurus is a loyal, devoted, and very sensual partner. They seek security and stability. Once they commit, they are in it for the long haul. They enjoy the simple pleasures with their partner, like a good meal or a cozy night in.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Taurus friends are the epitome of loyalty. They are the friend you can count on to be there, no matter what. They are patient and give great advice, although they can be a bit stubborn in their opinions.",
+      "workTitle": "At Work",
+      "work": "Professionally, Taurus is methodical, hardworking, and reliable. They won't stop until the job is done, and done well. They excel at tasks that require patience and perseverance, and are great managers of money and resources."
+    }
+  },
   "DailyTip": {
     "title": "Tip of the Day",
     "subtitle": "A dose of cosmic wisdom for your journey.",
