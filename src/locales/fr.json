@@ -1065,6 +1065,34 @@
       "friendship": "Les amis Capricorne sont loyaux et offrent les conseils les plus pratiques et les plus sensés. Ils peuvent avoir un petit cercle d'amis, mais leur loyauté est à vie. C'est l'ami qui vous aidera à rédiger votre CV ou à planifier votre avenir financier.",
       "workTitle": "Au Travail",
       "work": "Professionnellement, les Capricornes sont les ultimes managers et PDG. Ils sont incroyablement disciplinés, axés sur les objectifs et ont une compréhension innée de la structure et de la stratégie à long terme. Ils sont destinés à occuper des postes d'autorité."
+    },
+    "Aquarius": {
+      "title": "Le Visionnaire Verseau",
+      "description": "Le Verseau est l'humanitaire du zodiaque. Ils sont progressistes, indépendants et intellectuels, s'efforçant toujours de rendre le monde meilleur. Ils marchent au rythme de leur propre tambour.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Progressiste", "Original", "Indépendant", "Humanitaire", "Intellectuel"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Fuit l'expression émotionnelle", "Tempéramental", "Intransigeant", "Distant", "Détaché"],
+      "loveTitle": "En Amour",
+      "love": "En amour, le Verseau a besoin d'un partenaire qui soit avant tout un ami. Ils valorisent la connexion intellectuelle et la liberté. Ils peuvent sembler détachés, mais leur amour est sincère. Ils ont besoin d'espace et ne sont pas fans des démonstrations émotionnelles excessives.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "En tant qu'amis, les Verseaux sont loyaux et vous soutiendront. Ils ont un large cercle d'amis et apprécient les conversations sur les causes sociales et les idées futuristes. C'est l'ami qui remettra en question votre pensée et vous présentera de nouveaux concepts.",
+      "workTitle": "Au Travail",
+      "work": "Au travail, le Verseau excelle dans les rôles qui impliquent l'innovation, la technologie et le changement social. Ce sont des joueurs d'équipe qui apportent des idées originales. Ils n'aiment pas les structures rigides et ont besoin de la liberté d'expérimenter."
+    },
+    "Pisces": {
+      "title": "Les Poissons Compatissants",
+      "description": "Les Poissons, le dernier signe, sont les plus empathiques et intuitifs du zodiaque. Signe d'Eau, ils sont profondément connectés aux domaines émotionnel et spirituel, possédant souvent des capacités artistiques et psychiques.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Compatissant", "Artistique", "Intuitif", "Doux", "Sage"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Craintif", "Trop confiant", "Triste", "Désir d'échapper à la réalité", "Peut être une victime ou un martyr"],
+      "loveTitle": "En Amour",
+      "love": "Dans une relation, les Poissons sont des romantiques invétérés, à la recherche d'une connexion magique et profonde de l'âme. Ce sont des partenaires incroyablement altruistes et dévoués. Ils ont besoin de quelqu'un qui puisse protéger leur cœur sensible et apprécier leur nature rêveuse.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Les amis Poissons sont les plus compatissants et compréhensifs que vous puissiez trouver. Ils sont toujours là pour écouter sans juger et offrir un soutien émotionnel. C'est l'ami vers qui vous vous tournez lorsque vous avez besoin de vous sentir compris au niveau de l'âme.",
+      "workTitle": "Au Travail",
+      "work": "Les Poissons s'épanouissent dans les professions créatives et de guérison. Ce sont d'excellents artistes, musiciens, thérapeutes et guérisseurs. Ils ont besoin d'un environnement de travail qui ne soit pas sous haute pression et qui leur permette d'utiliser leur intuition et leur créativité."
     }
   }
 }

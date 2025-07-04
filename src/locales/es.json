@@ -1065,6 +1065,35 @@
       "friendship": "Los amigos Capricornio son leales y ofrecen los consejos más prácticos y sensatos. Pueden tener un pequeño círculo de amigos, pero su lealtad es para toda la vida. Son el amigo que te ayudará a construir tu currículum o a planificar tu futuro financiero.",
       "workTitle": "En el Trabajo",
       "work": "Profesionalmente, los Capricornio son los gerentes y directores ejecutivos definitivos. Son increíblemente disciplinados, orientados a objetivos y tienen una comprensión innata de la estructura y la estrategia a largo plazo. Están destinados a ocupar puestos de autoridad."
+    },
+    "Aquarius": {
+      "title": "El Visionario Aguador",
+      "description": "Acuario es el humanitario del zodíaco. Son progresistas, independientes e intelectuales, siempre esforzándose por hacer del mundo un lugar mejor. Marchan al ritmo de su propio tambor.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Progresista", "Original", "Independiente", "Humanitario", "Intelectual"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Huye de la expresión emocional", "Temperamental", "Intransigente", "Distante", "Desapegado"],
+      "loveTitle": "En el Amor",
+      "love": "En el amor, Acuario necesita una pareja que sea ante todo una amiga. Valoran la conexión intelectual y la libertad. Pueden parecer distantes, pero su amor es genuino. Necesitan espacio y no son fanáticos de las demostraciones emocionales excesivas.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Como amigos, los Acuario son leales y te apoyarán. Tienen un amplio círculo de amigos y disfrutan de conversaciones sobre causas sociales e ideas futuristas. Son el amigo que desafiará tu pensamiento y te presentará nuevos conceptos.",
+      "workTitle": "En el Trabajo",
+      "work": "En el trabajo, Acuario sobresale en roles que involucran innovación, tecnología y cambio social. Son jugadores de equipo que aportan ideas originales. No les gustan las estructuras rígidas y necesitan la libertad para experimentar."
+    },
+    "Pisces": {
+      "title": "El Pez Compasivo",
+      "description": "Piscis, el último signo, es el más empático e intuitivo del zodíaco. Un signo de Agua, están profundamente conectados con los reinos emocional y espiritual, a menudo poseyendo habilidades artísticas y psíquicas.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Compasivo", "Artístico", "Intuitivo", "Amable", "Sabio"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Temeroso", "Demasiado confiado", "Triste", "Deseo de escapar de la realidad", "Puede ser víctima o mártir"],
+      "loveTitle": "En el Amor",
+      "love": "En una relación, Piscis es un romántico empedernido, buscando una conexión mágica y profunda del alma. Son compañeros increíblemente desinteresados y devotos. Necesitan a alguien que pueda proteger su corazón sensible y apreciar su naturaleza soñadora.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Piscis son los más compasivos y comprensivos que encontrarás. Siempre están ahí para escuchar sin juzgar y ofrecer apoyo emocional. Son el amigo al que acudes cuando necesitas sentirte comprendido a nivel del alma.",
+      "workTitle": "En el Trabajo",
+      "work": "Piscis prospera en profesiones creativas y de sanación. Son excelentes artistas, músicos, terapeutas y sanadores. Necesitan un ambiente de trabajo que no sea de alta presión y que les permita usar su intuición y creatividad."
     }
   }
 }
+
