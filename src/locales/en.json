@@ -918,6 +918,13 @@
   "Toast.alreadyRated": "You have already claimed this reward.",
   "Toast.dailyReactionStardust": "+{amount} 💫 for your first reaction of the day!",
   "Toast.dailyCommentStardust": "+{amount} 💫 for your first comment of the day!",
+  "DailyTip": {
+    "title": "Tip of the Day",
+    "subtitle": "A dose of cosmic wisdom for your journey.",
+    "revealButton": "Reveal tip",
+    "loading": "Consulting the cosmos...",
+    "error": "The skies are cloudy. Please try again later."
+  },
   "ZodiacDetail": {
     "Aries": {
       "title": "The Trailblazing Ram",
@@ -946,13 +953,34 @@
       "friendship": "Taurus friends are the epitome of loyalty. They are the friend you can count on to be there, no matter what. They are patient and give great advice, although they can be a bit stubborn in their opinions.",
       "workTitle": "At Work",
       "work": "Professionally, Taurus is methodical, hardworking, and reliable. They won't stop until the job is done, and done well. They excel at tasks that require patience and perseverance, and are great managers of money and resources."
+    },
+    "Gemini": {
+      "title": "The Curious Twins",
+      "description": "Gemini is the chameleon of the zodiac, an Air sign that is curious, communicative, and constantly in motion. Represented by the twins, they have a dual nature that makes them adaptable and versatile.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Gentle", "Affectionate", "Curious", "Adaptable", "Quick learner"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Nervous", "Inconsistent", "Indecisive", "Superficial", "Two-faced"],
+      "loveTitle": "In Love",
+      "love": "In love, a Gemini needs intellectual stimulation and variety. They are witty, flirtatious, and need a partner who can keep up with their agile mind. Communication is everything to them. They need freedom and can feel trapped by routine or possessiveness.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Gemini friends are the life of the party, always ready with a joke or a fascinating story. They have a wide circle of friends and love to connect people. They are fun, but can sometimes be inconsistent with plans.",
+      "workTitle": "At Work",
+      "work": "Professionally, Geminis are masters of communication, marketing, and sales. They thrive in dynamic, fast-paced environments where they can multitask and learn new things. They get bored easily with repetitive tasks."
+    },
+    "Cancer": {
+      "title": "The Nurturing Crab",
+      "description": "Cancer, a Water sign ruled by the Moon, is the ultimate nurturer of the zodiac. Deeply intuitive and sentimental, Cancer is guided by its emotions and its profound connection to home and family.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Tenacious", "Highly imaginative", "Loyal", "Emotional", "Sympathetic"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Moody", "Pessimistic", "Suspicious", "Manipulative", "Insecure"],
+      "loveTitle": "In Love",
+      "love": "In a relationship, Cancer is a deeply caring and committed partner who craves emotional security and a safe home. They show their love through nurturing and protection. They can be sensitive and need a partner who understands their emotional depths.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Cancer friends are like family. They are incredibly loyal, empathetic, and will always offer a shoulder to cry on. They are the friend who will cook you soup when you're sick and remember your birthday without fail.",
+      "workTitle": "At Work",
+      "work": "At work, Cancers are intuitive and responsible. They thrive in environments where they can care for others, such as human resources, healthcare, or teaching. They are loyal employees who value a stable and secure work environment."
     }
-  },
-  "DailyTip": {
-    "title": "Tip of the Day",
-    "subtitle": "A dose of cosmic wisdom for your journey.",
-    "revealButton": "Reveal tip",
-    "loading": "Consulting the cosmos...",
-    "error": "The skies are cloudy. Please try again later."
   }
 }

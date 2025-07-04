@@ -376,7 +376,7 @@
   "MayanSign.Oc.interpretation": "Oc est le chien, le symbole de la loyauté, de l'amour inconditionnel et des relations. C'est l'énergie du cœur, de l'amitié, de la famille et de la guidance. Les personnes Oc sont des compagnons loyaux, protecteurs, dignes de confiance et profondément engagés envers leurs proches. Elles accordent une grande valeur à leurs relations et agissent souvent comme des guides ou des gardiens pour les autres, offrant un soutien émotionnel et un havre de paix. Leur défi est de surmonter la peur de l'abandon ou de la trahison et d'apprendre à s'aimer autant qu'elles aiment les autres. Oc vous invite à explorer les thèmes de l'amour, de la loyauté, de la confiance et de la camaraderie dans votre vie, et à apprendre que la véritable loyauté commence par soi-même.",
   "MayanSign.Chuen.interpretation": "Chuen est le singe, le maître du jeu, de la magie et de l'illusion divine. C'est l'énergie de la créativité, de la spontanéité et de l'humour. Les personnes Chuen sont souvent des artistes, des interprètes et des farceurs avec un esprit agile et un esprit joueur. Elles ont la capacité de voir la vie comme un grand jeu, d'inventer de nouvelles choses et de trouver la joie dans le moment présent. Elles nous apprennent à ne pas nous prendre trop au sérieux. Leur défi est de ne pas se laisser prendre par la superficialité de leurs propres illusions et d'utiliser leur immense intelligence de manière constructive. Chuen vous invite à jouer, à être créatif, à trouver la magie dans le quotidien et à vivre la vie avec un cœur léger.",
   "MayanSign.Eb.interpretation": "Eb est la route, représentant le voyage de la vie, le libre arbitre et l'abondance. C'est l'énergie qui nous guide et nous rappelle que nous sommes les pilotes de notre propre destin. Les personnes Eb sont souvent généreuses, travailleuses et ont une profonde connexion avec la nature et la Terre Mère. Elles aiment explorer, que ce soit physiquement ou intellectuellement, et cherchent constamment des moyens de s'améliorer et d'améliorer leur communauté. Leur défi est de choisir leur chemin avec sagesse et de ne pas se perdre dans les options ou les attentes des autres. Eb vous invite à parcourir votre chemin avec un but et de la gratitude, en reconnaissant que le voyage lui-même est la destination.",
-  "MayanSign.Ben.interpretation": "Ben est le roseau, le canal creux qui sert de pilier reliant le ciel et la terre. C'est le sceau de la croissance, de l'autorité familiale et de l'espace-temps. Les personnes Ben sont souvent des leaders nés, forts, déterminés et dotés d'un profond sens de leurs convictions et de leurs valeurs. Ce sont des explorateurs de la conscience, cherchant toujours à élargir leurs horizons et à faire le pont entre différentes réalités. Leur défi est de rester flexibles et de ne pas devenir trop rigides ou dogmatiques dans leurs croyances. Ben vous invite à rester ferme dans votre vérité tout en restant ouvert à de nouvelles perspectives, devenant ainsi un canal pour la sagesse céleste sur Terre.",
+  "MayanSign.Ben.interpretation": "Ben est le roseau, le canal creux qui sert de pilier reliant le ciel et la terre. C'est le sceau de la croissance, de l'autorité familiale et de l'espace-temps. Les personnes Ben sont souvent des leaders nés, forts, déterminés et dotés d'un profond sens de leurs convictions et de leurs valeurs. Ce sont des explorateurs de la conscience, cherchant toujours à élargir leurs horizons et à faire le pont entre différentes realités. Leur défi est de rester flexibles et de ne pas devenir trop rigides ou dogmatiques dans leurs croyances. Ben vous invite à rester ferme dans votre vérité tout en restant ouvert à de nouvelles perspectives, devenant ainsi un canal pour la sagesse céleste sur Terre.",
   "MayanSign.Ix.interpretation": "Ix est le jaguar, le chaman et le magicien qui marche entre les mondes. Il représente la magie, la vision nocturne, l'intuition et le pouvoir du cœur. Les personnes Ix sont souvent mystérieuses, sensibles, ont une forte connexion avec la nature et le monde spirituel. Ils sont les gardiens de la sagesse ancienne et des lieux sacrés. Leur énergie est celle du voyant, qui perçoit l'invisible. Leur défi est d'intégrer leur pouvoir de manière responsable, d'honorer leur espace personnel et de faire confiance à leur vision intérieure. Ix vous invite à vous connecter à votre magie intérieure, à faire confiance à votre intuition, à aiguiser vos sens et à parcourir le monde avec un cœur ouvert et courageux.",
   "MayanSign.Men.interpretation": "Men est l'aigle, représentant la vision supérieure, l'esprit collectif et la conscience planétaire. C'est l'énergie qui nous permet de voir la situation dans son ensemble et de nous élever au-dessus des problèmes et des drames quotidiens. Les personnes Men sont souvent des visionnaires, des penseurs indépendants et ont un esprit vif et analytique qui leur permet de voir des schémas et des solutions que les autres manquent. Leur défi est d'apprendre à redescendre sur terre et à se connecter avec les autres sur un plan émotionnel, et pas seulement intellectuel, pour éviter de devenir trop détachés ou critiques. Men vous invite à élargir votre vision, à croire en vos rêves les plus élevés et à partager votre perspective unique pour le bien de tous.",
   "MayanSign.Cib.interpretation": "Cib est le vautour ou la chouette, le gardien de la sagesse ancienne et de la mémoire cosmique. Il représente la capacité de recevoir et de canaliser la guidance divine et de nettoyer les anciens schémas karmiques. Les personnes Cib sont souvent sérieuses, sages, consciencieuses et ont une profonde connexion avec le passé et le karma. Ce sont d'excellents conseillers, capables d'examiner des problèmes complexes avec une perspective supérieure. Leur défi est de se pardonner à eux-mêmes et aux autres, en se libérant des anciens fardeaux pour pouvoir recevoir une nouvelle sagesse. Cib vous invite à calmer votre esprit, à écouter la douce voix de votre conscience intérieure et à honorer la sagesse de vos ancêtres.",
@@ -918,6 +918,13 @@
   "Toast.alreadyRated": "Vous avez déjà réclamé cette récompense.",
   "Toast.dailyReactionStardust": "+{amount} 💫 pour votre première réaction de la journée !",
   "Toast.dailyCommentStardust": "+{amount} 💫 pour votre premier commentaire de la journée !",
+  "DailyTip": {
+    "title": "Conseil du Jour",
+    "subtitle": "Une dose de sagesse cosmique pour votre journée.",
+    "revealButton": "Révéler le conseil",
+    "loading": "Consultation du cosmos...",
+    "error": "Les cieux sont nuageux. Veuillez réessayer plus tard."
+  },
   "ZodiacDetail": {
     "Aries": {
       "title": "Le Bélier Pionnier",
@@ -946,13 +953,34 @@
       "friendship": "Les amis Taureau sont l'incarnation de la loyauté. C'est l'ami sur qui vous pouvez compter pour être là, quoi qu'il arrive. Il est patient et donne de bons conseils, bien qu'il puisse être un peu têtu dans ses opinions.",
       "workTitle": "Au Travail",
       "work": "Professionnellement, le Taureau est méthodique, travailleur et fiable. Il ne s'arrête pas tant que le travail n'est pas fait, et bien fait. Il excelle dans les tâches qui exigent de la patience et de la persévérance, et est un excellent gestionnaire d'argent et de ressources."
+    },
+    "Gemini": {
+      "title": "Les Gémeaux Curieux",
+      "description": "Les Gémeaux sont les caméléons du zodiaque, un signe d'Air curieux, communicatif et constamment en mouvement. Représenté par les jumeaux, il a une double nature qui le rend adaptable et polyvalent.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Doux", "Affectueux", "Curieux", "Adaptable", "Apprend vite"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Nerveux", "Inconstant", "Indécis", "Superficiel", "Hypocrite"],
+      "loveTitle": "En Amour",
+      "love": "En amour, un Gémeaux a besoin de stimulation intellectuelle et de variété. Il est spirituel, flirtant et a besoin d'un partenaire qui peut suivre son esprit agile. La communication est tout pour lui. Il a besoin de liberté et peut se sentir piégé par la routine ou la possessivité.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Les amis Gémeaux sont l'âme de la fête, toujours prêts avec une blague ou une histoire fascinante. Ils ont un large cercle d'amis et aiment connecter les gens. Ils sont amusants, mais peuvent parfois être inconstants avec les projets.",
+      "workTitle": "Au Travail",
+      "work": "Professionnellement, les Gémeaux sont des maîtres de la communication, du marketing et des ventes. Ils s'épanouissent dans des environnements dynamiques et rapides où ils peuvent faire plusieurs tâches à la fois et apprendre de nouvelles choses. Ils s'ennuient facilement avec des tâches répétitives."
+    },
+    "Cancer": {
+      "title": "Le Crabe Nourricier",
+      "description": "Le Cancer, un signe d'Eau gouverné par la Lune, est le grand nourricier du zodiaque. Profondément intuitif et sentimental, le Cancer est guidé par ses émotions et sa profonde connexion au foyer et à la famille.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Tenace", "Très imaginatif", "Loyal", "Émotionnel", "Sympathique"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Lunatique", "Pessimiste", "Soupçonneux", "Manipulateur", "Peu sûr de soi"],
+      "loveTitle": "En Amour",
+      "love": "Dans une relation, le Cancer est un partenaire profondément attentionné et engagé qui recherche la sécurité émotionnelle et un foyer sûr. Ils montrent leur amour par le soin et la protection. Ils peuvent être sensibles et ont besoin d'un partenaire qui comprend leurs profondeurs émotionnelles.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Les amis Cancer sont comme la famille. Ils sont incroyablement loyaux, empathiques et offriront toujours une épaule sur laquelle pleurer. C'est l'ami qui vous préparera de la soupe quand vous êtes malade et se souviendra de votre anniversaire sans faute.",
+      "workTitle": "Au Travail",
+      "work": "Au travail, les Cancers sont intuitifs et responsables. Ils s'épanouissent dans des environnements où ils peuvent prendre soin des autres, comme les ressources humaines, la santé ou l'enseignement. Ce sont des employés loyaux qui apprécient un environnement de travail stable et sûr."
     }
-  },
-  "DailyTip": {
-    "title": "Conseil du Jour",
-    "subtitle": "Une dose de sagesse cosmique pour votre journée.",
-    "revealButton": "Révéler le conseil",
-    "loading": "Consultation du cosmos...",
-    "error": "Les cieux sont nuageux. Veuillez réessayer plus tard."
   }
 }

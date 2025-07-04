@@ -918,6 +918,13 @@
   "Toast.alreadyRated": "Ya has reclamado esta recompensa.",
   "Toast.dailyReactionStardust": "¡+{amount} 💫 por tu primera reacción del día!",
   "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!",
+  "DailyTip": {
+    "title": "Consejo del Día",
+    "subtitle": "Una dosis de sabiduría cósmica para tu jornada.",
+    "revealButton": "Revelar consejo",
+    "loading": "Consultando el cosmos...",
+    "error": "Los cielos están nublados. Por favor, inténtalo más tarde."
+  },
   "ZodiacDetail": {
     "Aries": {
       "title": "El Carnero Pionero",
@@ -946,13 +953,34 @@
       "friendship": "Los amigos Tauro son la personificación de la lealtad. Son el amigo en el que puedes confiar para estar ahí, pase lo que pase. Son pacientes y dan buenos consejos, aunque pueden ser un poco tercos en sus opiniones.",
       "workTitle": "En el Trabajo",
       "work": "Profesionalmente, Tauro es metódico, trabajador y fiable. No se detienen hasta que el trabajo está hecho y bien hecho. Son excelentes para tareas que requieren paciencia y perseverancia, y son grandes gestores del dinero y los recursos."
+    },
+    "Gemini": {
+      "title": "Los Gemelos Curiosos",
+      "description": "Géminis es el camaleón del zodiaco, un signo de Aire curioso, comunicativo y en constante movimiento. Representado por los gemelos, tiene una naturaleza dual que lo hace adaptable y versátil.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Amable", "Cariñoso", "Curioso", "Adaptable", "Rápido para aprender"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Nervioso", "Inconsistente", "Indeciso", "Superficial", "Con dos caras"],
+      "loveTitle": "En el Amor",
+      "love": "En el amor, Géminis necesita estimulación intelectual y variedad. Son ingeniosos, coquetos y necesitan una pareja que pueda seguir su mente ágil. La comunicación lo es todo para ellos. Necesitan libertad y pueden sentirse atrapados por la rutina o la posesividad.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Géminis son el alma de la fiesta, siempre listos con una broma o una historia fascinante. Tienen un amplio círculo de amigos y les encanta conectar personas. Son divertidos, pero a veces pueden ser inconsistentes con los planes.",
+      "workTitle": "En el Trabajo",
+      "work": "Profesionalmente, los Géminis son maestros de la comunicación, el marketing y las ventas. Prosperan en entornos dinámicos y de ritmo rápido donde pueden realizar múltiples tareas y aprender cosas nuevas. Se aburren fácilmente con tareas repetitivas."
+    },
+    "Cancer": {
+      "title": "El Cangrejo Nutridor",
+      "description": "Cáncer, un signo de Agua regido por la Luna, es el máximo nutridor del zodiaco. Profundamente intuitivo y sentimental, Cáncer se guía por sus emociones y su profunda conexión con el hogar y la familia.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Tenaz", "Muy imaginativo", "Leal", "Emocional", "Compasivo"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Malhumorado", "Pesimista", "Suspicaz", "Manipulador", "Inseguro"],
+      "loveTitle": "En el Amor",
+      "love": "En una relación, Cáncer es un compañero profundamente afectuoso y comprometido que anhela seguridad emocional y un hogar seguro. Muestran su amor a través del cuidado y la protección. Pueden ser sensibles y necesitan una pareja que comprenda sus profundidades emocionales.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Cáncer son como familia. Son increíblemente leales, empáticos y siempre ofrecerán un hombro en el que llorar. Son el amigo que te preparará sopa cuando estés enfermo y recordará tu cumpleaños sin falta.",
+      "workTitle": "En el Trabajo",
+      "work": "En el trabajo, los Cáncer son intuitivos y responsables. Prosperan en entornos donde pueden cuidar de los demás, como recursos humanos, atención médica o enseñanza. Son empleados leales que valoran un ambiente de trabajo estable y seguro."
     }
-  },
-  "DailyTip": {
-    "title": "Consejo del Día",
-    "subtitle": "Una dosis de sabiduría cósmica para tu jornada.",
-    "revealButton": "Revelar consejo",
-    "loading": "Consultando el cosmos...",
-    "error": "Los cielos están nublados. Por favor, inténtalo más tarde."
   }
 }
