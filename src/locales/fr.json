@@ -918,7 +918,36 @@
   "Toast.alreadyRated": "Vous avez déjà réclamé cette récompense.",
   "Toast.dailyReactionStardust": "+{amount} 💫 pour votre première réaction de la journée !",
   "Toast.dailyCommentStardust": "+{amount} 💫 pour votre premier commentaire de la journée !",
-  "ZodiacDetail": {},
+  "ZodiacDetail": {
+    "Aries": {
+      "title": "Le Bélier Pionnier",
+      "description": "Bélier, premier signe du zodiaque, est le pionnier. Audacieux, ambitieux et leader né, le Bélier se lance tête baissée dans les défis avec un esprit optimiste et fougueux.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Courageux", "Déterminé", "Confiant", "Enthousiaste", "Honnête"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Impatient", "Lunatique", "Colérique", "Impulsif", "Agressif"],
+      "loveTitle": "En Amour",
+      "love": "En amour, le Bélier est passionné, direct et franc. Il aime le frisson de la chasse et n'a pas peur de faire le premier pas. Il a besoin d'un partenaire qui peut égaler son énergie et apprécier sa nature indépendante.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "En tant qu'ami, le Bélier est loyal, amusant et toujours prêt pour l'aventure. C'est lui qui vous poussera à essayer de nouvelles choses et vous défendra farouchement. Ses amitiés sont basées sur l'action et les expériences partagées.",
+      "workTitle": "Au Travail",
+      "work": "Au travail, le Bélier est un leader né et un auto-entrepreneur motivé. Il s'épanouit dans les environnements compétitifs et n'a pas peur de prendre des risques. Il travaille mieux lorsqu'il a l'autonomie de prendre les commandes et de mener un projet du début à la fin."
+    },
+    "Taurus": {
+      "title": "Le Taureau Inébranlable",
+      "description": "Le Taureau, signe de Terre, valorise la stabilité et le confort par-dessus tout. Il est connu pour sa fiabilité, sa patience et sa nature sensuelle et terre-à-terre. Il est le bâtisseur du zodiaque.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Fiable", "Patient", "Pratique", "Dévoué", "Responsable"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Têtu", "Possessif", "Intransigeant", "Hédoniste", "Paresseux"],
+      "loveTitle": "En Amour",
+      "love": "Dans les relations, le Taureau est un partenaire loyal, dévoué et très sensuel. Il recherche la sécurité et la stabilité. Une fois qu'il s'engage, c'est pour le long terme. Il aime les plaisirs simples avec son partenaire, comme un bon repas ou une soirée confortable à la maison.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Les amis Taureau sont l'incarnation de la loyauté. C'est l'ami sur qui vous pouvez compter pour être là, quoi qu'il arrive. Il est patient et donne de bons conseils, bien qu'il puisse être un peu têtu dans ses opinions.",
+      "workTitle": "Au Travail",
+      "work": "Professionnellement, le Taureau est méthodique, travailleur et fiable. Il ne s'arrête pas tant que le travail n'est pas fait, et bien fait. Il excelle dans les tâches qui exigent de la patience et de la persévérance, et est un excellent gestionnaire d'argent et de ressources."
+    }
+  },
   "DailyTip": {
     "title": "Conseil du Jour",
     "subtitle": "Une dose de sagesse cosmique pour votre journée.",

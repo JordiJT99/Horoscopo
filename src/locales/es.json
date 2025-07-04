@@ -434,7 +434,7 @@
   "GalacticTone.Solar.interpretation": "El Tono Solar es el pulso de la intención, la energía que realiza y materializa. Con tu integridad confirmada, ahora es el momento de actuar con una intención clara y enfocada. Es como el rayo de sol que atraviesa las nubes para tocar un punto específico en la Tierra. Este tono te da la fuerza para dar los pasos decisivos que llevarán tu propósito a la manifestación. Hoy, la pregunta es: '¿Cómo logro mi propósito?'. No se trata de cualquier acción, sino de la acción precisa y deliberada que te acerca a tu meta. Identifica el siguiente paso clave y ejecútalo con toda tu voluntad y convicción.",
   "GalacticTone.Planetary.interpretation": "El Tono Planetario es el de la manifestación y la perfección. Aquí es donde tus intenciones y acciones se hacen visibles en el mundo físico. Es el momento de la cosecha, de ver el resultado tangible de tu trabajo. Pero no se trata solo de producir, sino de perfeccionar. Este tono te invita a observar lo que has creado y a hacer los ajustes finales para que se alinee perfectamente con tu visión original. Hoy, la pregunta es: '¿Cómo perfecciono lo que hago?'. Observa tu creación, ya sea un proyecto, una relación o un cambio interno, y pule los detalles. Es el momento de manifestar la excelencia.",
   "GalacticTone.Spectral.interpretation": "El Tono Espectral trae la energía de la liberación y la disolución. Después de manifestar (Tono 10), este tono te pide que sueltes todo lo que no es esencial, todo el exceso de equipaje emocional, mental o físico que has acumulado en el proceso. Es una energía de catarsis, de limpieza profunda. Como una serpiente que muda su piel, debes liberarte de las viejas estructuras y creencias para poder seguir creciendo. Hoy, la pregunta es: '¿Cómo libero y dejo ir?'. Identifica lo que te pesa, lo que te limita, y haz un acto consciente de soltarlo, creando espacio y ligereza para el siguiente ciclo.",
-  "GalacticTone.Crystal.interpretation": "El Tono Cristal es el de la cooperación y la comunidad. Una vez que te has liberado de lo innecesario, estás listo para compartir tu sabiduría y tus logros con los demás. Este tono representa la 'mesa redonda', donde todos los puntos de vista son válidos y la colaboración crea una estructura más compleja y estable que la que podrías crear solo. Es la energía de la sinergia, de universalizar tu propósito para que beneficie al colectivo. Hoy, la pregunta es: '¿Cómo puedo dedicarme a la cooperación?'. Busca formas de compartir lo que has aprendido, de colaborar con otros y de entender cómo tu viaje personal encaja en el tejido de la comunidad.",
+  "GalacticTone.Crystal.interpretation": "El Tono Cristal es el de la cooperación y la comunidad. Una vez que te has liberado de lo innecesario, estás listo para compartir tu sabiduría y tus logros con los demás. Este tono representa la 'mesa redonda', donde todos los puntos de vista son válidos y la colaboración crea una estructura más compleja y stable que la que podrías crear solo. Es la energía de la sinergia, de universalizar tu propósito para que beneficie al colectivo. Hoy, la pregunta es: '¿Cómo puedo dedicarme a la cooperación?'. Busca formas de compartir lo que has aprendido, de colaborar con otros y de entender cómo tu viaje personal encaja en el tejido de la comunidad.",
   "GalacticTone.Cosmic.interpretation": "El Tono Cósmico es el vuelo final, el que trasciende el ciclo actual y se prepara para el siguiente. Representa la presencia pura y la capacidad de perdurar en el tiempo. Habiendo completado el viaje de 12 pasos, ahora puedes tomar tu lugar en el cosmos, presente y expandido. Es un día para celebrar tu viaje, para integrar todo lo que has aprendido y para expandir tu alegría y tu amor sin límites. Hoy, la pregunta es: '¿Cómo puedo expandir mi alegría y mi amor?'. Vive en la magia del momento presente, sabiendo que has completado un ciclo y estás listo para el siguiente. Es la energía del regreso a casa y el despegue simultáneo.",
   "MoonPhase.new": "Luna Nueva",
   "MoonPhase.waxingCrescent": "Luna Creciente",
@@ -918,7 +918,36 @@
   "Toast.alreadyRated": "Ya has reclamado esta recompensa.",
   "Toast.dailyReactionStardust": "¡+{amount} 💫 por tu primera reacción del día!",
   "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!",
-  "ZodiacDetail": {},
+  "ZodiacDetail": {
+    "Aries": {
+      "title": "El Carnero Pionero",
+      "description": "Aries, el primer signo del zodiaco, es el pionero. Audaz, ambicioso y un líder nato, Aries se lanza de cabeza a los desafíos con un espíritu optimista y ardiente.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Valiente", "Determinado", "Confiado", "Entusiasta", "Honesto"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Impaciente", "Malhumorado", "De mal genio", "Impulsivo", "Agresivo"],
+      "loveTitle": "En el Amor",
+      "love": "En el amor, Aries es apasionado, directo y sin rodeos. Disfrutan de la emoción de la conquista y no temen dar el primer paso. Necesitan una pareja que pueda igualar su energía y apreciar su naturaleza independiente.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Como amigo, Aries es leal, divertido y siempre está dispuesto a una aventura. Son los que te empujarán a probar cosas nuevas y te defenderán ferozmente. Sus amistades se basan en la acción y las experiencias compartidas.",
+      "workTitle": "En el Trabajo",
+      "work": "En el trabajo, Aries es un líder nato y un motivado emprendedor. Prosperan en entornos competitivos y no temen tomar riesgos. Trabajan mejor cuando tienen la autonomía para tomar el mando y llevar un proyecto de principio a fin."
+    },
+    "Taurus": {
+      "title": "El Toro Resuelto",
+      "description": "Tauro, un signo de Tierra, valora la estabilidad y el confort por encima de todo. Son conocidos por su fiabilidad, paciencia y una naturaleza sensual y con los pies en la tierra. Son los constructores del zodiaco.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Fiable", "Paciente", "Práctico", "Devoto", "Responsable"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Testarudo", "Posesivo", "Intransigente", "Hedonista", "Perezoso"],
+      "loveTitle": "En el Amor",
+      "love": "En las relaciones, Tauro es un compañero leal, devoto y muy sensual. Buscan seguridad y estabilidad. Una vez que se comprometen, son para toda la vida. Disfrutan de los placeres simples con su pareja, como una buena comida o una noche acogedora en casa.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Tauro son la personificación de la lealtad. Son el amigo en el que puedes confiar para estar ahí, pase lo que pase. Son pacientes y dan buenos consejos, aunque pueden ser un poco tercos en sus opiniones.",
+      "workTitle": "En el Trabajo",
+      "work": "Profesionalmente, Tauro es metódico, trabajador y fiable. No se detienen hasta que el trabajo está hecho y bien hecho. Son excelentes para tareas que requieren paciencia y perseverancia, y son grandes gestores del dinero y los recursos."
+    }
+  },
   "DailyTip": {
     "title": "Consejo del Día",
     "subtitle": "Una dosis de sabiduría cósmica para tu jornada.",
