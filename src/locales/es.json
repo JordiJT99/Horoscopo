@@ -372,7 +372,7 @@
   "MayanSign.Cimi.interpretation": "Cimi es el sello de la muerte y la transformación. Representa la capacidad de soltar lo viejo para dar paso a lo nuevo, la rendición y el puente entre los mundos. Lejos de ser un signo negativo, Cimi es un signo de gran oportunidad de renovación. Aquellos nacidos bajo el sello de Cimi son a menudo sabios, comprensivos y tienen una perspectiva única sobre los ciclos de la vida. Comprenden que cada final es un nuevo comienzo. Su desafío es no temer al cambio y aprender a rendirse al flujo natural de la vida sin resistencia. Cimi te anima a perdonar, a soltar lo que ya no te sirve, a despojarte de viejas identidades y a abrazar la liberación de la transformación como parte esencial de la evolución.",
   "MayanSign.Manik.interpretation": "Manik es la mano, que simboliza la sanación, la realización y el conocimiento. Es la energía de la acción concreta, de las herramientas y de la finalización. Las personas Manik son a menudo hábiles, prácticas y tienen un don natural para la sanación, ya sea física, emocional o espiritual. Son solucionadores de problemas que disfrutan arremangándose y haciendo las cosas. Son generosos y encuentran satisfacción en ayudar a los demás. Su desafío es aprender a recibir tanto como dan y a evitar el perfeccionismo. Manik te invita a usar tus manos para crear, para sanar, para compartir lo que has aprendido con los demás y para completar lo que has comenzado, convirtiendo tus visiones en realidad tangible.",
   "MayanSign.Lamat.interpretation": "Lamat es la estrella, que representa la belleza, la armonía y la elegancia. Es la energía que nos conecta con la armonía del cosmos y nos recuerda nuestra propia luz interior. Las personas Lamat son a menudo artísticas, sociables y tienen un profundo sentido de la estética. Buscan crear armonía y belleza en su entorno y en sus relaciones. Tienen un brillo natural que atrae a los demás. Su desafío es no quedar atrapados en la superficialidad o en la necesidad de validación externa, y aprender a encontrar la belleza también en la imperfección. Lamat te invita a hacer brillar tu propia luz, a abrazar la creatividad como una forma de servicio y a encontrar la armonía en todas las cosas.",
-  "MayanSign.Muluc.interpretation": "Muluc es el agua, que representa las emociones primordiales, la purificación y el flujo de la vida. Es el sello de la luna y de la conciencia despierta. Las personas Muluc son altamente intuitivas, empáticas y emocionalmente profundas. Son como antenas, captando los sentimientos de quienes los rodean. Tienen una fuerte conexión con lo divino femenino y los ciclos de la naturaleza. Su desafío es aprender a navegar por sus propias corrientes emocionales sin ahogarse en ellas ni en las de los demás. Muluc te invita a honrar tus emociones, a purificar tu corazón de viejas heridas, a confiar en tu intuición y a fluir con la vida en lugar de luchar contra ella.",
+  "MayanSign.Muluc.interpretation": "Muluc es el agua, que representa las emociones primordiales, la purificación y el flujo de la vida. Es el sello de la luna y de la conciencia despierta. Las personas Muluc son altamente intuitivas, empáticas y emocionalmente profundas. Son como antenas, captando los sentimientos de quienes los rodean. Tienen una fuerte conexión con lo divino femenino y los ciclos de la naturaleza. Su desafío es aprender a navegar por sus propias corrientes emocionales sin ahogarse en ellas ni en las de los demás. Muluc te invita a honrar tus emociones, a purificar tu corazón de viejas heridas, a confiar en tu intución y a fluir con la vida en lugar de luchar contra ella.",
   "MayanSign.Oc.interpretation": "Oc es el perro, el símbolo de la lealtad, el amor incondicional y las relaciones. Es la energía del corazón, de la amistad, la familia y la guía. Las personas Oc son compañeros leales, protectores, dignos de confianza y profundamente comprometidos con sus seres queridos. Valoran profundamente sus relaciones y a menudo actúan como guías o guardianes para otros, ofreciendo apoyo emocional y un puerto seguro. Su desafío es superar el miedo al abandono o a la traición y aprender a amarse a sí mismos tanto como aman a los demás. Oc te invita a explorar los temas del amor, la lealtad, la confianza y la compañía en tu vida, y a aprender que la verdadera lealtad comienza contigo mismo.",
   "MayanSign.Chuen.interpretation": "Chuen es el mono, el maestro del juego, la magia y la ilusión divina. Es la energía de la creatividad, la espontaneidad y el humor. Las personas Chuen son a menudo artistas, intérpretes y bromistas con una mente ágil y un espíritu juguetón. Tienen la habilidad de ver la vida como un gran juego, de inventar cosas nuevas y de encontrar la alegría en el momento presente. Nos enseñan a no tomarnos demasiado en serio. Su desafío es no quedar atrapados en la superficialidad de sus propias ilusiones y a usar su inmensa inteligencia de manera constructiva. Chuen te invita a jugar, a ser creativo, a encontrar la magia en lo cotidiano y a vivir la vida con un corazón ligero.",
   "MayanSign.Eb.interpretation": "Eb es el camino, que representa el viaje de la vida, el libre albedrío y la abundancia. Es la energía que nos guía y nos recuerda que somos los pilotos de nuestro propio destino. Las personas Eb son a menudo generosas, trabajadoras y tienen una profunda conexión con la naturaleza y la Madre Tierra. Les gusta explorar, ya sea física o intelectualmente, y están constantemente buscando formas de mejorarse a sí mismos y a su comunidad. Su desafío es elegir su camino con sabiduría y a no perderse en las opciones o en las expectativas de los demás. Eb te invita a caminar tu sendero con propósito y gratitud, reconociendo que el viaje en sí mismo es el destino.",
@@ -981,6 +981,48 @@
       "friendship": "Los amigos Cáncer son como familia. Son increíblemente leales, empáticos y siempre ofrecerán un hombro en el que llorar. Son el amigo que te preparará sopa cuando estés enfermo y recordará tu cumpleaños sin falta.",
       "workTitle": "En el Trabajo",
       "work": "En el trabajo, los Cáncer son intuitivos y responsables. Prosperan en entornos donde pueden cuidar de los demás, como recursos humanos, atención médica o enseñanza. Son empleados leales que valoran un ambiente de trabajo estable y seguro."
+    },
+    "Leo": {
+      "title": "El León Majestuoso",
+      "description": "Leo, un signo de Fuego regido por el Sol, es el líder y artista nato del zodiaco. Regio, seguro de sí mismo y con un corazón de oro, a los Leo les encanta ser el centro de atención e inspirar a otros con su calidez y entusiasmo.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Creativo", "Apasionado", "Generoso", "Cálido", "Alegre"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Arrogante", "Testarudo", "Egocéntrico", "Perezoso", "Inflexible"],
+      "loveTitle": "En el Amor",
+      "love": "En una relación, Leo es un compañero apasionado, leal e increíblemente generoso. Aman los grandes gestos románticos y necesitan sentirse admirados y adorados. Son ferozmente protectores con sus seres queridos y harán todo lo posible para hacerlos felices.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Como amigo, Leo es el alma de la fiesta, llevando diversión y energía a donde quiera que vaya. Son extremadamente leales y generosos, tratando a sus amigos como a la realeza. Les encanta alentar y motivar a sus amigos a ser lo mejor de sí mismos.",
+      "workTitle": "En el Trabajo",
+      "work": "Profesionalmente, los Leo son líderes natos que prosperan bajo los reflectores. Sobresalen en roles que permiten la creatividad y el reconocimiento público. Son ambiciosos y tienen un don para el drama, lo que los convierte en excelentes gerentes, artistas y oradores."
+    },
+    "Virgo": {
+      "title": "La Virgen Meticulosa",
+      "description": "Virgo, un signo de Tierra, es práctico, analítico y trabajador. Tienen un profundo sentido de la humanidad y prestan mucha atención a los detalles más pequeños. Su enfoque metódico de la vida asegura que nada se deje al azar.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Leal", "Analítico", "Amable", "Trabajador", "Práctico"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Tímido", "Preocupado", "Excesivamente crítico", "Todo trabajo y nada de juego", "Perfeccionista"],
+      "loveTitle": "En el Amor",
+      "love": "En el amor, Virgo muestra afecto a través de actos de servicio y apoyo práctico en lugar de grandes declaraciones. Son compañeros leales y devotos que buscan una conexión profunda e intelectual. Necesitan una pareja que aprecie su atención al detalle y su deseo de ser útil.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Virgo son increíblemente fiables y dan los mejores y más prácticos consejos. Son a quienes llamas cuando necesitas ayuda para organizar tu vida o resolver un problema complejo. Son leales y solidarios, aunque a veces pueden ser críticos.",
+      "workTitle": "En el Trabajo",
+      "work": "En el trabajo, los Virgo son la columna vertebral de cualquier equipo. Sus mentes analíticas y su meticulosa atención al detalle los convierten en excelentes editores, investigadores y gerentes de proyectos. Son eficientes, organizados y dedicados a producir un trabajo de alta calidad."
+    },
+    "Libra": {
+      "title": "La Balanza Armoniosa",
+      "description": "Libra, un signo de Aire, está obsesionado con el equilibrio y la armonía. Regido por Venus, tiene un profundo aprecio por la belleza, el arte y la asociación. Son los diplomáticos del zodiaco, siempre esforzándose por crear equidad y paz.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Cooperativo", "Diplomático", "Cortés", "Justo", "Social"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Indeciso", "Evita las confrontaciones", "Guarda rencor", "Autocompasivo", "Superficial"],
+      "loveTitle": "En el Amor",
+      "love": "En una relación, Libra busca una verdadera asociación basada en la igualdad y la conexión intelectual. Son increíblemente románticos y encantadores, y les encanta crear una vida hermosa y armoniosa con su pareja. Necesitan una pareja que sea su igual en todos los sentidos.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Libra son los mariposas sociales y los pacificadores de su grupo. Son excelentes oyentes y mediadores, siempre esforzándose por asegurar que todos se lleven bien. Les encanta socializar y disfrutar de actividades culturales con sus amigos.",
+      "workTitle": "En el Trabajo",
+      "work": "Profesionalmente, los Libra sobresalen en roles que requieren diplomacia, negociación y un sentido de la justicia. Son excelentes abogados, mediadores y líderes de equipo. Prosperan en entornos colaborativos y son hábiles para unir a las personas para lograr un objetivo común."
     }
   }
 }
