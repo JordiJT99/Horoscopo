@@ -15,7 +15,7 @@ interface CosmicEnergyBarProps {
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust } = useCosmicEnergy();
   const { toast } = useToast();
 
   const handleAddPoints = () => {
@@ -38,6 +38,14 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     toast({
       title: `🔧 Dev Tool`,
       description: `-100 EC (Dev)`,
+    });
+  };
+
+  const handleAddStardust = () => {
+    addStardust(50);
+    toast({
+        title: `🔧 Dev Tool`,
+        description: `+50 Stardust (Dev)`,
     });
   };
 
@@ -69,6 +77,16 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>Dev Tool: Add 100 EC</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                             <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-400" onClick={handleAddStardust}>
+                                <Gem className="h-4 w-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Dev Tool: Add 50 Stardust</p>
                         </TooltipContent>
                     </Tooltip>
                 </div>
