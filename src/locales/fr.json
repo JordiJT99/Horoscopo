@@ -1023,6 +1023,48 @@
       "friendship": "Les amis Balance sont les papillons sociaux et les pacificateurs de leur groupe. Ce sont d'excellents auditeurs et médiateurs, s'efforçant toujours de s'assurer que tout le monde s'entend bien. Ils aiment socialiser et profiter des activités culturelles avec leurs amis.",
       "workTitle": "Au Travail",
       "work": "Professionnellement, les Balances excellent dans les rôles qui exigent de la diplomatie, de la négociation et un sens de la justice. Ils font d'excellents avocats, médiateurs et chefs d'équipe. Ils s'épanouissent dans des environnements collaboratifs et sont doués pour rassembler les gens pour atteindre un objectif commun."
+    },
+    "Scorpio": {
+      "title": "Le Scorpion Énigmatique",
+      "description": "Le Scorpion est un signe d'Eau passionné et assertif. Mystérieux et profond, il opère à un niveau d'intensité émotionnelle souvent caché sous un extérieur calme. Il est connu pour sa détermination et sa capacité de décision.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Ingénieux", "Courageux", "Passionné", "Têtu", "Un véritable ami"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Méfiant", "Jaloux", "Secret", "Violent", "Vindicatif"],
+      "loveTitle": "En Amour",
+      "love": "En amour, le Scorpion est un partenaire intense et profondément engagé. Il recherche une connexion profonde, d'âme à âme, et est incroyablement passionné. La confiance et la loyauté sont tout pour lui, et il attend le même niveau de dévotion qu'il donne.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Les amis Scorpion sont farouchement loyaux et protecteurs. Ce sont ceux à qui vous confiez vos secrets les plus profonds. Ils préfèrent un petit cercle d'amis authentiques à une grande foule et seront des amis pour la vie une fois leur confiance gagnée.",
+      "workTitle": "Au Travail",
+      "work": "Professionnellement, les Scorpions sont concentrés, ingénieux et d'excellents solutionneurs de problèmes. Ils s'épanouissent dans des rôles qui exigent de l'enquête et un esprit stratégique. Ils sont déterminés à réussir et n'ont pas peur des défis ou de la pression."
+    },
+    "Sagittarius": {
+      "title": "L'Archer Aventureux",
+      "description": "Le Sagittaire, dernier signe de Feu, est l'aventurier et le philosophe ultime du zodiaque. Sa quête de connaissance ne connaît pas de limites, et il est alimenté par l'optimisme et l'amour de la liberté.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Généreux", "Idéaliste", "Grand sens de l'humour", "Optimiste", "Enthousiaste"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Promet plus qu'il ne peut tenir", "Très impatient", "Dira n'importe quoi, même si c'est peu diplomate", "Agité"],
+      "loveTitle": "En Amour",
+      "love": "Dans les relations, le Sagittaire a besoin d'un partenaire qui soit aussi un compagnon de voyage. Il valorise la liberté et l'honnêteté par-dessus tout. Il est amusant, joueur et a besoin d'espace pour vagabonder. Un partenaire possessif le fera vite fuir.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Le Sagittaire est l'ami que l'on appelle pour une aventure de dernière minute. Il est optimiste, encourageant, et ses aperçus philosophiques peuvent être vraiment inspirants. Son honnêteté brutale, bien qu'intentionnelle, peut parfois être difficile à gérer.",
+      "workTitle": "Au Travail",
+      "work": "Le Sagittaire s'épanouit dans les carrières qui impliquent des voyages, l'apprentissage et la liberté. Ce sont des promoteurs et des entrepreneurs naturels, toujours à la recherche de la prochaine grande nouveauté. Ils travaillent mieux lorsqu'ils ne sont pas microgérés et peuvent explorer de nouvelles idées."
+    },
+    "Capricorn": {
+      "title": "La Chèvre Déterminée",
+      "description": "Le Capricorne, dernier signe de Terre, représente la discipline, l'ambition et le jeu à long terme. Ce sont les maîtres de la planification et ils sont déterminés à atteindre le sommet de n'importe quelle montagne qu'ils se fixent.",
+      "strengthsTitle": "Forces",
+      "strengths": ["Responsable", "Discipliné", "Maîtrise de soi", "Bons gestionnaires", "Loyal"],
+      "weaknessesTitle": "Faiblesses",
+      "weaknesses": ["Je-sais-tout", "Rancunier", "Condescendant", "S'attend au pire", "Stoïque"],
+      "loveTitle": "En Amour",
+      "love": "En amour, le Capricorne est un partenaire sérieux et engagé. Il montre son amour en construisant un avenir sûr et stable. Il n'est peut-être pas le plus ouvertement romantique, mais son dévouement est inébranlable. Il recherche un partenaire dans tous les sens du terme.",
+      "friendshipTitle": "En Amitié",
+      "friendship": "Les amis Capricorne sont loyaux et offrent les conseils les plus pratiques et les plus sensés. Ils peuvent avoir un petit cercle d'amis, mais leur loyauté est à vie. C'est l'ami qui vous aidera à rédiger votre CV ou à planifier votre avenir financier.",
+      "workTitle": "Au Travail",
+      "work": "Professionnellement, les Capricornes sont les ultimes managers et PDG. Ils sont incroyablement disciplinés, axés sur les objectifs et ont une compréhension innée de la structure et de la stratégie à long terme. Ils sont destinés à occuper des postes d'autorité."
     }
   }
 }

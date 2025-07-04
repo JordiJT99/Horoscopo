@@ -107,7 +107,7 @@
   "Zodiac.risingSign": "Rising Sign",
   "Zodiac.element": "Element",
   "Zodiac.polarity": "Polarity",
-  "Zodiac.modality": "Modalität",
+  "Zodiac.modality": "Modality",
   "Zodiac.sunSignShort": "Sun",
   "Zodiac.moonSignShort": "Moon",
   "Zodiac.risingSignShort": "Asc",
@@ -1023,6 +1023,48 @@
       "friendship": "Libra friends are the social butterflies and peacemakers of their group. They are excellent listeners and mediators, always striving to ensure everyone gets along. They love to socialize and enjoy cultural activities with their friends.",
       "workTitle": "At Work",
       "work": "Professionally, Libras excel in roles that require diplomacy, negotiation, and a sense of justice. They make excellent lawyers, mediators, and team leaders. They thrive in collaborative environments and are skilled at bringing people together to achieve a common goal."
+    },
+    "Scorpio": {
+      "title": "The Enigmatic Scorpion",
+      "description": "Scorpio is a passionate and assertive Water sign. Mysterious and deep, they operate on a level of emotional intensity that is often hidden beneath a calm exterior. They are known for their determination and decisiveness.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Resourceful", "Brave", "Passionate", "Stubborn", "A true friend"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Distrusting", "Jealous", "Secretive", "Violent", "Vindictive"],
+      "loveTitle": "In Love",
+      "love": "In love, Scorpio is an intense and deeply committed partner. They seek a profound, soul-deep connection and are incredibly passionate. Trust and loyalty are everything to them, and they expect the same level of devotion they give.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Scorpio friends are fiercely loyal and protective. They are the ones you trust with your deepest secrets. They prefer a small circle of authentic friends over a large crowd and will be a friend for life once their trust is earned.",
+      "workTitle": "At Work",
+      "work": "Professionally, Scorpios are focused, resourceful, and excellent problem-solvers. They thrive in roles that require investigation and a strategic mind. They are determined to succeed and are not afraid of challenges or pressure."
+    },
+    "Sagittarius": {
+      "title": "The Adventurous Archer",
+      "description": "Sagittarius, the final Fire sign, is the ultimate adventurer and philosopher of the zodiac. Their quest for knowledge knows no bounds, and they are fueled by optimism and a love for freedom.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Generous", "Idealistic", "Great sense of humor", "Optimistic", "Enthusiastic"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Promises more than can deliver", "Very impatient", "Will say anything no matter how undiplomatic", "Restless"],
+      "loveTitle": "In Love",
+      "love": "In relationships, Sagittarius needs a partner who is also a travel buddy. They value freedom and honesty above all. They are fun-loving, playful, and need space to roam. A possessive partner will quickly send them running.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Sagittarius is the friend you call for a last-minute adventure. They are optimistic, encouraging, and their philosophical insights can be truly inspiring. Their brutal honesty, while well-intentioned, can sometimes be a lot to handle.",
+      "workTitle": "At Work",
+      "work": "Sagittarius thrives in careers that involve travel, learning, and freedom. They are natural promoters and entrepreneurs, always looking for the next big thing. They work best when they are not micromanaged and can explore new ideas."
+    },
+    "Capricorn": {
+      "title": "The Determined Goat",
+      "description": "Capricorn, the final Earth sign, represents discipline, ambition, and the long game. They are the masters of planning and are determined to reach the top of any mountain they set their sights on.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Responsible", "Disciplined", "Self-control", "Good managers", "Loyal"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Know-it-all", "Unforgiving", "Condescending", "Expecting the worst", "Stoic"],
+      "loveTitle": "In Love",
+      "love": "In love, Capricorn is a serious and committed partner. They show their love by building a secure and stable future. They may not be the most outwardly romantic, but their devotion is unwavering. They are looking for a partner in every sense of the word.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Capricorn friends are loyal and offer the most practical, no-nonsense advice. They may have a small circle of friends, but their loyalty is for life. They are the friend who will help you build your resume or plan your financial future.",
+      "workTitle": "At Work",
+      "work": "Professionally, Capricorns are the ultimate managers and CEOs. They are incredibly disciplined, goal-oriented, and have an innate understanding of structure and long-term strategy. They are destined to be in positions of authority."
     }
   }
 }
