@@ -34,7 +34,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder,
       <div className={`${cardClasses} opacity-60 cursor-not-allowed relative`}>
         <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary/50 mb-1.5 sm:mb-2" />
         <CardTitle className="text-xs sm:text-sm font-headline text-foreground/60 leading-tight">{title}</CardTitle>
-        <Badge variant="secondary" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.comingSoon'] || 'Coming Soon'}</Badge>
+        <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.comingSoon'] || 'Coming Soon'}</Badge>
       </div>
     );
   }
