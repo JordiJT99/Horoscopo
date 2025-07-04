@@ -1023,6 +1023,48 @@
       "friendship": "Los amigos Libra son los mariposas sociales y los pacificadores de su grupo. Son excelentes oyentes y mediadores, siempre esforzándose por asegurar que todos se lleven bien. Les encanta socializar y disfrutar de actividades culturales con sus amigos.",
       "workTitle": "En el Trabajo",
       "work": "Profesionalmente, los Libra sobresalen en roles que requieren diplomacia, negociación y un sentido de la justicia. Son excelentes abogados, mediadores y líderes de equipo. Prosperan en entornos colaborativos y son hábiles para unir a las personas para lograr un objetivo común."
+    },
+    "Scorpio": {
+      "title": "El Escorpión Enigmático",
+      "description": "Escorpio es un signo de Agua apasionado y asertivo. Misterioso y profundo, opera a un nivel de intensidad emocional que a menudo se oculta bajo un exterior tranquilo. Son conocidos por su determinación y decisión.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Ingenioso", "Valiente", "Apasionado", "Tenaz", "Un verdadero amigo"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Desconfiado", "Celoso", "Reservado", "Violento", "Vengativo"],
+      "loveTitle": "En el Amor",
+      "love": "En el amor, Escorpio es un compañero intenso y profundamente comprometido. Buscan una conexión profunda, de alma a alma, y son increíblemente apasionados. La confianza y la lealtad lo son todo para ellos, y esperan el mismo nivel de devoción que dan.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Escorpio son ferozmente leales y protectores. Son aquellos en quienes confías tus secretos más profundos. Prefieren un pequeño círculo de amigos auténticos a una gran multitud y serán amigos de por vida una vez que se gane su confianza.",
+      "workTitle": "En el Trabajo",
+      "work": "Profesionalmente, los Escorpio son enfocados, ingeniosos y excelentes solucionadores de problemas. Prosperan en roles que requieren investigación y una mente estratégica. Están decididos a tener éxito y no temen a los desafíos o la presión."
+    },
+    "Sagittarius": {
+      "title": "El Arquero Aventurero",
+      "description": "Sagitario, el último signo de Fuego, es el aventurero y filósofo definitivo del zodiaco. Su búsqueda de conocimiento no tiene límites, y se alimentan de optimismo y amor por la libertad.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Generoso", "Idealista", "Gran sentido del humor", "Optimista", "Entusiasta"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Promete más de lo que puede cumplir", "Muy impaciente", "Dirá cualquier cosa por muy poco diplomática que sea", "Inquieto"],
+      "loveTitle": "En el Amor",
+      "love": "En las relaciones, Sagitario necesita una pareja que también sea un compañero de viaje. Valoran la libertad y la honestidad por encima de todo. Son amantes de la diversión, juguetones y necesitan espacio para deambular. Una pareja posesiva los hará huir rápidamente.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Sagitario es el amigo al que llamas para una aventura de último minuto. Son optimistas, alentadores, y sus perspectivas filosóficas pueden ser verdaderamente inspiradoras. Su honestidad brutal, aunque bien intencionada, a veces puede ser difícil de manejar.",
+      "workTitle": "En el Trabajo",
+      "work": "Sagitario prospera en carreras que involucran viajes, aprendizaje y libertad. Son promotores y emprendedores naturales, siempre buscando la próxima gran cosa. Trabajan mejor cuando no son microgestionados y pueden explorar nuevas ideas."
+    },
+    "Capricorn": {
+      "title": "La Cabra Determinada",
+      "description": "Capricornio, el último signo de Tierra, representa la disciplina, la ambición y el juego a largo plazo. Son los maestros de la planificación y están decididos a alcanzar la cima de cualquier montaña que se propongan.",
+      "strengthsTitle": "Fortalezas",
+      "strengths": ["Responsable", "Disciplinado", "Autocontrol", "Buenos gerentes", "Leal"],
+      "weaknessesTitle": "Debilidades",
+      "weaknesses": ["Sabelotodo", "Rencoroso", "Condescendiente", "Espera lo peor", "Estoico"],
+      "loveTitle": "En el Amor",
+      "love": "En el amor, Capricornio es un compañero serio y comprometido. Muestran su amor construyendo un futuro seguro y estable. Puede que no sean los más románticos exteriormente, pero su devoción es inquebrantable. Buscan un socio en todos los sentidos de la palabra.",
+      "friendshipTitle": "En la Amistad",
+      "friendship": "Los amigos Capricornio son leales y ofrecen los consejos más prácticos y sensatos. Pueden tener un pequeño círculo de amigos, pero su lealtad es para toda la vida. Son el amigo que te ayudará a construir tu currículum o a planificar tu futuro financiero.",
+      "workTitle": "En el Trabajo",
+      "work": "Profesionalmente, los Capricornio son los gerentes y directores ejecutivos definitivos. Son increíblemente disciplinados, orientados a objetivos y tienen una comprensión innata de la estructura y la estrategia a largo plazo. Están destinados a ocupar puestos de autoridad."
     }
   }
 }
