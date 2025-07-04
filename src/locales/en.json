@@ -369,7 +369,7 @@
   "MayanSign.Akbal.interpretation": "Akbal is the seal of the night, the sanctuary of the home, and the vast world of dreams. It represents deep introspection, intuition, and the courageous journey into the darkness of the subconscious to find the light of inner truth. Those under the Akbal seal are often deep, mysterious, and possess a rich inner life. They are comfortable in silence and stillness, where they can explore their mental labyrinths. Their main challenge is not to get lost in their own thoughts or fears, learning to balance introspection with action in the outer world. Their task is to bring the treasures of their inner world out into the light of day. Akbal invites you to explore your dreams, to confront your shadows, and to find the security and abundance that reside within you, in your own inner temple.",
   "MayanSign.Kan.interpretation": "Kan symbolizes the seed, the immense potential contained in a tiny point, and the explosive energy of growth. It represents the opportunity to flourish, to manifest talents, and to achieve self-development. Kan people are dynamic, energetic, full of ideas, and possess an innate desire to evolve and expand. They are natural leaders who inspire others to reach their full potential, acting as catalysts for change. Their main challenge lies in cultivating patience, understanding that all growth has its own rhythm. They must learn to trust the natural process without forcing results, avoiding the frustration of non-instant gratification. Kan encourages you to plant the seeds of your intentions with clear focus, to care for them with awareness and dedication, and to trust that, at the right time, you will reap the fruits of your labor.",
   "MayanSign.Chicchan.interpretation": "Chicchan is the serpent, the symbol of life force (Kundalini), pure instinct, and the deep connection with the intelligence of the physical body. It is the raw energy of survival, passion, sexuality, and the primal wisdom that resides in our DNA. Chicchan people are charismatic, intense, and possess a magnetic presence that does not go unnoticed. Guided by their instincts, they have an incredible capacity for transformation and regeneration, shedding their skin to be reborn stronger. Their challenge is to learn to balance their powerful instinctual energy with the wisdom of the heart, avoiding falling into purely primal reactions. Chicchan invites you to honor your body as a sacred temple, to listen attentively to your instincts, to embrace your passion for life, and to use your vital energy to heal and transform.",
-  "MayanSign.Cimi.interpretation": "Cimi is the seal of death and transformation. It represents the ability to let go of the old to make way for the new, surrender, and the bridge between worlds. Far from being a negative sign, Cimi is a sign of great opportunity for renewal. Those born under the Cimi seal are often wise, understanding, and have a unique perspective on the cycles of life. They understand that every ending is a new beginning. Their challenge is not to fear change and to learn to surrender to the natural flow of life without resistance. Cimi encourages you to forgive, to release what no longer serves you, to shed old identities, and to embrace the liberation of transformation as an essential part of evolution.",
+  "MayanSign.Cimi.interpretation": "Cimi is the seal of death and a transformation. It represents the ability to let go of the old to make way for the new, surrender, and the bridge between worlds. Far from being a negative sign, Cimi is a sign of great opportunity for renewal. Those born under the Cimi seal are often wise, understanding, and have a unique perspective on the cycles of life. They understand that every ending is a new beginning. Their challenge is not to fear change and to learn to surrender to the natural flow of life without resistance. Cimi encourages you to forgive, to release what no longer serves you, to shed old identities, and to embrace the liberation of transformation as an essential part of evolution.",
   "MayanSign.Manik.interpretation": "Manik is the hand, symbolizing healing, accomplishment, and knowledge. It is the energy of concrete action, of tools, and of finalization. Manik people are often skilled, practical, and have a natural gift for healing, whether it be physical, emotional, or spiritual. They are problem-solvers who enjoy rolling up their sleeves and getting things done. They are generous and find satisfaction in helping others. Their challenge is to learn to receive as much as they give and to avoid perfectionism. Manik invites you to use your hands to create, to heal, to share what you have learned with others, and to complete what you have started, turning your visions into tangible reality.",
   "MayanSign.Lamat.interpretation": "Lamat is the star, representing beauty, harmony, and elegance. It is the energy that connects us to the harmony of the cosmos and reminds us of our own inner light. Lamat people are often artistic, sociable, and have a deep sense of aesthetics. They seek to create harmony and beauty in their environment and in their relationships. They have a natural brilliance that attracts others. Their challenge is not to get lost in superficiality or the need for external validation, and to learn to find beauty in imperfection as well. Lamat invites you to let your own light shine, to embrace creativity as a form of service, and to find harmony in all things.",
   "MayanSign.Muluc.interpretation": "Muluc is the water, representing primordial emotions, purification, and the flow of life. It is the seal of the moon and awakened consciousness. Muluc people are highly intuitive, empathetic, and emotionally deep. They are like antennas, picking up on the feelings of those around them. They have a strong connection to the divine feminine and the cycles of nature. Their challenge is to learn to navigate their own emotional currents without drowning in them or in the emotions of others. Muluc invites you to honor your emotions, to purify your heart of old wounds, to trust your intuition, and to flow with life instead of fighting against it.",
@@ -981,6 +981,48 @@
       "friendship": "Cancer friends are like family. They are incredibly loyal, empathetic, and will always offer a shoulder to cry on. They are the friend who will cook you soup when you're sick and remember your birthday without fail.",
       "workTitle": "At Work",
       "work": "At work, Cancers are intuitive and responsible. They thrive in environments where they can care for others, such as human resources, healthcare, or teaching. They are loyal employees who value a stable and secure work environment."
+    },
+    "Leo": {
+      "title": "The Majestic Lion",
+      "description": "Leo, a Fire sign ruled by the Sun, is the natural-born leader and performer of the zodiac. Regal, confident, and with a heart of gold, Leos love to be the center of attention and inspire others with their warmth and enthusiasm.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Creative", "Passionate", "Generous", "Warm-hearted", "Cheerful"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Arrogant", "Stubborn", "Self-centered", "Lazy", "Inflexible"],
+      "loveTitle": "In Love",
+      "love": "In a relationship, Leo is a passionate, loyal, and incredibly generous partner. They love grand romantic gestures and need to feel admired and adored. They are fiercely protective of their loved ones and will go to great lengths to make them happy.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "As a friend, Leo is the life of the party, bringing fun and energy wherever they go. They are extremely loyal and generous, treating their friends like royalty. They love to encourage and motivate their friends to be their best selves.",
+      "workTitle": "At Work",
+      "work": "Professionally, Leos are natural leaders who thrive in the spotlight. They excel in roles that allow for creativity and public recognition. They are ambitious and have a flair for drama, making them excellent managers, performers, and public speakers."
+    },
+    "Virgo": {
+      "title": "The Meticulous Maiden",
+      "description": "Virgo, an Earth sign, is practical, analytical, and hardworking. They have a deep sense of humanity and pay close attention to the smallest details. Their methodical approach to life ensures that nothing is left to chance.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Loyal", "Analytical", "Kind", "Hardworking", "Practical"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Shy", "Worrywart", "Overly critical", "All work no play", "Perfectionist"],
+      "loveTitle": "In Love",
+      "love": "In love, Virgo shows affection through acts of service and practical support rather than grand declarations. They are loyal and devoted partners who seek a deep, intellectual connection. They need a partner who appreciates their attention to detail and their desire to be helpful.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Virgo friends are incredibly reliable and give the best, most practical advice. They are the ones you call when you need help organizing your life or solving a complex problem. They are loyal and supportive, though they can be critical at times.",
+      "workTitle": "At Work",
+      "work": "At work, Virgos are the backbone of any team. Their analytical minds and meticulous attention to detail make them excellent editors, researchers, and project managers. They are efficient, organized, and dedicated to producing high-quality work."
+    },
+    "Libra": {
+      "title": "The Harmonious Scales",
+      "description": "Libra, an Air sign, is obsessed with balance and harmony. Ruled by Venus, they have a deep appreciation for beauty, art, and partnership. They are the diplomats of the zodiac, always striving to create fairness and peace.",
+      "strengthsTitle": "Strengths",
+      "strengths": ["Cooperative", "Diplomatic", "Gracious", "Fair-minded", "Social"],
+      "weaknessesTitle": "Weaknesses",
+      "weaknesses": ["Indecisive", "Avoids confrontations", "Will carry a grudge", "Self-pity", "Superficial"],
+      "loveTitle": "In Love",
+      "love": "In a relationship, Libra seeks a true partnership built on equality and intellectual connection. They are incredibly romantic and charming, and love to create a beautiful and harmonious life with their partner. They need a partner who is their equal in every way.",
+      "friendshipTitle": "In Friendship",
+      "friendship": "Libra friends are the social butterflies and peacemakers of their group. They are excellent listeners and mediators, always striving to ensure everyone gets along. They love to socialize and enjoy cultural activities with their friends.",
+      "workTitle": "At Work",
+      "work": "Professionally, Libras excel in roles that require diplomacy, negotiation, and a sense of justice. They make excellent lawyers, mediators, and team leaders. They thrive in collaborative environments and are skilled at bringing people together to achieve a common goal."
     }
   }
 }
