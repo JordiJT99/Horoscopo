@@ -11,6 +11,7 @@ import {
   Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom, ShoppingBag
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -27,6 +28,17 @@ interface MorePageProps {
 // Helper component for feature cards
 const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder, currentDictionary }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean, currentDictionary: Record<string, string> }) => {
   const cardClasses = "bg-card/90 hover:bg-primary/20 transition-colors duration-200 p-3 sm:p-4 flex flex-col items-center justify-center text-center aspect-[4/3] sm:aspect-square shadow-lg rounded-xl";
+  
+  if (isPlaceholder) {
+    return (
+      <div className={`${cardClasses} opacity-60 cursor-not-allowed relative`}>
+        <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary/50 mb-1.5 sm:mb-2" />
+        <CardTitle className="text-xs sm:text-sm font-headline text-foreground/60 leading-tight">{title}</CardTitle>
+        <Badge variant="outline" className="mt-1 absolute bottom-2 right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.comingSoon'] || 'Coming Soon'}</Badge>
+      </div>
+    );
+  }
+
   const content = (
     <>
       <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary mb-1.5 sm:mb-2" />
@@ -34,14 +46,6 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder,
       {newBadge && <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.newBadge'] || 'NUEVO'}</Badge>}
     </>
   );
-
-  if (isPlaceholder) {
-    return (
-      <div className={`${cardClasses} opacity-60 cursor-not-allowed relative`}>
-        {content}
-      </div>
-    );
-  }
 
   return (
     <Link href={`/${locale}${href}`}>
@@ -101,7 +105,7 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/natalchart", icon: Orbit, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
     { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: false, isPlaceholder: false },
     { href: "/community", icon: Users, titleKey: "CommunityPage.title", newBadge: true, isPlaceholder: false },
-    { href: "/store", icon: ShoppingBag, titleKey: "StorePage.title", newBadge: true, isPlaceholder: false },
+    { href: "/store", icon: ShoppingBag, titleKey: "StorePage.title", newBadge: true, isPlaceholder: true },
     { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
