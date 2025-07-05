@@ -328,7 +328,8 @@ export type GameActionId =
   | 'use_crystal_ball'
   | 'use_dream_reading'
   | 'add_community_comment'
-  | 'react_to_post';
+  | 'react_to_post'
+  | 'daily_stardust_reward'; // For premium users
 
 export interface CosmicEnergyState {
   points: number;
@@ -337,6 +338,7 @@ export interface CosmicEnergyState {
   freeChats: number;
   lastGained: Record<GameActionId, string>;
   hasRatedApp: boolean;
+  isPremium: boolean; // Added premium status
 }
 
 export interface DailyTransit {

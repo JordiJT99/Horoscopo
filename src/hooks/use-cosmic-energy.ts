@@ -58,6 +58,7 @@ const initialState: CosmicEnergyState = {
     stardust: 0,
     lastGained: {} as Record<GameActionId, string>,
     hasRatedApp: false,
+    isPremium: false, // Added premium field
 };
 
 const getInitialState = (): CosmicEnergyState => initialState;
@@ -65,7 +66,7 @@ const getInitialState = (): CosmicEnergyState => initialState;
 const createStore = (userId: string) => {
     const listeners = new Set<() => void>();
     
-    const localStorageKey = `cosmicEnergy_v4_${userId}`; // Updated version
+    const localStorageKey = `cosmicEnergy_v5_${userId}`; // Updated version for premium state
     let currentState: CosmicEnergyState;
 
     try {
@@ -115,7 +116,7 @@ export interface AddEnergyPointsResult {
 export const useCosmicEnergy = () => {
     const { user } = useAuth();
     
-    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v4_${user.uid}`))) {
+    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v5_${user.uid}`))) {
         store = createStore(user.uid);
     } else if (!user?.uid && store) {
         store = null;
@@ -207,8 +208,29 @@ export const useCosmicEnergy = () => {
         });
 
         return { success: true, amount };
-    }, [user, state.stardust, state.lastGained]);
+    }, [user]);
 
+    const checkAndAwardDailyStardust = useCallback(() => {
+        if (!user?.uid || !store) return false;
+        
+        const currentState = store.getState();
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (currentState.isPremium && currentState.lastGained.daily_stardust_reward !== today) {
+            const newStardust = currentState.stardust + 100;
+            const newLastGained = { ...currentState.lastGained, daily_stardust_reward: today };
+            store.setState({ stardust: newStardust, lastGained: newLastGained });
+            return true;
+        }
+        return false;
+    }, [user]);
+
+    const togglePremium = useCallback(() => {
+        if (!user?.uid || !store) return;
+        const currentState = store.getState();
+        store.setState({ isPremium: !currentState.isPremium });
+    }, [user]);
+    
     const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
          const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: 1, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
@@ -333,5 +355,7 @@ export const useCosmicEnergy = () => {
         spendStardust,
         addStardust,
         claimRateReward,
+        checkAndAwardDailyStardust, // Expose new function
+        togglePremium, // Expose debug function
     };
 };

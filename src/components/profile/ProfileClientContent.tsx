@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { Locale, Dictionary } from '@/lib/dictionaries';

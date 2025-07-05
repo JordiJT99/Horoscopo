@@ -5,6 +5,8 @@ import type { Dictionary, Locale } from '@/lib/dictionaries';
 import TopBar from '@/components/shared/TopBar'; 
 import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; 
 import { useAuth } from '@/context/AuthContext';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
@@ -12,12 +14,28 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { isLoading: authLoading } = useAuth();
+  const { isPremium, checkAndAwardDailyStardust } = useCosmicEnergy();
+  const { toast } = useToast();
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  // Effect to award daily stardust for premium users
+  useEffect(() => {
+    if (isPremium) {
+      const awarded = checkAndAwardDailyStardust();
+      if (awarded) {
+        toast({
+          title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
+          description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust for being a Premium member.',
+        });
+      }
+    }
+  }, [isPremium, checkAndAwardDailyStardust, toast, dictionary]);
+
 
   const onboardingPath = `/${locale}/onboarding`;
   const loginPath = `/${locale}/login`;

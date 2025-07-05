@@ -31,7 +31,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const { toast } = useToast();
 
   const { user } = useAuth();
-  const { addEnergyPoints, lastGained, spendStardust, stardust } = useCosmicEnergy();
+  const { addEnergyPoints, lastGained, spendStardust, stardust, isPremium } = useCosmicEnergy();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -97,17 +97,21 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const hasUsedToday = lastGained.use_crystal_ball === today;
 
   const handleGetRevelation = async () => {
-    if (!hasUsedToday) {
-      setIsShowingAd(true);
-      toast({
-          title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-          description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-      });
-      setTimeout(() => {
-          setIsShowingAd(false);
-          performRevelation(true); 
-      }, 2500);
-    } else {
+    if (!hasUsedToday) { // First use of the day
+        if (isPremium) {
+            performRevelation(true);
+        } else {
+            setIsShowingAd(true);
+            toast({
+                title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
+                description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
+            });
+            setTimeout(() => {
+                setIsShowingAd(false);
+                performRevelation(true); 
+            }, 2500);
+        }
+    } else { // Subsequent use
       if (stardust < STARDUST_COST) {
         toast({
           title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
