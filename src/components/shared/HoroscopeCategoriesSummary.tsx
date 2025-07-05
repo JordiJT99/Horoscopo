@@ -114,6 +114,8 @@ export default function HoroscopeCategoriesSummary({
   horoscopeDetail,
 }: HoroscopeCategoriesSummaryProps) {
 
+  const activeCategories = categories.filter(cat => cat.dataKey !== 'money');
+
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg my-4">
       <CardHeader className="p-4 pb-2 text-center sm:text-left">
@@ -136,7 +138,7 @@ export default function HoroscopeCategoriesSummary({
           </div>
         ) : horoscopeDetail ? (
           <div className="grid grid-cols-1 min-[380px]:grid-cols-3 gap-3 sm:gap-4">
-            {categories.map((category, index) => (
+            {activeCategories.map((category, index) => (
               <SingleRadialChart
                 key={`${category.nameKey}-${index}`}
                 percentage={category.percentage}

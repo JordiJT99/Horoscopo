@@ -66,7 +66,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   const router = useRouter();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { level: userLevel, stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const { level: userLevel, stardust, spendStardust, lastGained, addEnergyPoints, isPremium } = useCosmicEnergy();
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);
@@ -138,17 +138,21 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       return;
     }
     
-    if (!hasUsedToday) {
-      setIsShowingAd(true);
-      toast({
-          title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-          description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-      });
-      setTimeout(() => {
-          setIsShowingAd(false);
-          performInterpretation(true); 
-      }, 2500);
-    } else {
+    if (!hasUsedToday) { // First use of the day
+      if (isPremium) {
+        performInterpretation(true);
+      } else {
+        setIsShowingAd(true);
+        toast({
+            title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
+            description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
+        });
+        setTimeout(() => {
+            setIsShowingAd(false);
+            performInterpretation(true); 
+        }, 2500);
+      }
+    } else { // Subsequent use
       if (stardust < STARDUST_COST) {
         toast({
           title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
@@ -243,7 +247,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(s => s - 1);
+      setCurrentStep(s => s + 1);
     }
   };
 
@@ -269,7 +273,10 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
     const getInterpretationButtonText = () => {
       const baseText = dictionary['DreamWizard.getInterpretationButton'] || 'Get Interpretation';
-      return hasUsedToday ? `${baseText} (${STARDUST_COST} 💫)` : baseText;
+      if (hasUsedToday && !isPremium) {
+        return `${baseText} (${STARDUST_COST} 💫)`;
+      }
+      return baseText;
     };
 
     return (
@@ -386,7 +393,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button onClick={handleNewInterpretation} variant="outline" className="flex-1">
                   <RotateCcw className="mr-2 h-4 w-4" />
-                  {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"} ({STARDUST_COST} 💫)
+                  {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"} {!isPremium && `(${STARDUST_COST} 💫)`}
               </Button>
                <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="flex-1">
                  {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}

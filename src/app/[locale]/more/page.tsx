@@ -1,4 +1,5 @@
 
+
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import Link from 'next/link';
@@ -94,7 +95,7 @@ export default async function MorePage({ params }: MorePageProps) {
   const allFeatures = [
     { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/tarot-personality-test", icon: Sparkles, titleKey: "TarotPersonalityPage.title", newBadge: false, isPlaceholder: false },
-    { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/crystal-ball", icon: Eye, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
     { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/compatibility", icon: Users, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
     { href: "/lucky-numbers", icon: LuckyNumbersIcon, titleKey: "LuckyNumbersPage.title", newBadge: false, isPlaceholder: false },
@@ -109,16 +110,15 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
-    { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: true },
-    { href: "/fortune-cookie", icon: Cookie, titleKey: "MorePage.fortuneCookie", newBadge: false, isPlaceholder: true },
-    { href: "/celebrity-compatibility", icon: CelebrityIcon, titleKey: "MorePage.celebrityCompatibility", newBadge: false, isPlaceholder: true },
-    { href: "/druid-horoscope", icon: DruidIcon, titleKey: "MorePage.druidHoroscope", newBadge: false, isPlaceholder: true },
   ];
 
   const accountItems = [
     { href: "/profile", icon: UserCircle, titleKey: "MorePage.profile", isPlaceholder: false },
     { href: "/invite-earn", icon: Gift, titleKey: "MorePage.inviteAndEarn", isPlaceholder: true },
   ];
+  
+  const premiumItem = { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: false };
+
 
   const stardustItems = [
      { href: "/get-stardust", icon: Gem, titleKey: "MorePage.getStardust", isPlaceholder: false }
@@ -140,7 +140,7 @@ export default async function MorePage({ params }: MorePageProps) {
     <main className="flex-grow container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-10 space-y-8 sm:space-y-10">
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.allFunctionsTitle'] || "Todas las Funciones"}
+          {dictionary['MorePage.allFunctionsTitle'] || "All Functions"}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-3.5">
           {allFeatures.map(feature => (
@@ -157,10 +157,26 @@ export default async function MorePage({ params }: MorePageProps) {
           ))}
         </div>
       </div>
+      
+       <div>
+        <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
+          {dictionary['PremiumPage.title'] || "AstroVibes Premium"}
+        </h2>
+        <div className="space-y-2.5 sm:space-y-3.5">
+          <AccountItem
+              key={premiumItem.href}
+              href={premiumItem.href}
+              icon={premiumItem.icon}
+              title={dictionary[premiumItem.titleKey] || premiumItem.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
+              locale={params.locale}
+              isPlaceholder={premiumItem.isPlaceholder}
+            />
+        </div>
+      </div>
 
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.accountTitle'] || "Cuenta"}
+          {dictionary['MorePage.accountTitle'] || "Account"}
         </h2>
         <div className="space-y-2.5 sm:space-y-3.5">
           {accountItems.map(item => (
@@ -178,7 +194,7 @@ export default async function MorePage({ params }: MorePageProps) {
 
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.stardustTitle'] || "Polvo Estelar y Recompensas"}
+          {dictionary['MorePage.stardustTitle'] || "Stardust & Rewards"}
         </h2>
         <div className="space-y-2.5 sm:space-y-3.5">
           {stardustItems.map(item => (
@@ -196,7 +212,7 @@ export default async function MorePage({ params }: MorePageProps) {
       
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.settingsTitle'] || "Ajustes"}
+          {dictionary['MorePage.settingsTitle'] || "Settings"}
         </h2>
         <div className="space-y-2.5 sm:space-y-3.5">
            {settingsItems.map(item => (

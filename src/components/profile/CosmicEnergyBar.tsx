@@ -4,20 +4,21 @@
 import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Sparkles, Star, MinusCircle, PlusCircle, Gem, HelpCircle } from 'lucide-react';
+import { Sparkles, Star, MinusCircle, PlusCircle, Gem, HelpCircle, Crown } from 'lucide-react';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, isPremium, togglePremium } = useCosmicEnergy();
   const { toast } = useToast();
 
   const handleAddPoints = () => {
@@ -51,6 +52,14 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     });
   };
 
+  const handleTogglePremium = () => {
+    togglePremium();
+    toast({
+      title: 'Premium Status Changed (Dev)',
+      description: `Premium is now ${!isPremium ? 'ON' : 'OFF'}.`,
+    });
+  };
+
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
       <CardHeader className="p-4 pb-2">
@@ -59,6 +68,7 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                 <CardTitle className="text-lg flex items-center gap-2">
                     <Sparkles className="h-5 w-5 text-primary" />
                     {dictionary['ProfilePage.cosmicEnergyTitle'] || "Cosmic Energy"}
+                    {isPremium && <Crown className="h-5 w-5 text-yellow-400" title={dictionary['PremiumPage.title'] || 'Premium Member'} />}
                 </CardTitle>
                 <Dialog>
                     <DialogTrigger asChild>
@@ -81,6 +91,16 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
             </div>
             <TooltipProvider>
                 <div className="flex items-center gap-1">
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleTogglePremium}>
+                                <Crown className={cn("h-4 w-4", isPremium ? "text-yellow-400" : "text-muted-foreground")} />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Dev Tool: Toggle Premium Status</p>
+                        </TooltipContent>
+                    </Tooltip>
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleSubtractPoints}>
@@ -131,27 +151,41 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
           </span>
         </div>
         <Progress value={progress} className="h-2.5" />
-        <div className="flex justify-end items-center mt-2 text-cyan-400 gap-1">
-            <Gem className="w-3.5 h-3.5 mr-1" />
-            <span className="font-semibold text-sm">{stardust.toLocaleString()} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-primary rounded-full">
-                        <HelpCircle className="h-4 w-4" />
-                    </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                            <Gem className="h-5 w-5 text-cyan-400" />
-                            {dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}
-                        </DialogTitle>
-                        <DialogDescription className="text-left pt-2 whitespace-pre-line">
-                            {dictionary['Stardust.explanationContent'] || "Stardust is a special currency..."}
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
+        <div className="flex justify-between items-center mt-2">
+            <div className="flex items-center text-cyan-400 gap-1">
+                <Gem className="w-3.5 h-3.5 mr-1" />
+                <span className="font-semibold text-sm">{stardust.toLocaleString()} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-primary rounded-full">
+                            <HelpCircle className="h-4 w-4" />
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                            <DialogTitle className="flex items-center gap-2">
+                                <Gem className="h-5 w-5 text-cyan-400" />
+                                {dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}
+                            </DialogTitle>
+                            <DialogDescription className="text-left pt-2 whitespace-pre-line">
+                                {dictionary['Stardust.explanationContent'] || "Stardust is a special currency..."}
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
+            </div>
+            {isPremium && lastGained.daily_stardust_reward === new Date().toISOString().split('T')[0] && (
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                           <p className="text-xs text-green-400 flex items-center gap-1">✅ {dictionary['Toast.dailyStardustClaimed'] || 'Daily bonus claimed!'}</p>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                           <p>{dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust for being a Premium member.'}</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            )}
         </div>
       </CardContent>
     </Card>

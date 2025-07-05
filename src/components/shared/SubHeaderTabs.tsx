@@ -4,7 +4,10 @@
 import type { Dictionary } from '@/lib/dictionaries';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion'; // Import for layoutId animation
+import { motion } from 'framer-motion';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { Lock } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export type HoroscopePeriod = 'yesterday' | 'today' | 'tomorrow' | 'weekly' | 'monthly';
 
@@ -15,6 +18,9 @@ interface SubHeaderTabsProps {
 }
 
 const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProps) => {
+  const { isPremium } = useCosmicEnergy();
+  const { toast } = useToast();
+  
   const tabs: { id: HoroscopePeriod; labelKey: string }[] = [
     { id: 'yesterday', labelKey: 'HomePage.yesterdayTab' },
     { id: 'today', labelKey: 'HomePage.todayTab' },
@@ -23,31 +29,50 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
     { id: 'monthly', labelKey: 'HomePage.monthlyTab' },
   ];
 
+  const handleTabClick = (tab: HoroscopePeriod) => {
+    const isTomorrowTab = tab === 'tomorrow';
+    const isLocked = isTomorrowTab && !isPremium;
+
+    if (isLocked) {
+      toast({
+        title: dictionary.PremiumLock?.featureTitle || 'Premium Feature',
+        description: dictionary.PremiumLock?.tomorrowHoroscope || "Tomorrow's horoscope is a Premium feature. Upgrade to see the future!",
+      });
+    } else {
+      onTabChange(tab);
+    }
+  };
+
   return (
     <div className={cn(
-      "sticky top-14 z-30 bg-background/10 backdrop-blur-md border-b border-primary/30 rounded-b-lg", // Added rounded-b-lg
+      "sticky top-14 z-30 bg-background/10 backdrop-blur-md border-b border-primary/30 rounded-b-lg",
       "shadow-[0_0_15px_0px_hsl(var(--primary)/0.2)]" 
     )}>
       <div className="container mx-auto px-0 sm:px-1">
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
+            const isTomorrowTab = tab.id === 'tomorrow';
+            const isLocked = isTomorrowTab && !isPremium;
+            
             return (
               <Button
                 key={tab.id}
                 variant="ghost"
                 role="tab"
-                aria-selected={isActive.toString()}
-                onClick={() => onTabChange(tab.id)}
+                aria-selected={isActive}
+                disabled={isLocked}
+                onClick={() => handleTabClick(tab.id)}
                 className={cn(
                   "rounded-full py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative",
                   "bg-transparent", 
                   isActive
                     ? "text-primary-foreground" 
-                    : "text-muted-foreground hover:text-primary/80" 
+                    : "text-muted-foreground hover:text-primary/80",
+                  isLocked && "text-muted-foreground/60 hover:text-muted-foreground/60 cursor-not-allowed"
                 )}
               >
-                {isActive && (
+                {isActive && !isLocked && (
                   <motion.div
                     className="absolute inset-0 bg-primary rounded-full shadow-[0_0_15px_2px_hsl(var(--primary)/0.6)]" 
                     layoutId="activeTabPill"
@@ -55,8 +80,9 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                     style={{ zIndex: 0 }} 
                   />
                 )}
-                <span style={{ position: 'relative', zIndex: 1 }}>
+                <span style={{ position: 'relative', zIndex: 1 }} className="flex items-center gap-1.5">
                   {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}
+                  {isLocked && <Lock className="h-3 w-3" />}
                 </span>
               </Button>
             );

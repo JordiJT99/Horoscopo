@@ -66,7 +66,7 @@ export default function AstroVibesHomePageContent({
   const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const { toast } = useToast();
-  const { addEnergyPoints } = useCosmicEnergy();
+  const { addEnergyPoints, isPremium } = useCosmicEnergy();
 
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
@@ -153,10 +153,21 @@ export default function AstroVibesHomePageContent({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, searchParams]); 
 
+  // Redirect if non-premium user tries to access tomorrow's horoscope
+  useEffect(() => {
+    if (activeHoroscopePeriodForTitles === 'tomorrow' && !isPremium) {
+      router.push(`/${locale}`); // Redirect to today's horoscope
+      toast({
+        title: dictionary.PremiumLock?.featureTitle || 'Premium Feature',
+        description: dictionary.PremiumLock?.tomorrowHoroscope || "Tomorrow's horoscope is a Premium feature.",
+      });
+    }
+  }, [activeHoroscopePeriodForTitles, isPremium, router, locale, toast, dictionary]);
+
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySignName) {
+      if (!selectedDisplaySignName || (activeHoroscopePeriodForTitles === 'tomorrow' && !isPremium)) {
           setIsHoroscopeLoading(true);
           return;
       }
@@ -238,7 +249,7 @@ export default function AstroVibesHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive, addEnergyPoints, user]);
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive, addEnergyPoints, user, isPremium, activeHoroscopePeriodForTitles]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -404,7 +415,6 @@ export default function AstroVibesHomePageContent({
   const detailedHoroscopeCategories = currentDisplayHoroscope ? [
     { id: "main", titleKey: "HomePage.workCategory", icon: WorkIcon, content: currentDisplayHoroscope?.main },
     { id: "love", titleKey: "HoroscopeSection.loveTitle", icon: Heart, content: currentDisplayHoroscope?.love },
-    { id: "money", titleKey: "HoroscopeSection.moneyTitle", icon: CircleDollarSign, content: currentDisplayHoroscope?.money },
     { id: "health", titleKey: "HoroscopeSection.healthTitle", icon: Activity, content: currentDisplayHoroscope?.health },
   ] : [];
 

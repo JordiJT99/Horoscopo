@@ -6,7 +6,9 @@ import type { Dictionary, Locale } from '@/lib/dictionaries';
 import BirthDataForm from './BirthDataForm';
 import NatalChartClientContent from './NatalChartClientContent';
 import { useAuth } from '@/context/AuthContext';
+import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import PremiumLockScreen from '@/components/premium/PremiumLockScreen';
 
 interface BirthData {
   date: string;
@@ -22,6 +24,7 @@ interface NatalChartClientWrapperProps {
 
 const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dictionary, locale }) => {
   const { user, isLoading: authLoading } = useAuth();
+  const { isPremium, isLoading: energyLoading } = useCosmicEnergy();
   const [birthData, setBirthData] = useState<BirthData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,8 +33,8 @@ const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dicti
   }, [user]);
 
   useEffect(() => {
-    if (authLoading) {
-      return; // Wait until auth state is resolved
+    if (authLoading || energyLoading) {
+      return; // Wait until auth and energy state are resolved
     }
     
     const key = getStorageKey();
@@ -50,7 +53,7 @@ const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dicti
       setBirthData(null);
     }
     setIsLoading(false);
-  }, [user, authLoading, getStorageKey]);
+  }, [user, authLoading, energyLoading, getStorageKey]);
 
   const handleFormSubmit = (data: BirthData) => {
     const key = getStorageKey();
@@ -90,6 +93,10 @@ const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dicti
         <LoadingSpinner className="h-12 w-12 text-primary" />
       </div>
     );
+  }
+  
+  if (!isPremium) {
+    return <PremiumLockScreen dictionary={dictionary} locale={locale} featureTitle={dictionary.NatalChartPage?.title} />;
   }
 
   return (

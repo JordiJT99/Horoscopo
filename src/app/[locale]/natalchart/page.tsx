@@ -1,3 +1,4 @@
+
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import NatalChartClientWrapper from '@/components/natal-chart/NatalChartClientWrapper';
@@ -24,7 +25,7 @@ export default async function NatalChartPage({ params }: NatalChartPageProps) {
     <>
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
         <SectionTitle
-          title={dictionary['MorePage.natalChart'] || "Natal Chart"}
+          title={dictionary['NatalChartPage.title'] || "Natal Chart"}
           subtitle={dictionary.NatalChartPage?.subtitle || "Discover the planetary positions at your exact time of birth."}
           icon={Sparkles}
           className="mb-8"
