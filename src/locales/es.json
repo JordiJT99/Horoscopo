@@ -486,6 +486,11 @@
   "CosmicEnergy.pointsEarnedDescription": "¡Has ganado +{points} EC!",
   "CosmicEnergy.levelUpTitle": "¡Subiste de Nivel!",
   "CosmicEnergy.levelUpDescription": "¡Has alcanzado el Nivel {level}!",
+  "CosmicEnergy.stardust": "Polvo Estelar",
+  "Stardust.explanationTitle": "¿Qué es el Polvo Estelar? 💫",
+  "Stardust.explanationContent": "El Polvo Estelar es la moneda especial dentro de AstroVibes. Puedes usarlo para desbloquear funciones premium, como enviar mensajes en los Chats Psíquicos.\n\nPuedes ganar Polvo Estelar al:\n- Subir de nivel tu Energía Cósmica.\n- Reclamar recompensas especiales (como valorar la app).\n- Viendo anuncios.\n- Comprando paquetes de Polvo Estelar (próximamente).",
+  "Stardust.showExplanationButton": "¿Qué es el Polvo Estelar?",
+  "Stardust.hideExplanationButton": "Ocultar Explicación",
   "DreamReadingPage.title": "Lectura de Sueños",
   "DreamReadingPage.subtitle": "Descubre los significados ocultos y símbolos dentro de tus sueños.",
   "DreamReadingPage.interpretationTitle": "Interpretación de Sueños",
@@ -1090,5 +1095,3 @@
     }
   }
 }
-
-    
