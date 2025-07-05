@@ -496,7 +496,12 @@
   "MorePage.stardustTitle": "Poussière d'Étoiles & Récompenses",
   "MorePage.getStardust": "Obtenir de la Poussière d'Étoiles",
   "GetStardustPage.title": "Poussière d'Étoiles & Récompenses",
-  "GetStardustPage.subtitle": "Renforcez votre voyage cosmique."
+  "GetStardustPage.subtitle": "Renforcez votre voyage cosmique.",
+  "TarotSpreadPage.title": "Tirage de Tarot",
+  "TarotSpreadPage.subtitle": "Sélectionnez deux cartes pour révéler leur message combiné pour vous.",
+  "TarotSpreadPage.selectTwoCards": "Sélectionnez {count} cartes",
+  "TarotSpreadPage.getReadingButton": "Révéler la Lecture",
+  "TarotSpreadPage.readingTitle": "Votre Tirage de Tarot",
+  "TarotSpreadPage.drawAgainButton": "Tirer à Nouveau",
+  "TarotSpreadPage.errorFetching": "Les cartes sont enveloppées de brume... Impossible d'obtenir une lecture. Veuillez réessayer."
 }
-
-    

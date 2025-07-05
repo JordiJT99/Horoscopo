@@ -114,16 +114,19 @@ export interface AddEnergyPointsResult {
 
 // Custom hook to interact with the store
 export const useCosmicEnergy = () => {
-    const { user } = useAuth();
+    const { user, isLoading: authIsLoading } = useAuth();
     
-    if (user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v5_${user.uid}`))) {
+    // This logic ensures the store is created or cleared based on user state.
+    // The dependency on authIsLoading prevents premature store creation/clearing.
+    if (!authIsLoading && user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v5_${user.uid}`))) {
         store = createStore(user.uid);
-    } else if (!user?.uid && store) {
+    } else if (!authIsLoading && !user && store) {
         store = null;
     }
     
     const state = useSyncExternalStore(
         store?.subscribe ?? (() => () => {}),
+        store?.getState ?? getInitialState,
         store?.getState ?? getInitialState
     );
     
@@ -357,5 +360,6 @@ export const useCosmicEnergy = () => {
         claimRateReward,
         checkAndAwardDailyStardust, // Expose new function
         togglePremium, // Expose debug function
+        isLoading: authIsLoading,
     };
 };
