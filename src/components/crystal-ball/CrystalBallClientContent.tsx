@@ -93,10 +93,10 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
     }
   };
 
+  const today = new Date().toISOString().split('T')[0];
+  const hasUsedToday = lastGained.use_crystal_ball === today;
+
   const handleGetRevelation = async () => {
-    const today = new Date().toISOString().split('T')[0];
-    const hasUsedToday = lastGained.use_crystal_ball === today;
-    
     if (!hasUsedToday) {
       setIsShowingAd(true);
       toast({
@@ -225,7 +225,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
         {revelation && !isLoading && !isShowingAd && (
           <div className="flex flex-col sm:flex-row gap-2 mt-4 w-full max-w-xs">
             <Button onClick={handleGetRevelation} variant="outline" className="flex-1 font-body" disabled={isShowingAd || isLoading}>
-              {dictionary['CrystalBallPage.lookAgainButton'] || "Look Again"}
+              {dictionary['CrystalBallPage.lookAgainButton'] || "Look Again"} {hasUsedToday && `(${STARDUST_COST} 💫)`}
             </Button>
             <Button onClick={handleShare} className="flex-1 font-body">
               <Share2 className="mr-2 h-4 w-4" />
