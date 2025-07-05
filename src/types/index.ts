@@ -45,7 +45,6 @@ export interface HoroscopeData {
 export interface HoroscopeDetail {
   main: string;
   love: string;
-  money: string;
   health: string;
 }
 
@@ -327,6 +326,7 @@ export type GameActionId =
   | 'draw_tarot_card'
   | 'draw_personality_card'
   | 'use_crystal_ball'
+  | 'use_dream_reading'
   | 'add_community_comment'
   | 'react_to_post';
 
