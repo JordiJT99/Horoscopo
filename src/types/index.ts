@@ -3,6 +3,7 @@
 import type { DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
 import type { TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
+import type { TarotSpreadOutput, TarotSpreadInput } from '@/ai/flows/tarot-spread-flow';
 
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
@@ -45,7 +46,6 @@ export interface HoroscopeData {
 export interface HoroscopeDetail {
   main: string;
   love: string;
-  money: string;
   health: string;
 }
 
@@ -257,6 +257,8 @@ export interface StoredDream {
   vividness: number;
 }
 
+export type { TarotSpreadInput, TarotSpreadOutput };
+
 
 export interface NatalChartOutput {
   sun: string;
@@ -327,8 +329,11 @@ export type GameActionId =
   | 'draw_tarot_card'
   | 'draw_personality_card'
   | 'use_crystal_ball'
+  | 'use_dream_reading'
   | 'add_community_comment'
-  | 'react_to_post';
+  | 'react_to_post'
+  | 'daily_stardust_reward'
+  | 'draw_tarot_spread';
 
 export interface CosmicEnergyState {
   points: number;
@@ -337,6 +342,7 @@ export interface CosmicEnergyState {
   freeChats: number;
   lastGained: Record<GameActionId, string>;
   hasRatedApp: boolean;
+  isPremium: boolean; // Added premium status
 }
 
 export interface DailyTransit {

@@ -1,4 +1,5 @@
 
+
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import Link from 'next/link';
@@ -8,9 +9,10 @@ import { Button } from '@/components/ui/button';
 import {
  Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare, Users,
   Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
-  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom, ShoppingBag
+  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom, ShoppingBag, Gem, Layers
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -27,6 +29,17 @@ interface MorePageProps {
 // Helper component for feature cards
 const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder, currentDictionary }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean, currentDictionary: Record<string, string> }) => {
   const cardClasses = "bg-card/90 hover:bg-primary/20 transition-colors duration-200 p-3 sm:p-4 flex flex-col items-center justify-center text-center aspect-[4/3] sm:aspect-square shadow-lg rounded-xl";
+  
+  if (isPlaceholder) {
+    return (
+      <div className={`${cardClasses} opacity-60 cursor-not-allowed relative`}>
+        <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary/50 mb-1.5 sm:mb-2" />
+        <CardTitle className="text-xs sm:text-sm font-headline text-foreground/60 leading-tight">{title}</CardTitle>
+        <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.comingSoon'] || 'Próximamente'}</Badge>
+      </div>
+    );
+  }
+
   const content = (
     <>
       <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary mb-1.5 sm:mb-2" />
@@ -34,14 +47,6 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder,
       {newBadge && <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.newBadge'] || 'NUEVO'}</Badge>}
     </>
   );
-
-  if (isPlaceholder) {
-    return (
-      <div className={`${cardClasses} opacity-60 cursor-not-allowed relative`}>
-        {content}
-      </div>
-    );
-  }
 
   return (
     <Link href={`/${locale}${href}`}>
@@ -90,6 +95,7 @@ export default async function MorePage({ params }: MorePageProps) {
   const allFeatures = [
     { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/tarot-personality-test", icon: Sparkles, titleKey: "TarotPersonalityPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/tarot-spread", icon: Layers, titleKey: "TarotSpreadPage.title", newBadge: true, isPlaceholder: false },
     { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
     { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/compatibility", icon: Users, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
@@ -101,19 +107,22 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/natalchart", icon: Orbit, titleKey: "MorePage.natalChart", newBadge: false, isPlaceholder: false },
     { href: "/psychic-chat", icon: MessageSquare, titleKey: "PsychicChatPage.title", newBadge: false, isPlaceholder: false },
     { href: "/community", icon: Users, titleKey: "CommunityPage.title", newBadge: true, isPlaceholder: false },
-    { href: "/store", icon: ShoppingBag, titleKey: "StorePage.title", newBadge: true, isPlaceholder: false },
+    { href: "/store", icon: ShoppingBag, titleKey: "StorePage.title", newBadge: true, isPlaceholder: true },
     { href: "/palm-reading", icon: Hand, titleKey: "MorePage.palmReading", newBadge: true, isPlaceholder: true },
     { href: "/articles", icon: ArticlesIcon, titleKey: "MorePage.articles", newBadge: false, isPlaceholder: true },
     { href: "/meditation", icon: MeditationIcon, titleKey: "MorePage.meditation", newBadge: true, isPlaceholder: true },
-    { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: true },
-    { href: "/fortune-cookie", icon: Cookie, titleKey: "MorePage.fortuneCookie", newBadge: false, isPlaceholder: true },
-    { href: "/celebrity-compatibility", icon: CelebrityIcon, titleKey: "MorePage.celebrityCompatibility", newBadge: false, isPlaceholder: true },
-    { href: "/druid-horoscope", icon: DruidIcon, titleKey: "MorePage.druidHoroscope", newBadge: false, isPlaceholder: true },
   ];
 
   const accountItems = [
     { href: "/profile", icon: UserCircle, titleKey: "MorePage.profile", isPlaceholder: false },
     { href: "/invite-earn", icon: Gift, titleKey: "MorePage.inviteAndEarn", isPlaceholder: true },
+  ];
+  
+  const premiumItem = { href: "/premium", icon: Award, titleKey: "MorePage.premium", newBadge: false, isPlaceholder: false };
+
+
+  const stardustItems = [
+     { href: "/get-stardust", icon: Gem, titleKey: "MorePage.getStardust", isPlaceholder: false }
   ];
 
   const settingsItems = [
@@ -132,7 +141,7 @@ export default async function MorePage({ params }: MorePageProps) {
     <main className="flex-grow container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-10 space-y-8 sm:space-y-10">
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.allFunctionsTitle'] || "Todas las Funciones"}
+          {dictionary['MorePage.allFunctionsTitle'] || "All Functions"}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-3.5">
           {allFeatures.map(feature => (
@@ -149,10 +158,26 @@ export default async function MorePage({ params }: MorePageProps) {
           ))}
         </div>
       </div>
+      
+       <div>
+        <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
+          {dictionary['PremiumPage.title'] || "AstroVibes Premium"}
+        </h2>
+        <div className="space-y-2.5 sm:space-y-3.5">
+          <AccountItem
+              key={premiumItem.href}
+              href={premiumItem.href}
+              icon={premiumItem.icon}
+              title={dictionary[premiumItem.titleKey] || premiumItem.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
+              locale={params.locale}
+              isPlaceholder={premiumItem.isPlaceholder}
+            />
+        </div>
+      </div>
 
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.accountTitle'] || "Cuenta"}
+          {dictionary['MorePage.accountTitle'] || "Account"}
         </h2>
         <div className="space-y-2.5 sm:space-y-3.5">
           {accountItems.map(item => (
@@ -167,10 +192,28 @@ export default async function MorePage({ params }: MorePageProps) {
           ))}
         </div>
       </div>
+
+      <div>
+        <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
+          {dictionary['MorePage.stardustTitle'] || "Stardust & Rewards"}
+        </h2>
+        <div className="space-y-2.5 sm:space-y-3.5">
+          {stardustItems.map(item => (
+            <AccountItem
+              key={item.href}
+              href={item.href}
+              icon={item.icon}
+              title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
+              locale={params.locale}
+              isPlaceholder={item.isPlaceholder}
+            />
+          ))}
+        </div>
+      </div>
       
       <div>
         <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
-          {dictionary['MorePage.settingsTitle'] || "Ajustes"}
+          {dictionary['MorePage.settingsTitle'] || "Settings"}
         </h2>
         <div className="space-y-2.5 sm:space-y-3.5">
            {settingsItems.map(item => (

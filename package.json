@@ -10,15 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "cap:sync": "npm run build && cap sync",
-    "cap:open:android": "cap open android",
-    "cap:open:ios": "cap add ios && cap open ios"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@capacitor/android": "^6.0.0",
-    "@capacitor/core": "^6.0.0",
-    "@capacitor/ios": "^6.0.0",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@genkit-ai/googleai": "^1.8.0",
     "@genkit-ai/next": "^1.8.0",
@@ -64,7 +58,6 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@capacitor/cli": "^6.0.0",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -25,21 +25,11 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState(''); // For signup
   const { login, signup, user, isLoading: authIsLoading } = useAuth();
-  const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSignupMode, setIsSignupMode] = useState(false);
 
-  useEffect(() => {
-    if (!authIsLoading && user) {
-      const onboardingComplete = localStorage.getItem(`onboardingComplete_${user.uid}`) === 'true';
-      if (onboardingComplete) {
-        router.push(`/${locale}/profile`);
-      } else {
-        router.push(`/${locale}/onboarding`);
-      }
-    }
-  }, [user, authIsLoading, router, locale]);
+  // The main redirection logic is now centralized in AuthContext to avoid race conditions.
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +38,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
       if (username.trim() && email.trim() && password) {
         try {
           await signup(email.trim(), password, username.trim(), locale);
-          // Redirection is handled by AuthContext or useEffect
+          // Redirection is handled by AuthContext
         } catch (e) {
           // Error is handled by AuthContext's toast
         }
@@ -59,7 +49,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
       if (email.trim() && password) {
         try {
           await login(email.trim(), password, locale);
-          // Redirection is handled by AuthContext or useEffect
+          // Redirection is handled by AuthContext
         } catch (e) {
           // Error is handled by AuthContext's toast
         }
@@ -70,8 +60,8 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
     setIsSubmitting(false);
   };
 
-  // Show loading spinner if auth is loading OR if user is already logged in (and about to be redirected)
-  if (authIsLoading || (!authIsLoading && user)) {
+  // Show a loading spinner if auth is checking, or if a user is found (and will be redirected).
+  if (authIsLoading || user) {
     return (
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center min-h-[calc(100vh-100px)]">
         <LoadingSpinner className="h-12 w-12 text-primary" />

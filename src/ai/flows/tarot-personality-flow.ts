@@ -10,14 +10,14 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { MAJOR_ARCANA_TAROT_CARDS } from '@/lib/constants';
+import { ALL_TAROT_CARDS } from '@/lib/constants';
 
 // Helper function to generate image path from card name
 const getTarotCardImagePath = (cardNameFromAI: string): string => {
   const basePath = '/custom_assets/tarot_cards/';
 
   const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
-  const matchedCanonicalName = MAJOR_ARCANA_TAROT_CARDS.find(
+  const matchedCanonicalName = ALL_TAROT_CARDS.find(
     (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
   );
 
@@ -27,30 +27,30 @@ const getTarotCardImagePath = (cardNameFromAI: string): string => {
   }
 
   console.warn(
-    `[AstroVibes - TarotPersonalityFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in MAJOR_ARCANA_TAROT_CARDS. Using placeholder image.`
+    `[AstroVibes - TarotPersonalityFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in ALL_TAROT_CARDS. Using placeholder image.`
   );
   return "https://placehold.co/267x470.png";
 };
 
 
+export type TarotPersonalityInput = z.infer<typeof TarotPersonalityInputSchema>;
 const TarotPersonalityInputSchema = z.object({
   locale: z.string().describe('The locale (e.g., "en", "es") for the result language.'),
   userName: z.string().optional().describe('The name of the user, for a personalized reading.'),
 });
-export type TarotPersonalityInput = z.infer<typeof TarotPersonalityInputSchema>;
 
 
+export type TarotPersonalityOutput = z.infer<typeof TarotPersonalityOutputSchema>;
 const TarotPersonalityOutputSchema = z.object({
-  cardName: z.string().describe('The name of the Major Arcana tarot card drawn for the day.'),
+  cardName: z.string().describe('The name of the Tarot card drawn for the day.'),
   isReversed: z.boolean().describe('Whether the card is drawn in a reversed position.'),
   reading: z.string().describe('An insightful, multi-paragraph reading for the user about what this card means for them today. It should touch on a general theme, a piece of advice, and a reflection.'),
   cardImagePlaceholderUrl: z.string().describe('A URL for the tarot card image. This will be dynamically generated.'),
 });
-export type TarotPersonalityOutput = z.infer<typeof TarotPersonalityOutputSchema>;
 
 // New schema for the prompt input, including the pre-selected card
 const DailyTarotPromptInputSchema = TarotPersonalityInputSchema.extend({
-    cardName: z.string().describe('The pre-selected Major Arcana card to be interpreted.'),
+    cardName: z.string().describe('The pre-selected Tarot card to be interpreted.'),
     isReversed: z.boolean().describe('Whether the pre-selected card is reversed.'),
 });
 
@@ -109,8 +109,8 @@ const tarotPersonalityFlowInternal = ai.defineFlow(
   },
   async (input) => {
     // True randomness is now handled by code, not the LLM.
-    const cardIndex = Math.floor(Math.random() * MAJOR_ARCANA_TAROT_CARDS.length);
-    const cardName = MAJOR_ARCANA_TAROT_CARDS[cardIndex];
+    const cardIndex = Math.floor(Math.random() * ALL_TAROT_CARDS.length);
+    const cardName = ALL_TAROT_CARDS[cardIndex];
     const isReversed = Math.random() < 0.3; // 30% chance of being reversed
 
     const {output: aiOutput} = await dailyTarotPrompt({
@@ -139,3 +139,5 @@ export async function tarotPersonalityFlow(input: TarotPersonalityInput): Promis
   const validatedInput = TarotPersonalityInputSchema.parse(input);
   return tarotPersonalityFlowInternal(validatedInput);
 }
+
+    
