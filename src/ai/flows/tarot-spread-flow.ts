@@ -30,7 +30,7 @@ const getTarotCardImagePath = (cardNameFromAI: string): string => {
 };
 
 
-export const TarotSpreadInputSchema = z.object({
+const TarotSpreadInputSchema = z.object({
   card1Name: z.string().describe('The name of the first tarot card drawn.'),
   card1Reversed: z.boolean().describe('Whether the first card is reversed.'),
   card2Name: z.string().describe('The name of the second tarot card drawn.'),
@@ -46,7 +46,7 @@ const TarotSpreadCardInfoSchema = z.object({
   imagePlaceholderUrl: z.string(),
 });
 
-export const TarotSpreadOutputSchema = z.object({
+const TarotSpreadOutputSchema = z.object({
   reading: z.string().describe('A detailed, multi-paragraph interpretation of the combined meaning of the two cards, relating them to each other and the user.'),
   card1: TarotSpreadCardInfoSchema,
   card2: TarotSpreadCardInfoSchema,
