@@ -3,6 +3,7 @@
 import type { DreamInterpretationOutput } from '@/ai/flows/dream-interpretation-flow';
 import type { TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
+import type { TarotSpreadOutput, TarotSpreadInput } from '@/ai/flows/tarot-spread-flow';
 
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
@@ -256,6 +257,8 @@ export interface StoredDream {
   vividness: number;
 }
 
+export type { TarotSpreadInput, TarotSpreadOutput };
+
 
 export interface NatalChartOutput {
   sun: string;
@@ -329,7 +332,8 @@ export type GameActionId =
   | 'use_dream_reading'
   | 'add_community_comment'
   | 'react_to_post'
-  | 'daily_stardust_reward'; // For premium users
+  | 'daily_stardust_reward'
+  | 'draw_tarot_spread';
 
 export interface CosmicEnergyState {
   points: number;
