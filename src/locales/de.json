@@ -492,5 +492,9 @@
   "Stardust.showExplanationButton": "Qu'est-ce que la Poussière d'Étoile ?",
   "Stardust.hideExplanationButton": "Masquer l'explication",
   "CosmicEnergy.explanationTitle": "Qu'est-ce que l'Énergie Cosmique ? ✨",
-  "CosmicEnergy.explanationContent": "L'Énergie Cosmique (EC) mesure votre engagement avec l'application. C'est comme vos points d'expérience !\n\n**À quoi ça sert ?**\n- **Monter de Niveau :** Accumuler de l'EC vous permet de faire monter votre profil de niveau.\n- **Débloquer des Récompenses :** Chaque nouveau niveau vous accorde des récompenses comme des cadres d'avatar exclusifs, des arrière-plans de profil, de la Poussière d'Étoile et même des chats de voyance gratuits.\n\n**Comment en obtenir ?**\nVous gagnez de l'EC automatiquement en utilisant les fonctionnalités de l'application, telles que :\n- Lire vos horoscopes quotidiens, hebdomadaires ou mensuels.\n- Obtenir un tirage de tarot.\n- Consulter la boule de cristal.\n- Participer à la communauté."
+  "CosmicEnergy.explanationContent": "L'Énergie Cosmique (EC) mesure votre engagement avec l'application. C'est comme vos points d'expérience !\n\n**À quoi ça sert ?**\n- **Monter de Niveau :** Accumuler de l'EC vous permet de faire monter votre profil de niveau.\n- **Débloquer des Récompenses :** Chaque nouveau niveau vous accorde des récompenses comme des cadres d'avatar exclusifs, des arrière-plans de profil, de la Poussière d'Étoile et même des chats de voyance gratuits.\n\n**Comment en obtenir ?**\nVous gagnez de l'EC automatiquement en utilisant les fonctionnalités de l'application, telles que :\n- Lire vos horoscopes quotidiens, hebdomadaires ou mensuels.\n- Obtenir un tirage de tarot.\n- Consulter la boule de cristal.\n- Participer à la communauté.",
+  "MorePage.stardustTitle": "Poussière d'Étoiles & Récompenses",
+  "MorePage.getStardust": "Obtenir de la Poussière d'Étoiles",
+  "GetStardustPage.title": "Poussière d'Étoiles & Récompenses",
+  "GetStardustPage.subtitle": "Renforcez votre voyage cosmique."
 }

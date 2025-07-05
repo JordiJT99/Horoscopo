@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import {
  Award, Cookie, Star as CelebrityIcon, GanttChartSquare as ChineseIcon, Leaf as DruidIcon, MessageSquare, Users,
   Newspaper as ArticlesIcon, BedDouble as DreamIcon, Brain as MeditationIcon, UserCircle, Gift, ChevronRight, Settings, Languages,
-  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom, ShoppingBag
+  Wand2 as TarotIcon, Eye as CrystalBallIcon, Moon as LunarIcon, Clover as LuckyNumbersIcon, Hand, Sparkles, Orbit, Atom, ShoppingBag, Gem
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -34,7 +34,7 @@ const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder,
       <div className={`${cardClasses} opacity-60 cursor-not-allowed relative`}>
         <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary/50 mb-1.5 sm:mb-2" />
         <CardTitle className="text-xs sm:text-sm font-headline text-foreground/60 leading-tight">{title}</CardTitle>
-        <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.comingSoon'] || 'Coming Soon'}</Badge>
+        <Badge variant="destructive" className="mt-1 absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-[0.6rem] px-1.5 py-0.5">{currentDictionary['MorePage.comingSoon'] || 'Próximamente'}</Badge>
       </div>
     );
   }
@@ -120,6 +120,10 @@ export default async function MorePage({ params }: MorePageProps) {
     { href: "/invite-earn", icon: Gift, titleKey: "MorePage.inviteAndEarn", isPlaceholder: true },
   ];
 
+  const stardustItems = [
+     { href: "/get-stardust", icon: Gem, titleKey: "MorePage.getStardust", isPlaceholder: false }
+  ];
+
   const settingsItems = [
      { href: "/notifications-settings", icon: Settings, titleKey: "MorePage.notifications", isPlaceholder: true },
   ];
@@ -160,6 +164,24 @@ export default async function MorePage({ params }: MorePageProps) {
         </h2>
         <div className="space-y-2.5 sm:space-y-3.5">
           {accountItems.map(item => (
+            <AccountItem
+              key={item.href}
+              href={item.href}
+              icon={item.icon}
+              title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
+              locale={params.locale}
+              isPlaceholder={item.isPlaceholder}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
+          {dictionary['MorePage.stardustTitle'] || "Polvo Estelar y Recompensas"}
+        </h2>
+        <div className="space-y-2.5 sm:space-y-3.5">
+          {stardustItems.map(item => (
             <AccountItem
               key={item.href}
               href={item.href}
