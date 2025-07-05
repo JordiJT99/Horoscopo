@@ -55,10 +55,30 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
       <CardHeader className="p-4 pb-2">
          <div className="flex justify-between items-center">
-            <CardTitle className="text-lg flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
-                {dictionary['ProfilePage.cosmicEnergyTitle'] || "Cosmic Energy"}
-            </CardTitle>
+            <div className="flex items-center gap-1.5">
+                <CardTitle className="text-lg flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    {dictionary['ProfilePage.cosmicEnergyTitle'] || "Cosmic Energy"}
+                </CardTitle>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-primary rounded-full">
+                            <HelpCircle className="h-4 w-4" />
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                            <DialogTitle className="flex items-center gap-2">
+                                <Sparkles className="h-5 w-5 text-primary" />
+                                {dictionary['CosmicEnergy.explanationTitle'] || "What is Cosmic Energy? ✨"}
+                            </DialogTitle>
+                            <DialogDescription className="text-left pt-2 whitespace-pre-line">
+                                {dictionary['CosmicEnergy.explanationContent'] || "Cosmic Energy (CE) is a measure of your engagement with the app. It's like your experience points!\n\n**What is it for?**\n- **Level Up:** Accumulating CE allows you to level up your profile.\n- **Unlock Rewards:** Each new level grants you rewards like exclusive avatar frames, profile backgrounds, Stardust, and even free psychic chats.\n\n**How to get it?**\nYou earn CE automatically by using the app's features, such as:\n- Reading your daily, weekly, or monthly horoscopes.\n- Getting a tarot card reading.\n- Consulting the crystal ball.\n- Participating in the community."}
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
+            </div>
             <TooltipProvider>
                 <div className="flex items-center gap-1">
                     <Tooltip>
