@@ -1,4 +1,5 @@
 
+
 {
   "App.title": "AstroVibes",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
@@ -136,7 +137,6 @@
   "HoroscopeSection.error": "No se pudieron cargar los datos del horóscopo. Por favor, inténtalo de nuevo más tarde.",
   "HoroscopeSection.noData": "No hay datos de horóscopo disponibles. Por favor, selecciona un signo.",
   "HoroscopeSection.loveTitle": "Amor",
-  "HoroscopeSection.moneyTitle": "Dinero",
   "HoroscopeSection.healthTitle": "Salud",
   "CompatibilitySection.title": "Chequeo de Compatibilidad",
   "CompatibilitySection.description": "Selecciona dos signos para ver su reporte de compatibilidad.",
@@ -893,7 +893,6 @@
   "CommunityPage.exclusiveEmojiAria": "Insertar emoji exclusivo",
   "ProfilePage.rewardsTitle": "Recompensas por Nivel",
   "ProfilePage.rewardsDescription": "Desbloquea nuevos beneficios al subir de nivel tu Energía Cósmica.",
-  "CosmicEnergy.stardust": "Polvo Estelar",
   "Reward.lockedTitle": "Contenido Bloqueado",
   "Reward.unlockAtLevel": "Desbloquea esta función en el Nivel {level}. ¡Sigue explorando la app para ganar Energía Cósmica!",
   "Reward.viewProgress": "Ver Tu Progreso",
@@ -930,6 +929,13 @@
     "loading": "Consultando el cosmos...",
     "error": "Los cielos están nublados. Por favor, inténtalo más tarde."
   },
+  "Toast.adRequiredTitle": "Anuncio Requerido",
+  "Toast.adRequiredDescription": "Viendo un breve anuncio para tu primer uso del día.",
+  "Toast.watchingAd": "Viendo anuncio...",
+  "Toast.notEnoughStardustTitle": "Polvo Estelar Insuficiente",
+  "Toast.notEnoughStardustDescription": "Necesitas {cost} de Polvo Estelar para usar esto de nuevo hoy. Puedes conseguir más en la sección 'Más'.",
+  "Toast.stardustSpent": "Polvo Estelar Gastado",
+  "Toast.stardustSpentDescription": "Se han usado {cost} de Polvo Estelar para esta lectura.",
   "ZodiacDetail": {
     "Aries": {
       "title": "El Carnero Pionero",
@@ -1087,7 +1093,7 @@
     },
     "Pisces": {
       "title": "El Pez Compasivo",
-      "description": "Piscis, el último signo de Agua, es el más empático, compasivo e intuitivo del zodiaco. Regido por Neptuno, el planeta de los sueños y la ilusión, están profundamente conectados con los reinos emocional y espiritual. Son los místicos, artistas y soñadores, que poseen una imaginación sin límites y una profunda comprensión de la condición humana. Simbolizados por dos peces que nadan en direcciones opuestas, navegan constantemente entre la fantasía y la realidad. Sienten todo, lo que es a la vez su mayor don y su carga más pesada. Su sabiduría no es de este mundo.",
+      "description": "Piscis, el último signo de Agua, es el más empático, compasivo e intuitivo del zodiaco. Regido por Neptuno, el planeta de los sueños y la ilusión, están profundamente conectados con los remos emocional y espiritual. Son los místicos, artistas y soñadores, que poseen una imaginación sin límites y una profunda comprensión de la condición humana. Simbolizados por dos peces que nadan en direcciones opuestas, navegan constantemente entre la fantasía y la realidad. Sienten todo, lo que es a la vez su mayor don y su carga más pesada. Su sabiduría no es de este mundo.",
       "strengthsTitle": "Fortalezas",
       "strengths": ["Compasivo", "Artístico", "Intuitivo", "Amable", "Sabio"],
       "weaknessesTitle": "Debilidades",

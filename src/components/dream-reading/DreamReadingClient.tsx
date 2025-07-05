@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -25,6 +26,7 @@ import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 
 const TOTAL_STEPS = 6;
+const STARDUST_COST = 10;
 
 type ViewMode = 'wizard' | 'loading' | 'result';
 
@@ -62,10 +64,9 @@ const DreamMapCategory = ({ title, items, icon: Icon }: { title: string, items: 
 
 export default function DreamReadingClient({ dictionary, locale }: DreamReadingClientProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { level: userLevel } = useCosmicEnergy();
+  const { level: userLevel, stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);
@@ -75,6 +76,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isShowingAd, setIsShowingAd] = useState(false);
   const [interpretationResult, setInterpretationResult] = useState<DreamInterpretationOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [newDreamTrigger, setNewDreamTrigger] = useState(0);
@@ -84,11 +86,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     setIsClient(true);
   }, []);
 
-  const handleInterpretDream = async () => {
-    if (!formData.coreDescription.trim()) {
-      toast({ title: dictionary['Error.genericTitle'] || "Error", description: dictionary['DreamWizard.error.coreRequired'] || "The main dream description is required.", variant: 'destructive'});
-      return;
-    }
+  const performInterpretation = async (isFirstUse: boolean) => {
     setViewMode('loading');
     setError(null);
     setInterpretationResult(null);
@@ -97,6 +95,10 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
       setInterpretationResult(result);
       
+      if (isFirstUse) {
+        addEnergyPoints('use_dream_reading', 20);
+      }
+
       try {
         const newDreamRecord: StoredDream = {
             id: new Date().toISOString(),
@@ -106,26 +108,61 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
         };
         const storedDreamsRaw = localStorage.getItem('dreamJournal');
         const storedDreams: StoredDream[] = storedDreamsRaw ? JSON.parse(storedDreamsRaw) : [];
-        // Reduced from 100 to 20 to prevent quota errors
         const updatedDreams = [newDreamRecord, ...storedDreams].slice(0, 20);
         localStorage.setItem('dreamJournal', JSON.stringify(updatedDreams));
         setNewDreamTrigger(Date.now());
       } catch(e) {
-        // Prevent crash on quota exceeded, but don't bother the user with a toast.
-        // The main functionality (seeing the interpretation) has already succeeded.
         console.error("Could not save dream to journal (likely quota exceeded):", e);
       }
 
       setViewMode('result');
     } catch (err) {
       console.error("Error interpreting dream:", err);
-      setError(dictionary['DreamReadingPage.errorFetching'] || "The dreamscape is hazy... Could not get an interpretation. Please try again.");
+      const errorMessage = dictionary['DreamReadingPage.errorFetching'] || "The dreamscape is hazy... Could not get an interpretation. Please try again.";
+      setError(errorMessage);
       toast({
         title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['DreamReadingPage.errorFetching'] || "The dreamscape is hazy... Could not get an interpretation. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
       setViewMode('wizard');
+    }
+  };
+  
+  const handleInterpretDream = async () => {
+    if (!formData.coreDescription.trim()) {
+      toast({ title: dictionary['Error.genericTitle'] || "Error", description: dictionary['DreamWizard.error.coreRequired'] || "The main dream description is required.", variant: 'destructive'});
+      return;
+    }
+    
+    const today = new Date().toISOString().split('T')[0];
+    const hasUsedToday = lastGained.use_dream_reading === today;
+    
+    if (!hasUsedToday) {
+      setIsShowingAd(true);
+      toast({
+          title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
+          description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
+      });
+      setTimeout(() => {
+          setIsShowingAd(false);
+          performInterpretation(true); 
+      }, 2500);
+    } else {
+      if (stardust < STARDUST_COST) {
+        toast({
+          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
+          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust for another reading today. Get more from the 'More' section.").replace('{cost}', STARDUST_COST.toString()),
+          variant: "destructive",
+        });
+        return;
+      }
+      spendStardust(STARDUST_COST);
+      toast({
+        title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
+        description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
+      });
+      performInterpretation(false);
     }
   };
 
@@ -206,7 +243,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(s => s + 1);
+      setCurrentStep(s => s - 1);
     }
   };
 
@@ -355,13 +392,23 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     </Card>
   );
 
-  const renderLoading = () => (
-    <Card className="w-full max-w-xl mx-auto shadow-xl flex flex-col items-center justify-center min-h-[300px] p-8">
-        <Brain className="h-16 w-16 text-primary animate-pulse mb-4" />
-        <h2 className="text-xl font-headline font-semibold text-primary">{dictionary['DreamReadingPage.interpretingButton'] || "Interpreting Dreamscape..."}</h2>
-        <p className="text-muted-foreground mt-2 text-center">{dictionary['DreamWizard.loadingMessage'] || "The spirits are analyzing the symbols and emotions of your journey..."}</p>
-    </Card>
-  );
+  const renderLoading = () => {
+    if (isShowingAd) {
+      return (
+        <Card className="w-full max-w-xl mx-auto shadow-xl flex flex-col items-center justify-center min-h-[300px] p-8">
+            <LoadingSpinner className="h-16 w-16 text-primary animate-pulse mb-4" />
+            <h2 className="text-xl font-headline font-semibold text-primary">{dictionary['Toast.watchingAd'] || "Watching ad..."}</h2>
+        </Card>
+      )
+    }
+    return (
+      <Card className="w-full max-w-xl mx-auto shadow-xl flex flex-col items-center justify-center min-h-[300px] p-8">
+          <Brain className="h-16 w-16 text-primary animate-pulse mb-4" />
+          <h2 className="text-xl font-headline font-semibold text-primary">{dictionary['DreamReadingPage.interpretingButton'] || "Interpreting Dreamscape..."}</h2>
+          <p className="text-muted-foreground mt-2 text-center">{dictionary['DreamWizard.loadingMessage'] || "The spirits are analyzing the symbols and emotions of your journey..."}</p>
+      </Card>
+    );
+  }
 
   if (error) {
     return <p className="text-destructive text-center font-body text-sm md:text-base">{error}</p>;
