@@ -9,5 +9,6 @@ import './flows/natal-chart-flow';
 import './flows/psychic-chat-flow';
 import './flows/psychic-match-flow';
 import './flows/daily-tip-flow';
+import './flows/tarot-spread-flow';
 // Removed: import './flows/natal-chart-image-flow';
 // Removed: import './flows/compatibility-report-flow';

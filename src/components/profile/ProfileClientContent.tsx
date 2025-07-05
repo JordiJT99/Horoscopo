@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { Locale, Dictionary } from '@/lib/dictionaries';
@@ -8,116 +9,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings, Star, ShoppingBag, Clapperboard } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Settings, Star } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from '@/components/ui/skeleton';
-import SectionTitle from '@/components/shared/SectionTitle';
 import type { OnboardingFormData, ZodiacSign } from '@/types';
 import { getSunSignFromDate } from '@/lib/constants';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import CosmicEnergyBar from './CosmicEnergyBar';
 import MySignsCard from './MySignsCard';
 import NotificationSettingsCard from './NotificationSettingsCard';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { cn } from '@/lib/utils';
-import RewardsCard from './RewardsCard';
-
-
-const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
-    const { addStardust, claimRateReward, hasRatedApp } = useCosmicEnergy();
-    const [isAdPlaying, setIsAdPlaying] = useState(false);
-    const { toast } = useToast();
-
-    const handleRateApp = () => {
-        const { success, amount } = claimRateReward();
-        if (success) {
-            toast({
-                title: dictionary['Toast.rateSuccessTitle'] || "Thank You!",
-                description: (dictionary['Toast.rateSuccessDescription'] || "You've been awarded {amount} Stardust for your feedback.").replace('{amount}', amount.toString())
-            });
-        } else {
-             toast({
-                title: dictionary['Toast.alreadyRated'] || "Already Rewarded",
-                description: "You have already claimed this reward."
-            });
-        }
-    };
-
-    const handleWatchAd = () => {
-        setIsAdPlaying(true);
-        setTimeout(() => {
-            const adReward = 15;
-            addStardust(adReward);
-            setIsAdPlaying(false);
-            toast({
-                 title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
-                description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
-            });
-        }, 2000); // Simulate ad watch time
-    };
-
-    const stardustPacks = [
-        { amount: 100, price: "$0.99", popular: false, icon: '💎' },
-        { amount: 550, price: "$4.99", popular: true, icon: '✨' },
-        { amount: 1200, price: "$9.99", popular: false, icon: '🌟' }
-    ];
-
-    return (
-        <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
-            <CardHeader className="p-6">
-                <CardTitle className="text-lg flex items-center gap-2">
-                    <ShoppingBag className="h-5 w-5 text-primary" />
-                    {dictionary['ProfilePage.getMoreStardustTitle'] || "Get More Stardust"}
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="p-6 pt-0 space-y-4">
-                <Button onClick={handleRateApp} disabled={hasRatedApp} className="w-full justify-between h-auto py-3 px-4">
-                    <div className="flex items-center gap-3">
-                         <Star className="h-5 w-5"/>
-                         <div className="text-left">
-                            <p className="font-semibold">{dictionary['ProfilePage.rateAppButton'] || "Rate the App"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '150')}</p>
-                         </div>
-                    </div>
-                    <span>{hasRatedApp ? '✅' : '▶️'}</span>
-                </Button>
-                 <Button onClick={handleWatchAd} disabled={isAdPlaying} className="w-full justify-between h-auto py-3 px-4">
-                    <div className="flex items-center gap-3">
-                         <Clapperboard className="h-5 w-5"/>
-                         <div className="text-left">
-                            <p className="font-semibold">{dictionary['ProfilePage.watchAdButton'] || "Watch an Ad"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '15')}</p>
-                         </div>
-                    </div>
-                    <span>{isAdPlaying ? '...' : '▶️'}</span>
-                </Button>
-
-                <div className="pt-4">
-                    <h4 className="text-center font-semibold mb-3">{dictionary['ProfilePage.buyStardustTitle'] || "Buy Stardust"}</h4>
-                    <div className="grid grid-cols-1 gap-2">
-                        {stardustPacks.map(pack => (
-                             <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-lg">{pack.icon}</span>
-                                    <p className="font-semibold">{pack.amount.toLocaleString()} 💫</p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="font-bold">{pack.price}</p>
-                                    <p className="text-xs font-normal text-muted-foreground">{dictionary['MorePage.comingSoon']}</p>
-                                </div>
-                            </Button>
-                        ))}
-                    </div>
-                </div>
-
-            </CardContent>
-        </Card>
-    );
-};
 
 
 export default function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
@@ -213,7 +118,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
                 <p className="font-body text-base mb-6">{dictionary['Auth.pleaseLoginToProfile'] || "You need to be logged in to access your profile and settings."}</p>
                 <Button asChild className="w-full font-body">
                     <Link href={`/${locale}/login`}>
-                        <LogIn className="mr-2 h-5 w-5" />
+                        <UserCircle className="mr-2 h-5 w-5" />
                         {dictionary['Auth.goToLoginButton'] || "Go to Login Page"}
                     </Link>
                 </Button>
@@ -252,73 +157,58 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
         </Card>
       </div>
 
-      {/* --- Right Column: Tabbed Content --- */}
+      {/* --- Right Column: Content --- */}
       <div className="md:col-span-2 space-y-8">
-         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="profile"><User className="mr-2 h-4 w-4" />{dictionary['ProfilePage.profileTab'] || "Profile"}</TabsTrigger>
-            <TabsTrigger value="extras"><Award className="mr-2 h-4 w-4" />{dictionary['ProfilePage.extrasTab'] || "Extras"}</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="profile" className="mt-6 space-y-8">
-            <MySignsCard dictionary={dictionary} locale={locale} onboardingData={onboardingData} />
-            <CosmicEnergyBar dictionary={dictionary} />
-            <NotificationSettingsCard dictionary={dictionary} />
+        <MySignsCard dictionary={dictionary} locale={locale} onboardingData={onboardingData} />
+        <CosmicEnergyBar dictionary={dictionary} />
+        <NotificationSettingsCard dictionary={dictionary} />
 
-            <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
-              <CardHeader className="flex flex-row items-center justify-between p-6">
-                <CardTitle className="text-lg">{dictionary['ProfilePage.aboutMeTitle'] || "About Me"}</CardTitle>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={handleAboutEdit}
-                  aria-label={isEditingAbout ? (dictionary['ProfilePage.saveAboutAriaLabel'] || 'Save changes to about me') : (dictionary['ProfilePage.editAboutAriaLabel'] || 'Edit about me section')}
-                >
-                  {isEditingAbout ? <Save className="h-5 w-5 text-primary" /> : <Edit3 className="h-5 w-5" />}
-                </Button>
-              </CardHeader>
-              <CardContent className="p-6 pt-0">
-                {isEditingAbout ? (
-                  <Textarea 
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    placeholder={dictionary['ProfilePage.bioPlaceholder'] || 'Tell us about your cosmic journey...'}
-                    className="min-h-[100px] bg-input/50 text-sm"
-                    maxLength={300}
-                  />
-                ) : (
-                  <p className="font-body text-base text-card-foreground leading-relaxed min-h-[100px] whitespace-pre-wrap">{bio}</p>
-                )}
-              </CardContent>
-            </Card>
+        <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
+          <CardHeader className="flex flex-row items-center justify-between p-6">
+            <CardTitle className="text-lg">{dictionary['ProfilePage.aboutMeTitle'] || "About Me"}</CardTitle>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleAboutEdit}
+              aria-label={isEditingAbout ? (dictionary['ProfilePage.saveAboutAriaLabel'] || 'Save changes to about me') : (dictionary['ProfilePage.editAboutAriaLabel'] || 'Edit about me section')}
+            >
+              {isEditingAbout ? <Save className="h-5 w-5 text-primary" /> : <Edit3 className="h-5 w-5" />}
+            </Button>
+          </CardHeader>
+          <CardContent className="p-6 pt-0">
+            {isEditingAbout ? (
+              <Textarea 
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                placeholder={dictionary['ProfilePage.bioPlaceholder'] || 'Tell us about your cosmic journey...'}
+                className="min-h-[100px] bg-input/50 text-sm"
+                maxLength={300}
+              />
+            ) : (
+              <p className="font-body text-base text-card-foreground leading-relaxed min-h-[100px] whitespace-pre-wrap">{bio}</p>
+            )}
+          </CardContent>
+        </Card>
 
-            <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
-              <CardHeader className="p-6">
-                <CardTitle className="text-lg flex items-center gap-2"><Settings className="h-5 w-5 text-primary"/>{dictionary['ProfilePage.accountSettingsTitle'] || "Account Settings"}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 p-6 pt-0">
-                <div className="space-y-2">
-                  <Label htmlFor="username-profile">{dictionary['ProfilePage.usernameLabel'] || "Username"}</Label>
-                  <Input type="text" id="username-profile" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-input/50" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email-profile">{dictionary['ProfilePage.emailLabel'] || "Email Address"}</Label>
-                  <Input type="email" id="email-profile" value={displayEmail} className="bg-input/50" disabled />
-                  <p className="text-xs text-muted-foreground">{dictionary['ProfilePage.emailCannotBeChanged'] || 'Email address cannot be changed.'}</p>
-                </div>
-                <Button onClick={handleAccountUpdate} disabled={isLoading}>
-                  <Save className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.saveAccountChangesButton'] || "Save Account Changes"}
-                </Button>
-              </CardContent>
-            </Card>
-
-          </TabsContent>
-
-          <TabsContent value="extras" className="mt-6 space-y-8">
-            <GetStardustCard dictionary={dictionary} />
-            <RewardsCard dictionary={dictionary} />
-          </TabsContent>
-        </Tabs>
+        <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
+          <CardHeader className="p-6">
+            <CardTitle className="text-lg flex items-center gap-2"><Settings className="h-5 w-5 text-primary"/>{dictionary['ProfilePage.accountSettingsTitle'] || "Account Settings"}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 p-6 pt-0">
+            <div className="space-y-2">
+              <Label htmlFor="username-profile">{dictionary['ProfilePage.usernameLabel'] || "Username"}</Label>
+              <Input type="text" id="username-profile" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-input/50" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email-profile">{dictionary['ProfilePage.emailLabel'] || "Email Address"}</Label>
+              <Input type="email" id="email-profile" value={displayEmail} className="bg-input/50" disabled />
+              <p className="text-xs text-muted-foreground">{dictionary['ProfilePage.emailCannotBeChanged'] || 'Email address cannot be changed.'}</p>
+            </div>
+            <Button onClick={handleAccountUpdate} disabled={isLoading}>
+              <Save className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.saveAccountChangesButton'] || "Save Account Changes"}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -79,7 +79,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           photoURL: firebaseUser.photoURL,
         };
         setUser(authUser);
-        // Redirection logic after auth state is confirmed will be handled in login/signup
       } else {
         setUser(null);
       }
@@ -173,7 +172,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       if (userCredential.user) {
         await updateProfile(userCredential.user, { displayName: username });
-        // Explicitly set user here to ensure context is updated before potential redirect checks
         const authUser: AuthUser = {
           uid: userCredential.user.uid,
           email: userCredential.user.email,
@@ -182,7 +180,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
         setUser(authUser);
         
-        localStorage.removeItem(getOnboardingStatusKey(userCredential.user.uid)); // Ensure onboarding is fresh
+        localStorage.removeItem(getOnboardingStatusKey(userCredential.user.uid));
 
         const dictionary = await getDictionary(locale);
         toast({
@@ -231,8 +229,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         title: dictionary['Auth.logoutSuccessTitle'] || "Logged Out",
         description: dictionary['Auth.logoutSuccessMessage'] || "You have been successfully logged out.",
       });
-      // User will be set to null by onAuthStateChanged
-      // Redirect to home or login after logout
       const loginPath = `/${locale}/login`;
       router.push(loginPath);
     } catch (error: any) {
@@ -252,27 +248,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const markOnboardingAsComplete = useCallback(() => {
     if (user?.uid) {
       localStorage.setItem(getOnboardingStatusKey(user.uid), 'true');
-      // Optionally, trigger a re-check or state update if needed elsewhere,
-      // but for now, layout effect will handle future navigations.
     } else {
       console.warn("markOnboardingAsComplete called without a user.");
     }
   }, [user]);
 
-
-  // This effect is primarily for handling the initial load and already logged-in users
-  // Redirection after login/signup actions is handled within those functions.
+  // Centralized redirection logic
   useEffect(() => {
-    if (!hasMounted || isLoading || !user || !appInitializedSuccessfully) {
-      return;
+    if (!hasMounted || isLoading || !appInitializedSuccessfully) {
+      return; // Wait for auth state to be confirmed
     }
 
-    const onboardingComplete = localStorage.getItem(getOnboardingStatusKey(user.uid)) === 'true';
-    const currentPath = pathname.split('/').slice(2).join('/'); // Get path without locale
     const localeFromPath = pathname.split('/')[1] as Locale || 'es';
+    const loginPath = `/${localeFromPath}/login`;
+    const onboardingPath = `/${localeFromPath}/onboarding`;
+    const isLoginPage = pathname === loginPath;
+    const isOnboardingPage = pathname === onboardingPath;
 
-    if (!onboardingComplete && currentPath !== 'onboarding' && currentPath !== 'login') {
-      router.push(`/${localeFromPath}/onboarding`);
+    if (user) {
+      // User is logged in
+      const onboardingComplete = localStorage.getItem(getOnboardingStatusKey(user.uid)) === 'true';
+
+      if (onboardingComplete) {
+        // User is fully set up, should not be on login or onboarding pages
+        if (isLoginPage || isOnboardingPage) {
+          router.push(`/${localeFromPath}/profile`);
+        }
+      } else {
+        // User is logged in but has NOT completed onboarding
+        if (!isOnboardingPage) {
+          // Force them to the onboarding page if they are anywhere else
+          router.push(onboardingPath);
+        }
+      }
+    } else {
+      // No user is logged in. No redirection logic here, as some pages might be public.
+      // Pages that require auth should handle their own checks or be wrapped in an auth guard.
     }
   }, [user, isLoading, pathname, router, hasMounted, appInitializedSuccessfully]);
 
