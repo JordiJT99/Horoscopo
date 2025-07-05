@@ -386,7 +386,7 @@
   "GalacticTone.Electric.name": "Elektrisch",
   "GalacticTone.Electric.keyword": "Dienst",
   "GalacticTone.Electric.question": "Wie kann ich am besten dienen?",
-  "GalacticTone.SelfExisting.name": "Selbst-Existent",
+  "GalacticTone.SelfExisting.name": "Auto-Existente",
   "GalacticTone.SelfExisting.keyword": "Form",
   "GalacticTone.SelfExisting.question": "Was ist die Form der Handlung?",
   "GalacticTone.Overtone.name": "Oberton",
@@ -496,11 +496,12 @@
   "MorePage.getStardust": "Sternenstaub erhalten",
   "GetStardustPage.title": "Sternenstaub & Belohnungen",
   "GetStardustPage.subtitle": "Stärke deine kosmische Reise.",
-  "TarotSpreadPage.title": "Tirage de Tarot",
-  "TarotSpreadPage.subtitle": "Sélectionnez deux cartes pour révéler leur message combiné pour vous.",
-  "TarotSpreadPage.selectTwoCards": "Sélectionnez {count} cartes",
-  "TarotSpreadPage.getReadingButton": "Révéler la Lecture",
-  "TarotSpreadPage.readingTitle": "Votre Tirage de Tarot",
-  "TarotSpreadPage.drawAgainButton": "Tirer à Nouveau",
-  "TarotSpreadPage.errorFetching": "Les cartes sont enveloppées de brume... Impossible d'obtenir une lecture. Veuillez réessayer."
+  "TarotSpreadPage.title": "Tarot-Legung",
+  "TarotSpreadPage.subtitle": "Wähle zwei Karten, um ihre kombinierte Botschaft für dich zu enthüllen.",
+  "TarotSpreadPage.selectTwoCards": "Wähle {count} Karten",
+  "TarotSpreadPage.getReadingButton": "Legung enthüllen",
+  "TarotSpreadPage.readingTitle": "Deine Tarot-Legung",
+  "TarotSpreadPage.drawAgainButton": "Erneut ziehen",
+  "TarotSpreadPage.errorFetching": "Die Karten sind in Nebel gehüllt... Eine Legung konnte nicht erhalten werden. Bitte versuche es erneut."
 }
+
