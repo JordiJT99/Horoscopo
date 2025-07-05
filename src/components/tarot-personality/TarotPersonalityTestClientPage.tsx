@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -24,6 +25,8 @@ interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
   locale: Locale;
 }
+
+const STARDUST_COST = 10;
 
 export default function TarotPersonalityTestClientPage({ dictionary, locale }: TarotPersonalityTestClientPageProps) {
   const router = useRouter();
@@ -245,7 +248,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
                         <div className="flex flex-col sm:flex-row gap-2 mt-4">
                           <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm flex-1">
                               <RotateCcw className="mr-2 h-4 w-4" />
-                              {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"}
+                              {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"} ({STARDUST_COST} 💫)
                           </Button>
                           <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="w-full font-body text-xs md:text-sm flex-1">
                              {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}

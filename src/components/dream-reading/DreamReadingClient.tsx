@@ -129,14 +129,14 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     }
   };
   
+  const today = new Date().toISOString().split('T')[0];
+  const hasUsedToday = lastGained.use_dream_reading === today;
+
   const handleInterpretDream = async () => {
     if (!formData.coreDescription.trim()) {
       toast({ title: dictionary['Error.genericTitle'] || "Error", description: dictionary['DreamWizard.error.coreRequired'] || "The main dream description is required.", variant: 'destructive'});
       return;
     }
-    
-    const today = new Date().toISOString().split('T')[0];
-    const hasUsedToday = lastGained.use_dream_reading === today;
     
     if (!hasUsedToday) {
       setIsShowingAd(true);
@@ -267,6 +267,11 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     const value = formData[fieldName];
     const maxLength = (stepInfo as any).maxLength;
 
+    const getInterpretationButtonText = () => {
+      const baseText = dictionary['DreamWizard.getInterpretationButton'] || 'Get Interpretation';
+      return hasUsedToday ? `${baseText} (${STARDUST_COST} 💫)` : baseText;
+    };
+
     return (
       <Card className="w-full max-w-xl mx-auto shadow-xl">
         <CardHeader className="px-4 py-4 md:px-6 md:py-5">
@@ -330,7 +335,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             {dictionary['DreamWizard.prevButton'] || 'Previous'}
           </Button>
           <Button onClick={handleNextStep}>
-            {currentStep === TOTAL_STEPS ? (dictionary['DreamWizard.getInterpretationButton'] || 'Get Interpretation') : (dictionary['DreamWizard.nextButton'] || 'Next')}
+            {currentStep === TOTAL_STEPS ? getInterpretationButtonText() : (dictionary['DreamWizard.nextButton'] || 'Next')}
             {currentStep < TOTAL_STEPS && <ChevronRight className="ml-1 h-4 w-4" />}
           </Button>
         </CardFooter>
@@ -381,7 +386,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button onClick={handleNewInterpretation} variant="outline" className="flex-1">
                   <RotateCcw className="mr-2 h-4 w-4" />
-                  {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"}
+                  {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"} ({STARDUST_COST} 💫)
               </Button>
                <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="flex-1">
                  {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
