@@ -3,11 +3,12 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { MAJOR_ARCANA_TAROT_CARDS } from '@/lib/constants';
+import { ALL_TAROT_CARDS } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { tarotSpreadFlow, type TarotSpreadInput, type TarotSpreadOutput } from '@/ai/flows/tarot-spread-flow';
+import { tarotSpreadFlow } from '@/ai/flows/tarot-spread-flow';
+import type { TarotSpreadInput, TarotSpreadOutput } from '@/types';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -53,7 +54,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   const cardBackPath = "/custom_assets/tarot-card-back.png";
 
   useEffect(() => {
-    setShuffledCards(shuffleArray(MAJOR_ARCANA_TAROT_CARDS));
+    setShuffledCards(shuffleArray(ALL_TAROT_CARDS));
   }, []);
   
   const today = new Date().toISOString().split('T')[0];
@@ -137,7 +138,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   };
 
   const handleReset = () => {
-    setShuffledCards(shuffleArray(MAJOR_ARCANA_TAROT_CARDS));
+    setShuffledCards(shuffleArray(ALL_TAROT_CARDS));
     setSelectedIndices([]);
     setSelectedCards([]);
     setReading(null);
@@ -158,7 +159,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
             </div>
           </div>
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-7 gap-2 sm:gap-4 justify-center">
-            {shuffledCards.map((cardName, index) => (
+            {shuffledCards.slice(0, 21).map((cardName, index) => ( // Show first 21 cards for UI simplicity
               <div key={index} className="perspective-1000">
                 <motion.div
                   className="relative w-full aspect-[2/3] transform-style-preserve-3d"
@@ -240,3 +241,5 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     </div>
   );
 }
+
+    

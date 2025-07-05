@@ -10,13 +10,13 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { MAJOR_ARCANA_TAROT_CARDS } from '@/lib/constants';
+import { ALL_TAROT_CARDS } from '@/lib/constants';
 
 // Helper function to generate image path from card name
 const getTarotCardImagePath = (cardNameFromAI: string): string => {
   const basePath = '/custom_assets/tarot_cards/';
   const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
-  const matchedCanonicalName = MAJOR_ARCANA_TAROT_CARDS.find(
+  const matchedCanonicalName = ALL_TAROT_CARDS.find(
     (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
   );
 
@@ -30,6 +30,7 @@ const getTarotCardImagePath = (cardNameFromAI: string): string => {
 };
 
 
+export type TarotSpreadInput = z.infer<typeof TarotSpreadInputSchema>;
 const TarotSpreadInputSchema = z.object({
   card1Name: z.string().describe('The name of the first tarot card drawn.'),
   card1Reversed: z.boolean().describe('Whether the first card is reversed.'),
@@ -38,7 +39,6 @@ const TarotSpreadInputSchema = z.object({
   locale: z.string().describe('The locale (e.g., "en", "es") for the reading language.'),
   userName: z.string().optional().describe('The name of the user, for a personalized reading.'),
 });
-export type TarotSpreadInput = z.infer<typeof TarotSpreadInputSchema>;
 
 const TarotSpreadCardInfoSchema = z.object({
   cardName: z.string(),
@@ -46,19 +46,19 @@ const TarotSpreadCardInfoSchema = z.object({
   imagePlaceholderUrl: z.string(),
 });
 
+export type TarotSpreadOutput = z.infer<typeof TarotSpreadOutputSchema>;
 const TarotSpreadOutputSchema = z.object({
   reading: z.string().describe('A detailed, multi-paragraph interpretation of the combined meaning of the two cards, relating them to each other and the user.'),
   card1: TarotSpreadCardInfoSchema,
   card2: TarotSpreadCardInfoSchema,
 });
-export type TarotSpreadOutput = z.infer<typeof TarotSpreadOutputSchema>;
 
 const tarotSpreadPrompt = ai.definePrompt({
   name: 'tarotSpreadPrompt',
   input: { schema: TarotSpreadInputSchema },
   output: { schema: z.object({ reading: z.string() }) }, // AI only generates the text
   prompt: `You are an expert Tarot reader, skilled at synthesizing the meaning of multiple cards into a cohesive narrative.
-The user has drawn two cards from the Major Arcana. Your task is to provide a thoughtful and insightful reading that explains how these two cards interact and what their combined message is for the user. Respond in the {{locale}} language.
+The user has drawn two cards from the Tarot. Your task is to provide a thoughtful and insightful reading that explains how these two cards interact and what their combined message is for the user. Respond in the {{locale}} language.
 
 **User Information:**
 {{#if userName}}
@@ -120,3 +120,5 @@ const tarotSpreadFlowInternal = ai.defineFlow(
 export async function tarotSpreadFlow(input: TarotSpreadInput): Promise<TarotSpreadOutput> {
     return tarotSpreadFlowInternal(input);
 }
+
+    

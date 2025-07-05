@@ -607,6 +607,19 @@ export const MAJOR_ARCANA_TAROT_CARDS = [
   "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World"
 ];
 
+const MINOR_ARCANA_SUITS = ["Wands", "Cups", "Swords", "Pentacles"];
+const MINOR_ARCANA_RANKS = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Page", "Knight", "Queen", "King"];
+
+const MINOR_ARCANA_TAROT_CARDS = MINOR_ARCANA_SUITS.flatMap(suit => 
+  MINOR_ARCANA_RANKS.map(rank => `${rank} of ${suit}`)
+);
+
+export const ALL_TAROT_CARDS = [
+  ...MAJOR_ARCANA_TAROT_CARDS,
+  ...MINOR_ARCANA_TAROT_CARDS
+];
+
+
 export { Briefcase as WorkIcon };
 
 const transits: DailyTransit[] = [
@@ -626,3 +639,6 @@ export const getDailyTransit = (date: Date): DailyTransit => {
 
 
 
+
+
+    
