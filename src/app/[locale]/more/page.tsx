@@ -95,7 +95,7 @@ export default async function MorePage({ params }: MorePageProps) {
   const allFeatures = [
     { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/tarot-personality-test", icon: Sparkles, titleKey: "TarotPersonalityPage.title", newBadge: false, isPlaceholder: false },
-    { href: "/crystal-ball", icon: Eye, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
+    { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
     { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/compatibility", icon: Users, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },
     { href: "/lucky-numbers", icon: LuckyNumbersIcon, titleKey: "LuckyNumbersPage.title", newBadge: false, isPlaceholder: false },
