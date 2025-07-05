@@ -4,11 +4,13 @@
 import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Sparkles, Star, MinusCircle, PlusCircle, Gem } from 'lucide-react';
+import { Sparkles, Star, MinusCircle, PlusCircle, Gem, HelpCircle } from 'lucide-react';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '../ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
@@ -109,9 +111,27 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
           </span>
         </div>
         <Progress value={progress} className="h-2.5" />
-        <div className="flex justify-end items-center mt-2 text-cyan-400">
-          <Gem className="w-3.5 h-3.5 mr-1.5" />
-          <span className="font-semibold text-sm">{stardust.toLocaleString()} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
+        <div className="flex justify-end items-center mt-2 text-cyan-400 gap-1">
+            <Gem className="w-3.5 h-3.5 mr-1" />
+            <span className="font-semibold text-sm">{stardust.toLocaleString()} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-primary rounded-full">
+                        <HelpCircle className="h-4 w-4" />
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <Gem className="h-5 w-5 text-cyan-400" />
+                            {dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}
+                        </DialogTitle>
+                        <DialogDescription className="text-left pt-2 whitespace-pre-line">
+                            {dictionary['Stardust.explanationContent'] || "Stardust is a special currency..."}
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
         </div>
       </CardContent>
     </Card>

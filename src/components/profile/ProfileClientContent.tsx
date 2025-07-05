@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings, Star, ShoppingBag, Clapperboard } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Award, ShieldQuestion, LogIn, User, Settings, Star, ShoppingBag, Clapperboard, Gem, HelpCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -31,7 +31,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const { addStardust, claimRateReward, hasRatedApp } = useCosmicEnergy();
     const [isAdPlaying, setIsAdPlaying] = useState(false);
     const { toast } = useToast();
-
+    
     const handleRateApp = () => {
         const { success, amount } = claimRateReward();
         if (success) {
