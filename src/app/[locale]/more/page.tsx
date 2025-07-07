@@ -128,6 +128,10 @@ export default async function MorePage({ params }: MorePageProps) {
   const settingsItems = [
      { href: "/notifications-settings", icon: Settings, titleKey: "MorePage.notifications", isPlaceholder: true },
   ];
+  
+  const legalItems = [
+    { href: "/privacy", icon: Cookie, titleKey: "PrivacyPolicy.title", isPlaceholder: false },
+  ];
 
   const availableLocales = [
     { code: 'es' as Locale, name: dictionary['Language.es'] || 'Español' },
@@ -243,6 +247,24 @@ export default async function MorePage({ params }: MorePageProps) {
               ))}
             </div>
           </Card>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-xl sm:text-2xl font-headline font-semibold text-primary mb-3 sm:mb-4 px-1 sm:px-2 text-left">
+          {dictionary['MorePage.legalTitle'] || "Legal"}
+        </h2>
+        <div className="space-y-2.5 sm:space-y-3.5">
+          {legalItems.map(item => (
+            <AccountItem
+              key={item.href}
+              href={item.href}
+              icon={item.icon}
+              title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
+              locale={params.locale}
+              isPlaceholder={item.isPlaceholder}
+            />
+          ))}
         </div>
       </div>
 
