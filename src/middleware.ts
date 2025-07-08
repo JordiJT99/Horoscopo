@@ -51,6 +51,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   // Matcher ignoring `/_next/`, `/api/` and static assets in /public
   matcher: [
-    '/((?!api|_next/static|_next/image|custom_assets|images|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|custom_assets|images|favicon.ico|firebase-messaging-sw.js).*)',
   ],
 };

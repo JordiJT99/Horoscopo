@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
     config.externals.push({
       handlebars: 'commonjs handlebars',
     });
+    // Genkit dependencies that are not needed in the browser.
+    config.externals.push(
+      '@opentelemetry/exporter-jaeger',
+      '@opentelemetry/exporter-zipkin'
+    );
     return config;
   },
 };
