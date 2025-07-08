@@ -12,8 +12,9 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "cap:add:android": "npx cap add android",
-    "cap:sync:android": "npx cap sync android",
-    "cap:open:android": "npx cap open android"
+    "cap:sync:android": "npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "build:android:release": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
