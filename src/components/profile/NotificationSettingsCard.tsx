@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { BellDot } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { requestNotificationPermission, deleteCurrentToken } from '@/lib/firebase-messaging';
 
 interface NotificationSettingsCardProps {
   dictionary: Dictionary;
@@ -16,41 +18,74 @@ interface NotificationSettingsCardProps {
 export default function NotificationSettingsCard({ dictionary }: NotificationSettingsCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
-  const [mercuryRetrogradeAlert, setMercuryRetrogradeAlert] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [permission, setPermission] = useState<NotificationPermission>('default');
 
-  const storageKey = user ? `notificationSettings_${user.uid}` : null;
-
+  // Check current browser permission state on mount
   useEffect(() => {
-    if (storageKey) {
-      const storedSettingsRaw = localStorage.getItem(storageKey);
-      if (storedSettingsRaw) {
-        try {
-          const settings = JSON.parse(storedSettingsRaw);
-          setMercuryRetrogradeAlert(settings.mercuryRetrogradeAlert || false);
-        } catch (e) {
-          console.error("Failed to parse notification settings:", e);
-        }
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      setPermission(Notification.permission);
+      // If permission is already granted, reflect this in the UI
+      if (Notification.permission === 'granted') {
+          setNotificationsEnabled(true);
       }
     }
-  }, [storageKey]);
+  }, []);
 
-  const handleToggleChange = (newValue: boolean) => {
-    if (storageKey) {
-      setMercuryRetrogradeAlert(newValue);
-      const newSettings = { mercuryRetrogradeAlert: newValue };
-      localStorage.setItem(storageKey, JSON.stringify(newSettings));
-      toast({
-        title: dictionary['ProfilePage.settingsSavedTitle'] || "Settings Saved",
-        description: dictionary['ProfilePage.notificationPrefsUpdated'] || "Your notification preferences have been updated.",
-      });
-    } else {
+  const handleToggleChange = async (enabled: boolean) => {
+    if (!user) {
       toast({
         title: dictionary['Auth.notLoggedInTitle'] || "Not Logged In",
         description: dictionary['ProfilePage.loginToSaveSettings'] || "You must be logged in to save settings.",
         variant: 'destructive',
       });
+      return;
+    }
+
+    if (enabled) {
+      // User wants to enable notifications
+      try {
+        const hasPermission = await requestNotificationPermission();
+        if (hasPermission) {
+          setNotificationsEnabled(true);
+          setPermission('granted');
+          toast({
+            title: dictionary['Toast.notificationsEnabledTitle'] || "Notifications Enabled",
+            description: dictionary['Toast.notificationsEnabledDesc'] || "You will now receive updates from AstroVibes!",
+          });
+        } else {
+          // Permission was denied or dismissed
+          setNotificationsEnabled(false);
+          setPermission(Notification.permission);
+          toast({
+            title: dictionary['Toast.notificationsDeniedTitle'] || "Permission Denied",
+            description: dictionary['Toast.notificationsDeniedDesc'] || "Please enable notifications in your browser settings to receive updates.",
+            variant: 'destructive',
+          });
+        }
+      } catch (error) {
+        console.error('Error requesting notification permission:', error);
+        setNotificationsEnabled(false);
+        toast({ title: dictionary['Error.genericTitle'], description: (error as Error).message, variant: 'destructive' });
+      }
+    } else {
+      // User wants to disable notifications
+      try {
+        await deleteCurrentToken(user.uid);
+        setNotificationsEnabled(false);
+        toast({
+            title: dictionary['Toast.notificationsDisabledTitle'] || "Notifications Disabled",
+            description: dictionary['Toast.notificationsDisabledDesc'] || "You will no longer receive notifications on this device.",
+        });
+      } catch(error) {
+        console.error("Error deleting token: ", error);
+        // Even if token deletion fails, update UI to reflect user's choice
+        setNotificationsEnabled(false);
+      }
     }
   };
+  
+  const isPermissionBlocked = permission === 'denied';
 
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
@@ -70,10 +105,16 @@ export default function NotificationSettingsCard({ dictionary }: NotificationSet
           </Label>
           <Switch
             id="mercury-retrograde-switch"
-            checked={mercuryRetrogradeAlert}
+            checked={notificationsEnabled && !isPermissionBlocked}
             onCheckedChange={handleToggleChange}
+            disabled={isPermissionBlocked}
           />
         </div>
+        {isPermissionBlocked && (
+            <p className="text-xs text-destructive mt-2">
+                {dictionary['Toast.notificationsBlockedDesc'] || "Notifications are blocked in your browser. You must enable them in your browser's settings."}
+            </p>
+        )}
       </CardContent>
     </Card>
   );

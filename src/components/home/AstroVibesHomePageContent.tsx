@@ -27,6 +27,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import AdBanner from '@/components/shared/AdBanner';
+import React from 'react';
 
 
 interface AstroVibesPageContentProps {
@@ -558,45 +560,37 @@ export default function AstroVibesHomePageContent({
             )}
 
             <div className="space-y-3 sm:space-y-4">
-              {detailedHoroscopeCategories.map((cat) => (
-                <div key={`${cat.id}-${motionDivKey}-detail`} className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4")}>
-                  <h3 className={cn(
-                    "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl"
-                  )}>
-                    <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2")} />
-                    {dictionary[cat.titleKey]}
-                  </h3>
-                  {isHoroscopeLoading ? (
-                    <div className={cn("space-y-1.5")}>
-                      <Skeleton className="h-4 w-full font-body" />
-                      <Skeleton className="h-4 w-5/6 font-body" />
-                      <Skeleton className="h-4 w-3/4 font-body" />
-                    </div>
-                  ) : (
-                    <p className="font-body text-sm text-foreground/80 leading-relaxed">
-                      {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
-                    </p>
-                  )}
-                </div>
-              ))}
-              {isHoroscopeLoading && detailedHoroscopeCategories.length === 0 && Array.from({ length: 4 }).map((_, index) => (
+              {isHoroscopeLoading ? (
+                Array.from({ length: 3 }).map((_, index) => (
                   <div key={`skeleton-cat-${index}`} className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4">
-                    <h3 className={cn(
-                      "font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl" 
-                    )}>
-                        <LoadingSpinner className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" )} />
-                        {dictionary['HoroscopeSection.loading'] || "Loading..."}
+                    <h3 className="font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl">
+                      <LoadingSpinner className="h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" />
+                      {dictionary['HoroscopeSection.loading'] || "Loading..."}
                     </h3>
-                    <div className={cn("space-y-1.5")}>
-                      <Skeleton className="h-4 w-full font-body" />
-                      <Skeleton className="h-4 w-5/6 font-body" />
-                      <Skeleton className="h-4 w-3/4 font-body" />
+                    <div className="space-y-1.5">
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
                     </div>
                   </div>
-              ))}
-              {!isHoroscopeLoading && !currentDisplayHoroscope && (
-                 <div className="sm:col-span-2 text-center py-10">
-                   <p className="font-body text-muted-foreground">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
+                ))
+              ) : currentDisplayHoroscope ? (
+                detailedHoroscopeCategories.map((cat, index) => (
+                  <React.Fragment key={`${cat.id}-${motionDivKey}-detail`}>
+                    <div className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4")}>
+                      <h3 className={cn("font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl")}>
+                        <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2")} />
+                        {dictionary[cat.titleKey]}
+                      </h3>
+                      <p className="font-body text-sm text-foreground/80 leading-relaxed">
+                        {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
+                      </p>
+                    </div>
+                    {!isPremium && index === 0 && <AdBanner dictionary={dictionary} />}
+                  </React.Fragment>
+                ))
+              ) : (
+                <div className="sm:col-span-2 text-center py-10">
+                  <p className="font-body text-muted-foreground">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
                 </div>
               )}
             </div>
