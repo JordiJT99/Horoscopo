@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# production
+/build
+
 # misc
 .DS_Store
 *.pem
@@ -23,6 +26,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -31,9 +35,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Capacitor
+# capacitor
 /android
 /ios
 /www
-capacitor.config.json
-.capacitor/

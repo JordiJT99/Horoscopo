@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -158,8 +157,8 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
               <div className={cn("w-8 h-12 border-2 rounded", selectedIndices.length >= 2 ? 'bg-primary border-primary' : 'bg-muted border-dashed')} />
             </div>
           </div>
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-7 gap-2 sm:gap-4 justify-center">
-            {shuffledCards.slice(0, 21).map((cardName, index) => ( // Show first 21 cards for UI simplicity
+          <div className="grid grid-cols-6 sm:grid-cols-7 md:grid-cols-9 gap-2 sm:gap-4 justify-center">
+            {shuffledCards.map((cardName, index) => (
               <div key={index} className="perspective-1000">
                 <motion.div
                   className="relative w-full aspect-[2/3] transform-style-preserve-3d"
@@ -241,5 +240,3 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     </div>
   );
 }
-
-    
