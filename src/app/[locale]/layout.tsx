@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
-import type { Locale } from '@/lib/dictionaries';
-import { getDictionary, type Dictionary } from '@/lib/dictionaries';
+import type { Metadata, Viewport } from 'next';
+import type { Locale, Dictionary } from '@/lib/dictionaries';
+import { getDictionary, type Dictionary as DictType } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from '@/context/AuthContext';
 import AppStructure from '@/components/shared/AppStructure';
@@ -15,12 +15,6 @@ export const metadata: Metadata = {
   title: 'AstroMística : Tarot, Horóscopo y Carta Natal',
   description: 'Tu fuente diaria de horóscopos, tarot e insights astrológicos.',
   manifest: '/manifest.json',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
    icons: {
     icon: '/custom_assets/logo_192.png',
     apple: '/custom_assets/logo_192.png',
@@ -31,6 +25,15 @@ export const metadata: Metadata = {
     title: 'AstroMística',
   },
 };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#1A142B',
+};
+
 
 interface LocaleLayoutParams {
   locale: Locale;
@@ -74,7 +77,6 @@ export default async function LocaleLayout({
             strategy="afterInteractive"
             crossOrigin="anonymous"
           />
-           <meta name="theme-color" content="#1A142B" />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col text-foreground bg-background dark">
         <AuthProvider>
