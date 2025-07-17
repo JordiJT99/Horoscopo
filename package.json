@@ -14,7 +14,7 @@
     "cap:add:android": "npx cap add android",
     "cap:sync:android": "npx cap sync",
     "cap:open:android": "npx cap open android",
-    "build:android:release": "cd android && ./gradlew assembleRelease"
+    "build:android:release": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
