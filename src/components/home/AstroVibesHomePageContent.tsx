@@ -27,9 +27,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
-import AdBanner from '@/components/shared/AdBanner';
 import React from 'react';
-import { AdMob, BannerAdPosition, BannerAdSize } from '@admob-plus/capacitor';
+// import { AdMob, BannerAdPosition, BannerAdSize } from '@admob-plus/capacitor';
 
 
 interface AstroVibesPageContentProps {

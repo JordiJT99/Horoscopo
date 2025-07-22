@@ -44,7 +44,8 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cordova-plugin-admob-free": "^0.27.0",
+    "cordova-admob-sdk": "^0.24.1",
+    "cordova-promise-polyfill": "^0.0.2",
     "date-fns": "^3.6.0",
     "dotenv": "^16.5.0",
     "firebase": "^11.8.1",
@@ -65,9 +66,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@capacitor/android": "^6.0.0",
-    "@capacitor/cli": "^6.0.0",
-    "@capacitor/core": "^6.0.0",
+    "@capacitor/android": "^7.4.2",
+    "@capacitor/cli": "^7.4.2",
+    "@capacitor/core": "^7.4.2",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/react": "^18",

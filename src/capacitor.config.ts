@@ -1,13 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.astromistica.app',
+  appId: 'com.astromistica.horoscopo',
   appName: 'AstroMística : Tarot, Horóscopo y Carta Natal',
-  webDir: 'out',
-  server: {
-    url: 'https://astromistica.org',
-    cleartext: true,
-  },
+  webDir: 'public',
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,

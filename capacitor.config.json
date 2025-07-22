@@ -1,0 +1,16 @@
+{
+  "appId": "com.astromistica.horoscopo",
+  "appName": "AstroMistica : Tarot, Horóscopo y Carta Natal",
+  "webDir": "public",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#1A142B",
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "large",
+      "spinnerColor": "#E11D48",
+      "showSpinner": true
+    }
+  }
+}
