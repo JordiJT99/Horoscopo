@@ -22,8 +22,8 @@ const AdBanner = () => {
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client="ca-pub-1601092077557933" // Tu ID de editor
-        data-ad-slot="1234567890" // ¡IMPORTANTE! Reemplaza esto con tu ID de bloque de anuncio
+        data-ad-client="ca-pub-1601092077557933" 
+        data-ad-slot="YOUR_AD_SLOT_ID_HERE" 
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>

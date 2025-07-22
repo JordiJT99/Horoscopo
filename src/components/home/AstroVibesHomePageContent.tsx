@@ -29,6 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import AdBanner from '@/components/shared/AdBanner';
 import React from 'react';
+import { AdMob, BannerAdPosition, BannerAdSize } from '@admob-plus/capacitor';
 
 
 interface AstroVibesPageContentProps {
@@ -253,6 +254,23 @@ export default function AstroVibesHomePageContent({
     fetchHoroscope();
   }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive, addEnergyPoints, user, isPremium, activeHoroscopePeriodForTitles]);
 
+  useEffect(() => {
+    const showAd = async () => {
+      try {
+        await AdMob.start(); // Inicia el SDK
+  
+        await AdMob.banner.show({
+          adUnitId: 'ca-app-pub-1601092077557933/7021416293', // Tu ID real
+          position: BannerAdPosition.BOTTOM_CENTER,
+          size: BannerAdSize.BANNER,
+        });
+      } catch (e) {
+        console.error(e)
+      }
+    };
+  
+    showAd();
+  }, [])
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
     let currentSignParam = searchParams.get('sign');
