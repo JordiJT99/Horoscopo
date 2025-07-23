@@ -462,13 +462,6 @@ export default function AstroVibesHomePageContent({
     <div className="flex flex-col">
       <main className="flex-grow container mx-auto px-2 sm:px-3 py-3 space-y-4 overflow-x-hidden">
         
-        <SectionTitle
-            title={dictionary['Page.welcomeTitle'] || "Welcome to AstroVibes"}
-            subtitle={dictionary['Page.welcomeSubtitle'] || "Your portal to the cosmos. Explore your astrological path and uncover celestial secrets."}
-            icon={Sparkles}
-            className="mb-2"
-        />
-
         <DailyTransitWidget dictionary={dictionary} />
         <DailyTipWidget dictionary={dictionary} locale={locale} />
 
