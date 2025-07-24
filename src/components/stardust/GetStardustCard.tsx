@@ -70,7 +70,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                     <Card className="mb-4 p-4 bg-background/50 border-primary/20">
                         <CardTitle className="text-md font-semibold mb-2 flex items-center gap-1.5">{dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}</CardTitle>
                         <p className="text-sm text-card-foreground/80 whitespace-pre-line">
-                            {dictionary['Stardust.explanationContent'] || "Stardust is a special currency within AstroVibes. You can use it to unlock premium features, such as sending messages in Psychic Chats.\n\nYou can earn Stardust by:\n- Leveling up your Cosmic Energy.\n- Claiming special rewards (like rating the app).\n- Watching ads.\n- Purchasing Stardust packs (coming soon)."}
+                            {dictionary['Stardust.explanationContent'] || "Stardust is a special currency within AstroMística. You can use it to unlock premium features, such as sending messages in Psychic Chats.\n\nYou can earn Stardust by:\n- Leveling up your Cosmic Energy.\n- Claiming special rewards (like rating the app).\n- Watching ads.\n- Purchasing Stardust packs (coming soon)."}
                         </p>
                     </Card>
                 )}

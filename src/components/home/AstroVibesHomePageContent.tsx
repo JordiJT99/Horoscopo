@@ -22,16 +22,17 @@ import PromotionCard from '@/components/shared/PromotionCard';
 import DailyTransitWidget from './DailyTransitWidget';
 import DailyTipWidget from './DailyTipWidget';
 import { Button } from '@/components/ui/button';
-import { CalendarDays, Share2, Heart, CircleDollarSign, Activity } from 'lucide-react';
+import { CalendarDays, Share2, Heart, CircleDollarSign, Activity, Sparkles } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import AdBanner from '@/components/shared/AdBanner';
 import React from 'react';
+import SectionTitle from '@/components/shared/SectionTitle';
 
 
-interface AstroVibesPageContentProps {
+interface AstroMísticaPageContentProps {
   dictionary: Dictionary;
   locale: Locale;
   displayPeriod: 'daily' | 'weekly' | 'monthly';
@@ -55,13 +56,13 @@ function getDeterministicRandom(seedString: string, min: number, max: number): n
 }
 
 
-export default function AstroVibesHomePageContent({
+export default function AstroMísticaHomePageContent({
   dictionary,
   locale,
   displayPeriod,
   targetDate,
   activeHoroscopePeriodForTitles,
-}: AstroVibesPageContentProps) {
+}: AstroMísticaPageContentProps) {
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -315,10 +316,10 @@ export default function AstroVibesHomePageContent({
     const userNameToShare = (isPersonalizedRequestActive && onboardingData?.name) ? onboardingData.name : null;
 
     const shareTitle = userNameToShare
-      ? (dictionary['Share.personalizedHoroscopeTitle'] || "My Personalized AstroVibes Horoscope for {signName}")
+      ? (dictionary['Share.personalizedHoroscopeTitle'] || "My Personalized AstroMística Horoscope for {signName}")
           .replace('{signName}', signNameToShare)
           .replace('{userName}', userNameToShare)
-      : (dictionary['Share.horoscopeTitle'] || "Horoscope for {signName} from AstroVibes")
+      : (dictionary['Share.horoscopeTitle'] || "Horoscope for {signName} from AstroMística")
           .replace('{signName}', signNameToShare);
 
     let horoscopeText = `${currentDisplayHoroscope.main}`;
@@ -326,7 +327,7 @@ export default function AstroVibesHomePageContent({
         horoscopeText = (dictionary['Share.personalizedHoroscopePrefix'] || "For {userName} ({signName}):").replace('{userName}', userNameToShare).replace('{signName}', signNameToShare) + `\n${horoscopeText}`;
     }
 
-    const appInvite = dictionary['Share.downloadAppPrompt'] || "Discover AstroVibes for more insights!";
+    const appInvite = dictionary['Share.downloadAppPrompt'] || "Discover AstroMística for more insights!";
     const appStoreLink = dictionary['Share.appStoreLinkPlaceholder'] || "https://apps.apple.com/app/your-app-id-here";
     const googlePlayLink = dictionary['Share.googlePlayLinkPlaceholder'] || "https://play.google.com/store/apps/details?id=your.package.name.here";
     
