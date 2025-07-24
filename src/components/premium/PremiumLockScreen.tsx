@@ -1,4 +1,3 @@
-'// src/components/premium/PremiumLockScreen.tsx
 'use client';
 
 import type { Dictionary, Locale } from '@/lib/dictionaries';
