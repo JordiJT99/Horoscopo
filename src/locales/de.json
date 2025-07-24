@@ -217,7 +217,7 @@
   "CompatibilityPage.calculatorSubtitleFriendship": "Erkunden Sie die Dynamik der Freundschaft zwischen Zeichen.",
   "CompatibilityPage.calculatorTitleWork": "Arbeitskompatibilitätsrechner",
   "CompatibilityPage.calculatorSubtitleWork": "Sehen Sie, wie Zeichen in einem beruflichen Umfeld zusammenarbeiten.",
-  "LuckyNumbersPage.title": "Glückszahlen",
+  "LuckyNumbersPage.title": "Glücksbringer",
   "LuckyNumbersPage.subtitle": "Finden Sie Ihre Glückszahlen, -farbe und -edelstein für Ihr Zeichen heraus.",
   "ChineseHoroscopePage.title": "Chinesisches Horoskop",
   "ChineseHoroscopePage.subtitle": "Erkunden Sie die Weisheit des chinesischen Tierkreises. Entdecken Sie Ihr Tierzeichen und seine Eigenschaften.",
@@ -373,5 +373,3 @@
     "error": "Der Himmel ist bewölkt. Bitte versuche es später erneut."
   }
 }
-
-    
