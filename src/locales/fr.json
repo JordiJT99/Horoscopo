@@ -1,8 +1,8 @@
 
 {
-  "App.title": "AstroVibes",
+  "App.title": "AstroMística",
   "App.description": "Votre source quotidienne d'horoscopes et d'informations astrologiques.",
-  "Header.title": "AstroVibes",
+  "Header.title": "AstroMística",
   "Header.changeLanguage": "Langue",
   "Header.horoscopes": "Horoscopes",
   "Header.compatibility": "Compat.",
@@ -12,7 +12,7 @@
   "Header.profile": "Profil",
   "Header.settings": "Paramètres",
   "Header.about": "À propos",
-  "Footer.copyright": "© {year} AstroVibes. Tous droits réservés.",
+  "Footer.copyright": "© {year} AstroMística. Tous droits réservés.",
   "Footer.poweredBy": "Propulsé par l'Énergie Cosmique & Next.js",
   "TopBar.horoscopeTitle": "Horoscope",
   "TopBar.settingsAriaLabel": "Paramètres",
@@ -41,14 +41,14 @@
   "PromotionCard.tarotNebulaAlt": "Icône TAROT Nebula",
   "PromotionCard.freeBadge": "GRATUIT",
   "PromotionCard.dailyCard": "Votre carte du jour vous attend",
-  "Page.welcomeTitle": "Bienvenue sur AstroVibes",
+  "Page.welcomeTitle": "Bienvenue sur AstroMística",
   "Page.welcomeSubtitle": "Votre portail vers le cosmos. Explorez votre chemin astrologique et découvrez les secrets célestes.",
   "HomePage.dailyHoroscopeTitle": "Horoscope du Jour",
   "HomePage.dailyHoroscopeSubtitle": "Vos aperçus astrologiques quotidiens. Sélectionnez votre signe ci-dessous.",
   "HomePage.personalizedForecastsTitle": "Prévisions Cosmiques Personnalisées",
   "HomePage.personalizedForecastsSubtitleUser": "Votre tableau de bord céleste pour les énergies d'aujourd'hui, {userName}.",
   "HomePage.personalizedForecastsSubtitleGuest": "Débloquez vos aperçus personnels en vous connectant.",
-  "HomePage.welcomeGuestTitle": "Bienvenue sur AstroVibes !",
+  "HomePage.welcomeGuestTitle": "Bienvenue sur AstroMística !",
   "HomePage.guestPrompt": "Connectez-vous ou complétez votre profil pour des prévisions cosmiques personnalisées.",
   "HomePage.userForecastTitle": "Prévision Cosmique de {userName}",
   "HomePage.comingSoon": "Bientôt disponible",
@@ -291,7 +291,7 @@
     "lastUpdated": "Dernière mise à jour",
     "introduction": {
       "title": "1. Introduction",
-      "content": "Bienvenue sur AstroVibes. Votre vie privée est d'une importance capitale pour nous. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre application.\n\nNous pouvons mettre à jour cette politique à tout moment. Les modifications prendront effet immédiatement après la publication de la politique mise à jour, et nous vous encourageons à la consulter périodiquement."
+      "content": "Bienvenue sur AstroMística. Votre vie privée est d'une importance capitale pour nous. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre application.\n\nNous pouvons mettre à jour cette politique à tout moment. Les modifications prendront effet immédiatement après la publication de la politique mise à jour, et nous vous encourageons à la consulter périodiquement."
     },
     "informationWeCollect": {
       "title": "2. Informations que nous collectons",
@@ -552,7 +552,7 @@
 "CosmicEnergy.levelUpDescription": "Vous avez atteint le Niveau {level} !",
 "CosmicEnergy.stardust": "Poussière d'Étoile",
 "Stardust.explanationTitle": "Qu'est-ce que la Poussière d'Étoile ? 💫",
-"Stardust.explanationContent": "La Poussière d'Étoile est la monnaie spéciale d'AstroVibes. Vous pouvez l'utiliser pour débloquer des fonctionnalités premium, comme envoyer des messages dans les Chats de Voyance.\n\nVous pouvez gagner de la Poussière d'Étoile en :\n- Augmentant votre niveau d'Énergie Cosmique.\n- Réclamant des récompenses spéciales (comme noter l'application).\n- Regardant des publicités.\n- Achetant des packs de Poussière d'Étoile (bientôt disponible).",
+"Stardust.explanationContent": "La Poussière d'Étoile est la monnaie spéciale d'AstroMística. Vous pouvez l'utiliser pour débloquer des fonctionnalités premium, comme envoyer des messages dans les Chats de Voyance.\n\nVous pouvez gagner de la Poussière d'Étoile en :\n- Augmentant votre niveau d'Énergie Cosmique.\n- Réclamant des récompenses spéciales (comme noter l'application).\n- Regardant des publicités.\n- Achetant des packs de Poussière d'Étoile (bientôt disponible).",
 "Stardust.showExplanationButton": "Qu'est-ce que la Poussière d'Étoile ?",
 "Stardust.hideExplanationButton": "Masquer l'explication",
 "CosmicEnergy.explanationTitle": "Qu'est-ce que l'Énergie Cosmique ? ✨",
@@ -571,3 +571,4 @@
 
 }
 }
+

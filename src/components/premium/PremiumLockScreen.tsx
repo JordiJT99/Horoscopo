@@ -1,4 +1,4 @@
-// src/components/premium/PremiumLockScreen.tsx
+'// src/components/premium/PremiumLockScreen.tsx
 'use client';
 
 import type { Dictionary, Locale } from '@/lib/dictionaries';
@@ -15,7 +15,7 @@ interface PremiumLockScreenProps {
 
 export default function PremiumLockScreen({ dictionary, locale, featureTitle }: PremiumLockScreenProps) {
   const title = featureTitle || dictionary.PremiumLock?.title || 'Premium Feature';
-  const description = dictionary.PremiumLock?.description || 'Unlock this and many other exclusive features with AstroVibes Premium.';
+  const description = dictionary.PremiumLock?.description || 'Unlock this and many other exclusive features with AstroMística Premium.';
   const buttonText = dictionary.PremiumLock?.button || 'Go Premium';
 
   return (

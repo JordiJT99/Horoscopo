@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import type { Dictionary } from '@/lib/dictionaries';
 
 declare global {
   interface Window {
@@ -8,25 +9,32 @@ declare global {
   }
 }
 
-const AdBanner = () => {
+interface AdBannerProps {
+  dictionary: Dictionary;
+}
+
+const AdBanner = ({ dictionary }: AdBannerProps) => {
   useEffect(() => {
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      if (window.adsbygoogle) {
+        window.adsbygoogle.push({});
+      }
     } catch (err) {
       console.error('AdSense error:', err);
     }
   }, []);
 
   return (
-    <div className="w-full text-center my-4">
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-1601092077557933" // Tu ID de editor
-        data-ad-slot="1234567890" // ¡IMPORTANTE! Reemplaza esto con tu ID de bloque de anuncio
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
+    <div className="w-full text-center my-4 p-2 bg-muted/30 rounded-lg border border-border/50">
+        <p className="text-xs text-muted-foreground mb-2">{dictionary['AdBanner.placeholderText'] || 'Advertisement'}</p>
+        <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || ''}
+            data-ad-slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID || ''}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+        ></ins>
     </div>
   );
 };
