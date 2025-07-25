@@ -25,6 +25,7 @@ export default async function PrivacyPolicyPage({ params }: PrivacyPolicyPagePro
     { title: privacyDict.advertising?.title, content: privacyDict.advertising?.content },
     { title: privacyDict.dataSecurity?.title, content: privacyDict.dataSecurity?.content },
     { title: privacyDict.yourRights?.title, content: privacyDict.yourRights?.content },
+    { title: privacyDict.dataDeletion?.title, content: privacyDict.dataDeletion?.content },
     { title: privacyDict.childrensPrivacy?.title, content: privacyDict.childrensPrivacy?.content },
     { title: privacyDict.changesToPolicy?.title, content: privacyDict.changesToPolicy?.content },
     { title: privacyDict.contactUs?.title, content: privacyDict.contactUs?.content },
@@ -51,10 +52,7 @@ export default async function PrivacyPolicyPage({ params }: PrivacyPolicyPagePro
             section.title && section.content && (
               <div key={index}>
                 <h2 className="text-lg font-semibold font-headline text-primary mb-2">{section.title}</h2>
-                <div className="whitespace-pre-line space-y-3">
-                  {section.content.split('\\n').map((paragraph: string, pIndex: number) => (
-                    <p key={pIndex}>{paragraph}</p>
-                  ))}
+                <div className="whitespace-pre-line space-y-3" dangerouslySetInnerHTML={{ __html: section.content.replace(/\\n/g, '<br />') }}>
                 </div>
               </div>
             )
