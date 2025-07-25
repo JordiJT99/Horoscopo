@@ -93,10 +93,8 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
       setInterpretationResult(result);
       
-      const today = new Date().toISOString().split('T')[0];
-      if (lastGained.use_dream_reading !== today) {
-        addEnergyPoints('use_dream_reading', 20);
-      }
+      addEnergyPoints('use_dream_reading', 20);
+
 
       try {
         const newDreamRecord: StoredDream = {

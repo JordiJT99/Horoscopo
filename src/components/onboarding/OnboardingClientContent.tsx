@@ -155,7 +155,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
 
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep(prev => prev - 1);
     }
   };
 
