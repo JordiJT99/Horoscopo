@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -26,8 +27,6 @@ interface CardState {
   isReversed: boolean;
 }
 
-const STARDUST_COST = 10;
-
 // Helper to shuffle an array
 const shuffleArray = (array: string[]): string[] => {
   const newArray = [...array];
@@ -41,13 +40,12 @@ const shuffleArray = (array: string[]): string[] => {
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
   const { toast } = useToast();
   const { user } = useAuth();
-  const { stardust, spendStardust, isPremium, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const { addEnergyPoints, lastGained } = useCosmicEnergy();
 
   const [shuffledCards, setShuffledCards] = useState<string[]>([]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [selectedCards, setSelectedCards] = useState<CardState[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isShowingAd, setIsShowingAd] = useState(false);
   const [reading, setReading] = useState<TarotSpreadOutput | null>(null);
 
   const cardBackPath = "/custom_assets/tarot-card-back.png";
@@ -56,9 +54,6 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     setShuffledCards(shuffleArray(ALL_TAROT_CARDS));
   }, []);
   
-  const today = new Date().toISOString().split('T')[0];
-  const hasUsedToday = lastGained.draw_tarot_spread === today;
-
   const handleCardClick = (index: number) => {
     if (selectedIndices.length >= 2 || selectedIndices.includes(index) || isLoading || reading) {
       return;
@@ -76,63 +71,32 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   const handleGetReading = async () => {
     if (selectedCards.length !== 2 || isLoading) return;
 
-    const performReading = async (isFirstUse: boolean) => {
-      setIsLoading(true);
-      try {
-        const input: TarotSpreadInput = {
-          card1Name: selectedCards[0].name,
-          card1Reversed: selectedCards[0].isReversed,
-          card2Name: selectedCards[1].name,
-          card2Reversed: selectedCards[1].isReversed,
-          locale: locale,
-          userName: user?.displayName || undefined
-        };
-        const result = await tarotSpreadFlow(input);
-        setReading(result);
-        if (isFirstUse) {
-          addEnergyPoints('draw_tarot_spread', 25);
-        }
-      } catch (error) {
-        console.error("Error fetching tarot spread reading:", error);
-        toast({
-          title: dictionary['Error.genericTitle'] || "Error",
-          description: dictionary['TarotSpreadPage.errorFetching'] || "The cards are shrouded in mist... Could not get a reading. Please try again.",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
+    setIsLoading(true);
+    try {
+      const input: TarotSpreadInput = {
+        card1Name: selectedCards[0].name,
+        card1Reversed: selectedCards[0].isReversed,
+        card2Name: selectedCards[1].name,
+        card2Reversed: selectedCards[1].isReversed,
+        locale: locale,
+        userName: user?.displayName || undefined
+      };
+      const result = await tarotSpreadFlow(input);
+      setReading(result);
+
+      const today = new Date().toISOString().split('T')[0];
+      if (lastGained.draw_tarot_spread !== today) {
+        addEnergyPoints('draw_tarot_spread', 25);
       }
-    };
-    
-    if (!hasUsedToday) {
-      if (isPremium) {
-        performReading(true);
-      } else {
-        setIsShowingAd(true);
-        toast({
-            title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-            description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-        });
-        setTimeout(() => {
-            setIsShowingAd(false);
-            performReading(true); 
-        }, 2500);
-      }
-    } else {
-      if (stardust < STARDUST_COST) {
-        toast({
-          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
-          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust for another reading today.").replace('{cost}', STARDUST_COST.toString()),
-          variant: "destructive",
-        });
-        return;
-      }
-      spendStardust(STARDUST_COST);
+    } catch (error) {
+      console.error("Error fetching tarot spread reading:", error);
       toast({
-        title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
-        description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
+        title: dictionary['Error.genericTitle'] || "Error",
+        description: dictionary['TarotSpreadPage.errorFetching'] || "The cards are shrouded in mist... Could not get a reading. Please try again.",
+        variant: "destructive",
       });
-      performReading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -190,9 +154,8 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
           </div>
           <div className="text-center mt-8">
             <Button onClick={handleGetReading} disabled={selectedIndices.length !== 2 || isLoading} size="lg">
-              {isLoading || isShowingAd ? <LoadingSpinner className="mr-2 h-5 w-5" /> : <Sparkles className="mr-2 h-5 w-5" />}
+              {isLoading ? <LoadingSpinner className="mr-2 h-5 w-5" /> : <Sparkles className="mr-2 h-5 w-5" />}
               {isLoading ? (dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card...") : (dictionary['TarotSpreadPage.getReadingButton'] || 'Reveal Reading')}
-              {!isPremium && hasUsedToday && ` (${STARDUST_COST} 💫)`}
             </Button>
           </div>
         </>
@@ -229,7 +192,6 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
                    <Button onClick={handleReset} variant="outline" size="lg">
                      <RotateCcw className="mr-2 h-5 w-5" />
                      {dictionary['TarotSpreadPage.drawAgainButton'] || "Draw Again"}
-                     {!isPremium && ` (${STARDUST_COST} 💫)`}
                   </Button>
                 </div>
               </CardContent>

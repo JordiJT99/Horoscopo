@@ -156,21 +156,10 @@ export default function AstroMísticaHomePageContent({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, searchParams]); 
 
-  // Redirect if non-premium user tries to access tomorrow's horoscope
-  useEffect(() => {
-    if (activeHoroscopePeriodForTitles === 'tomorrow' && !isPremium) {
-      router.push(`/${locale}`); // Redirect to today's horoscope
-      toast({
-        title: dictionary.PremiumLock?.featureTitle || 'Premium Feature',
-        description: dictionary.PremiumLock?.tomorrowHoroscope || "Tomorrow's horoscope is a Premium feature.",
-      });
-    }
-  }, [activeHoroscopePeriodForTitles, isPremium, router, locale, toast, dictionary]);
-
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySignName || (activeHoroscopePeriodForTitles === 'tomorrow' && !isPremium)) {
+      if (!selectedDisplaySignName) {
           setIsHoroscopeLoading(true);
           return;
       }
@@ -252,7 +241,7 @@ export default function AstroMísticaHomePageContent({
     };
 
     fetchHoroscope();
-  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive, addEnergyPoints, user, isPremium, activeHoroscopePeriodForTitles]);
+  }, [selectedDisplaySignName, locale, displayPeriod, targetDate, dictionary, toast, userSunSign, onboardingData, isPersonalizedRequestActive, addEnergyPoints, user]);
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
@@ -586,6 +575,7 @@ export default function AstroMísticaHomePageContent({
                         {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
                       </p>
                     </div>
+                    {/* Ads are always enabled for non-premium users */}
                     {!isPremium && index === 0 && <AdBanner dictionary={dictionary} />}
                   </React.Fragment>
                 ))
