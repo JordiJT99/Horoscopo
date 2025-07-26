@@ -1,24 +1,21 @@
 
 "use client";
 
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import TopBar from '@/components/shared/TopBar'; 
 import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; 
 import { useAuth } from '@/context/AuthContext';
-import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
-import AdMobBannerManager from '@/components/shared/AdMobBannerManager';
 import { adMobManager } from '@/lib/admob';
 import { Capacitor } from '@capacitor/core';
-import { BannerAdPosition } from '@capacitor-community/admob';
 
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { isLoading: authLoading } = useAuth();
-  const { isPremium, checkAndAwardDailyStardust } = useCosmicEnergy();
   const { toast } = useToast();
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
@@ -27,17 +24,6 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
     setHasMounted(true);
   }, []);
 
-  // Effect to award daily stardust for premium users
-  useEffect(() => {
-    if (isPremium) {
-      const awarded = checkAndAwardDailyStardust();
-      if (awarded) {
-        toast({
-          title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
-          description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust for being a Premium member.',
-        });
-      }
-    }
   // Effect to register the Service Worker for PWA functionality
   useEffect(() => {
     if ('serviceWorker' in navigator) {
