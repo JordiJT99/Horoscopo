@@ -1,4 +1,3 @@
-
 {
   "name": "nextn",
   "version": "0.1.0",
@@ -17,6 +16,7 @@
     "build:android:release": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^7.0.3",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@genkit-ai/googleai": "^1.8.0",
     "@genkit-ai/next": "^1.8.0",
