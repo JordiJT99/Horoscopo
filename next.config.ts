@@ -3,7 +3,8 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
- 
+
+  serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow'],
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -11,7 +12,6 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true, // Add this line to disable image optimization
     remotePatterns: [
       {
         protocol: 'https',
