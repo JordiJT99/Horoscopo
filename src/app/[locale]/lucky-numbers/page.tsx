@@ -1,6 +1,7 @@
 
 // Server Component
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
+import type { Dictionary } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Clover } from 'lucide-react';
@@ -8,12 +9,15 @@ import LuckyNumbersClientContent from '@/components/lucky-numbers/LuckyNumbersCl
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Required for static export with dynamic routes
-export async function generateStaticParams() {
-  const locales = getSupportedLocales();
-  return locales.map((locale) => ({
-    locale: locale,
-  }));
-}
+// Force dynamic rendering to avoid useSearchParams issues
+export const dynamic = 'force-dynamic';
+
+// export async function generateStaticParams() {
+//   const locales = getSupportedLocales();
+//   return locales.map((locale) => ({
+//     locale: locale,
+//   }));
+// }
 
 interface LuckyNumbersPageProps {
   params: {

@@ -1,6 +1,7 @@
 
 // AstroVibesYesterdayPageWrapper is the async Server Component (default export)
-import type { Locale, Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries'; // Added getSupportedLocales
 import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
 import { format, subDays } from 'date-fns';

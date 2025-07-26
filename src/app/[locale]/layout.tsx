@@ -7,6 +7,7 @@ import AppStructure from '@/components/shared/AppStructure';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import FirebaseAnalytics from '@/components/shared/FirebaseAnalytics';
 import FirebaseMessagingProvider from '@/components/shared/FirebaseMessagingProvider';
+import GlobalSuspenseProvider from '@/components/providers/GlobalSuspenseProvider';
 import { Suspense } from 'react';
 import Script from 'next/script';
 import '../globals.css';

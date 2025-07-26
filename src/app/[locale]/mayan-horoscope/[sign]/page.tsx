@@ -1,6 +1,7 @@
 
 // Server Component - Detail page for a specific Mayan Sign
-import type { Locale } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
+import type { Dictionary } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import { MAYAN_ZODIAC_SIGNS } from '@/lib/constants';
 import { notFound } from 'next/navigation';

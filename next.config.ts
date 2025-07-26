@@ -3,6 +3,14 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // Configuration for WebView - disable pre-rendering
+  experimental: {
+    // Disable all static generation for WebView compatibility
+    ppr: false,
+  },
+  // Force all pages to be server-rendered
+  dynamicParams: true,
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },

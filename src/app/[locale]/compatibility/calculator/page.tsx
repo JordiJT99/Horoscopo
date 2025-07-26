@@ -1,8 +1,9 @@
 // Server Component - This page now just fetches data and renders the client wrapper.
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
-import CompatibilityCalculatorClient from '@/components/compatibility/CompatibilityCalculatorClient'; // Import the new client component
+import CompatibilityCalculatorWrapper from '@/components/compatibility/CompatibilityCalculatorWrapper';
 
 export async function generateStaticParams() {
   const locales = getSupportedLocales();
@@ -32,5 +33,5 @@ export default async function CompatibilityCalculatorPage({ params }: Compatibil
 
   // The logic that used searchParams is now in CompatibilityCalculatorClient.
   // The server page just fetches the dictionary and renders the client component.
-  return <CompatibilityCalculatorClient dictionary={dictionary} locale={params.locale} />;
+  return <CompatibilityCalculatorWrapper dictionary={dictionary} locale={params.locale} />;
 }

@@ -1,5 +1,21 @@
-// Server Component - Detail page for a specific Mayan Galactic Tone
-import type { Locale } from '@/lib/dictionaries';
+// Serve// Force dynamic rendering to avoid useSearchParams issues
+export const dynamic = 'force-dynamic';
+
+// export async function generateStaticParams() {
+//   const locales = getSupportedLocales();
+//   const tones = Array.from({ length: 13 }, (_, i) => (i + 1).toString());
+//   const params: { locale: string; toneId: string }[] = [];
+
+//   locales.forEach(locale => {
+//     tones.forEach(toneId => {
+//       params.push({ locale, toneId });
+//     });
+//   });
+
+//   return params;
+// } Detail page for a specific Mayan Galactic Tone
+import type { Locale } from '@/types';
+import type { Dictionary } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import { GALACTIC_TONES } from '@/lib/constants';
 import { notFound } from 'next/navigation';

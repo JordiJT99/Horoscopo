@@ -15,12 +15,15 @@ import { MayanAstrologyIcon } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 // Required for static export with dynamic routes
-export async function generateStaticParams() {
-  const locales = getSupportedLocales();
-  return locales.map((locale) => ({
-    locale: locale,
-  }));
-}
+// Force dynamic rendering to avoid useSearchParams issues
+export const dynamic = 'force-dynamic';
+
+// export async function generateStaticParams() {
+//   const locales = getSupportedLocales();
+//   return locales.map((locale) => ({
+//     locale: locale,
+//   }));
+// }
 
 interface MorePageProps {
   params: { locale: Locale };
