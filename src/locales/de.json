@@ -1,8 +1,8 @@
 
 {
-  "App.title": "AstroVibes",
+  "App.title": "AstroMística",
   "App.description": "Ihre tägliche Quelle für Horoskope und astrologische Einblicke.",
-  "Header.title": "AstroVibes",
+  "Header.title": "AstroMística",
   "Header.changeLanguage": "Sprache",
   "Header.horoscopes": "Horoskope",
   "Header.compatibility": "Kompat.",
@@ -12,7 +12,7 @@
   "Header.profile": "Profil",
   "Header.settings": "Einstellungen",
   "Header.about": "Über",
-  "Footer.copyright": "© {year} AstroVibes. Alle Rechte vorbehalten.",
+  "Footer.copyright": "© {year} AstroMística. Alle Rechte vorbehalten.",
   "Footer.poweredBy": "Angetrieben von Kosmischer Energie & Next.js",
   "TopBar.horoscopeTitle": "Horoskop",
   "TopBar.settingsAriaLabel": "Einstellungen",
@@ -41,14 +41,14 @@
   "PromotionCard.tarotNebulaAlt": "TAROT Nebula Symbol",
   "PromotionCard.freeBadge": "KOSTENLOS",
   "PromotionCard.dailyCard": "Deine Tageskarte wartet",
-  "Page.welcomeTitle": "Willkommen bei AstroVibes",
+  "Page.welcomeTitle": "Willkommen bei AstroMística",
   "Page.welcomeSubtitle": "Ihr Portal zum Kosmos. Entdecken Sie Ihren astrologischen Pfad und lüften Sie himmlische Geheimnisse.",
   "HomePage.dailyHoroscopeTitle": "Horoskop von Heute",
   "HomePage.dailyHoroscopeSubtitle": "Ihre täglichen astrologischen Einblicke. Wählen Sie unten Ihr Zeichen.",
   "HomePage.personalizedForecastsTitle": "Personalisierte Kosmische Vorhersagen",
   "HomePage.personalizedForecastsSubtitleUser": "Ihr himmlisches Dashboard für die heutigen Energien, {userName}.",
   "HomePage.personalizedForecastsSubtitleGuest": "Schalten Sie Ihre persönlichen Einblicke frei, indem Sie sich anmelden.",
-  "HomePage.welcomeGuestTitle": "Willkommen bei AstroVibes!",
+  "HomePage.welcomeGuestTitle": "Willkommen bei AstroMística!",
   "HomePage.guestPrompt": "Melden Sie sich an oder vervollständigen Sie Ihr Profil für personalisierte kosmische Vorhersagen.",
   "HomePage.userForecastTitle": "Kosmische Vorhersage für {userName}",
   "HomePage.comingSoon": "Demnächst",
@@ -217,7 +217,7 @@
   "CompatibilityPage.calculatorSubtitleFriendship": "Erkunden Sie die Dynamik der Freundschaft zwischen Zeichen.",
   "CompatibilityPage.calculatorTitleWork": "Arbeitskompatibilitätsrechner",
   "CompatibilityPage.calculatorSubtitleWork": "Sehen Sie, wie Zeichen in einem beruflichen Umfeld zusammenarbeiten.",
-  "LuckyNumbersPage.title": "Glückszahlen",
+  "LuckyNumbersPage.title": "Glücksbringer",
   "LuckyNumbersPage.subtitle": "Finden Sie Ihre Glückszahlen, -farbe und -edelstein für Ihr Zeichen heraus.",
   "ChineseHoroscopePage.title": "Chinesisches Horoskop",
   "ChineseHoroscopePage.subtitle": "Erkunden Sie die Weisheit des chinesischen Tierkreises. Entdecken Sie Ihr Tierzeichen und seine Eigenschaften.",
@@ -291,7 +291,7 @@
     "lastUpdated": "Zuletzt aktualisiert",
     "introduction": {
       "title": "1. Einleitung",
-      "content": "Willkommen bei AstroVibes. Ihre Privatsphäre ist für uns von entscheidender Bedeutung. Diese Datenschutzrichtlinie legt dar, wie wir Ihre Informationen erfassen, verwenden, offenlegen und schützen, wenn Sie unsere Anwendung nutzen.\n\nWir können diese Richtlinie jederzeit aktualisieren. Änderungen werden wirksam, sobald die aktualisierte Richtlinie veröffentlicht wird. Wir empfehlen Ihnen, diese Richtlinie regelmäßig zu überprüfen."
+      "content": "Willkommen bei AstroMística. Ihre Privatsphäre ist für uns von entscheidender Bedeutung. Diese Datenschutzrichtlinie legt dar, wie wir Ihre Informationen erfassen, verwenden, offenlegen und schützen, wenn Sie unsere Anwendung nutzen.\n\nWir können diese Richtlinie jederzeit aktualisieren. Änderungen werden wirksam, sobald die aktualisierte Richtlinie veröffentlicht wird. Wir empfehlen Ihnen, diese Richtlinie regelmäßig zu überprüfen."
     },
     "informationWeCollect": {
       "title": "2. Von uns erfasste Informationen",
@@ -317,35 +317,64 @@
       "title": "7. Ihre Rechte und Kontrolle",
       "content": "Sie haben das Recht, auf Ihre persönlichen Daten zuzugreifen und diese zu aktualisieren. Sie können Ihre Geburtsinformationen und Profildetails jederzeit im Profil- und Onboarding-Bereich der App überprüfen und ändern. Um Ihr Konto zu löschen oder bei anderen datenschutzbezogenen Anfragen, kontaktieren Sie uns bitte unter der unten angegebenen E-Mail-Adresse."
     },
+    "dataDeletion": {
+      "title": "8. Löschung von Konto und Daten",
+      "content": "Sie haben das Recht, die Löschung Ihres Kontos und der zugehörigen Daten zu beantragen. Dies ist eine permanente Aktion, die nicht rückgängig gemacht werden kann.\\n\\n**So beantragen Sie die Löschung:**\\n1. Senden Sie eine E-Mail an jordi.jordi.jordi9@gmail.com von der E-Mail-Adresse, die mit Ihrem AstroMistica Tarot & Horóscopo-Konto verknüpft ist.\\n2. Verwenden Sie den Betreff: 'Antrag auf Kontolöschung'.\\n3. Wir werden Ihre Identität überprüfen und den Löschvorgang innerhalb von 14 Werktagen einleiten.\\n\\n**Welche Daten werden gelöscht:**\\n- Ihr Benutzerprofil (Name, E-Mail, Foto-URL).\\n- Alle von Ihnen bereitgestellten Geburtsdaten (Datum, Uhrzeit, Ort).\\n- Alle von Ihnen im Community-Forum erstellten Beiträge und Kommentare.\\n- Alle anderen persönlichen Daten, die direkt mit Ihrem Konto verknüpft sind.\\n\\n**Welche Daten können aufbewahrt werden:**\\n- Anonymisierte Nutzungsdaten (z.B. welche Funktionen am beliebtesten sind), die nicht mehr mit Ihnen in Verbindung gebracht werden können, können für statistische Zwecke auf unbestimmte Zeit aufbewahrt werden, um unsere App zu verbessern."
+    },
     "childrensPrivacy": {
-      "title": "8. Datenschutz für Kinder",
+      "title": "9. Datenschutz für Kinder",
       "content": "Unsere Dienste richten sich nicht an Personen unter 13 Jahren. Wir erfassen wissentlich keine personenbezogenen Daten von Kindern. Wenn wir feststellen, dass ein Kind uns personenbezogene Daten zur Verfügung gestellt hat, löschen wir diese umgehend."
     },
     "changesToPolicy": {
-      "title": "9. Änderungen an dieser Richtlinie",
+      "title": "10. Änderungen an dieser Richtlinie",
       "content": "Wir können unsere Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden Sie über alle Änderungen informieren, indem wir die neue Datenschutzrichtlinie auf dieser Seite veröffentlichen."
     },
     "contactUs": {
-      "title": "10. Kontaktieren Sie uns",
+      "title": "11. Kontaktieren Sie uns",
       "content": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, können Sie uns kontaktieren unter: jordi.jordi.jordi9@gmail.com"
     }
-},
-"Admin": {
-"title": "Admin-Panel",
-"subtitle": "Push-Benachrichtigungen senden",
-"formTitle": "Benachrichtigung verfassen",
-"formDescription": "Diese Nachricht wird an alle abonnierten Benutzer gesendet.",
-"labelTitle": "Titel",
-"placeholderTitle": "z.B., Dein Tageshoroskop ist fertig!",
-"labelBody": "Nachrichtentext",
-"placeholderBody": "Tippe, um zu sehen, was die Sterne für dich bereithalten.",
-"labelPath": "Zielpfad",
-"placeholderPath": "z.B., /tarot-reading",
-"pathDescription": "Der relative Pfad zum Öffnen (z.B. /tarot-reading). Verwenden Sie / für die Startseite.",
-"buttonSend": "Benachrichtigung senden",
-"buttonSending": "Senden...",
-"toastSuccessTitle": "Erfolg",
-"toastErrorTitle": "Fehler",
-"toastSuccessMessage": "Erfolgreich {successCount} Benachrichtigungen gesendet. {failureCount} fehlgeschlagen."
-}
+  },
+  "Admin": {
+    "title": "Admin-Panel",
+    "subtitle": "Push-Benachrichtigungen senden",
+    "formTitle": "Benachrichtigung verfassen",
+    "formDescription": "Diese Nachricht wird an alle abonnierten Benutzer gesendet.",
+    "labelTitle": "Titel",
+    "placeholderTitle": "z.B., Dein Tageshoroskop ist fertig!",
+    "labelBody": "Nachrichtentext",
+    "placeholderBody": "Tippe, um zu sehen, was die Sterne für dich bereithalten.",
+    "labelPath": "Zielpfad",
+    "placeholderPath": "z.B., /tarot-reading",
+    "pathDescription": "Der relative Pfad zum Öffnen (z.B. /tarot-reading). Verwenden Sie / für die Startseite.",
+    "buttonSend": "Benachrichtigung senden",
+    "buttonSending": "Senden...",
+    "toastSuccessTitle": "Erfolg",
+    "toastErrorTitle": "Fehler",
+    "toastSuccessMessage": "Erfolgreich {successCount} Benachrichtigungen gesendet. {failureCount} fehlgeschlagen."
+  },
+  "DailyTransits": {
+    "TodaysSky": "Dein Himmel Heute",
+    "VenusTrineMoon": "Venus Trigon Mond",
+    "EnergyForLove": "Energie für Liebe und Harmonie.",
+    "SunConjunctMercury": "Sonne Konjunktion Merkur",
+    "ExcellentForCommunication": "Hervorragend für Kommunikation und Ideen.",
+    "MarsSquareSaturn": "Mars Quadrat Saturn",
+    "ChallengesRequiringPatience": "Herausforderungen, die Geduld erfordern.",
+    "JupiterEntersPisces": "Jupiter tritt in die Fische ein",
+    "ExpansionOfCreativity": "Expansion von Kreativität und Träumen.",
+    "MercuryRetrograde": "Rückläufiger Merkur",
+    "ReviewReflect": "Überprüfen, reflektieren, nichts Neues beginnen.",
+    "FullMoonInScorpio": "Vollmond im Skorpion",
+    "EmotionalIntensity": "Emotionale Intensität und Transformation.",
+    "SunTrineJupiter": "Sonne Trigon Jupiter",
+    "OptimismGrowth": "Optimismus, Wachstum und Glück."
+  },
+  "DailyTip": {
+    "title": "Tipp des Tages",
+    "subtitle": "Eine Dosis kosmischer Weisheit für deine Reise.",
+    "revealButton": "Tipp enthüllen",
+    "loading": "Der Kosmos wird befragt...",
+    "error": "Der Himmel ist bewölkt. Bitte versuche es später erneut."
+  },
+  "ProfilePage.requestDataDeletion": "Kontolöschung beantragen"
 }

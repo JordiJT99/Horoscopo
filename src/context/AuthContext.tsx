@@ -4,7 +4,7 @@
 import type { AuthUser } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { auth, appInitializedSuccessfully } from '@/lib/firebase';
 import {
   onAuthStateChanged,
@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [hasMounted, setHasMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -264,28 +265,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const onboardingPath = `/${localeFromPath}/onboarding`;
     const isLoginPage = pathname === loginPath;
     const isOnboardingPage = pathname === onboardingPath;
+    const isEditingOnboarding = searchParams.get('mode') === 'edit';
 
     if (user) {
-      // User is logged in
       const onboardingComplete = localStorage.getItem(getOnboardingStatusKey(user.uid)) === 'true';
 
       if (onboardingComplete) {
-        // User is fully set up, should not be on login or onboarding pages
-        if (isLoginPage || isOnboardingPage) {
+        // User is fully set up.
+        // Redirect them from login.
+        // Redirect them from onboarding ONLY IF they are not in edit mode.
+        if (isLoginPage || (isOnboardingPage && !isEditingOnboarding)) {
           router.push(`/${localeFromPath}/profile`);
         }
       } else {
-        // User is logged in but has NOT completed onboarding
+        // User is logged in but has NOT completed onboarding.
+        // Force them to the onboarding page if they are anywhere else.
         if (!isOnboardingPage) {
-          // Force them to the onboarding page if they are anywhere else
           router.push(onboardingPath);
         }
       }
     } else {
       // No user is logged in. No redirection logic here, as some pages might be public.
-      // Pages that require auth should handle their own checks or be wrapped in an auth guard.
     }
-  }, [user, isLoading, pathname, router, hasMounted, appInitializedSuccessfully]);
+  }, [user, isLoading, pathname, router, hasMounted, appInitializedSuccessfully, searchParams]);
 
 
   if (!hasMounted) {

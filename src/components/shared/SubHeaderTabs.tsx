@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -30,17 +31,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   ];
 
   const handleTabClick = (tab: HoroscopePeriod) => {
-    const isTomorrowTab = tab === 'tomorrow';
-    const isLocked = isTomorrowTab && !isPremium;
-
-    if (isLocked) {
-      toast({
-        title: dictionary.PremiumLock?.featureTitle || 'Premium Feature',
-        description: dictionary.PremiumLock?.tomorrowHoroscope || "Tomorrow's horoscope is a Premium feature. Upgrade to see the future!",
-      });
-    } else {
-      onTabChange(tab);
-    }
+    onTabChange(tab);
   };
 
   return (
@@ -52,8 +43,6 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
-            const isTomorrowTab = tab.id === 'tomorrow';
-            const isLocked = isTomorrowTab && !isPremium;
             
             return (
               <Button
@@ -61,18 +50,16 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                 variant="ghost"
                 role="tab"
                 aria-selected={isActive}
-                disabled={isLocked}
                 onClick={() => handleTabClick(tab.id)}
                 className={cn(
                   "rounded-full py-1.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold transition-colors duration-150 ease-in-out flex-shrink-0 mx-1.5 sm:mx-2 relative",
                   "bg-transparent", 
                   isActive
                     ? "text-primary-foreground" 
-                    : "text-muted-foreground hover:text-primary/80",
-                  isLocked && "text-muted-foreground/60 hover:text-muted-foreground/60 cursor-not-allowed"
+                    : "text-muted-foreground hover:text-primary/80"
                 )}
               >
-                {isActive && !isLocked && (
+                {isActive && (
                   <motion.div
                     className="absolute inset-0 bg-primary rounded-full shadow-[0_0_15px_2px_hsl(var(--primary)/0.6)]" 
                     layoutId="activeTabPill"
@@ -82,7 +69,6 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
                 )}
                 <span style={{ position: 'relative', zIndex: 1 }} className="flex items-center gap-1.5">
                   {dictionary[tab.labelKey] || tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}
-                  {isLocked && <Lock className="h-3 w-3" />}
                 </span>
               </Button>
             );

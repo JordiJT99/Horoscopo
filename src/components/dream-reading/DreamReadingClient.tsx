@@ -26,7 +26,6 @@ import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 
 
 const TOTAL_STEPS = 6;
-const STARDUST_COST = 10;
 
 type ViewMode = 'wizard' | 'loading' | 'result';
 
@@ -66,7 +65,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   const router = useRouter();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { level: userLevel, stardust, spendStardust, lastGained, addEnergyPoints, isPremium } = useCosmicEnergy();
+  const { level: userLevel, addEnergyPoints, lastGained } = useCosmicEnergy();
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);
@@ -76,7 +75,6 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isShowingAd, setIsShowingAd] = useState(false);
   const [interpretationResult, setInterpretationResult] = useState<DreamInterpretationOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [newDreamTrigger, setNewDreamTrigger] = useState(0);
@@ -86,7 +84,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     setIsClient(true);
   }, []);
 
-  const performInterpretation = async (isFirstUse: boolean) => {
+  const performInterpretation = async () => {
     setViewMode('loading');
     setError(null);
     setInterpretationResult(null);
@@ -95,9 +93,8 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
       setInterpretationResult(result);
       
-      if (isFirstUse) {
-        addEnergyPoints('use_dream_reading', 20);
-      }
+      addEnergyPoints('use_dream_reading', 20);
+
 
       try {
         const newDreamRecord: StoredDream = {
@@ -129,45 +126,12 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     }
   };
   
-  const today = new Date().toISOString().split('T')[0];
-  const hasUsedToday = lastGained.use_dream_reading === today;
-
   const handleInterpretDream = async () => {
     if (!formData.coreDescription.trim()) {
       toast({ title: dictionary['Error.genericTitle'] || "Error", description: dictionary['DreamWizard.error.coreRequired'] || "The main dream description is required.", variant: 'destructive'});
       return;
     }
-    
-    if (!hasUsedToday) { // First use of the day
-      if (isPremium) {
-        performInterpretation(true);
-      } else {
-        setIsShowingAd(true);
-        toast({
-            title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-            description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-        });
-        setTimeout(() => {
-            setIsShowingAd(false);
-            performInterpretation(true); 
-        }, 2500);
-      }
-    } else { // Subsequent use
-      if (stardust < STARDUST_COST) {
-        toast({
-          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
-          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust for another reading today. Get more from the 'More' section.").replace('{cost}', STARDUST_COST.toString()),
-          variant: "destructive",
-        });
-        return;
-      }
-      spendStardust(STARDUST_COST);
-      toast({
-        title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
-        description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
-      });
-      performInterpretation(false);
-    }
+    performInterpretation();
   };
 
   const handleShareToCommunity = async () => {
@@ -247,7 +211,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(s => s + 1);
+      setCurrentStep(s => s - 1);
     }
   };
 
@@ -270,14 +234,6 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     const fieldName = stepInfo.field as keyof DreamWizardData;
     const value = formData[fieldName];
     const maxLength = (stepInfo as any).maxLength;
-
-    const getInterpretationButtonText = () => {
-      const baseText = dictionary['DreamWizard.getInterpretationButton'] || 'Get Interpretation';
-      if (hasUsedToday && !isPremium) {
-        return `${baseText} (${STARDUST_COST} 💫)`;
-      }
-      return baseText;
-    };
 
     return (
       <Card className="w-full max-w-xl mx-auto shadow-xl">
@@ -342,7 +298,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             {dictionary['DreamWizard.prevButton'] || 'Previous'}
           </Button>
           <Button onClick={handleNextStep}>
-            {currentStep === TOTAL_STEPS ? getInterpretationButtonText() : (dictionary['DreamWizard.nextButton'] || 'Next')}
+            {currentStep === TOTAL_STEPS ? (dictionary['DreamWizard.getInterpretationButton'] || 'Get Interpretation') : (dictionary['DreamWizard.nextButton'] || 'Next')}
             {currentStep < TOTAL_STEPS && <ChevronRight className="ml-1 h-4 w-4" />}
           </Button>
         </CardFooter>
@@ -393,7 +349,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
             <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button onClick={handleNewInterpretation} variant="outline" className="flex-1">
                   <RotateCcw className="mr-2 h-4 w-4" />
-                  {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"} {!isPremium && `(${STARDUST_COST} 💫)`}
+                  {dictionary['DreamReadingPage.newInterpretationButton'] || "Get a New Interpretation"}
               </Button>
                <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="flex-1">
                  {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
@@ -405,14 +361,6 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   );
 
   const renderLoading = () => {
-    if (isShowingAd) {
-      return (
-        <Card className="w-full max-w-xl mx-auto shadow-xl flex flex-col items-center justify-center min-h-[300px] p-8">
-            <LoadingSpinner className="h-16 w-16 text-primary animate-pulse mb-4" />
-            <h2 className="text-xl font-headline font-semibold text-primary">{dictionary['Toast.watchingAd'] || "Watching ad..."}</h2>
-        </Card>
-      )
-    }
     return (
       <Card className="w-full max-w-xl mx-auto shadow-xl flex flex-col items-center justify-center min-h-[300px] p-8">
           <Brain className="h-16 w-16 text-primary animate-pulse mb-4" />

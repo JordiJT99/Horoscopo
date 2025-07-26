@@ -26,8 +26,6 @@ interface TarotReadingClientProps {
   locale: Locale;
 }
 
-const STARDUST_COST = 10;
-
 export default function TarotReadingClient({ dictionary, locale }: TarotReadingClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,7 +36,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
-  const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained, isPremium } = useCosmicEnergy();
+  const { addEnergyPoints, level: userLevel, lastGained } = useCosmicEnergy();
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   
@@ -46,9 +44,6 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  const today = new Date().toISOString().split('T')[0];
-  const hasUsedToday = lastGained.draw_tarot_card === today;
 
   const handleDrawCard = async () => {
     if (!question.trim()) {
@@ -59,48 +54,18 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
     setError(null);
     setReading(null);
     setIsShowingSharedContent(false);
+    setIsLoading(true);
 
-    if (!hasUsedToday) { // First use of the day
-      if (isPremium) {
-        setIsLoading(true);
-        performReading(true);
-      } else {
-        setIsLoading(true);
-        toast({
-          title: dictionary['Toast.adRequiredTitle'] || 'Ad Required',
-          description: dictionary['Toast.adRequiredDescription'] || 'Watching a short ad for your first use of the day.',
-        });
-        setTimeout(() => {
-            performReading(true);
-        }, 2500);
-      }
-    } else { // Subsequent use
-      if (stardust < STARDUST_COST) {
-          toast({
-              title: dictionary['Toast.notEnoughStardustTitle'],
-              description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust for another reading today.").replace('{cost}', STARDUST_COST.toString()),
-              variant: "destructive",
-          });
-          return;
-      }
-      setIsLoading(true);
-      spendStardust(STARDUST_COST);
-      toast({
-          title: dictionary['Toast.stardustSpent'],
-          description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
-      });
-      performReading(false);
-    }
-  };
-
-  const performReading = async (isFirstUse: boolean) => {
     try {
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
-      if (isFirstUse) {
+      
+      const today = new Date().toISOString().split('T')[0];
+      if(lastGained.draw_tarot_card !== today) {
         addEnergyPoints('draw_tarot_card', 15);
       }
+
     } catch (err) {
       console.error("Error getting tarot reading:", err);
       setError(dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.");
@@ -238,7 +203,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
                 ) : (
                   <>
                     <Sparkles className="mr-2 h-4 w-4" />
-                    {dictionary['TarotReadingPage.drawCardButton'] || "Draw a Card"} {hasUsedToday && !isPremium && `(${STARDUST_COST} 💫)`}
+                    {dictionary['TarotReadingPage.drawCardButton'] || "Draw a Card"}
                   </>
                 )}
               </Button>
@@ -304,7 +269,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
                  <div className="flex flex-col sm:flex-row gap-2 mt-4">
                   <Button onClick={handleNewReading} variant="outline" className="w-full font-body text-xs md:text-sm flex-1">
                     <RotateCcw className="mr-2 h-4 w-4" />
-                    {dictionary['TarotReadingPage.newReadingButton'] || "Get a New Reading"} {!isPremium && `(${STARDUST_COST} 💫)`}
+                    {dictionary['TarotReadingPage.newReadingButton'] || "Get a New Reading"}
                   </Button>
                   <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="w-full font-body text-xs md:text-sm flex-1">
                     {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
