@@ -330,23 +330,6 @@
         "content": "If you have any questions about this Privacy Policy, you can contact us at: jordi.jordi.jordi9@gmail.com"
     }
 },
-"Admin": {
-"title": "Admin Panel",
-"subtitle": "Send Push Notifications",
-"formTitle": "Compose Notification",
-"formDescription": "This message will be sent to all subscribed users.",
-"labelTitle": "Title",
-"placeholderTitle": "e.g., Your daily horoscope is ready!",
-"labelBody": "Body",
-"placeholderBody": "Tap to see what the stars have in store for you.",
-"labelPath": "Destination Path",
-"placeholderPath": "e.g., /tarot-reading",
-"pathDescription": "The relative path to open (e.g., /tarot-reading). Use / for the homepage.",
-"buttonSend": "Send Notification",
-"buttonSending": "Sending...",
-"toastSuccessTitle": "Success",
-"toastErrorTitle": "Error",
-"toastSuccessMessage": "Successfully sent {successCount} notifications. {failureCount} failed.",
 
 "MayanHoroscopePage.title": "Mayan Horoscope",
 "MayanHoroscopePage.subtitle": "Discover the ancient insights of Mayan astrology.",
@@ -1169,7 +1152,5 @@
 "work": "Pisces thrive in creative and healing professions. They are excellent artists, musicians, therapists, social workers, and healers. They need a work environment that is not high-pressure and that allows them to use their intuition, creativity, and compassion. They are not motivated by money or status, but by the desire to make a difference and to bring more beauty and healing into the world. They may struggle with deadlines and rigid structures, but their imaginative contributions and deep insights are invaluable."
 
 }
-}
-
 }
 }
