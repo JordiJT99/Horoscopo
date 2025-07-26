@@ -155,21 +155,17 @@ export default function AstroVibesHomePageContent({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, searchParams]); 
 
-  // Redirect if non-premium user tries to access tomorrow's horoscope
+  // Eliminar restricción premium - permitir acceso a horóscopo de mañana para todos
   useEffect(() => {
-    if (activeHoroscopePeriodForTitles === 'tomorrow' && !isPremium) {
-      router.push(`/${locale}`); // Redirect to today's horoscope
-      toast({
-        title: dictionary.PremiumLock?.featureTitle || 'Premium Feature',
-        description: dictionary.PremiumLock?.tomorrowHoroscope || "Tomorrow's horoscope is a Premium feature.",
-      });
-    }
+    // Ya no redirigir - todos los usuarios pueden acceder a cualquier período
+    return;
   }, [activeHoroscopePeriodForTitles, isPremium, router, locale, toast, dictionary]);
 
 
   useEffect(() => {
     const fetchHoroscope = async () => {
-      if (!selectedDisplaySignName || (activeHoroscopePeriodForTitles === 'tomorrow' && !isPremium)) {
+      // Permitir acceso completo - eliminar restricción premium
+      if (!selectedDisplaySignName) {
           setIsHoroscopeLoading(true);
           return;
       }

@@ -1,35 +1,21 @@
 {
   "hosting": {
-    "public": "out",
-    "headers": [
+    "public": ".next/static",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
       {
-        "source": "**/*.html",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          }
-        ]
-      },
-      {
-        "source": "/api/**",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          }
-        ]
-      },
-      {
-        "source": "**/*.@(js|css|ico|gif|jpg|jpeg|png|svg|webp|avif|eot|otf|ttf|woff|woff2|cur|mp3|mp4|webm)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=315360000, immutable"
-          }
-        ]
+        "source": "**",
+        "function": "nextjsFunc"
       }
     ]
+  },
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs18"
   },
   "firestore": {
     "rules": "firestore.rules"

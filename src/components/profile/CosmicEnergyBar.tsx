@@ -18,7 +18,7 @@ interface CosmicEnergyBarProps {
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, isPremium, togglePremium } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust } = useCosmicEnergy();
   const { toast } = useToast();
 
   const handleAddPoints = () => {

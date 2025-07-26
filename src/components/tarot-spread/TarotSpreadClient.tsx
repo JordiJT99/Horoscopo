@@ -105,33 +105,10 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     };
     
     if (!hasUsedToday) {
-      if (isPremium) {
-        performReading(true);
-      } else {
-        setIsShowingAd(true);
-        toast({
-            title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-            description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-        });
-        setTimeout(() => {
-            setIsShowingAd(false);
-            performReading(true); 
-        }, 2500);
-      }
+      // Eliminar restricción premium - acceso gratuito para todos
+      performReading(true);
     } else {
-      if (stardust < STARDUST_COST) {
-        toast({
-          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
-          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust for another reading today.").replace('{cost}', STARDUST_COST.toString()),
-          variant: "destructive",
-        });
-        return;
-      }
-      spendStardust(STARDUST_COST);
-      toast({
-        title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
-        description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
-      });
+      // Eliminar costo de stardust - acceso gratuito
       performReading(false);
     }
   };
@@ -192,7 +169,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
             <Button onClick={handleGetReading} disabled={selectedIndices.length !== 2 || isLoading} size="lg">
               {isLoading || isShowingAd ? <LoadingSpinner className="mr-2 h-5 w-5" /> : <Sparkles className="mr-2 h-5 w-5" />}
               {isLoading ? (dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card...") : (dictionary['TarotSpreadPage.getReadingButton'] || 'Reveal Reading')}
-              {!isPremium && hasUsedToday && ` (${STARDUST_COST} 💫)`}
+              {!isPremium && hasUsedToday && ` (Free)`}
             </Button>
           </div>
         </>
@@ -229,7 +206,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
                    <Button onClick={handleReset} variant="outline" size="lg">
                      <RotateCcw className="mr-2 h-5 w-5" />
                      {dictionary['TarotSpreadPage.drawAgainButton'] || "Draw Again"}
-                     {!isPremium && ` (${STARDUST_COST} 💫)`}
+                     {!isPremium && ` (Free)`}
                   </Button>
                 </div>
               </CardContent>
