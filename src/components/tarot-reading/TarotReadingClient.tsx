@@ -38,7 +38,8 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
-  const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained, isPremium } = useCosmicEnergy();
+  const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   

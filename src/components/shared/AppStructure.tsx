@@ -14,7 +14,8 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { isLoading: authLoading } = useAuth();
-  const { isPremium, checkAndAwardDailyStardust } = useCosmicEnergy();
+  const { checkAndAwardDailyStardust } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
   const { toast } = useToast();
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);

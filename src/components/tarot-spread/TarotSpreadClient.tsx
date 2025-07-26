@@ -41,7 +41,8 @@ const shuffleArray = (array: string[]): string[] => {
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
   const { toast } = useToast();
   const { user } = useAuth();
-  const { stardust, spendStardust, isPremium, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const { stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
   const [shuffledCards, setShuffledCards] = useState<string[]>([]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
