@@ -68,7 +68,8 @@ export default function AstroVibesHomePageContent({
   const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const { toast } = useToast();
-  const { addEnergyPoints, isPremium } = useCosmicEnergy();
+  const { addEnergyPoints } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);

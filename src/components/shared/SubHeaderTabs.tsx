@@ -18,7 +18,8 @@ interface SubHeaderTabsProps {
 }
 
 const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProps) => {
-  const { isPremium } = useCosmicEnergy();
+  const { } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
   const { toast } = useToast();
   
   const tabs: { id: HoroscopePeriod; labelKey: string }[] = [

@@ -24,7 +24,8 @@ interface NatalChartClientWrapperProps {
 
 const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dictionary, locale }) => {
   const { user, isLoading: authLoading } = useAuth();
-  const { isPremium, isLoading: energyLoading } = useCosmicEnergy();
+  const { isLoading: energyLoading } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
   const [birthData, setBirthData] = useState<BirthData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
