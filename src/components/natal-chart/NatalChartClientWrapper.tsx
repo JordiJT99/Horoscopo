@@ -95,9 +95,10 @@ const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dicti
     );
   }
   
-  if (!isPremium) {
-    return <PremiumLockScreen dictionary={dictionary} locale={locale} featureTitle={dictionary.NatalChartPage?.title} />;
-  }
+  // Eliminar restricción premium para carta natal
+  // if (!isPremium) {
+  //   return <PremiumLockScreen dictionary={dictionary} locale={locale} featureTitle={dictionary.NatalChartPage?.title} />;
+  // }
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">

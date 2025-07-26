@@ -1,6 +1,9 @@
 
 import { NextResponse } from 'next/server';
 
+// Configure for static export
+export const dynamic = 'force-static';
+
 export async function GET() {
   // These variables are safe to be public.
   // The service worker needs them to initialize.
