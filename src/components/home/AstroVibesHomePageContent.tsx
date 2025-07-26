@@ -28,6 +28,9 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import AdBanner from '@/components/shared/AdBanner';
+import { useInterstitialAd } from '@/hooks/use-admob-ads';
+import { useAdMob } from '@/lib/admob';
+import { BannerAdPosition } from '@capacitor-community/admob';
 import React from 'react';
 import SectionTitle from '@/components/shared/SectionTitle';
 
@@ -69,7 +72,14 @@ export default function AstroMísticaHomePageContent({
   const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const { toast } = useToast();
-  const { addEnergyPoints, isPremium } = useCosmicEnergy();
+  const { addEnergyPoints } = useCosmicEnergy();
+
+  // AdMob hooks
+  const { showBanner, hideBanner, isAvailable: isAdMobAvailable } = useAdMob();
+  const { showAd: showInterstitialAd } = useInterstitialAd({
+    onAdShown: () => console.log('Interstitial ad shown'),
+    onAdClosed: () => console.log('Interstitial ad closed'),
+  });
 
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
@@ -276,9 +286,18 @@ export default function AstroMísticaHomePageContent({
     router.push(`${newPath}?${queryParams.toString()}`, { scroll: false });
   };
 
+  // Determine if the user is premium (adjust this logic based on your actual user object/structure)
+  // If user.isPremium does not exist, default to false
+  const isPremium = typeof user?.isPremium === 'boolean' ? user.isPremium : false;
+
   const handleSignSelectedFromScroll = (sign: ZodiacSign, isItAUserProfileClick: boolean = false) => {
     setSelectedDisplaySignName(sign.name);
     setIsPersonalizedRequestActive(isItAUserProfileClick); 
+
+    // Mostrar anuncio intersticial ocasionalmente para usuarios no premium
+    if (!isPremium && isAdMobAvailable() && Math.random() < 0.3) {
+      showInterstitialAd();
+    }
 
     const currentQueryParams = new URLSearchParams(searchParams.toString());
     currentQueryParams.set('sign', sign.name);

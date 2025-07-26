@@ -10,6 +10,10 @@ import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import AdMobBannerManager from '@/components/shared/AdMobBannerManager';
+import { adMobManager } from '@/lib/admob';
+import { Capacitor } from '@capacitor/core';
+import { BannerAdPosition } from '@capacitor-community/admob';
 
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
@@ -34,8 +38,6 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
         });
       }
     }
-  }, [isPremium, checkAndAwardDailyStardust, toast, dictionary]);
-
   // Effect to register the Service Worker for PWA functionality
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -47,6 +49,26 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
         });
       });
     }
+  }, []);
+
+  // Initialize AdMob for native platforms
+  useEffect(() => {
+    const initAdMob = async () => {
+      if (Capacitor.isNativePlatform()) {
+        try {
+          await adMobManager.initialize();
+          console.log('AdMob initialized successfully');
+          
+          // Pre-load interstitial and rewarded ads
+          await adMobManager.loadInterstitial();
+          await adMobManager.loadRewarded();
+        } catch (error) {
+          console.error('Failed to initialize AdMob:', error);
+        }
+      }
+    };
+
+    initAdMob();
   }, []);
 
 
