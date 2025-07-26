@@ -330,23 +330,6 @@
       "content": "Si vous avez des questions sur cette politique de confidentialité, vous pouvez nous contacter à : jordi.jordi.jordi9@gmail.com"
     }
 },
-"Admin": {
-"title": "Panneau d'Administration",
-"subtitle": "Envoyer des Notifications Push",
-"formTitle": "Composer une Notification",
-"formDescription": "Ce message sera envoyé à tous les utilisateurs abonnés.",
-"labelTitle": "Titre",
-"placeholderTitle": "ex., Votre horoscope du jour est prêt !",
-"labelBody": "Corps du Message",
-"placeholderBody": "Appuyez pour voir ce que les étoiles vous réservent.",
-"labelPath": "Chemin de Destination",
-"placeholderPath": "ex., /tarot-reading",
-"pathDescription": "Le chemin relatif à ouvrir (ex., /tarot-reading). Utilisez / pour la page d'accueil.",
-"buttonSend": "Envoyer la Notification",
-"buttonSending": "Envoi en cours...",
-"toastSuccessTitle": "Succès",
-"toastErrorTitle": "Erreur",
-"toastSuccessMessage": "{successCount} notifications envoyées avec succès. {failureCount} ont échoué.",
 
 "MayanHoroscopePage.title": "Horoscope Maya",
 "MayanHoroscopePage.subtitle": "Découvrez les anciennes perspectives de l'astrologie maya.",
@@ -569,5 +552,4 @@
 "TarotSpreadPage.drawAgainButton": "Tirer à Nouveau",
 "TarotSpreadPage.errorFetching": "Les cartes sont enveloppées de brume... Impossible d'obtenir une lecture. Veuillez réessayer."
 
-}
 }
