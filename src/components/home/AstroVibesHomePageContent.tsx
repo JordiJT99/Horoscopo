@@ -69,7 +69,8 @@ export default function AstroMísticaHomePageContent({
   const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const { toast } = useToast();
-  const { addEnergyPoints, isPremium } = useCosmicEnergy();
+  const { addEnergyPoints } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
@@ -156,9 +157,16 @@ export default function AstroMísticaHomePageContent({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, searchParams]); 
 
+  // Eliminar restricción premium - permitir acceso a horóscopo de mañana para todos
+  useEffect(() => {
+    // Ya no redirigir - todos los usuarios pueden acceder a cualquier período
+    return;
+  }, [activeHoroscopePeriodForTitles, isPremium, router, locale, toast, dictionary]);
+
 
   useEffect(() => {
     const fetchHoroscope = async () => {
+      // Permitir acceso completo - eliminar restricción premium
       if (!selectedDisplaySignName) {
           setIsHoroscopeLoading(true);
           return;

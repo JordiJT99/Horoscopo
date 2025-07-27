@@ -334,26 +334,6 @@
       "content": "Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos en: jordi.jordi.jordi9@gmail.com"
     }
   },
-"Admin": {
-"title": "Panel de Administración",
-"subtitle": "Enviar Notificaciones Push",
-"formTitle": "Redactar Notificación",
-"formDescription": "Este mensaje se enviará a todos los usuarios suscritos.",
-"labelTitle": "Título",
-"placeholderTitle": "ej., ¡Tu horóscopo diario está listo!",
-"labelBody": "Cuerpo del Mensaje",
-"placeholderBody": "Toca para ver qué te deparan las estrellas.",
-"labelPath": "Ruta de Destino",
-"placeholderPath": "ej., /tarot-reading",
-"pathDescription": "La ruta relativa a abrir (ej., /tarot-reading). Usa / para la página principal.",
-"buttonSend": "Enviar Notificación",
-"buttonSending": "Enviando...",
-"toastSuccessTitle": "Éxito",
-"toastErrorTitle": "Error",
-"toastSuccessMessage": "Se han enviado {successCount} notificaciones con éxito. {failureCount} fallaron."
-
-},
-"ProfilePage.requestDataDeletion": "Solicitar eliminación de cuenta",
 
 "MayanHoroscopePage.title": "Horóscopo Maya",
 "MayanHoroscopePage.subtitle": "Descubre las antiguas perspectivas de la astrología maya.",

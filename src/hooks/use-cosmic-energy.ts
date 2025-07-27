@@ -319,6 +319,30 @@ export const useCosmicEnergy = () => {
         return { success: true, amount: rewardAmount };
     }, [user]);
 
+    const checkAndAwardDailyStardust = useCallback((): boolean => {
+        if (!user?.uid || !store) return false;
+        
+        const currentState = store.getState();
+        const lastDailyAward = currentState.lastGained['daily_stardust'] || '';
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (lastDailyAward === today) {
+            return false; // Already awarded today
+        }
+        
+        // Award 100 stardust for daily premium bonus
+        const dailyAmount = 100;
+        const newStardust = currentState.stardust + dailyAmount;
+        const newLastGained = { ...currentState.lastGained, 'daily_stardust': today };
+        
+        store.setState({
+            stardust: newStardust,
+            lastGained: newLastGained,
+        });
+        
+        return true;
+    }, [user]);
+
     const pointsForCurrentLevel = LEVEL_THRESHOLDS[state.level - 1] ?? 0;
     const pointsForNextLevel = LEVEL_THRESHOLDS[state.level] ?? LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length-1];
     const progress = pointsForNextLevel === pointsForCurrentLevel ? 100 : Math.max(0, Math.min(100, ((state.points - pointsForCurrentLevel) / (pointsForNextLevel - pointsForCurrentLevel)) * 100));
@@ -336,6 +360,7 @@ export const useCosmicEnergy = () => {
         spendStardust,
         addStardust,
         claimRateReward,
+        checkAndAwardDailyStardust,
         isLoading: authIsLoading,
     };
 };

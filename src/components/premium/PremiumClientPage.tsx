@@ -13,14 +13,14 @@ interface PremiumClientPageProps {
 }
 
 export default function PremiumClientPage({ dictionary, locale }: PremiumClientPageProps) {
-  const { isPremium, togglePremium } = useCosmicEnergy();
+  const { togglePremium } = useCosmicEnergy();
   const { toast } = useToast();
 
   const handleTogglePremium = () => {
     togglePremium();
     toast({
       title: 'Premium Status Changed (Dev)',
-      description: `Premium is now ${!isPremium ? 'ON' : 'OFF'}.`,
+      description: `Premium features are now available for all users.`,
     });
   };
 
@@ -32,6 +32,9 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
             <CardTitle className="text-2xl font-headline text-primary">
               {dictionary.PremiumPage?.featuresTitle || 'Premium Features'}
             </CardTitle>
+            <CardDescription className="text-lg">
+              {dictionary.PremiumPage?.featuresDesc || 'All premium features are now available for free!'}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-start gap-3">
@@ -44,8 +47,8 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
             <div className="flex items-start gap-3">
               <BarChart3 className="h-6 w-6 text-cyan-400 mt-1" />
               <div>
-                <h4 className="font-semibold">{dictionary.PremiumPage?.adFreeTitle || 'Ad-Free Experience'}</h4>
-                <p className="text-sm text-muted-foreground">{dictionary.PremiumPage?.adFreeDesc || 'Enjoy all features without interruptions.'}</p>
+                <h4 className="font-semibold">{dictionary.PremiumPage?.adFreeTitle || 'Enhanced Experience'}</h4>
+                <p className="text-sm text-muted-foreground">{dictionary.PremiumPage?.adFreeDesc || 'All features now available with AdMob monetization.'}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -62,6 +65,13 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
                 <p className="text-sm text-muted-foreground">{dictionary.PremiumPage?.tomorrowHoroscopeDesc || 'Get a sneak peek at the energies of the next day.'}</p>
               </div>
             </div>
+            <div className="flex items-start gap-3">
+              <MessageCircle className="h-6 w-6 text-cyan-400 mt-1" />
+              <div>
+                <h4 className="font-semibold">{dictionary.PremiumPage?.psychicChatTitle || 'Unlimited Psychic Chat'}</h4>
+                <p className="text-sm text-muted-foreground">{dictionary.PremiumPage?.psychicChatDesc || 'Unlimited conversations with AI psychics.'}</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -69,14 +79,17 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
       <div className="md:col-span-1">
         <Card className="bg-card/90 backdrop-blur-lg border-primary/50 shadow-2xl shadow-primary/20">
           <CardHeader className="text-center">
-            <CardTitle>{dictionary.PremiumPage?.upgradeTitle || 'Upgrade Now'}</CardTitle>
-            <CardDescription className="text-2xl font-bold text-primary">$4.99 / month</CardDescription>
+            <CardTitle>{dictionary.PremiumPage?.upgradeTitle || 'All Features Available'}</CardTitle>
+            <CardDescription className="text-2xl font-bold text-primary">Free with Ads</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full" onClick={handleTogglePremium}>
-              {isPremium ? (dictionary.PremiumPage?.devDeactivate || 'Deactivate Premium (Dev)') : (dictionary.PremiumPage?.devActivate || 'Activate Premium (Dev)')}
+            <div className="text-center text-sm text-muted-foreground mb-4">
+              <p>All premium features are now available for all users. We monetize through AdMob ads instead of subscriptions.</p>
+            </div>
+            <Button className="w-full" disabled>
+              {dictionary.PremiumPage?.allFeaturesAvailable || 'All Features Available'}
             </Button>
-             <p className="text-xs text-muted-foreground text-center mt-2">{dictionary.PremiumPage?.devNote || 'This is a developer toggle. A real purchase flow would be here.'}</p>
+            <p className="text-xs text-muted-foreground text-center mt-2">{dictionary.PremiumPage?.adSupportedNote || 'Supported by ads - premium subscriptions coming soon.'}</p>
           </CardContent>
         </Card>
       </div>

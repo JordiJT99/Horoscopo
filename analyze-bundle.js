@@ -1,10 +1,19 @@
-import type {NextConfig} from 'next';
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   trailingSlash: true,
+  swcMinify: true,
   compress: true,
   
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
+
   serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow'],
+  
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -24,12 +33,10 @@ const nextConfig: NextConfig = {
   },
   
   webpack: (config) => {
-    // Excluir dependencias pesadas del bundle
     config.externals.push({
       handlebars: 'commonjs handlebars',
     });
     
-    // Dependencias que no se necesitan en el browser
     config.externals.push(
       '@opentelemetry/exporter-jaeger',
       '@opentelemetry/exporter-zipkin',
@@ -40,8 +47,29 @@ const nextConfig: NextConfig = {
       'firebase-functions'
     );
 
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+            maxSize: 200000,
+          },
+        },
+      },
+    };
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'react': require.resolve('react'),
+      'react-dom': require.resolve('react-dom'),
+    };
+
     return config;
   },
 };
 
-export default nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

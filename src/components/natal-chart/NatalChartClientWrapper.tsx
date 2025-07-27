@@ -24,7 +24,8 @@ interface NatalChartClientWrapperProps {
 
 const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dictionary, locale }) => {
   const { user, isLoading: authLoading } = useAuth();
-  const { isPremium, isLoading: energyLoading } = useCosmicEnergy();
+  const { isLoading: energyLoading } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
   const [birthData, setBirthData] = useState<BirthData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -94,6 +95,11 @@ const NatalChartClientWrapper: React.FC<NatalChartClientWrapperProps> = ({ dicti
       </div>
     );
   }
+  
+  // Eliminar restricción premium para carta natal
+  // if (!isPremium) {
+  //   return <PremiumLockScreen dictionary={dictionary} locale={locale} featureTitle={dictionary.NatalChartPage?.title} />;
+  // }
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">

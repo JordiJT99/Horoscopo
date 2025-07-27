@@ -1,7 +1,8 @@
 
 "use client";
 
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import TopBar from '@/components/shared/TopBar'; 
 import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; 
 import { useAuth } from '@/context/AuthContext';
@@ -14,7 +15,7 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
   const { isLoading: authLoading } = useAuth();
-  const { isPremium, checkAndAwardDailyStardust } = useCosmicEnergy();
+  const { checkAndAwardDailyStardust } = useCosmicEnergy();
   const { toast } = useToast();
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
@@ -23,18 +24,16 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
     setHasMounted(true);
   }, []);
 
-  // Effect to award daily stardust for premium users
+  // Effect to award daily stardust
   useEffect(() => {
-    if (isPremium) {
-      const awarded = checkAndAwardDailyStardust();
-      if (awarded) {
-        toast({
-          title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
-          description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust for being a Premium member.',
-        });
-      }
+    const awarded = checkAndAwardDailyStardust();
+    if (awarded) {
+      toast({
+        title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
+        description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust!',
+      });
     }
-  }, [isPremium, checkAndAwardDailyStardust, toast, dictionary]);
+  }, [checkAndAwardDailyStardust, toast, dictionary]);
 
   // Effect to register the Service Worker for PWA functionality
   useEffect(() => {

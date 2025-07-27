@@ -36,7 +36,8 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
-  const { addEnergyPoints, level: userLevel, lastGained } = useCosmicEnergy();
+  const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
   
@@ -56,6 +57,18 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
     setIsShowingSharedContent(false);
     setIsLoading(true);
 
+    if (!hasUsedToday) { // First use of the day
+      // Eliminar restricción premium - acceso gratuito para todos
+      setIsLoading(true);
+      performReading(true);
+    } else { // Subsequent use
+      // Eliminar costo de stardust - acceso gratuito
+      setIsLoading(true);
+      performReading(false);
+    }
+  };
+
+  const performReading = async (isFirstUse: boolean) => {
     try {
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);

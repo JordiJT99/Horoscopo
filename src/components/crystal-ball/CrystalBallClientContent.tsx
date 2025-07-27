@@ -30,7 +30,8 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const { toast } = useToast();
 
   const { user } = useAuth();
-  const { addEnergyPoints, lastGained } = useCosmicEnergy();
+  const { addEnergyPoints, lastGained, spendStardust, stardust } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {

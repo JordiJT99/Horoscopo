@@ -19,7 +19,8 @@ interface SubHeaderTabsProps {
 }
 
 const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProps) => {
-  const { isPremium } = useCosmicEnergy();
+  const { } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
   const { toast } = useToast();
   
   const tabs: { id: HoroscopePeriod; labelKey: string }[] = [
@@ -31,6 +32,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
   ];
 
   const handleTabClick = (tab: HoroscopePeriod) => {
+    // Eliminar restricción premium - permitir acceso a todos los tabs
     onTabChange(tab);
   };
 
@@ -43,6 +45,7 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
+            // Eliminar lógica de bloqueo premium
             
             return (
               <Button

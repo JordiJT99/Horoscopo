@@ -65,7 +65,8 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   const router = useRouter();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { level: userLevel, addEnergyPoints, lastGained } = useCosmicEnergy();
+  const { level: userLevel, stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);

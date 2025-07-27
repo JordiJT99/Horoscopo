@@ -40,7 +40,8 @@ const shuffleArray = (array: string[]): string[] => {
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
   const { toast } = useToast();
   const { user } = useAuth();
-  const { addEnergyPoints, lastGained } = useCosmicEnergy();
+  const { stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const isPremium = true; // All users have premium access now
 
   const [shuffledCards, setShuffledCards] = useState<string[]>([]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
@@ -88,15 +89,14 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
       if (lastGained.draw_tarot_spread !== today) {
         addEnergyPoints('draw_tarot_spread', 25);
       }
-    } catch (error) {
-      console.error("Error fetching tarot spread reading:", error);
-      toast({
-        title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['TarotSpreadPage.errorFetching'] || "The cards are shrouded in mist... Could not get a reading. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+    };
+    
+    if (!hasUsedToday) {
+      // Eliminar restricción premium - acceso gratuito para todos
+      performReading(true);
+    } else {
+      // Eliminar costo de stardust - acceso gratuito
+      performReading(false);
     }
   };
 
@@ -156,6 +156,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
             <Button onClick={handleGetReading} disabled={selectedIndices.length !== 2 || isLoading} size="lg">
               {isLoading ? <LoadingSpinner className="mr-2 h-5 w-5" /> : <Sparkles className="mr-2 h-5 w-5" />}
               {isLoading ? (dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card...") : (dictionary['TarotSpreadPage.getReadingButton'] || 'Reveal Reading')}
+              {!isPremium && hasUsedToday && ` (Free)`}
             </Button>
           </div>
         </>
@@ -192,6 +193,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
                    <Button onClick={handleReset} variant="outline" size="lg">
                      <RotateCcw className="mr-2 h-5 w-5" />
                      {dictionary['TarotSpreadPage.drawAgainButton'] || "Draw Again"}
+                     {!isPremium && ` (Free)`}
                   </Button>
                 </div>
               </CardContent>
