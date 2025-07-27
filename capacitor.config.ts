@@ -3,11 +3,17 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.astromistica.app',
   appName: 'AstroMística : Tarot, Horóscopo y Carta Natal',
-  webDir: 'out',
+  webDir: '.next',
   server: {
     url: 'https://astromistica.org',
-    cleartext: true,
+    cleartext: false,
     androidScheme: 'https'
+  },
+  android: {
+    minWebViewVersion: 125,
+    allowMixedContent: false,
+    captureInput: true,
+    webContentsDebuggingEnabled: false
   },
   plugins: {
     SplashScreen: {
@@ -18,6 +24,13 @@ const config: CapacitorConfig = {
       iosSpinnerStyle: "large",
       spinnerColor: "#E11D48",
       showSpinner: true
+    },
+    CapacitorHttp: {
+      enabled: true
+    },
+    AdMob: {
+      appId: 'ca-app-pub-1601092077557933~3273742971',
+      testMode: false
     }
   }
 };
