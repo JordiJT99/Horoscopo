@@ -1,21 +1,19 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
-import type {NextConfig} from 'next';
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
   trailingSlash: true,
-  
-  // Optimizaciones para reducir el tamaño del bundle
   swcMinify: true,
   compress: true,
   
-  // Configuración experimental para optimizaciones
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
 
   serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow'],
+  
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -23,7 +21,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -33,16 +31,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // The i18n object from next.config.js is for the Pages Router.
-  // For App Router, i18n is typically handled by middleware and [locale] dynamic segments.
-  // We will use middleware for routing.
+  
   webpack: (config) => {
-    // Excluir dependencias pesadas del bundle
     config.externals.push({
       handlebars: 'commonjs handlebars',
     });
     
-    // Genkit dependencies que no se necesitan en el browser
     config.externals.push(
       '@opentelemetry/exporter-jaeger',
       '@opentelemetry/exporter-zipkin',
@@ -53,7 +47,6 @@ const nextConfig: NextConfig = {
       'firebase-functions'
     );
 
-    // Optimizaciones para reducir el tamaño del bundle
     config.optimization = {
       ...config.optimization,
       splitChunks: {
@@ -63,13 +56,12 @@ const nextConfig: NextConfig = {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
-            maxSize: 200000, // 200KB máximo por chunk
+            maxSize: 200000,
           },
         },
       },
     };
 
-    // Resolver alias para evitar duplicados
     config.resolve.alias = {
       ...config.resolve.alias,
       'react': require.resolve('react'),
@@ -80,4 +72,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
