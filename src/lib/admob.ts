@@ -1,28 +1,27 @@
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 
-// ⚡ MODO DE PRUEBA ACTIVADO ⚡
-// Usando IDs de prueba de Google AdMob para testing
-// Cuando confirmes que funciona, cambia estos por tus IDs de producción
+// ⚡ MODO DE PRODUCCIÓN ACTIVADO ⚡
+// Usando tus IDs reales de AdMob para producción
 
-// IDs de AdMob para PRUEBAS (Google Test IDs oficiales)
+// IDs de AdMob REALES de tu cuenta
 export const AD_CONFIG = {
   APPLICATION_ID: {
-    android: 'ca-app-pub-1601092077557933~3273742971', // Test App ID para Android
-    ios: 'ca-app-pub-3940256099942544~1458002511'     // Test App ID para iOS
+    android: 'ca-app-pub-1601092077557933~3273742971', // Tu App ID real para Android
+    ios: 'ca-app-pub-1601092077557933~3273742971'     // Tu App ID real para iOS
   },
   AD_UNITS: {
     banner: {
-      android: 'ca-app-pub-1601092077557933/1500472200', // Test Banner ID para Android
-      ios: 'ca-app-pub-3940256099942544/2934735716'      // Test Banner ID para iOS
+      android: 'ca-app-pub-1601092077557933/1500472200', // Tu Banner ID real para Android
+      ios: 'ca-app-pub-1601092077557933/1500472200'      // Tu Banner ID real para iOS
     },
     interstitial: {
-      android: 'ca-app-pub-1601092077557933/7954199917', // Test Interstitial ID para Android
-      ios: 'ca-app-pub-3940256099942544/4411468910'      // Test Interstitial ID para iOS
+      android: 'ca-app-pub-1601092077557933/7954199917', // Tu Interstitial ID real para Android
+      ios: 'ca-app-pub-1601092077557933/7954199917'      // Tu Interstitial ID real para iOS
     },
     rewarded: {
-      android: 'ca-app-pub-1601092077557933/9187390537', // Test Rewarded ID para Android
-      ios: 'ca-app-pub-3940256099942544/1712485313'      // Test Rewarded ID para iOS
+      android: 'ca-app-pub-1601092077557933/9187390537', // Tu Rewarded ID real para Android
+      ios: 'ca-app-pub-1601092077557933/9187390537'      // Tu Rewarded ID real para iOS
     }
   }
 };
@@ -56,7 +55,7 @@ export class AdMobService {
       });
 
       this.isInitialized = true;
-      console.log('AdMob initialized successfully in TEST mode');
+      console.log('AdMob initialized successfully in PRODUCTION mode');
       console.log(`Using App ID: ${appId}`);
     } catch (error) {
       console.error('Failed to initialize AdMob:', error);
@@ -67,7 +66,7 @@ export class AdMobService {
   // Obtener información del modo actual
   static getAdModeInfo(): { isTesting: boolean; config: typeof AD_CONFIG } {
     return {
-      isTesting: true,
+      isTesting: false,
       config: AD_CONFIG
     };
   }
@@ -92,12 +91,12 @@ export class AdMobService {
         adSize: BannerAdSize.BANNER,
         position: position,
         margin: 0,
-        isTesting: true // Modo de prueba activado
+        isTesting: false // MODO PRODUCCIÓN
       };
 
       await AdMob.showBanner(options);
       this.currentBannerId = adUnitId;
-      console.log('Banner ad shown successfully (TEST mode)');
+      console.log('Banner ad shown successfully (PRODUCTION mode)');
       console.log(`Banner ID: ${adUnitId}`);
     } catch (error) {
       console.error('Failed to show banner ad:', error);
@@ -137,7 +136,7 @@ export class AdMobService {
 
       const options = {
         adId: adUnitId,
-        isTesting: true
+        isTesting: false
       };
 
       // Preparar el anuncio
@@ -145,7 +144,7 @@ export class AdMobService {
       
       // Mostrar el anuncio
       await AdMob.showInterstitial();
-      console.log('Interstitial ad shown successfully (TEST mode)');
+      console.log('Interstitial ad shown successfully (PRODUCTION mode)');
       console.log(`Interstitial ID: ${adUnitId}`);
     } catch (error) {
       console.error('Failed to show interstitial ad:', error);
@@ -170,7 +169,7 @@ export class AdMobService {
 
       const options: RewardAdOptions = {
         adId: adUnitId,
-        isTesting: true
+        isTesting: false
       };
 
       // Preparar el anuncio
@@ -178,7 +177,7 @@ export class AdMobService {
       
       // Mostrar el anuncio y esperar la recompensa
       const result = await AdMob.showRewardVideoAd();
-      console.log('Rewarded ad completed (TEST mode):', result);
+      console.log('Rewarded ad completed (PRODUCTION mode):', result);
       console.log(`Rewarded ID: ${adUnitId}`);
       
       return result;
