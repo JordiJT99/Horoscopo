@@ -142,7 +142,7 @@ Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}, sie
 Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}, en el contexto de "{{astrologicalTheme}}".
 Para 'health', sugiere cómo {{userName}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
 {{else}}
-Genera ÚNICAMENTE el horóscopo DIARIO GENERAL para el signo zodiacal {{sign}} para {{dateDescriptor}} en el idioma {{locale}}.
+Genera ÚNICamente el horóscopo DIARIO GENERAL para el signo zodiacal {{sign}} para {{dateDescriptor}} en el idioma {{locale}}.
 **INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en el signo {{sign}}.
 Tu tono debe ser místico y predictivo, usando frases como "el cosmos depara", "las estrellas sugieren", "la energía de hoy invita a".
 
