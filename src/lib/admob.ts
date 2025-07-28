@@ -8,20 +8,20 @@ import { Capacitor } from '@capacitor/core';
 // IDs de AdMob para PRUEBAS (Google Test IDs oficiales)
 export const AD_CONFIG = {
   APPLICATION_ID: {
-    android: 'ca-app-pub-3940256099942544~3347511713', // Test App ID para Android
+    android: 'ca-app-pub-1601092077557933~3273742971', // Test App ID para Android
     ios: 'ca-app-pub-3940256099942544~1458002511'     // Test App ID para iOS
   },
   AD_UNITS: {
     banner: {
-      android: 'ca-app-pub-3940256099942544/6300978111', // Test Banner ID para Android
+      android: 'ca-app-pub-1601092077557933/1500472200', // Test Banner ID para Android
       ios: 'ca-app-pub-3940256099942544/2934735716'      // Test Banner ID para iOS
     },
     interstitial: {
-      android: 'ca-app-pub-3940256099942544/1033173712', // Test Interstitial ID para Android
+      android: 'ca-app-pub-1601092077557933/7954199917', // Test Interstitial ID para Android
       ios: 'ca-app-pub-3940256099942544/4411468910'      // Test Interstitial ID para iOS
     },
     rewarded: {
-      android: 'ca-app-pub-3940256099942544/5224354917', // Test Rewarded ID para Android
+      android: 'ca-app-pub-1601092077557933/9187390537', // Test Rewarded ID para Android
       ios: 'ca-app-pub-3940256099942544/1712485313'      // Test Rewarded ID para iOS
     }
   }
@@ -51,8 +51,8 @@ export class AdMobService {
         : AD_CONFIG.APPLICATION_ID.ios;
 
       await AdMob.initialize({
-        testingDevices: ['YOUR_DEVICE_ID_HERE'], // Opcional: agrega tu device ID para testing
-        initializeForTesting: true
+        testingDevices: [],                 // ✅
+        initializeForTesting: false,
       });
 
       this.isInitialized = true;
