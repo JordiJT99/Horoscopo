@@ -12,8 +12,8 @@ import Script from 'next/script';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  title: 'AstroMística : Tarot, Horóscopo y Carta Natal',
-  description: 'Tu fuente diaria de horóscopos, tarot e insights astrológicos.',
+  title: 'AstroMística: Horóscopo, Tarot y Astrología',
+  description: 'Tu guía espiritual diaria: horóscopo, tarot, compatibilidad de signos, carta natal y más. Descubre los secretos del cosmos y alinea tu vida con las estrellas.',
   manifest: '/manifest.json',
   viewport: {
     width: 'device-width',

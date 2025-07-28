@@ -317,16 +317,20 @@
       "title": "7. Sus Derechos y Control",
       "content": "Usted tiene derecho a acceder y actualizar su información personal. Puede revisar y cambiar su información de nacimiento y los detalles de su perfil en cualquier momento en las secciones de Perfil e Incorporación de la aplicación. Para eliminar su cuenta o para otras solicitudes relacionadas con la privacidad, por favor contáctenos en el correo electrónico a continuación."
     },
+    "dataDeletion": {
+      "title": "8. Eliminación de Cuenta y Datos",
+      "content": "Usted tiene derecho a solicitar la eliminación de su cuenta y sus datos asociados. Esta es una acción permanente que no se puede deshacer.\\n\\n**Cómo solicitar la eliminación:**\\n1. Envíe un correo electrónico a jordi.jordi.jordi9@gmail.com desde la dirección de correo electrónico asociada a su cuenta de AstroMistica Tarot & Horóscopo.\\n2. Use el asunto: 'Solicitud de Eliminación de Cuenta'.\\n3. Verificaremos su identidad e iniciaremos el proceso de eliminación en un plazo de 14 días hábiles.\\n\\n**Qué datos se eliminan:**\\n- Su perfil de usuario (nombre, correo electrónico, URL de la foto).\\n- Todos los datos de nacimiento que haya proporcionado (fecha, hora, lugar).\\n- Todas las publicaciones y comentarios que haya realizado en el foro de la comunidad.\\n- Cualquier otro dato personal directamente vinculado a su cuenta.\\n\\n**Qué datos pueden conservarse:**\\n- Los datos de uso anónimos (por ejemplo, qué funciones son más populares) que ya no pueden vincularse a usted pueden conservarse indefinidamente con fines estadísticos para mejorar nuestra aplicación."
+    },
     "childrensPrivacy": {
-      "title": "8. Privacidad de los Niños",
+      "title": "9. Privacidad de los Niños",
       "content": "Nuestros servicios no se dirigen a menores de 13 años. No recopilamos a sabiendas información de identificación personal de niños. Si nos damos cuenta de que un niño nos ha proporcionado datos personales, los eliminaremos de inmediato."
     },
     "changesToPolicy": {
-      "title": "9. Cambios a esta Política",
+      "title": "10. Cambios a esta Política",
       "content": "Podemos actualizar nuestra Política de Privacidad de vez en cuando. Le notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página."
     },
     "contactUs": {
-      "title": "10. Contáctenos",
+      "title": "11. Contáctenos",
       "content": "Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos en: jordi.jordi.jordi9@gmail.com"
     }
   },
@@ -1160,4 +1164,5 @@
 }
 }
 }
+
 

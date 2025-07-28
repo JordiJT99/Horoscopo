@@ -1,10 +1,11 @@
 'use client';
 
+
 import { useEffect, useState } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { useAutoShowBanner } from '@/hooks/use-admob-ads';
 import { BannerAdPosition } from '@capacitor-community/admob';
-import type { Dictionary } from '@/lib/dictionaries';
+
 
 declare global {
   interface Window {
@@ -13,6 +14,7 @@ declare global {
 }
 
 interface AdBannerProps {
+
   dictionary?: Dictionary;
   position?: BannerAdPosition;
 }
@@ -25,6 +27,7 @@ const AdBanner = ({ dictionary, position = BannerAdPosition.BOTTOM_CENTER }: AdB
 
   useEffect(() => {
     setIsNative(Capacitor.isNativePlatform());
+
   }, []);
 
   // AdSense para web (cuando no es nativo)
@@ -57,15 +60,16 @@ const AdBanner = ({ dictionary, position = BannerAdPosition.BOTTOM_CENTER }: AdB
 
   // Para web, usar AdSense
   return (
-    <div className="w-full text-center my-4">
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-1601092077557933" // Tu ID de editor
-        data-ad-slot="1234567890" // ¡IMPORTANTE! Reemplaza esto con tu ID de bloque de anuncio
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
+    <div className="w-full text-center my-4 p-2 bg-muted/30 rounded-lg border border-border/50">
+        <p className="text-xs text-muted-foreground mb-2">{dictionary['AdBanner.placeholderText'] || 'Advertisement'}</p>
+        <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || ''}
+            data-ad-slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID || ''}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+        ></ins>
     </div>
   );
 };
