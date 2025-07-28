@@ -29,7 +29,7 @@ const config: CapacitorConfig = {
       enabled: true
     },
     AdMob: {
-      appId: 'ca-app-pub-1601092077557933~3273742971',
+      appId: 'ca-app-pub-1601092077557933~3927093480',
       testMode: false
     }
   }
