@@ -5,7 +5,9 @@ import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
 
 // Import the new client component
 import AstroVibesHomePageContent from '@/components/home/AstroVibesHomePageContent';
+import AdMobBanner from '@/components/shared/AdMobBanner';
 import type { HoroscopePeriod } from '@/components/shared/SubHeaderTabs';
+import { BannerAdPosition } from '@capacitor-community/admob';
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -40,12 +42,20 @@ export default async function AstroVibesHomePageWrapper({ params: paramsPromise,
   }
   
   return (
-    <AstroVibesHomePageContent 
-      dictionary={dictionary} 
-      locale={params.locale}
-      displayPeriod="daily" // For 'today' and 'tomorrow', we always display daily data
-      // targetDate is not needed for today/tomorrow as flow defaults to current day
-      activeHoroscopePeriodForTitles={activePeriodForTitles}
-    />
+    <>
+      {/* Banner superior para monetización */}
+      <AdMobBanner position={BannerAdPosition.TOP_CENTER} />
+      
+      <AstroVibesHomePageContent 
+        dictionary={dictionary} 
+        locale={params.locale}
+        displayPeriod="daily" // For 'today' and 'tomorrow', we always display daily data
+        // targetDate is not needed for today/tomorrow as flow defaults to current day
+        activeHoroscopePeriodForTitles={activePeriodForTitles}
+      />
+      
+      {/* Banner inferior para mayor monetización */}
+      <AdMobBanner position={BannerAdPosition.BOTTOM_CENTER} />
+    </>
   );
 }

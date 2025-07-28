@@ -5,6 +5,8 @@ import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Wand } from 'lucide-react';
 import TarotReadingClient from '@/components/tarot-reading/TarotReadingClient'; // Import the new client component
+import AdMobBanner from '@/components/shared/AdMobBanner';
+import { BannerAdPosition } from '@capacitor-community/admob';
 
 // Required for static export with dynamic routes
 export async function generateStaticParams() {
@@ -23,13 +25,20 @@ export default async function TarotReadingPage({ params }: TarotReadingPageProps
 
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
+      {/* Banner superior */}
+      <AdMobBanner position={BannerAdPosition.TOP_CENTER} />
+      
       <SectionTitle
         title={dictionary['TarotReadingPage.title'] || "Tarot Reading"}
         subtitle={dictionary['TarotReadingPage.subtitle'] || "Ask a question and draw a card for guidance."}
         icon={Wand}
         className="mb-12"
       />
+      
       <TarotReadingClient dictionary={dictionary} locale={params.locale} />
+      
+      {/* Banner inferior para más monetización */}
+      <AdMobBanner position={BannerAdPosition.BOTTOM_CENTER} />
     </main>
   );
 }

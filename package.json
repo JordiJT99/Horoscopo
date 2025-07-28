@@ -13,7 +13,10 @@
     "cap:add:android": "npx cap add android",
     "cap:sync:android": "npx cap sync",
     "cap:open:android": "npx cap open android",
-    "build:android:release": "cd android && ./gradlew assembleRelease"
+    "build:android:release": "cd android && ./gradlew assembleRelease",
+    "admob:build": "npm run build && npx cap sync android",
+    "admob:install": "cd android && ./gradlew installDebug",
+    "admob:test": "npm run admob:build && npm run admob:install"
   },
   "dependencies": {
     "@capacitor-community/admob": "^7.0.3",

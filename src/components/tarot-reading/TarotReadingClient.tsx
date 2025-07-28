@@ -20,6 +20,7 @@ import { db } from '@/lib/firebase';
 import type { NewPostData, ZodiacSignName } from '@/types';
 import { getSunSignFromDate } from '@/lib/constants';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useAdMob } from '@/hooks/use-admob-ads';
 
 interface TarotReadingClientProps {
   dictionary: Dictionary;
@@ -39,6 +40,7 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const { toast } = useToast();
   const { user } = useAuth();
   const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained } = useCosmicEnergy();
+  const { showInterstitial } = useAdMob();
   const isPremium = true; // All users have premium access now
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
@@ -74,6 +76,18 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
 
   const performReading = async (isFirstUse: boolean) => {
     try {
+      // Mostrar anuncio intersticial antes de la lectura para monetización
+      if (!isFirstUse) { // Solo en usos posteriores para no molestar en la primera vez
+        try {
+          await showInterstitial();
+          // Pequeña pausa después del anuncio
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (adError) {
+          console.log('Ad not shown:', adError);
+          // Continuar sin anuncio si hay error
+        }
+      }
+      
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
