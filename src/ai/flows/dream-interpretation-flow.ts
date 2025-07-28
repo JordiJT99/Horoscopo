@@ -37,7 +37,7 @@ const DreamElementsSchema = z.object({
 
 const DreamInterpretationOutputSchema = z.object({
   interpretation: z.string().describe('A thoughtful and insightful interpretation of the dream, analyzing symbols, emotions, and events. It should be multi-paragraph and detailed if the dream description allows.'),
-  dreamElements: DreamElementsSchema.describe('Extracted key elements from the dream, categorized for the "Dream Map".'),
+  dreamElements: DreamElementsSchema.optional().describe('Extracted key elements from the dream, categorized for the "Dream Map".'),
 });
 export type DreamInterpretationOutput = z.infer<typeof DreamInterpretationOutputSchema>;
 
