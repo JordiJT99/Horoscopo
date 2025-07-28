@@ -11,9 +11,20 @@
 # next.js
 /.next/
 /out/
+.next/cache/
+**/cache/
+.next/
+out/
 
 # production
 /build
+/dist/
+build/
+
+# webpack
+.webpack/
+webpack-stats.json
+**/webpack-stats.json
 
 # misc
 .DS_Store
@@ -39,3 +50,39 @@ next-env.d.ts
 /android
 /ios
 /www
+
+# Android build artifacts
+android/app/build/
+android/app/release/
+android/**/build/
+android/**/release/
+**/intermediates/
+**/intermediary-bundle.aab
+**/base.zip
+**/*.aab
+**/*.apk
+
+# bundle analysis
+analyze-bundle.js
+bundle-analyzer-report.html
+
+# cache directories
+.cache/
+**/cache/
+**/.cache/
+.parcel-cache/
+.eslintcache
+
+# temporary files
+*.tmp
+*.temp
+.tmp/
+temp/
+
+# webpack and build artifacts
+*.hot-update.js
+*.hot-update.json
+stats.json
+webpack.stats.json
+**/webpack/**/*.pack
+**/assets/**/cache/
