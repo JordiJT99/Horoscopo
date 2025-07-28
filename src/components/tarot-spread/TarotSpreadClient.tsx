@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useAdMob } from '@/hooks/use-admob-ads';
 import { Sparkles, RotateCcw } from 'lucide-react';
 
 interface TarotSpreadClientProps {
@@ -42,6 +43,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   const { toast } = useToast();
   const { user } = useAuth();
   const { stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const { showRewardedAd, showInterstitial } = useAdMob();
   const isPremium = true; // All users have premium access now
 
   const [shuffledCards, setShuffledCards] = useState<string[]>([]);
@@ -58,7 +60,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   }, []);
   
   const today = new Date().toISOString().split('T')[0];
-  const hasUsedToday = lastGained.draw_tarot_spread === today;
+  const hasUsedToday = lastGained.draw_tarot_card === today;
 
   const handleCardClick = (index: number) => {
     if (selectedIndices.length >= 2 || selectedIndices.includes(index) || isLoading || reading) {
@@ -91,7 +93,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
         const result = await tarotSpreadFlow(input);
         setReading(result);
         if (isFirstUse) {
-          addEnergyPoints('draw_tarot_spread', 25);
+          addEnergyPoints('draw_tarot_card', 25);
         }
       } catch (error) {
         console.error("Error fetching tarot spread reading:", error);
@@ -106,11 +108,32 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     };
     
     if (!hasUsedToday) {
-      // Eliminar restricción premium - acceso gratuito para todos
+      // Primera vez del día - acceso gratuito
       performReading(true);
     } else {
-      // Eliminar costo de stardust - acceso gratuito
-      performReading(false);
+      // Usos posteriores - ofrecer anuncio con recompensa para bonificación extra
+      setIsShowingAd(true);
+      try {
+        const reward = await showRewardedAd();
+        if (reward) {
+          // Si vio el anuncio, dar lectura + energía bonus
+          performReading(false);
+          addEnergyPoints('draw_tarot_card', 10); // Energía bonus por ver anuncio
+          toast({
+            title: "¡Recompensa!",
+            description: "+10 energía cósmica por ver el anuncio",
+          });
+        } else {
+          // Si no vio el anuncio, dar lectura normal
+          performReading(false);
+        }
+      } catch (adError) {
+        console.log('Rewarded ad not available:', adError);
+        // Si el anuncio no está disponible, dar lectura normal
+        performReading(false);
+      } finally {
+        setIsShowingAd(false);
+      }
     }
   };
 
