@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -41,22 +42,23 @@ const shuffleArray = (array: string[]): string[] => {
 };
 
 // Function to convert number words to digits for image paths
-const getCardImagePath = (cardName: string) => {
-    const numberWords: Record<string, string> = {
-        'two': '2', 'three': '3', 'four': '4', 'five': '5',
-        'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'ten': '10'
-    };
-    const parts = cardName.toLowerCase().split(' ');
-    const firstWord = parts[0];
+const getCardImagePath = (cardName: string): string => {
+    const basePath = '/custom_assets/tarot_cards/';
+    const normalizedSearchName = cardName.trim().toLowerCase();
+    const matchedCanonicalName = ALL_TAROT_CARDS.find(
+        (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
+    );
 
-    // Check if the first word is a number word that needs conversion
-    if (numberWords[firstWord]) {
-        parts[0] = numberWords[firstWord];
+    if (matchedCanonicalName) {
+        const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
+        return `${basePath}${fileName}`;
     }
     
-    // Rejoin and format for the URL
-    const fileName = parts.join('_') + '.png';
-    return `/custom_assets/tarot_cards/${fileName}`;
+    // Fallback if no exact match is found after normalization.
+    console.warn(
+        `[TarotSpreadClient] Tarot card name "${cardName}" (normalized: "${normalizedSearchName}") not found in ALL_TAROT_CARDS. Using placeholder image.`
+    );
+    return "https://placehold.co/267x470.png";
 };
 
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
