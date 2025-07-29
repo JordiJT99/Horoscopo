@@ -260,7 +260,7 @@ export default async function MorePage({ params }: MorePageProps) {
               key={item.href}
               href={item.href}
               icon={item.icon}
-              title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
+              title={dictionary[item.titleKey] || 'Privacy Policy'}
               locale={params.locale}
               isPlaceholder={item.isPlaceholder}
             />
