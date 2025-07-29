@@ -10,16 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { ALL_TAROT_CARDS } from '@/lib/constants';
-
-// Helper function to generate image path from card name
-const getCardImagePath = (cardName: string): string => {
-    const basePath = '/custom_assets/tarot_cards/';
-    // Normalize the name: lowercase, replace spaces with underscores.
-    // This is a more direct and robust way to match the file names.
-    const fileName = cardName.toLowerCase().replace(/\s+/g, '_') + '.png';
-    return `${basePath}${fileName}`;
-};
+import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 
 
 export type TarotReadingInput = z.infer<typeof TarotReadingInputSchema>;
@@ -76,7 +67,7 @@ const tarotReadingFlowInternal = ai.defineFlow(
       throw new Error('Tarot reader provided no insights or an invalid card name.');
     }
     
-    const cardImagePath = getCardImagePath(aiOutput.cardName);
+    const cardImagePath = getTarotCardImagePath(aiOutput.cardName);
 
     return {
       ...aiOutput,

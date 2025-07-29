@@ -619,6 +619,16 @@ export const ALL_TAROT_CARDS = [
   ...MINOR_ARCANA_TAROT_CARDS
 ];
 
+// Centralized function to get tarot card image paths correctly.
+export const getTarotCardImagePath = (cardName: string): string => {
+  if (!cardName) return "https://placehold.co/220x385.png?text=Error";
+  
+  const basePath = '/custom_assets/tarot_cards/';
+  // Normalize the name: lowercase, replace spaces with underscores.
+  const fileName = cardName.trim().toLowerCase().replace(/\s+/g, '_') + '.png';
+  return `${basePath}${fileName}`;
+};
+
 
 export { Briefcase as WorkIcon };
 
