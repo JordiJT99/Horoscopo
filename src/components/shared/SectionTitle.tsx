@@ -13,7 +13,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className,
   return (
     <div className={cn("mb-6 md:mb-8 text-center", className)}>
       <div className="flex items-center justify-center gap-2 px-2">
-        {Icon && <Icon className="h-6 w-6 sm:h-7 sm:h-7" />}
+        {Icon && <Icon className="h-6 w-6 sm:h-7 sm:h-7 text-primary" />}
         <h1 className="text-2xl font-headline font-semibold text-primary">
           {title}
         </h1>
