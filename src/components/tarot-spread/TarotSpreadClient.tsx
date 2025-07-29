@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -238,3 +239,5 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     </div>
   );
 }
+
+  
