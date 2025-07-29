@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -37,6 +38,25 @@ const shuffleArray = (array: string[]): string[] => {
     [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
   }
   return newArray;
+};
+
+// Function to convert number words to digits for image paths
+const getCardImagePath = (cardName: string) => {
+    const numberWords: Record<string, string> = {
+        'two': '2', 'three': '3', 'four': '4', 'five': '5',
+        'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'ten': '10'
+    };
+    const parts = cardName.toLowerCase().split(' ');
+    const firstWord = parts[0];
+
+    // Check if the first word is a number word that needs conversion
+    if (numberWords[firstWord]) {
+        parts[0] = numberWords[firstWord];
+    }
+    
+    // Rejoin and format for the URL
+    const fileName = parts.join('_') + '.png';
+    return `/custom_assets/tarot_cards/${fileName}`;
 };
 
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
@@ -144,8 +164,6 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     setReading(null);
     setIsLoading(false);
   };
-
-  const getCardImagePath = (cardName: string) => `/custom_assets/tarot_cards/${cardName.toLowerCase().replace(/\s+/g, '_')}.png`;
 
   return (
     <div className="w-full">
