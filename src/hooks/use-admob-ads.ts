@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react';
-import { AdMobService } from '@/lib/admob';
-import { Capacitor } from '@capacitor/core';
+
+"use client";
+
+import { useState, useEffect } from 'react';
 import { BannerAdPosition } from '@capacitor-community/admob';
+import { AdMobService } from '@/lib/admob';
 
-export const useAdMobAds = () => {
+export function useAdMob() {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [isBannerVisible, setIsBannerVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Inicializar AdMob cuando se monta el componente
+  // Inicializar AdMob al montar el hook
   useEffect(() => {
     const initializeAdMob = async () => {
-      if (!Capacitor.isNativePlatform()) {
-        console.log('AdMob: Not on native platform');
+      if (!AdMobService.isSupported()) {
+        console.log('AdMob not supported on this platform');
+
         return;
       }
 
@@ -20,9 +23,13 @@ export const useAdMobAds = () => {
         setIsLoading(true);
         await AdMobService.initialize();
         setIsInitialized(true);
-        console.log('AdMob: Hook initialized successfully');
-      } catch (error) {
-        console.error('AdMob: Hook initialization failed', error);
+
+        console.log('AdMob initialized successfully via hook');
+      } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : 'Failed to initialize AdMob';
+        setError(errorMsg);
+        console.error('AdMob initialization error:', err);
+
       } finally {
         setIsLoading(false);
       }
@@ -31,69 +38,90 @@ export const useAdMobAds = () => {
     initializeAdMob();
   }, []);
 
+
+  // Función para mostrar banner
   const showBanner = async (position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER) => {
     try {
+      setError(null);
       await AdMobService.showBanner(position);
-      setIsBannerVisible(true);
-    } catch (error) {
-      console.error('AdMob: Failed to show banner in hook', error);
+      console.log('Banner shown via hook');
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to show banner';
+      setError(errorMsg);
+      console.error('Banner error:', err);
     }
   };
 
+  // Función para ocultar banner
   const hideBanner = async () => {
     try {
+      setError(null);
       await AdMobService.hideBanner();
-      setIsBannerVisible(false);
-    } catch (error) {
-      console.error('AdMob: Failed to hide banner in hook', error);
+      console.log('Banner hidden via hook');
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to hide banner';
+      setError(errorMsg);
+      console.error('Hide banner error:', err);
     }
   };
 
-  const showInterstitial = async (): Promise<boolean> => {
+  // Función para mostrar intersticial
+  const showInterstitial = async () => {
     try {
-      return await AdMobService.showInterstitial();
-    } catch (error) {
-      console.error('AdMob: Failed to show interstitial in hook', error);
-      return false;
+      setError(null);
+      setIsLoading(true);
+      await AdMobService.showInterstitial();
+      console.log('Interstitial shown via hook');
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to show interstitial';
+      setError(errorMsg);
+      console.error('Interstitial error:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const showRewardedAd = async (): Promise<boolean> => {
+  // Función para mostrar anuncio con recompensa
+  const showRewardedAd = async () => {
     try {
-      return await AdMobService.showRewardedAd();
-    } catch (error) {
-      console.error('AdMob: Failed to show rewarded ad in hook', error);
-      return false;
+      setError(null);
+      setIsLoading(true);
+      const reward = await AdMobService.showRewardedAd();
+      console.log('Rewarded ad completed via hook:', reward);
+      return reward;
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to show rewarded ad';
+      setError(errorMsg);
+      console.error('Rewarded ad error:', err);
+      return null;
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  // Obtener información del modo
+  const getAdInfo = () => {
+    return AdMobService.getAdModeInfo();
   };
 
   return {
+    // Estado
     isInitialized,
-    isBannerVisible,
     isLoading,
+    error,
+    isSupported: AdMobService.isSupported(),
+    
+    // Funciones
+
     showBanner,
     hideBanner,
     showInterstitial,
     showRewardedAd,
+
+    getAdInfo,
+    
+    // Limpiar error manualmente
+    clearError: () => setError(null)
   };
-};
+}
 
-// Hook específico para mostrar banner automáticamente
-export const useAutoShowBanner = (position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER) => {
-  const { isInitialized, showBanner, hideBanner, isBannerVisible } = useAdMobAds();
-
-  useEffect(() => {
-    if (isInitialized && !isBannerVisible) {
-      showBanner(position);
-    }
-
-    // Limpiar banner al desmontar
-    return () => {
-      if (isBannerVisible) {
-        hideBanner();
-      }
-    };
-  }, [isInitialized, position]);
-
-  return { isBannerVisible, hideBanner };
-};

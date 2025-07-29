@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from "@/lib/utils";
 import { useSearchParams, useRouter } from 'next/navigation'; // Para leer type de searchParams si es necesario
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { useAdMob } from '@/hooks/use-admob-ads';
 
 const AnimatedHeart = ({ filled, animated }: { filled: boolean, animated?: boolean }) => (
   <svg
@@ -50,8 +51,9 @@ function CompatibilityClientContentInternal({ dictionary, locale, compatibilityT
   const [compatibility, setCompatibility] = useState<CompatibilityData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { showInterstitial } = useAdMob();
 
-  const handleFetchCompatibility = () => {
+  const handleFetchCompatibility = async () => {
     if (!sign1 || !sign2) {
       toast({
         title: dictionary['Error.genericTitle'] || "Error",
@@ -64,6 +66,16 @@ function CompatibilityClientContentInternal({ dictionary, locale, compatibilityT
 
     setIsLoading(true);
     setCompatibility(null);
+
+    // Mostrar anuncio intersticial antes del cálculo para monetización
+    try {
+      await showInterstitial();
+      // Pequeña pausa después del anuncio
+      await new Promise(resolve => setTimeout(resolve, 500));
+    } catch (adError) {
+      console.log('Ad not shown:', adError);
+      // Continuar sin anuncio si hay error
+    }
 
     setTimeout(() => {
       try {

@@ -1,148 +1,215 @@
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions } from '@capacitor-community/admob';
+
+import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 
-// IDs de AdMob - CAMBIAR por tus IDs reales de Google AdMob
-export const ADMOB_CONFIG = {
-  // IDs de test para desarrollo
-  TEST_BANNER_ID: 'ca-app-pub-3940256099942544/6300978111',
-  TEST_INTERSTITIAL_ID: 'ca-app-pub-3940256099942544/1033173712',
-  TEST_REWARDED_ID: 'ca-app-pub-3940256099942544/5224354917',
-  
-  // IDs de producción - REEMPLAZAR con tus IDs reales
-  PRODUCTION_BANNER_ID: 'ca-app-pub-1601092077557933/1500472200', // CAMBIAR por tu Banner ID real
-  PRODUCTION_INTERSTITIAL_ID: 'ca-app-pub-1601092077557933/7954199917', // CAMBIAR por tu Interstitial ID real
-  PRODUCTION_REWARDED_ID: 'ca-app-pub-1601092077557933/9187390537', // CAMBIAR por tu Rewarded ID real
-  
-  // Tu Application ID de AdMob (ya está correcto en AndroidManifest)
-  APPLICATION_ID: 'ca-app-pub-1601092077557933~3273742971',
+// ⚡ MODO DE PRODUCCIÓN ACTIVADO ⚡
+// Usando tus IDs reales de AdMob para producción
+
+// IDs de AdMob REALES de tu cuenta
+export const AD_CONFIG = {
+  APPLICATION_ID: {
+    android: 'ca-app-pub-1601092077557933~3927093480', // Tu App ID real para Android
+    ios: 'ca-app-pub-1601092077557933~3927093480'     // Tu App ID real para iOS
+  },
+  AD_UNITS: {
+    banner: {
+      android: 'ca-app-pub-1601092077557933/4647765323', // Tu Banner ID real para Android
+      ios: 'ca-app-pub-1601092077557933/4647765323'      // Tu Banner ID real para iOS
+    },
+    interstitial: {
+      android: 'ca-app-pub-1601092077557933/7377870444', // Tu Interstitial ID real para Android
+      ios: 'ca-app-pub-1601092077557933/7377870444'      // Tu Interstitial ID real para iOS
+    },
+    rewarded: {
+      android: 'ca-app-pub-1601092077557933/3438625437', // Tu Rewarded ID real para Android
+      ios: 'ca-app-pub-1601092077557933/3438625437'      // Tu Rewarded ID real para iOS
+    }
+  }
 };
 
-// Usar IDs de test en desarrollo, producción en release
-const isProduction = process.env.NODE_ENV === 'production';
-
-export const getBannerAdId = () => 
-  isProduction ? ADMOB_CONFIG.PRODUCTION_BANNER_ID : ADMOB_CONFIG.TEST_BANNER_ID;
-
-export const getInterstitialAdId = () => 
-  isProduction ? ADMOB_CONFIG.PRODUCTION_INTERSTITIAL_ID : ADMOB_CONFIG.TEST_INTERSTITIAL_ID;
-
-export const getRewardedAdId = () => 
-  isProduction ? ADMOB_CONFIG.PRODUCTION_REWARDED_ID : ADMOB_CONFIG.TEST_REWARDED_ID;
+// 📝 PARA CAMBIAR A PRODUCCIÓN:
+// Reemplaza los IDs de arriba con tus IDs reales:
+// App ID: ca-app-pub-1601092077557933~3273742971
+// Banner: ca-app-pub-1601092077557933/1500472200
+// Interstitial: ca-app-pub-1601092077557933/7954199917
+// Rewarded: ca-app-pub-1601092077557933/9187390537
 
 export class AdMobService {
-  private static initialized = false;
+  private static isInitialized = false;
+  private static currentBannerId: string | null = null;
 
-  static async initialize() {
-    if (!Capacitor.isNativePlatform()) {
-      console.log('AdMob: Not on native platform, skipping initialization');
-      return;
-    }
-
-    if (this.initialized) {
-      console.log('AdMob: Already initialized');
+  // Inicializar AdMob
+  static async initialize(): Promise<void> {
+    if (this.isInitialized || !Capacitor.isNativePlatform()) {
       return;
     }
 
     try {
+      const platform = Capacitor.getPlatform();
+      const appId = platform === 'android' 
+        ? AD_CONFIG.APPLICATION_ID.android 
+        : AD_CONFIG.APPLICATION_ID.ios;
+
       await AdMob.initialize({
-        testingDevices: ['YOUR_DEVICE_ID'], // Agregar el ID de tu dispositivo de test
-        initializeForTesting: !isProduction,
+        testingDevices: [],                 // ✅
+        initializeForTesting: false,
       });
-      
-      this.initialized = true;
-      console.log('AdMob: Successfully initialized');
+
+      this.isInitialized = true;
+      console.log('AdMob initialized successfully in PRODUCTION mode');
+      console.log(`Using App ID: ${appId}`);
     } catch (error) {
-      console.error('AdMob: Failed to initialize', error);
+      console.error('Failed to initialize AdMob:', error);
+
       throw error;
     }
   }
 
-  static async showBanner(position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER) {
+
+  // Obtener información del modo actual
+  static getAdModeInfo(): { isTesting: boolean; config: typeof AD_CONFIG } {
+    return {
+      isTesting: false,
+      config: AD_CONFIG
+    };
+  }
+
+  // Mostrar banner
+  static async showBanner(position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      console.log('AdMob: Banner not shown (not native platform)');
+      console.warn('AdMob banners only work on native platforms');
+      return;
+    }
+
+    await this.initialize();
+
+    try {
+      const platform = Capacitor.getPlatform();
+      const adUnitId = platform === 'android' 
+        ? AD_CONFIG.AD_UNITS.banner.android 
+        : AD_CONFIG.AD_UNITS.banner.ios;
+
+      const options: BannerAdOptions = {
+        adId: adUnitId,
+        adSize: BannerAdSize.BANNER,
+        position: position,
+        margin: 0,
+        isTesting: false // MODO PRODUCCIÓN
+      };
+
+      await AdMob.showBanner(options);
+      this.currentBannerId = adUnitId;
+      console.log('Banner ad shown successfully (PRODUCTION mode)');
+      console.log(`Banner ID: ${adUnitId}`);
+    } catch (error) {
+      console.error('Failed to show banner ad:', error);
+      throw error;
+    }
+  }
+
+  // Ocultar banner
+  static async hideBanner(): Promise<void> {
+    if (!Capacitor.isNativePlatform() || !this.currentBannerId) {
       return;
     }
 
     try {
-      await this.initialize();
-      
-      const options: BannerAdOptions = {
-        adId: getBannerAdId(),
-        adSize: BannerAdSize.BANNER,
-        position: position,
-        margin: 0,
-        isTesting: !isProduction,
-      };
-
-      await AdMob.showBanner(options);
-      console.log('AdMob: Banner shown successfully');
-    } catch (error) {
-      console.error('AdMob: Failed to show banner', error);
-    }
-  }
-
-  static async hideBanner() {
-    if (!Capacitor.isNativePlatform()) return;
-
-    try {
       await AdMob.hideBanner();
-      console.log('AdMob: Banner hidden');
+      this.currentBannerId = null;
+      console.log('Banner ad hidden successfully');
     } catch (error) {
-      console.error('AdMob: Failed to hide banner', error);
+      console.error('Failed to hide banner ad:', error);
     }
   }
 
-  static async showInterstitial(): Promise<boolean> {
+  // Mostrar anuncio intersticial
+  static async showInterstitial(): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      console.log('AdMob: Interstitial not shown (not native platform)');
-      return false;
+      console.warn('AdMob interstitials only work on native platforms');
+      return;
     }
 
+    await this.initialize();
+
     try {
-      await this.initialize();
+      const platform = Capacitor.getPlatform();
+      const adUnitId = platform === 'android' 
+        ? AD_CONFIG.AD_UNITS.interstitial.android 
+        : AD_CONFIG.AD_UNITS.interstitial.ios;
 
       const options = {
-        adId: getInterstitialAdId(),
-        isTesting: !isProduction,
+        adId: adUnitId,
+        isTesting: false
       };
 
+      // Preparar el anuncio
       await AdMob.prepareInterstitial(options);
+      
+      // Mostrar el anuncio
       await AdMob.showInterstitial();
-      console.log('AdMob: Interstitial shown successfully');
-      return true;
+      console.log('Interstitial ad shown successfully (PRODUCTION mode)');
+      console.log(`Interstitial ID: ${adUnitId}`);
     } catch (error) {
-      console.error('AdMob: Failed to show interstitial', error);
-      return false;
+      console.error('Failed to show interstitial ad:', error);
+      throw error;
     }
   }
 
-  static async showRewardedAd(): Promise<boolean> {
+  // Mostrar anuncio con recompensa
+  static async showRewardedAd(): Promise<AdMobRewardItem | null> {
     if (!Capacitor.isNativePlatform()) {
-      console.log('AdMob: Rewarded ad not shown (not native platform)');
-      return false;
+      console.warn('AdMob rewarded ads only work on native platforms');
+      return null;
     }
+
+    await this.initialize();
 
     try {
-      await this.initialize();
+      const platform = Capacitor.getPlatform();
+      const adUnitId = platform === 'android' 
+        ? AD_CONFIG.AD_UNITS.rewarded.android 
+        : AD_CONFIG.AD_UNITS.rewarded.ios;
 
       const options: RewardAdOptions = {
-        adId: getRewardedAdId(),
-        isTesting: !isProduction,
+        adId: adUnitId,
+        isTesting: false
       };
 
+      // Preparar el anuncio
       await AdMob.prepareRewardVideoAd(options);
-      const result = await AdMob.showRewardVideoAd();
       
-      if (result) {
-        console.log('AdMob: Rewarded ad completed, user earned reward');
-        return true;
-      } else {
-        console.log('AdMob: Rewarded ad dismissed without reward');
-        return false;
-      }
+      // Mostrar el anuncio y esperar la recompensa
+      const result = await AdMob.showRewardVideoAd();
+      console.log('Rewarded ad completed (PRODUCTION mode):', result);
+      console.log(`Rewarded ID: ${adUnitId}`);
+      
+      return result;
     } catch (error) {
-      console.error('AdMob: Failed to show rewarded ad', error);
-      return false;
+      console.error('Failed to show rewarded ad:', error);
+      throw error;
     }
   }
+
+  // Verificar si una plataforma es compatible
+  static isSupported(): boolean {
+    return Capacitor.isNativePlatform();
+  }
+
+  // Verificar si está inicializado
+  static getInitializationStatus(): boolean {
+    return this.isInitialized;
+  }
 }
+
+// Exportar funciones convenientes
+export const {
+  initialize,
+  showBanner,
+  hideBanner,
+  showInterstitial,
+  showRewardedAd,
+  isSupported,
+  getInitializationStatus,
+  getAdModeInfo
+} = AdMobService;
+

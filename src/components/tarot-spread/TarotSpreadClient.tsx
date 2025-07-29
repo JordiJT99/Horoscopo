@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useAdMob } from '@/hooks/use-admob-ads';
 import { Sparkles, RotateCcw } from 'lucide-react';
 
 interface TarotSpreadClientProps {
@@ -41,6 +42,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   const { toast } = useToast();
   const { user } = useAuth();
   const { stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
+  const { showRewardedAd, showInterstitial } = useAdMob();
   const isPremium = true; // All users have premium access now
 
   const [shuffledCards, setShuffledCards] = useState<string[]>([]);
@@ -55,6 +57,11 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     setShuffledCards(shuffleArray(ALL_TAROT_CARDS));
   }, []);
   
+
+  const today = new Date().toISOString().split('T')[0];
+  const hasUsedToday = lastGained.draw_tarot_card === today;
+
+
   const handleCardClick = (index: number) => {
     if (selectedIndices.length >= 2 || selectedIndices.includes(index) || isLoading || reading) {
       return;
@@ -72,31 +79,63 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   const handleGetReading = async () => {
     if (selectedCards.length !== 2 || isLoading) return;
 
-    setIsLoading(true);
-    try {
-      const input: TarotSpreadInput = {
-        card1Name: selectedCards[0].name,
-        card1Reversed: selectedCards[0].isReversed,
-        card2Name: selectedCards[1].name,
-        card2Reversed: selectedCards[1].isReversed,
-        locale: locale,
-        userName: user?.displayName || undefined
-      };
-      const result = await tarotSpreadFlow(input);
-      setReading(result);
 
-      const today = new Date().toISOString().split('T')[0];
-      if (lastGained.draw_tarot_spread !== today) {
-        addEnergyPoints('draw_tarot_spread', 25);
+    const performReading = async (isFirstUse: boolean) => {
+      setIsLoading(true);
+      try {
+        const input: TarotSpreadInput = {
+          card1Name: selectedCards[0].name,
+          card1Reversed: selectedCards[0].isReversed,
+          card2Name: selectedCards[1].name,
+          card2Reversed: selectedCards[1].isReversed,
+          locale: locale,
+          userName: user?.displayName || undefined
+        };
+        const result = await tarotSpreadFlow(input);
+        setReading(result);
+        if (isFirstUse) {
+          addEnergyPoints('draw_tarot_card', 25);
+        }
+      } catch (error) {
+        console.error("Error fetching tarot spread reading:", error);
+        toast({
+          title: dictionary['Error.genericTitle'] || "Error",
+          description: dictionary['TarotSpreadPage.errorFetching'] || "The cards are shrouded in mist... Could not get a reading. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+
       }
     };
     
     if (!hasUsedToday) {
-      // Eliminar restricción premium - acceso gratuito para todos
+      // Primera vez del día - acceso gratuito
       performReading(true);
     } else {
-      // Eliminar costo de stardust - acceso gratuito
-      performReading(false);
+      // Usos posteriores - ofrecer anuncio con recompensa para bonificación extra
+      setIsShowingAd(true);
+      try {
+        const reward = await showRewardedAd();
+        if (reward) {
+          // Si vio el anuncio, dar lectura + energía bonus
+          performReading(false);
+          addEnergyPoints('draw_tarot_card', 10); // Energía bonus por ver anuncio
+          toast({
+            title: "¡Recompensa!",
+            description: "+10 energía cósmica por ver el anuncio",
+          });
+        } else {
+          // Si no vio el anuncio, dar lectura normal
+          performReading(false);
+        }
+      } catch (adError) {
+        console.log('Rewarded ad not available:', adError);
+        // Si el anuncio no está disponible, dar lectura normal
+        performReading(false);
+      } finally {
+        setIsShowingAd(false);
+      }
     }
   };
 

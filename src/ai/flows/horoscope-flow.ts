@@ -23,10 +23,10 @@ const zodSignEnum = z.enum(ALL_SIGN_NAMES as [string, ...string[]]);
 
 // Define Zod schema for HoroscopeDetail
 const HoroscopeDetailSchema = z.object({
-  main: z.string().describe('The main horoscope text for the period.'),
-  love: z.string().describe('The love horoscope text for the period.'),
-  money: z.string().describe('The money/career horoscope text for the period.'),
-  health: z.string().describe('The health horoscope text for the period.'),
+  main: z.string().describe('The main horoscope text for the period. It must be a complete and insightful astrological prediction.'),
+  love: z.string().describe('The love horoscope text for the period. It must be a complete and insightful astrological prediction for romance.'),
+  money: z.string().describe('The money/career horoscope text for the period. It must be a complete and insightful astrological prediction for finances and work.'),
+  health: z.string().describe('The health horoscope text for the period. It must be a complete and insightful astrological prediction for well-being.'),
 });
 export type HoroscopeDetail = z.infer<typeof HoroscopeDetailSchema>;
 
@@ -125,43 +125,32 @@ const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
   input: { schema: PromptInputSchema },
   output: { schema: HoroscopeDetailSchema },
-  prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas del día influirán en la vida del usuario.
+  prompt: `Eres un astrólogo experto, empático y perspicaz. Tu tarea es generar un horóscopo DIARIO y completo para el signo zodiacal {{sign}}.
+
+**INSTRUCCIONES CRÍTICAS:**
+1.  **IDIOMA:** Responde ÚNICAMENTE en el idioma especificado por el código de locale: **{{locale}}**.
+2.  **FORMATO:** Tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al esquema. Las claves deben ser "main", "love", "money", y "health". No añadas claves adicionales ni uses markdown.
+3.  **CONTENIDO:** Cada campo ("main", "love", "money", "health") debe contener una predicción astrológica completa, detallada y significativa de al menos 30 palabras. No uses frases de marcador de posición.
+4.  **TEMA CENTRAL:** Basa TODA tu predicción en la influencia específica del siguiente tema astrológico para el día de hoy: **"{{astrologicalTheme}}"**. Explica cómo este tema afecta a cada área (principal, amor, dinero, salud) para el signo {{sign}}.
+
+**PERSONALIZACIÓN (Si aplica):**
 {{#if isPersonalized}}
-Genera ÚNICAMENTE el horóscopo DIARIO PERSONALIZADO para {{userName}} (signo {{sign}}) para {{dateDescriptor}} en el idioma {{locale}}.
-**INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en {{userName}} ({{sign}}).
-**Saluda a {{userName}} al principio de la predicción principal de forma natural y amigable.** Tu tono debe ser místico y directo, como si revelaras un secreto del cosmos. Usa frases como "Hola {{userName}}, hoy el universo te depara...", "Para ti, {{userName}}, las estrellas sugieren...", "La energía cósmica de hoy te invita a...".
-{{#if userRelationshipStatus}}
-Considera sutilmente su estado sentimental ({{userRelationshipStatus}}) al redactar la sección de amor.
-{{/if}}
-{{#if userEmploymentStatus}}
-Considera sutilmente su situación laboral ({{userEmploymentStatus}}) al redactar la sección de dinero/trabajo.
-{{/if}}
-
-Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en {{userName}} ({{sign}}).
-Para 'love', ofrece consejos reflexivos para las conexiones de {{userName}}, siempre en relación con "{{astrologicalTheme}}".
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para {{userName}}, en el contexto de "{{astrologicalTheme}}".
-Para 'health', sugiere cómo {{userName}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
+Este es un horóscopo PERSONALIZADO para **{{userName}}**.
+- **Saludo:** Comienza la predicción 'main' con un saludo cálido y natural a {{userName}}.
+- **Contexto:** Considera sutilmente su situación sentimental ({{userRelationshipStatus}}) y laboral ({{userEmploymentStatus}}) al redactar las secciones de amor y dinero respectivamente.
 {{else}}
-Genera ÚNICAMENTE el horóscopo DIARIO GENERAL para el signo zodiacal {{sign}} para {{dateDescriptor}} en el idioma {{locale}}.
-**INSTRUCCIÓN CLAVE:** El tema astrológico central para este día es **"{{astrologicalTheme}}"**. Basa TODA tu predicción (principal, amor, dinero y salud) en cómo esta energía específica influye en el signo {{sign}}.
-Tu tono debe ser místico y predictivo, usando frases como "el cosmos depara", "las estrellas sugieren", "la energía de hoy invita a".
-
-Para la sección 'main', profundiza en cómo las energías diarias actuales, guiadas por "{{astrologicalTheme}}", podrían influir en el signo {{sign}}.
-Para 'love', ofrece consejos reflexivos para las conexiones para el signo {{sign}}, siempre en relación con "{{astrologicalTheme}}".
-Para 'money', proporciona perspectivas sobre decisiones financieras o asuntos laborales para el signo {{sign}}, en el contexto de "{{astrologicalTheme}}".
-Para 'health', sugiere cómo el signo {{sign}} puede mantener el bienestar, considerando el tema de "{{astrologicalTheme}}".
+Este es un horóscopo GENERAL para todos los nativos del signo {{sign}}.
 {{/if}}
 
-IMPORTANTE: No incluyas la descripción de la fecha (como "{{dateDescriptor}}", "hoy", "ayer" o la fecha específica) directamente en el texto de las secciones "main", "love", "money" o "health".
-CRÍTICO: La estructura de tu respuesta DEBE ser un objeto JSON válido que se ajuste estrictamente al siguiente esquema: "main", "love", "money", "health". NO añadas ninguna otra clave. NO uses markdown.
-Ejemplo de estructura de salida para {{userName}}="Alex" y tema="un encuentro social sorprendente" (CASO PERSONALIZADO):
+**EJEMPLO DE SALIDA PERFECTA (para un caso personalizado):**
 {
-  "main": "Hola Alex, para tu signo Aries, el cosmos hoy te depara un encuentro social sorprendente. Una conexión inesperada, ya sea con alguien nuevo o del pasado, tiene el potencial de ofrecerte una perspectiva que no habías considerado. Mantente abierto a las conversaciones espontáneas; las estrellas indican que la sincronicidad está de tu lado.",
-  "love": "En el amor, esta energía social te beneficia enormemente. Si estás en pareja, una salida con amigos puede reavivar la chispa. Si estás soltero, Alex, tu carisma estará en su punto más alto en cualquier evento social. No dudes en iniciar una conversación.",
-  "money": "El networking es tu mejor activo hoy, Alex. Una conversación casual en un entorno relajado podría llevar a una colaboración inesperada o a una valiosa oportunidad profesional. Escucha atentamente.",
-  "health": "Tu bienestar se nutre de la interacción social positiva. Considera una actividad física en grupo, como un deporte de equipo o una clase de baile con amigos. La energía colectiva no solo te motivará, sino que también aliviará el estrés acumulado."
+  "main": "Hola Alex, para tu signo Aries, el cosmos hoy te depara un encuentro social sorprendente. Una conexión inesperada, ya sea con alguien nuevo o del pasado, tiene el potencial de ofrecerte una perspectiva que no habías considerado. Mantente abierto a las conversaciones espontáneas; las estrellas indican que la sincronicidad está de tu lado, y este evento podría ser clave.",
+  "love": "En el amor, esta energía social te beneficia enormemente. Si estás en pareja, una salida con amigos puede reavivar la chispa y traer nueva alegría. Si estás soltero, Alex, tu carisma estará en su punto más alto en cualquier evento social al que asistas. No dudes en iniciar una conversación, pues la conexión que buscas podría surgir de la manera más inesperada.",
+  "money": "El networking es tu mejor activo hoy, Alex. Una conversación casual en un entorno relajado, quizás fuera de la oficina, podría llevar a una colaboración inesperada o a una valiosa oportunidad profesional. Escucha atentamente lo que otros tienen que decir; la clave de tu próximo éxito financiero podría estar en las palabras de otra persona.",
+  "health": "Tu bienestar se nutre de la interacción social positiva. Considera una actividad física en grupo, como un deporte de equipo o una clase de baile con amigos. La energía colectiva no solo te motivará, sino que también aliviará el estrés acumulado, mejorando tu estado de ánimo y tu vitalidad general."
 }
-Ahora genera el horóscopo diario para {{sign}} en {{locale}} para {{dateDescriptor}} y el tema "{{astrologicalTheme}}", reflejando este estilo perspicaz, empático y detallado.
+
+Ahora, genera el horóscopo DIARIO para **{{sign}}** en **{{locale}}**, siguiendo todas las instrucciones al pie de la letra.
 `,
 });
 
@@ -550,3 +539,4 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
     
 
     
+
