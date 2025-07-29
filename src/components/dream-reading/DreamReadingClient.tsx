@@ -248,7 +248,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(s => s + 1);
+      setCurrentStep(s => s - 1);
     }
   };
 
