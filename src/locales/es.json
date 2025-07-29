@@ -744,8 +744,6 @@
 "Auth.loginFormTitleNow": "Ingresa tus credenciales",
 "Auth.loginFormDescription": "Inicia sesión con tu cuenta de Google o usa correo electrónico y contraseña.",
 "Auth.loginFormDescriptionFirebase": "Inicia sesión con tu correo electrónico y contraseña.",
-"Auth.signupFormTitle": "Crea tu cuenta",
-"Auth.signupFormDescription": "Completa los detalles para unirte a AstroVibes.",
 "Auth.usernameLabel": "Nombre de usuario",
 "Auth.usernamePlaceholder": "Ingresa tu nombre de usuario",
 "Auth.emailLabel": "Correo Electrónico",
@@ -923,7 +921,7 @@
 "ProfilePage.notificationPrefsUpdated": "Tus preferencias de notificación han sido actualizadas.",
 "ProfilePage.loginToSaveSettings": "Debes iniciar sesión para guardar los ajustes.",
 "DailyTransits.TodaysSky": "Tu Cielo de Hoy",
-"DailyTransits.VenusTrineMoon": "Venus Trígono Luna",
+"DailyTransits.VenusTrineMoon": "Venus Trino Luna",
 "DailyTransits.EnergyForLove": "Energía para el amor y la armonía.",
 "DailyTransits.SunConjunctMercury": "Sol Conjunción Mercurio",
 "DailyTransits.ExcellentForCommunication": "Excelente para la comunicación e ideas.",
@@ -935,7 +933,7 @@
 "DailyTransits.ReviewReflect": "Revisa, reflexiona, no inicies nada nuevo.",
 "DailyTransits.FullMoonInScorpio": "Luna Llena en Escorpio",
 "DailyTransits.EmotionalIntensity": "Intensidad emocional y transformación.",
-"DailyTransits.SunTrineJupiter": "Sol Trígono Júpiter",
+"DailyTransits.SunTrineJupiter": "Sol Trino Júpiter",
 "DailyTransits.OptimismGrowth": "Optimismo, crecimiento y buena fortuna.",
 "ProfilePage.editAboutAriaLabel": "Editar sección sobre mí",
 "ProfilePage.saveAboutAriaLabel": "Guardar cambios sobre mí",
@@ -1161,3 +1159,5 @@
 }
 }
 
+
+    
