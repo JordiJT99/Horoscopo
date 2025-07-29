@@ -13,23 +13,12 @@ import {z} from 'genkit';
 import { ALL_TAROT_CARDS } from '@/lib/constants';
 
 // Helper function to generate image path from card name
-const getTarotCardImagePath = (cardNameFromAI: string): string => {
-  const basePath = '/custom_assets/tarot_cards/';
-
-  const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
-  const matchedCanonicalName = ALL_TAROT_CARDS.find(
-    (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
-  );
-
-  if (matchedCanonicalName) {
-    const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
+const getCardImagePath = (cardName: string): string => {
+    const basePath = '/custom_assets/tarot_cards/';
+    // Normalize the name: lowercase, replace spaces with underscores.
+    // This is a more direct and robust way to match the file names.
+    const fileName = cardName.toLowerCase().replace(/\s+/g, '_') + '.png';
     return `${basePath}${fileName}`;
-  }
-
-  console.warn(
-    `[AstroVibes - TarotPersonalityFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in ALL_TAROT_CARDS. Using placeholder image.`
-  );
-  return "https://placehold.co/267x470.png";
 };
 
 
@@ -124,7 +113,7 @@ const tarotPersonalityFlowInternal = ai.defineFlow(
       throw new Error('Tarot reader provided no insights.');
     }
     
-    const cardImagePath = getTarotCardImagePath(cardName);
+    const cardImagePath = getCardImagePath(cardName);
 
     return {
       cardName,
