@@ -16,20 +16,35 @@
   - El usuario ve el mismo resultado en cualquier dispositivo.
   - Puedes servir el mismo contenido a todos los usuarios si corresponde (ej: horóscopos generales).
 
-#### Instrucciones para cachear horóscopos generales en backend:
-1. **Al entrar el primer usuario del día para un signo:**
-   - Comprueba en la base de datos si existe el horóscopo de ese signo y fecha.
-   - Si NO existe:
-     - Genera el horóscopo con Gemini.
-     - Guarda en la base de datos: `{signo, fecha, resultado}`.
-     - Devuelve el resultado al usuario.
-   - Si SÍ existe:
-     - Devuelve el resultado guardado al usuario (no generes de nuevo con Gemini).
 
-2. **Para todos los usuarios posteriores ese día:**
-   - Siempre consulta primero en la base de datos.
-   - Si existe el horóscopo de ese signo y fecha, lo devuelves directamente.
-   - Así solo pagas una vez a Gemini por signo y día, y todos los usuarios reciben el mismo contenido.
+
+#### Pautas para implementar el cacheo de horóscopos generales en backend (ejemplo Firestore):
+
+1. **Verifica la conexión a Firestore:**
+   - Antes de cualquier operación, asegúrate de que la base de datos está disponible y lista para usarse.
+
+2. **Busca el horóscopo:**
+   - Intenta leer el documento correspondiente en la colección (por ejemplo, `dailyHoroscopes/{signo}_{fecha}`).
+   - Si el documento existe:
+     - Devuélvelo directamente al usuario (ahorras costes y evitas duplicados).
+
+3. **Si NO lo encuentra:**
+   - Llama a la IA de Gemini para generar un nuevo horóscopo para ese signo y fecha.
+   - Guarda el resultado usando `docRef.set(...)` en la colección adecuada (esto crea la colección y el documento si no existen).
+   - Devuelve el horóscopo recién creado al usuario.
+
+4. **Este patrón debe repetirse para cada signo y cada día:**
+   - Así, solo se paga una vez a Gemini por cada signo y día.
+   - Todos los usuarios reciben el mismo contenido para ese signo y fecha.
+
+5. **Ventajas de este enfoque:**
+   - Reduces el coste de la API al mínimo necesario.
+   - Mejoras la velocidad de respuesta para los usuarios posteriores.
+   - El resultado es consistente para todos los usuarios ese día.
+
+6. **Recomendaciones adicionales:**
+   - Implementa un sistema de expiración o limpieza en la base de datos para eliminar horóscopos antiguos (por ejemplo, de semanas pasadas).
+   - Aplica el mismo patrón a otros contenidos que sean iguales para todos los usuarios en un periodo (consejo del día, carta diaria, etc.).
 
 #### Ejemplo de flujo (pseudocódigo):
 ```typescript
