@@ -27,7 +27,7 @@ interface MorePageProps {
 }
 
 // Helper component for feature cards
-const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder, currentDictionary }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean, currentDictionary: Record<string, string> }) => {
+const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder, currentDictionary }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean, currentDictionary: Record<string, any> }) => {
   const cardClasses = "bg-card/90 hover:bg-primary/20 transition-colors duration-200 p-3 sm:p-4 flex flex-col items-center justify-center text-center aspect-[4/3] sm:aspect-square shadow-lg rounded-xl";
   
   if (isPlaceholder) {
@@ -260,7 +260,7 @@ export default async function MorePage({ params }: MorePageProps) {
               key={item.href}
               href={item.href}
               icon={item.icon}
-              title={dictionary[item.titleKey] || 'Privacy Policy'}
+              title={dictionary.PrivacyPolicy?.title || 'Privacy Policy'}
               locale={params.locale}
               isPlaceholder={item.isPlaceholder}
             />
