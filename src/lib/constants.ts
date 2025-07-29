@@ -1,5 +1,4 @@
 
-
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey, DailyTransit } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
 import {
@@ -623,28 +622,28 @@ export const ALL_TAROT_CARDS = [
 // This map is the single source of truth for converting names to file paths.
 const TAROT_CARD_FILENAME_MAP: { [key: string]: string } = {
     // Major Arcana
-    "The Fool": "el_loco",
-    "The Magician": "el_mago",
-    "The High Priestess": "la_sacerdotisa",
-    "The Empress": "la_emperatriz",
-    "The Emperor": "el_emperador",
-    "The Hierophant": "el_hierofante",
-    "The Lovers": "los_enamorados",
-    "The Chariot": "el_carro",
-    "Strength": "la_fuerza",
-    "The Hermit": "el_ermitano",
-    "Wheel of Fortune": "la_rueda_de_la_fortuna",
-    "Justice": "la_justicia",
-    "The Hanged Man": "el_colgado",
-    "Death": "la_muerte",
-    "Temperance": "la_templanza",
-    "The Devil": "el_diablo",
-    "The Tower": "la_torre",
-    "The Star": "la_estrella",
-    "The Moon": "la_luna",
-    "The Sun": "el_sol",
-    "Judgement": "el_juicio",
-    "The World": "el_mundo",
+    "The Fool": "the_fool",
+    "The Magician": "the_magician",
+    "The High Priestess": "the_high_priestess",
+    "The Empress": "the_empress",
+    "The Emperor": "the_emperor",
+    "The Hierophant": "the_hierophant",
+    "The Lovers": "the_lovers",
+    "The Chariot": "the_chariot",
+    "Strength": "strength",
+    "The Hermit": "the_hermit",
+    "Wheel of Fortune": "wheel_of_fortune",
+    "Justice": "justice",
+    "The Hanged Man": "the_hanged_man",
+    "Death": "death",
+    "Temperance": "temperance",
+    "The Devil": "the_devil",
+    "The Tower": "the_tower",
+    "The Star": "the_star",
+    "The Moon": "the_moon",
+    "The Sun": "the_sun",
+    "Judgement": "judgement",
+    "The World": "the_world",
     // Minor Arcana (Wands)
     "Ace of Wands": "ace_of_wands",
     "Two of Wands": "two_of_wands",
@@ -724,7 +723,7 @@ export const getTarotCardImagePath = (cardNameFromAI: string): string => {
   }
   
   // Fallback for names that might not be in the map (should not happen with a complete map)
-  console.warn(`[getTarotCardImagePath] Card name "${cardNameFromAI}" not found in map. Using a generic name.`);
+  console.warn(`[getTarotCardImagePath] Card name "${cardNameFromAI}" not found in map. Falling back to a generic name.`);
   const genericFileName = cardNameFromAI.trim().toLowerCase().replace(/\s+/g, '_');
   return `${basePath}${genericFileName}.png`;
 };
@@ -746,11 +745,3 @@ export const getDailyTransit = (date: Date): DailyTransit => {
   const dayOfYear = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
   return transits[dayOfYear % transits.length];
 };
-
-
-
-
-
-    
-
-  
