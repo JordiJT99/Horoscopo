@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -14,6 +15,7 @@ export function useAdMob() {
     const initializeAdMob = async () => {
       if (!AdMobService.isSupported()) {
         console.log('AdMob not supported on this platform');
+
         return;
       }
 
@@ -21,11 +23,13 @@ export function useAdMob() {
         setIsLoading(true);
         await AdMobService.initialize();
         setIsInitialized(true);
+
         console.log('AdMob initialized successfully via hook');
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : 'Failed to initialize AdMob';
         setError(errorMsg);
         console.error('AdMob initialization error:', err);
+
       } finally {
         setIsLoading(false);
       }
@@ -33,6 +37,7 @@ export function useAdMob() {
 
     initializeAdMob();
   }, []);
+
 
   // Función para mostrar banner
   const showBanner = async (position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER) => {
@@ -107,13 +112,16 @@ export function useAdMob() {
     isSupported: AdMobService.isSupported(),
     
     // Funciones
+
     showBanner,
     hideBanner,
     showInterstitial,
     showRewardedAd,
+
     getAdInfo,
     
     // Limpiar error manualmente
     clearError: () => setError(null)
   };
 }
+

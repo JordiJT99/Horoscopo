@@ -1,3 +1,4 @@
+
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 
@@ -59,9 +60,11 @@ export class AdMobService {
       console.log(`Using App ID: ${appId}`);
     } catch (error) {
       console.error('Failed to initialize AdMob:', error);
+
       throw error;
     }
   }
+
 
   // Obtener información del modo actual
   static getAdModeInfo(): { isTesting: boolean; config: typeof AD_CONFIG } {
@@ -209,3 +212,4 @@ export const {
   getInitializationStatus,
   getAdModeInfo
 } = AdMobService;
+

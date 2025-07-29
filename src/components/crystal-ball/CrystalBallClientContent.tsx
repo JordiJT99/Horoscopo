@@ -27,7 +27,6 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const router = useRouter();
   const [revelation, setRevelation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isShowingAd, setIsShowingAd] = useState(false);
   const { toast } = useToast();
 
   const { user } = useAuth();
@@ -55,7 +54,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
     }
   }, [user]);
   
-  const performRevelation = async (isFirstUse: boolean) => {
+  const performRevelation = async () => {
     setIsLoading(true);
     setRevelation(null);
     try {
@@ -65,7 +64,9 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
       };
       const result: CrystalBallRevelationOutput = await getCrystalBallRevelation(input);
       setRevelation(result.revelation);
-      if (isFirstUse) {
+      
+      const today = new Date().toISOString().split('T')[0];
+      if (lastGained.use_crystal_ball !== today) {
         const energyResult = addEnergyPoints('use_crystal_ball', 10);
         if (energyResult.pointsAdded > 0) {
           toast({
@@ -94,40 +95,8 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
     }
   };
 
-  const today = new Date().toISOString().split('T')[0];
-  const hasUsedToday = lastGained.use_crystal_ball === today;
-
   const handleGetRevelation = async () => {
-    if (!hasUsedToday) { // First use of the day
-        if (isPremium) {
-            performRevelation(true);
-        } else {
-            setIsShowingAd(true);
-            toast({
-                title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-                description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-            });
-            setTimeout(() => {
-                setIsShowingAd(false);
-                performRevelation(true); 
-            }, 2500);
-        }
-    } else { // Subsequent use
-      if (stardust < STARDUST_COST) {
-        toast({
-          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
-          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to use this again today. Get more from the 'More' section.").replace('{cost}', STARDUST_COST.toString()),
-          variant: "destructive",
-        });
-        return;
-      }
-      spendStardust(STARDUST_COST);
-      toast({
-        title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
-        description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
-      });
-      performRevelation(false);
-    }
+    performRevelation();
   };
 
   const handleShare = async () => {
@@ -197,20 +166,13 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
           </div>
         </div>
         
-        {isLoading && !isShowingAd && (
+        {isLoading && (
           <div className="text-center min-h-[80px]">
             <LoadingSpinner className="h-10 w-10 text-primary" />
-          </div>
-        )}
-        
-        {isShowingAd && (
-          <div className="text-center min-h-[80px]">
-            <LoadingSpinner className="h-10 w-10 text-primary" />
-            <p className="mt-2 text-sm text-muted-foreground">{dictionary['Toast.watchingAd'] || 'Watching ad...'}</p>
           </div>
         )}
 
-        {!isLoading && !isShowingAd && revelation && (
+        {!isLoading && revelation && (
           <Card className="w-full bg-secondary/30 p-4 rounded-lg shadow text-center min-h-[80px]">
             <p className="font-body leading-relaxed text-card-foreground text-base whitespace-pre-line">
               {revelation}
@@ -218,19 +180,19 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
           </Card>
         )}
 
-        {!revelation && !isLoading && !isShowingAd && (
+        {!revelation && !isLoading && (
           <div className="text-center min-h-[80px]">
-             <Button onClick={handleGetRevelation} className="w-full max-w-xs font-body text-base" size="lg" disabled={isShowingAd || isLoading}>
+             <Button onClick={handleGetRevelation} className="w-full max-w-xs font-body text-base" size="lg" disabled={isLoading}>
               <Sparkles className="mr-2 h-5 w-5" />
               {dictionary['CrystalBallPage.getRevelationButton'] || "Get Today's Revelation"}
             </Button>
           </div>
         )}
 
-        {revelation && !isLoading && !isShowingAd && (
+        {revelation && !isLoading && (
           <div className="flex flex-col sm:flex-row gap-2 mt-4 w-full max-w-xs">
-            <Button onClick={handleGetRevelation} variant="outline" className="flex-1 font-body" disabled={isShowingAd || isLoading}>
-              {dictionary['CrystalBallPage.lookAgainButton'] || "Look Again"} {hasUsedToday && `(${STARDUST_COST} 💫)`}
+            <Button onClick={handleGetRevelation} variant="outline" className="flex-1 font-body" disabled={isLoading}>
+              {dictionary['CrystalBallPage.lookAgainButton'] || "Look Again"}
             </Button>
             <Button onClick={handleShare} className="flex-1 font-body">
               <Share2 className="mr-2 h-4 w-4" />

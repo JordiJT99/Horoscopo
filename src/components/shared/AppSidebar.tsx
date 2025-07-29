@@ -1,7 +1,7 @@
 
 "use client";
 // This component is no longer used for the main navigation in layout.tsx
-// It can be removed or repurposed if a different type of sidebar is needed elsewhere.
+// It can be repurposed if a different type of sidebar is needed elsewhere.
 // For now, I'll leave its content, but it's effectively orphaned from the main layout.
 
 import Link from 'next/link';
@@ -92,7 +92,7 @@ const AppSidebar = ({ dictionary, currentLocale, onLinkClick }: AppSidebarProps)
           <AstroAppLogo className="h-8 w-8 text-sidebar-primary" />
           {/* Removed sidebarState check as this is now context-dependent */}
           <h2 className="text-xl font-headline font-semibold text-sidebar-foreground">
-            {dictionary['Header.title'] || "AstroVibes"}
+            {dictionary['Header.title'] || "AstroMística"}
           </h2>
         </Link>
       </SidebarHeader>

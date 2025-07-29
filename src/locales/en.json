@@ -1,8 +1,8 @@
 
 {
-  "App.title": "AstroVibes",
+  "App.title": "AstroMística",
   "App.description": "Your daily source for horoscopes and astrological insights.",
-  "Header.title": "AstroVibes",
+  "Header.title": "AstroMística",
   "Header.changeLanguage": "Language",
   "Header.horoscopes": "Horoscopes",
   "Header.compatibility": "Compat.",
@@ -12,7 +12,7 @@
   "Header.profile": "Profile",
   "Header.settings": "Settings",
   "Header.about": "About",
-  "Footer.copyright": "© {year} AstroVibes. All rights reserved.",
+  "Footer.copyright": "© {year} AstroMística. All rights reserved.",
   "Footer.poweredBy": "Powered by Cosmic Energy & Next.js",
   "TopBar.horoscopeTitle": "Horoscope",
   "TopBar.settingsAriaLabel": "Settings",
@@ -41,14 +41,14 @@
   "PromotionCard.tarotNebulaAlt": "TAROT Nebula Icon",
   "PromotionCard.freeBadge": "FREE",
   "PromotionCard.dailyCard": "Your daily card awaits",
-  "Page.welcomeTitle": "Welcome to AstroVibes",
+  "Page.welcomeTitle": "Welcome to AstroMística",
   "Page.welcomeSubtitle": "Your portal to the cosmos. Explore your astrological path and uncover celestial secrets.",
   "HomePage.dailyHoroscopeTitle": "Today's Horoscope",
   "HomePage.dailyHoroscopeSubtitle": "Your daily astrological insights. Select your sign below.",
   "HomePage.personalizedForecastsTitle": "Personalized Cosmic Forecasts",
   "HomePage.personalizedForecastsSubtitleUser": "Your celestial dashboard for today's energies, {userName}.",
   "HomePage.personalizedForecastsSubtitleGuest": "Unlock your personal insights by logging in.",
-  "HomePage.welcomeGuestTitle": "Welcome to AstroVibes!",
+  "HomePage.welcomeGuestTitle": "Welcome to AstroMística!",
   "HomePage.guestPrompt": "Log in or complete your profile for personalized cosmic forecasts.",
   "HomePage.userForecastTitle": "{userName}'s Cosmic Forecast",
   "HomePage.comingSoon": "Coming Soon",
@@ -266,7 +266,7 @@
   "ChineseHoroscopeDetail.Snake.interpretation": "The Snake is wise, enigmatic, and deeply intuitive. They possess a sharp mind and a calmness that hides great inner strength. They are excellent strategists who prefer to work in silence, analyzing situations from all angles before making a move. While they can be secretive and distrustful, they are extremely loyal and possessive of the people they love. Their wisdom and magnetic charm are their greatest gifts.",
   "ChineseHoroscopeDetail.Horse.interpretation": "The Horse is a free spirit, full of energy, optimism, and an insatiable love for adventure. They are extremely sociable and love to be at the center of the action. Their independence is their most prized possession, and they hate feeling tied down or restricted. Although their impulsive nature can lead them to make hasty decisions, their enthusiasm is contagious, and their ability to bounce back from setbacks is admirable.",
   "ChineseHoroscopeDetail.Goat.interpretation": "The Goat is the artist of the Chinese zodiac, a kind, creative, and compassionate soul. They are dreamers who value beauty, peace, and harmony above all else. Their sensitive nature makes them very empathetic, but also prone to melancholy and indecisiveness. They need a stable and supportive environment for their creativity to flourish. A Goat is a loyal friend and a sympathetic partner.",
-  "ChineseHoroscopeDetail.Monkey.interpretation": "The Monkey is the mischievous genius of the zodiac. They are incredibly intelligent, witty, and curious, with an unparalleled ability to solve complex problems in creative ways. Their sense of humor and love of fun make them the life of any social gathering. The challenge for the Monkey is to channel their mental energy so they don't get bored or become too manipulative. Their greatest asset is their ability to innovate and adapt to any situation.",
+  "ChineseHoroscopeDetail.Monkey.interpretation": "The Monkey is the mischievous genius of the zodiac. They are incredibly intelligent, witty, and curious, with an unparalleled ability to solve complex problems in creative ways. Their sense of humor and love of fun make them the life of any social gathering. The challenge for the Monkey is to channel their mental energy so they do not get bored or become too manipulative. Their greatest asset is their ability to innovate and adapt to any situation.",
   "ChineseHoroscopeDetail.Rooster.interpretation": "The Rooster is the perfectionist of the zodiac, observant, hardworking, and with a great sense of duty. They are extremely organized and have a keen eye for detail, making them excellent planners. Their honesty is direct and sometimes brutal, as they believe in telling the truth to improve things. Although they can seem arrogant, they are deeply loyal and always willing to work hard for the good of their family and community.",
   "ChineseHoroscopeDetail.Dog.interpretation": "The Dog is the loyal and honest guardian of the zodiac. Their sense of justice and their loyalty are absolute. They are friends and partners who can be trusted blindly, always ready to defend the weak and fight for what is right. Their nature can sometimes be pessimistic or anxious, as they tend to worry about others. A Dog is the most faithful companion one could wish for.",
   "ChineseHoroscopeDetail.Pig.interpretation": "The Pig is a symbol of generosity, honesty, and good fortune. They are kind-hearted souls who enjoy the simple pleasures of life and work hard to provide for their loved ones. Their trusting nature and lack of pretense endear them to everyone. Although they can sometimes be a bit naive, their heart is pure, and their optimism is unwavering. A Pig in your life is a constant source of joy and unconditional support.",
@@ -291,7 +291,7 @@
     "lastUpdated": "Last updated",
     "introduction": {
         "title": "1. Introduction",
-        "content": "Welcome to AstroVibes. Your privacy is critically important to us. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you use our application.\n\nWe may update this policy at any time. Changes will be effective immediately upon posting the updated policy, and we encourage you to review it periodically."
+        "content": "Welcome to AstroMística. Your privacy is critically important to us. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you use our application.\n\nWe may update this policy at any time. Changes will be effective immediately upon posting the updated policy, and we encourage you to review it periodically."
     },
     "informationWeCollect": {
         "title": "2. Information We Collect",
@@ -317,16 +317,20 @@
         "title": "7. Your Rights and Control",
         "content": "You have the right to access and update your personal information. You can review and change your birth information and profile details at any time in the app's Profile and Onboarding sections. To delete your account or for other privacy-related requests, please contact us at the email below."
     },
+    "dataDeletion": {
+      "title": "8. Account and Data Deletion",
+      "content": "You have the right to request the deletion of your account and its associated data. This is a permanent action that cannot be undone.\\n\\n**How to Request Deletion:**\\n1. Send an email to jordi.jordi.jordi9@gmail.com from the email address associated with your AstroMistica Tarot & Horóscopo account.\\n2. Use the subject line: 'Account Deletion Request'.\\n3. We will verify your identity and initiate the deletion process within 14 business days.\\n\\n**What Data is Deleted:**\\n- Your user profile (name, email, photo URL).\\n- Any birth data you provided (date, time, location).\\n- Any posts and comments you made in the community forum.\\n- Any other personal data directly linked to your account.\\n\\n**What Data May Be Retained:**\\n- Anonymized usage data (e.g., which features are most popular) that can no longer be linked to you may be kept indefinitely for statistical purposes to improve our app."
+    },
     "childrensPrivacy": {
-        "title": "8. Children's Privacy",
+        "title": "9. Children's Privacy",
         "content": "Our services are not directed to anyone under the age of 13. We do not knowingly collect personally identifiable information from children. If we become aware that a child has provided us with personal data, we will delete it promptly."
     },
     "changesToPolicy": {
-        "title": "9. Changes to This Policy",
+        "title": "10. Changes to This Policy",
         "content": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page."
     },
     "contactUs": {
-        "title": "10. Contact Us",
+        "title": "11. Contact Us",
         "content": "If you have any questions about this Privacy Policy, you can contact us at: jordi.jordi.jordi9@gmail.com"
     }
 },
