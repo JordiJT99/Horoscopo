@@ -4,7 +4,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { ALL_TAROT_CARDS } from '@/lib/constants';
+import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
@@ -41,14 +41,6 @@ const shuffleArray = (array: string[]): string[] => {
   return newArray;
 };
 
-// Function to convert number words to digits for image paths
-const getCardImagePath = (cardName: string): string => {
-    const basePath = '/custom_assets/tarot_cards/';
-    // Normalize the name: lowercase, replace spaces with underscores.
-    // This is a more direct and robust way to match the file names.
-    const fileName = cardName.toLowerCase().replace(/\s+/g, '_') + '.png';
-    return `${basePath}${fileName}`;
-};
 
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
   const { toast } = useToast();
@@ -190,7 +182,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
                         className="w-full h-full"
                         animate={{ rotate: selectedCards.find(c => c.name === cardName)?.isReversed ? 180 : 0 }}
                       >
-                         <Image src={getCardImagePath(cardName)} alt={cardName} layout="fill" objectFit="cover" />
+                         <Image src={getTarotCardImagePath(cardName)} alt={cardName} layout="fill" objectFit="cover" />
                       </motion.div>
                     )}
                   </div>
@@ -250,4 +242,3 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     </div>
   );
 }
-
