@@ -44,21 +44,10 @@ const shuffleArray = (array: string[]): string[] => {
 // Function to convert number words to digits for image paths
 const getCardImagePath = (cardName: string): string => {
     const basePath = '/custom_assets/tarot_cards/';
-    const normalizedSearchName = cardName.trim().toLowerCase();
-    const matchedCanonicalName = ALL_TAROT_CARDS.find(
-        (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
-    );
-
-    if (matchedCanonicalName) {
-        const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
-        return `${basePath}${fileName}`;
-    }
-    
-    // Fallback if no exact match is found after normalization.
-    console.warn(
-        `[TarotSpreadClient] Tarot card name "${cardName}" (normalized: "${normalizedSearchName}") not found in ALL_TAROT_CARDS. Using placeholder image.`
-    );
-    return "https://placehold.co/267x470.png";
+    // Normalize the name: lowercase, replace spaces with underscores.
+    // This is a more direct and robust way to match the file names.
+    const fileName = cardName.toLowerCase().replace(/\s+/g, '_') + '.png';
+    return `${basePath}${fileName}`;
 };
 
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
@@ -261,3 +250,4 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     </div>
   );
 }
+
