@@ -306,7 +306,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
             </div>
             <div className="flex gap-4 items-start">
                <Image 
-                  src={cardData?.imagePlaceholderUrl || ''} 
+                  src={cardData?.imagePlaceholderUrl || 'https://placehold.co/80x140.png'} 
                   alt={cardData?.cardName || 'Tarot Card'} 
                   width={80}  
                   height={140} 
