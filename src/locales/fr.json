@@ -551,4 +551,21 @@
 "TarotSpreadPage.readingTitle": "Votre Tirage de Tarot",
 "TarotSpreadPage.drawAgainButton": "Tirer à Nouveau",
 "TarotSpreadPage.errorFetching": "Les cartes sont enveloppées de brume... Impossible d'obtenir une lecture. Veuillez réessayer."
-}
+},
+"DailyTransits.TodaysSky": "Votre Ciel Aujourd'hui",
+"DailyTransits.VenusTrineMoon": "Vénus en Trigone avec la Lune",
+"DailyTransits.EnergyForLove": "Énergie propice à l'amour et à l'harmonie.",
+"DailyTransits.SunConjunctMercury": "Soleil en Conjonction avec Mercure",
+"DailyTransits.ExcellentForCommunication": "Excellent pour la communication et les idées.",
+"DailyTransits.MarsSquareSaturn": "Mars en Carré avec Saturne",
+"DailyTransits.ChallengesRequiringPatience": "Des défis qui demandent de la patience.",
+"DailyTransits.JupiterEntersPisces": "Jupiter entre en Poissons",
+"DailyTransits.ExpansionOfCreativity": "Expansion de la créativité et des rêves.",
+"DailyTransits.MercuryRetrograde": "Mercure Rétrograde",
+"DailyTransits.ReviewReflect": "Revoyez, réfléchissez, ne commencez rien de nouveau.",
+"DailyTransits.FullMoonInScorpio": "Pleine Lune en Scorpion",
+"DailyTransits.EmotionalIntensity": "Intensité émotionnelle et transformation.",
+"DailyTransits.SunTrineJupiter": "Soleil en Trigone avec Jupiter",
+"DailyTransits.OptimismGrowth": "Optimisme, croissance et bonne fortune."
+
+    

@@ -347,5 +347,23 @@
 "toastSuccessTitle": "Erfolg",
 "toastErrorTitle": "Fehler",
 "toastSuccessMessage": "Erfolgreich {successCount} Benachrichtigungen gesendet. {failureCount} fehlgeschlagen."
+},
+"DailyTransits.TodaysSky": "Ihr Himmel Heute",
+"DailyTransits.VenusTrineMoon": "Venus Trigon Mond",
+"DailyTransits.EnergyForLove": "Energie für Liebe und Harmonie.",
+"DailyTransits.SunConjunctMercury": "Sonne Konjunktion Merkur",
+"DailyTransits.ExcellentForCommunication": "Hervorragend für Kommunikation und Ideen.",
+"DailyTransits.MarsSquareSaturn": "Mars Quadrat Saturn",
+"DailyTransits.ChallengesRequiringPatience": "Herausforderungen, die Geduld erfordern.",
+"DailyTransits.JupiterEntersPisces": "Jupiter tritt in die Fische ein",
+"DailyTransits.ExpansionOfCreativity": "Erweiterung von Kreativität und Träumen.",
+"DailyTransits.MercuryRetrograde": "Rückläufiger Merkur",
+"DailyTransits.ReviewReflect": "Überprüfen, reflektieren, nichts Neues beginnen.",
+"DailyTransits.FullMoonInScorpio": "Vollmond im Skorpion",
+"DailyTransits.EmotionalIntensity": "Emotionale Intensität und Transformation.",
+"DailyTransits.SunTrineJupiter": "Sonne Trigon Jupiter",
+"DailyTransits.OptimismGrowth": "Optimismus, Wachstum und Glück."
 }
-}
+
+
+    
