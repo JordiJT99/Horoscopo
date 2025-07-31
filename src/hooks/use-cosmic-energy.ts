@@ -311,7 +311,7 @@ export const useCosmicEnergy = () => {
         if (currentState.hasRatedApp) {
             return { success: false, amount: 0 };
         }
-        const rewardAmount = 150;
+        const rewardAmount = 4;
         store.setState({ 
             stardust: currentState.stardust + rewardAmount,
             hasRatedApp: true 

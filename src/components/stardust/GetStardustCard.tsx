@@ -34,7 +34,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const handleWatchAd = () => {
         setIsAdPlaying(true);
         setTimeout(() => {
-            const adReward = 15;
+            const adReward = 2;
             addStardust(adReward);
             setIsAdPlaying(false);
             toast({
@@ -79,7 +79,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                          <Star className="h-5 w-5"/>
                          <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.rateAppButton'] || "Rate the App"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '150')}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '4')}</p>
                          </div>
                     </div>
                     <span>{hasRatedApp ? '✅' : '▶️'}</span>
@@ -89,7 +89,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                          <Clapperboard className="h-5 w-5"/>
                          <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.watchAdButton'] || "Watch an Ad"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '15')}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '2')}</p>
                          </div>
                     </div>
                     <span>{isAdPlaying ? '...' : '▶️'}</span>
