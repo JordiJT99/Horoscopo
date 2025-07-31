@@ -170,8 +170,8 @@ export const useCosmicEnergy = () => {
 
         // Special one-time welcome stardust
         if (actionId === 'complete_profile' && !lastGainedDate) {
-            newStardust += 50;
-            result.rewards.stardust += 50;
+            newStardust += 5;
+            result.rewards.stardust += 5;
         }
         
         const finalLevel = calculateLevel(newPoints);
@@ -223,7 +223,7 @@ export const useCosmicEnergy = () => {
         
         let newFreeChats = currentState.freeChats || 0;
         let newStardust = currentState.stardust || 0;
-        if (leveledUp) {
+        if (newLevel > currentState.level) {
             for (let level = currentState.level + 1; level <= newLevel; level++) {
                 const stardustReward = getLevelUpStardustReward(level);
                 if (stardustReward > 0) {
@@ -319,7 +319,7 @@ export const useCosmicEnergy = () => {
         if (!user?.uid || !store) return false;
         
         const currentState = store.getState();
-        const lastDailyAward = currentState.lastGained['daily_stardust_reward'] || '';
+        const lastDailyAward = currentState.lastGained['daily_stardust'] || '';
         const today = new Date().toISOString().split('T')[0];
         
         if (lastDailyAward === today) {
@@ -328,7 +328,7 @@ export const useCosmicEnergy = () => {
         
         const dailyAmount = 1;
         const newStardust = currentState.stardust + dailyAmount;
-        const newLastGained = { ...currentState.lastGained, 'daily_stardust_reward': today };
+        const newLastGained = { ...currentState.lastGained, 'daily_stardust': today };
         
         store.setState({
             stardust: newStardust,
