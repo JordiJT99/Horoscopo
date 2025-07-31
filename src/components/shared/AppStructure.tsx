@@ -13,6 +13,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { getSupportedLocales } from '@/lib/dictionaries';
 import { match } from '@formatjs/intl-localematcher';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
@@ -74,6 +76,24 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
         });
       });
     }
+
+    // Capacitor App Listener for the back button
+    if (Capacitor.isNativePlatform()) {
+      CapacitorApp.addListener('backButton', ({ canGoBack }) => {
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          CapacitorApp.exitApp();
+        }
+      });
+    }
+    
+    // Cleanup the listener when the component unmounts
+    return () => {
+      if (Capacitor.isNativePlatform()) {
+        CapacitorApp.removeAllListeners();
+      }
+    };
   }, []);
 
 
