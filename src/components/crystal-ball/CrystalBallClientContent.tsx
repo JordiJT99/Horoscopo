@@ -100,23 +100,8 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   const hasUsedToday = lastGained.use_crystal_ball === today;
 
   const handleGetRevelation = async () => {
-    if (!hasUsedToday) { // First use of the day
-        setIsShowingAd(true);
-        toast({
-            title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-            description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-        });
-        try {
-            const reward = await showRewardedAd();
-            if(reward) {
-                performRevelation(true); 
-            }
-        } catch(err) {
-            console.error("Ad failed to show:", err);
-            toast({ title: "Ad Error", description: "Could not load ad. Please try again later.", variant: "destructive"});
-        } finally {
-            setIsShowingAd(false);
-        }
+    if (!hasUsedToday) { // First use of the day is now free
+      performRevelation(true);
     } else { // Subsequent use
       if (stardust < STARDUST_COST) {
         toast({
@@ -202,7 +187,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
           </div>
         </div>
         
-        {isLoading && !isShowingAd && (
+        {isLoading && (
           <div className="text-center min-h-[80px]">
             <LoadingSpinner className="h-10 w-10 text-primary" />
           </div>
