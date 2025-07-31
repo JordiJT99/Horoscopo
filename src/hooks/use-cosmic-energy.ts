@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useSyncExternalStore, useCallback } from 'react';
@@ -289,11 +290,16 @@ export const useCosmicEnergy = () => {
         return false;
     }, [user]);
 
-    const spendStardust = useCallback((amount: number): boolean => {
+    const spendStardust = useCallback((amount: number, actionId?: GameActionId): boolean => {
         if (!user?.uid || !store) return false;
         const currentState = store.getState();
         if (currentState.stardust >= amount) {
-            store.setState({ stardust: currentState.stardust - amount });
+            const newState: Partial<CosmicEnergyState> = { stardust: currentState.stardust - amount };
+            if (actionId) {
+                const today = new Date().toISOString().split('T')[0];
+                newState.lastGained = { ...currentState.lastGained, [actionId]: today };
+            }
+            store.setState(newState);
             return true;
         }
         return false;
@@ -364,3 +370,4 @@ export const useCosmicEnergy = () => {
         isLoading: authIsLoading,
     };
 };
+

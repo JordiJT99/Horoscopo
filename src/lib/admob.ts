@@ -29,9 +29,7 @@ export const AD_CONFIG = {
 export class AdMobService {
   private static isInitialized = false;
   private static currentBannerId: string | null = null;
-  private static interstitial: InterstitialAdPlugin | null = null;
-
-
+  
   // Inicializar AdMob
   static async initialize(): Promise<void> {
     if (this.isInitialized || !Capacitor.isNativePlatform()) {
@@ -43,8 +41,6 @@ export class AdMobService {
         testingDevices: [],
         initializeForTesting: false,
       });
-
-      this.interstitial = AdMob.Interstitial;
       this.isInitialized = true;
       console.log('AdMob initialized successfully in PRODUCTION mode');
     } catch (error) {
@@ -116,10 +112,6 @@ export class AdMobService {
     }
 
     await this.initialize();
-    if (!this.interstitial) {
-        console.error("Interstitial plugin not available");
-        return;
-    }
     
     try {
       const platform = Capacitor.getPlatform();
@@ -132,8 +124,8 @@ export class AdMobService {
         isTesting: false
       };
 
-      await this.interstitial.prepare(options);
-      await this.interstitial.show();
+      await AdMob.prepareInterstitial(options);
+      await AdMob.showInterstitial();
       console.log('Interstitial ad shown successfully (PRODUCTION mode)');
     } catch (error) {
       console.error('Failed to show interstitial ad:', error);
