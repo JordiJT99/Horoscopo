@@ -9,8 +9,10 @@ import { useAuth } from '@/context/AuthContext';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import { getSupportedLocales } from '@/lib/dictionaries';
+import { match } from '@formatjs/intl-localematcher';
 
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
@@ -18,22 +20,48 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
   const { checkAndAwardDailyStardust } = useCosmicEnergy();
   const { toast } = useToast();
   const pathname = usePathname();
+  const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
+  // Effect to handle language persistence
+  useEffect(() => {
+    if (hasMounted) {
+      const savedLocale = localStorage.getItem('userLocale') as Locale | null;
+      const currentPathLocale = pathname.split('/')[1] as Locale;
+
+      if (savedLocale && savedLocale !== currentPathLocale) {
+        const newPath = pathname.replace(`/${currentPathLocale}`, `/${savedLocale}`);
+        router.replace(newPath);
+      } else if (!savedLocale) {
+        // If no locale is saved, detect from browser and redirect if necessary
+        const locales = getSupportedLocales();
+        const browserLanguages = navigator.languages || [navigator.language];
+        // @ts-ignore
+        const detectedLocale = match(browserLanguages, locales, 'es') as Locale;
+        if (detectedLocale !== currentPathLocale) {
+           const newPath = pathname.replace(`/${currentPathLocale}`, `/${detectedLocale}`);
+           router.replace(newPath);
+        }
+      }
+    }
+  }, [hasMounted, pathname, router]);
+
   // Effect to award daily stardust
   useEffect(() => {
-    const awarded = checkAndAwardDailyStardust();
-    if (awarded) {
-      toast({
-        title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
-        description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust!',
-      });
+    if (hasMounted) {
+      const awarded = checkAndAwardDailyStardust();
+      if (awarded) {
+        toast({
+          title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
+          description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust!',
+        });
+      }
     }
-  }, [checkAndAwardDailyStardust, toast, dictionary]);
+  }, [hasMounted, checkAndAwardDailyStardust, toast, dictionary]);
 
   // Effect to register the Service Worker for PWA functionality
   useEffect(() => {
@@ -53,9 +81,6 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
   const loginPath = `/${locale}/login`;
   const isOnboardingPage = pathname === onboardingPath;
   const isLoginPage = pathname === loginPath;
-
-  // All redirection logic has been centralized into AuthContext to prevent race conditions and improve maintainability.
-  // This component is now only responsible for the layout structure.
 
   if (!hasMounted || authLoading) {
      return (
