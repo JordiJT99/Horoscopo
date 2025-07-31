@@ -22,7 +22,7 @@ interface CrystalBallClientContentProps {
   locale: Locale;
 }
 
-const STARDUST_COST = 10;
+const STARDUST_COST = 1;
 
 export default function CrystalBallClientContent({ dictionary, locale }: CrystalBallClientContentProps) {
   const router = useRouter();
