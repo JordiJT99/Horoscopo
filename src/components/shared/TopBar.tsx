@@ -48,9 +48,9 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
               size="icon"
               onClick={() => router.back()}
               aria-label={dictionary['TopBar.backAriaLabel'] || "Go back"}
-              className="text-top-bar-foreground h-10 w-10 rounded-full hover:bg-muted/50"
+              className="text-top-bar-foreground h-12 w-12 rounded-full hover:bg-muted/50"
             >
-              <ArrowLeft className="h-7 w-7" />
+              <ArrowLeft size={32} /> 
             </Button>
           )}
           <Link href={`/${currentLocale}/`} passHref className="flex items-center group">
