@@ -20,13 +20,15 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { getSunSignFromDate } from '@/lib/constants';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useAdMob } from '@/hooks/use-admob-ads';
+
 
 interface TarotPersonalityTestClientPageProps {
   dictionary: Dictionary;
   locale: Locale;
 }
 
-const STARDUST_COST = 10;
+const STARDUST_COST = 1;
 
 export default function TarotPersonalityTestClientPage({ dictionary, locale }: TarotPersonalityTestClientPageProps) {
   const router = useRouter();
@@ -36,8 +38,10 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
-  const { addEnergyPoints, level: userLevel } = useCosmicEnergy();
+  const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained } = useCosmicEnergy();
+  const { showRewardedAd } = useAdMob();
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
+  const [isShowingAd, setIsShowingAd] = useState(false);
 
   useEffect(() => {
     if (user?.uid) {
@@ -56,42 +60,66 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
     }
   }, [user]);
 
+  const today = new Date().toISOString().split('T')[0];
+  const hasUsedToday = lastGained.draw_personality_card === today;
+
+  const performReading = async (isFirstUse: boolean) => {
+    setIsLoading(true);
+    try {
+        const input: TarotPersonalityInput = {
+            locale,
+            userName: onboardingData?.name || user?.displayName || undefined,
+        };
+        const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
+        setResult(flowResult);
+        if (isFirstUse) {
+            addEnergyPoints('draw_personality_card', 15);
+        }
+        setIsFlipped(true); // Trigger the flip animation
+    } catch (err) {
+        console.error("Error getting daily tarot card:", err);
+        toast({
+            title: dictionary['Error.genericTitle'] || "Error",
+            description: dictionary['TarotDailyReading.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.",
+            variant: "destructive",
+        });
+    } finally {
+        setIsLoading(false);
+    }
+  };
+
   const handleGetDailyCard = async () => {
     if (isLoading || isFlipped) return;
 
-    setIsLoading(true);
-    try {
-      const input: TarotPersonalityInput = {
-        locale,
-        userName: onboardingData?.name || user?.displayName || undefined,
-      };
-      const flowResult: TarotPersonalityOutput = await tarotPersonalityFlow(input);
-      setResult(flowResult);
-      const { pointsAdded, leveledUp, newLevel } = addEnergyPoints('draw_personality_card', 15);
-      if (pointsAdded > 0) {
-        toast({
-            title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
-            description: `${dictionary['CosmicEnergy.pointsEarnedDescription'] || 'You earned'} +${pointsAdded} EC!`,
-        });
-         if (leveledUp) {
-            setTimeout(() => {
-                toast({
-                    title: `🎉 ${dictionary['CosmicEnergy.levelUpTitle'] || 'Level Up!'}`,
-                    description: `${(dictionary['CosmicEnergy.levelUpDescription'] || 'You have reached Level {level}!').replace('{level}', newLevel.toString())}`,
-                });
-            }, 500);
+    if(!hasUsedToday) {
+      setIsShowingAd(true);
+      try {
+        const reward = await showRewardedAd();
+        if(reward) {
+          performReading(true);
         }
+      } catch (err) {
+        console.error("Rewarded ad failed:", err);
+        toast({ title: "Ad Error", description: "Failed to load ad. Please try again.", variant: "destructive" });
+      } finally {
+        setIsShowingAd(false);
       }
-      setIsFlipped(true); // Trigger the flip animation
-    } catch (err) {
-      console.error("Error getting daily tarot card:", err);
-      toast({
-        title: dictionary['Error.genericTitle'] || "Error",
-        description: dictionary['TarotDailyReading.errorFetching'] || "The spirits are pondering... Could not determine your card. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+    } else {
+        if(stardust < STARDUST_COST) {
+            toast({
+                title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
+                description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to use this again today.").replace('{cost}', STARDUST_COST.toString()),
+                variant: "destructive",
+            });
+            return;
+        }
+        if(spendStardust(STARDUST_COST, 'draw_personality_card')) {
+            toast({
+                title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
+                description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
+            });
+            performReading(false);
+        }
     }
   };
 
@@ -219,9 +247,10 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
         </motion.div>
       </div>
 
-      {isLoading && (
+      {(isLoading || isShowingAd) && (
           <div className="text-center my-4">
               <LoadingSpinner className="h-8 w-8 text-primary" />
+              {isShowingAd && <p className="text-sm mt-2 text-muted-foreground">{dictionary['Toast.watchingAd']}</p>}
           </div>
       )}
 
@@ -248,7 +277,7 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
                         <div className="flex flex-col sm:flex-row gap-2 mt-4">
                           <Button onClick={handleTryAgain} variant="outline" className="w-full font-body text-xs md:text-sm flex-1">
                               <RotateCcw className="mr-2 h-4 w-4" />
-                              {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"} ({STARDUST_COST} 💫)
+                              {dictionary['TarotDailyReading.drawAgainButton'] || "Draw Another Card"} {hasUsedToday && `(${STARDUST_COST} 💫)`}
                           </Button>
                           <Button onClick={handleShareToCommunity} disabled={isSubmitting} className="w-full font-body text-xs md:text-sm flex-1">
                              {isSubmitting ? <LoadingSpinner className="h-4 w-4 mr-2" /> : <MessageCircle className="mr-2 h-4 w-4" />}
