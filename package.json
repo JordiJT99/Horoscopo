@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@capacitor-community/admob": "^7.0.3",
+    "@capacitor/app": "^6.0.0",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@genkit-ai/googleai": "^1.8.0",
     "@genkit-ai/next": "^1.8.0",
@@ -67,9 +68,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@capacitor/android": "^7.4.2",
-    "@capacitor/cli": "^7.4.2",
-    "@capacitor/core": "^7.4.2",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
     "@next/bundle-analyzer": "^15.4.4",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
