@@ -94,13 +94,15 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
     if(!hasUsedToday) {
       setIsShowingAd(true);
       try {
-        const reward = await showRewardedAd();
-        if(reward) {
-          performReading(true);
-        }
+        await showRewardedAd();
+        // The user has interacted with the ad, proceed regardless of reward.
+        // This handles cases where the ad is closed before completion.
+        performReading(true);
       } catch (err) {
         console.error("Rewarded ad failed:", err);
-        toast({ title: "Ad Error", description: "Failed to load ad. Please try again.", variant: "destructive" });
+        // If ad fails to load, let the user proceed for a better experience on first use.
+        toast({ title: "Ad Error", description: "Could not load ad. Reading card anyway...", variant: "destructive"});
+        performReading(true);
       } finally {
         setIsShowingAd(false);
       }
@@ -293,3 +295,4 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
     </div>
   );
 }
+
