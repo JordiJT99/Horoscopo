@@ -33,12 +33,12 @@ const calculateLevel = (points: number): number => {
 };
 
 // Reward structure: key is the level reached, value is the reward
-const LEVEL_REWARDS: Record<number, { freeChats?: number; stardust?: number }> = {
-    3: { freeChats: 1 },
-    4: { stardust: 100 },
-    5: { freeChats: 1 },
-    7: { stardust: 250 }, // Example, can be adjusted
-    10: { stardust: 500 },
+// New: 5 stardust every 3 levels.
+const getLevelUpStardustReward = (newLevel: number): number => {
+  if (newLevel > 1 && newLevel % 3 === 0) {
+    return 5;
+  }
+  return 0;
 };
 
 
@@ -117,7 +117,7 @@ export const useCosmicEnergy = () => {
     const { user, isLoading: authIsLoading } = useAuth();
     
     // This logic ensures the store is created or cleared based on user state.
-    // The dependency on authIsLoading prevents premature store creation/clearing.
+    // The dependency on authIsloading prevents premature store creation/clearing.
     if (!authIsLoading && user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v4_${user.uid}`))) {
         store = createStore(user.uid);
     } else if (!authIsLoading && !user && store) {
@@ -154,16 +154,16 @@ export const useCosmicEnergy = () => {
         const newLastGained = { ...currentState.lastGained, [actionId]: today };
 
         const leveledUp = newLevel > currentState.level;
-        let newFreeChats = currentState.freeChats || 0;
         let newStardust = currentState.stardust || 0;
+        let newFreeChats = currentState.freeChats || 0; // Keep free chats for future use maybe
+
 
         if (leveledUp) {
             for (let level = currentState.level + 1; level <= newLevel; level++) {
-                if (LEVEL_REWARDS[level]) {
-                    newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    newStardust += LEVEL_REWARDS[level].stardust || 0;
-                    result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    result.rewards.stardust += LEVEL_REWARDS[level].stardust || 0;
+                const stardustReward = getLevelUpStardustReward(level);
+                if (stardustReward > 0) {
+                    newStardust += stardustReward;
+                    result.rewards.stardust += stardustReward;
                 }
             }
         }
@@ -221,17 +221,14 @@ export const useCosmicEnergy = () => {
         const newPoints = currentState.points + pointsToAdd;
         const newLevel = calculateLevel(newPoints);
         
-        const leveledUp = newLevel > currentState.level;
         let newFreeChats = currentState.freeChats || 0;
         let newStardust = currentState.stardust || 0;
-
         if (leveledUp) {
             for (let level = currentState.level + 1; level <= newLevel; level++) {
-                if (LEVEL_REWARDS[level]) {
-                    newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    newStardust += LEVEL_REWARDS[level].stardust || 0;
-                    result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    result.rewards.stardust += LEVEL_REWARDS[level].stardust || 0;
+                const stardustReward = getLevelUpStardustReward(level);
+                if (stardustReward > 0) {
+                    newStardust += stardustReward;
+                    result.rewards.stardust += stardustReward;
                 }
             }
         }
@@ -258,23 +255,16 @@ export const useCosmicEnergy = () => {
         const newPoints = Math.max(0, currentState.points - pointsToSubtract);
         const newLevel = calculateLevel(newPoints);
         
-        let newFreeChats = currentState.freeChats || 0;
         let newStardust = currentState.stardust || 0;
         if (newLevel < currentState.level) {
-            for (let level = currentState.level; level > newLevel; level--) {
-                if (LEVEL_REWARDS[level]?.freeChats) {
-                    newFreeChats = Math.max(0, newFreeChats - (LEVEL_REWARDS[level].freeChats || 0));
-                }
-                if(LEVEL_REWARDS[level]?.stardust){
-                    newStardust = Math.max(0, newStardust - (LEVEL_REWARDS[level].stardust || 0));
-                }
-            }
+            // This part is tricky. Reversing rewards isn't straightforward.
+            // For a debug tool, simply reducing points and level is usually enough.
+            // A full implementation would need to track which rewards were claimed at which level.
         }
         
         store.setState({
             points: newPoints,
             level: newLevel,
-            freeChats: newFreeChats,
             stardust: newStardust,
         });
 
@@ -329,17 +319,16 @@ export const useCosmicEnergy = () => {
         if (!user?.uid || !store) return false;
         
         const currentState = store.getState();
-        const lastDailyAward = currentState.lastGained['daily_stardust'] || '';
+        const lastDailyAward = currentState.lastGained['daily_stardust_reward'] || '';
         const today = new Date().toISOString().split('T')[0];
         
         if (lastDailyAward === today) {
             return false; // Already awarded today
         }
         
-        // Award 100 stardust for daily premium bonus
-        const dailyAmount = 100;
+        const dailyAmount = 1;
         const newStardust = currentState.stardust + dailyAmount;
-        const newLastGained = { ...currentState.lastGained, 'daily_stardust': today };
+        const newLastGained = { ...currentState.lastGained, 'daily_stardust_reward': today };
         
         store.setState({
             stardust: newStardust,
@@ -370,4 +359,3 @@ export const useCosmicEnergy = () => {
         isLoading: authIsLoading,
     };
 };
-

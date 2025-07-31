@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -9,12 +10,16 @@ import { Button } from '../ui/button';
 import { useState } from 'react';
 import { ShoppingBag, Star, Clapperboard, Gem, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAdMob } from '@/hooks/use-admob-ads';
+
 
 const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const { addStardust, claimRateReward, hasRatedApp } = useCosmicEnergy();
     const [isAdPlaying, setIsAdPlaying] = useState(false);
     const { toast } = useToast();
     const [showExplanation, setShowExplanation] = useState(false);
+    const { showRewardedAd } = useAdMob();
+
 
     const handleRateApp = () => {
         const { success, amount } = claimRateReward();
@@ -31,17 +36,27 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
         }
     };
 
-    const handleWatchAd = () => {
+    const handleWatchAd = async () => {
         setIsAdPlaying(true);
-        setTimeout(() => {
-            const adReward = 2;
-            addStardust(adReward);
-            setIsAdPlaying(false);
-            toast({
-                 title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
-                description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
+        try {
+            const reward = await showRewardedAd();
+            if (reward) {
+                const adReward = 1;
+                addStardust(adReward);
+                toast({
+                    title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
+                    description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
+                });
+            }
+        } catch(err) {
+             toast({
+                title: dictionary['Error.genericTitle'] || "Error",
+                description: "Failed to load ad. Please try again later.",
+                variant: 'destructive',
             });
-        }, 2000); // Simulate ad watch time
+        } finally {
+            setIsAdPlaying(false);
+        }
     };
 
     const stardustPacks = [
@@ -89,7 +104,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                          <Clapperboard className="h-5 w-5"/>
                          <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.watchAdButton'] || "Watch an Ad"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '2')}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '1')}</p>
                          </div>
                     </div>
                     <span>{isAdPlaying ? '...' : '▶️'}</span>

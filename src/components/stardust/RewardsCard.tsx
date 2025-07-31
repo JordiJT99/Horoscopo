@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -15,14 +16,14 @@ interface RewardsCardProps {
 const rewards = [
   { level: 1, key: 'baseAccess', icon: Sparkles, stardust: 50 },
   { level: 2, key: 'cometFrame', icon: Palette, stardust: 0 },
-  { level: 3, key: 'lunarSticker', icon: Moon, stardust: 0 },
-  { level: 4, key: 'gaiaNebulaBackground', icon: Palette, stardust: 100 },
+  { level: 3, key: 'lunarSticker', icon: Moon, stardust: 5 },
+  { level: 4, key: 'gaiaNebulaBackground', icon: Palette, stardust: 0 },
   { level: 5, key: 'freePsychicChat', icon: MessageCircle, stardust: 0 },
-  { level: 5, key: 'guidingStarBadge', icon: Star, stardust: 0 },
+  { level: 6, key: 'guidingStarBadge', icon: Star, stardust: 5 },
   { level: 7, key: 'stardustBonus', icon: Gem, stardust: 0 },
   { level: 8, key: 'ringOfLightFrame', icon: Palette, stardust: 0 },
-  { level: 9, key: 'supernovaTitle', icon: Star, stardust: 0 },
-  { level: 10, key: 'enlightenedTitle', icon: Crown, stardust: 500 },
+  { level: 9, key: 'supernovaTitle', icon: Star, stardust: 5 },
+  { level: 10, key: 'enlightenedTitle', icon: Crown, stardust: 0 },
 ];
 
 export default function RewardsCard({ dictionary }: RewardsCardProps) {
@@ -57,7 +58,7 @@ export default function RewardsCard({ dictionary }: RewardsCardProps) {
                     <span className={cn("font-medium text-sm", !isUnlocked && "text-muted-foreground")}>
                       {(dictionary[`Reward.${reward.key}`] || reward.key.replace(/([A-Z])/g, ' $1').trim())}
                     </span>
-                    {reward.stardust > 0 && (
+                    {reward.stardust > 0 && isUnlocked && (
                         <p className="text-xs text-primary/80 font-semibold">
                             + {reward.stardust} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}
                         </p>

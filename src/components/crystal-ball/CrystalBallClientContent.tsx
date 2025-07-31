@@ -15,6 +15,7 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData } from '@/types';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useAdMob } from '@/hooks/use-admob-ads';
 
 interface CrystalBallClientContentProps {
   dictionary: Dictionary;
@@ -32,7 +33,8 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
 
   const { user } = useAuth();
   const { addEnergyPoints, lastGained, spendStardust, stardust } = useCosmicEnergy();
-  const isPremium = true; // All users have premium access now
+  const { showRewardedAd } = useAdMob();
+
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -99,18 +101,21 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
 
   const handleGetRevelation = async () => {
     if (!hasUsedToday) { // First use of the day
-        if (isPremium) {
-            performRevelation(true);
-        } else {
-            setIsShowingAd(true);
-            toast({
-                title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
-                description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
-            });
-            setTimeout(() => {
-                setIsShowingAd(false);
+        setIsShowingAd(true);
+        toast({
+            title: dictionary['Toast.adRequiredTitle'] || "Ad Required",
+            description: dictionary['Toast.adRequiredDescription'] || "Watching a short ad for your first use of the day.",
+        });
+        try {
+            const reward = await showRewardedAd();
+            if(reward) {
                 performRevelation(true); 
-            }, 2500);
+            }
+        } catch(err) {
+            console.error("Ad failed to show:", err);
+            toast({ title: "Ad Error", description: "Could not load ad. Please try again later.", variant: "destructive"});
+        } finally {
+            setIsShowingAd(false);
         }
     } else { // Subsequent use
       if (stardust < STARDUST_COST) {
