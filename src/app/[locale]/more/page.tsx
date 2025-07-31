@@ -1,5 +1,7 @@
 
 
+'use client'; // This component now needs client-side logic for localStorage
+
 import type { Locale } from '@/lib/dictionaries';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import Link from 'next/link';
@@ -13,18 +15,10 @@ import {
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
-// Required for static export with dynamic routes
-export async function generateStaticParams() {
-  const locales = getSupportedLocales();
-  return locales.map((locale) => ({
-    locale: locale,
-  }));
-}
-
-interface MorePageProps {
-  params: { locale: Locale };
-}
 
 // Helper component for feature cards
 const FeatureCard = ({ href, icon: Icon, title, locale, newBadge, isPlaceholder, currentDictionary }: { href: string; icon: React.ElementType; title: string; locale: Locale; newBadge?: boolean, isPlaceholder?: boolean, currentDictionary: Record<string, any> }) => {
@@ -89,8 +83,29 @@ const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:
 };
 
 
-export default async function MorePage({ params }: MorePageProps) {
-  const dictionary = await getDictionary(params.locale);
+export default function MorePage() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const currentLocale = pathname.split('/')[1] as Locale;
+  const [dictionary, setDictionary] = useState<any | null>(null);
+
+  useEffect(() => {
+    getDictionary(currentLocale).then(setDictionary);
+  }, [currentLocale]);
+
+  const handleLanguageChange = (newLocale: Locale) => {
+    localStorage.setItem('userLocale', newLocale);
+    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    router.replace(newPath);
+  };
+  
+  if (!dictionary) {
+    return (
+      <main className="flex-grow container mx-auto px-4 py-8 md:py-12 flex items-center justify-center min-h-screen">
+        <LoadingSpinner className="h-12 w-12 text-primary" />
+      </main>
+    );
+  }
 
   const allFeatures = [
     { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
@@ -154,7 +169,7 @@ export default async function MorePage({ params }: MorePageProps) {
               href={feature.href}
               icon={feature.icon}
               title={dictionary[feature.titleKey] || feature.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
-              locale={params.locale}
+              locale={currentLocale}
               newBadge={feature.newBadge}
               isPlaceholder={feature.isPlaceholder}
               currentDictionary={dictionary}
@@ -173,7 +188,7 @@ export default async function MorePage({ params }: MorePageProps) {
               href={premiumItem.href}
               icon={premiumItem.icon}
               title={dictionary[premiumItem.titleKey] || premiumItem.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
-              locale={params.locale}
+              locale={currentLocale}
               isPlaceholder={premiumItem.isPlaceholder}
             />
         </div>
@@ -190,7 +205,7 @@ export default async function MorePage({ params }: MorePageProps) {
               href={item.href}
               icon={item.icon}
               title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
-              locale={params.locale}
+              locale={currentLocale}
               isPlaceholder={item.isPlaceholder}
             />
           ))}
@@ -208,7 +223,7 @@ export default async function MorePage({ params }: MorePageProps) {
               href={item.href}
               icon={item.icon}
               title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
-              locale={params.locale}
+              locale={currentLocale}
               isPlaceholder={item.isPlaceholder}
             />
           ))}
@@ -226,7 +241,7 @@ export default async function MorePage({ params }: MorePageProps) {
               href={item.href}
               icon={item.icon}
               title={dictionary[item.titleKey] || item.titleKey.split('.').pop()?.replace(/([A-Z])/g, ' $1').trim()}
-              locale={params.locale}
+              locale={currentLocale}
               isPlaceholder={item.isPlaceholder}
             />
           ))}
@@ -237,13 +252,13 @@ export default async function MorePage({ params }: MorePageProps) {
             </div>
             <div className="grid grid-cols-2 gap-2">
               {availableLocales.map(lang => (
-                <Link
+                <Button
                   key={lang.code}
-                  href={`/${lang.code}/more`}
-                  className={`w-full ${params.locale === lang.code ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-muted text-muted-foreground hover:bg-muted/80'} text-xs sm:text-sm font-medium py-2 px-3 rounded-md text-center transition-colors`}
+                  onClick={() => handleLanguageChange(lang.code)}
+                  className={`w-full ${currentLocale === lang.code ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-muted text-muted-foreground hover:bg-muted/80'} text-xs sm:text-sm font-medium py-2 px-3 rounded-md text-center transition-colors`}
                 >
                   {lang.name}
-                </Link>
+                </Button>
               ))}
             </div>
           </Card>
@@ -261,7 +276,7 @@ export default async function MorePage({ params }: MorePageProps) {
               href={item.href}
               icon={item.icon}
               title={dictionary.PrivacyPolicy?.title || 'Privacy Policy'}
-              locale={params.locale}
+              locale={currentLocale}
               isPlaceholder={item.isPlaceholder}
             />
           ))}
