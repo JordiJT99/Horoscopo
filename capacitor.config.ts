@@ -4,10 +4,12 @@ const config: CapacitorConfig = {
   appId: 'com.astromistica.horoscopo',
   appName: 'AstroMística : Tarot, Horóscopo y Carta Natal',
   webDir: '.next',
+  // La URL del servidor se debe usar solo para desarrollo.
+  // Para producción (builds de la app), esta sección se debe eliminar
+  // para que la app cargue los archivos desde el paquete local.
   server: {
-    url: 'https://astromistica.org',
-    cleartext: false,
-    androidScheme: 'https'
+    url: 'http://localhost:3000',
+    cleartext: true,
   },
   android: {
     minWebViewVersion: 125,
