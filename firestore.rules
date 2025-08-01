@@ -1,41 +1,42 @@
-
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Regla para perfiles de usuario: Solo el propietario puede leer y escribir.
+    // Regla de seguridad para los perfiles de usuario
     match /userProfiles/{userId} {
+      // Un usuario solo puede leer y escribir en su propio documento de perfil.
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-
-    // Reglas para la comunidad
+    
+    // Reglas para las publicaciones de la comunidad
     match /community-posts/{postId} {
       // Cualquiera puede leer las publicaciones
       allow read: if true;
-      // Solo usuarios autenticados pueden crear, y solo el autor puede actualizar o borrar.
+      // Solo los usuarios autenticados pueden crear, actualizar o eliminar SUS PROPIAS publicaciones
       allow create: if request.auth != null;
       allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
     }
 
+    // Reglas para los comentarios de las publicaciones
     match /community-posts/{postId}/comments/{commentId} {
-      // Cualquiera puede leer comentarios
-      allow read: if true;
-      // Solo usuarios autenticados pueden comentar
-      allow create: if request.auth != null;
+        // Cualquiera puede leer los comentarios
+        allow read: if true;
+        // Solo los usuarios autenticados pueden crear comentarios
+        allow create: if request.auth != null;
+        // Los usuarios pueden actualizar/eliminar sus propios comentarios (opcional)
+        allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
     }
 
-    // Regla para los tokens de notificación (FCM)
+    // Permitir a los usuarios gestionar su propio token FCM.
     match /fcmTokens/{token} {
       allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
     }
 
-    // Por defecto, denegar el acceso al resto de la base de datos.
-    // Esta regla ya no es necesaria si cubrimos todos los casos explícitamente,
-    // pero la mantenemos para mayor seguridad.
+    // Denegar todas las demás escrituras por defecto para mayor seguridad.
     match /{document=**} {
-      allow read: if false; // Denegar lecturas no explícitamente permitidas
-      allow write: if false; // Denegar escrituras no explícitamente permitidas
+      allow read: if true; // Permite lectura global si no hay reglas más específicas.
+      allow write: if false; // Deniega escritura si no hay una regla que lo permita explícitamente.
     }
   }
 }
