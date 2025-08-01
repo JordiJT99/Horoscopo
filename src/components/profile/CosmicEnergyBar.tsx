@@ -46,10 +46,10 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
   };
 
   const handleAddStardust = () => {
-    addStardust(50);
+    addStardust(1);
     toast({
         title: `🔧 Dev Tool`,
-        description: `+50 Stardust (Dev)`,
+        description: `+1 Stardust (Dev)`,
     });
   };
 
