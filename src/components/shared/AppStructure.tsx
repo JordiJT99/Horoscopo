@@ -15,6 +15,7 @@ import { getSupportedLocales } from '@/lib/dictionaries';
 import { match } from '@formatjs/intl-localematcher';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
+import { cn } from '@/lib/utils';
 
 // AppStructure is a Client Component because it uses client-side hooks.
 export default function AppStructure({ locale, dictionary, children }: { locale: Locale, dictionary: Dictionary, children: React.ReactNode }) {
@@ -118,10 +119,11 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
     );
   }
 
+  // Se añade `pt-14` para dejar espacio al AdMob banner superior
   return (
     <>
       <TopBar dictionary={dictionary} currentLocale={locale} />
-      <div className="flex-grow pb-16">
+      <div className={cn("flex-grow pb-16 pt-14")}>
         {children}
       </div>
       <BottomNavigationBar dictionary={dictionary} currentLocale={locale} />
