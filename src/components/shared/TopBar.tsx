@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import Link from 'next/link';
@@ -105,7 +104,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
                     className="flex items-center gap-1.5 h-10 px-3 rounded-full text-foreground hover:bg-muted/50"
                     aria-label={`${stardust} Stardust`}
                 >
-                    <StardustIcon className="h-6 w-6" />
+                    <StardustIcon className="h-7 w-7" />
                     <span className="font-bold text-sm">{stardust}</span>
                 </Button>
             </Link>
