@@ -1,29 +1,41 @@
+
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // User profiles can only be read and written by their owner.
+    
+    // Regla para perfiles de usuario: Solo el propietario puede leer y escribir.
     match /userProfiles/{userId} {
-      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Reglas para la comunidad
+    match /community-posts/{postId} {
+      // Cualquiera puede leer las publicaciones
+      allow read: if true;
+      // Solo usuarios autenticados pueden crear, y solo el autor puede actualizar o borrar.
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+    }
+
+    match /community-posts/{postId}/comments/{commentId} {
+      // Cualquiera puede leer comentarios
+      allow read: if true;
+      // Solo usuarios autenticados pueden comentar
       allow create: if request.auth != null;
     }
 
-    // Community posts can be read by anyone.
-    // Creation is allowed for any authenticated user.
-    // Updates/deletes are only allowed by the post's author.
-    match /community-posts/{postId} {
-      allow read;
-      allow create: if request.auth != null;
-      allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+    // Regla para los tokens de notificación (FCM)
+    match /fcmTokens/{token} {
+      allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
 
-      // Rules for the 'comments' subcollection within a post.
-      match /comments/{commentId} {
-        allow read;
-        allow create: if request.auth != null;
-        // Optional: allow comment authors to delete their own comments.
-        allow delete: if request.auth != null && request.auth.uid == resource.data.authorId;
-      }
+    // Por defecto, denegar el acceso al resto de la base de datos.
+    // Esta regla ya no es necesaria si cubrimos todos los casos explícitamente,
+    // pero la mantenemos para mayor seguridad.
+    match /{document=**} {
+      allow read: if false; // Denegar lecturas no explícitamente permitidas
+      allow write: if false; // Denegar escrituras no explícitamente permitidas
     }
   }
 }
