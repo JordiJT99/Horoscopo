@@ -4,7 +4,8 @@
 import Link from 'next/link';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
 import { Button } from "@/components/ui/button";
-import { Settings, Wand2, ArrowLeft, Gem } from 'lucide-react';
+import { Settings, Wand2, ArrowLeft } from 'lucide-react';
+import { StardustIcon } from '@/lib/constants'; // Import the new icon
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -79,7 +80,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
               size="icon"
               onClick={() => router.back()}
               aria-label={dictionary['TopBar.backAriaLabel'] || "Go back"}
-              className="text-top-bar-foreground h-10 w-10 rounded-full hover:bg-muted/50"
+              className="text-top-bar-foreground h-12 w-12 rounded-full hover:bg-muted/50"
             >
               <ArrowLeft size={24} />
             </Button>
@@ -103,7 +104,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
                     className="flex items-center gap-1.5 h-10 px-3 rounded-full text-foreground hover:bg-muted/50"
                     aria-label={`${stardust} Stardust`}
                 >
-                    <Gem className="h-5 w-5 text-cyan-400" />
+                    <StardustIcon className="h-6 w-6" />
                     <span className="font-bold text-sm">{stardust}</span>
                 </Button>
             </Link>

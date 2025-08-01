@@ -8,9 +8,10 @@ import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '../ui/button';
 import { useState } from 'react';
-import { ShoppingBag, Star, Clapperboard, Gem, HelpCircle } from 'lucide-react';
+import { ShoppingBag, Star, Clapperboard, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdMob } from '@/hooks/use-admob-ads';
+import { StardustIcon } from '@/lib/constants';
 
 
 const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
@@ -83,7 +84,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
             <CardContent className="p-6 pt-0 space-y-4">
                  {showExplanation && (
                     <Card className="mb-4 p-4 bg-background/50 border-primary/20">
-                        <CardTitle className="text-md font-semibold mb-2 flex items-center gap-1.5">{dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}</CardTitle>
+                        <CardTitle className="text-md font-semibold mb-2 flex items-center gap-1.5"><StardustIcon className="w-5 h-5" />{dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}</CardTitle>
                         <p className="text-sm text-card-foreground/80 whitespace-pre-line">
                             {dictionary['Stardust.explanationContent'] || "Stardust is a special currency within AstroVibes. You can use it to unlock premium features, such as sending messages in Psychic Chats.\n\nYou can earn Stardust by:\n- Leveling up your Cosmic Energy.\n- Claiming special rewards (like rating the app).\n- Watching ads.\n- Purchasing Stardust packs (coming soon)."}
                         </p>
@@ -117,7 +118,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                              <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
                                 <div className="flex items-center gap-2">
                                     <span className="text-lg">{pack.icon}</span>
-                                    <p className="font-semibold">{pack.amount.toLocaleString()} 💫</p>
+                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-1" /></p>
                                 </div>
                                 <div className="text-right">
                                     <p className="font-bold">{pack.price}</p>
