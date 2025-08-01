@@ -2,7 +2,7 @@
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
 import { getAuth, type Auth } from "firebase/auth"; 
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, initializeFirestore, CACHE_SIZE_UNLIMITED } from "firebase/firestore";
 import { getMessaging, type Messaging } from "firebase/messaging";
 
 const firebaseConfig: FirebaseOptions = {
@@ -22,7 +22,6 @@ let analyticsInstance: Analytics | null = null;
 let messagingInstance: Messaging | null = null;
 let appInitializedSuccessfully = false;
 
-// Check for missing configuration and log a clear error
 const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId'];
 const isConfigIncomplete = requiredConfigKeys.some(key => !firebaseConfig[key]);
 
@@ -40,6 +39,10 @@ if (isConfigIncomplete) {
   if (!getApps().length) {
     try {
       app = initializeApp(firebaseConfig);
+      // Initialize Firestore with settings to enable offline persistence
+      initializeFirestore(app, {
+        cacheSizeBytes: CACHE_SIZE_UNLIMITED,
+      });
       appInitializedSuccessfully = true;
     } catch (error) {
       console.error("Firebase initialization error (initializeApp failed):", error);
@@ -55,7 +58,6 @@ if (appInitializedSuccessfully && app) {
   try {
     authInstance = getAuth(app);
     db = getFirestore(app);
-    // Initialize Analytics and Messaging only in the browser
     if (typeof window !== "undefined") {
       analyticsInstance = getAnalytics(app);
       messagingInstance = getMessaging(app);

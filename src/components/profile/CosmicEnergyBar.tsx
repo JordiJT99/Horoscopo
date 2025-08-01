@@ -22,7 +22,7 @@ interface CosmicEnergyBarProps {
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
   const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, subtractStardust, lastGained } = useCosmicEnergy();
   const { toast } = useToast();
-  const isPremium = true; // All users have premium access now
+  const isPremium = true; 
 
   const handleAddPoints = () => {
     const { pointsAdded, leveledUp, newLevel } = addDebugPoints(100);
@@ -47,16 +47,16 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     });
   };
 
-  const handleAddStardust = () => {
-    addStardust(50);
+  const handleAddStardust = async () => {
+    await addStardust(50);
     toast({
         title: `🔧 Dev Tool`,
         description: `+50 Stardust (Dev)`,
     });
   };
 
-  const handleSubtractStardust = () => {
-    subtractStardust(50);
+  const handleSubtractStardust = async () => {
+    await subtractStardust(50);
     toast({
         title: `🔧 Dev Tool`,
         description: `-50 Stardust (Dev)`,
@@ -96,7 +96,7 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                 <div className="flex items-center gap-1">
                     <Tooltip>
                         <TooltipTrigger asChild>
-                             <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-500" onClick={handleSubtractStardust}>
+                             <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-400" onClick={handleSubtractStardust}>
                                 <MinusCircle className="h-4 w-4" />
                             </Button>
                         </TooltipTrigger>
@@ -157,7 +157,7 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                     </DialogContent>
                 </Dialog>
             </div>
-            {isPremium && lastGained.daily_stardust_reward === new Date().toISOString().split('T')[0] && (
+            {isPremium && lastGained.daily_stardust === new Date().toISOString().split('T')[0] && (
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger>

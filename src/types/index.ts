@@ -27,8 +27,8 @@ export type AstrologicalModality = "Cardinal" | "Fixed" | "Mutable";
 
 export interface ZodiacSign {
   name: ZodiacSignName;
-  icon?: React.ElementType; // For Lucide icons or custom components
-  customIconPath?: string; // Path for custom image icons
+  icon?: React.ElementType; 
+  customIconPath?: string; 
   dateRange: string;
   element: AstrologicalElement;
   polarity: AstrologicalPolarity;
@@ -48,8 +48,6 @@ export interface HoroscopeDetail {
   health: string;
 }
 
-// Interface for onboarding data that might be passed to the horoscope flow
-// Make fields optional as not all might be available or relevant for every call
 export interface HoroscopePersonalizationData {
   name?: string;
   gender?: Gender;
@@ -61,8 +59,8 @@ export interface HoroscopePersonalizationData {
 export interface HoroscopeFlowInput {
   sign: ZodiacSignName;
   locale: string;
-  targetDate?: string; // YYYY-MM-DD format, optional
-  onboardingData?: HoroscopePersonalizationData; // Re-added for personalized horoscopes
+  targetDate?: string; 
+  onboardingData?: HoroscopePersonalizationData;
 }
 
 export interface HoroscopeFlowOutput {
@@ -76,7 +74,7 @@ export interface CompatibilityData {
   sign1: ZodiacSignName;
   sign2: ZodiacSignName;
   report: string;
-  score: number; // e.g., 1-5 or 1-100
+  score: number;
 }
 
 export interface LuckyNumbersData {
@@ -125,9 +123,6 @@ export interface UserBirthData {
   city: string;
 }
 
-// --- New Types for Chinese and Mayan Horoscopes ---
-
-// Chinese Astrology
 export type ChineseAnimalSignName =
   | "Rat" | "Ox" | "Tiger" | "Rabbit" | "Dragon" | "Snake"
   | "Horse" | "Goat" | "Monkey" | "Rooster" | "Dog" | "Pig";
@@ -153,11 +148,10 @@ export interface ChineseCompatibilityData {
   animal1: ChineseAnimalSignName;
   animal2: ChineseAnimalSignName;
   report: string;
-  score: number; // e.g., 1-5
+  score: number;
 }
 
 
-// Mayan Astrology
 export type MayanSignName =
   | "Imix" | "Ik" | "Akbal" | "Kan" | "Chicchan" | "Cimi"
   | "Manik" | "Lamat" | "Muluc" | "Oc" | "Chuen" | "Eb"
@@ -201,15 +195,13 @@ export interface MayanKinInfo {
 }
 
 
-// User type for Firebase Authentication
 export interface AuthUser {
   uid: string;
   email: string | null;
   displayName: string | null;
-  photoURL?: string | null; // Added photoURL for profile images
+  photoURL?: string | null;
 }
 
-// Onboarding Flow Types
 export type Gender = "male" | "female" | "non-binary" | "prefer-not-to-say" | "other" | "";
 export type RelationshipStatus = "single" | "in-relationship" | "engaged" | "married" | "divorced" | "widowed" | "complicated" | "";
 export type EmploymentStatus = "employed-full-time" | "employed-part-time" | "self-employed" | "unemployed" | "student" | "retired" | "homemaker" | "";
@@ -217,24 +209,21 @@ export type EmploymentStatus = "employed-full-time" | "employed-part-time" | "se
 export interface OnboardingFormData {
   name: string;
   gender: Gender;
-  dateOfBirth: Date | undefined; // Stored as Date object after parsing
-  timeOfBirth?: string; // HH:mm, optional
-  cityOfBirth?: string; // optional
+  dateOfBirth: Date | undefined;
+  timeOfBirth?: string;
+  cityOfBirth?: string;
   relationshipStatus: RelationshipStatus;
   employmentStatus: EmploymentStatus;
   personalizedAdsConsent: boolean;
 }
 
-// Profile selector type
 export type SelectedProfileType = 'user' | 'generic';
 
-// Type for conversational chat messages
 export interface ChatMessage {
   role: 'user' | 'model';
   content: string;
 }
 
-// Type for Natal Chart
 export interface AspectDetail {
   body1: string;
   body2: string;
@@ -248,10 +237,9 @@ export interface HousePlacementDetail {
   explanation: string;
 }
 
-// Type for storing dream interpretations in localStorage
 export interface StoredDream {
   id: string;
-  timestamp: string; // ISO string
+  timestamp: string;
   interpretation: DreamInterpretationOutput;
   vividness: number;
 }
@@ -284,18 +272,15 @@ export interface Psychic {
   aiHint: string;
 }
 
-// Type for Community Forum Posts
 export type PostType = 'text' | 'dream' | 'tarot_reading' | 'tarot_personality';
 
-// This is the data needed to create a new post
 export interface NewPostData {
   authorId: string;
   authorName: string;
   authorAvatarUrl: string;
   authorZodiacSign: ZodiacSignName;
-  authorLevel?: number; // Added author's level at time of posting
+  authorLevel?: number;
   postType: PostType;
-  // Optional content fields
   textContent?: string;
   dreamData?: DreamInterpretationOutput;
   tarotReadingData?: TarotReadingOutput;
@@ -303,12 +288,12 @@ export interface NewPostData {
 }
 
 export interface Comment {
-  id: string; // Document ID from Firestore
+  id: string;
   authorId: string;
   authorName: string;
   authorAvatarUrl: string;
   text: string;
-  timestamp: string; // ISO 8601 string for date
+  timestamp: string;
 }
 
 export interface CommunityPost extends NewPostData {
@@ -318,7 +303,6 @@ export interface CommunityPost extends NewPostData {
   commentCount: number;
 }
 
-// Gamification Types
 export type GameActionId = 
   | 'read_daily_horoscope'
   | 'read_weekly_horoscope'
@@ -339,6 +323,7 @@ export interface CosmicEnergyState {
   freeChats: number;
   lastGained: Record<GameActionId, string>;
   hasRatedApp: boolean;
+  bio?: string; // Adding bio to the state to be stored in Firestore
 }
 
 export interface DailyTransit {

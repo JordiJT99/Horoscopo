@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -80,8 +81,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const { showRewardedAd } = useAdMob();
   const scrollViewportRef = useRef<HTMLDivElement>(null);
 
-  // State for time-based chat
-  const [chatTimeRemaining, setChatTimeRemaining] = useState(0); // in seconds
+  const [chatTimeRemaining, setChatTimeRemaining] = useState(0); 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const getStorageKey = useCallback(() => {
@@ -89,24 +89,29 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     return `chatHistory_${user.uid}_${psychic.id}`;
   }, [user, psychic]);
 
-  // Load chat history from localStorage on mount
   useEffect(() => {
     const storageKey = getStorageKey();
     if (storageKey) {
       const savedChat = localStorage.getItem(storageKey);
       if (savedChat) {
-        const { messages: savedMessages, topic, timeRemaining } = JSON.parse(savedChat);
-        setMessages(savedMessages);
-        setSelectedTopic(topic);
-        setChatTimeRemaining(timeRemaining || 0);
+        try {
+          const { messages: savedMessages, topic, timeRemaining } = JSON.parse(savedChat);
+          if (Array.isArray(savedMessages) && topic) {
+            setMessages(savedMessages);
+            setSelectedTopic(topic);
+            setChatTimeRemaining(timeRemaining || 0);
+          }
+        } catch (e) {
+          console.error("Failed to parse chat history from localStorage", e);
+          localStorage.removeItem(storageKey); // Clear corrupted data
+        }
       }
     }
   }, [getStorageKey]);
 
-  // Save chat history to localStorage whenever it changes
   useEffect(() => {
     const storageKey = getStorageKey();
-    if (storageKey && selectedTopic) {
+    if (storageKey && selectedTopic && messages.length > 0) {
       const chatState = {
         messages,
         topic: selectedTopic,
@@ -122,13 +127,12 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       setChatTimeRemaining(prevTime => {
         if (prevTime <= 1) {
           if (timerRef.current) clearInterval(timerRef.current);
-          spendStardust(MINUTE_COST, 'psychic_chat_minute'); // Deduct cost when timer starts/restarts
           return 0;
         }
         return prevTime - 1;
       });
     }, 1000);
-  }, [spendStardust]);
+  }, []);
 
   useEffect(() => {
     if (chatTimeRemaining > 0) {
@@ -151,7 +155,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     
     setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
-    // Initial free minute on topic selection if no time is remaining from a previous session
     if (chatTimeRemaining <= 0) {
         setChatTimeRemaining(60); 
     }
@@ -222,39 +225,23 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         description: dictionary['PsychicChatPage.sendMessageError'] || 'Error connecting to the psychic.',
         variant: 'destructive',
       });
-      // Restore user message on error
       setMessages(prev => prev.slice(0, -1));
     } finally {
       setIsSending(false);
     }
   };
 
-  const addChatTime = (minutes: number) => {
-    if (spendStardust(minutes * MINUTE_COST, 'psychic_chat_minute')) {
-        setChatTimeRemaining(prev => prev + (minutes * 60));
-        toast({
-            title: "Time Added!",
-            description: `You've added ${minutes} minute(s) to your chat.`
-        });
-    } else {
-        toast({
-            title: "Not enough Stardust!",
-            description: `You need ${minutes * MINUTE_COST} Stardust to add more time.`,
-            variant: "destructive"
-        });
-    }
-  }
-
   const handleWatchAd = async () => {
     setIsAdPlaying(true);
     try {
       const reward = await showRewardedAd();
       if (reward) {
-        const adRewardMinutes = 1; // 1 minute per ad
+        const adRewardMinutes = 1;
+        await addStardust(adRewardMinutes * MINUTE_COST); // Reward with stardust instead of time directly
         setChatTimeRemaining(prev => prev + (adRewardMinutes * 60));
         toast({
           title: "¡Recompensa Obtenida!",
-          description: `Has ganado ${adRewardMinutes} minuto(s) de chat.`,
+          description: `Has ganado ${adRewardMinutes * MINUTE_COST} de Polvo Estelar y ${adRewardMinutes} minuto(s) de chat.`,
         });
       }
     } catch(err) {
