@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { ShoppingBag, Star, Clapperboard, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdMob } from '@/hooks/use-admob-ads';
-import { StardustIcon } from '@/lib/constants';
+import { StardustIcon } from '@/components/shared/StardustIcon';
 
 
 const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {

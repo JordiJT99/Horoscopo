@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { CheckCircle, Lock, Award, MessageCircle, Sparkles, Star, Palette, Moon, Ticket, Download, Crown, Box, Atom } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { ChineseAstrologyIcon, StardustIcon } from '@/lib/constants';
+import { StardustIcon } from '@/components/shared/StardustIcon';
 
 interface RewardsCardProps {
   dictionary: Dictionary;
