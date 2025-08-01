@@ -35,10 +35,11 @@ const calculateLevel = (points: number): number => {
 // Reward structure: key is the level reached, value is the reward
 // New: 3 stardust every 3 levels.
 const getLevelUpStardustReward = (newLevel: number): number => {
-  if (newLevel > 1 && newLevel % 3 === 0) {
-    return 3;
-  }
-  return 0;
+    if (newLevel === 1) return 5; // Welcome bonus
+    if (newLevel > 1 && newLevel % 3 === 0) {
+      return 3;
+    }
+    return 0;
 };
 
 
@@ -168,10 +169,11 @@ export const useCosmicEnergy = () => {
             }
         }
 
-        // Special one-time welcome stardust
+        // Special one-time welcome stardust for completing profile, not for leveling to 1.
         if (actionId === 'complete_profile' && !lastGainedDate) {
-            newStardust += 5;
-            result.rewards.stardust += 5;
+            const welcomeStardust = 5;
+            newStardust += welcomeStardust;
+            result.rewards.stardust += welcomeStardust;
         }
         
         const finalLevel = calculateLevel(newPoints);
@@ -301,6 +303,12 @@ export const useCosmicEnergy = () => {
         store.setState({ stardust: currentState.stardust + amount });
     }, [user]);
 
+    const subtractStardust = useCallback((amount: number) => {
+        if (!user?.uid || !store) return;
+        const currentState = store.getState();
+        store.setState({ stardust: Math.max(0, currentState.stardust - amount) });
+    }, [user]);
+
     const claimRateReward = useCallback(() => {
         if (!user?.uid || !store) return { success: false, amount: 0 };
         const currentState = store.getState();
@@ -354,6 +362,7 @@ export const useCosmicEnergy = () => {
         subtractDebugPoints,
         spendStardust,
         addStardust,
+        subtractStardust,
         claimRateReward,
         checkAndAwardDailyStardust,
         isLoading: authIsLoading,
