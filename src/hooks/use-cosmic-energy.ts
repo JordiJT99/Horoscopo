@@ -80,7 +80,7 @@ const createStore = () => {
             const userProfileRef = doc(db, 'userProfiles', currentUserId);
             try {
                 // Use updateDoc for partial updates to avoid overwriting fields
-                await updateDoc(userProfileRef, newState);
+                await setDoc(userProfileRef, newState, { merge: true });
             } catch (error) {
                 console.error("Failed to update user profile in Firestore:", error);
                 // Revert state on error

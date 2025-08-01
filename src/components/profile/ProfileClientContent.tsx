@@ -31,7 +31,7 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
   const { user, isLoading, logout, updateUsername } = useAuth();
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
-  const { level: userLevel } = useCosmicEnergy();
+  const { level: userLevel, bio: bioFromHook, setBio: setBioInStore } = useCosmicEnergy() as any;
 
   const [isEditingAbout, setIsEditingAbout] = useState(false);
   
