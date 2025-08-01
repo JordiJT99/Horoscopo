@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -12,7 +13,7 @@ import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { StardustIcon } from '@/lib/constants';
+import { StardustIcon } from '@/components/shared/StardustIcon';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
