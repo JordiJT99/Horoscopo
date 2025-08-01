@@ -23,7 +23,6 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
   const { stardust } = useCosmicEnergy();
 
   useEffect(() => {
-    // This check ensures we only determine navigation capability on the client side.
     setCanGoBack(window.history.length > 1);
   }, [pathname]);
 
@@ -57,36 +56,35 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
 
   const getPageTitle = () => {
     const basePath = pathname.replace(`/${currentLocale}`, '') || '/';
-    // Find the most specific match first
     const specificMatch = Object.keys(mainNavPaths).find(key => basePath.startsWith(key) && key !== '/');
     if (specificMatch) return mainNavPaths[specificMatch];
     return mainNavPaths[basePath] || '';
   };
 
   const pageTitle = getPageTitle();
-  const isMainPage = Object.keys(mainNavPaths).some(key => {
-    const p = `/${currentLocale}${key === '/' ? '' : key}`;
-    return pathname === p || (key !== '/' && pathname.startsWith(p));
-  });
+
+  const handleBack = () => {
+    if (canGoBack) {
+      router.back();
+    } else {
+      router.push(`/${currentLocale}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur-lg">
       <div className="container flex h-14 items-center justify-between px-4 max-w-screen-2xl">
-        {/* Left side: Back button or empty space to balance center title */}
+        {/* Left side: Back button */}
         <div className="flex-1 flex justify-start">
-          {canGoBack && !isMainPage ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => router.back()}
-              aria-label={dictionary['TopBar.backAriaLabel'] || "Go back"}
-              className="text-top-bar-foreground h-12 w-12 rounded-full hover:bg-muted/50"
-            >
-              <ArrowLeft size={24} />
-            </Button>
-          ) : (
-            <div className="w-10"></div> // Placeholder to keep title centered
-          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleBack}
+            aria-label={dictionary['TopBar.backAriaLabel'] || "Go back"}
+            className="text-top-bar-foreground h-12 w-12 rounded-full hover:bg-muted/50"
+          >
+            <ArrowLeft size={24} />
+          </Button>
         </div>
 
         {/* Center: Title */}
