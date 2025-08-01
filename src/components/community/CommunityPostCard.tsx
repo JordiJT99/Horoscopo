@@ -172,7 +172,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       try {
         await updateDoc(postRef, { [userReactionField]: emoji });
         if (!hadReaction) {
-            const stardustResult = awardStardustForAction('react_to_post', 1);
+            const stardustResult = await awardStardustForAction('react_to_post', 1);
             if (stardustResult.success) {
                 toast({
                     title: `✨ ${dictionary['CosmicEnergy.stardust'] || 'Stardust'}!`,
@@ -209,7 +209,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
       batch.update(postRef, { commentCount: increment(1) });
       await batch.commit();
       
-      const energyResult = addEnergyPoints('add_community_comment', 10);
+      const energyResult = await addEnergyPoints('add_community_comment', 10);
       if (energyResult.pointsAdded > 0) {
         toast({
             title: `✨ ${dictionary['CosmicEnergy.pointsEarnedTitle'] || 'Cosmic Energy Gained!'}`,
@@ -225,7 +225,7 @@ export default function CommunityPostCard({ post, dictionary, locale }: Communit
         }
       }
 
-      const stardustResult = awardStardustForAction('add_community_comment', 1);
+      const stardustResult = await awardStardustForAction('add_community_comment', 1);
       if (stardustResult.success) {
           toast({
               title: `✨ ${dictionary['CosmicEnergy.stardust'] || 'Stardust'}!`,

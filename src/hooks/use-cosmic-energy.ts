@@ -225,6 +225,32 @@ export const useCosmicEnergy = () => {
         const currentState = store.getState();
         await store.setState({ stardust: currentState.stardust + amount });
     }, [user]);
+
+    const awardStardustForAction = useCallback(async (actionId: GameActionId, amount: number): Promise<AwardStardustResult> => {
+        const result: AwardStardustResult = { success: false, amount: 0 };
+        if (!user?.uid || !store) return result;
+
+        const currentState = store.getState();
+        const lastGainedDate = currentState.lastGained[actionId];
+        const today = new Date().toISOString().split('T')[0];
+
+        if (lastGainedDate === today) {
+            return result; // Already awarded today
+        }
+
+        const newStardust = (currentState.stardust || 0) + amount;
+        const newLastGained = { ...currentState.lastGained, [actionId]: today };
+
+        await store.setState({
+            stardust: newStardust,
+            lastGained: newLastGained,
+        });
+
+        result.success = true;
+        result.amount = amount;
+        return result;
+
+    }, [user]);
     
     // Debug tools remain local and don't need async/await
     const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
@@ -317,6 +343,7 @@ export const useCosmicEnergy = () => {
         subtractStardust,
         claimRateReward,
         checkAndAwardDailyStardust,
+        awardStardustForAction,
         isLoading: authIsLoading,
     };
 };
