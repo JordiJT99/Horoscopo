@@ -2,15 +2,28 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Permite a los usuarios leer y escribir solo en su propio documento de perfil.
+
+    // User profiles can only be read and written by their owner.
     match /userProfiles/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null;
     }
-    
-    // Deniega el acceso a cualquier otra colección/documento por defecto.
-    // Esta regla es opcional si la de arriba es la única, pero es una buena práctica de seguridad.
-    match /{document=**} {
-      allow read, write: if false;
+
+    // Community posts can be read by anyone.
+    // Creation is allowed for any authenticated user.
+    // Updates/deletes are only allowed by the post's author.
+    match /community-posts/{postId} {
+      allow read;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+
+      // Rules for the 'comments' subcollection within a post.
+      match /comments/{commentId} {
+        allow read;
+        allow create: if request.auth != null;
+        // Optional: allow comment authors to delete their own comments.
+        allow delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+      }
     }
   }
 }
