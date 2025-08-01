@@ -19,6 +19,8 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useAdMob } from '@/hooks/use-admob-ads';
 
+const MESSAGE_COST = 1;
+
 interface Message {
   text: string;
   sender: 'user' | 'ai';
@@ -77,9 +79,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const { stardust, spendStardust, addStardust } = useCosmicEnergy();
   const { showRewardedAd } = useAdMob();
   const scrollViewportRef = useRef<HTMLDivElement>(null);
-
-  const [chatTime, setChatTime] = useState(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isFirstMessageSent, setIsFirstMessageSent] = useState(false);
 
   const topicKeyMapping: { [key: string]: string } = {
     'love': 'PsychicTopic.loveRelationships',
@@ -88,32 +88,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     'general': 'PsychicTopic.generalReading',
   };
 
-  const startTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-
-    timerRef.current = setInterval(() => {
-      setChatTime(prevTime => {
-        if (prevTime <= 1) {
-          clearInterval(timerRef.current!);
-          timerRef.current = null;
-          return 0;
-        }
-        // Descontar stardust cada minuto (60 segundos)
-        if (prevTime > 0 && (prevTime % 60 === 0)) {
-           spendStardust(1, 'psychic_chat_minute');
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-  }, [spendStardust]);
-
-  const addChatTime = useCallback((seconds: number) => {
-    setChatTime(prev => prev + seconds);
-    if (!timerRef.current) {
-      startTimer();
-    }
-  }, [startTimer]);
-
   const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
     let initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
       .replace('{psychicName}', psychic.name)
@@ -121,11 +95,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     
     setMessages([{ text: initialMessage, sender: 'ai' }]);
     setSelectedTopic({ key: topicKey, name: topicName });
-    if (stardust > 0) {
-      setChatTime(stardust * 60); // 1 stardust = 1 minute
-      startTimer();
-    }
-  }, [dictionary, psychic.name, stardust, startTimer]);
+  }, [dictionary, psychic.name]);
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
@@ -137,12 +107,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         }
     }
   }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
 
   const scrollToBottom = () => {
     if (scrollViewportRef.current) {
@@ -156,13 +120,18 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isSending || !selectedTopic) return;
-    if(chatTime <= 0) {
+    
+    if (isFirstMessageSent && stardust < MESSAGE_COST) {
       toast({
-        title: "¡Tiempo agotado!",
-        description: "Recarga tu tiempo para continuar la conversación.",
+        title: "Polvo Estelar Insuficiente",
+        description: "Recarga tu polvo estelar para continuar la conversación.",
         variant: "destructive"
       });
       return;
+    }
+
+    if (isFirstMessageSent) {
+      spendStardust(MESSAGE_COST, 'send_psychic_message');
     }
 
     const newUserMessage: Message = { text: inputMessage, sender: 'user' };
@@ -170,6 +139,9 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     setMessages(updatedMessagesForUI);
     setInputMessage('');
     setIsSending(true);
+    if (!isFirstMessageSent) {
+      setIsFirstMessageSent(true);
+    }
 
     const flowMessages: ChatMessage[] = updatedMessagesForUI.map(msg => ({
         role: msg.sender === 'user' ? ('user' as const) : ('model' as const),
@@ -208,10 +180,11 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     try {
       const reward = await showRewardedAd();
       if (reward) {
-        addChatTime(60); // Añade 1 minuto (60 segundos)
+        const adReward = 1; // 1 Stardust por ver un anuncio
+        addStardust(adReward);
         toast({
           title: "¡Recompensa Obtenida!",
-          description: "Has ganado 1 minuto de chat.",
+          description: `Has ganado ${adReward} de Polvo Estelar.`,
         });
       }
     } catch(err) {
@@ -228,23 +201,20 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const userInitial = user?.displayName?.charAt(0).toUpperCase() || <UserCircle size={18} />;
   const psychicInitial = psychic.name.charAt(0);
+  
+  const hasEnoughStardust = stardust >= MESSAGE_COST;
 
   if (!selectedTopic) {
     return <TopicSelector dictionary={dictionary} onTopicSelect={handleTopicSelect} psychic={psychic} />;
   }
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
   return (
     <Card className="flex flex-col h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg rounded-xl overflow-hidden">
       <div className="p-2 border-b border-border/30 text-center">
-        <p className="text-sm font-semibold">
-          Tiempo Restante: <span className={cn("font-bold", chatTime <= 10 && "text-destructive animate-pulse")}>{formatTime(chatTime)}</span>
-        </p>
+        <div className="flex items-center justify-center gap-2 text-sm font-semibold">
+           <Gem className="w-4 h-4 text-cyan-400"/>
+           <span>{stardust} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
+        </div>
       </div>
       <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
         <ScrollArea className="flex-1" viewportRef={scrollViewportRef}>
@@ -294,14 +264,25 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
           </div>
         </ScrollArea>
       </CardContent>
-      <div className="flex items-center p-2 sm:p-3 border-t border-border/30 bg-background/50">
-        {chatTime > 0 ? (
-          <>
-            <div className="flex items-center mr-2 bg-input/50 rounded-full px-3 py-1 text-xs font-semibold">
-              <Gem className="w-4 h-4 text-cyan-400 mr-1.5"/>
-              {stardust}
-            </div>
-            <Input
+      <div className="p-2 sm:p-3 border-t border-border/30 bg-background/50">
+        { (isFirstMessageSent && !hasEnoughStardust) ? (
+          <div className="w-full flex flex-col items-center justify-center gap-2 p-4 text-center bg-destructive/10 rounded-lg">
+             <p className="font-semibold text-destructive">¡Polvo Estelar Insuficiente!</p>
+             <p className="text-xs text-muted-foreground">Recarga para seguir chateando.</p>
+             <div className="flex gap-2 mt-2">
+                <Button onClick={handleWatchAd} variant="outline" disabled={isAdPlaying}>
+                    <Clapperboard className="mr-2 h-4 w-4"/>
+                    {isAdPlaying ? "Cargando..." : "Ver Anuncio (+1 💫)"}
+                </Button>
+                <Button onClick={() => router.push(`/${locale}/get-stardust`)}>
+                    <ShoppingBag className="mr-2 h-4 w-4"/>
+                    Obtener Polvo Estelar
+                </Button>
+             </div>
+          </div>
+        ) : (
+          <div className="flex items-center">
+             <Input
               className="flex-grow mr-2 bg-input/50"
               placeholder={dictionary['PsychicChatClient.inputPlaceholder'] || 'Type your message...'}
               value={inputMessage}
@@ -317,23 +298,9 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
               {isSending ? <LoadingSpinner className="h-4 w-4" /> : <Send size={18} />}
               <span className="sr-only">{dictionary['PsychicChatClient.sendButton'] || 'Send'}</span>
             </Button>
-          </>
-        ) : (
-          <div className="w-full flex flex-col items-center justify-center gap-2 p-4 text-center bg-destructive/10 rounded-lg">
-             <p className="font-semibold text-destructive">¡Se acabó el tiempo!</p>
-             <p className="text-xs text-muted-foreground">Recarga para seguir chateando.</p>
-             <div className="flex gap-2 mt-2">
-                <Button onClick={handleWatchAd} variant="outline" disabled={isAdPlaying}>
-                    <Clapperboard className="mr-2 h-4 w-4"/>
-                    {isAdPlaying ? "Cargando..." : "Ver Anuncio (+1 min)"}
-                </Button>
-                <Button onClick={() => router.push(`/${locale}/get-stardust`)}>
-                    <ShoppingBag className="mr-2 h-4 w-4"/>
-                    Obtener Polvo Estelar
-                </Button>
-             </div>
           </div>
         )}
+         {isFirstMessageSent && <p className="text-xs text-center text-muted-foreground mt-1.5">{MESSAGE_COST} 💫 / Mensaje</p>}
       </div>
     </Card>
   );
