@@ -35,9 +35,9 @@ const calculateLevel = (points: number): number => {
 // Reward structure: key is the level reached, value is the reward
 // New: 3 stardust every 3 levels.
 const getLevelUpStardustReward = (newLevel: number): number => {
-    if (newLevel === 1) return 5; // Welcome bonus
+    if (newLevel === 1) return 5;
     if (newLevel > 1 && newLevel % 3 === 0) {
-      return 3;
+      return 5;
     }
     return 0;
 };
