@@ -18,7 +18,7 @@ interface CosmicEnergyBarProps {
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, lastGained } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, subtractStardust, lastGained } = useCosmicEnergy();
   const { toast } = useToast();
   const isPremium = true; // All users have premium access now
 
@@ -53,11 +53,11 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     });
   };
 
-  const handleTogglePremium = () => {
-    togglePremium();
+  const handleSubtractStardust = () => {
+    subtractStardust(50);
     toast({
-      title: 'Premium Status Changed (Dev)',
-      description: `Premium is now ${!isPremium ? 'ON' : 'OFF'}.`,
+        title: `🔧 Dev Tool`,
+        description: `-50 Stardust (Dev)`,
     });
   };
 
@@ -94,38 +94,18 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                 <div className="flex items-center gap-1">
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleTogglePremium}>
-                                <Crown className={cn("h-4 w-4", isPremium ? "text-yellow-400" : "text-muted-foreground")} />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Dev Tool: Toggle Premium Status</p>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleSubtractPoints}>
+                             <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-500" onClick={handleSubtractStardust}>
                                 <MinusCircle className="h-4 w-4" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Dev Tool: Subtract 100 EC</p>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                             <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleAddPoints}>
-                                <PlusCircle className="h-4 w-4" />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Dev Tool: Add 100 EC</p>
+                            <p>Dev Tool: Subtract 50 Stardust</p>
                         </TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger asChild>
                              <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-400" onClick={handleAddStardust}>
-                                <Gem className="h-4 w-4" />
+                                <PlusCircle className="h-4 w-4" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -169,7 +149,7 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                                 {dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}
                             </DialogTitle>
                             <DialogDescription className="text-left pt-2 whitespace-pre-line">
-                                {dictionary['Stardust.explanationContent'] || "Stardust is a special currency..."}
+                                {dictionary['Stardust.explanationContent'] || "Stardust is a special currency within AstroVibes. You can use it to unlock premium features, such as sending messages in Psychic Chats.\n\nYou can earn Stardust by:\n- Leveling up your Cosmic Energy.\n- Claiming special rewards (like rating the app).\n- Watching ads.\n- Purchasing Stardust packs (coming soon)."}
                             </DialogDescription>
                         </DialogHeader>
                     </DialogContent>

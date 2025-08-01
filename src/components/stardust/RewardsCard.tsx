@@ -32,10 +32,12 @@ export default function RewardsCard({ dictionary }: RewardsCardProps) {
   const getRewardDescription = (reward: typeof rewards[0]) => {
     let baseText = dictionary[`Reward.${reward.key}`] || reward.key.replace(/([A-Z])/g, ' $1').trim();
     if (reward.key === 'recurringStardust') {
-      return baseText.replace('{level}', reward.level.toString());
+      return (dictionary['Reward.recurringStardustSimple'] || "+{amount} Stardust every 3 levels").replace('{amount}', reward.stardust.toString());
     }
     return baseText;
   }
+  
+  const uniqueRecurringReward = rewards.find(r => r.key === 'recurringStardust');
 
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
@@ -49,7 +51,7 @@ export default function RewardsCard({ dictionary }: RewardsCardProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0 space-y-3">
-        {rewards.map((reward, index) => {
+        {rewards.filter(r => r.key !== 'recurringStardust').map((reward, index) => {
           const isUnlocked = currentLevel >= reward.level;
           const Icon = reward.icon;
           return (
@@ -76,12 +78,35 @@ export default function RewardsCard({ dictionary }: RewardsCardProps) {
               <div className={cn("flex items-center gap-2 text-xs font-semibold", isUnlocked ? "text-green-400" : "text-muted-foreground")}>
                 {isUnlocked ? <CheckCircle className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
                 <span>
-                  {(dictionary['Reward.levelLabel'] || 'Lv. {level}').replace('{level}', reward.level.toString())}
+                  {(dictionary['Reward.levelLabel'] || 'Lvl {level}').replace('{level}', reward.level.toString())}
                 </span>
               </div>
             </div>
           );
         })}
+        {uniqueRecurringReward && (
+           <div
+              className={cn(
+                "flex items-center justify-between p-3 rounded-md transition-all",
+                "bg-muted/50"
+              )}
+            >
+              <div className="flex items-center gap-3">
+                <Gem className="w-5 h-5 text-muted-foreground" />
+                <div>
+                    <span className="font-medium text-sm text-muted-foreground">
+                      {getRewardDescription(uniqueRecurringReward)}
+                    </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+                <Lock className="w-4 h-4" />
+                <span>
+                   (Niveles 3, 6, 9...)
+                </span>
+              </div>
+            </div>
+        )}
       </CardContent>
     </Card>
   );
