@@ -16,13 +16,13 @@ interface RewardsCardProps {
 const rewards = [
   { level: 1, key: 'baseAccess', icon: Sparkles, stardust: 5 },
   { level: 2, key: 'cometFrame', icon: Palette, stardust: 0 },
-  { level: 3, key: 'recurringStardust', icon: Gem, stardust: 5 },
+  { level: 3, key: 'recurringStardust', icon: Gem, stardust: 3 },
   { level: 4, key: 'gaiaNebulaBackground', icon: Palette, stardust: 0 },
   { level: 5, key: 'freePsychicChat', icon: MessageCircle, stardust: 0 },
-  { level: 6, key: 'recurringStardust', icon: Gem, stardust: 5 },
+  { level: 6, key: 'recurringStardust', icon: Gem, stardust: 3 },
   { level: 7, key: 'stardustBonus', icon: Gem, stardust: 0 },
   { level: 8, key: 'ringOfLightFrame', icon: Palette, stardust: 0 },
-  { level: 9, key: 'recurringStardust', icon: Gem, stardust: 5 },
+  { level: 9, key: 'recurringStardust', icon: Gem, stardust: 3 },
   { level: 10, key: 'enlightenedTitle', icon: Crown, stardust: 0 },
 ];
 
