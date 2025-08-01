@@ -22,8 +22,8 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const { showRewardedAd } = useAdMob();
 
 
-    const handleRateApp = () => {
-        const { success, amount } = claimRateReward();
+    const handleRateApp = async () => {
+        const { success, amount } = await claimRateReward();
         if (success) {
             toast({
                 title: dictionary['Toast.rateSuccessTitle'] || "Thank You!",
@@ -43,7 +43,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
             const reward = await showRewardedAd();
             if (reward) {
                 const adReward = 1;
-                addStardust(adReward);
+                await addStardust(adReward);
                 toast({
                     title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
                     description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
@@ -118,7 +118,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                              <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
                                 <div className="flex items-center gap-2">
                                     <span className="text-lg">{pack.icon}</span>
-                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-1" /></p>
+                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-0.5" />}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="font-bold">{pack.price}</p>
