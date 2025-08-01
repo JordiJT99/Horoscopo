@@ -72,7 +72,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur-lg">
+    <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur-lg">
       <div className="container flex h-14 items-center justify-between px-4 max-w-screen-2xl">
         {/* Left side: Back button */}
         <div className="flex-1 flex justify-start">
