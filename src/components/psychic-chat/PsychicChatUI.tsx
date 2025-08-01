@@ -12,18 +12,19 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, UserCircle, Gem, Clapperboard, ShoppingBag } from 'lucide-react';
+import { Send, UserCircle, Gem, Clapperboard, ShoppingBag, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useAdMob } from '@/hooks/use-admob-ads';
 
-const MESSAGE_COST = 1;
+const MINUTE_COST = 1;
 
 interface Message {
   text: string;
   sender: 'user' | 'ai';
+  timestamp: number;
 }
 
 interface PsychicChatUIProps {
@@ -65,7 +66,6 @@ const TopicSelector = ({ dictionary, onTopicSelect, psychic }: { dictionary: Dic
   );
 };
 
-
 export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicChatUIProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -79,71 +79,128 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const { stardust, spendStardust, addStardust } = useCosmicEnergy();
   const { showRewardedAd } = useAdMob();
   const scrollViewportRef = useRef<HTMLDivElement>(null);
-  const [isFirstMessageSent, setIsFirstMessageSent] = useState(false);
 
-  const topicKeyMapping: { [key: string]: string } = {
-    'love': 'PsychicTopic.loveRelationships',
-    'career': 'PsychicTopic.careerFinance',
-    'personal_growth': 'PsychicTopic.spiritualGrowth',
-    'general': 'PsychicTopic.generalReading',
-  };
+  // State for time-based chat
+  const [chatTimeRemaining, setChatTimeRemaining] = useState(0); // in seconds
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const getStorageKey = useCallback(() => {
+    if (!user || !psychic) return null;
+    return `chatHistory_${user.uid}_${psychic.id}`;
+  }, [user, psychic]);
+
+  // Load chat history from localStorage on mount
+  useEffect(() => {
+    const storageKey = getStorageKey();
+    if (storageKey) {
+      const savedChat = localStorage.getItem(storageKey);
+      if (savedChat) {
+        const { messages: savedMessages, topic, timeRemaining } = JSON.parse(savedChat);
+        setMessages(savedMessages);
+        setSelectedTopic(topic);
+        setChatTimeRemaining(timeRemaining || 0);
+      }
+    }
+  }, [getStorageKey]);
+
+  // Save chat history to localStorage whenever it changes
+  useEffect(() => {
+    const storageKey = getStorageKey();
+    if (storageKey && selectedTopic) {
+      const chatState = {
+        messages,
+        topic: selectedTopic,
+        timeRemaining: chatTimeRemaining
+      };
+      localStorage.setItem(storageKey, JSON.stringify(chatState));
+    }
+  }, [messages, selectedTopic, chatTimeRemaining, getStorageKey]);
+
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setChatTimeRemaining(prevTime => {
+        if (prevTime <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          spendStardust(MINUTE_COST, 'psychic_chat_minute'); // Deduct cost when timer starts/restarts
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+  }, [spendStardust]);
+
+  useEffect(() => {
+    if (chatTimeRemaining > 0) {
+      startTimer();
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [chatTimeRemaining, startTimer]);
+
 
   const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
-    let initialMessage = (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
-      .replace('{psychicName}', psychic.name)
-      .replace('{topicName}', topicName);
+    let initialMessage = {
+        text: (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
+        .replace('{psychicName}', psychic.name)
+        .replace('{topicName}', topicName),
+        sender: 'ai' as const,
+        timestamp: Date.now()
+    };
     
-    setMessages([{ text: initialMessage, sender: 'ai' }]);
+    setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
-  }, [dictionary, psychic.name]);
+    // Initial free minute on topic selection if no time is remaining from a previous session
+    if (chatTimeRemaining <= 0) {
+        setChatTimeRemaining(60); 
+    }
+  }, [dictionary, psychic.name, chatTimeRemaining]);
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
-    if (topicFromQuery && topicKeyMapping[topicFromQuery]) {
+    if (topicFromQuery && !selectedTopic) {
+        const topicKeyMapping: { [key: string]: string } = {
+            'love': 'PsychicTopic.loveRelationships',
+            'career': 'PsychicTopic.careerFinance',
+            'personal_growth': 'PsychicTopic.spiritualGrowth',
+            'general': 'PsychicTopic.generalReading',
+        };
         const topicDictKey = topicKeyMapping[topicFromQuery];
-        const topicName = dictionary[topicDictKey] || topicFromQuery;
-        if (!selectedTopic) {
+        if(topicDictKey) {
+            const topicName = dictionary[topicDictKey] || topicFromQuery;
             handleTopicSelect(topicDictKey, topicName);
         }
     }
   }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
 
   const scrollToBottom = () => {
-    if (scrollViewportRef.current) {
-      scrollViewportRef.current.scrollTop = scrollViewportRef.current.scrollHeight;
-    }
+    setTimeout(() => {
+      if (scrollViewportRef.current) {
+        scrollViewportRef.current.scrollTop = scrollViewportRef.current.scrollHeight;
+      }
+    }, 100);
   };
 
-  useEffect(() => {
-    setTimeout(scrollToBottom, 100);
-  }, [messages, isSending]);
+  useEffect(scrollToBottom, [messages]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isSending || !selectedTopic) return;
-    
-    if (isFirstMessageSent && stardust < MESSAGE_COST) {
-      toast({
-        title: "Polvo Estelar Insuficiente",
-        description: "Recarga tu polvo estelar para continuar la conversación.",
-        variant: "destructive"
-      });
-      return;
+    if (chatTimeRemaining <= 0) {
+         toast({
+            title: "Time's Up!",
+            description: "Your chat time has run out. Watch an ad or get more stardust to continue.",
+            variant: "destructive"
+        });
+        return;
     }
 
-    if (isFirstMessageSent) {
-      spendStardust(MESSAGE_COST, 'send_psychic_message');
-    }
-
-    const newUserMessage: Message = { text: inputMessage, sender: 'user' };
-    const updatedMessagesForUI = [...messages, newUserMessage];
-    setMessages(updatedMessagesForUI);
+    const newUserMessage: Message = { text: inputMessage, sender: 'user', timestamp: Date.now() };
+    setMessages(prev => [...prev, newUserMessage]);
     setInputMessage('');
     setIsSending(true);
-    if (!isFirstMessageSent) {
-      setIsFirstMessageSent(true);
-    }
 
-    const flowMessages: ChatMessage[] = updatedMessagesForUI.map(msg => ({
+    const flowMessages: ChatMessage[] = [...messages, newUserMessage].map(msg => ({
         role: msg.sender === 'user' ? ('user' as const) : ('model' as const),
         content: msg.text,
     }));
@@ -156,14 +213,8 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         selectedTopic.name, 
         user?.displayName || undefined
       );
-      const newAiMessage: Message = { text: aiResponse, sender: 'ai' };
-      
-      const randomDelay = Math.floor(Math.random() * 2500) + 1500;
-      setTimeout(() => {
-        setMessages(prev => [...prev, newAiMessage]);
-        setIsSending(false);
-      }, randomDelay);
-
+      const newAiMessage: Message = { text: aiResponse, sender: 'ai', timestamp: Date.now() };
+      setMessages(prev => [...prev, newAiMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -171,20 +222,39 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         description: dictionary['PsychicChatPage.sendMessageError'] || 'Error connecting to the psychic.',
         variant: 'destructive',
       });
+      // Restore user message on error
+      setMessages(prev => prev.slice(0, -1));
+    } finally {
       setIsSending(false);
     }
   };
+
+  const addChatTime = (minutes: number) => {
+    if (spendStardust(minutes * MINUTE_COST, 'psychic_chat_minute')) {
+        setChatTimeRemaining(prev => prev + (minutes * 60));
+        toast({
+            title: "Time Added!",
+            description: `You've added ${minutes} minute(s) to your chat.`
+        });
+    } else {
+        toast({
+            title: "Not enough Stardust!",
+            description: `You need ${minutes * MINUTE_COST} Stardust to add more time.`,
+            variant: "destructive"
+        });
+    }
+  }
 
   const handleWatchAd = async () => {
     setIsAdPlaying(true);
     try {
       const reward = await showRewardedAd();
       if (reward) {
-        const adReward = 1; // 1 Stardust por ver un anuncio
-        addStardust(adReward);
+        const adRewardMinutes = 1; // 1 minute per ad
+        setChatTimeRemaining(prev => prev + (adRewardMinutes * 60));
         toast({
           title: "¡Recompensa Obtenida!",
-          description: `Has ganado ${adReward} de Polvo Estelar.`,
+          description: `Has ganado ${adRewardMinutes} minuto(s) de chat.`,
         });
       }
     } catch(err) {
@@ -202,8 +272,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const userInitial = user?.displayName?.charAt(0).toUpperCase() || <UserCircle size={18} />;
   const psychicInitial = psychic.name.charAt(0);
   
-  const hasEnoughStardust = stardust >= MESSAGE_COST;
-
   if (!selectedTopic) {
     return <TopicSelector dictionary={dictionary} onTopicSelect={handleTopicSelect} psychic={psychic} />;
   }
@@ -212,6 +280,9 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     <Card className="flex flex-col h-full bg-card/70 backdrop-blur-sm border-border/30 shadow-lg rounded-xl overflow-hidden">
       <div className="p-2 border-b border-border/30 text-center">
         <div className="flex items-center justify-center gap-2 text-sm font-semibold">
+           <Clock className="w-4 h-4 text-primary"/>
+           <span>{Math.floor(chatTimeRemaining / 60)}:{(chatTimeRemaining % 60).toString().padStart(2, '0')}</span>
+           <span className="mx-2">|</span>
            <Gem className="w-4 h-4 text-cyan-400"/>
            <span>{stardust} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
         </div>
@@ -265,14 +336,14 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         </ScrollArea>
       </CardContent>
       <div className="p-2 sm:p-3 border-t border-border/30 bg-background/50">
-        { (isFirstMessageSent && !hasEnoughStardust) ? (
+        {chatTimeRemaining <= 0 ? (
           <div className="w-full flex flex-col items-center justify-center gap-2 p-4 text-center bg-destructive/10 rounded-lg">
-             <p className="font-semibold text-destructive">¡Polvo Estelar Insuficiente!</p>
+             <p className="font-semibold text-destructive">¡Tiempo Agotado!</p>
              <p className="text-xs text-muted-foreground">Recarga para seguir chateando.</p>
              <div className="flex gap-2 mt-2">
                 <Button onClick={handleWatchAd} variant="outline" disabled={isAdPlaying}>
                     <Clapperboard className="mr-2 h-4 w-4"/>
-                    {isAdPlaying ? "Cargando..." : "Ver Anuncio (+1 💫)"}
+                    {isAdPlaying ? "Cargando..." : "Ver Anuncio (+1 min)"}
                 </Button>
                 <Button onClick={() => router.push(`/${locale}/get-stardust`)}>
                     <ShoppingBag className="mr-2 h-4 w-4"/>
@@ -300,7 +371,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
             </Button>
           </div>
         )}
-         {isFirstMessageSent && <p className="text-xs text-center text-muted-foreground mt-1.5">{MESSAGE_COST} 💫 / Mensaje</p>}
       </div>
     </Card>
   );
