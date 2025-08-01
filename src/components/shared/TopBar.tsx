@@ -104,7 +104,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
                     className="flex items-center gap-1.5 h-10 px-3 rounded-full text-foreground hover:bg-muted/50"
                     aria-label={`${stardust} Stardust`}
                 >
-                    <StardustIcon className="h-7 w-7" />
+                    <StardustIcon className="h-14 w-14" />
                     <span className="font-bold text-sm">{stardust}</span>
                 </Button>
             </Link>
