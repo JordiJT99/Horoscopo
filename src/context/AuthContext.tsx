@@ -2,7 +2,7 @@
 "use client";
 
 import type { AuthUser } from '@/types';
-import type { Locale } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { auth, appInitializedSuccessfully } from '@/lib/firebase';

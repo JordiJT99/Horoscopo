@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Button } from "@/components/ui/button";
 import { Sparkles, Users, MessageSquare, BookOpen, Orbit } from 'lucide-react';
 import { cn } from '@/lib/utils';

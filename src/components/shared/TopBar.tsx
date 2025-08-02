@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Button } from "@/components/ui/button";
 import { Settings, Wand2, ArrowLeft } from 'lucide-react';
 import { StardustIcon } from '@/components/shared/StardustIcon';

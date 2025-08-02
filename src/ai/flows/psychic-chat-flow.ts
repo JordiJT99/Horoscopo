@@ -8,7 +8,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import type { Locale } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import { psychics } from '@/lib/psychics';
 import type { ChatMessage } from '@/types';
 import type {MessageData} from 'genkit';

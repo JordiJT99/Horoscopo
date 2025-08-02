@@ -6,7 +6,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { AstroAppLogo, ChineseAstrologyIcon, MayanAstrologyIcon, TarotPersonalityTestIcon } from '@/lib/constants';
 import {
   Accordion,

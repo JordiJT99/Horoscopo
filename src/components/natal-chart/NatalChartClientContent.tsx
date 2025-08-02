@@ -2,7 +2,7 @@
 
 'use client';
 
-import type { Dictionary, Locale } from '@/lib/dictionaries'; // Import Locale
+import type { Dictionary, Locale } from '@/types'; // Import Locale
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
 import { useToast } from '@/hooks/use-toast';

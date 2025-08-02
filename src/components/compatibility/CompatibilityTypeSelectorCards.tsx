@@ -1,7 +1,7 @@
 
 "use client";
 
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 // Button component is no longer needed here
 import Link from 'next/link';

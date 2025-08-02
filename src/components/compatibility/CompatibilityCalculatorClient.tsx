@@ -3,7 +3,7 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import CompatibilityClientContent, { type CompatibilityType } from '@/components/compatibility/CompatibilityClientContent';
 import { Heart, Handshake, Briefcase } from 'lucide-react';
 import SectionTitle from '@/components/shared/SectionTitle';

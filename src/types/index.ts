@@ -7,6 +7,8 @@ import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 
 export type Locale = 'en' | 'es' | 'de' | 'fr';
 
+export type Dictionary = Record<string, any>;
+
 export type ZodiacSignName =
   | "Aries"
   | "Taurus"

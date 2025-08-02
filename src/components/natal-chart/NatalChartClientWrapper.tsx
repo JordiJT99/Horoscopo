@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import BirthDataForm from './BirthDataForm';
 import NatalChartClientContent from './NatalChartClientContent';
 import { useAuth } from '@/context/AuthContext';

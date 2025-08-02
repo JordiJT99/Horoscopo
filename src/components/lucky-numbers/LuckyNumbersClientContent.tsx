@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import type { ZodiacSignName, LuckyNumbersData } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { ZODIAC_SIGNS, getLuckyNumbers } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

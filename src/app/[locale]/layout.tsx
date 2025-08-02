@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import type { Locale } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import { getDictionary, type Dictionary } from '@/lib/dictionaries';
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from '@/context/AuthContext';

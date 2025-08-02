@@ -2,7 +2,7 @@
 
 'use client';
 
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { CheckCircle, Lock, Award, MessageCircle, Sparkles, Star, Palette, Moon, Ticket, Download, Crown, Box, Atom } from 'lucide-react';

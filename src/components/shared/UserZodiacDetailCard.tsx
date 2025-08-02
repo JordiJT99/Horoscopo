@@ -2,7 +2,7 @@
 "use client";
 
 import type { AuthUser, OnboardingFormData, SelectedProfileType, ZodiacSign, AstrologicalElement, AstrologicalModality, AstrologicalPolarity } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { ZODIAC_SIGNS } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

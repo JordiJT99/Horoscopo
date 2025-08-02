@@ -2,7 +2,7 @@
 "use client";
 
 import type { AuthUser, OnboardingFormData, SelectedProfileType } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Sparkles, UserCircle, UserRoundPlus } from 'lucide-react';

@@ -3,7 +3,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import type { ZodiacSignName, CompatibilityData } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { ZODIAC_SIGNS, getCompatibility } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

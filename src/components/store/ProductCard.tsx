@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
 import type { StoreProduct } from '@/lib/store-products';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 
 interface ProductCardProps {
   product: StoreProduct;
