@@ -141,14 +141,50 @@ npm run build  # ✅ Successful
 src/
 ├── types/index.ts                          # ✅ Tipos actualizados
 ├── lib/horoscope-firestore-service.ts     # ✅ Servicio extendido
+├── lib/user-progress-service.ts            # ✅ Servicio de progreso del usuario
+├── lib/achievements.ts                     # ✅ Sistema de logros completo
 ├── hooks/use-personalized-horoscope.ts    # ✅ Hook nuevo
+├── hooks/use-cosmic-energy.ts              # ✅ Hook mejorado con logros
 ├── components/home/AstroVibesHomePageContent.tsx  # ✅ Integrado
+├── components/profile/AchievementsCard.tsx # ✅ Componente de logros nuevo
+├── components/profile/ProfileClientContent.tsx    # ✅ Perfil con logros
 └── app/api/admin/cleanup-horoscopes/route.ts      # ✅ Actualizado
 
 docs/
 ├── sistema-horoscopos-personalizados.md   # ✅ Documentación nueva
 └── sistema-limpieza-horoscopos.md         # ✅ Actualizada
 ```
+
+## 🎮 Sistema de Logros Implementado
+
+### 🏆 **Interfaz de Usuario de Logros**
+- **Ubicación**: Perfil del usuario (`/profile`)
+- **Componente**: `AchievementsCard.tsx`
+- **Funcionalidades**:
+  - ✅ Lista completa de logros con iconos
+  - ✅ Progreso visual hacia logros no desbloqueados
+  - ✅ Estados visual (desbloqueado/bloqueado)
+  - ✅ Recompensas mostradas claramente
+  - ✅ Estadísticas de energía cósmica y polvo estelar
+  - ✅ Barra de progreso general de logros
+
+### 🎯 **15+ Logros Disponibles**
+1. **Progreso**: Primeros pasos (50 puntos), Viajero cósmico (500 puntos), Navegante estelar (1500 puntos)
+2. **Niveles**: Místico novato (nivel 3), Oráculo experimentado (nivel 5), Astrólogo maestro (nivel 10)
+3. **Rachas**: Devoto diario (7 días), Constancia cósmica (30 días)
+4. **Características**: Entusiasta de horóscopos (30 lecturas), Buscador del tarot (10 lecturas)
+5. **Especiales**: Y muchos más con diferentes tipos de recompensas
+
+### 💎 **Recompensas Automáticas**
+- **Polvo Estelar**: 2-20 puntos según el logro
+- **Energía Cósmica**: Bonificaciones especiales
+- **Verificación Automática**: Los logros se desbloquean automáticamente al cumplir requisitos
+
+### 📱 **Experiencia de Usuario**
+- **Diseño Intuitivo**: Iconos claros y colores distintivos
+- **Feedback Visual**: Progreso hacia logros parcialmente completados
+- **Gamificación**: Sistema de recompensas que motiva el uso de la app
+- **Integración Perfecta**: Seamless con el sistema de energía cósmica existente
 
 ---
 

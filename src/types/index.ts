@@ -325,6 +325,23 @@ export interface CosmicEnergyState {
   lastGained: Record<GameActionId, string>;
   hasRatedApp: boolean;
   bio?: string; // Adding bio to the state to be stored in Firestore
+  
+  // Nuevos campos para progreso extendido
+  createdAt?: Date;
+  lastUpdated?: Date;
+  totalSessionTime?: number; // Tiempo total en la app (segundos)
+  totalFeatureUsage?: Record<string, number>; // Conteo de uso de características
+  achievements?: string[]; // Lista de logros desbloqueados
+  streakData?: {
+    currentLoginStreak: number;
+    longestLoginStreak: number;
+    lastLoginDate: string;
+  };
+  preferences?: {
+    notifications: boolean;
+    theme: string;
+    language: string;
+  };
 }
 
 export interface DailyTransit {
@@ -342,6 +359,40 @@ export interface UserAstrologyProfile {
 export interface AwardStardustResult {
     success: boolean;
     amount: number;
+}
+
+export interface UserProgressStats {
+  totalPoints: number;
+  currentLevel: number;
+  totalStardust: number;
+  loginStreak: number;
+  achievementsCount: number;
+  featuresUsed: number;
+}
+
+export interface LoginStreakResult {
+  newStreak: number;
+  isRecord: boolean;
+}
+
+export interface AchievementData {
+  id: string;
+  nameKey: string;
+  descriptionKey: string;
+  icon: string;
+  type: 'progress' | 'milestone' | 'special';
+  requirements: {
+    points?: number;
+    level?: number;
+    stardust?: number;
+    streak?: number;
+    feature?: string;
+    count?: number;
+  };
+  rewards: {
+    stardust?: number;
+    points?: number;
+  };
 }
 
 // ==========================================

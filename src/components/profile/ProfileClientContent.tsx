@@ -2,7 +2,8 @@
 
 "use client";
 
-import type { Locale, Dictionary } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
+import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,7 @@ import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
 import CosmicEnergyBar from './CosmicEnergyBar';
 import MySignsCard from './MySignsCard';
 import NotificationSettingsCard from './NotificationSettingsCard';
+import AchievementsCard from './AchievementsCard';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { cn } from '@/lib/utils';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -45,14 +47,21 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
       if (user) {
         setUsername(user.displayName || '');
         // Fetch extended profile data from Firestore
-        const profileRef = doc(db, 'userProfiles', user.uid);
-        const profileSnap = await getDoc(profileRef);
-        if (profileSnap.exists()) {
-          const data = profileSnap.data();
-          setBio(data.bio || (dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom."));
-        } else {
-            // If no profile, use placeholder and maybe save it later
+        if (db) {
+          try {
+            const profileRef = doc(db, 'userProfiles', user.uid);
+            const profileSnap = await getDoc(profileRef);
+            if (profileSnap.exists()) {
+              const data = profileSnap.data();
+              setBio(data.bio || (dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom."));
+            } else {
+              // If no profile, use placeholder and maybe save it later
+              setBio(dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom.");
+            }
+          } catch (error) {
+            console.error('Error fetching profile:', error);
             setBio(dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom.");
+          }
         }
 
         // Onboarding data is still in localStorage for now
@@ -78,9 +87,9 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
 
   const handleAboutEdit = async () => {
     if (isEditingAbout) {
-      if(user) {
-        const profileRef = doc(db, 'userProfiles', user.uid);
+      if(user && db) {
         try {
+          const profileRef = doc(db, 'userProfiles', user.uid);
           await setDoc(profileRef, { bio }, { merge: true });
           toast({ title: dictionary['ProfilePage.aboutUpdateSuccessTitle'] || "About Me Updated", description: dictionary['ProfilePage.aboutUpdateSuccessMessage'] || "Your bio has been saved." });
         } catch (error) {
@@ -179,6 +188,8 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
 
       <div className="md:col-span-2 space-y-8">
         <MySignsCard dictionary={dictionary} locale={locale} onboardingData={onboardingData} />
+        
+        <AchievementsCard />
         
         <NotificationSettingsCard dictionary={dictionary} />
 
