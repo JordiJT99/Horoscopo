@@ -7,6 +7,8 @@ import { useAuth } from '@/context/AuthContext';
 import type { CosmicEnergyState, GameActionId, AwardStardustResult } from '@/types';
 import { doc, getDoc, setDoc, updateDoc, writeBatch, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { AchievementChecker } from '@/lib/achievements';
+import { UserProgressService } from '@/lib/user-progress-service';
 
 // --- Configuration ---
 export const LEVEL_THRESHOLDS = [
@@ -72,14 +74,33 @@ const createStore = () => {
 
     const getState = () => currentState;
 
+    const saveToFirestore = async (userId: string, cosmicEnergy: number, stardust: number) => {
+        if (!db) {
+            console.error("Firestore no está inicializado");
+            return;
+        }
+        
+        try {
+            const userProfileRef = doc(db, 'userProfiles', userId);
+            await setDoc(userProfileRef, { cosmicEnergy, stardust }, { merge: true });
+        } catch (error) {
+            console.error("Failed to update user profile in Firestore:", error);
+        }
+    };
+
     const setState = async (newState: Partial<CosmicEnergyState>) => {
         const oldState = { ...currentState };
         currentState = { ...currentState, ...newState };
 
         if (currentUserId) {
-            const userProfileRef = doc(db, 'userProfiles', currentUserId);
+            if (!db) {
+                console.error("Firestore no está inicializado");
+                currentState = oldState;
+                return;
+            }
+            
             try {
-                // Use updateDoc for partial updates to avoid overwriting fields
+                const userProfileRef = doc(db, 'userProfiles', currentUserId);
                 await setDoc(userProfileRef, newState, { merge: true });
             } catch (error) {
                 console.error("Failed to update user profile in Firestore:", error);
@@ -92,6 +113,13 @@ const createStore = () => {
 
     const loadInitialState = async (userId: string) => {
       if (userId === currentUserId && currentState.points > 0) return; // Already loaded for this user
+
+      if (!db) {
+        console.error("Firestore no está inicializado");
+        currentState = { ...initialState };
+        listeners.forEach(listener => listener());
+        return;
+      }
 
       currentUserId = userId;
       const userProfileRef = doc(db, 'userProfiles', userId);
