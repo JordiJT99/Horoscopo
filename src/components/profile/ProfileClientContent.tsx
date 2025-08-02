@@ -173,11 +173,13 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
             </Button>
           </CardContent>
         </Card>
+
+        <CosmicEnergyBar dictionary={dictionary} />
       </div>
 
       <div className="md:col-span-2 space-y-8">
         <MySignsCard dictionary={dictionary} locale={locale} onboardingData={onboardingData} />
-        <CosmicEnergyBar dictionary={dictionary} />
+        
         <NotificationSettingsCard dictionary={dictionary} />
 
         <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
