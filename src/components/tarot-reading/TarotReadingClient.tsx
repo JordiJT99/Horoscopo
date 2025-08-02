@@ -50,8 +50,30 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
     setIsClient(true);
   }, []);
 
+
   const today = new Date().toISOString().split('T')[0];
   const hasUsedToday = lastGained.draw_tarot_card === today;
+  const handleDrawCard = async () => {
+    if (!question.trim()) {
+      setError(dictionary['TarotReadingPage.enterQuestionPrompt'] || "Please enter a question for your reading.");
+      return;
+    }
+    
+    setError(null);
+    setReading(null);
+    setIsShowingSharedContent(false);
+    setIsLoading(true);
+
+    if (!hasUsedToday) { // First use of the day
+      // Eliminar restricción premium - acceso gratuito para todos
+      setIsLoading(true);
+      performReading(true);
+    } else { // Subsequent use
+      // Eliminar costo de stardust - acceso gratuito
+      setIsLoading(true);
+      performReading(false);
+    }
+  };
 
   const performReading = async (isFirstUse: boolean) => {
     setIsLoading(true);
@@ -59,9 +81,12 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
-      if (isFirstUse) {
+      
+      const today = new Date().toISOString().split('T')[0];
+      if(lastGained.draw_tarot_card !== today) {
         addEnergyPoints('draw_tarot_card', 15);
       }
+
     } catch (err) {
       console.error("Error getting tarot reading:", err);
       setError(dictionary['TarotReadingPage.errorFetching'] || "The spirits are clouded... Could not get a reading. Please try again.");

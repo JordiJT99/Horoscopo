@@ -1,4 +1,6 @@
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem, InterstitialAdPlugin } from '@capacitor-community/admob';
+
+
 import { Capacitor } from '@capacitor/core';
 
 // ⚡ MODO DE PRODUCCIÓN ACTIVADO ⚡
@@ -45,9 +47,11 @@ export class AdMobService {
       console.log('AdMob initialized successfully in PRODUCTION mode');
     } catch (error) {
       console.error('Failed to initialize AdMob:', error);
+
       throw error;
     }
   }
+
 
   // Obtener información del modo actual
   static getAdModeInfo(): { isTesting: boolean; config: typeof AD_CONFIG } {
@@ -182,3 +186,4 @@ export const {
   getInitializationStatus,
   getAdModeInfo
 } = AdMobService;
+

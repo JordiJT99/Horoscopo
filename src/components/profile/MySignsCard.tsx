@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useMemo } from 'react';
@@ -55,7 +56,7 @@ export default function MySignsCard({ dictionary, locale, onboardingData }: MySi
           <CardDescription className="text-xs">{dictionary['ProfilePage.mySignsDescription'] || "Your core astrological placements."}</CardDescription>
         </div>
         <Button variant="ghost" size="icon" asChild>
-          <Link href={`/${locale}/onboarding`} aria-label={dictionary['ProfilePage.editBirthDataAriaLabel'] || 'Edit birth data'}>
+          <Link href={`/${locale}/onboarding?mode=edit`} aria-label={dictionary['ProfilePage.editBirthDataAriaLabel'] || 'Edit birth data'}>
             <Edit3 className="h-4 w-4" />
             <span className="sr-only">{dictionary['ProfilePage.editBirthDataAriaLabel'] || 'Edit birth data'}</span>
           </Link>

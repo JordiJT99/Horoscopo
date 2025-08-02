@@ -51,6 +51,7 @@ next-env.d.ts
 /ios
 /www
 
+
 # Android build artifacts
 android/app/build/
 android/app/release/
@@ -86,3 +87,4 @@ stats.json
 webpack.stats.json
 **/webpack/**/*.pack
 **/assets/**/cache/
+
