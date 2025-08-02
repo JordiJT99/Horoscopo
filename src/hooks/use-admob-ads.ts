@@ -15,33 +15,25 @@ export function useAdMob() {
     const initializeAdMob = async () => {
       if (!AdMobService.isSupported()) {
         console.log('AdMob not supported on this platform');
-
         return;
       }
       try {
         await AdMobService.initialize();
         setIsInitialized(true);
-
         console.log('AdMob initialized successfully via hook');
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : 'Failed to initialize AdMob';
         setError(errorMsg);
         console.error('AdMob initialization error:', err);
-
-=======
-
       } finally {
         setIsLoading(false);
-
       }
     };
     initializeAdMob();
   }, []);
 
-
-
   // Función para mostrar banner
-  const showBanner = async (position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER) => {
+  const showBanner = useCallback(async (position: BannerAdPosition = BannerAdPosition.BOTTOM_CENTER) => {
     try {
       setError(null);
       await AdMobService.showBanner(position);
@@ -115,3 +107,29 @@ export function useAdMob() {
   };
 }
 
+export function useAutoShowBanner(position: BannerAdPosition) {
+  const { isInitialized, isSupported, showBanner, hideBanner } = useAdMob();
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
+
+  useEffect(() => {
+    if (isInitialized && isSupported) {
+      const showAdBanner = async () => {
+        try {
+          await showBanner(position);
+          setIsBannerVisible(true);
+        } catch (error) {
+          console.error('Failed to auto-show banner:', error);
+        }
+      };
+      
+      showAdBanner();
+
+      // Cleanup on component unmount
+      return () => {
+        hideBanner().catch(err => console.error("Failed to hide banner on unmount:", err));
+      };
+    }
+  }, [isInitialized, isSupported, position, showBanner, hideBanner]);
+
+  return { isBannerVisible };
+}
