@@ -3,40 +3,53 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Regla de seguridad para los perfiles de usuario
+    // Reglas para los perfiles de usuario
     match /userProfiles/{userId} {
-      // Un usuario solo puede leer y escribir en su propio documento de perfil.
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Un usuario puede leer y crear su propio documento.
+      allow read, create: if request.auth != null && request.auth.uid == userId;
+      
+      // Un usuario solo puede actualizar su propio documento.
+      // Se añaden validaciones para asegurar la integridad de los datos.
+      allow update: if request.auth != null && request.auth.uid == userId
+                    && request.resource.data.points is int
+                    && request.resource.data.points >= 0
+                    && request.resource.data.level is int
+                    && request.resource.data.level >= 1
+                    && request.resource.data.stardust is int
+                    && request.resource.data.stardust >= 0;
+      
+      // No se permite borrar perfiles desde el cliente por ahora.
+      allow delete: if false;
     }
-    
+
     // Reglas para las publicaciones de la comunidad
     match /community-posts/{postId} {
-      // Cualquiera puede leer las publicaciones
+      // Cualquiera puede leer las publicaciones (incluso anónimos).
       allow read: if true;
-      // Solo los usuarios autenticados pueden crear, actualizar o eliminar SUS PROPIAS publicaciones
+      
+      // Solo los usuarios autenticados pueden crear publicaciones.
       allow create: if request.auth != null;
+      
+      // Un usuario solo puede actualizar o eliminar sus propias publicaciones.
       allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
     }
 
-    // Reglas para los comentarios de las publicaciones
+    // Reglas para los comentarios dentro de las publicaciones
     match /community-posts/{postId}/comments/{commentId} {
-        // Cualquiera puede leer los comentarios
-        allow read: if true;
-        // Solo los usuarios autenticados pueden crear comentarios
-        allow create: if request.auth != null;
-        // Los usuarios pueden actualizar/eliminar sus propios comentarios (opcional)
-        allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+      // Cualquiera puede leer los comentarios.
+      allow read: if true;
+      
+      // Solo los usuarios autenticados pueden crear comentarios.
+      allow create: if request.auth != null;
+
+      // Por ahora, no se permite actualizar o borrar comentarios desde el cliente.
+      allow update, delete: if false;
     }
 
-    // Permitir a los usuarios gestionar su propio token FCM.
+    // Reglas para los tokens de notificaciones push
     match /fcmTokens/{token} {
+      // Un usuario solo puede escribir su propio token.
       allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
-    }
-
-    // Denegar todas las demás escrituras por defecto para mayor seguridad.
-    match /{document=**} {
-      allow read: if true; // Permite lectura global si no hay reglas más específicas.
-      allow write: if false; // Deniega escritura si no hay una regla que lo permita explícitamente.
     }
   }
 }
