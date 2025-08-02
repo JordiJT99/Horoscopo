@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { AuthUser } from '@/types';
@@ -208,7 +209,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
   const updateUsername = useCallback(async (newName: string, locale: Locale) => {
     const dictionary = await getDictionary(locale);
-    if (!auth?.currentUser) {
+    if (!auth.currentUser) {
       toast({ title: dictionary['Error.genericTitle'] || "Error", description: "No user is currently signed in.", variant: "destructive" });
       return;
     }
@@ -222,6 +223,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       toast({ title: dictionary['ProfilePage.accountUpdateErrorTitle'] || "Update Error", description: error.message || "Could not update your username.", variant: "destructive" });
     }
   }, [toast]);
+
 
   const logout = useCallback(async (locale: Locale) => {
     if (!appInitializedSuccessfully || !auth) {
@@ -252,6 +254,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     }
   }, [router, toast]);
+
 
   const markOnboardingAsComplete = useCallback(() => {
     if (user?.uid) {
@@ -307,6 +310,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
   }, [user, isLoading, pathname, router, hasMounted, appInitializedSuccessfully, onboardingComplete]);
+
 
   if (!hasMounted) {
     return null; 
