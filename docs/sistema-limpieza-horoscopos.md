@@ -1,20 +1,23 @@
 # Sistema de Limpieza Automática de Horóscopos
 
 ## Descripción
-Sistema para eliminar automáticamente horóscopos diarios que tengan más de 1 semana de antigüedad, manteniendo la base de datos optimizada.
+Sistema para eliminar automáticamente horóscopos diarios genéricos y personalizados que tengan más de 1-2 semanas de antigüedad, manteniendo la base de datos optimizada.
 
 ## Componentes
 
 ### 1. Función de Limpieza
 - **Archivo**: `src/lib/horoscope-firestore-service.ts`
-- **Método**: `cleanOldDailyHoroscopes()`
-- **Funcionalidad**: Elimina horóscopos anteriores a 7 días desde la fecha actual
+- **Métodos**: 
+  - `cleanOldDailyHoroscopes()` - Elimina horóscopos genéricos anteriores a 7 días
+  - `cleanOldPersonalizedHoroscopes()` - Elimina horóscopos personalizados anteriores a 14 días
+- **Funcionalidad**: Mantenimiento automático de la base de datos
 
 ### 2. Endpoint API
 - **Ruta**: `/api/admin/cleanup-horoscopes`
-- **Método**: POST
+- **Método**: POST/GET
 - **Autenticación**: Requiere clave `key=cleanup-old-horoscopes-2025`
 - **Uso**: `POST /api/admin/cleanup-horoscopes?key=cleanup-old-horoscopes-2025`
+- **Nuevo**: Ahora limpia tanto horóscopos genéricos como personalizados
 
 ### 3. Scripts de Automatización
 
@@ -43,12 +46,27 @@ o directamente:
 
 ### Estructura de Datos Afectada
 ```
-/horoscopes/daily/
-  ├── 2025-07-25/     ← Se eliminará (más de 1 semana)
-  ├── 2025-07-26/     ← Se eliminará (más de 1 semana)
-  ├── 2025-08-01/     ← Se mantiene (menos de 1 semana)
-  └── 2025-08-02/     ← Se mantiene (fecha actual)
+/horoscopes/
+  ├── daily/                    ← Horóscopos genéricos
+  │   ├── 2025-07-25/          ← Se eliminará (más de 1 semana)
+  │   ├── 2025-07-26/          ← Se eliminará (más de 1 semana)
+  │   ├── 2025-08-01/          ← Se mantiene (menos de 1 semana)
+  │   └── 2025-08-02/          ← Se mantiene (fecha actual)
+  └── personalized/             ← Horóscopos personalizados
+      ├── 2025-07-15/          ← Se eliminará (más de 2 semanas)
+      ├── 2025-07-20/          ← Se eliminará (más de 2 semanas)
+      ├── 2025-07-25/          ← Se mantiene (menos de 2 semanas)
+      └── 2025-08-02/          ← Se mantiene (fecha actual)
 ```
+
+### Tipos de Horóscopos
+1. **Genéricos**: Horóscopos estándar para todos los usuarios del mismo signo
+   - Ubicación: `/horoscopes/daily/{date}/{locale}/{sign}`
+   - Retención: 7 días
+   
+2. **Personalizados**: Horóscopos únicos basados en datos del usuario
+   - Ubicación: `/horoscopes/personalized/{date}/{locale}/{sign}/{userId}`
+   - Retención: 14 días (mayor porque son únicos y costosos de regenerar)
 
 ## Ejecución Manual
 
@@ -92,8 +110,16 @@ crontab -e
 {
   "success": true,
   "message": "Limpieza completada exitosamente",
-  "cleaned": 5,
-  "errors": [],
+  "generic": {
+    "cleaned": 5,
+    "errors": []
+  },
+  "personalized": {
+    "cleaned": 12,
+    "errors": []
+  },
+  "totalCleaned": 17,
+  "totalErrors": 0,
   "timestamp": "2025-08-02T10:30:00.000Z"
 }
 ```
