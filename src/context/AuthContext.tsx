@@ -198,7 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
   const updateUsername = useCallback(async (newName: string, locale: Locale) => {
     const dictionary = await getDictionary(locale);
-    if (!auth.currentUser) {
+    if (!auth?.currentUser) {
       toast({ title: dictionary['Error.genericTitle'] || "Error", description: "No user is currently signed in.", variant: "destructive" });
       return;
     }

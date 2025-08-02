@@ -26,6 +26,20 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Excluir rutas de API, archivos estáticos y otros recursos
+  if (
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/custom_assets/') ||
+    pathname.startsWith('/images/') ||
+    pathname === '/favicon.ico' ||
+    pathname === '/firebase-messaging-sw.js' ||
+    pathname === '/sw.js' ||
+    pathname === '/manifest.json'
+  ) {
+    return NextResponse.next();
+  }
+
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
@@ -50,6 +64,14 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|custom_assets|images|favicon.ico|firebase-messaging-sw.js).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * And other static assets
+     */
+    '/((?!api/|_next/static|_next/image|custom_assets|images|favicon.ico|firebase-messaging-sw.js|sw.js|manifest.json).*)',
   ],
 };
