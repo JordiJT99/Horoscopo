@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -25,6 +26,7 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
   const pathname = usePathname();
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
+  const [isDailyRewardChecked, setIsDailyRewardChecked] = useState(false); // New state
 
   useEffect(() => {
     setHasMounted(true);
@@ -53,18 +55,20 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
     }
   }, [hasMounted, pathname, router]);
 
-  // Effect to award daily stardust
+  // Effect to award daily stardust - now runs only once per session
   useEffect(() => {
-    if (hasMounted) {
-      const awarded = checkAndAwardDailyStardust();
-      if (awarded) {
-        toast({
-          title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
-          description: dictionary['Toast.dailyStardustDescription'] || 'You received your daily 100 Stardust!',
-        });
-      }
+    if (hasMounted && !isDailyRewardChecked) {
+      checkAndAwardDailyStardust().then(awarded => {
+        if (awarded) {
+          toast({
+            title: dictionary['Toast.dailyStardustTitle'] || 'Daily Stardust Reward!',
+            description: (dictionary['Toast.dailyStardustDescription'] || 'You received your daily +{amount} Stardust.').replace('{amount}', '1'),
+          });
+        }
+        setIsDailyRewardChecked(true); // Mark as checked for this session
+      });
     }
-  }, [hasMounted, checkAndAwardDailyStardust, toast, dictionary]);
+  }, [hasMounted, isDailyRewardChecked, checkAndAwardDailyStardust, toast, dictionary]);
 
   // Effect to register the Service Worker for PWA functionality
   useEffect(() => {

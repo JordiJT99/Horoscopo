@@ -318,7 +318,7 @@ export const useCosmicEnergy = () => {
         const dailyAmount = 1;
         
         await store.setState({
-            stardust: currentState.stardust + dailyAmount,
+            stardust: (currentState.stardust || 0) + dailyAmount,
             lastGained: { ...currentState.lastGained, 'daily_stardust': today },
         });
         
