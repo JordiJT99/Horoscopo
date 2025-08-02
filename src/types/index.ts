@@ -45,6 +45,7 @@ export interface HoroscopeData {
 export interface HoroscopeDetail {
   main: string;
   love: string;
+  money: string;
   health: string;
 }
 
@@ -341,4 +342,34 @@ export interface UserAstrologyProfile {
 export interface AwardStardustResult {
     success: boolean;
     amount: number;
+}
+
+// ==========================================
+// FIRESTORE HOROSCOPE TYPES
+// ==========================================
+
+export interface FirestoreHoroscopeData {
+  main: string;
+  love: string;
+  money: string;
+  health: string;
+  generatedAt: Date;
+  sign: ZodiacSignName;
+}
+
+export interface DailyHoroscopeDocument {
+  [key: string]: FirestoreHoroscopeData; // key = sign name en minúscula
+}
+
+export type HoroscopePeriod = 'daily' | 'weekly' | 'monthly';
+
+export interface HoroscopeGenerationJob {
+  id: string;
+  date: string;
+  period: HoroscopePeriod;
+  locale: Locale;
+  status: 'pending' | 'processing' | 'completed' | 'error';
+  createdAt: Date;
+  completedAt?: Date;
+  error?: string;
 }
