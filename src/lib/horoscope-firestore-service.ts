@@ -9,7 +9,8 @@ import {
   where,
   writeBatch,
   orderBy,
-  limit
+  limit,
+  deleteDoc
 } from 'firebase/firestore';
 import { ALL_SIGN_NAMES } from '@/lib/constants';
 import type { HoroscopeDetail, ZodiacSignName, Locale } from '@/types';
@@ -364,6 +365,107 @@ export class HoroscopeFirestoreService {
     } catch (error) {
       console.error('❌ Error cargando horóscopo mensual para signo:', error);
       return null;
+    }
+  }
+
+  /**
+   * Limpia horóscopos diarios antiguos (más de 1 semana)
+   */
+  static async cleanOldDailyHoroscopes(): Promise<{
+    cleaned: number;
+    errors: string[];
+  }> {
+    try {
+      this.validateFirestore();
+      
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 7); // 7 días atrás
+      const cutoffDateString = cutoffDate.toISOString().split('T')[0]; // YYYY-MM-DD
+      
+      console.log(`🧹 Iniciando limpieza de horóscopos anteriores a: ${cutoffDateString}`);
+      
+      let cleaned = 0;
+      const errors: string[] = [];
+      const batch = writeBatch(db!);
+      let operationsInBatch = 0;
+      const MAX_BATCH_SIZE = 400; // Límite conservador para Firestore
+      
+      // Generar fechas a verificar (últimos 30 días para encontrar fechas antiguas)
+      const datesToCheck: string[] = [];
+      for (let i = 7; i <= 30; i++) { // Desde hace 7 días hasta hace 30 días
+        const checkDate = new Date();
+        checkDate.setDate(checkDate.getDate() - i);
+        const dateString = checkDate.toISOString().split('T')[0];
+        datesToCheck.push(dateString);
+      }
+      
+      console.log(`🔍 Verificando ${datesToCheck.length} fechas para limpieza...`);
+      
+      const locales = ['es', 'en', 'de', 'fr'];
+      
+      for (const dateString of datesToCheck) {
+        try {
+          // Verificar si la fecha es anterior al cutoff
+          if (dateString < cutoffDateString) {
+            let dateHadData = false;
+            
+            for (const locale of locales) {
+              // Referencia al documento específico: horoscopes/daily/{date}/{locale}
+              const docRef = doc(db!, 'horoscopes', 'daily', dateString, locale);
+              
+              // Verificar si el documento existe
+              const docSnap = await getDoc(docRef);
+              
+              if (docSnap.exists()) {
+                dateHadData = true;
+                batch.delete(docRef);
+                operationsInBatch++;
+                
+                console.log(`🗑️ Marcando para eliminar: ${dateString}/${locale}`);
+                
+                // Si alcanzamos el límite del batch, ejecutarlo
+                if (operationsInBatch >= MAX_BATCH_SIZE) {
+                  await batch.commit();
+                  console.log(`🗑️ Ejecutado batch con ${operationsInBatch} operaciones`);
+                  operationsInBatch = 0;
+                  
+                  // Crear nuevo batch - método correcto
+                  const newBatch = writeBatch(db!);
+                  // Reasignar la variable batch
+                  Object.setPrototypeOf(batch, Object.getPrototypeOf(newBatch));
+                  Object.assign(batch, newBatch);
+                }
+              }
+            }
+            
+            if (dateHadData) {
+              cleaned++;
+              console.log(`✅ Fecha ${dateString} marcada para limpieza completa`);
+            }
+          }
+        } catch (docError) {
+          const errorMsg = `Error procesando fecha ${dateString}: ${docError}`;
+          console.error('❌', errorMsg);
+          errors.push(errorMsg);
+        }
+      }
+      
+      // Ejecutar el último batch si tiene operaciones pendientes
+      if (operationsInBatch > 0) {
+        await batch.commit();
+        console.log(`🗑️ Ejecutado batch final con ${operationsInBatch} operaciones`);
+      }
+      
+      console.log(`✅ Limpieza completada. Fechas procesadas: ${cleaned}, Errores: ${errors.length}`);
+      
+      return {
+        cleaned,
+        errors
+      };
+      
+    } catch (error) {
+      console.error('❌ Error en limpieza de horóscopos antiguos:', error);
+      throw error;
     }
   }
 }
