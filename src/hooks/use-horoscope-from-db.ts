@@ -45,27 +45,68 @@ export function useHoroscopeFromDB({
       
       console.log(`🔍 Cargando horóscopo desde BD: ${sign} - ${targetDate} (${locale})`);
       
-      const response = await fetch(`/api/horoscopes/${targetDate}?locale=${locale}&sign=${sign}`, {
+      // Detectar WebView para logging adicional
+      const isWebView = typeof window !== 'undefined' && (
+        window.navigator.userAgent.includes('wv') || 
+        window.navigator.userAgent.includes('WebView') ||
+        // @ts-ignore
+        window.ReactNativeWebView !== undefined
+      );
+      
+      if (isWebView) {
+        console.log(`📱 WebView detectada. UserAgent: ${window.navigator.userAgent}`);
+      }
+      
+      const apiUrl = `/api/horoscopes/${targetDate}?locale=${locale}&sign=${sign}`;
+      console.log(`🌐 Fetching: ${apiUrl}`);
+      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          // Agregar headers específicos para WebView
+          'X-Requested-With': 'XMLHttpRequest',
+          'Cache-Control': 'no-cache'
+        },
         // Agregar cache para evitar requests duplicados
         cache: 'no-store'
       });
+      
+      console.log(`📡 Response status: ${response.status} ${response.statusText}`);
       
       if (!response.ok) {
         if (response.status === 404) {
           throw new Error('Horóscopo no encontrado para esta fecha');
         }
-        const errorData = await response.json().catch(() => ({}));
+        
+        let errorData: any = {};
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          console.error('❌ Error parsing response JSON:', parseError);
+          throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+        }
+        
         throw new Error(errorData.error || `Error HTTP: ${response.status}`);
       }
       
       const data = await response.json();
+      console.log(`✅ Data received:`, { hasHoroscope: !!data.horoscope, keys: Object.keys(data) });
+      
       setHoroscope(data.horoscope);
       
       console.log(`✅ Horóscopo cargado desde BD: ${sign}`);
       
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
-      console.error('❌ Error cargando horóscopo:', errorMessage);
+      console.error('❌ Error cargando horóscopo:', {
+        error: errorMessage,
+        sign,
+        locale,
+        date: targetDate,
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'SSR'
+      });
       setError(errorMessage);
       setHoroscope(null);
     } finally {

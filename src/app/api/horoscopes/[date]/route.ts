@@ -13,7 +13,23 @@ export async function GET(
     const sign = searchParams.get('sign');
     const { date } = await params;
 
-    console.log(`🔍 API: Cargando horóscopos para ${date} (${locale})`);
+    // Logging adicional para debugging
+    const userAgent = request.headers.get('user-agent') || 'unknown';
+    const isWebView = userAgent.includes('wv') || userAgent.includes('WebView');
+    
+    console.log(`🔍 API: Cargando horóscopos para ${date} (${locale})`, {
+      sign,
+      userAgent: isWebView ? userAgent : 'browser',
+      isWebView
+    });
+
+    // Validar parámetros
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return NextResponse.json(
+        { error: 'Formato de fecha inválido. Use YYYY-MM-DD' },
+        { status: 400 }
+      );
+    }
 
     if (sign) {
       // Cargar horóscopo para un signo específico
@@ -38,8 +54,16 @@ export async function GET(
         } catch (generateError) {
           console.error('❌ Error generando horóscopo automáticamente:', generateError);
           return NextResponse.json(
-            { error: 'Error generando horóscopo automáticamente' },
-            { status: 500 }
+            { error: 'Error generando horóscopo automáticamente', details: generateError instanceof Error ? generateError.message : 'Unknown error' },
+            { 
+              status: 500,
+              headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+              }
+            }
           );
         }
       }
@@ -47,7 +71,13 @@ export async function GET(
       if (!horoscope) {
         return NextResponse.json(
           { error: 'Horóscopo no encontrado y no se pudo generar' },
-          { status: 404 }
+          { 
+            status: 404,
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Access-Control-Allow-Origin': '*'
+            }
+          }
         );
       }
 
@@ -56,6 +86,12 @@ export async function GET(
         locale,
         sign,
         horoscope 
+      }, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        }
       });
     } else {
       // Cargar horóscopos para todos los signos
@@ -78,8 +114,16 @@ export async function GET(
         } catch (generateError) {
           console.error('❌ Error generando horóscopos automáticamente:', generateError);
           return NextResponse.json(
-            { error: 'Error generando horóscopos automáticamente' },
-            { status: 500 }
+            { error: 'Error generando horóscopos automáticamente', details: generateError instanceof Error ? generateError.message : 'Unknown error' },
+            { 
+              status: 500,
+              headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+              }
+            }
           );
         }
       }
@@ -87,7 +131,13 @@ export async function GET(
       if (!horoscopes) {
         return NextResponse.json(
           { error: 'Horóscopos no encontrados y no se pudieron generar' },
-          { status: 404 }
+          { 
+            status: 404,
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Access-Control-Allow-Origin': '*'
+            }
+          }
         );
       }
 
@@ -95,6 +145,12 @@ export async function GET(
         date,
         locale,
         horoscopes 
+      }, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        }
       });
     }
     
@@ -102,10 +158,18 @@ export async function GET(
     console.error('❌ Error cargando horóscopos:', error);
     return NextResponse.json(
       { 
-        error: 'Error cargando horóscopos',
-        details: error instanceof Error ? error.message : 'Error desconocido'
+        error: 'Error interno del servidor',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString()
       },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        }
+      }
     );
   }
 }
