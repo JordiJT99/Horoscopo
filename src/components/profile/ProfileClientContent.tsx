@@ -23,33 +23,46 @@ import MySignsCard from './MySignsCard';
 import NotificationSettingsCard from './NotificationSettingsCard';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { cn } from '@/lib/utils';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 
 export default function ProfileClientContent({ dictionary, locale }: { dictionary: Dictionary, locale: Locale }) {
   const { user, isLoading, logout, updateUsername } = useAuth();
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
-  const { level: userLevel } = useCosmicEnergy();
+  const { level: userLevel, bio: bioFromHook, setBio: setBioInStore } = useCosmicEnergy() as any;
 
-  // Editing states
   const [isEditingAbout, setIsEditingAbout] = useState(false);
   
-  // Form data states
   const [bio, setBio] = useState('');
   const [username, setUsername] = useState('');
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
     setIsClient(true);
-    if (user) {
-      const storedBio = localStorage.getItem(`userBio_${user.uid}`) || (dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom.");
-      setBio(storedBio);
-      setUsername(user.displayName || '');
-      const storedOnboardingData = localStorage.getItem(`onboardingData_${user.uid}`);
-      if (storedOnboardingData) {
-        setOnboardingData(JSON.parse(storedOnboardingData));
+    const fetchUserData = async () => {
+      if (user) {
+        setUsername(user.displayName || '');
+        // Fetch extended profile data from Firestore
+        const profileRef = doc(db, 'userProfiles', user.uid);
+        const profileSnap = await getDoc(profileRef);
+        if (profileSnap.exists()) {
+          const data = profileSnap.data();
+          setBio(data.bio || (dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom."));
+        } else {
+            // If no profile, use placeholder and maybe save it later
+            setBio(dictionary['ProfilePage.placeholderBio'] || "Lover of stars, seeker of cosmic wisdom.");
+        }
+
+        // Onboarding data is still in localStorage for now
+        const storedOnboardingData = localStorage.getItem(`onboardingData_${user.uid}`);
+        if (storedOnboardingData) {
+          setOnboardingData(JSON.parse(storedOnboardingData));
+        }
       }
-    }
+    };
+    fetchUserData();
   }, [user, dictionary]);
 
   const userSunSign: ZodiacSign | null = useMemo(() => {
@@ -59,15 +72,21 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
     return null;
   }, [onboardingData]);
 
-  // Derived display values
   const displayName = user?.displayName || (dictionary['ProfilePage.defaultUsername'] || "Astro User");
   const displayEmail = user?.email || (dictionary['ProfilePage.defaultEmail'] || "No email provided");
   const userInitial = displayName.substring(0, 1).toUpperCase();
 
-  const handleAboutEdit = () => {
-    if (isEditingAbout) { // Was editing, now wants to save
-      localStorage.setItem(`userBio_${user?.uid}`, bio);
-      toast({ title: dictionary['ProfilePage.aboutUpdateSuccessTitle'] || "About Me Updated", description: dictionary['ProfilePage.aboutUpdateSuccessMessage'] || "Your bio has been saved." });
+  const handleAboutEdit = async () => {
+    if (isEditingAbout) {
+      if(user) {
+        const profileRef = doc(db, 'userProfiles', user.uid);
+        try {
+          await setDoc(profileRef, { bio }, { merge: true });
+          toast({ title: dictionary['ProfilePage.aboutUpdateSuccessTitle'] || "About Me Updated", description: dictionary['ProfilePage.aboutUpdateSuccessMessage'] || "Your bio has been saved." });
+        } catch (error) {
+          toast({ title: "Error", description: "Could not save bio.", variant: "destructive" });
+        }
+      }
     }
     setIsEditingAbout(!isEditingAbout);
   };
@@ -85,14 +104,14 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
   };
   
   const profileBackgroundClass = useMemo(() => {
-    if (userLevel >= 9) return 'profile-bg-rosette'; // Supernova
-    if (userLevel >= 4) return 'profile-bg-gaia-nebula'; // Planeta
+    if (userLevel >= 9) return 'profile-bg-rosette'; 
+    if (userLevel >= 4) return 'profile-bg-gaia-nebula'; 
     return '';
   }, [userLevel]);
 
   const avatarFrameClass = useMemo(() => {
-    if (userLevel >= 8) return 'avatar-frame-ring-of-light'; // Nebulosa
-    if (userLevel >= 2) return 'avatar-frame-comet'; // Cometa
+    if (userLevel >= 8) return 'avatar-frame-ring-of-light';
+    if (userLevel >= 2) return 'avatar-frame-comet';
     return '';
   }, [userLevel]);
 
@@ -130,7 +149,6 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
   return (
     <div className={cn("grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto p-4 rounded-lg transition-all duration-500", profileBackgroundClass)}>
       
-      {/* --- Left Column: Main Profile Card --- */}
       <div className="md:col-span-1 space-y-8">
         <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
           <CardHeader className="items-center text-center p-6">
@@ -155,12 +173,13 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
             </Button>
           </CardContent>
         </Card>
+
+        <CosmicEnergyBar dictionary={dictionary} />
       </div>
 
-      {/* --- Right Column: Content --- */}
       <div className="md:col-span-2 space-y-8">
         <MySignsCard dictionary={dictionary} locale={locale} onboardingData={onboardingData} />
-        <CosmicEnergyBar dictionary={dictionary} />
+        
         <NotificationSettingsCard dictionary={dictionary} />
 
         <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">

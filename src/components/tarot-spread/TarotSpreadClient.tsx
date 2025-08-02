@@ -1,9 +1,10 @@
 
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
 import type { Dictionary, Locale } from '@/lib/dictionaries';
-import { ALL_TAROT_CARDS } from '@/lib/constants';
+import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
@@ -37,6 +38,7 @@ const shuffleArray = (array: string[]): string[] => {
   }
   return newArray;
 };
+
 
 export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadClientProps) {
   const { toast } = useToast();
@@ -110,28 +112,23 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     };
     
     if (!hasUsedToday) {
-      // Primera vez del día - acceso gratuito
       performReading(true);
     } else {
-      // Usos posteriores - ofrecer anuncio con recompensa para bonificación extra
       setIsShowingAd(true);
       try {
         const reward = await showRewardedAd();
         if (reward) {
-          // Si vio el anuncio, dar lectura + energía bonus
           performReading(false);
-          addEnergyPoints('draw_tarot_card', 10); // Energía bonus por ver anuncio
+          addEnergyPoints('draw_tarot_card', 10);
           toast({
             title: "¡Recompensa!",
             description: "+10 energía cósmica por ver el anuncio",
           });
         } else {
-          // Si no vio el anuncio, dar lectura normal
           performReading(false);
         }
       } catch (adError) {
         console.log('Rewarded ad not available:', adError);
-        // Si el anuncio no está disponible, dar lectura normal
         performReading(false);
       } finally {
         setIsShowingAd(false);
@@ -147,8 +144,6 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     setIsLoading(false);
   };
 
-  const getCardImagePath = (cardName: string) => `/custom_assets/tarot_cards/${cardName.toLowerCase().replace(/\s+/g, '_')}.png`;
-
   return (
     <div className="w-full">
       {!reading ? (
@@ -161,41 +156,44 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
             </div>
           </div>
           <div className="grid grid-cols-6 sm:grid-cols-7 md:grid-cols-9 gap-2 sm:gap-4 justify-center">
-            {shuffledCards.map((cardName, index) => (
+            {shuffledCards.map((cardName, index) => {
+              const isSelected = selectedIndices.includes(index);
+              const cardData = isSelected ? selectedCards.find(c => c.name === cardName) : null;
+              
+              return (
               <div key={index} className="perspective-1000">
                 <motion.div
                   className="relative w-full aspect-[2/3] transform-style-preserve-3d"
-                  animate={{ rotateY: selectedIndices.includes(index) ? 180 : 0 }}
+                  animate={{ rotateY: isSelected ? 180 : 0 }}
                   transition={{ duration: 0.5 }}
+                  onClick={() => handleCardClick(index)}
                 >
                   <div
                     className={cn(
                       "absolute w-full h-full backface-hidden rounded-md overflow-hidden shadow-lg border-2 border-primary/20",
-                      selectedIndices.length < 2 && !selectedIndices.includes(index) && "cursor-pointer hover:shadow-primary/40 hover:scale-105 transition-all duration-300",
+                      !isSelected && selectedIndices.length < 2 && "cursor-pointer hover:shadow-primary/40 hover:scale-105 transition-all duration-300",
                     )}
-                    onClick={() => handleCardClick(index)}
                   >
                     <Image src={cardBackPath} alt={dictionary['TarotDailyReading.cardBackAlt']} layout="fill" objectFit="cover" />
                   </div>
                   <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)] rounded-md overflow-hidden shadow-lg border-2 border-primary/50">
-                    {selectedCards.find(c => c.name === cardName) && (
+                    {cardData && (
                       <motion.div
                         className="w-full h-full"
-                        animate={{ rotate: selectedCards.find(c => c.name === cardName)?.isReversed ? 180 : 0 }}
+                        animate={{ rotate: cardData.isReversed ? 180 : 0 }}
                       >
-                         <Image src={getCardImagePath(cardName)} alt={cardName} layout="fill" objectFit="cover" />
+                         <Image src={getTarotCardImagePath(cardData.name)} alt={cardData.name} layout="fill" objectFit="cover" />
                       </motion.div>
                     )}
                   </div>
                 </motion.div>
               </div>
-            ))}
+            )})}
           </div>
           <div className="text-center mt-8">
             <Button onClick={handleGetReading} disabled={selectedIndices.length !== 2 || isLoading} size="lg">
               {isLoading ? <LoadingSpinner className="mr-2 h-5 w-5" /> : <Sparkles className="mr-2 h-5 w-5" />}
               {isLoading ? (dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card...") : (dictionary['TarotSpreadPage.getReadingButton'] || 'Reveal Reading')}
-              {!isPremium && hasUsedToday && ` (Free)`}
             </Button>
           </div>
         </>
@@ -232,7 +230,6 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
                    <Button onClick={handleReset} variant="outline" size="lg">
                      <RotateCcw className="mr-2 h-5 w-5" />
                      {dictionary['TarotSpreadPage.drawAgainButton'] || "Draw Again"}
-                     {!isPremium && ` (Free)`}
                   </Button>
                 </div>
               </CardContent>
@@ -243,3 +240,5 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     </div>
   );
 }
+
+  

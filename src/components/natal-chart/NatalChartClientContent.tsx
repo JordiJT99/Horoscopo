@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import type { Dictionary, Locale } from '@/lib/dictionaries'; // Import Locale
@@ -200,7 +201,7 @@ export default function NatalChartClientContent({
       {/* Unconditional Chart Wheel rendering */}
       <div className="my-8 flex flex-col items-center">
         {isLoading || !explanations ? (
-          <div className="w-[360px] h-[360px] flex items-center justify-center">
+          <div className="w-[320px] h-[320px] flex items-center justify-center">
             <LoadingSpinner className="w-16 h-16 text-primary" />
           </div>
         ) : (

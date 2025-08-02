@@ -27,6 +27,8 @@ interface TarotReadingClientProps {
   locale: Locale;
 }
 
+const STARDUST_COST = 1;
+
 export default function TarotReadingClient({ dictionary, locale }: TarotReadingClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,16 +40,19 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const { toast } = useToast();
   const { user } = useAuth();
   const { addEnergyPoints, level: userLevel, stardust, spendStardust, lastGained } = useCosmicEnergy();
-  const { showInterstitial } = useAdMob();
-  const isPremium = true; // All users have premium access now
+  const { showInterstitial, showRewardedAd } = useAdMob();
 
   const [isShowingSharedContent, setIsShowingSharedContent] = useState(false);
+  const [isShowingAd, setIsShowingAd] = useState(false);
   
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+
+  const today = new Date().toISOString().split('T')[0];
+  const hasUsedToday = lastGained.draw_tarot_card === today;
   const handleDrawCard = async () => {
     if (!question.trim()) {
       setError(dictionary['TarotReadingPage.enterQuestionPrompt'] || "Please enter a question for your reading.");
@@ -71,19 +76,8 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   };
 
   const performReading = async (isFirstUse: boolean) => {
+    setIsLoading(true);
     try {
-      // Mostrar anuncio intersticial antes de la lectura para monetización
-      if (!isFirstUse) { // Solo en usos posteriores para no molestar en la primera vez
-        try {
-          await showInterstitial();
-          // Pequeña pausa después del anuncio
-          await new Promise(resolve => setTimeout(resolve, 500));
-        } catch (adError) {
-          console.log('Ad not shown:', adError);
-          // Continuar sin anuncio si hay error
-        }
-      }
-      
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);
@@ -103,6 +97,47 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDrawCard = async () => {
+    if (!question.trim()) {
+      setError(dictionary['TarotReadingPage.enterQuestionPrompt'] || "Please enter a question for your reading.");
+      return;
+    }
+    
+    setError(null);
+    setReading(null);
+    setIsShowingSharedContent(false);
+
+    if (!hasUsedToday) { // First use of the day
+      setIsShowingAd(true);
+      try {
+        await showInterstitial();
+        performReading(true);
+      } catch (adError) {
+        console.log('Ad not shown:', adError);
+        // If ad fails, let them proceed anyway as it's their first use
+        performReading(true);
+      } finally {
+        setIsShowingAd(false);
+      }
+    } else { // Subsequent use
+      if (stardust < STARDUST_COST) {
+        toast({
+          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
+          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to use this again today.").replace('{cost}', STARDUST_COST.toString()),
+          variant: "destructive",
+        });
+        return;
+      }
+      if (spendStardust(STARDUST_COST, 'draw_tarot_card')) {
+        toast({
+          title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
+          description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
+        });
+        performReading(false);
+      }
     }
   };
 
@@ -219,10 +254,10 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
 
               <Button 
                 onClick={handleDrawCard} 
-                disabled={isLoading} 
+                disabled={isLoading || isShowingAd} 
                 className={cn("w-full font-body text-sm md:text-base relative z-10 tarot-cta-button")}
               >
-                {isLoading ? (
+                {isLoading || isShowingAd ? (
                   <>
                     <LoadingSpinner className="mr-2 h-4 w-4" />
                     {dictionary['TarotReadingPage.drawingCardButton'] || "Drawing Card..."}

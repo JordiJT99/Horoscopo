@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import type { Dictionary } from '@/lib/dictionaries';
@@ -7,17 +8,22 @@ import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '../ui/button';
 import { useState } from 'react';
-import { ShoppingBag, Star, Clapperboard, Gem, HelpCircle } from 'lucide-react';
+import { ShoppingBag, Star, Clapperboard, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAdMob } from '@/hooks/use-admob-ads';
+import { StardustIcon } from '@/components/shared/StardustIcon';
+
 
 const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const { addStardust, claimRateReward, hasRatedApp } = useCosmicEnergy();
     const [isAdPlaying, setIsAdPlaying] = useState(false);
     const { toast } = useToast();
     const [showExplanation, setShowExplanation] = useState(false);
+    const { showRewardedAd } = useAdMob();
 
-    const handleRateApp = () => {
-        const { success, amount } = claimRateReward();
+
+    const handleRateApp = async () => {
+        const { success, amount } = await claimRateReward();
         if (success) {
             toast({
                 title: dictionary['Toast.rateSuccessTitle'] || "Thank You!",
@@ -31,17 +37,27 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
         }
     };
 
-    const handleWatchAd = () => {
+    const handleWatchAd = async () => {
         setIsAdPlaying(true);
-        setTimeout(() => {
-            const adReward = 15;
-            addStardust(adReward);
-            setIsAdPlaying(false);
-            toast({
-                 title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
-                description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
+        try {
+            const reward = await showRewardedAd();
+            if (reward) {
+                const adReward = 1;
+                await addStardust(adReward);
+                toast({
+                    title: dictionary['Toast.adWatchedTitle'] || "Ad Finished",
+                    description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
+                });
+            }
+        } catch(err) {
+             toast({
+                title: dictionary['Error.genericTitle'] || "Error",
+                description: "Failed to load ad. Please try again later.",
+                variant: 'destructive',
             });
-        }, 2000); // Simulate ad watch time
+        } finally {
+            setIsAdPlaying(false);
+        }
     };
 
     const stardustPacks = [
@@ -68,7 +84,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
             <CardContent className="p-6 pt-0 space-y-4">
                  {showExplanation && (
                     <Card className="mb-4 p-4 bg-background/50 border-primary/20">
-                        <CardTitle className="text-md font-semibold mb-2 flex items-center gap-1.5">{dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}</CardTitle>
+                        <CardTitle className="text-md font-semibold mb-2 flex items-center gap-1.5"><StardustIcon className="w-5 h-5" />{dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}</CardTitle>
                         <p className="text-sm text-card-foreground/80 whitespace-pre-line">
                             {dictionary['Stardust.explanationContent'] || "Stardust is a special currency within AstroMística. You can use it to unlock premium features, such as sending messages in Psychic Chats.\n\nYou can earn Stardust by:\n- Leveling up your Cosmic Energy.\n- Claiming special rewards (like rating the app).\n- Watching ads.\n- Purchasing Stardust packs (coming soon)."}
                         </p>
@@ -79,7 +95,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                          <Star className="h-5 w-5"/>
                          <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.rateAppButton'] || "Rate the App"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '150')}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '4')}</p>
                          </div>
                     </div>
                     <span>{hasRatedApp ? '✅' : '▶️'}</span>
@@ -89,7 +105,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                          <Clapperboard className="h-5 w-5"/>
                          <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.watchAdButton'] || "Watch an Ad"}</p>
-                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '15')}</p>
+                            <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '1')}</p>
                          </div>
                     </div>
                     <span>{isAdPlaying ? '...' : '▶️'}</span>
@@ -102,7 +118,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                              <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
                                 <div className="flex items-center gap-2">
                                     <span className="text-lg">{pack.icon}</span>
-                                    <p className="font-semibold">{pack.amount.toLocaleString()} 💫</p>
+                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-0.5" />}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="font-bold">{pack.price}</p>

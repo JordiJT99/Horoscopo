@@ -10,27 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { ALL_TAROT_CARDS } from '@/lib/constants';
-
-// Helper function to generate image path from card name
-const getTarotCardImagePath = (cardNameFromAI: string): string => {
-  const basePath = '/custom_assets/tarot_cards/';
-
-  const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
-  const matchedCanonicalName = ALL_TAROT_CARDS.find(
-    (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
-  );
-
-  if (matchedCanonicalName) {
-    const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
-    return `${basePath}${fileName}`;
-  }
-
-  console.warn(
-    `[AstroVibes - TarotPersonalityFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in ALL_TAROT_CARDS. Using placeholder image.`
-  );
-  return "https://placehold.co/267x470.png";
-};
+import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 
 
 export type TarotPersonalityInput = z.infer<typeof TarotPersonalityInputSchema>;
@@ -141,3 +121,5 @@ export async function tarotPersonalityFlow(input: TarotPersonalityInput): Promis
 }
 
     
+
+  

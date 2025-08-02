@@ -1,5 +1,6 @@
+import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem, InterstitialAdPlugin } from '@capacitor-community/admob';
 
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem } from '@capacitor-community/admob';
+
 import { Capacitor } from '@capacitor/core';
 
 // ⚡ MODO DE PRODUCCIÓN ACTIVADO ⚡
@@ -27,17 +28,10 @@ export const AD_CONFIG = {
   }
 };
 
-// 📝 PARA CAMBIAR A PRODUCCIÓN:
-// Reemplaza los IDs de arriba con tus IDs reales:
-// App ID: ca-app-pub-1601092077557933~3273742971
-// Banner: ca-app-pub-1601092077557933/1500472200
-// Interstitial: ca-app-pub-1601092077557933/7954199917
-// Rewarded: ca-app-pub-1601092077557933/9187390537
-
 export class AdMobService {
   private static isInitialized = false;
   private static currentBannerId: string | null = null;
-
+  
   // Inicializar AdMob
   static async initialize(): Promise<void> {
     if (this.isInitialized || !Capacitor.isNativePlatform()) {
@@ -45,19 +39,12 @@ export class AdMobService {
     }
 
     try {
-      const platform = Capacitor.getPlatform();
-      const appId = platform === 'android' 
-        ? AD_CONFIG.APPLICATION_ID.android 
-        : AD_CONFIG.APPLICATION_ID.ios;
-
       await AdMob.initialize({
-        testingDevices: [],                 // ✅
+        testingDevices: [],
         initializeForTesting: false,
       });
-
       this.isInitialized = true;
       console.log('AdMob initialized successfully in PRODUCTION mode');
-      console.log(`Using App ID: ${appId}`);
     } catch (error) {
       console.error('Failed to initialize AdMob:', error);
 
@@ -94,13 +81,12 @@ export class AdMobService {
         adSize: BannerAdSize.BANNER,
         position: position,
         margin: 0,
-        isTesting: false // MODO PRODUCCIÓN
+        isTesting: false
       };
 
       await AdMob.showBanner(options);
       this.currentBannerId = adUnitId;
       console.log('Banner ad shown successfully (PRODUCTION mode)');
-      console.log(`Banner ID: ${adUnitId}`);
     } catch (error) {
       console.error('Failed to show banner ad:', error);
       throw error;
@@ -130,7 +116,7 @@ export class AdMobService {
     }
 
     await this.initialize();
-
+    
     try {
       const platform = Capacitor.getPlatform();
       const adUnitId = platform === 'android' 
@@ -142,13 +128,9 @@ export class AdMobService {
         isTesting: false
       };
 
-      // Preparar el anuncio
       await AdMob.prepareInterstitial(options);
-      
-      // Mostrar el anuncio
       await AdMob.showInterstitial();
       console.log('Interstitial ad shown successfully (PRODUCTION mode)');
-      console.log(`Interstitial ID: ${adUnitId}`);
     } catch (error) {
       console.error('Failed to show interstitial ad:', error);
       throw error;
@@ -175,14 +157,9 @@ export class AdMobService {
         isTesting: false
       };
 
-      // Preparar el anuncio
       await AdMob.prepareRewardVideoAd(options);
-      
-      // Mostrar el anuncio y esperar la recompensa
       const result = await AdMob.showRewardVideoAd();
       console.log('Rewarded ad completed (PRODUCTION mode):', result);
-      console.log(`Rewarded ID: ${adUnitId}`);
-      
       return result;
     } catch (error) {
       console.error('Failed to show rewarded ad:', error);
@@ -190,18 +167,15 @@ export class AdMobService {
     }
   }
 
-  // Verificar si una plataforma es compatible
   static isSupported(): boolean {
     return Capacitor.isNativePlatform();
   }
 
-  // Verificar si está inicializado
   static getInitializationStatus(): boolean {
     return this.isInitialized;
   }
 }
 
-// Exportar funciones convenientes
 export const {
   initialize,
   showBanner,

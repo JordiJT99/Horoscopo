@@ -333,48 +333,41 @@
       "title": "11. Kontaktieren Sie uns",
       "content": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, können Sie uns kontaktieren unter: jordi.jordi.jordi9@gmail.com"
     }
-  },
-  "Admin": {
-    "title": "Admin-Panel",
-    "subtitle": "Push-Benachrichtigungen senden",
-    "formTitle": "Benachrichtigung verfassen",
-    "formDescription": "Diese Nachricht wird an alle abonnierten Benutzer gesendet.",
-    "labelTitle": "Titel",
-    "placeholderTitle": "z.B., Dein Tageshoroskop ist fertig!",
-    "labelBody": "Nachrichtentext",
-    "placeholderBody": "Tippe, um zu sehen, was die Sterne für dich bereithalten.",
-    "labelPath": "Zielpfad",
-    "placeholderPath": "z.B., /tarot-reading",
-    "pathDescription": "Der relative Pfad zum Öffnen (z.B. /tarot-reading). Verwenden Sie / für die Startseite.",
-    "buttonSend": "Benachrichtigung senden",
-    "buttonSending": "Senden...",
-    "toastSuccessTitle": "Erfolg",
-    "toastErrorTitle": "Fehler",
-    "toastSuccessMessage": "Erfolgreich {successCount} Benachrichtigungen gesendet. {failureCount} fehlgeschlagen."
-  },
-  "DailyTransits": {
-    "TodaysSky": "Dein Himmel Heute",
-    "VenusTrineMoon": "Venus Trigon Mond",
-    "EnergyForLove": "Energie für Liebe und Harmonie.",
-    "SunConjunctMercury": "Sonne Konjunktion Merkur",
-    "ExcellentForCommunication": "Hervorragend für Kommunikation und Ideen.",
-    "MarsSquareSaturn": "Mars Quadrat Saturn",
-    "ChallengesRequiringPatience": "Herausforderungen, die Geduld erfordern.",
-    "JupiterEntersPisces": "Jupiter tritt in die Fische ein",
-    "ExpansionOfCreativity": "Expansion von Kreativität und Träumen.",
-    "MercuryRetrograde": "Rückläufiger Merkur",
-    "ReviewReflect": "Überprüfen, reflektieren, nichts Neues beginnen.",
-    "FullMoonInScorpio": "Vollmond im Skorpion",
-    "EmotionalIntensity": "Emotionale Intensität und Transformation.",
-    "SunTrineJupiter": "Sonne Trigon Jupiter",
-    "OptimismGrowth": "Optimismus, Wachstum und Glück."
-  },
-  "DailyTip": {
-    "title": "Tipp des Tages",
-    "subtitle": "Eine Dosis kosmischer Weisheit für deine Reise.",
-    "revealButton": "Tipp enthüllen",
-    "loading": "Der Kosmos wird befragt...",
-    "error": "Der Himmel ist bewölkt. Bitte versuche es später erneut."
-  },
-  "ProfilePage.requestDataDeletion": "Kontolöschung beantragen"
+},
+"Admin": {
+"title": "Admin-Panel",
+"subtitle": "Push-Benachrichtigungen senden",
+"formTitle": "Benachrichtigung verfassen",
+"formDescription": "Diese Nachricht wird an alle abonnierten Benutzer gesendet.",
+"labelTitle": "Titel",
+"placeholderTitle": "z.B., Dein Tageshoroskop ist fertig!",
+"labelBody": "Nachrichtentext",
+"placeholderBody": "Tippe, um zu sehen, was die Sterne für dich bereithalten.",
+"labelPath": "Zielpfad",
+"placeholderPath": "z.B., /tarot-reading",
+"pathDescription": "Der relative Pfad zum Öffnen (z.B. /tarot-reading). Verwenden Sie / für die Startseite.",
+"buttonSend": "Benachrichtigung senden",
+"buttonSending": "Senden...",
+"toastSuccessTitle": "Erfolg",
+"toastErrorTitle": "Fehler",
+"toastSuccessMessage": "Erfolgreich {successCount} Benachrichtigungen gesendet. {failureCount} fehlgeschlagen."
+},
+"DailyTransits.TodaysSky": "Ihr Himmel Heute",
+"DailyTransits.VenusTrineMoon": "Venus Trigon Mond",
+"DailyTransits.EnergyForLove": "Energie für Liebe und Harmonie.",
+"DailyTransits.SunConjunctMercury": "Sonne Konjunktion Merkur",
+"DailyTransits.ExcellentForCommunication": "Hervorragend für Kommunikation und Ideen.",
+"DailyTransits.MarsSquareSaturn": "Mars Quadrat Saturn",
+"DailyTransits.ChallengesRequiringPatience": "Herausforderungen, die Geduld erfordern.",
+"DailyTransits.JupiterEntersPisces": "Jupiter tritt in die Fische ein",
+"DailyTransits.ExpansionOfCreativity": "Erweiterung von Kreativität und Träumen.",
+"DailyTransits.MercuryRetrograde": "Rückläufiger Merkur",
+"DailyTransits.ReviewReflect": "Überprüfen, reflektieren, nichts Neues beginnen.",
+"DailyTransits.FullMoonInScorpio": "Vollmond im Skorpion",
+"DailyTransits.EmotionalIntensity": "Emotionale Intensität und Transformation.",
+"DailyTransits.SunTrineJupiter": "Sonne Trigon Jupiter",
+"DailyTransits.OptimismGrowth": "Optimismus, Wachstum und Glück."
 }
+
+
+   

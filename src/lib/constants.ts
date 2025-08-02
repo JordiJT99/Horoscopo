@@ -2,6 +2,7 @@
 
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey, DailyTransit } from '@/types';
 import type { Locale, Dictionary } from '@/lib/dictionaries';
+import { StardustIcon } from '@/components/shared/StardustIcon'; // Import the new icon component
 import {
   Sparkles as SparklesIcon,
   Rabbit as RabbitIcon,
@@ -43,6 +44,11 @@ import { workCompatibilityPairings } from './constantswork';
 import type { CompatibilityReportDetail } from './constantslove'; 
 import { chineseCompatibilityPairings, type ChineseCompatibilityReportDetail } from './constantshoroscopochino';
 import { getSunLongitude, getMoonLongitude, getAscendantLongitude, getJulianDay, computeLunarPhasesForMonth } from './astronomy';
+import React from 'react';
+
+// The custom StardustIcon component is now defined in its own file: src/components/shared/StardustIcon.tsx
+// It is imported above and re-exported here for easy access from other parts of the app.
+export { StardustIcon };
 
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
@@ -619,6 +625,116 @@ export const ALL_TAROT_CARDS = [
   ...MINOR_ARCANA_TAROT_CARDS
 ];
 
+// Map of AI card names (English) to the expected filename format
+// This map is the single source of truth for converting names to file paths.
+const TAROT_CARD_FILENAME_MAP: { [key: string]: string } = {
+    // Major Arcana
+    "The Fool": "the_fool",
+    "The Magician": "the_magician",
+    "The High Priestess": "the_high_priestess",
+    "The Empress": "the_empress",
+    "The Emperor": "the_emperor",
+    "The Hierophant": "the_hierophant",
+    "The Lovers": "the_lovers",
+    "The Chariot": "the_chariot",
+    "Strength": "strength",
+    "The Hermit": "the_hermit",
+    "Wheel of Fortune": "wheel_of_fortune",
+    "Justice": "justice",
+    "The Hanged Man": "the_hanged_man",
+    "Death": "death",
+    "Temperance": "temperance",
+    "The Devil": "the_devil",
+    "The Tower": "the_tower",
+    "The Star": "the_star",
+    "The Moon": "the_moon",
+    "The Sun": "the_sun",
+    "Judgement": "judgement",
+    "The World": "the_world",
+    // Minor Arcana (Wands)
+    "Ace of Wands": "ace_of_wands",
+    "Two of Wands": "two_of_wands",
+    "Three of Wands": "three_of_wands",
+    "Four of Wands": "four_of_wands",
+    "Five of Wands": "five_of_wands",
+    "Six of Wands": "six_of_wands",
+    "Seven of Wands": "seven_of_wands",
+    "Eight of Wands": "eight_of_wands",
+    "Nine of Wands": "nine_of_wands",
+    "Ten of Wands": "ten_of_wands",
+    "Page of Wands": "page_of_wands",
+    "Knight of Wands": "knight_of_wands",
+    "Queen of Wands": "queen_of_wands",
+    "King of Wands": "king_of_wands",
+    // Minor Arcana (Cups)
+    "Ace of Cups": "ace_of_cups",
+    "Two of Cups": "two_of_cups",
+    "Three of Cups": "three_of_cups",
+    "Four of Cups": "four_of_cups",
+    "Five of Cups": "five_of_cups",
+    "Six of Cups": "six_of_cups",
+    "Seven of Cups": "seven_of_cups",
+    "Eight of Cups": "eight_of_cups",
+    "Nine of Cups": "nine_of_cups",
+    "Ten of Cups": "ten_of_cups",
+    "Page of Cups": "page_of_cups",
+    "Knight of Cups": "knight_of_cups",
+    "Queen of Cups": "queen_of_cups",
+    "King of Cups": "king_of_cups",
+    // Minor Arcana (Swords)
+    "Ace of Swords": "ace_of_swords",
+    "Two of Swords": "two_of_swords",
+    "Three of Swords": "three_of_swords",
+    "Four of Swords": "four_of_swords",
+    "Five of Swords": "five_of_swords",
+    "Six of Swords": "six_of_swords",
+    "Seven of Swords": "seven_of_swords",
+    "Eight of Swords": "eight_of_swords",
+    "Nine of Swords": "nine_of_swords",
+    "Ten of Swords": "ten_of_swords",
+    "Page of Swords": "page_of_swords",
+    "Knight of Swords": "knight_of_swords",
+    "Queen of Swords": "queen_of_swords",
+    "King of Swords": "king_of_swords",
+    // Minor Arcana (Pentacles)
+    "Ace of Pentacles": "ace_of_pentacles",
+    "Two of Pentacles": "two_of_pentacles",
+    "Three of Pentacles": "three_of_pentacles",
+    "Four of Pentacles": "four_of_pentacles",
+    "Five of Pentacles": "five_of_pentacles",
+    "Six of Pentacles": "six_of_pentacles",
+    "Seven of Pentacles": "seven_of_pentacles",
+    "Eight of Pentacles": "eight_of_pentacles",
+    "Nine of Pentacles": "nine_of_pentacles",
+    "Ten of Pentacles": "ten_of_pentacles",
+    "Page of Pentacles": "page_of_pentacles",
+    "Knight of Pentacles": "knight_of_pentacles",
+    "Queen of Pentacles": "queen_of_pentacles",
+    "King of Pentacles": "king_of_pentacles"
+};
+
+// Centralized function to get tarot card image paths correctly.
+export const getTarotCardImagePath = (cardNameFromAI: string): string => {
+  const basePath = '/custom_assets/tarot_cards/';
+  const fallbackImage = "https://placehold.co/220x385.png?text=Error";
+
+  if (!cardNameFromAI) {
+    console.warn(`[getTarotCardImagePath] Received an empty card name. Using placeholder.`);
+    return fallbackImage;
+  }
+  
+  const fileName = TAROT_CARD_FILENAME_MAP[cardNameFromAI.trim()];
+
+  if (fileName) {
+    return `${basePath}${fileName}.png`;
+  }
+  
+  // Fallback for names that might not be in the map (should not happen with a complete map)
+  console.warn(`[getTarotCardImagePath] Card name "${cardNameFromAI}" not found in map. Falling back to a generic name.`);
+  const genericFileName = cardNameFromAI.trim().toLowerCase().replace(/\s+/g, '_');
+  return `${basePath}${genericFileName}.png`;
+};
+
 
 export { Briefcase as WorkIcon };
 
@@ -636,9 +752,3 @@ export const getDailyTransit = (date: Date): DailyTransit => {
   const dayOfYear = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
   return transits[dayOfYear % transits.length];
 };
-
-
-
-
-
-    

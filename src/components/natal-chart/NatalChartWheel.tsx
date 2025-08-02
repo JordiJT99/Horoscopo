@@ -68,11 +68,11 @@ const aspectColors: Record<string, string> = {
 
 
 const NatalChartWheel: React.FC<NatalChartWheelProps> = ({ planetPositions, aspects, imageDataUrl }) => {
-  const wheelSize = 360; // The size of the wheel container in pixels
+  const wheelSize = 320; // The size of the wheel container in pixels, reduced to create padding
 
   // Function to calculate position, now accepts an offset flag
   const calculateLabelPosition = (degree: number, useOffset: boolean) => {
-    const radius = wheelSize * (useOffset ? 0.64 : 0.53); // Stagger radii
+    const radius = wheelSize * (useOffset ? 0.62 : 0.51); // Radii adjusted for new size
     const angleRad = (180 - degree) * (Math.PI / 180);
     const x = wheelSize / 2 + radius * Math.cos(angleRad);
     const y = wheelSize / 2 - radius * Math.sin(angleRad);

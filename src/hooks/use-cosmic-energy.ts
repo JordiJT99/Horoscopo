@@ -1,26 +1,27 @@
 
+
 "use client";
 
-import { useSyncExternalStore, useCallback } from 'react';
+import { useSyncExternalStore, useCallback, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import type { CosmicEnergyState, GameActionId, AwardStardustResult } from '@/types';
+import { doc, getDoc, setDoc, updateDoc, writeBatch, increment } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 // --- Configuration ---
-// XP needed to reach the start of each level. Index corresponds to level - 1.
 export const LEVEL_THRESHOLDS = [
-  0,     // Level 1: Asteroide
-  250,   // Level 2: Cometa
-  700,   // Level 3: Luna
-  1400,  // Level 4: Planeta
-  2300,  // Level 5: Estrella
-  3500,  // Level 6: Constelación
-  5000,  // Level 7: Galaxia
-  7000,  // Level 8: Nebulosa
-  10000, // Level 9: Supernova
-  14000, // Level 10: Cuásar
-  Infinity // Cap at level 10
+  0,     // Level 1
+  250,   // Level 2
+  700,   // Level 3
+  1400,  // Level 4
+  2300,  // Level 5
+  3500,  // Level 6
+  5000,  // Level 7
+  7000,  // Level 8
+  10000, // Level 9
+  14000, // Level 10
+  Infinity 
 ];
-
 
 const calculateLevel = (points: number): number => {
   for (let i = LEVEL_THRESHOLDS.length - 2; i >= 0; i--) {
@@ -31,23 +32,24 @@ const calculateLevel = (points: number): number => {
   return 1;
 };
 
-// Reward structure: key is the level reached, value is the reward
-const LEVEL_REWARDS: Record<number, { freeChats?: number; stardust?: number }> = {
-    3: { freeChats: 1 },
-    4: { stardust: 100 },
-    5: { freeChats: 1 },
-    7: { stardust: 250 }, // Example, can be adjusted
-    10: { stardust: 500 },
+const getLevelUpStardustReward = (newLevel: number): number => {
+    if (newLevel === 1) return 5; 
+    if (newLevel > 1 && (newLevel - 1) % 3 === 0) { // Levels 4, 7, 10...
+      return 5;
+    }
+    if (newLevel > 1 && newLevel % 3 === 0) { // Levels 3, 6, 9...
+      return 3;
+    }
+    return 0;
 };
 
-
-// This store will hold the state and notify listeners of changes.
 let store: {
     state: CosmicEnergyState;
     listeners: Set<() => void>;
-    setState: (newState: Partial<CosmicEnergyState>) => void;
+    setState: (newState: Partial<CosmicEnergyState>) => Promise<void>;
     getState: () => CosmicEnergyState;
     subscribe: (listener: () => void) => () => void;
+    loadInitialState: (userId: string) => Promise<void>;
 } | null = null;
 
 
@@ -62,38 +64,53 @@ const initialState: CosmicEnergyState = {
 
 const getInitialState = (): CosmicEnergyState => initialState;
 
-const createStore = (userId: string) => {
+const createStore = () => {
     const listeners = new Set<() => void>();
     
-    const localStorageKey = `cosmicEnergy_v4_${userId}`;
-    let currentState: CosmicEnergyState;
-
-    try {
-        const storedState = localStorage.getItem(localStorageKey);
-        if (storedState) {
-            const parsedState = JSON.parse(storedState);
-            // Ensure all fields exist to avoid issues with older state formats by merging with a fresh initial state
-            currentState = { ...initialState, ...parsedState };
-        } else {
-            // If no stored state, create a fresh copy of the initial state
-            currentState = { ...initialState };
-        }
-    } catch (error) {
-        console.error("Failed to parse cosmic energy state from localStorage", error);
-        // Fallback to a fresh copy on error
-        currentState = { ...initialState };
-    }
+    let currentState: CosmicEnergyState = { ...initialState };
+    let currentUserId: string | null = null;
 
     const getState = () => currentState;
 
-    const setState = (newState: Partial<CosmicEnergyState>) => {
+    const setState = async (newState: Partial<CosmicEnergyState>) => {
+        const oldState = { ...currentState };
         currentState = { ...currentState, ...newState };
-        try {
-            localStorage.setItem(localStorageKey, JSON.stringify(currentState));
-        } catch (error) {
-            console.error("Failed to save cosmic energy state to localStorage", error);
+
+        if (currentUserId) {
+            const userProfileRef = doc(db, 'userProfiles', currentUserId);
+            try {
+                // Use updateDoc for partial updates to avoid overwriting fields
+                await setDoc(userProfileRef, newState, { merge: true });
+            } catch (error) {
+                console.error("Failed to update user profile in Firestore:", error);
+                // Revert state on error
+                currentState = oldState;
+            }
         }
         listeners.forEach(listener => listener());
+    };
+
+    const loadInitialState = async (userId: string) => {
+      if (userId === currentUserId && currentState.points > 0) return; // Already loaded for this user
+
+      currentUserId = userId;
+      const userProfileRef = doc(db, 'userProfiles', userId);
+      try {
+        const docSnap = await getDoc(userProfileRef);
+        if (docSnap.exists()) {
+          const loadedData = docSnap.data() as Partial<CosmicEnergyState>;
+          // Merge with initial state to ensure all fields are present
+          currentState = { ...initialState, ...loadedData };
+        } else {
+          // If profile doesn't exist, create it with initial values
+          currentState = { ...initialState };
+          await setDoc(userProfileRef, currentState);
+        }
+      } catch (error) {
+        console.error("Failed to load user profile from Firestore:", error);
+        currentState = { ...initialState };
+      }
+      listeners.forEach(listener => listener());
     };
     
     const subscribe = (listener: () => void) => {
@@ -101,7 +118,12 @@ const createStore = (userId: string) => {
         return () => listeners.delete(listener);
     };
 
-    return { state: currentState, listeners, setState, getState, subscribe };
+    return { state: currentState, listeners, setState, getState, subscribe, loadInitialState };
+};
+
+// Initialize the store singleton
+if (!store) {
+  store = createStore();
 }
 
 export interface AddEnergyPointsResult {
@@ -111,17 +133,14 @@ export interface AddEnergyPointsResult {
     rewards: { freeChats: number; stardust: number; };
 }
 
-// Custom hook to interact with the store
 export const useCosmicEnergy = () => {
     const { user, isLoading: authIsLoading } = useAuth();
     
-    // This logic ensures the store is created or cleared based on user state.
-    // The dependency on authIsLoading prevents premature store creation/clearing.
-    if (!authIsLoading && user?.uid && (!store || !localStorage.getItem(`cosmicEnergy_v4_${user.uid}`))) {
-        store = createStore(user.uid);
-    } else if (!authIsLoading && !user && store) {
-        store = null;
-    }
+    useEffect(() => {
+        if (user?.uid && store) {
+            store.loadInitialState(user.uid);
+        }
+    }, [user, authIsLoading]);
     
     const state = useSyncExternalStore(
         store?.subscribe ?? (() => () => {}),
@@ -129,7 +148,7 @@ export const useCosmicEnergy = () => {
         store?.getState ?? getInitialState
     );
     
-    const addEnergyPoints = useCallback((actionId: GameActionId, pointsToAdd: number): AddEnergyPointsResult => {
+    const addEnergyPoints = useCallback(async (actionId: GameActionId, pointsToAdd: number): Promise<AddEnergyPointsResult> => {
         const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: state.level, rewards: { freeChats: 0, stardust: 0 } };
         if (!user?.uid || !store) return result;
         
@@ -137,189 +156,155 @@ export const useCosmicEnergy = () => {
         const lastGainedDate = currentState.lastGained[actionId];
         
         if (actionId === 'complete_profile' && lastGainedDate) {
-            return result; // Already awarded for completing profile once
+            return result;
         }
         
         const today = new Date().toISOString().split('T')[0];
         if (lastGainedDate === today && actionId !== 'complete_profile') {
-            return result; // Daily action already performed today
+            return result;
         }
         
-        const stardustMultiplier = currentState.level >= 7 ? 1.1 : 1.0;
-        const finalPointsToAdd = actionId === 'complete_profile' ? pointsToAdd : Math.ceil(pointsToAdd * stardustMultiplier);
-
-        const newPoints = currentState.points + finalPointsToAdd;
-        const newLevel = calculateLevel(newPoints);
-        const newLastGained = { ...currentState.lastGained, [actionId]: today };
-
-        const leveledUp = newLevel > currentState.level;
-        let newFreeChats = currentState.freeChats || 0;
-        let newStardust = currentState.stardust || 0;
-
-        if (leveledUp) {
-            for (let level = currentState.level + 1; level <= newLevel; level++) {
-                if (LEVEL_REWARDS[level]) {
-                    newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    newStardust += LEVEL_REWARDS[level].stardust || 0;
-                    result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    result.rewards.stardust += LEVEL_REWARDS[level].stardust || 0;
-                }
-            }
-        }
-
-        // Special one-time welcome stardust
-        if (actionId === 'complete_profile' && !lastGainedDate) {
-            newStardust += 50;
-            result.rewards.stardust += 50;
-        }
-        
-        const finalLevel = calculateLevel(newPoints);
-
-        store.setState({
-            points: newPoints,
-            level: finalLevel,
-            freeChats: newFreeChats,
-            stardust: newStardust,
-            lastGained: newLastGained,
-        });
-
-        result.pointsAdded = finalPointsToAdd;
-        result.leveledUp = finalLevel > currentState.level;
-        result.newLevel = finalLevel;
-        return result;
-
-    }, [user, state.level, state.freeChats, state.stardust, state.lastGained]);
-    
-    const awardStardustForAction = useCallback((actionId: GameActionId, amount: number): AwardStardustResult => {
-        if (!user?.uid || !store) return { success: false, amount: 0 };
-        
-        const currentState = store.getState();
-        const lastGainedDate = currentState.lastGained[actionId];
-        const today = new Date().toISOString().split('T')[0];
-
-        if (lastGainedDate === today) {
-            return { success: false, amount: 0 }; // Already awarded today
-        }
-        
-        const newStardust = currentState.stardust + amount;
-        const newLastGained = { ...currentState.lastGained, [actionId]: today };
-
-        store.setState({
-            stardust: newStardust,
-            lastGained: newLastGained,
-        });
-
-        return { success: true, amount };
-    }, [user]);
-    
-    const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
-         const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: 1, rewards: { freeChats: 0, stardust: 0 } };
-        if (!user?.uid || !store) return result;
-        
-        const currentState = store.getState();
         const newPoints = currentState.points + pointsToAdd;
         const newLevel = calculateLevel(newPoints);
-        
+        const newLastGained = { ...currentState.lastGained, [actionId]: today };
+
         const leveledUp = newLevel > currentState.level;
-        let newFreeChats = currentState.freeChats || 0;
         let newStardust = currentState.stardust || 0;
+        let newFreeChats = currentState.freeChats || 0;
 
         if (leveledUp) {
             for (let level = currentState.level + 1; level <= newLevel; level++) {
-                if (LEVEL_REWARDS[level]) {
-                    newFreeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    newStardust += LEVEL_REWARDS[level].stardust || 0;
-                    result.rewards.freeChats += LEVEL_REWARDS[level].freeChats || 0;
-                    result.rewards.stardust += LEVEL_REWARDS[level].stardust || 0;
+                const stardustReward = getLevelUpStardustReward(level);
+                if (stardustReward > 0) {
+                    newStardust += stardustReward;
+                    result.rewards.stardust += stardustReward;
                 }
             }
         }
         
+        if (actionId === 'complete_profile' && !lastGainedDate) {
+            const welcomeStardust = 5;
+            newStardust += welcomeStardust;
+            result.rewards.stardust += welcomeStardust;
+        }
+        
         const finalLevel = calculateLevel(newPoints);
 
-        store.setState({
+        await store.setState({
             points: newPoints,
             level: finalLevel,
             freeChats: newFreeChats,
             stardust: newStardust,
+            lastGained: newLastGained,
         });
 
         result.pointsAdded = pointsToAdd;
         result.leveledUp = finalLevel > currentState.level;
         result.newLevel = finalLevel;
         return result;
+
+    }, [user, state.level, state.freeChats, state.stardust, state.lastGained]);
+
+    const spendStardust = useCallback(async (amount: number, actionId?: GameActionId): Promise<boolean> => {
+        if (!user?.uid || !store) return false;
+        const currentState = store.getState();
+        if (currentState.stardust >= amount) {
+            const newState: Partial<CosmicEnergyState> = { stardust: currentState.stardust - amount };
+            if (actionId) {
+                const today = new Date().toISOString().split('T')[0];
+                newState.lastGained = { ...currentState.lastGained, [actionId]: today };
+            }
+            await store.setState(newState);
+            return true;
+        }
+        return false;
+    }, [user]);
+
+    const addStardust = useCallback(async (amount: number) => {
+        if (!user?.uid || !store) return;
+        const currentState = store.getState();
+        await store.setState({ stardust: currentState.stardust + amount });
+    }, [user]);
+
+    const awardStardustForAction = useCallback(async (actionId: GameActionId, amount: number): Promise<AwardStardustResult> => {
+        const result: AwardStardustResult = { success: false, amount: 0 };
+        if (!user?.uid || !store) return result;
+
+        const currentState = store.getState();
+        const lastGainedDate = currentState.lastGained[actionId];
+        const today = new Date().toISOString().split('T')[0];
+
+        if (lastGainedDate === today) {
+            return result; // Already awarded today
+        }
+
+        const newStardust = (currentState.stardust || 0) + amount;
+        const newLastGained = { ...currentState.lastGained, [actionId]: today };
+
+        await store.setState({
+            stardust: newStardust,
+            lastGained: newLastGained,
+        });
+
+        result.success = true;
+        result.amount = amount;
+        return result;
+
+    }, [user]);
+    
+    // Debug tools remain local and don't need async/await
+    const addDebugPoints = useCallback((pointsToAdd: number): AddEnergyPointsResult => {
+         const result: AddEnergyPointsResult = { pointsAdded: 0, leveledUp: false, newLevel: 1, rewards: { freeChats: 0, stardust: 0 } };
+        if (!user?.uid || !store) return result;
+        const currentState = store.getState();
+        const newPoints = currentState.points + pointsToAdd;
+        const newLevel = calculateLevel(newPoints);
+        let newStardust = currentState.stardust;
+         if (newLevel > currentState.level) {
+            for (let level = currentState.level + 1; level <= newLevel; level++) {
+                const stardustReward = getLevelUpStardustReward(level);
+                if (stardustReward > 0) {
+                    newStardust += stardustReward;
+                    result.rewards.stardust += stardustReward;
+                }
+            }
+        }
+        store.setState({ points: newPoints, level: newLevel, stardust: newStardust });
+        result.leveledUp = newLevel > currentState.level;
+        result.newLevel = newLevel;
+        result.pointsAdded = pointsToAdd;
+        return result;
     }, [user]);
 
     const subtractDebugPoints = useCallback((pointsToSubtract: number) => {
         if (!user?.uid || !store) return;
-        
         const currentState = store.getState();
         const newPoints = Math.max(0, currentState.points - pointsToSubtract);
-        const newLevel = calculateLevel(newPoints);
-        
-        let newFreeChats = currentState.freeChats || 0;
-        let newStardust = currentState.stardust || 0;
-        if (newLevel < currentState.level) {
-            for (let level = currentState.level; level > newLevel; level--) {
-                if (LEVEL_REWARDS[level]?.freeChats) {
-                    newFreeChats = Math.max(0, newFreeChats - (LEVEL_REWARDS[level].freeChats || 0));
-                }
-                if(LEVEL_REWARDS[level]?.stardust){
-                    newStardust = Math.max(0, newStardust - (LEVEL_REWARDS[level].stardust || 0));
-                }
-            }
-        }
-        
-        store.setState({
-            points: newPoints,
-            level: newLevel,
-            freeChats: newFreeChats,
-            stardust: newStardust,
-        });
-
+        store.setState({ points: newPoints, level: calculateLevel(newPoints) });
     }, [user]);
 
-    const useFreeChat = useCallback(() => {
-        if (!user?.uid || !store) return false;
-        const currentState = store.getState();
-        if (currentState.freeChats > 0) {
-            store.setState({ freeChats: currentState.freeChats - 1 });
-            return true;
-        }
-        return false;
-    }, [user]);
-
-    const spendStardust = useCallback((amount: number): boolean => {
-        if (!user?.uid || !store) return false;
-        const currentState = store.getState();
-        if (currentState.stardust >= amount) {
-            store.setState({ stardust: currentState.stardust - amount });
-            return true;
-        }
-        return false;
-    }, [user]);
-    
-    const addStardust = useCallback((amount: number) => {
+    const subtractStardust = useCallback((amount: number) => {
         if (!user?.uid || !store) return;
         const currentState = store.getState();
-        store.setState({ stardust: currentState.stardust + amount });
+        store.setState({ stardust: Math.max(0, currentState.stardust - amount) });
     }, [user]);
 
-    const claimRateReward = useCallback(() => {
+
+    const claimRateReward = useCallback(async () => {
         if (!user?.uid || !store) return { success: false, amount: 0 };
         const currentState = store.getState();
         if (currentState.hasRatedApp) {
             return { success: false, amount: 0 };
         }
-        const rewardAmount = 150;
-        store.setState({ 
+        const rewardAmount = 4;
+        await store.setState({ 
             stardust: currentState.stardust + rewardAmount,
             hasRatedApp: true 
         });
         return { success: true, amount: rewardAmount };
     }, [user]);
 
-    const checkAndAwardDailyStardust = useCallback((): boolean => {
+    const checkAndAwardDailyStardust = useCallback(async (): Promise<boolean> => {
         if (!user?.uid || !store) return false;
         
         const currentState = store.getState();
@@ -327,17 +312,14 @@ export const useCosmicEnergy = () => {
         const today = new Date().toISOString().split('T')[0];
         
         if (lastDailyAward === today) {
-            return false; // Already awarded today
+            return false;
         }
         
-        // Award 100 stardust for daily premium bonus
-        const dailyAmount = 100;
-        const newStardust = currentState.stardust + dailyAmount;
-        const newLastGained = { ...currentState.lastGained, 'daily_stardust': today };
+        const dailyAmount = 1;
         
-        store.setState({
-            stardust: newStardust,
-            lastGained: newLastGained,
+        await store.setState({
+            stardust: (currentState.stardust || 0) + dailyAmount,
+            lastGained: { ...currentState.lastGained, 'daily_stardust': today },
         });
         
         return true;
@@ -353,14 +335,15 @@ export const useCosmicEnergy = () => {
         pointsForNextLevel: pointsForNextLevel,
         progress,
         addEnergyPoints,
-        awardStardustForAction,
-        useFreeChat,
+        useFreeChat: () => {}, // Deprecated, can be removed
         addDebugPoints,
         subtractDebugPoints,
         spendStardust,
         addStardust,
+        subtractStardust,
         claimRateReward,
         checkAndAwardDailyStardust,
+        awardStardustForAction,
         isLoading: authIsLoading,
     };
 };

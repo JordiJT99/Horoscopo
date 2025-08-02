@@ -15,13 +15,14 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData } from '@/types';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useAdMob } from '@/hooks/use-admob-ads';
 
 interface CrystalBallClientContentProps {
   dictionary: Dictionary;
   locale: Locale;
 }
 
-const STARDUST_COST = 10;
+const STARDUST_COST = 1;
 
 export default function CrystalBallClientContent({ dictionary, locale }: CrystalBallClientContentProps) {
   const router = useRouter();
@@ -31,7 +32,8 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
 
   const { user } = useAuth();
   const { addEnergyPoints, lastGained, spendStardust, stardust } = useCosmicEnergy();
-  const isPremium = true; // All users have premium access now
+  const { showRewardedAd } = useAdMob();
+
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
 
   useEffect(() => {
@@ -96,7 +98,25 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
   };
 
   const handleGetRevelation = async () => {
-    performRevelation();
+    if (!hasUsedToday) { // First use of the day is now free
+      performRevelation(true);
+    } else { // Subsequent use
+      if (stardust < STARDUST_COST) {
+        toast({
+          title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
+          description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to use this again today. Get more from the 'More' section.").replace('{cost}', STARDUST_COST.toString()),
+          variant: "destructive",
+        });
+        return;
+      }
+      spendStardust(STARDUST_COST);
+      toast({
+        title: dictionary['Toast.stardustSpent'] || "Stardust Spent",
+        description: (dictionary['Toast.stardustSpentDescription'] || "{cost} Stardust has been used for this reading.").replace('{cost}', STARDUST_COST.toString()),
+      });
+      performRevelation(false);
+    }
+
   };
 
   const handleShare = async () => {
@@ -167,6 +187,14 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
         </div>
         
         {isLoading && (
+
+          <div className="text-center min-h-[80px]">
+            <LoadingSpinner className="h-10 w-10 text-primary" />
+          </div>
+        )}
+        
+        {isShowingAd && (
+
           <div className="text-center min-h-[80px]">
             <LoadingSpinner className="h-10 w-10 text-primary" />
           </div>

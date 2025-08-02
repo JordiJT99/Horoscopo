@@ -10,33 +10,8 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { ALL_TAROT_CARDS } from '@/lib/constants';
+import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 
-// Helper function to generate image path from card name
-const getTarotCardImagePath = (cardNameFromAI: string): string => {
-  const basePath = '/custom_assets/tarot_cards/';
-
-  // 1. Normalize the name from AI for searching (trim, lowercase).
-  const normalizedSearchName = cardNameFromAI.trim().toLowerCase();
-
-  // 2. Find a matching canonical name from ALL_TAROT_CARDS.
-  const matchedCanonicalName = ALL_TAROT_CARDS.find(
-    (canonicalName) => canonicalName.trim().toLowerCase() === normalizedSearchName
-  );
-
-  if (matchedCanonicalName) {
-    // 3. If a match is found, normalize the CANONICAL name for the filename.
-    const fileName = matchedCanonicalName.toLowerCase().replace(/\s+/g, '_') + '.png';
-    return `${basePath}${fileName}`;
-  }
-
-  // Fallback if no exact match is found after normalization.
-  // This logs to the server console where Genkit flows run.
-  console.warn(
-    `[AstroVibes - TarotReadingFlow] Tarot card name "${cardNameFromAI}" (normalized: "${normalizedSearchName}") not found in ALL_TAROT_CARDS. Using placeholder image.`
-  );
-  return "https://placehold.co/267x470.png";
-};
 
 export type TarotReadingInput = z.infer<typeof TarotReadingInputSchema>;
 const TarotReadingInputSchema = z.object({
@@ -106,3 +81,5 @@ export async function tarotReadingFlow(input: TarotReadingInput): Promise<TarotR
 }
 
     
+
+  

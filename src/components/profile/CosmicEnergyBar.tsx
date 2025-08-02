@@ -1,10 +1,11 @@
 
+
 "use client";
 
 import type { Dictionary } from '@/lib/dictionaries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Sparkles, Star, MinusCircle, PlusCircle, Gem, HelpCircle, Crown } from 'lucide-react';
+import { Sparkles, Star, MinusCircle, PlusCircle, HelpCircle, Crown } from 'lucide-react';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
@@ -12,15 +13,16 @@ import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { StardustIcon } from '@/components/shared/StardustIcon';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, lastGained } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, subtractStardust, lastGained } = useCosmicEnergy();
   const { toast } = useToast();
-  const isPremium = true; // All users have premium access now
+  const isPremium = true; 
 
   const handleAddPoints = () => {
     const { pointsAdded, leveledUp, newLevel } = addDebugPoints(100);
@@ -45,19 +47,19 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
     });
   };
 
-  const handleAddStardust = () => {
-    addStardust(50);
+  const handleAddStardust = async () => {
+    await addStardust(50);
     toast({
         title: `🔧 Dev Tool`,
         description: `+50 Stardust (Dev)`,
     });
   };
 
-  const handleTogglePremium = () => {
-    togglePremium();
+  const handleSubtractStardust = async () => {
+    await subtractStardust(50);
     toast({
-      title: 'Premium Status Changed (Dev)',
-      description: `Premium is now ${!isPremium ? 'ON' : 'OFF'}.`,
+        title: `🔧 Dev Tool`,
+        description: `-50 Stardust (Dev)`,
     });
   };
 
@@ -94,38 +96,18 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                 <div className="flex items-center gap-1">
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleTogglePremium}>
-                                <Crown className={cn("h-4 w-4", isPremium ? "text-yellow-400" : "text-muted-foreground")} />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Dev Tool: Toggle Premium Status</p>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleSubtractPoints}>
+                             <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-400" onClick={handleSubtractStardust}>
                                 <MinusCircle className="h-4 w-4" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Dev Tool: Subtract 100 EC</p>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                             <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleAddPoints}>
-                                <PlusCircle className="h-4 w-4" />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Dev Tool: Add 100 EC</p>
+                            <p>Dev Tool: Subtract 50 Stardust</p>
                         </TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger asChild>
                              <Button variant="ghost" size="icon" className="h-7 w-7 text-cyan-400" onClick={handleAddStardust}>
-                                <Gem className="h-4 w-4" />
+                                <PlusCircle className="h-4 w-4" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -154,7 +136,7 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
         <Progress value={progress} className="h-2.5" />
         <div className="flex justify-between items-center mt-2">
             <div className="flex items-center text-cyan-400 gap-1">
-                <Gem className="w-3.5 h-3.5 mr-1" />
+                <StardustIcon className="w-4 h-4 mr-1" />
                 <span className="font-semibold text-sm">{stardust.toLocaleString()} {dictionary['CosmicEnergy.stardust'] || 'Stardust'}</span>
                 <Dialog>
                     <DialogTrigger asChild>
@@ -165,17 +147,17 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
                     <DialogContent className="sm:max-w-md">
                         <DialogHeader>
                             <DialogTitle className="flex items-center gap-2">
-                                <Gem className="h-5 w-5 text-cyan-400" />
+                                <StardustIcon className="w-5 h-5" />
                                 {dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}
                             </DialogTitle>
                             <DialogDescription className="text-left pt-2 whitespace-pre-line">
-                                {dictionary['Stardust.explanationContent'] || "Stardust is a special currency..."}
+                                {dictionary['Stardust.explanationContent'] || "Stardust is a special currency within AstroVibes. You can use it to unlock premium features, such as sending messages in Psychic Chats.\n\nYou can earn Stardust by:\n- Leveling up your Cosmic Energy.\n- Claiming special rewards (like rating the app).\n- Watching ads.\n- Purchasing Stardust packs (coming soon)."}
                             </DialogDescription>
                         </DialogHeader>
                     </DialogContent>
                 </Dialog>
             </div>
-            {isPremium && lastGained.daily_stardust_reward === new Date().toISOString().split('T')[0] && (
+            {isPremium && lastGained.daily_stardust === new Date().toISOString().split('T')[0] && (
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger>

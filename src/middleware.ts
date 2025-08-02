@@ -13,14 +13,12 @@ function getLocale(request: NextRequest): string {
   try {
     languages = new Negotiator({ headers: negotiatorHeaders }).languages();
   } catch (e) {
-    // Handle cases where Negotiator might fail (e.g. invalid headers)
     languages = [defaultLocale];
   }
   
   try {
     return match(languages, locales, defaultLocale);
   } catch (e) {
-    // Fallback if match fails
     return defaultLocale;
   }
 }
@@ -28,16 +26,18 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
 
-  // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
+    // Client-side logic will now handle localStorage.
+    // The middleware's primary job is to ensure a locale is always present in the URL.
+    // It will redirect to the browser's preferred language on the very first visit
+    // before any client-side logic can run. Subsequent visits will be handled
+    // by the client checking localStorage.
     const locale = getLocale(request);
     
-    // Preserve search parameters if any
     const newUrl = new URL(`/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`, request.url);
     request.nextUrl.searchParams.forEach((value, key) => {
       newUrl.searchParams.set(key, value);
@@ -49,7 +49,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Matcher ignoring `/_next/`, `/api/` and static assets in /public
   matcher: [
     '/((?!api|_next/static|_next/image|custom_assets|images|favicon.ico|firebase-messaging-sw.js).*)',
   ],
