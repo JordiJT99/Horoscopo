@@ -1,6 +1,6 @@
 'use client';
 
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';

@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import type { CommunityPost, NewPostData, ZodiacSignName } from '@/types';
 import { getCommunityPosts } from '@/lib/community-posts'; // Only import read functions
 import { db } from '@/lib/firebase'; // Import client-side db instance

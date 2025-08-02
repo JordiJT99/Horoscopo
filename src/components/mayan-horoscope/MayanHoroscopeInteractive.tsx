@@ -3,7 +3,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import type { MayanKinInfo } from '@/types';
 import {
   KinCalculatorIcon,

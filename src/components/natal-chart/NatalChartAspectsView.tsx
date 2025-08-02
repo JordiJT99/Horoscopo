@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 // Helper to get unicode symbols for planets and aspects

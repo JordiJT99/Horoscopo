@@ -2,7 +2,7 @@
 
 "use client";
 
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Sparkles, Star, MinusCircle, PlusCircle, HelpCircle, Crown } from 'lucide-react';

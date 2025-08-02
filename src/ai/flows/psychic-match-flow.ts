@@ -6,7 +6,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { psychics, type Psychic } from '@/lib/psychics';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 
 // Define the structure for a single Q&A pair
 const QAPairSchema = z.object({

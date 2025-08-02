@@ -2,7 +2,7 @@
 
 "use client";
 
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import type { Locale } from '@/types';
 import TopBar from '@/components/shared/TopBar'; 
 import BottomNavigationBar from '@/components/shared/BottomNavigationBar'; 

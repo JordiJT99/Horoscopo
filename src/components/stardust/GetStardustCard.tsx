@@ -2,7 +2,7 @@
 
 'use client';
 
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useToast } from '@/hooks/use-toast';
@@ -118,7 +118,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                              <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
                                 <div className="flex items-center gap-2">
                                     <span className="text-lg">{pack.icon}</span>
-                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-0.5" />}</p>
+                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-0.5" /></p>
                                 </div>
                                 <div className="text-right">
                                     <p className="font-bold">{pack.price}</p>

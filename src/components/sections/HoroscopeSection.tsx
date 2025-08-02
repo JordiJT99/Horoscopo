@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import type { ZodiacSignName } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { ZODIAC_SIGNS } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';

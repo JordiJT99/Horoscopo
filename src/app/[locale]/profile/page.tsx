@@ -1,7 +1,7 @@
 // Note: Top-level "use client"; has been removed.
 // This page is now primarily a Server Component.
 
-import type { Locale, Dictionary } from '@/lib/dictionaries';
+import type { Locale, Dictionary } from '@/types';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { UserCircle } from 'lucide-react'; // Server-side icon for SectionTitle

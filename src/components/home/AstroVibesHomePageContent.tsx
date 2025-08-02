@@ -4,7 +4,7 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import type { Locale, Dictionary } from '@/lib/dictionaries';
+import type { Locale, Dictionary } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData, UserAstrologyProfile } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon, getMoonSign, getAscendantSign } from '@/lib/constants';

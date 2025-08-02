@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import type { DailyTransit } from '@/types';
 import { getDailyTransit } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

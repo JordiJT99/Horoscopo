@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, MessageCircle } from 'lucide-react';

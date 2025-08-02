@@ -1,11 +1,11 @@
 
 // src/app/[locale]/get-stardust/page.tsx
 
-import type { Locale } from '@/lib/dictionaries';
+import type { Locale } from '@/types';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
 import GetStardustCard from '@/components/stardust/GetStardustCard';
-import RewardsCard from '@/components/stardust/RewardsCard';
+import AchievementsCard from '@/components/profile/AchievementsCard';
 import { Gem } from 'lucide-react';
 
 export async function generateStaticParams() {
@@ -32,7 +32,7 @@ export default async function GetStardustPage({ params }: GetStardustPageProps) 
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <GetStardustCard dictionary={dictionary} />
-        <RewardsCard dictionary={dictionary} />
+        <AchievementsCard />
       </div>
     </main>
   );

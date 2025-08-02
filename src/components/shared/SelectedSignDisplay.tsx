@@ -2,7 +2,7 @@
 "use client";
 
 import type { ZodiacSign, UserAstrologyProfile } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';

@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import type { Psychic } from '@/lib/psychics';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { psychicChat } from '@/ai/flows/psychic-chat-flow';
 import type { ChatMessage } from '@/types';
 import { useAuth } from '@/context/AuthContext';

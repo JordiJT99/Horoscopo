@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import type { CommunityPost, Comment } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ZodiacSignIcon from '../shared/ZodiacSignIcon';

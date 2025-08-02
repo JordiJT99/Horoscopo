@@ -1,7 +1,7 @@
 
 
 import type { ZodiacSignName, ZodiacSign, CompatibilityData, LuckyNumbersData, LunarData, AscendantData, ChineseZodiacSign, MayanZodiacSign, ChineseAnimalSignName, ChineseZodiacResult, ChineseCompatibilityData, MayanSignName, GalacticTone, MayanKinInfo, AstrologicalElement, AstrologicalPolarity, AstrologicalModality, UpcomingPhase, MoonPhaseKey, DailyTransit } from '@/types';
-import type { Locale, Dictionary } from '@/lib/dictionaries';
+import type { Locale, Dictionary } from '@/types';
 import { StardustIcon } from '@/components/shared/StardustIcon'; // Import the new icon component
 import {
   Sparkles as SparklesIcon,

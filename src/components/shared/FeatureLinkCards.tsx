@@ -1,6 +1,6 @@
 "use client";
 
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import { Heart, Eye, ChevronRight } from 'lucide-react';

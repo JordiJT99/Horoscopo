@@ -2,7 +2,7 @@
 "use client";
 
 import type { ZodiacSign, ZodiacSignName, AuthUser, OnboardingFormData } from '@/types';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';

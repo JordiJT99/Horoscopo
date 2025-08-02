@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { Dictionary } from '@/lib/dictionaries';
+import type { Dictionary } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';

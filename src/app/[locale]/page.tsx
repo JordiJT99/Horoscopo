@@ -1,5 +1,5 @@
 // AstroVibesHomePageWrapper is the async Server Component (default export)
-import type { Locale, Dictionary } from '@/lib/dictionaries';
+import type { Locale, Dictionary } from '@/types';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import { Sparkles as GlobalSparklesIcon } from 'lucide-react';
 

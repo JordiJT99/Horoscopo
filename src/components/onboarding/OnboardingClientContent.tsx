@@ -4,7 +4,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import type { OnboardingFormData, Gender, RelationshipStatus, EmploymentStatus } from '@/types';
 import SectionTitle from '@/components/shared/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";

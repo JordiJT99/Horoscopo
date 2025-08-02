@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { Dictionary, Locale } from '@/lib/dictionaries';
+import type { Dictionary, Locale } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Lightbulb } from 'lucide-react';
