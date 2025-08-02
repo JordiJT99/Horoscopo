@@ -3,7 +3,7 @@
 import type { AuthUser } from '@/types';
 import type { Locale } from '@/lib/dictionaries';
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { auth, appInitializedSuccessfully } from '@/lib/firebase';
 import {
   onAuthStateChanged,
@@ -39,6 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -289,24 +290,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const onboardingPath = `/${localeFromPath}/onboarding`;
     const isLoginPage = pathname === loginPath;
     const isOnboardingPage = pathname === onboardingPath;
+    const isEditingOnboarding = searchParams.get('mode') === 'edit';
 
-    if (user && onboardingComplete !== null) {
-      // User is logged in and we have onboarding status
-      
+
+    if (user) {
+      const onboardingComplete = localStorage.getItem(getOnboardingStatusKey(user.uid)) === 'true';
+
       if (onboardingComplete) {
-        // User is fully set up, should not be on login page
-        if (isLoginPage) {
+        // User is fully set up.
+        // Redirect them from login.
+        // Redirect them from onboarding ONLY IF they are not in edit mode.
+        if (isLoginPage || (isOnboardingPage && !isEditingOnboarding)) {
           router.push(`/${localeFromPath}/profile`);
         }
         // Don't redirect from onboarding page when completing - let markOnboardingAsComplete handle it
       } else {
-        // User is logged in but has NOT completed onboarding
-        if (!isOnboardingPage && !isLoginPage) { // Don't redirect from login page
+
+        // User is logged in but has NOT completed onboarding.
+        // Force them to the onboarding page if they are anywhere else.
+        if (!isOnboardingPage) {
           router.push(onboardingPath);
         }
       }
+    } else {
+      // No user is logged in. No redirection logic here, as some pages might be public.
     }
-  }, [user, isLoading, pathname, router, hasMounted, appInitializedSuccessfully, onboardingComplete]);
+  }, [user, isLoading, pathname, router, hasMounted, appInitializedSuccessfully, searchParams]);
+
 
   if (!hasMounted) {
     return null; 

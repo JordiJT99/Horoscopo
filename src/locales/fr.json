@@ -1,8 +1,8 @@
 
 {
-  "App.title": "AstroVibes",
+  "App.title": "AstroMística",
   "App.description": "Votre source quotidienne d'horoscopes et d'informations astrologiques.",
-  "Header.title": "AstroVibes",
+  "Header.title": "AstroMística",
   "Header.changeLanguage": "Langue",
   "Header.horoscopes": "Horoscopes",
   "Header.compatibility": "Compat.",
@@ -12,7 +12,7 @@
   "Header.profile": "Profil",
   "Header.settings": "Paramètres",
   "Header.about": "À propos",
-  "Footer.copyright": "© {year} AstroVibes. Tous droits réservés.",
+  "Footer.copyright": "© {year} AstroMística. Tous droits réservés.",
   "Footer.poweredBy": "Propulsé par l'Énergie Cosmique & Next.js",
   "TopBar.horoscopeTitle": "Horoscope",
   "TopBar.settingsAriaLabel": "Paramètres",
@@ -41,14 +41,14 @@
   "PromotionCard.tarotNebulaAlt": "Icône TAROT Nebula",
   "PromotionCard.freeBadge": "GRATUIT",
   "PromotionCard.dailyCard": "Votre carte du jour vous attend",
-  "Page.welcomeTitle": "Bienvenue sur AstroVibes",
+  "Page.welcomeTitle": "Bienvenue sur AstroMística",
   "Page.welcomeSubtitle": "Votre portail vers le cosmos. Explorez votre chemin astrologique et découvrez les secrets célestes.",
   "HomePage.dailyHoroscopeTitle": "Horoscope du Jour",
   "HomePage.dailyHoroscopeSubtitle": "Vos aperçus astrologiques quotidiens. Sélectionnez votre signe ci-dessous.",
   "HomePage.personalizedForecastsTitle": "Prévisions Cosmiques Personnalisées",
   "HomePage.personalizedForecastsSubtitleUser": "Votre tableau de bord céleste pour les énergies d'aujourd'hui, {userName}.",
   "HomePage.personalizedForecastsSubtitleGuest": "Débloquez vos aperçus personnels en vous connectant.",
-  "HomePage.welcomeGuestTitle": "Bienvenue sur AstroVibes !",
+  "HomePage.welcomeGuestTitle": "Bienvenue sur AstroMística !",
   "HomePage.guestPrompt": "Connectez-vous ou complétez votre profil pour des prévisions cosmiques personnalisées.",
   "HomePage.userForecastTitle": "Prévision Cosmique de {userName}",
   "HomePage.comingSoon": "Bientôt disponible",
@@ -291,7 +291,7 @@
     "lastUpdated": "Dernière mise à jour",
     "introduction": {
       "title": "1. Introduction",
-      "content": "Bienvenue sur AstroVibes. Votre vie privée est d'une importance capitale pour nous. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre application.\n\nNous pouvons mettre à jour cette politique à tout moment. Les modifications prendront effet immédiatement après la publication de la politique mise à jour, et nous vous encourageons à la consulter périodiquement."
+      "content": "Bienvenue sur AstroMística. Votre vie privée est d'une importance capitale pour nous. Cette Politique de Confidentialité décrit comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre application.\n\nNous pouvons mettre à jour cette politique à tout moment. Les modifications prendront effet immédiatement après la publication de la politique mise à jour, et nous vous encourageons à la consulter périodiquement."
     },
     "informationWeCollect": {
       "title": "2. Informations que nous collectons",
@@ -317,16 +317,20 @@
       "title": "7. Vos droits et votre contrôle",
       "content": "Vous avez le droit d'accéder à vos informations personnelles et de les mettre à jour. Vous pouvez consulter et modifier vos informations de naissance et les détails de votre profil à tout moment dans les sections Profil et Intégration de l'application. Pour supprimer votre compte ou pour toute autre demande relative à la confidentialité, veuillez nous contacter à l'adresse e-mail ci-dessous."
     },
+    "dataDeletion": {
+      "title": "8. Suppression de Compte et de Données",
+      "content": "Vous avez le droit de demander la suppression de votre compte et de ses données associées. C'est une action permanente qui ne peut être annulée.\\n\\n**Comment demander la suppression :**\\n1. Envoyez un e-mail à jordi.jordi.jordi9@gmail.com depuis l'adresse e-mail associée à votre compte AstroMistica Tarot & Horóscopo.\\n2. Utilisez l'objet : 'Demande de Suppression de Compte'.\\n3. Nous vérifierons votre identité et lancerons le processus de suppression dans un délai de 14 jours ouvrables.\\n\\n**Quelles données sont supprimées :**\\n- Votre profil utilisateur (nom, e-mail, URL de la photo).\\n- Toutes les données de naissance que vous avez fournies (date, heure, lieu).\\n- Toutes les publications et tous les commentaires que vous avez faits sur le forum de la communauté.\\n- Toute autre donnée personnelle directement liée à votre compte.\\n\\n**Quelles données peuvent être conservées :**\\n- Les données d'utilisation anonymisées (par exemple, quelles fonctionnalités sont les plus populaires) qui ne peuvent plus être liées à vous peuvent être conservées indéfiniment à des fins statistiques pour améliorer notre application."
+    },
     "childrensPrivacy": {
-      "title": "8. Confidentialité des enfants",
+      "title": "9. Confidentialité des enfants",
       "content": "Nos services ne s'adressent pas aux personnes de moins de 13 ans. Nous ne collectons pas sciemment d'informations personnellement identifiables auprès d'enfants. Si nous apprenons qu'un enfant nous a fourni des données personnelles, nous les supprimerons rapidement."
     },
     "changesToPolicy": {
-      "title": "9. Modifications de cette politique",
+      "title": "10. Modifications de cette politique",
       "content": "Nous pouvons mettre à jour notre politique de confidentialité de temps à autre. Nous vous informerons de toute modification en publiant la nouvelle politique de confidentialité sur cette page."
     },
     "contactUs": {
-      "title": "10. Contactez-nous",
+      "title": "11. Contactez-nous",
       "content": "Si vous avez des questions sur cette politique de confidentialité, vous pouvez nous contacter à : jordi.jordi.jordi9@gmail.com"
     }
   },
@@ -989,4 +993,3 @@
   "Toast.stardustSpentDescription": "{cost} Poussières d'Étoile ont été utilisées pour cette lecture."
 }
 
-    

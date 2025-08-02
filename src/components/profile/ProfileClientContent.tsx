@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { UserCircle, Mail, Edit3, Save, LogOut, Settings, Star } from 'lucide-react';
+import { UserCircle, Mail, Edit3, Save, LogOut, Settings, Star, Trash2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -223,9 +223,14 @@ export default function ProfileClientContent({ dictionary, locale }: { dictionar
               <Input type="email" id="email-profile" value={displayEmail} className="bg-input/50" disabled />
               <p className="text-xs text-muted-foreground">{dictionary['ProfilePage.emailCannotBeChanged'] || 'Email address cannot be changed.'}</p>
             </div>
-            <Button onClick={handleAccountUpdate} disabled={isLoading}>
-              <Save className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.saveAccountChangesButton'] || "Save Account Changes"}
-            </Button>
+             <div className="space-y-2 pt-2">
+                <Button onClick={handleAccountUpdate} disabled={isLoading}>
+                    <Save className="mr-2 h-4 w-4" /> {dictionary['ProfilePage.saveAccountChangesButton'] || "Save Account Changes"}
+                </Button>
+                <a href="mailto:jordi.jordi.jordi9@gmail.com?subject=Solicitud%20de%20Eliminaci%C3%B3n%20de%20Cuenta%20-%20AstroMistica" className="inline-block ml-4 text-sm text-muted-foreground hover:text-destructive hover:underline">
+                    {dictionary['ProfilePage.requestDataDeletion'] || 'Solicitar eliminación de cuenta'}
+                </a>
+            </div>
           </CardContent>
         </Card>
       </div>

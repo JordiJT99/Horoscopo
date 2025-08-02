@@ -265,7 +265,7 @@ export default function OnboardingClientContent({ dictionary, locale }: Onboardi
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
       <SectionTitle
-        title={dictionary['OnboardingPage.title'] || "Welcome to AstroVibes!"}
+        title={dictionary['OnboardingPage.title'] || "Welcome to AstroMística!"}
         subtitle={(dictionary['OnboardingPage.subtitleStep'] || "Step {currentStep} of {totalSteps}: Let's get to know you").replace('{currentStep}', currentStep.toString()).replace('{totalSteps}', TOTAL_STEPS.toString())}
         icon={Edit}
         className="mb-8"
