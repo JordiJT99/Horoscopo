@@ -1,6 +1,4 @@
-
-import type { HoroscopeDetail, ZodiacSignName } from '@/types';
-import type { Locale } from '@/lib/dictionaries';
+import type { HoroscopeDetail } from '@/types';
 
 // Helper para generar un horóscopo de ejemplo simple
 const createPlaceholderMock = (period: string, index: number): HoroscopeDetail => ({
@@ -48,40 +46,33 @@ const mockWeeklyHoroscopes: HoroscopeDetail[] = [
   {
     main: "Esta semana, la introspección y el autoconocimiento serán tus mejores aliados. Es un buen momento para reflexionar sobre tus emociones y patrones de comportamiento. Un sueño revelador podría darte pistas importantes. Confía en tu intuición.",
     love: "Conecta con tu pareja a un nivel más emocional y espiritual. Para los solteros, es un buen momento para sanar heridas del pasado y prepararse para una nueva etapa afectiva.",
-    money: "Podrías descubrir talentos ocultos que te permitan generar ingresos extra. La creatividad aplicada a tus finanzas dará buenos resultados. Sé paciente con inversiones a largo plazo.",
-    health: "Las prácticas como la meditación o el mindfulness te ayudarán a mantener la calma y la claridad mental. Escucha las necesidades de tu cuerpo y mente.",
+    money: "Sé cauteloso con las inversiones esta semana. Es mejor consolidar lo que ya tienes que aventurarte en nuevos terrenos. Una revisión de tus gastos mensuales podría revelar ahorros inesperados.",
+    health: "Presta atención a las señales que te envía tu cuerpo. Es importante descansar adecuadamente y no sobreexigirte. Una consulta médica preventiva podría ser beneficiosa.",
   },
   ...Array.from({ length: 7 }, (_, i) => createPlaceholderMock("semanal", i + 3))
 ];
 
 const mockMonthlyHoroscopes: HoroscopeDetail[] = [
   {
-    main: "Este mes marca un período de transformación y crecimiento personal. Estarás más conectado con tu propósito de vida. Las primeras semanas serán de preparación, mientras que la segunda quincena traerá la manifestación de tus esfuerzos. ¡Confía en el proceso!",
-    love: "Se fortalecen los lazos afectivos. Si tienes pareja, es un mes para consolidar la relación y hacer planes a futuro. Los solteros podrían iniciar una relación significativa y duradera. El amor está en el aire.",
-    money: "Tu carrera profesional recibe un impulso. Es un mes excelente para buscar ascensos, nuevos empleos o emprender proyectos ambiciosos. La estabilidad financiera está a tu alcance si trabajas con dedicación.",
-    health: "Tu energía vital estará en un buen nivel durante todo el mes. Adopta hábitos saludables y realiza actividad física regularmente. Presta atención a tu bienestar emocional.",
+    main: "Este mes marca el inicio de un ciclo importante en tu vida. Las oportunidades de crecimiento personal y profesional estarán presentes, pero requerirán de tu dedicación y enfoque. La paciencia será tu virtud más valiosa. Hacia fin de mes, los resultados de tus esfuerzos comenzarán a manifestarse.",
+    love: "El amor toma una dimensión más profunda y significativa este mes. Las relaciones superficiales darán paso a vínculos más auténticos. Es un período ideal para comprometerse o fortalecer compromisos existentes. Los solteros podrían encontrar a alguien especial en situaciones cotidianas.",
+    money: "Financieramente, es un mes para sentar bases sólidas. Evita gastos impulsivos y enfócate en crear un plan de ahorro a largo plazo. Podrían presentarse oportunidades de inversión hacia la segunda mitad del mes. La prudencia será tu mejor consejera.",
+    health: "Tu bienestar general requiere atención especial este mes. Establece rutinas saludables que puedas mantener a largo plazo. El ejercicio regular y una alimentación balanceada serán fundamentales. No descuides tu salud mental; considera técnicas de relajación o meditación.",
   },
   {
-    main: "Un mes para enfocarte en tus relaciones y conexiones sociales. La colaboración y el trabajo en equipo serán clave para el éxito. Podrías ampliar tu círculo de amistades y participar en actividades grupales enriquecedoras. La diplomacia te abrirá puertas.",
-    love: "La vida social activa podría traer nuevas oportunidades amorosas para los solteros. Si tienes pareja, disfruten juntos de salidas y encuentros con amigos. La comunicación abierta será esencial.",
-    money: "Las alianzas estratégicas y los contactos profesionales serán muy beneficiosos este mes. No dudes en pedir ayuda o consejo. Una inversión conjunta podría ser muy rentable.",
-    health: "Mantén un equilibrio entre la actividad social y los momentos de recogimiento. Cuidar tus horas de sueño y llevar una dieta balanceada te ayudará a mantenerte saludable y enérgico.",
+    main: "Un mes de transformaciones profundas te espera. Los cambios que has estado postergando finalmente tomarán forma. Será importante mantener una mente abierta y flexible ante las nuevas circunstancias. Tu capacidad de adaptación será puesta a prueba, pero saldrás fortalecido.",
+    love: "La comunicación será el pilar fundamental en tus relaciones este mes. Habla con honestidad sobre tus sentimientos y expectativas. Los malentendidos del pasado podrán resolverse si hay voluntad de ambas partes. El romance florecerá en ambientes creativos o artísticos.",
+    money: "Es momento de diversificar tus fuentes de ingresos. Explora nuevas oportunidades de negocio o desarrolla habilidades que puedan monetizarse. La segunda quincena será especialmente favorable para negociaciones importantes. Mantén un registro detallado de tus finanzas.",
+    health: "Tu energía vital se renueva este mes. Es un período excelente para iniciar nuevos hábitos de ejercicio o mejorar tu alimentación. Presta atención especial a tu descanso nocturno. Actividades al aire libre te proporcionarán beneficios adicionales para tu bienestar integral.",
   },
-  {
-    main: "La creatividad y la expresión personal serán los temas centrales de este mes. Es un momento ideal para desarrollar tus talentos artísticos, iniciar hobbies o simplemente dedicar tiempo a actividades que te apasionen. Permite que tu niño interior juegue y se divierta.",
-    love: "El romance y la diversión marcan la pauta en el amor. Sorprende a tu pareja con gestos creativos. Los solteros podrían vivir un idilio apasionado y lleno de alegría. Disfruta del presente.",
-    money: "Tus ideas originales podrían convertirse en fuentes de ingreso. No temas presentar propuestas innovadoras. Es un buen mes para invertir en tu formación o en herramientas que potencien tu creatividad.",
-    health: "Realiza actividades que te hagan sentir feliz y pleno. El ejercicio a través del baile o deportes recreativos será muy beneficioso. Controla el estrés con técnicas de relajación.",
-  },
-  ...Array.from({ length: 7 }, (_, i) => createPlaceholderMock("mensual", i + 3))
+  ...Array.from({ length: 8 }, (_, i) => createPlaceholderMock("mensual", i + 2))
 ];
 
 export function getRandomMockHoroscope(
-  period: 'daily' | 'weekly' | 'monthly',
-  // sign: ZodiacSignName, // Sign can be used if mocks become sign-specific
-  // locale: Locale // Locale can be used if mocks are translated
+  period: 'daily' | 'weekly' | 'monthly' = 'daily'
 ): HoroscopeDetail {
   let selectedArray: HoroscopeDetail[];
+  
   switch (period) {
     case 'daily':
       selectedArray = mockDailyHoroscopes;
@@ -101,4 +92,4 @@ export function getRandomMockHoroscope(
   return selectedArray[randomIndex];
 }
 
-    
+

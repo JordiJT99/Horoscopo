@@ -16,7 +16,8 @@
     "build:android:release": "cd android && ./gradlew assembleRelease",
     "admob:build": "npm run build && npx cap sync android",
     "admob:install": "cd android && ./gradlew installDebug",
-    "admob:test": "npm run admob:build && npm run admob:install"
+    "admob:test": "npm run admob:build && npm run admob:install",
+    "cleanup:horoscopes": "powershell -ExecutionPolicy Bypass -File ./scripts/cleanup-old-horoscopes.ps1"
   },
   "dependencies": {
     "@capacitor-community/admob": "^7.0.3",
