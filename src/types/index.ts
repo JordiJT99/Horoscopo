@@ -361,6 +361,21 @@ export interface DailyHoroscopeDocument {
   [key: string]: FirestoreHoroscopeData; // key = sign name en minúscula
 }
 
+export interface PersonalizedHoroscopeData {
+  main: string;
+  love: string;
+  money: string;
+  health: string;
+  generatedAt: Date;
+  sign: ZodiacSignName;
+  userId: string;
+  personalizationData: HoroscopePersonalizationData;
+}
+
+export interface PersonalizedHoroscopeDocument {
+  [userId: string]: PersonalizedHoroscopeData;
+}
+
 export type HoroscopePeriod = 'daily' | 'weekly' | 'monthly';
 
 export interface HoroscopeGenerationJob {

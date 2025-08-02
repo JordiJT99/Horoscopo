@@ -17,13 +17,25 @@ export async function POST(request: NextRequest) {
 
     console.log('🧹 Iniciando limpieza manual de horóscopos antiguos...');
     
-    const result = await HoroscopeFirestoreService.cleanOldDailyHoroscopes();
+    // Limpiar horóscopos genéricos y personalizados
+    const [genericResult, personalizedResult] = await Promise.all([
+      HoroscopeFirestoreService.cleanOldDailyHoroscopes(),
+      HoroscopeFirestoreService.cleanOldPersonalizedHoroscopes()
+    ]);
     
     const response = {
       success: true,
       message: 'Limpieza completada exitosamente',
-      cleaned: result.cleaned,
-      errors: result.errors,
+      generic: {
+        cleaned: genericResult.cleaned,
+        errors: genericResult.errors
+      },
+      personalized: {
+        cleaned: personalizedResult.cleaned,
+        errors: personalizedResult.errors
+      },
+      totalCleaned: genericResult.cleaned + personalizedResult.cleaned,
+      totalErrors: genericResult.errors.length + personalizedResult.errors.length,
       timestamp: new Date().toISOString()
     };
     
@@ -76,13 +88,25 @@ export async function GET(request: NextRequest) {
     if (action === 'execute') {
       console.log('🧹 Iniciando limpieza via GET con action=execute...');
       
-      const result = await HoroscopeFirestoreService.cleanOldDailyHoroscopes();
+      // Limpiar horóscopos genéricos y personalizados
+      const [genericResult, personalizedResult] = await Promise.all([
+        HoroscopeFirestoreService.cleanOldDailyHoroscopes(),
+        HoroscopeFirestoreService.cleanOldPersonalizedHoroscopes()
+      ]);
       
       const response = {
         success: true,
         message: 'Limpieza completada exitosamente via GET',
-        cleaned: result.cleaned,
-        errors: result.errors,
+        generic: {
+          cleaned: genericResult.cleaned,
+          errors: genericResult.errors
+        },
+        personalized: {
+          cleaned: personalizedResult.cleaned,
+          errors: personalizedResult.errors
+        },
+        totalCleaned: genericResult.cleaned + personalizedResult.cleaned,
+        totalErrors: genericResult.errors.length + personalizedResult.errors.length,
         timestamp: new Date().toISOString(),
         method: 'GET'
       };

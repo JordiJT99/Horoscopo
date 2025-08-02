@@ -17,7 +17,10 @@ import type { HoroscopeDetail, ZodiacSignName, Locale } from '@/types';
 import type { 
   FirestoreHoroscopeData, 
   HoroscopePeriod, 
-  DailyHoroscopeDocument 
+  DailyHoroscopeDocument,
+  PersonalizedHoroscopeData,
+  PersonalizedHoroscopeDocument,
+  HoroscopePersonalizationData
 } from '@/types';
 
 export class HoroscopeFirestoreService {
@@ -465,6 +468,204 @@ export class HoroscopeFirestoreService {
       
     } catch (error) {
       console.error('❌ Error en limpieza de horóscopos antiguos:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Guarda un horóscopo personalizado para un usuario específico
+   */
+  static async savePersonalizedHoroscope(
+    userId: string,
+    sign: ZodiacSignName,
+    date: string, // YYYY-MM-DD
+    horoscope: HoroscopeDetail,
+    personalizationData: HoroscopePersonalizationData,
+    locale: Locale = 'es'
+  ): Promise<void> {
+    try {
+      this.validateFirestore();
+      
+      console.log(`💾 Guardando horóscopo personalizado para usuario ${userId}, signo ${sign}, fecha ${date}`);
+      
+      const personalizedDocRef = doc(db!, 'horoscopes', 'personalized', date, locale, sign, userId);
+      
+      const personalizedData: PersonalizedHoroscopeData = {
+        main: horoscope.main,
+        love: horoscope.love,
+        money: horoscope.money,
+        health: horoscope.health,
+        generatedAt: new Date(),
+        sign: sign,
+        userId: userId,
+        personalizationData: personalizationData
+      };
+      
+      await setDoc(personalizedDocRef, personalizedData);
+      
+      console.log(`✅ Horóscopo personalizado guardado para ${userId} - ${sign} - ${date} (${locale})`);
+    } catch (error) {
+      console.error('❌ Error guardando horóscopo personalizado:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Carga un horóscopo personalizado para un usuario específico
+   */
+  static async loadPersonalizedHoroscope(
+    userId: string,
+    sign: ZodiacSignName,
+    date: string, // YYYY-MM-DD
+    locale: Locale = 'es'
+  ): Promise<HoroscopeDetail | null> {
+    try {
+      this.validateFirestore();
+      
+      console.log(`🔍 Buscando horóscopo personalizado para usuario ${userId}, signo ${sign}, fecha ${date}`);
+      
+      const personalizedDocRef = doc(db!, 'horoscopes', 'personalized', date, locale, sign, userId);
+      const docSnap = await getDoc(personalizedDocRef);
+      
+      if (!docSnap.exists()) {
+        console.log(`📅 No hay horóscopo personalizado para ${userId} - ${sign} - ${date} (${locale})`);
+        return null;
+      }
+      
+      const data = docSnap.data() as PersonalizedHoroscopeData;
+      
+      const result: HoroscopeDetail = {
+        main: data.main,
+        love: data.love,
+        money: data.money,
+        health: data.health
+      };
+      
+      console.log(`✅ Horóscopo personalizado cargado para ${userId} - ${sign} - ${date} (${locale})`);
+      return result;
+    } catch (error) {
+      console.error('❌ Error cargando horóscopo personalizado:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Verifica si existe un horóscopo personalizado para un usuario
+   */
+  static async personalizedHoroscopeExists(
+    userId: string,
+    sign: ZodiacSignName,
+    date: string,
+    locale: Locale = 'es'
+  ): Promise<boolean> {
+    try {
+      this.validateFirestore();
+      
+      const personalizedDocRef = doc(db!, 'horoscopes', 'personalized', date, locale, sign, userId);
+      const docSnap = await getDoc(personalizedDocRef);
+      return docSnap.exists();
+    } catch (error) {
+      console.error('❌ Error verificando existencia de horóscopo personalizado:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Limpia horóscopos personalizados antiguos (más de 2 semanas)
+   */
+  static async cleanOldPersonalizedHoroscopes(): Promise<{
+    cleaned: number;
+    errors: string[];
+  }> {
+    try {
+      this.validateFirestore();
+      
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 14); // 14 días atrás
+      const cutoffDateString = cutoffDate.toISOString().split('T')[0]; // YYYY-MM-DD
+      
+      console.log(`🧹 Iniciando limpieza de horóscopos personalizados anteriores a: ${cutoffDateString}`);
+      
+      let cleaned = 0;
+      const errors: string[] = [];
+      const batch = writeBatch(db!);
+      let operationsInBatch = 0;
+      const MAX_BATCH_SIZE = 400;
+      
+      // Generar fechas a verificar (últimos 45 días para encontrar fechas antiguas)
+      const datesToCheck: string[] = [];
+      for (let i = 14; i <= 45; i++) { // Desde hace 14 días hasta hace 45 días
+        const checkDate = new Date();
+        checkDate.setDate(checkDate.getDate() - i);
+        const dateString = checkDate.toISOString().split('T')[0];
+        datesToCheck.push(dateString);
+      }
+      
+      console.log(`🔍 Verificando ${datesToCheck.length} fechas para limpieza de horóscopos personalizados...`);
+      
+      const locales = ['es', 'en', 'de', 'fr'];
+      
+      for (const dateString of datesToCheck) {
+        try {
+          if (dateString < cutoffDateString) {
+            let dateHadData = false;
+
+            for (const locale of locales) {
+              for (const signName of ALL_SIGN_NAMES) {
+                // Verificar si hay documentos en esta ruta
+                const personalizedCollectionRef = collection(db!, 'horoscopes', 'personalized', dateString, locale, signName);
+                const personalizedDocs = await getDocs(personalizedCollectionRef);
+
+                personalizedDocs.forEach((doc) => {
+                  dateHadData = true;
+                  batch.delete(doc.ref);
+                  operationsInBatch++;
+
+                  console.log(`🗑️ Marcando para eliminar horóscopo personalizado: ${dateString}/${locale}/${signName}/${doc.id}`);
+
+                  // Si alcanzamos el límite del batch, ejecutarlo
+                  if (operationsInBatch >= MAX_BATCH_SIZE) {
+                    batch.commit().then(() => {
+                      console.log(`🗑️ Ejecutado batch con ${operationsInBatch} operaciones`);
+                    });
+                    operationsInBatch = 0;
+
+                    // Crear nuevo batch
+                    const newBatch = writeBatch(db!);
+                    Object.setPrototypeOf(batch, Object.getPrototypeOf(newBatch));
+                    Object.assign(batch, newBatch);
+                  }
+                });
+              }
+            }
+
+            if (dateHadData) {
+              cleaned++;
+              console.log(`✅ Fecha ${dateString} marcada para limpieza completa de horóscopos personalizados`);
+            }
+          }
+        } catch (docError) {
+          const errorMsg = `Error procesando fecha ${dateString} para horóscopos personalizados: ${docError}`;
+          console.error('❌', errorMsg);
+          errors.push(errorMsg);
+        }
+      }
+      
+      // Ejecutar el último batch si tiene operaciones pendientes
+      if (operationsInBatch > 0) {
+        await batch.commit();
+        console.log(`🗑️ Ejecutado batch final con ${operationsInBatch} operaciones`);
+      }
+      
+      console.log(`✅ Limpieza de horóscopos personalizados completada. Fechas procesadas: ${cleaned}, Errores: ${errors.length}`);
+      
+      return {
+        cleaned,
+        errors
+      };
+      
+    } catch (error) {
+      console.error('❌ Error en limpieza de horóscopos personalizados antiguos:', error);
       throw error;
     }
   }
