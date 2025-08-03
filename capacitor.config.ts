@@ -13,9 +13,21 @@ const config: CapacitorConfig = {
   },
   android: {
     minWebViewVersion: 125,
-    allowMixedContent: false,
+    allowMixedContent: true, // Permitir contenido mixto para APIs
     captureInput: true,
-    webContentsDebuggingEnabled: false
+    webContentsDebuggingEnabled: true, // Habilitar debug para desarrollo
+    backgroundColor: '#1A142B',
+    // Configuraciones adicionales para APIs y Firestore
+    clearTextTrafficPermitted: true,
+    usesCleartextTraffic: true
+  },
+  ios: {
+    // Configuraciones para iOS
+    allowsLinkPreview: false,
+    backgroundColor: '#1A142B',
+    scrollEnabled: true,
+    // Permitir requests HTTP para desarrollo
+    allowsInlineMediaPlayback: true
   },
   plugins: {
     SplashScreen: {
@@ -28,6 +40,9 @@ const config: CapacitorConfig = {
       showSpinner: true
     },
     CapacitorHttp: {
+      enabled: true
+    },
+    CapacitorCookies: {
       enabled: true
     },
     AdMob: {

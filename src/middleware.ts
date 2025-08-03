@@ -25,6 +25,12 @@ function getLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const userAgent = request.headers.get('user-agent') || '';
+  
+  // Detectar Capacitor/WebView
+  const isCapacitor = userAgent.includes('capacitor') || userAgent.includes('ionic');
+  const isWebView = /webview|wv\)|capacitor|ionic/i.test(userAgent);
+  const platform = request.headers.get('x-platform') || 'unknown';
 
   // Excluir rutas de API, archivos estáticos y otros recursos
   if (
@@ -37,7 +43,21 @@ export function middleware(request: NextRequest) {
     pathname === '/sw.js' ||
     pathname === '/manifest.json'
   ) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    
+    // Añadir headers específicos para Capacitor en rutas API
+    if (pathname.startsWith('/api/') && (isCapacitor || isWebView)) {
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, X-Platform, X-Is-Capacitor');
+      response.headers.set('Access-Control-Allow-Credentials', 'false');
+      response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      response.headers.set('X-Frame-Options', 'ALLOWALL');
+      
+      console.log(`🔧 Capacitor headers added for API: ${pathname}, Platform: ${platform}`);
+    }
+    
+    return response;
   }
 
   const pathnameIsMissingLocale = locales.every(
