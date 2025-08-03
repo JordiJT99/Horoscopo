@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { ZodiacSignName, Locale, HoroscopeDetail } from '@/types';
+import { capacitorFetch, getCapacitorInfo } from '@/lib/capacitor-utils';
 
 interface UseHoroscopeFromDBOptions {
   sign: ZodiacSignName;
@@ -45,32 +46,19 @@ export function useHoroscopeFromDB({
       
       console.log(`🔍 Cargando horóscopo desde BD: ${sign} - ${targetDate} (${locale})`);
       
-      // Detectar WebView para logging adicional
-      const isWebView = typeof window !== 'undefined' && (
-        window.navigator.userAgent.includes('wv') || 
-        window.navigator.userAgent.includes('WebView') ||
-        // @ts-ignore
-        window.ReactNativeWebView !== undefined
-      );
+      // Detectar Capacitor y WebView
+      const capacitorInfo = getCapacitorInfo();
       
-      if (isWebView) {
-        console.log(`📱 WebView detectada. UserAgent: ${window.navigator.userAgent}`);
+      if (capacitorInfo.isCapacitor || capacitorInfo.isWebView) {
+        console.log(`📱 Capacitor/WebView detectada:`, capacitorInfo);
       }
       
       const apiUrl = `/api/horoscopes/${targetDate}?locale=${locale}&sign=${sign}`;
       console.log(`🌐 Fetching: ${apiUrl}`);
       
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          // Agregar headers específicos para WebView
-          'X-Requested-With': 'XMLHttpRequest',
-          'Cache-Control': 'no-cache'
-        },
-        // Agregar cache para evitar requests duplicados
-        cache: 'no-store'
+      // Usar capacitorFetch para mejor compatibilidad
+      const response = await capacitorFetch(apiUrl, {
+        method: 'GET'
       });
       
       console.log(`📡 Response status: ${response.status} ${response.statusText}`);

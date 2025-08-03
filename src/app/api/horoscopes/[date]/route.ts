@@ -15,12 +15,16 @@ export async function GET(
 
     // Logging adicional para debugging
     const userAgent = request.headers.get('user-agent') || 'unknown';
-    const isWebView = userAgent.includes('wv') || userAgent.includes('WebView');
+    const platform = request.headers.get('x-platform') || 'unknown';
+    const isCapacitor = request.headers.get('x-is-capacitor') === 'true';
+    const isWebView = userAgent.includes('wv') || userAgent.includes('WebView') || isCapacitor;
     
     console.log(`🔍 API: Cargando horóscopos para ${date} (${locale})`, {
       sign,
-      userAgent: isWebView ? userAgent : 'browser',
-      isWebView
+      platform,
+      isCapacitor,
+      isWebView,
+      userAgent: isWebView ? userAgent.substring(0, 100) + '...' : 'browser'
     });
 
     // Validar parámetros
