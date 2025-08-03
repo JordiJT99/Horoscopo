@@ -40,7 +40,8 @@ export const getCapacitorInfo = () => {
     return {
       isCapacitor: false,
       platform: 'web' as const,
-      userAgent: 'server-side'
+      userAgent: 'server-side',
+      isWebView: false
     };
   }
 
