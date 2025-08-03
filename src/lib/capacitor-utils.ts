@@ -2,37 +2,20 @@
  * Utilidades específicas para Capacitor WebView
  */
 
+import { Capacitor, Http, type HttpOptions, type HttpResponse } from '@capacitor/core';
+
 export const isCapacitor = (): boolean => {
-  return !!(
-    typeof window !== 'undefined' &&
-    window.Capacitor &&
-    window.Capacitor.isNativePlatform &&
-    window.Capacitor.isNativePlatform()
-  );
+  return Capacitor.isNativePlatform();
 };
 
 export const getPlatform = (): 'ios' | 'android' | 'web' => {
   if (typeof window === 'undefined') return 'web';
-  
-  if (window.Capacitor?.getPlatform) {
-    return window.Capacitor.getPlatform() as 'ios' | 'android' | 'web';
-  }
-  
-  return 'web';
+  return Capacitor.getPlatform() as 'ios' | 'android' | 'web';
 };
 
 export const isCapacitorWebView = (): boolean => {
   if (typeof window === 'undefined') return false;
-  
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  
-  // Detectar indicadores específicos de Capacitor
-  return !!(
-    window.Capacitor ||
-    userAgent.includes('capacitor') ||
-    userAgent.includes('ionic') ||
-    (userAgent.includes('wv') && (userAgent.includes('android') || userAgent.includes('iphone')))
-  );
+  return Capacitor.isWebView();
 };
 
 export const getCapacitorInfo = () => {
@@ -54,68 +37,70 @@ export const getCapacitorInfo = () => {
   };
 };
 
-// Headers específicos para requests desde Capacitor
-export const getCapacitorHeaders = (): Record<string, string> => {
-  const info = getCapacitorInfo();
-  
-  return {
-    'User-Agent': info.userAgent,
-    'X-Platform': info.platform,
-    'X-Is-Capacitor': info.isCapacitor.toString(),
-    'X-Is-WebView': info.isWebView.toString(),
-    'Cache-Control': 'no-cache, no-store, must-revalidate',
-    'Pragma': 'no-cache',
-    'Expires': '0'
-  };
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+  return 'http://localhost:3000'; // Fallback para SSR
 };
 
 // Función para hacer requests compatibles con Capacitor
 export const capacitorFetch = async (url: string, options: RequestInit = {}): Promise<Response> => {
-  const capacitorHeaders = getCapacitorHeaders();
-  
-  const enhancedOptions: RequestInit = {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...capacitorHeaders,
-      ...options.headers,
-    },
-    credentials: 'omit', // Capacitor no maneja bien las cookies
-    mode: 'cors'
-  };
+  const info = getCapacitorInfo();
+  const fullUrl = url.startsWith('/') ? `${getBaseUrl()}${url}` : url;
 
-  console.log('🔧 Capacitor Fetch:', {
-    url,
-    platform: getPlatform(),
-    isCapacitor: isCapacitor(),
-    headers: enhancedOptions.headers
-  });
+  if (info.isCapacitor && Http) {
+    console.log(`🚀 Using CapacitorHttp for: ${fullUrl}`);
+    const httpOptions: HttpOptions = {
+      url: fullUrl,
+      method: options.method || 'GET',
+      headers: { ...options.headers } as { [key: string]: string },
+      connectTimeout: 15000,
+      readTimeout: 15000,
+    };
 
-  try {
-    const response = await fetch(url, enhancedOptions);
-    
-    if (!response.ok) {
-      console.error('❌ Capacitor Fetch Error:', {
-        status: response.status,
-        statusText: response.statusText,
-        url
-      });
+    if (options.body) {
+      httpOptions.data = JSON.parse(options.body as string);
     }
     
-    return response;
-  } catch (error) {
-    console.error('❌ Capacitor Fetch Exception:', error);
-    throw error;
+    try {
+      const response: HttpResponse = await Http.request(httpOptions);
+      
+      // Construir una respuesta compatible con la API Fetch
+      return new Response(JSON.stringify(response.data), {
+        status: response.status,
+        headers: response.headers,
+      });
+
+    } catch (error) {
+       console.error('❌ CapacitorHttp Request Exception:', error);
+       // Lanzar un error que pueda ser capturado por los bloques try/catch existentes
+       throw new Error(`CapacitorHttp failed: ${(error as Error).message}`);
+    }
+
+  } else {
+    // Fallback para web o si el plugin HTTP no está disponible
+    console.log(`🌐 Using standard fetch for: ${fullUrl}`);
+    const enhancedOptions: RequestInit = {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    };
+    try {
+      const response = await fetch(fullUrl, enhancedOptions);
+      return response;
+    } catch (error) {
+      console.error('❌ Standard Fetch Exception:', error);
+      throw error;
+    }
   }
 };
 
 // Declaraciones globales para TypeScript
 declare global {
   interface Window {
-    Capacitor?: {
-      isNativePlatform?: () => boolean;
-      getPlatform?: () => string;
-      platform?: string;
-    };
+    Capacitor?: any;
   }
 }
