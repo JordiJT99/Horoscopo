@@ -2,7 +2,7 @@
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
 import { getAuth, type Auth } from "firebase/auth"; 
-import { getFirestore, initializeFirestore, CACHE_SIZE_UNLIMITED } from "firebase/firestore";
+import { getFirestore, initializeFirestore, CACHE_SIZE_UNLIMITED, enableIndexedDbPersistence } from "firebase/firestore";
 import { getMessaging, type Messaging } from "firebase/messaging";
 
 const firebaseConfig: FirebaseOptions = {
@@ -22,6 +22,13 @@ let analyticsInstance: Analytics | null = null;
 let messagingInstance: Messaging | null = null;
 let appInitializedSuccessfully = false;
 
+// Detectar si estamos en un entorno WebView
+const isWebView = typeof window !== "undefined" && (
+  (window as any).AndroidInterface ||
+  navigator.userAgent.includes('wv') ||
+  (window as any).webkit?.messageHandlers
+);
+
 const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId'];
 const isConfigIncomplete = requiredConfigKeys.some(key => !firebaseConfig[key]);
 
@@ -39,10 +46,35 @@ if (isConfigIncomplete) {
   if (!getApps().length) {
     try {
       app = initializeApp(firebaseConfig);
-      // Initialize Firestore with settings to enable offline persistence
-      initializeFirestore(app, {
+      
+      // Configuración específica para WebView
+      const firestoreSettings: any = {
         cacheSizeBytes: CACHE_SIZE_UNLIMITED,
-      });
+      };
+      
+      if (isWebView) {
+        // Configuraciones específicas para WebView
+        firestoreSettings.experimentalAutoDetectLongPolling = true;
+        firestoreSettings.useFetchStreams = false;
+        console.log("🔧 Firebase configurado para WebView con long polling");
+      }
+      
+      // Initialize Firestore with WebView-specific settings
+      db = initializeFirestore(app, firestoreSettings);
+      
+      // Intentar habilitar persistencia offline, pero capturar errores en WebView
+      if (typeof window !== "undefined" && db) {
+        enableIndexedDbPersistence(db).catch((err) => {
+          if (err.code === 'failed-precondition') {
+            console.warn("⚠️ Persistencia offline no disponible (múltiples pestañas abiertas)");
+          } else if (err.code === 'unimplemented') {
+            console.warn("⚠️ Persistencia offline no soportada en este WebView");
+          } else {
+            console.warn("⚠️ Persistencia offline deshabilitada:", err.message);
+          }
+        });
+      }
+      
       appInitializedSuccessfully = true;
     } catch (error) {
       console.error("Firebase initialization error (initializeApp failed):", error);
@@ -50,6 +82,7 @@ if (isConfigIncomplete) {
     }
   } else {
     app = getApp();
+    db = getFirestore(app);
     appInitializedSuccessfully = true;
   }
 }
