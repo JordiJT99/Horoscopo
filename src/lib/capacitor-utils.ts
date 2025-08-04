@@ -48,10 +48,9 @@ const getBaseUrl = () => {
 
 // Función para hacer requests compatibles con Capacitor
 export const capacitorFetch = async (url: string, options: RequestInit = {}): Promise<Response> => {
-  const info = getCapacitorInfo();
   const fullUrl = url.startsWith('/') ? `https://astromistica.org${url}` : url;
 
-  if (info.isCapacitor && Http) {
+  if (Capacitor.isNativePlatform()) {
     console.log(`🚀 Using CapacitorHttp for: ${fullUrl}`);
     const httpOptions: HttpOptions = {
       url: fullUrl,
@@ -81,7 +80,7 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
     }
 
   } else {
-    // Fallback para web o si el plugin HTTP no está disponible
+    // Fallback para web
     console.log(`🌐 Using standard fetch for: ${fullUrl}`);
     const enhancedOptions: RequestInit = {
       ...options,
