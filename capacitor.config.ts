@@ -5,12 +5,18 @@ const config: CapacitorConfig = {
   appName: 'AstroMística : Tarot, Horóscopo y Carta Natal',
   webDir: 'out',
   server: {
-    hostname: 'astromistica.org',
-    androidScheme: 'https',
-    iosScheme: 'https',
+    // Para desarrollo y testing - usar IP local
+    url: 'http://192.168.1.166:9002',
+    cleartext: true,
+    // hostname: 'astromistica.org',
+    // androidScheme: 'https',
+    // iosScheme: 'https',
     allowNavigation: [
-      '*.astromistica.org', // Permitir todos los subdominios
-      'astromistica.org'    // Permitir el dominio principal
+      'localhost:*',
+      '127.0.0.1:*',
+      '192.168.1.166:*',
+      '*.astromistica.org',
+      'astromistica.org'
     ]
   },
   android: {
@@ -46,7 +52,7 @@ const config: CapacitorConfig = {
     },
     AdMob: {
       appId: 'ca-app-pub-1601092077557933~3927093480',
-      testMode: false
+      testMode: true  // Cambiar a true para testing
     }
   }
 };
