@@ -36,12 +36,13 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
-  // Fallback for server-side execution
+  // Fallback for server-side execution - ALWAYS use the non-www version to standardize
   return 'https://astromistica.org'; 
 };
 
 // Función para hacer requests compatibles con Capacitor
 export const capacitorFetch = async (url: string, options: RequestInit = {}): Promise<Response> => {
+  // Siempre construir la URL completa desde el dominio base no-www para consistencia
   const fullUrl = url.startsWith('/') ? `https://astromistica.org${url}` : url;
 
   if (Capacitor.isNativePlatform()) {
@@ -84,7 +85,7 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
 
   } else {
     // Fallback para web
-    console.log(`🌐 Using standard fetch for: ${fullUrl}`);
+    console.log(`🌐 Using standard fetch for: ${url}`);
     const enhancedOptions: RequestInit = {
       ...options,
       headers: {
