@@ -147,20 +147,25 @@ export class HoroscopeFirestoreService {
     try {
       console.log(`🔍 Buscando horóscopo para signo específico: ${sign} - ${date} (${locale})`);
       const allHoroscopes = await this.loadDailyHoroscopes(date, locale);
-      console.log(`📊 Horóscopos encontrados:`, allHoroscopes ? Object.keys(allHoroscopes) : 'null');
       
       if (!allHoroscopes) {
         console.log(`🎯 No hay horóscopos para ${date}`);
         return null;
       }
       
-      // Buscar el signo en diferentes formatos
-      let result = allHoroscopes[sign]; // Formato exacto
+      // Buscar el signo en diferentes formatos (mayúsculas, minúsculas, capitalizado)
+      const signKeyLower = sign.toLowerCase();
+      const allHoroscopesLowerKeys = Object.keys(allHoroscopes).reduce((acc, key) => {
+        acc[key.toLowerCase()] = allHoroscopes[key as ZodiacSignName];
+        return acc;
+      }, {} as Record<string, HoroscopeDetail>);
+
+      let result = allHoroscopesLowerKeys[signKeyLower];
+
+      // If not found, check with capitalized key as a fallback
       if (!result) {
-        // Buscar en formato capitalizado
-        const capitalizedSign = sign.charAt(0).toUpperCase() + sign.slice(1).toLowerCase() as ZodiacSignName;
-        result = allHoroscopes[capitalizedSign];
-        console.log(`🔄 Buscando formato capitalizado: ${capitalizedSign}`);
+        const capitalizedSignKey = sign.charAt(0).toUpperCase() + sign.slice(1).toLowerCase();
+        result = allHoroscopes[capitalizedSignKey as ZodiacSignName];
       }
       
       console.log(`🎯 Resultado para ${sign}:`, result ? 'ENCONTRADO' : 'NO ENCONTRADO');
