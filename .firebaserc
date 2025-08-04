@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "astrovibes-2ad43"
-  }
+  },
+  "targets": {
+    "astrovibes-xv2f4": {
+      "hosting": {
+        "astromistica-org": [
+          "astromistica-org"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
