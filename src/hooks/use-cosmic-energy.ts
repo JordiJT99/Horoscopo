@@ -5,7 +5,7 @@
 import { useSyncExternalStore, useCallback, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import type { CosmicEnergyState, GameActionId, AwardStardustResult } from '@/types';
-import { doc, getDoc, setDoc, updateDoc, writeBatch, increment } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, writeBatch, increment, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { AchievementChecker } from '@/lib/achievements';
 import { UserProgressService } from '@/lib/user-progress-service';
@@ -46,99 +46,92 @@ const getLevelUpStardustReward = (newLevel: number): number => {
 };
 
 let store: {
-    state: CosmicEnergyState;
+    state: CosmicEnergyState & { isLoading: boolean };
     listeners: Set<() => void>;
-    setState: (newState: Partial<CosmicEnergyState>) => Promise<void>;
-    getState: () => CosmicEnergyState;
+    setState: (newState: Partial<CosmicEnergyState & { isLoading: boolean }>) => Promise<void>;
+    getState: () => CosmicEnergyState & { isLoading: boolean };
     subscribe: (listener: () => void) => () => void;
     loadInitialState: (userId: string) => Promise<void>;
 } | null = null;
 
 
-const initialState: CosmicEnergyState = {
+const initialState: CosmicEnergyState & { isLoading: boolean } = {
     points: 0,
     level: 1,
     freeChats: 0,
     stardust: 0,
     lastGained: {} as Record<GameActionId, string>,
     hasRatedApp: false,
+    isLoading: true, // Start in loading state
 };
 
-const getInitialState = (): CosmicEnergyState => initialState;
+const getInitialState = (): CosmicEnergyState & { isLoading: boolean } => initialState;
 
 const createStore = () => {
     const listeners = new Set<() => void>();
     
-    let currentState: CosmicEnergyState = { ...initialState };
+    let currentState: CosmicEnergyState & { isLoading: boolean } = { ...initialState };
     let currentUserId: string | null = null;
 
     const getState = () => currentState;
 
-    const saveToFirestore = async (userId: string, cosmicEnergy: number, stardust: number) => {
+    const saveToFirestore = async (userId: string, dataToSave: Partial<CosmicEnergyState>) => {
         if (!db) {
             console.error("Firestore no está inicializado");
             return;
         }
-        
         try {
             const userProfileRef = doc(db, 'userProfiles', userId);
-            await setDoc(userProfileRef, { cosmicEnergy, stardust }, { merge: true });
+            await setDoc(userProfileRef, { ...dataToSave, lastUpdated: serverTimestamp() }, { merge: true });
         } catch (error) {
             console.error("Failed to update user profile in Firestore:", error);
         }
     };
 
-    const setState = async (newState: Partial<CosmicEnergyState>) => {
+    const setState = async (newState: Partial<CosmicEnergyState & { isLoading: boolean }>) => {
         const oldState = { ...currentState };
         currentState = { ...currentState, ...newState };
 
+        // Don't save the isLoading flag to Firestore
+        const { isLoading, ...stateToSave } = currentState;
+        
         if (currentUserId) {
-            if (!db) {
-                console.error("Firestore no está inicializado");
-                currentState = oldState;
-                return;
-            }
-            
-            try {
-                const userProfileRef = doc(db, 'userProfiles', currentUserId);
-                await setDoc(userProfileRef, newState, { merge: true });
-            } catch (error) {
-                console.error("Failed to update user profile in Firestore:", error);
-                // Revert state on error
-                currentState = oldState;
-            }
+            await saveToFirestore(currentUserId, stateToSave);
         }
         listeners.forEach(listener => listener());
     };
 
     const loadInitialState = async (userId: string) => {
-      if (userId === currentUserId && currentState.points > 0) return; // Already loaded for this user
+        if (userId === currentUserId && !currentState.isLoading) return;
 
-      if (!db) {
-        console.error("Firestore no está inicializado");
-        currentState = { ...initialState };
-        listeners.forEach(listener => listener());
-        return;
-      }
+        currentState = { ...initialState, isLoading: true };
+        listeners.forEach(l => l());
 
-      currentUserId = userId;
-      const userProfileRef = doc(db, 'userProfiles', userId);
-      try {
-        const docSnap = await getDoc(userProfileRef);
-        if (docSnap.exists()) {
-          const loadedData = docSnap.data() as Partial<CosmicEnergyState>;
-          // Merge with initial state to ensure all fields are present
-          currentState = { ...initialState, ...loadedData };
-        } else {
-          // If profile doesn't exist, create it with initial values
-          currentState = { ...initialState };
-          await setDoc(userProfileRef, currentState);
+        currentUserId = userId;
+
+        if (!db) {
+            console.error("Firestore is not initialized");
+            currentState = { ...initialState, isLoading: false };
+            listeners.forEach(l => l());
+            return;
         }
-      } catch (error) {
-        console.error("Failed to load user profile from Firestore:", error);
-        currentState = { ...initialState };
-      }
-      listeners.forEach(listener => listener());
+
+        try {
+            const userProfileRef = doc(db, 'userProfiles', userId);
+            const docSnap = await getDoc(userProfileRef);
+            if (docSnap.exists()) {
+                const loadedData = docSnap.data() as Partial<CosmicEnergyState>;
+                currentState = { ...initialState, ...loadedData, isLoading: false };
+            } else {
+                // If profile doesn't exist, create it with initial values
+                await saveToFirestore(userId, initialState);
+                currentState = { ...initialState, isLoading: false };
+            }
+        } catch (error) {
+            console.error("Failed to load user profile from Firestore:", error);
+            currentState = { ...initialState, isLoading: false };
+        }
+        listeners.forEach(l => l());
     };
     
     const subscribe = (listener: () => void) => {
@@ -167,6 +160,9 @@ export const useCosmicEnergy = () => {
     useEffect(() => {
         if (user?.uid && store) {
             store.loadInitialState(user.uid);
+        } else if (!user && !authIsLoading && store) {
+            // Reset to initial state if user logs out
+            store.setState({ ...initialState, isLoading: false });
         }
     }, [user, authIsLoading]);
     
@@ -251,7 +247,7 @@ export const useCosmicEnergy = () => {
     const addStardust = useCallback(async (amount: number) => {
         if (!user?.uid || !store) return;
         const currentState = store.getState();
-        await store.setState({ stardust: currentState.stardust + amount });
+        await store.setState({ stardust: (currentState.stardust || 0) + amount });
     }, [user]);
 
     const awardStardustForAction = useCallback(async (actionId: GameActionId, amount: number): Promise<AwardStardustResult> => {
@@ -372,6 +368,6 @@ export const useCosmicEnergy = () => {
         claimRateReward,
         checkAndAwardDailyStardust,
         awardStardustForAction,
-        isLoading: authIsLoading,
+        isLoading: authIsLoading || state.isLoading,
     };
 };

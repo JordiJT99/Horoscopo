@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Link from 'next/link';
@@ -10,6 +11,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { Skeleton } from '../ui/skeleton';
 
 interface TopBarProps {
   dictionary: Dictionary;
@@ -20,7 +22,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [canGoBack, setCanGoBack] = useState(false);
-  const { stardust } = useCosmicEnergy();
+  const { stardust, isLoading } = useCosmicEnergy();
 
   useEffect(() => {
     setCanGoBack(window.history.length > 1);
@@ -96,16 +98,20 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
 
         {/* Right side: Stardust balance */}
         <div className="flex-1 flex justify-end">
-             <Link href={`/${currentLocale}/get-stardust`} passHref>
-                <Button
-                    variant="ghost"
-                    className="flex items-center gap-1.5 h-10 px-3 rounded-full text-foreground hover:bg-muted/50"
-                    aria-label={`${stardust} Stardust`}
-                >
-                    <StardustIcon className="h-14 w-14" />
-                    <span className="font-bold text-sm">{stardust}</span>
-                </Button>
-            </Link>
+            {isLoading ? (
+                <Skeleton className="h-10 w-20 rounded-full" />
+            ) : (
+                <Link href={`/${currentLocale}/get-stardust`} passHref>
+                    <Button
+                        variant="ghost"
+                        className="flex items-center gap-1.5 h-10 px-3 rounded-full text-foreground hover:bg-muted/50"
+                        aria-label={`${stardust} Stardust`}
+                    >
+                        <StardustIcon className="h-14 w-14" />
+                        <span className="font-bold text-sm">{stardust}</span>
+                    </Button>
+                </Link>
+            )}
         </div>
       </div>
     </header>

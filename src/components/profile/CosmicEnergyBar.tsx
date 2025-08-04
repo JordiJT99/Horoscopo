@@ -14,13 +14,14 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { StardustIcon } from '@/components/shared/StardustIcon';
+import { Skeleton } from '../ui/skeleton';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
 }
 
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
-  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, subtractStardust, lastGained } = useCosmicEnergy();
+  const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, subtractStardust, lastGained, isLoading } = useCosmicEnergy();
   const { toast } = useToast();
   const isPremium = true; 
 
@@ -62,6 +63,27 @@ export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
         description: `-50 Stardust (Dev)`,
     });
   };
+
+  if (isLoading) {
+    return (
+        <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
+            <CardHeader className="p-4 pb-2">
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-4 w-1/2 mt-1" />
+            </CardHeader>
+            <CardContent className="p-4 pt-2">
+                <div className="flex justify-between items-center mb-1">
+                    <Skeleton className="h-5 w-1/4" />
+                    <Skeleton className="h-4 w-1/3" />
+                </div>
+                <Skeleton className="h-2.5 w-full rounded-full" />
+                 <div className="flex justify-between items-center mt-2">
+                    <Skeleton className="h-5 w-1/3" />
+                </div>
+            </CardContent>
+        </Card>
+    );
+  }
 
   return (
     <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
