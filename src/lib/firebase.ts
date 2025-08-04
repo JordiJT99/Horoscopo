@@ -93,7 +93,13 @@ if (appInitializedSuccessfully && app) {
     db = getFirestore(app);
     if (typeof window !== "undefined") {
       analyticsInstance = getAnalytics(app);
-      messagingInstance = getMessaging(app);
+      // Solo inicializar messaging si NO estamos en Capacitor WebView
+      const isCapacitor = window.Capacitor && window.Capacitor.isNativePlatform();
+      if (!isCapacitor) {
+        messagingInstance = getMessaging(app);
+      } else {
+        console.log('🚫 Firebase Messaging deshabilitado en Capacitor WebView');
+      }
     }
   } catch (error) {
     console.error("Firebase getAuth/getFirestore/getAnalytics/getMessaging error:", error);

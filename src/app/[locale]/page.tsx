@@ -19,11 +19,12 @@ export async function generateStaticParams() {
 
 interface AstroVibesHomePageProps {
   params: Promise<{ locale: Locale }>;
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function AstroVibesHomePageWrapper({ params: paramsPromise, searchParams }: AstroVibesHomePageProps) {
+export default async function AstroVibesHomePageWrapper({ params: paramsPromise, searchParams: searchParamsPromise }: AstroVibesHomePageProps) {
   const params = await paramsPromise;
+  const searchParams = await searchParamsPromise;
   const dictionary = await getDictionary(params.locale);
 
   if (!dictionary || Object.keys(dictionary).length === 0) {

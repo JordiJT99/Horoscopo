@@ -220,10 +220,10 @@ export default function AstroVibesHomePageContent({
 
       setIsHoroscopeLoading(true);
       
+      // Determinar si usar horóscopo personalizado o genérico
+      const usePersonalizedForDaily = shouldUsePersonalized && displayPeriod === 'daily';
+      
       try {
-        // Determinar si usar horóscopo personalizado o genérico
-        const usePersonalizedForDaily = shouldUsePersonalized && displayPeriod === 'daily';
-        
         let dailyData: HoroscopeDetail | null = null;
         
         if (usePersonalizedForDaily) {

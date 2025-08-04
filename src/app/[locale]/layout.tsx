@@ -47,7 +47,8 @@ export default async function LocaleLayout({
   children,
   params,
 }: Readonly<LocaleLayoutProps>) {
-  const currentLocale = params.locale;
+  const resolvedParams = await params;
+  const currentLocale = resolvedParams.locale;
   const dictionary = await getDictionary(currentLocale);
 
   if (Object.keys(dictionary).length === 0) { 

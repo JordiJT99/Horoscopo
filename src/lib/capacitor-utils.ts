@@ -3,7 +3,7 @@
  */
 
 import { Capacitor } from '@capacitor/core';
-import { Http, type HttpOptions, type HttpResponse } from '@capacitor/core';
+import { CapacitorHttp, type HttpOptions, type HttpResponse } from '@capacitor/core';
 
 
 export const isCapacitor = (): boolean => {
@@ -36,14 +36,15 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
-  // Fallback for server-side execution - ALWAYS use the non-www version to standardize
-  return 'https://astromistica.org'; 
+  // Fallback for server-side execution
+  return 'http://192.168.1.166:9002'; // Usar servidor de desarrollo
 };
 
 // Función para hacer requests compatibles con Capacitor
 export const capacitorFetch = async (url: string, options: RequestInit = {}): Promise<Response> => {
-  // Siempre construir la URL completa desde el dominio base no-www para consistencia
-  const fullUrl = url.startsWith('/') ? `https://astromistica.org${url}` : url;
+  // Construir la URL completa usando el servidor correcto
+  const baseUrl = getBaseUrl();
+  const fullUrl = url.startsWith('/') ? `${baseUrl}${url}` : url;
 
   if (Capacitor.isNativePlatform()) {
     console.log(`🚀 Using CapacitorHttp for: ${fullUrl}`);
@@ -67,7 +68,7 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
     }
     
     try {
-      const response: HttpResponse = await Http.request(httpOptions);
+      const response: HttpResponse = await CapacitorHttp.request(httpOptions);
       
       // Construir una respuesta compatible con la API Fetch
       const responseBody = typeof response.data === 'string' ? response.data : JSON.stringify(response.data);
