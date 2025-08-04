@@ -33,9 +33,11 @@ export function middleware(request: NextRequest) {
 
   // Si la petición viene de Capacitor, añadir cabeceras CORS
   if (isCapacitor) {
+      console.log(`🔧 Capacitor request detected for: ${pathname}. Adding CORS headers.`);
       response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, X-Platform, X-Is-Capacitor');
+      response.headers.set('Access-Control-Allow-Credentials', 'false'); // Importante para orígenes '*'
       response.headers.set('X-Frame-Options', 'ALLOWALL');
   }
 
@@ -71,6 +73,7 @@ export function middleware(request: NextRequest) {
       redirectResponse.headers.set('Access-Control-Allow-Origin', '*');
       redirectResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
       redirectResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, X-Platform, X-Is-Capacitor');
+      redirectResponse.headers.set('Access-Control-Allow-Credentials', 'false');
     }
     
     return redirectResponse;

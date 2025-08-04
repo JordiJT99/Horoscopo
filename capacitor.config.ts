@@ -9,7 +9,8 @@ const config: CapacitorConfig = {
     androidScheme: 'https',
     iosScheme: 'https',
     allowNavigation: [
-      'astromistica.org'
+      '*.astromistica.org', // Permitir todos los subdominios
+      'astromistica.org'    // Permitir el dominio principal
     ]
   },
   android: {
