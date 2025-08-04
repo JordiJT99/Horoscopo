@@ -15,26 +15,19 @@ export const getPlatform = (): 'ios' | 'android' | 'web' => {
   return Capacitor.getPlatform() as 'ios' | 'android' | 'web';
 };
 
-export const isCapacitorWebView = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  return Capacitor.isWebView();
-};
-
 export const getCapacitorInfo = () => {
   if (typeof window === 'undefined') {
     return {
       isCapacitor: false,
       platform: 'web' as const,
       userAgent: 'server-side',
-      isWebView: false
     };
   }
 
   return {
-    isCapacitor: isCapacitor(),
+    isCapacitor: Capacitor.isNativePlatform(),
     platform: getPlatform(),
     userAgent: window.navigator.userAgent,
-    isWebView: isCapacitorWebView(),
     hasCapacitorObject: !!window.Capacitor
   };
 };
@@ -43,6 +36,7 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
+  // Fallback for server-side execution
   return 'https://astromistica.org'; 
 };
 
@@ -61,14 +55,23 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
     };
 
     if (options.body) {
-      httpOptions.data = JSON.parse(options.body as string);
+        try {
+            // Check if body is already a string, otherwise stringify it.
+            httpOptions.data = typeof options.body === 'string' ? JSON.parse(options.body) : options.body;
+        } catch(e) {
+            // If parsing fails, it might be a simple string body.
+            console.warn("Could not parse options.body as JSON for CapacitorHttp, sending as is.");
+            httpOptions.data = options.body;
+        }
     }
     
     try {
       const response: HttpResponse = await Http.request(httpOptions);
       
       // Construir una respuesta compatible con la API Fetch
-      return new Response(JSON.stringify(response.data), {
+      const responseBody = typeof response.data === 'string' ? response.data : JSON.stringify(response.data);
+
+      return new Response(responseBody, {
         status: response.status,
         headers: response.headers,
       });
@@ -90,7 +93,7 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
       },
     };
     try {
-      const response = await fetch(fullUrl, enhancedOptions);
+      const response = await fetch(url, enhancedOptions);
       
       if (!response.ok) {
         console.error('❌ Standard Fetch Error:', {
@@ -98,7 +101,8 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
           statusText: response.statusText,
           url: fullUrl,
         });
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
       
       return response;
