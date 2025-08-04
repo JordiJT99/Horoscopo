@@ -7,10 +7,10 @@ const config: CapacitorConfig = {
   // La URL del servidor se debe usar solo para desarrollo.
   // Para producción (builds de la app), esta sección se debe eliminar
   // para que la app cargue los archivos desde el paquete local.
-  server: {
-    url: 'http://localhost:3000',
-    cleartext: true,
-  },
+  // server: {
+  //   url: 'http://localhost:3000',
+  //   cleartext: true,
+  // },
   android: {
     minWebViewVersion: 125,
     allowMixedContent: true, // Permitir contenido mixto para APIs
