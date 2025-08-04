@@ -2,7 +2,9 @@
  * Utilidades específicas para Capacitor WebView
  */
 
-import { Capacitor, Http, type HttpOptions, type HttpResponse } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
+import { Http, type HttpOptions, type HttpResponse } from '@capacitor/core';
+
 
 export const isCapacitor = (): boolean => {
   return Capacitor.isNativePlatform();
@@ -41,13 +43,13 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
-  return 'http://localhost:3000'; // Fallback para SSR
+  return 'https://astromistica.org'; 
 };
 
 // Función para hacer requests compatibles con Capacitor
 export const capacitorFetch = async (url: string, options: RequestInit = {}): Promise<Response> => {
   const info = getCapacitorInfo();
-  const fullUrl = url.startsWith('/') ? `${getBaseUrl()}${url}` : url;
+  const fullUrl = url.startsWith('/') ? `https://astromistica.org${url}` : url;
 
   if (info.isCapacitor && Http) {
     console.log(`🚀 Using CapacitorHttp for: ${fullUrl}`);
@@ -90,6 +92,16 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
     };
     try {
       const response = await fetch(fullUrl, enhancedOptions);
+      
+      if (!response.ok) {
+        console.error('❌ Standard Fetch Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          url: fullUrl,
+        });
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       return response;
     } catch (error) {
       console.error('❌ Standard Fetch Exception:', error);
@@ -102,5 +114,9 @@ export const capacitorFetch = async (url: string, options: RequestInit = {}): Pr
 declare global {
   interface Window {
     Capacitor?: any;
+    CapacitorHttp?: any;
+    CapacitorCookies?: any;
+    CapacitorToast?: any;
+    CapacitorBrowser?: any;
   }
 }
