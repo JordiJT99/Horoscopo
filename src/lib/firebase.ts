@@ -4,8 +4,6 @@ import { getAnalytics, type Analytics } from "firebase/analytics";
 import { getAuth, type Auth } from "firebase/auth"; 
 import { getFirestore, initializeFirestore, CACHE_SIZE_UNLIMITED, enableIndexedDbPersistence } from "firebase/firestore";
 import { getMessaging, type Messaging } from "firebase/messaging";
-import { initializeAppCheck, ReCaptchaV3Provider, getToken, CustomProvider } from "firebase/app-check";
-import { isCapacitor } from '@/lib/capacitor-utils';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -24,11 +22,16 @@ let analyticsInstance: Analytics | null = null;
 let messagingInstance: Messaging | null = null;
 let appInitializedSuccessfully = false;
 
-// Detectar si estamos en un entorno WebView
-const isWebView = typeof window !== "undefined" && (
+// Detectar si estamos en un entorno Capacitor/WebView con múltiples indicadores
+const isCapacitorEnv = typeof window !== "undefined" && (
+  (window as any).Capacitor ||
   (window as any).AndroidInterface ||
   navigator.userAgent.includes('wv') ||
-  (window as any).webkit?.messageHandlers
+  navigator.userAgent.includes('WebView') ||
+  (window as any).webkit?.messageHandlers ||
+  document.URL.startsWith('capacitor://') ||
+  document.URL.startsWith('ionic://') ||
+  document.URL.startsWith('file://')
 );
 
 const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId'];
@@ -49,45 +52,17 @@ if (isConfigIncomplete) {
     try {
       app = initializeApp(firebaseConfig);
       
-      // Inicializar App Check
-      if (typeof window !== "undefined") {
-        try {
-          if (isCapacitor()) {
-            // Para aplicaciones móviles nativas (Capacitor) usar CustomProvider para Play Integrity
-            initializeAppCheck(app, {
-              provider: new CustomProvider({
-                getToken: async () => {
-                  // Este token se manejará automáticamente por el plugin nativo
-                  // cuando tengamos el SHA-256 configurado en Firebase Console
-                  return { token: '', expireTimeMillis: Date.now() + 3600000 };
-                }
-              }),
-              isTokenAutoRefreshEnabled: true
-            });
-            console.log("🛡️ App Check: Modo nativo (Play Integrity/DeviceCheck)");
-          } else {
-            // Para aplicaciones web, usar reCAPTCHA v3
-            initializeAppCheck(app, {
-              provider: new ReCaptchaV3Provider('6LeDwlcqAAAAAIhE9cNE0xJbL8iJk8OKdvIY7hIt'), // Reemplaza con tu site key
-              isTokenAutoRefreshEnabled: true
-            });
-            console.log("🛡️ App Check: Modo web (reCAPTCHA v3)");
-          }
-        } catch (error) {
-          console.warn("⚠️ Error inicializando App Check:", error);
-        }
-      }
-      
-      // Configuración específica para WebView
+      // Configuración específica para Capacitor/WebView
       const firestoreSettings: any = {
         cacheSizeBytes: CACHE_SIZE_UNLIMITED,
       };
       
-      if (isWebView) {
-        // Configuraciones específicas para WebView
+      if (isCapacitorEnv) {
+        // Configuraciones específicas para Capacitor/WebView con mejor conectividad
         firestoreSettings.experimentalAutoDetectLongPolling = true;
         firestoreSettings.useFetchStreams = false;
-        console.log("🔧 Firebase configurado para WebView con long polling");
+        firestoreSettings.experimentalForceLongPolling = true;
+        console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
       }
       
       // Initialize Firestore with WebView-specific settings
@@ -99,7 +74,7 @@ if (isConfigIncomplete) {
           if (err.code === 'failed-precondition') {
             console.warn("⚠️ Persistencia offline no disponible (múltiples pestañas abiertas)");
           } else if (err.code === 'unimplemented') {
-            console.warn("⚠️ Persistencia offline no soportada en este WebView");
+            console.warn("⚠️ Persistencia offline no soportada en este Capacitor WebView");
           } else {
             console.warn("⚠️ Persistencia offline deshabilitada:", err.message);
           }
@@ -124,12 +99,18 @@ if (appInitializedSuccessfully && app) {
     db = getFirestore(app);
     if (typeof window !== "undefined") {
       analyticsInstance = getAnalytics(app);
-      // Solo inicializar messaging si NO estamos en Capacitor WebView
-      const isCapacitor = window.Capacitor && window.Capacitor.isNativePlatform();
-      if (!isCapacitor) {
-        messagingInstance = getMessaging(app);
+      
+      // Solo inicializar Firebase Messaging en entornos web (no en Capacitor)
+      if (!isCapacitorEnv) {
+        try {
+          messagingInstance = getMessaging(app);
+        } catch (messagingError) {
+          console.warn("⚠️ Firebase Messaging no disponible:", messagingError);
+          messagingInstance = null;
+        }
       } else {
-        console.log('🚫 Firebase Messaging deshabilitado en Capacitor WebView');
+        console.log("🔧 Firebase Messaging deshabilitado en Capacitor");
+        messagingInstance = null;
       }
     }
   } catch (error) {
@@ -143,30 +124,3 @@ if (appInitializedSuccessfully && app) {
 }
 
 export { app, authInstance as auth, db, analyticsInstance as analytics, messagingInstance as messaging, appInitializedSuccessfully };
-
-/**
- * Función para verificar el estado de App Check
- */
-export async function verifyAppCheck(): Promise<{ success: boolean; token?: string; error?: string }> {
-  try {
-    if (!app) {
-      return { success: false, error: 'Firebase app no inicializada' };
-    }
-
-    if (typeof window === "undefined") {
-      return { success: false, error: 'App Check solo funciona en el navegador' };
-    }
-
-    // Verificar si App Check está configurado
-    if (isCapacitor()) {
-      console.log('🛡️ App Check en modo nativo - verificación automática con Play Integrity');
-      return { success: true, token: 'native-app-check' };
-    } else {
-      console.log('🛡️ App Check en modo web - verificación con reCAPTCHA v3');
-      return { success: true, token: 'web-app-check' };
-    }
-  } catch (error) {
-    console.error('❌ Error verificando App Check:', error);
-    return { success: false, error: error instanceof Error ? error.message : 'Error desconocido' };
-  }
-}

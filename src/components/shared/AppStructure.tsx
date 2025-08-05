@@ -70,9 +70,10 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
     }
   }, [hasMounted, isDailyRewardChecked, checkAndAwardDailyStardust, toast, dictionary]);
 
-  // Effect to register the Service Worker for PWA functionality
+  // Effect to register the Service Worker for PWA functionality (only on web)
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    // Solo registrar Service Worker en entornos web, no en Capacitor
+    if ('serviceWorker' in navigator && !Capacitor.isNativePlatform()) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/firebase-messaging-sw.js').then(registration => {
           console.log('Service Worker registered: ', registration);
@@ -80,6 +81,8 @@ export default function AppStructure({ locale, dictionary, children }: { locale:
           console.log('Service Worker registration failed: ', registrationError);
         });
       });
+    } else if (Capacitor.isNativePlatform()) {
+      console.log('🔧 Service Worker deshabilitado en Capacitor');
     }
 
     // Capacitor App Listener for the back button
