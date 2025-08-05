@@ -27,8 +27,9 @@ service cloud.firestore {
     }
     
     match /horoscopes/personalized/{date}/{locale}/{sign}/{userId} {
-        // Un usuario autenticado solo puede leer y escribir su propio horóscopo personalizado.
-        allow read, write: if request.auth != null && request.auth.uid == userId;
+        // Permitir lectura pública y escritura con cualquier userId válido
+        allow read: if true;
+        allow write: if userId != null && userId != "";
     }
 
     // Perfiles de usuario: Solo el propio usuario puede leer y escribir su perfil.
@@ -36,17 +37,23 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
     
-    // Publicaciones de la comunidad: Cualquiera puede leer, solo autenticados pueden crear.
+    // Publicaciones de la comunidad: Lectura pública, escritura con validación de contenido
     match /community-posts/{postId} {
       allow read: if true;
-      allow create: if request.auth != null;
+      allow create: if request.resource.data.content != null && 
+                      request.resource.data.content != "" &&
+                      request.resource.data.authorName != null &&
+                      request.resource.data.authorName != "";
       allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
     }
 
-    // Comentarios de la comunidad: Cualquiera puede leer, solo autenticados pueden crear.
+    // Comentarios de la comunidad: Lectura pública, escritura con validación
     match /community-posts/{postId}/comments/{commentId} {
       allow read: if true;
-      allow create: if request.auth != null;
+      allow create: if request.resource.data.content != null && 
+                      request.resource.data.content != "" &&
+                      request.resource.data.authorName != null &&
+                      request.resource.data.authorName != "";
       allow update, delete: if false; // Nadie puede editar o borrar comentarios desde el cliente.
     }
 
