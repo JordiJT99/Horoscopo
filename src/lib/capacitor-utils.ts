@@ -36,8 +36,8 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
-  // Fallback for server-side execution
-  return 'http://192.168.1.166:9002'; // Usar servidor de desarrollo
+  // Fallback for server-side execution - usar dominio de producción
+  return 'https://astromistica.org'; 
 };
 
 // Función para hacer requests compatibles con Capacitor
