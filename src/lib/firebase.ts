@@ -87,10 +87,7 @@ if (isConfigIncomplete) {
         // Configuraciones específicas para WebView
         firestoreSettings.experimentalAutoDetectLongPolling = true;
         firestoreSettings.useFetchStreams = false;
-        // Configuraciones adicionales para conectividad móvil
-        firestoreSettings.experimentalForceLongPolling = true;
-        firestoreSettings.ignoreUndefinedProperties = true;
-        console.log("🔧 Firebase configurado para WebView con long polling forzado");
+        console.log("🔧 Firebase configurado para WebView con long polling");
       }
       
       // Initialize Firestore with WebView-specific settings
@@ -171,56 +168,5 @@ export async function verifyAppCheck(): Promise<{ success: boolean; token?: stri
   } catch (error) {
     console.error('❌ Error verificando App Check:', error);
     return { success: false, error: error instanceof Error ? error.message : 'Error desconocido' };
-  }
-}
-
-/**
- * Función para restaurar la conectividad de Firebase cuando está offline
- */
-export async function restoreFirebaseConnectivity(): Promise<boolean> {
-  try {
-    console.log('🔄 Attempting to restore Firebase connectivity...');
-    
-    if (!db) {
-      console.error('❌ Firestore database not initialized');
-      return false;
-    }
-
-    // Importar funciones de Firestore
-    const { enableNetwork, connectFirestoreEmulator, terminate, clearIndexedDbPersistence } = await import('firebase/firestore');
-    
-    try {
-      // Habilitar la red de Firestore
-      await enableNetwork(db);
-      console.log('✅ Firebase network enabled');
-      
-      // Verificar conectividad con una operación simple
-      const { doc, getDoc } = await import('firebase/firestore');
-      const testDoc = doc(db, '_test_connectivity', 'test');
-      await getDoc(testDoc);
-      console.log('✅ Firebase connectivity verified');
-      
-      return true;
-    } catch (networkError) {
-      console.warn('⚠️ Network enable failed, trying alternative approach:', networkError);
-      
-      // Si falla, intentar limpiar la caché y reconectar
-      try {
-        if (typeof window !== 'undefined') {
-          await clearIndexedDbPersistence(db);
-          console.log('🧹 Cleared Firestore persistence cache');
-        }
-        
-        await enableNetwork(db);
-        console.log('✅ Firebase network re-enabled after cache clear');
-        return true;
-      } catch (retryError) {
-        console.error('❌ Failed to restore Firebase connectivity:', retryError);
-        return false;
-      }
-    }
-  } catch (error) {
-    console.error('❌ Error in restoreFirebaseConnectivity:', error);
-    return false;
   }
 }

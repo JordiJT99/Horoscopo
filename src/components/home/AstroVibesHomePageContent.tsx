@@ -79,11 +79,6 @@ export default function AstroVibesHomePageContent({
   const initialSignFromUrl = useMemo(() => searchParams.get('sign') as ZodiacSignName | null, [searchParams]);
   
   const [isPersonalizedRequestActive, setIsPersonalizedRequestActive] = useState(false);
-  const [networkStatus, setNetworkStatus] = useState({
-    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
-    connectionRetries: 0,
-    lastConnectionAttempt: null as Date | null
-  });
 
   const [selectedDisplaySignName, setSelectedDisplaySignName] = useState<ZodiacSignName>(() => {
     if (initialSignFromUrl && ZODIAC_SIGNS.find(s => s.name === initialSignFromUrl)) {
@@ -191,50 +186,6 @@ export default function AstroVibesHomePageContent({
     return { sun, moon, ascendant };
   }, [onboardingData]);
 
-  // Monitor network connectivity
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleOnline = () => {
-      console.log('🌐 Network back online');
-      setNetworkStatus(prev => ({
-        ...prev,
-        isOnline: true,
-        lastConnectionAttempt: new Date()
-      }));
-      
-      // Retry fetching horoscope when back online
-      if (!currentDisplayHoroscope) {
-        console.log('🔄 Retrying horoscope fetch after coming back online');
-        setTimeout(() => {
-          setSelectedDisplaySignName(prev => prev);
-        }, 1000);
-      }
-    };
-
-    const handleOffline = () => {
-      console.log('📱 Network went offline');
-      setNetworkStatus(prev => ({
-        ...prev,
-        isOnline: false
-      }));
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    // Check initial network status
-    setNetworkStatus(prev => ({
-      ...prev,
-      isOnline: navigator.onLine
-    }));
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, [currentDisplayHoroscope]);
-
 
   useEffect(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
@@ -320,9 +271,7 @@ export default function AstroVibesHomePageContent({
         userAgent: navigator.userAgent,
         isMobileApp: window.location.protocol === 'file:' || window.location.hostname === 'localhost',
         currentUrl: window.location.href,
-        timestamp: new Date().toISOString(),
-        networkState: networkStatus,
-        connectionRetries: networkStatus.connectionRetries
+        timestamp: new Date().toISOString()
       });
       
       // Determinar si usar horóscopo personalizado o genérico
@@ -415,42 +364,6 @@ export default function AstroVibesHomePageContent({
           }
         } else if (!usePersonalizedForDaily && dailyDBError) {
           console.error("Error fetching horoscope from DB:", dailyDBError);
-          
-          // Check if it's a Firebase offline error
-          if (dailyDBError.message?.includes('client is offline') || dailyDBError.code === 'unavailable') {
-            console.log('🔄 Firebase offline detected, attempting retry...');
-            // Try to restore Firebase connectivity
-            try {
-              const { restoreFirebaseConnectivity } = await import('@/lib/firebase');
-              const restored = await restoreFirebaseConnectivity();
-              
-              if (restored) {
-                console.log('✅ Firebase connectivity restored, retrying...');
-                setNetworkStatus(prev => ({
-                  ...prev,
-                  connectionRetries: prev.connectionRetries + 1,
-                  lastConnectionAttempt: new Date()
-                }));
-                
-                // Wait a bit and retry
-                setTimeout(() => {
-                  console.log('🔄 Retrying after connectivity restore...');
-                  setSelectedDisplaySignName(prev => prev);
-                }, 1500);
-                
-                return; // Don't show error toast yet, we're retrying
-              } else {
-                console.log('❌ Failed to restore Firebase connectivity');
-                setNetworkStatus(prev => ({
-                  ...prev,
-                  connectionRetries: prev.connectionRetries + 1
-                }));
-              }
-            } catch (networkError) {
-              console.error('❌ Failed to restore Firebase connectivity:', networkError);
-            }
-          }
-          
           setFullHoroscopeData(null);
           setCurrentDisplayHoroscope(null);
           if (dictionary && Object.keys(dictionary).length > 0) {
@@ -462,28 +375,6 @@ export default function AstroVibesHomePageContent({
           }
         } else if (usePersonalizedForDaily && personalizedError) {
           console.error("Error fetching personalized horoscope:", personalizedError);
-          
-          // Check if it's a Firebase offline error
-          if (personalizedError.message?.includes('client is offline') || personalizedError.code === 'unavailable') {
-            console.log('🔄 Firebase offline detected in personalized hook, attempting retry...');
-            try {
-              const { restoreFirebaseConnectivity } = await import('@/lib/firebase');
-              const restored = await restoreFirebaseConnectivity();
-              
-              if (restored) {
-                console.log('✅ Firebase connectivity restored for personalized, retrying...');
-                setTimeout(() => {
-                  console.log('🔄 Retrying personalized after connectivity restore...');
-                  setSelectedDisplaySignName(prev => prev);
-                }, 1500);
-                
-                return;
-              }
-            } catch (networkError) {
-              console.error('❌ Failed to restore Firebase connectivity for personalized:', networkError);
-            }
-          }
-          
           setFullHoroscopeData(null);
           setCurrentDisplayHoroscope(null);
           if (dictionary && Object.keys(dictionary).length > 0) {
@@ -496,28 +387,6 @@ export default function AstroVibesHomePageContent({
         }
       } catch (error) {
         console.error("Error fetching horoscope (exception caught):", error);
-        
-        // Check if it's a Firebase offline error in the catch block
-        if (error.message?.includes('client is offline') || error.code === 'unavailable') {
-          console.log('🔄 Firebase offline detected in catch block, attempting recovery...');
-          try {
-            const { restoreFirebaseConnectivity } = await import('@/lib/firebase');
-            const restored = await restoreFirebaseConnectivity();
-            
-            if (restored) {
-              console.log('✅ Firebase connectivity restored in catch block, retrying...');
-              setTimeout(() => {
-                console.log('🔄 Retrying after catch block connectivity restore...');
-                setSelectedDisplaySignName(prev => prev);
-              }, 1500);
-              
-              return;
-            }
-          } catch (networkError) {
-            console.error('❌ Failed to restore Firebase connectivity in catch:', networkError);
-          }
-        }
-        
         setFullHoroscopeData(null);
         setCurrentDisplayHoroscope(null);
         if (dictionary && Object.keys(dictionary).length > 0) {
