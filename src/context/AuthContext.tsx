@@ -48,6 +48,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (!appInitializedSuccessfully || !auth) {
       console.warn("AuthContext: Firebase not properly initialized. Auth features will be disabled.");
+      console.warn("Debug info:", { 
+        appInitializedSuccessfully, 
+        hasAuth: !!auth,
+        timestamp: new Date().toISOString()
+      });
       setIsLoading(false);
       setUser(null);
       (async () => {
