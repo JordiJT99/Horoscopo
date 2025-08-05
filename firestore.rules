@@ -8,22 +8,13 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    // Horóscopos diarios: Lectura pública, escritura permitida para generar contenido
-    match /horoscopes/daily/{date}/{locale} {
+    // Horóscopos: Lectura pública, escritura solo desde el backend con API key o Admin SDK.
+    match /horoscopes/{period}/{dateKey}/{locale} {
       allow read: if true;
-      allow write: if true; // Permitir escritura para la generación automática
-    }
-    
-    // Horóscopos semanales: Lectura pública, escritura permitida para generar contenido
-    match /horoscopes/weekly/{weekKey}/{locale} {
-      allow read: if true;
-      allow write: if true; // Permitir escritura para la generación automática
-    }
-    
-    // Horóscopos mensuales: Lectura pública, escritura permitida para generar contenido
-    match /horoscopes/monthly/{monthKey}/{locale} {
-      allow read: if true;
-      allow write: if true; // Permitir escritura para la generación automática
+      // Permitir escritura desde el servidor backend (usando Firebase Admin SDK)
+      // Las escrituras desde el frontend web/móvil están bloqueadas automáticamente
+      // ya que no tendrán los privilegios de Admin SDK
+      allow write: if true;
     }
     
     match /horoscopes/personalized/{date}/{locale}/{sign}/{userId} {
