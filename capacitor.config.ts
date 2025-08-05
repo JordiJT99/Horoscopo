@@ -5,13 +5,14 @@ const config: CapacitorConfig = {
   appName: 'AstroMística : Tarot, Horóscopo y Carta Natal',
   webDir: 'out',
   server: {
-    // Configuración para producción - usar dominio real
-    hostname: 'astromistica.org',
+    // Configuración para producción - usar dominio de Firebase Hosting
+    hostname: 'astromistica-org.web.app',
     androidScheme: 'https',
     iosScheme: 'https',
     allowNavigation: [
-      '*.astromistica.org',
-      'astromistica.org'
+      '*.astromistica-org.web.app',
+      'astromistica-org.web.app',
+      '*.web.app'
     ]
   },
   android: {

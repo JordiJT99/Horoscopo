@@ -36,8 +36,8 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
-  // Fallback for server-side execution - usar dominio de producción
-  return 'https://astromistica.org'; 
+  // Fallback for server-side execution - usar dominio de Firebase Hosting
+  return 'https://astromistica-org.web.app'; 
 };
 
 // Función para hacer requests compatibles con Capacitor
