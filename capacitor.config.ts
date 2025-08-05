@@ -20,10 +20,7 @@ const config: CapacitorConfig = {
     allowMixedContent: false,
     captureInput: true,
     webContentsDebuggingEnabled: false,
-    backgroundColor: '#1A142B',
-    // Configuraciones adicionales para conectividad
-    useLegacyBridge: false,
-    loggingBehavior: 'production'
+    backgroundColor: '#1A142B'
   },
   ios: {
     allowsLinkPreview: false,
@@ -44,9 +41,6 @@ const config: CapacitorConfig = {
       enabled: true
     },
     CapacitorCookies: {
-      enabled: true
-    },
-    Network: {
       enabled: true
     },
     AdMob: {
