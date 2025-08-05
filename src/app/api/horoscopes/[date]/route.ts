@@ -81,8 +81,20 @@ export async function GET(
       );
 
       if (!horoscope) {
-        console.log(`🔄 Usando horóscopo mock para desarrollo - ${sign} (${date})`);
-        horoscope = createMockHoroscope(sign as any, date, locale);
+        console.log(`🔄 Generando horóscopo automáticamente para ${sign} - ${date} (${locale})`);
+        try {
+          await HoroscopeBatchGenerator.generateDailyHoroscopes(date, [locale]);
+          horoscope = await HoroscopeFirestoreService.loadHoroscopeForSign(
+            sign as any,
+            date,
+            locale
+          );
+        } catch (generateError) {
+          console.error('❌ Error generando horóscopo automáticamente:', generateError);
+          // En caso de error, usar datos mock como fallback
+          console.log('🔄 Usando horóscopo mock como fallback');
+          horoscope = createMockHoroscope(sign as any, date, locale);
+        }
       }
 
       if (!horoscope) {

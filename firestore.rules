@@ -9,7 +9,7 @@ service cloud.firestore {
     }
 
     // Horóscopos: Lectura pública, escritura solo desde el backend (bloqueada para clientes).
-    match /horoscopes/{document=**} {
+    match /horoscopes/{period}/{dateKey}/{locale} {
       allow read: if true;
       allow write: if false; // Importante: previene escrituras desde el cliente.
     }
