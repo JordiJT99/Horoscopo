@@ -4,6 +4,8 @@ import { getAnalytics, type Analytics } from "firebase/analytics";
 import { getAuth, type Auth } from "firebase/auth"; 
 import { getFirestore, initializeFirestore, CACHE_SIZE_UNLIMITED, enableIndexedDbPersistence } from "firebase/firestore";
 import { getMessaging, type Messaging } from "firebase/messaging";
+import { initializeAppCheck, ReCaptchaV3Provider, getToken, type AppCheck } from "firebase/app-check";
+import { isCapacitor } from '@/lib/capacitor-utils';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,6 +22,7 @@ let authInstance: Auth | null = null;
 let db: ReturnType<typeof getFirestore> | null = null;
 let analyticsInstance: Analytics | null = null;
 let messagingInstance: Messaging | null = null;
+let appCheckInstance: AppCheck | null = null;
 let appInitializedSuccessfully = false;
 
 // Detectar si estamos en un entorno WebView
@@ -46,6 +49,30 @@ if (isConfigIncomplete) {
   if (!getApps().length) {
     try {
       app = initializeApp(firebaseConfig);
+      
+      // Inicializar App Check
+      if (typeof window !== "undefined") {
+        try {
+          if (isCapacitor()) {
+            // Para aplicaciones móviles nativas (Capacitor), App Check se maneja automáticamente
+            // con Play Integrity en Android y DeviceCheck en iOS
+            appCheckInstance = initializeAppCheck(app, {
+              provider: new ReCaptchaV3Provider('6LeDwlcqAAAAAIhE9cNE0xJbL8iJk8OKdvIY7hIt'), // Placeholder, no se usa en móvil
+              isTokenAutoRefreshEnabled: true
+            });
+            console.log("🛡️ App Check: Modo nativo (Play Integrity/DeviceCheck)");
+          } else {
+            // Para aplicaciones web, usar reCAPTCHA v3
+            appCheckInstance = initializeAppCheck(app, {
+              provider: new ReCaptchaV3Provider('6LeDwlcqAAAAAIhE9cNE0xJbL8iJk8OKdvIY7hIt'), // Reemplaza con tu site key
+              isTokenAutoRefreshEnabled: true
+            });
+            console.log("🛡️ App Check: Modo web (reCAPTCHA v3)");
+          }
+        } catch (error) {
+          console.warn("⚠️ Error inicializando App Check:", error);
+        }
+      }
       
       // Configuración específica para WebView
       const firestoreSettings: any = {
@@ -112,3 +139,27 @@ if (appInitializedSuccessfully && app) {
 }
 
 export { app, authInstance as auth, db, analyticsInstance as analytics, messagingInstance as messaging, appInitializedSuccessfully };
+
+/**
+ * Función para verificar el estado de App Check y obtener un token
+ */
+export async function verifyAppCheck(): Promise<{ success: boolean; token?: string; error?: string }> {
+  try {
+    if (!appCheckInstance) {
+      return { success: false, error: 'App Check no inicializado' };
+    }
+
+    // Intentar obtener un token de App Check
+    const appCheckToken = await getToken(appCheckInstance, /* forceRefresh */ false);
+    
+    if (appCheckToken.token) {
+      console.log('✅ App Check token obtenido correctamente');
+      return { success: true, token: appCheckToken.token };
+    } else {
+      return { success: false, error: 'No se pudo obtener el token de App Check' };
+    }
+  } catch (error) {
+    console.error('❌ Error verificando App Check:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Error desconocido' };
+  }
+}
