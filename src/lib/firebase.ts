@@ -37,6 +37,17 @@ const isCapacitorEnv = typeof window !== "undefined" && (
 const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId'];
 const isConfigIncomplete = requiredConfigKeys.some(key => !firebaseConfig[key]);
 
+// Solo log en el cliente para evitar spam durante el build
+if (typeof window !== "undefined") {
+  console.log("🔍 Firebase config check:", {
+    apiKey: !!firebaseConfig.apiKey,
+    authDomain: !!firebaseConfig.authDomain,
+    projectId: !!firebaseConfig.projectId,
+    messagingSenderId: !!firebaseConfig.messagingSenderId,
+    isConfigIncomplete
+  });
+}
+
 if (isConfigIncomplete) {
   console.error(
     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
@@ -62,7 +73,17 @@ if (isConfigIncomplete) {
         firestoreSettings.experimentalAutoDetectLongPolling = true;
         firestoreSettings.useFetchStreams = false;
         firestoreSettings.experimentalForceLongPolling = true;
+        
+        // Debug info para verificar que el debugging funciona
         console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
+        console.log("🔍 Debug habilitado - Capacitor detectado:", {
+          userAgent: navigator.userAgent,
+          isCapacitor: !!(window as any).Capacitor,
+          docURL: document.URL,
+          timestamp: new Date().toISOString()
+        });
+      } else {
+        console.log("🌐 Firebase configurado para entorno web estándar");
       }
       
       // Initialize Firestore with WebView-specific settings
@@ -124,3 +145,15 @@ if (appInitializedSuccessfully && app) {
 }
 
 export { app, authInstance as auth, db, analyticsInstance as analytics, messagingInstance as messaging, appInitializedSuccessfully };
+
+// Debug logging para diagnosticar problemas de inicialización (solo en cliente)
+if (typeof window !== "undefined") {
+  console.log("🔍 Firebase initialization status:", {
+    appInitializedSuccessfully,
+    hasApp: !!app,
+    hasAuth: !!authInstance,
+    hasDb: !!db,
+    isCapacitorEnv,
+    timestamp: new Date().toISOString()
+  });
+}
