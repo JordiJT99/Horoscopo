@@ -33,81 +33,81 @@ const isCapacitorEnv = typeof window !== "undefined" && (
   document.URL.startsWith('file://')
 );
 
-const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId'];
-const isConfigIncomplete = requiredConfigKeys.some(key => !firebaseConfig[key]);
+// --- Robust Key Validation ---
+const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId', 'appId'];
+let isConfigValid = true;
+let missingOrInvalidKeys: string[] = [];
 
-if (typeof window !== "undefined" && isConfigIncomplete) {
-  console.error(
-    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
-    "!! FIREBASE CONFIGURATION IS INCOMPLETE                                           !!\n" +
-    "!!                                                                                !!\n" +
-    "!! Please set all NEXT_PUBLIC_FIREBASE_* variables in your .env file.             !!\n" +
-    "!!                                                                                !!\n" +
-    "!! Firebase will NOT be initialized. App features may be disabled.                !!\n" +
-    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  );
+for (const key of requiredConfigKeys) {
+    const value = firebaseConfig[key];
+    if (!value || value.startsWith('YOUR_') || value.includes('HERE')) {
+        isConfigValid = false;
+        missingOrInvalidKeys.push(key);
+    }
 }
+// --- End Validation ---
 
-if (!isConfigIncomplete) {
-  if (!getApps().length) {
-    try {
-      app = initializeApp(firebaseConfig);
-      
-      const firestoreSettings: any = {
-        cacheSizeBytes: CACHE_SIZE_UNLIMITED,
-        ...(isCapacitorEnv
-          ? {
-              experimentalForceLongPolling: true,
-              experimentalAutoDetectLongPolling: false, // Desactivar explícitamente
-              useFetchStreams: false,
+
+if (!isConfigValid) {
+    console.error(
+      "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
+      "!! FIREBASE CONFIGURATION IS INCOMPLETE OR USES PLACEHOLDER VALUES              !!\n" +
+      "!!                                                                                !!\n" +
+      `!! Please update the following keys in your .env file: ${missingOrInvalidKeys.join(', ')}    !!\n` +
+      "!!                                                                                !!\n" +
+      "!! You can find these values in your Firebase project settings.                   !!\n" +
+      "!! Firebase will NOT be initialized. App features will be disabled.               !!\n" +
+      "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    );
+} else {
+    if (!getApps().length) {
+        try {
+            app = initializeApp(firebaseConfig);
+            
+            const firestoreSettings: any = {
+                cacheSizeBytes: CACHE_SIZE_UNLIMITED,
+            };
+            
+            if (isCapacitorEnv) {
+                firestoreSettings.experimentalAutoDetectLongPolling = true;
+                firestoreSettings.useFetchStreams = false;
+                firestoreSettings.experimentalForceLongPolling = true;
+                console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
+            } else {
+                console.log("🌐 Firebase configurado para entorno web estándar");
             }
-          : {
-              experimentalAutoDetectLongPolling: true, // web normal
-            }),
-      };
-      
-      if (isCapacitorEnv) {
-        firestoreSettings.experimentalAutoDetectLongPolling = true;
-        firestoreSettings.useFetchStreams = false;
-        firestoreSettings.experimentalForceLongPolling = true;
-        console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
-      } else {
-        console.log("🌐 Firebase configurado para entorno web estándar con auto-detect");
-      }
-      
-      db = initializeFirestore(app, firestoreSettings);
-      
-      if (typeof window !== "undefined" && db) {
-        enableIndexedDbPersistence(db).catch((err) => {
-          if (err.code === 'failed-precondition') {
-            console.warn("⚠️ Persistencia offline no disponible (múltiples pestañas abiertas)");
-          } else if (err.code === 'unimplemented') {
-            console.warn("⚠️ Persistencia offline no soportada en este Capacitor WebView");
-          } else {
-            console.warn("⚠️ Persistencia offline deshabilitada:", err.message);
-          }
-        });
-      }
-      
-      appInitializedSuccessfully = true;
-    } catch (error) {
-      console.error("Firebase initialization error (initializeApp failed):", error);
-      appInitializedSuccessfully = false;
+            
+            db = initializeFirestore(app, firestoreSettings);
+            
+            if (typeof window !== "undefined" && db) {
+                enableIndexedDbPersistence(db).catch((err) => {
+                    if (err.code === 'failed-precondition') {
+                        console.warn("⚠️ Persistencia offline no disponible (múltiples pestañas abiertas)");
+                    } else if (err.code === 'unimplemented') {
+                        console.warn("⚠️ Persistencia offline no soportada en este Capacitor WebView");
+                    } else {
+                        console.warn("⚠️ Persistencia offline deshabilitada:", err.message);
+                    }
+                });
+            }
+            
+            appInitializedSuccessfully = true;
+        } catch (error) {
+            console.error("Firebase initialization error (initializeApp failed):", error);
+            appInitializedSuccessfully = false;
+        }
+    } else {
+        app = getApp();
+        db = getFirestore(app);
+        appInitializedSuccessfully = true;
     }
-  } else {
-    app = getApp();
-    // No reasignar db aquí, ya está inicializada con initializeFirestore
-    if (!db) {
-      db = getFirestore(app);
-    }
-    appInitializedSuccessfully = true;
-  }
 }
 
 if (appInitializedSuccessfully && app) {
   try {
     authInstance = getAuth(app);
-    // No reasignar db aquí, ya está configurada con initializeFirestore
+    // Re-get Firestore instance from the initialized app to ensure consistency
+    db = getFirestore(app);
     if (typeof window !== "undefined") {
       // Analytics solo en web normal (no en Capacitor/WebView)
       if (!isCapacitorEnv && firebaseConfig.measurementId) {
@@ -116,7 +116,7 @@ if (appInitializedSuccessfully && app) {
         console.log("🔧 Firebase Analytics deshabilitado en Capacitor");
       }
       
-      if (!isCapacitorEnv) {
+      if (!isCapacitorEnv && firebaseConfig.vapidKey) {
         try {
           messagingInstance = getMessaging(app);
         } catch (messagingError) {
@@ -124,7 +124,8 @@ if (appInitializedSuccessfully && app) {
           messagingInstance = null;
         }
       } else {
-        console.log("🔧 Firebase Messaging deshabilitado en Capacitor");
+        if(isCapacitorEnv) console.log("🔧 Firebase Messaging deshabilitado en Capacitor");
+        if(!firebaseConfig.vapidKey) console.warn("🔧 Firebase Messaging deshabilitado, NEXT_PUBLIC_FIREBASE_VAPID_KEY no está configurada.");
         messagingInstance = null;
       }
     }
@@ -142,6 +143,7 @@ export { app, authInstance as auth, db, analyticsInstance as analytics, messagin
 
 if (typeof window !== "undefined") {
   console.log("🔍 Firebase initialization status:", {
+    isConfigValid,
     appInitializedSuccessfully,
     hasApp: !!app,
     hasAuth: !!authInstance,
