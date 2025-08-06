@@ -10,10 +10,15 @@ const VAPID_KEY = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
 // --- Client-side functions ---
 
 export const getFCMToken = async (userId: string): Promise<string | null> => {
-  if (!appInitializedSuccessfully || !messaging || !VAPID_KEY) {
-    console.warn('Firebase Messaging not initialized or VAPID key is missing.');
+  if (!appInitializedSuccessfully || !messaging) {
+    console.warn('Firebase Messaging not initialized.');
     return null;
   }
+  if (!VAPID_KEY || VAPID_KEY === 'YOUR_VAPID_KEY_HERE') {
+    console.warn('VAPID key is missing in .env file. Cannot get FCM token.');
+    return null;
+  }
+
 
   try {
     const token = await getToken(messaging, { vapidKey: VAPID_KEY });
