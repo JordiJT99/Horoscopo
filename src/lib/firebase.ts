@@ -22,7 +22,6 @@ let analyticsInstance: Analytics | null = null;
 let messagingInstance: Messaging | null = null;
 let appInitializedSuccessfully = false;
 
-// Detectar si estamos en un entorno Capacitor/WebView con múltiples indicadores
 const isCapacitorEnv = typeof window !== "undefined" && (
   (window as any).Capacitor ||
   (window as any).AndroidInterface ||
@@ -37,18 +36,7 @@ const isCapacitorEnv = typeof window !== "undefined" && (
 const requiredConfigKeys: (keyof FirebaseOptions)[] = ['apiKey', 'authDomain', 'projectId', 'messagingSenderId'];
 const isConfigIncomplete = requiredConfigKeys.some(key => !firebaseConfig[key]);
 
-// Solo log en el cliente para evitar spam durante el build
-if (typeof window !== "undefined") {
-  console.log("🔍 Firebase config check:", {
-    apiKey: !!firebaseConfig.apiKey,
-    authDomain: !!firebaseConfig.authDomain,
-    projectId: !!firebaseConfig.projectId,
-    messagingSenderId: !!firebaseConfig.messagingSenderId,
-    isConfigIncomplete
-  });
-}
-
-if (isConfigIncomplete) {
+if (typeof window !== "undefined" && isConfigIncomplete) {
   console.error(
     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
     "!! FIREBASE CONFIGURATION IS INCOMPLETE                                           !!\n" +
@@ -58,12 +46,13 @@ if (isConfigIncomplete) {
     "!! Firebase will NOT be initialized. App features may be disabled.                !!\n" +
     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   );
-} else {
+}
+
+if (!isConfigIncomplete) {
   if (!getApps().length) {
     try {
       app = initializeApp(firebaseConfig);
       
-      // Configuración específica para Capacitor/WebView
       const firestoreSettings: any = {
         cacheSizeBytes: CACHE_SIZE_UNLIMITED,
         ...(isCapacitorEnv
@@ -78,22 +67,16 @@ if (isConfigIncomplete) {
       };
       
       if (isCapacitorEnv) {
-        // Debug info para verificar que el debugging funciona
+        firestoreSettings.experimentalAutoDetectLongPolling = true;
+        firestoreSettings.useFetchStreams = false;
+        firestoreSettings.experimentalForceLongPolling = true;
         console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
-        console.log("🔍 Debug habilitado - Capacitor detectado:", {
-          userAgent: navigator.userAgent,
-          isCapacitor: !!(window as any).Capacitor,
-          docURL: document.URL,
-          timestamp: new Date().toISOString()
-        });
       } else {
         console.log("🌐 Firebase configurado para entorno web estándar con auto-detect");
       }
       
-      // Initialize Firestore with WebView-specific settings
       db = initializeFirestore(app, firestoreSettings);
       
-      // Intentar habilitar persistencia offline, pero capturar errores en WebView
       if (typeof window !== "undefined" && db) {
         enableIndexedDbPersistence(db).catch((err) => {
           if (err.code === 'failed-precondition') {
@@ -133,7 +116,6 @@ if (appInitializedSuccessfully && app) {
         console.log("🔧 Firebase Analytics deshabilitado en Capacitor");
       }
       
-      // Solo inicializar Firebase Messaging en entornos web (no en Capacitor)
       if (!isCapacitorEnv) {
         try {
           messagingInstance = getMessaging(app);
@@ -158,7 +140,6 @@ if (appInitializedSuccessfully && app) {
 
 export { app, authInstance as auth, db, analyticsInstance as analytics, messagingInstance as messaging, appInitializedSuccessfully };
 
-// Debug logging para diagnosticar problemas de inicialización (solo en cliente)
 if (typeof window !== "undefined") {
   console.log("🔍 Firebase initialization status:", {
     appInitializedSuccessfully,
