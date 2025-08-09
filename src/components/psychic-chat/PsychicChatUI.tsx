@@ -83,6 +83,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const [chatTimeRemaining, setChatTimeRemaining] = useState(0); 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const stardustTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const getStorageKey = useCallback(() => {
     if (!user || !psychic) return null;
@@ -123,6 +124,8 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
+    if (stardustTimerRef.current) clearInterval(stardustTimerRef.current);
+
     timerRef.current = setInterval(() => {
       setChatTimeRemaining(prevTime => {
         if (prevTime <= 1) {
@@ -132,7 +135,12 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         return prevTime - 1;
       });
     }, 1000);
-  }, []);
+
+    stardustTimerRef.current = setInterval(() => {
+        spendStardust(MINUTE_COST);
+    }, 60000); // Spend 1 stardust every minute
+
+  }, [spendStardust]);
 
   useEffect(() => {
     if (chatTimeRemaining > 0) {
@@ -140,6 +148,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (stardustTimerRef.current) clearInterval(stardustTimerRef.current);
     };
   }, [chatTimeRemaining, startTimer]);
 
