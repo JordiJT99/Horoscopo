@@ -71,7 +71,7 @@ if (!isConfigValid) {
             if (isCapacitorEnv) {
                 firestoreSettings.experimentalAutoDetectLongPolling = true;
                 firestoreSettings.useFetchStreams = false;
-                firestoreSettings.experimentalForceLongPolling = true;
+                firestoreSettings.experimentalForceLongPolling = false;
                 console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
             } else {
                 console.log("🌐 Firebase configurado para entorno web estándar");
