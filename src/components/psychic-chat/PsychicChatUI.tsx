@@ -157,13 +157,15 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   }, [spendStardust]);
 
   useEffect(() => {
-      if (chatTimeRemaining > 0 && selectedTopic) {
+      // Solo iniciar el timer cuando se selecciona un tópico por primera vez
+      // NO cuando cambia el tiempo restante
+      if (selectedTopic && !timerRef.current) {
           startTimer();
       }
       return () => {
           if (timerRef.current) clearInterval(timerRef.current);
       };
-  }, [chatTimeRemaining, selectedTopic, startTimer]);
+  }, [selectedTopic, startTimer]); // Removido chatTimeRemaining de las dependencias
 
 
   const scrollToBottom = () => {
