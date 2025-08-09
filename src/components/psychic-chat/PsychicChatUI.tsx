@@ -90,10 +90,11 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   }, [user, psychic]);
   
   const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
-    if (stardust < MINUTE_COST) {
+    const initialCost = 1; // 1 polvo estelar para iniciar
+    if (stardust < initialCost) {
         toast({
             title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
-            description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to start a chat.").replace('{cost}', MINUTE_COST.toString()),
+            description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to start a chat.").replace('{cost}', initialCost.toString()),
             variant: "destructive"
         });
         return;
@@ -110,8 +111,8 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
     
-    // Descontar el primer minuto al iniciar
-    spendStardust(MINUTE_COST);
+    // Descontar el costo inicial (1 polvo estelar) al iniciar
+    spendStardust(initialCost);
     // Establecer el tiempo restante a partir del saldo *restante*
     setChatTimeRemaining(stardust * 60);
 
