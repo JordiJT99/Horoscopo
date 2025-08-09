@@ -20,7 +20,7 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useAdMob } from '@/hooks/use-admob-ads';
 
-const MINUTE_COST = 1;
+const MINUTE_COST = 0.5;
 
 interface Message {
   text: string;
@@ -229,12 +229,13 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     try {
       const reward = await showRewardedAd();
       if (reward) {
-        const adRewardMinutes = 1;
-        await addStardust(adRewardMinutes * MINUTE_COST); 
+        const adRewardStardust = 1; // Los anuncios siempre dan 1 polvo estelar
+        const adRewardMinutes = Math.floor(adRewardStardust / MINUTE_COST); // Calcular minutos equivalentes
+        await addStardust(adRewardStardust); 
         setChatTimeRemaining(prev => prev + (adRewardMinutes * 60));
         toast({
           title: "¡Recompensa Obtenida!",
-          description: `Has ganado ${adRewardMinutes * MINUTE_COST} de Polvo Estelar y ${adRewardMinutes} minuto(s) de chat.`,
+          description: `Has ganado ${adRewardStardust} de Polvo Estelar y ${adRewardMinutes} minuto(s) de chat.`,
         });
       }
     } catch(err) {
