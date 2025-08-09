@@ -82,7 +82,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const scrollViewportRef = useRef<HTMLDivElement>(null);
 
   const [chatTimeRemaining, setChatTimeRemaining] = useState(0); 
-  const [timerStarted, setTimerStarted] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const getStorageKey = useCallback(() => {
@@ -110,7 +109,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     
     setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
-    setTimerStarted(false); // Reset timer state
     
     // Descontar el primer minuto al iniciar
     spendStardust(MINUTE_COST);
@@ -136,20 +134,11 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     }
   }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
 
-  // Usar useRef para la función spendStardust para evitar recreación
-  const spendStardustRef = useRef(spendStardust);
-  spendStardustRef.current = spendStardust;
-
+  // Timer management
   useEffect(() => {
-      console.log(`🔍 EFFECT: selectedTopic: ${!!selectedTopic}, timerStarted: ${timerStarted}`);
-      // Solo iniciar el timer cuando se selecciona un tópico Y no se ha iniciado aún
-      if (selectedTopic && !timerStarted) {
-          console.log(`🔍 EFFECT: Starting timer for the first time`);
-          setTimerStarted(true);
-          
+      if (selectedTopic && chatTimeRemaining > 0) {
           // Limpiar timer existente
           if (timerRef.current) {
-              console.log(`🔍 TIMER: Clearing existing timer`);
               clearInterval(timerRef.current);
           }
 
@@ -165,24 +154,20 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
                   // Solo restar polvo estelar cuando se completa exactamente 1 minuto (60 segundos)
                   // Y evitar cobrarlo al inicio del primer minuto
                   if (prevTime > 60 && newTime % 60 === 0) {
-                      console.log(`🔍 TRACE: Timer callback execution - Timer ID: ${timerRef.current}`);
-                      console.log(`✨ Full minute completed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
-                      spendStardustRef.current(MINUTE_COST);
+                      spendStardust(MINUTE_COST);
                   }
                   return newTime;
               });
           }, 1000);
-          console.log(`🔍 TIMER: New timer created with ID:`, timerRef.current);
       }
       
       return () => {
-          console.log(`🔍 EFFECT: Cleanup - clearing timer`);
           if (timerRef.current) {
               clearInterval(timerRef.current);
               timerRef.current = null;
           }
       };
-  }, [selectedTopic, timerStarted]);
+  }, [selectedTopic, chatTimeRemaining > 0, spendStardust]); // Depende de si hay tiempo restante
 
 
   const scrollToBottom = () => {
