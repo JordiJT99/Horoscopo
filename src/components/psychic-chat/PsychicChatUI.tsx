@@ -91,25 +91,30 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
+    
+    // Pequeño retardo para asegurar que el estado se actualiza antes de empezar
+    setTimeout(() => {
+      timerRef.current = setInterval(() => {
+        setChatTimeRemaining(prevTime => {
+          if (prevTime <= 0) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            return 0;
+          }
 
-    timerRef.current = setInterval(() => {
-      setChatTimeRemaining(prevTime => {
-        if (prevTime <= 1) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          return 0;
-        }
+          const newTime = prevTime - 1;
+          const previousMinute = Math.ceil(prevTime / 60);
+          const currentMinute = Math.ceil(newTime / 60);
+          
+          // Descontar Polvo Estelar cuando se cruza un umbral de minuto
+          if (currentMinute < previousMinute) {
+              console.log(`✨ Minute passed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
+              spendStardust(MINUTE_COST);
+          }
 
-        const newTime = prevTime - 1;
-        
-        // Descontar Polvo Estelar cada 60 segundos
-        if (prevTime > 0 && newTime % 60 === 0) {
-            spendStardust(MINUTE_COST);
-            console.log(`✨ 1 Stardust spent. Remaining time: ${newTime}s`);
-        }
-
-        return newTime;
-      });
-    }, 1000);
+          return newTime;
+        });
+      }, 1000);
+    }, 100);
   }, [spendStardust]);
 
 
@@ -161,7 +166,16 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   }, [chatTimeRemaining, startTimer]);
 
 
-  const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
+ const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
+    if (stardust <= 0) {
+        toast({
+            title: "Polvo Estelar Insuficiente",
+            description: "Necesitas al menos 1 de Polvo Estelar para iniciar un chat.",
+            variant: "destructive"
+        });
+        return;
+    }
+
     const initialMessage = {
         text: (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
         .replace('{psychicName}', psychic.name)
@@ -172,10 +186,13 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     
     setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
-    if (chatTimeRemaining <= 0) {
-        setChatTimeRemaining(stardust * 60); 
-    }
-  }, [dictionary, psychic.name, stardust, chatTimeRemaining]);
+    
+    // Descontar el primer minuto al iniciar
+    spendStardust(MINUTE_COST);
+    // Establecer el tiempo restante
+    setChatTimeRemaining((stardust - MINUTE_COST) * 60);
+
+  }, [dictionary, psychic.name, stardust, spendStardust, toast]);
 
 
   useEffect(() => {
@@ -380,3 +397,4 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     </Card>
   );
 }
+
