@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   compress: true,
   
-  serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow', 'lucide-react'],
+  serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow'],
   typescript: {
     ignoreBuildErrors: true,
   },
