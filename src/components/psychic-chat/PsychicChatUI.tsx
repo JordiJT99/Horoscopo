@@ -90,38 +90,6 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     return `chatHistory_${user.uid}_${psychic.id}`;
   }, [user, psychic]);
 
-  useEffect(() => {
-    const storageKey = getStorageKey();
-    if (storageKey) {
-      const savedChat = localStorage.getItem(storageKey);
-      if (savedChat) {
-        try {
-          const { messages: savedMessages, topic, timeRemaining } = JSON.parse(savedChat);
-          if (Array.isArray(savedMessages) && topic) {
-            setMessages(savedMessages);
-            setSelectedTopic(topic);
-            setChatTimeRemaining(timeRemaining || 0);
-          }
-        } catch (e) {
-          console.error("Failed to parse chat history from localStorage", e);
-          localStorage.removeItem(storageKey); // Clear corrupted data
-        }
-      }
-    }
-  }, [getStorageKey]);
-
-  useEffect(() => {
-    const storageKey = getStorageKey();
-    if (storageKey && selectedTopic && messages.length > 0) {
-      const chatState = {
-        messages,
-        topic: selectedTopic,
-        timeRemaining: chatTimeRemaining
-      };
-      localStorage.setItem(storageKey, JSON.stringify(chatState));
-    }
-  }, [messages, selectedTopic, chatTimeRemaining, getStorageKey]);
-
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     if (stardustTimerRef.current) clearInterval(stardustTimerRef.current);
@@ -137,16 +105,57 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       });
     }, 1000);
 
+    // This timer consumes stardust every minute
     stardustTimerRef.current = setInterval(() => {
-      setChatTimeRemaining(prev => {
-        if (prev > 0) {
-            spendStardust(MINUTE_COST);
-        }
-        return prev;
-      });
+      if (chatTimeRemaining > 0) {
+        spendStardust(MINUTE_COST);
+        console.log(`✨ 1 Stardust spent. Remaining: ${stardust - MINUTE_COST}`);
+      }
     }, 60000); 
 
-  }, [spendStardust]);
+  }, [spendStardust, chatTimeRemaining, stardust]);
+
+
+  useEffect(() => {
+    const storageKey = getStorageKey();
+    if (storageKey) {
+      const savedChat = localStorage.getItem(storageKey);
+      if (savedChat) {
+        try {
+          const { messages: savedMessages, topic, timeRemaining } = JSON.parse(savedChat);
+          if (Array.isArray(savedMessages) && topic && typeof timeRemaining === 'number' && timeRemaining > 0) {
+            setMessages(savedMessages);
+            setSelectedTopic(topic);
+            setChatTimeRemaining(timeRemaining);
+          } else {
+            // If saved time is 0 or invalid, reset the state
+            localStorage.removeItem(storageKey);
+          }
+        } catch (e) {
+          console.error("Failed to parse chat history from localStorage", e);
+          localStorage.removeItem(storageKey); // Clear corrupted data
+        }
+      }
+    }
+  }, [getStorageKey]);
+
+  // Effect to save chat state to localStorage
+  useEffect(() => {
+    const storageKey = getStorageKey();
+    if (storageKey && selectedTopic && messages.length > 0) {
+      const chatState = {
+        messages,
+        topic: selectedTopic,
+        timeRemaining: chatTimeRemaining,
+      };
+      // Only save if there's time remaining
+      if (chatTimeRemaining > 0) {
+        localStorage.setItem(storageKey, JSON.stringify(chatState));
+      } else {
+        localStorage.removeItem(storageKey);
+      }
+    }
+  }, [messages, selectedTopic, chatTimeRemaining, getStorageKey]);
 
   useEffect(() => {
     if (chatTimeRemaining > 0) {
@@ -160,7 +169,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
 
 
   const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
-    let initialMessage = {
+    const initialMessage = {
         text: (dictionary['PsychicChatPage.initialMessage'] || "Hello! I am {psychicName}. Let's discuss \"{topicName}\". How can I help you today?")
         .replace('{psychicName}', psychic.name)
         .replace('{topicName}', topicName),
@@ -170,10 +179,12 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     
     setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
+    // Convert stardust to time in seconds
     if (chatTimeRemaining <= 0) {
-        setChatTimeRemaining(stardust * 60);
+        setChatTimeRemaining(stardust * 60); 
     }
   }, [dictionary, psychic.name, stardust, chatTimeRemaining]);
+
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
