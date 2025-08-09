@@ -49,8 +49,8 @@ const config: CapacitorConfig = {
       enabled: true
     },
     AdMob: {
-      appId: 'ca-app-pub-1601092077557933~3927093480',
-      testMode: false  // Producción: false para anuncios reales
+      appId: 'ca-app-pub-1601092077557933~8388042665',
+      testMode: true  // Producción: false para anuncios reales
     }
   }
 };

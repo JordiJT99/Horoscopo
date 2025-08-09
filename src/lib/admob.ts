@@ -7,21 +7,22 @@ import { Capacitor } from '@capacitor/core';
 // IDs de AdMob REALES de tu cuenta
 export const AD_CONFIG = {
   APPLICATION_ID: {
-    android: 'ca-app-pub-1601092077557933~3927093480', // Tu App ID real para Android
-    ios: 'ca-app-pub-1601092077557933~3927093480'     // Tu App ID real para iOS
+    android: 'ca-app-pub-1601092077557933~8388042665', // Tu App ID real para Android
+    ios: 'ca-app-pub-1601092077557933~8388042665' 
+    //ios: 'ca-app-pub-1601092077557933~3927093480'    // antiguo
   },
   AD_UNITS: {
     banner: {
-      android: 'ca-app-pub-1601092077557933/4647765323', // Tu Banner ID real para Android
-      ios: 'ca-app-pub-1601092077557933/4647765323'      // Tu Banner ID real para iOS
+      android: 'ca-app-pub-1601092077557933/8699033852', // Tu Banner ID real para Android
+      ios: 'ca-app-pub-1601092077557933/8699033852'      // Tu Banner ID real para iOS
     },
     interstitial: {
-      android: 'ca-app-pub-1601092077557933/7377870444', // Tu Interstitial ID real para Android
-      ios: 'ca-app-pub-1601092077557933/7377870444'      // Tu Interstitial ID real para iOS
+      android: 'ca-app-pub-1601092077557933/7953730727', // Tu Interstitial ID real para Android
+      ios: 'ca-app-pub-1601092077557933/7953730727'      // Tu Interstitial ID real para iOS
     },
     rewarded: {
-      android: 'ca-app-pub-1601092077557933/3438625437', // Tu Rewarded ID real para Android
-      ios: 'ca-app-pub-1601092077557933/3438625437'      // Tu Rewarded ID real para iOS
+      android: 'ca-app-pub-1601092077557933/2996917515', // Tu Rewarded ID real para Android
+      ios: 'ca-app-pub-1601092077557933/2996917515'      // Tu Rewarded ID real para iOS
     }
   }
 };
