@@ -130,6 +130,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       setChatTimeRemaining(prevTime => {
         if (prevTime <= 1) {
           if (timerRef.current) clearInterval(timerRef.current);
+          if (stardustTimerRef.current) clearInterval(stardustTimerRef.current);
           return 0;
         }
         return prevTime - 1;
@@ -137,8 +138,13 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     }, 1000);
 
     stardustTimerRef.current = setInterval(() => {
-        spendStardust(MINUTE_COST);
-    }, 60000); // Spend 1 stardust every minute
+      setChatTimeRemaining(prev => {
+        if (prev > 0) {
+            spendStardust(MINUTE_COST);
+        }
+        return prev;
+      });
+    }, 60000); 
 
   }, [spendStardust]);
 
@@ -165,9 +171,9 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     setMessages([initialMessage]);
     setSelectedTopic({ key: topicKey, name: topicName });
     if (chatTimeRemaining <= 0) {
-        setChatTimeRemaining(60); 
+        setChatTimeRemaining(stardust * 60);
     }
-  }, [dictionary, psychic.name, chatTimeRemaining]);
+  }, [dictionary, psychic.name, stardust, chatTimeRemaining]);
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
