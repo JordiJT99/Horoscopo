@@ -88,89 +88,12 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     if (!user || !psychic) return null;
     return `chatHistory_${user.uid}_${psychic.id}`;
   }, [user, psychic]);
-
-  const startTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    
-    // Pequeño retardo para asegurar que el estado se actualiza antes de empezar
-    setTimeout(() => {
-      timerRef.current = setInterval(() => {
-        setChatTimeRemaining(prevTime => {
-          if (prevTime <= 0) {
-            if (timerRef.current) clearInterval(timerRef.current);
-            return 0;
-          }
-
-          const newTime = prevTime - 1;
-          const previousMinute = Math.ceil(prevTime / 60);
-          const currentMinute = Math.ceil(newTime / 60);
-          
-          // Descontar Polvo Estelar cuando se cruza un umbral de minuto
-          if (currentMinute < previousMinute) {
-              console.log(`✨ Minute passed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
-              spendStardust(MINUTE_COST);
-          }
-
-          return newTime;
-        });
-      }, 1000);
-    }, 100);
-  }, [spendStardust]);
-
-
-  useEffect(() => {
-    const storageKey = getStorageKey();
-    if (storageKey) {
-      const savedChat = localStorage.getItem(storageKey);
-      if (savedChat) {
-        try {
-          const { messages: savedMessages, topic, timeRemaining } = JSON.parse(savedChat);
-          if (Array.isArray(savedMessages) && topic && typeof timeRemaining === 'number' && timeRemaining > 0) {
-            setMessages(savedMessages);
-            setSelectedTopic(topic);
-            setChatTimeRemaining(timeRemaining);
-          } else {
-            localStorage.removeItem(storageKey);
-          }
-        } catch (e) {
-          console.error("Failed to parse chat history from localStorage", e);
-          localStorage.removeItem(storageKey);
-        }
-      }
-    }
-  }, [getStorageKey]);
-
-  useEffect(() => {
-    const storageKey = getStorageKey();
-    if (storageKey && selectedTopic && messages.length > 0) {
-      const chatState = {
-        messages,
-        topic: selectedTopic,
-        timeRemaining: chatTimeRemaining,
-      };
-      if (chatTimeRemaining > 0) {
-        localStorage.setItem(storageKey, JSON.stringify(chatState));
-      } else {
-        localStorage.removeItem(storageKey);
-      }
-    }
-  }, [messages, selectedTopic, chatTimeRemaining, getStorageKey]);
-
-  useEffect(() => {
-    if (chatTimeRemaining > 0) {
-      startTimer();
-    }
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [chatTimeRemaining, startTimer]);
-
-
- const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
-    if (stardust <= 0) {
+  
+  const handleTopicSelect = useCallback((topicKey: string, topicName: string) => {
+    if (stardust < MINUTE_COST) {
         toast({
-            title: "Polvo Estelar Insuficiente",
-            description: "Necesitas al menos 1 de Polvo Estelar para iniciar un chat.",
+            title: dictionary['Toast.notEnoughStardustTitle'] || "Not Enough Stardust",
+            description: (dictionary['Toast.notEnoughStardustDescription'] || "You need {cost} Stardust to start a chat.").replace('{cost}', MINUTE_COST.toString()),
             variant: "destructive"
         });
         return;
@@ -189,11 +112,10 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     
     // Descontar el primer minuto al iniciar
     spendStardust(MINUTE_COST);
-    // Establecer el tiempo restante
-    setChatTimeRemaining((stardust - MINUTE_COST) * 60);
+    // Establecer el tiempo restante a partir del saldo *restante*
+    setChatTimeRemaining(stardust * 60);
 
   }, [dictionary, psychic.name, stardust, spendStardust, toast]);
-
 
   useEffect(() => {
     const topicFromQuery = searchParams.get('topic');
@@ -211,6 +133,37 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         }
     }
   }, [searchParams, dictionary, selectedTopic, handleTopicSelect]);
+
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    timerRef.current = setInterval(() => {
+      setChatTimeRemaining(prevTime => {
+        if (prevTime <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          return 0;
+        }
+
+        const newTime = prevTime - 1;
+        // Check if a minute has just passed (e.g., from 61 to 60, or 121 to 120)
+        if (newTime % 60 === 0) {
+            console.log(`✨ Minute passed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
+            spendStardust(MINUTE_COST);
+        }
+        return newTime;
+      });
+    }, 1000);
+  }, [spendStardust]);
+
+  useEffect(() => {
+      if (chatTimeRemaining > 0 && selectedTopic) {
+          startTimer();
+      }
+      return () => {
+          if (timerRef.current) clearInterval(timerRef.current);
+      };
+  }, [chatTimeRemaining, selectedTopic, startTimer]);
+
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -398,3 +351,4 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   );
 }
 
+    
