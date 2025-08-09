@@ -148,7 +148,9 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         // Solo restar polvo estelar cuando se completa exactamente 1 minuto (60 segundos)
         // Y evitar cobrarlo al inicio del primer minuto
         if (prevTime > 60 && newTime % 60 === 0) {
+            console.log(`🔍 TRACE: Timer callback execution - Psychic: ${psychic.name}`);
             console.log(`✨ Full minute completed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
+            console.log(`🔍 TRACE: About to call spendStardust with amount: ${MINUTE_COST}`);
             spendStardust(MINUTE_COST);
         }
         return newTime;

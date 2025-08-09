@@ -230,18 +230,24 @@ export const useCosmicEnergy = () => {
     }, [user, state.level, state.freeChats, state.stardust, state.lastGained]);
 
     const spendStardust = useCallback(async (amount: number, actionId?: GameActionId): Promise<boolean> => {
+        console.log(`🔍 HOOK TRACE: spendStardust called with amount: ${amount}, actionId: ${actionId}`);
+        console.log(`🔍 HOOK TRACE: Stack trace:`, new Error().stack);
+        
         if (!user?.uid || !store) return false;
         
         const currentState = store.getState(); // Get the most recent state
         if (currentState.stardust >= amount) {
+            console.log(`🔍 HOOK TRACE: Current stardust: ${currentState.stardust}, spending: ${amount}`);
             const newState: Partial<CosmicEnergyState> = { stardust: currentState.stardust - amount };
             if (actionId) {
                 const today = new Date().toISOString().split('T')[0];
                 newState.lastGained = { ...currentState.lastGained, [actionId]: today };
             }
             await store.setState(newState);
+            console.log(`🔍 HOOK TRACE: New stardust after spending: ${newState.stardust}`);
             return true;
         }
+        console.log(`🔍 HOOK TRACE: Not enough stardust. Current: ${currentState.stardust}, needed: ${amount}`);
         return false;
     }, [user]);
 
