@@ -140,42 +140,41 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
   const spendStardustRef = useRef(spendStardust);
   spendStardustRef.current = spendStardust;
 
-  const startTimer = useCallback(() => {
-    console.log(`🔍 TIMER: Starting new timer. Current timerRef.current:`, !!timerRef.current);
-    if (timerRef.current) {
-      console.log(`🔍 TIMER: Clearing existing timer`);
-      clearInterval(timerRef.current);
-    }
-
-    timerRef.current = setInterval(() => {
-      setChatTimeRemaining(prevTime => {
-        if (prevTime <= 1) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          return 0;
-        }
-
-        const newTime = prevTime - 1;
-        // Solo restar polvo estelar cuando se completa exactamente 1 minuto (60 segundos)
-        // Y evitar cobrarlo al inicio del primer minuto
-        if (prevTime > 60 && newTime % 60 === 0) {
-            console.log(`🔍 TRACE: Timer callback execution - Psychic: ${psychic.name}, Timer ID: ${timerRef.current}`);
-            console.log(`✨ Full minute completed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
-            spendStardustRef.current(MINUTE_COST);
-        }
-        return newTime;
-      });
-    }, 1000);
-    console.log(`🔍 TIMER: New timer created with ID:`, timerRef.current);
-  }, []); // Sin dependencias para evitar recreación
-
   useEffect(() => {
       console.log(`🔍 EFFECT: selectedTopic: ${!!selectedTopic}, timerStarted: ${timerStarted}`);
       // Solo iniciar el timer cuando se selecciona un tópico Y no se ha iniciado aún
       if (selectedTopic && !timerStarted) {
           console.log(`🔍 EFFECT: Starting timer for the first time`);
           setTimerStarted(true);
-          startTimer();
+          
+          // Limpiar timer existente
+          if (timerRef.current) {
+              console.log(`🔍 TIMER: Clearing existing timer`);
+              clearInterval(timerRef.current);
+          }
+
+          // Crear nuevo timer
+          timerRef.current = setInterval(() => {
+              setChatTimeRemaining(prevTime => {
+                  if (prevTime <= 1) {
+                      if (timerRef.current) clearInterval(timerRef.current);
+                      return 0;
+                  }
+
+                  const newTime = prevTime - 1;
+                  // Solo restar polvo estelar cuando se completa exactamente 1 minuto (60 segundos)
+                  // Y evitar cobrarlo al inicio del primer minuto
+                  if (prevTime > 60 && newTime % 60 === 0) {
+                      console.log(`🔍 TRACE: Timer callback execution - Timer ID: ${timerRef.current}`);
+                      console.log(`✨ Full minute completed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
+                      spendStardustRef.current(MINUTE_COST);
+                  }
+                  return newTime;
+              });
+          }, 1000);
+          console.log(`🔍 TIMER: New timer created with ID:`, timerRef.current);
       }
+      
       return () => {
           console.log(`🔍 EFFECT: Cleanup - clearing timer`);
           if (timerRef.current) {
@@ -183,7 +182,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
               timerRef.current = null;
           }
       };
-  }, [selectedTopic, timerStarted, startTimer]);
+  }, [selectedTopic, timerStarted]);
 
 
   const scrollToBottom = () => {
