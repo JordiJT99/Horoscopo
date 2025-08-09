@@ -66,14 +66,18 @@ if (isConfigIncomplete) {
       // Configuración específica para Capacitor/WebView
       const firestoreSettings: any = {
         cacheSizeBytes: CACHE_SIZE_UNLIMITED,
+        ...(isCapacitorEnv
+          ? {
+              experimentalForceLongPolling: true,
+              experimentalAutoDetectLongPolling: false, // Desactivar explícitamente
+              useFetchStreams: false,
+            }
+          : {
+              experimentalAutoDetectLongPolling: true, // web normal
+            }),
       };
       
       if (isCapacitorEnv) {
-        // Configuraciones específicas para Capacitor/WebView con mejor conectividad
-        firestoreSettings.experimentalAutoDetectLongPolling = true;
-        firestoreSettings.useFetchStreams = false;
-        firestoreSettings.experimentalForceLongPolling = true;
-        
         // Debug info para verificar que el debugging funciona
         console.log("🔧 Firebase configurado para Capacitor con long polling forzado");
         console.log("🔍 Debug habilitado - Capacitor detectado:", {
@@ -83,7 +87,7 @@ if (isConfigIncomplete) {
           timestamp: new Date().toISOString()
         });
       } else {
-        console.log("🌐 Firebase configurado para entorno web estándar");
+        console.log("🌐 Firebase configurado para entorno web estándar con auto-detect");
       }
       
       // Initialize Firestore with WebView-specific settings
@@ -109,7 +113,10 @@ if (isConfigIncomplete) {
     }
   } else {
     app = getApp();
-    db = getFirestore(app);
+    // No reasignar db aquí, ya está inicializada con initializeFirestore
+    if (!db) {
+      db = getFirestore(app);
+    }
     appInitializedSuccessfully = true;
   }
 }
@@ -117,9 +124,14 @@ if (isConfigIncomplete) {
 if (appInitializedSuccessfully && app) {
   try {
     authInstance = getAuth(app);
-    db = getFirestore(app);
+    // No reasignar db aquí, ya está configurada con initializeFirestore
     if (typeof window !== "undefined") {
-      analyticsInstance = getAnalytics(app);
+      // Analytics solo en web normal (no en Capacitor/WebView)
+      if (!isCapacitorEnv && firebaseConfig.measurementId) {
+        analyticsInstance = getAnalytics(app);
+      } else if (isCapacitorEnv) {
+        console.log("🔧 Firebase Analytics deshabilitado en Capacitor");
+      }
       
       // Solo inicializar Firebase Messaging en entornos web (no en Capacitor)
       if (!isCapacitorEnv) {
