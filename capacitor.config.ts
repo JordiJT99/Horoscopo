@@ -6,9 +6,12 @@ const config: CapacitorConfig = {
   webDir: 'out',
   server: {
     // Configuración para desarrollo y debugging - permitir contenido local
+    url: 'https://astromistica.org',
     androidScheme: 'https',
     iosScheme: 'https',
     allowNavigation: [
+      'astromistica.org',
+      '*.astromistica.org',
       '*.astromistica-org.web.app',
       'astromistica-org.web.app',
       '*.web.app',
