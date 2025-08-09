@@ -231,7 +231,8 @@ export const useCosmicEnergy = () => {
 
     const spendStardust = useCallback(async (amount: number, actionId?: GameActionId): Promise<boolean> => {
         if (!user?.uid || !store) return false;
-        const currentState = store.getState();
+        
+        const currentState = store.getState(); // Get the most recent state
         if (currentState.stardust >= amount) {
             const newState: Partial<CosmicEnergyState> = { stardust: currentState.stardust - amount };
             if (actionId) {
