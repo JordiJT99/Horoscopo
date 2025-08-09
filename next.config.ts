@@ -1,10 +1,11 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
   compress: true,
   
-  serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow'],
+  serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow', 'lucide-react'],
   typescript: {
     ignoreBuildErrors: true,
   },
