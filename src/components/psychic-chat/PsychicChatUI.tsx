@@ -145,9 +145,10 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
         }
 
         const newTime = prevTime - 1;
-        // Check if a minute has just passed (e.g., from 61 to 60, or 121 to 120)
-        if (newTime % 60 === 0) {
-            console.log(`✨ Minute passed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
+        // Solo restar polvo estelar cuando se completa exactamente 1 minuto (60 segundos)
+        // Y evitar cobrarlo al inicio del primer minuto
+        if (prevTime > 60 && newTime % 60 === 0) {
+            console.log(`✨ Full minute completed. Spending 1 stardust. Previous time: ${prevTime}, New time: ${newTime}`);
             spendStardust(MINUTE_COST);
         }
         return newTime;
