@@ -40,7 +40,7 @@ const config: CapacitorConfig = {
       showSpinner: true
     },
     CapacitorHttp: {
-      enabled: true
+      enabled: false
     },
     CapacitorCookies: {
       enabled: true
