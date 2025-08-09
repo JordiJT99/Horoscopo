@@ -75,7 +75,7 @@ export class AdMobService {
 
       const options: BannerAdOptions = {
         adId: adUnitId,
-        adSize: BannerAdSize.BANNER,
+        adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: position,
         margin: 0,
         isTesting: false
