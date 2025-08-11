@@ -1,52 +1,50 @@
+
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Reglas para Horóscopos Genéricos
     match /horoscopes/{period}/{dateKey}/{locale} {
       allow read: if true;
-      allow write: if request.auth != null; // Solo usuarios autenticados pueden escribir
+      allow write: if false; // Solo desde el backend
     }
-    
-    // Reglas para Horóscopos Personalizados
+
     match /horoscopes/personalized/{date}/{locale}/{sign}/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-
-    // Reglas para Perfiles de Usuario
-    match /userProfiles/{userId} {
-      allow read: if true;
-      allow write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // --- NUEVAS REGLAS PARA LA COMUNIDAD ---
+    
+    // =================================================================
+    // REGLAS DE LA COMUNIDAD
+    // =================================================================
     match /community-posts/{postId} {
       // Cualquiera puede leer las publicaciones
       allow read: if true;
-
-      // Solo usuarios autenticados pueden crear publicaciones
-      allow create: if request.auth != null;
-
-      // Solo el autor puede actualizar o borrar su publicación
+      
+      // Solo los usuarios autenticados pueden crear publicaciones, y deben ser el autor
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.authorId;
+      
+      // Solo el autor original puede actualizar o eliminar su publicación
       allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorId;
 
-      // --- REGLAS PARA COMENTARIOS (SUBCOLECCIÓN) ---
+      // --- Subcolección de Comentarios ---
       match /comments/{commentId} {
-        // Cualquiera puede leer los comentarios
-        allow read: if true;
-
-        // Solo usuarios autenticados pueden crear, actualizar o borrar sus propios comentarios
-        allow create: if request.auth != null;
+        // Cualquiera autenticado puede leer y añadir comentarios
+        allow read, create: if request.auth != null;
+        
+        // Solo el autor del comentario puede editarlo o eliminarlo
         allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorId;
       }
     }
     
-    // Reglas para tokens de notificación (FCM)
-    match /fcmTokens/{token} {
-        // Un usuario solo puede crear un documento con su propio ID
-        allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
-        // Un usuario solo puede leer, actualizar o borrar su propio token
-        allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    // =================================================================
+    // REGLAS DE PERFILES DE USUARIO
+    // =================================================================
+    match /userProfiles/{userId} {
+      // Cualquiera puede leer perfiles (para avatares, nombres, etc.)
+      allow read: if true;
+      
+      // Solo el propietario del perfil puede escribir en él
+      allow write: if request.auth != null && request.auth.uid == userId;
     }
   }
 }
