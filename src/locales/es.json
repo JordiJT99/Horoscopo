@@ -97,8 +97,8 @@
   "Earth": "Tierra",
   "Air": "Aire",
   "Water": "Agua",
-  "Masculine": "Masculino",
-  "Feminine": "Femenino",
+  "Masculine": "Masculine",
+  "Feminine": "Feminine",
   "Cardinal": "Cardinal",
   "Fixed": "Fijo",
   "Mutable": "Mutable",
@@ -258,9 +258,17 @@
   "ChineseHoroscopePage.descriptions.Rooster": "Observador, trabajador, ingenioso, valiente y talentoso.",
   "ChineseHoroscopePage.descriptions.Dog": "Leal, honesto, amable, bondadoso, cauteloso y prudente.",
   "ChineseHoroscopePage.descriptions.Pig": "Diligente, compasivo, generoso y de trato fácil.",
-  "ChineseHoroscopeDetail.Rat.interpretation": "Las Ratas son conocidas por su encanto e inteligencia. Son oportunistas naturales con una increíble capacidad para adaptarse a nuevas situaciones. Su curiosidad no tiene límites y siempre están buscando formas de mejorar su vida y la de quienes los rodean. Aunque pueden ser un poco tacañas, son extremadamente leales a sus amigos y familiares. Su mente rápida y su naturaleza sociable las convierten en excelentes estrategas y solucionadoras de problemas.",
-  "ChineseHoroscopeDetail.Ox.interpretation": "El Buey simboliza la fuerza, la diligencia y la fiabilidad. Son trabajadores incansables que creen en el poder de la paciencia y la perseverancia. Su enfoque metódico de la vida les permite construir bases sólidas y duraderas. Aunque pueden ser tercos y reacios al cambio, su lealtad y su sentido del deber son inquebrantables. Un Buey es un amigo y un socio en quien siempre puedes confiar.",
-  "ChineseHoroscopeDetail.Tiger.interpretation": "El Tigre es el epítome del coraje, el carisma y la confianza. Son líderes naturales con una energía magnética que atrae a los demás. Viven la vida con pasión e intensidad, y no temen tomar riesgos para alcanzar sus metas. Su naturaleza impredecible los hace emocionantes, pero también pueden ser impulsivos y temperamentales. Un Tigre siempre defenderá lo que cree justo y protegerá ferozmente a sus seres queridos.",
+  "ChineseHoroscopeDetail": {
+    "Rat": {
+      "interpretation": "Las Ratas son conocidas por su encanto e inteligencia. Son oportunistas naturales con una increíble capacidad para adaptarse a nuevas situaciones. Su curiosidad no tiene límites y siempre están buscando formas de mejorar su vida y la de quienes los rodean. Aunque pueden ser un poco tacañas, son extremadamente leales a sus amigos y familiares. Su mente rápida y su naturaleza sociable las convierten en excelentes estrategas y solucionadoras de problemas."
+    },
+    "Ox": {
+      "interpretation": "El Buey simboliza la fuerza, la diligencia y la fiabilidad. Son trabajadores incansables que creen en el poder de la paciencia y la perseverancia. Su enfoque metódico de la vida les permite construir bases sólidas y duraderas. Aunque pueden ser tercos y reacios al cambio, su lealtad y su sentido del deber son inquebrantables. Un Buey es un amigo y un socio en quien siempre puedes confiar."
+    },
+    "Tiger": {
+      "interpretation": "El Tigre es el epítome del coraje, el carisma y la confianza. Son líderes naturales con una energía magnética que atrae a los demás. Viven la vida con pasión e intensidad, y no temen tomar riesgos para alcanzar sus metas. Su naturaleza impredecible los hace emocionantes, pero también pueden ser impulsivos y temperamentales. Un Tigre siempre defenderá lo que cree justo y protegerá ferozmente a sus seres queridos."
+    }
+  },
   "Rat": "Rata",
   "Ox": "Buey",
   "Tiger": "Tigre",
@@ -570,8 +578,7 @@
   "TarotSpreadPage.getReadingButton": "Revelar Lectura",
   "TarotSpreadPage.readingTitle": "Tu Lectura de Tirada de Tarot",
   "TarotSpreadPage.drawAgainButton": "Hacer otra Tirada",
-  "TarotSpreadPage.errorFetching": "Las cartas están envueltas en niebla... No se pudo obtener una lectura. Por favor, inténtalo de nuevo.",
-  "DreamReadingPage.title": "Lectura de Sueños",
+  "TarotSpreadPage.errorFetching": "Las cartas están envueltas en niebla... No se pudo obtener una lectura. Por favor, inténtalo de nuevo.","DreamReadingPage.title": "Lectura de Sueños",
   "DreamReadingPage.subtitle": "Descubre los significados ocultos y símbolos dentro de tus sueños.",
   "DreamReadingPage.interpretationTitle": "Interpretación de Sueños",
   "DreamReadingPage.dreamEnergyTitle": "Nivel de Energía del Sueño",
@@ -765,8 +772,6 @@
   "Auth.loginFormTitleNow": "Ingresa tus credenciales",
   "Auth.loginFormDescription": "Inicia sesión con tu cuenta de Google o usa correo electrónico y contraseña.",
   "Auth.loginFormDescriptionFirebase": "Inicia sesión con tu correo electrónico y contraseña.",
-  "Auth.signupFormTitle": "Crea tu cuenta",
-  "Auth.signupFormDescription": "Rellena los detalles para unirte a AstroVibes.",
   "Auth.usernameLabel": "Nombre de usuario",
   "Auth.usernamePlaceholder": "Ingresa tu nombre de usuario",
   "Auth.emailLabel": "Correo Electrónico",
@@ -1009,9 +1014,9 @@
   "Toast.notEnoughStardustTitle": "Polvo Estelar Insuficiente",
   "Toast.notEnoughStardustDescription": "Necesitas {cost} de Polvo Estelar para usar esto de nuevo hoy. Puedes conseguir más en la sección 'Más'.",
   "Toast.stardustSpent": "Polvo Estelar Gastado",
-  "Toast.stardustSpentDescription": "Se han usado {cost} de Polvo Estelar para esta lectura."
+  "Toast.stardustSpentDescription": "Se han usado {cost} de Polvo Estelar para esta lectura.",
+  "Toast.dailyStardustClaimed": "¡Bono diario reclamado!",
+  "Toast.dailyStardustDescription": "Has recibido tu +1 Polvo Estelar diario."
 }
-
-    
 
     
