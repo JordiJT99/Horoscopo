@@ -270,6 +270,12 @@
     },
     "Rabbit": {
       "interpretation": "El Conejo es un símbolo de paz, elegancia y sensibilidad. Son almas gentiles que anhelan un entorno armonioso y evitan el conflicto a toda costa. Su naturaleza diplomática y su buen gusto los convierten en excelentes anfitriones y amigos. Aunque puedan parecer tímidos, son extremadamente vigilantes y astutos, capaces de sortear el peligro con gracia. Su mayor fortaleza es su capacidad para crear belleza y tranquilidad a su alrededor."
+    },
+    "Dragon": {
+      "interpretation": "El Dragón es el signo más poderoso y auspicioso del zodiaco chino. Son visionarios carismáticos, llenos de energía, ambición y un deseo innato de liderar. Su confianza en sí mismos es inmensa y no temen a los desafíos. A veces pueden parecer arrogantes, pero su corazón es generoso y siempre están dispuestos a ayudar a los demás. Un Dragón está destinado a dejar una huella en el mundo."
+    },
+    "Snake": {
+      "interpretation": "La Serpiente es sabia, enigmática y profundamente intuitiva. Poseen una mente aguda y una calma que esconde una gran fuerza interior. Son excelentes estrategas que prefieren trabajar en silencio, analizando las situaciones desde todos los ángulos antes de actuar. Aunque pueden ser reservados y desconfiados, son extremadamente leales y posesivos con las personas que aman. Su sabiduría y su encanto magnético son sus mayores dones."
     }
   },
   "Rat": "Rata",
@@ -829,7 +835,7 @@
   "CommunityPage.postCommentButton": "Publicar Comentario",
   "CommunityPage.noCommentsYet": "Aún no hay comentarios. ¡Sé el primero en comentar!",
   "CommunityPage.commentError": "No se pudo publicar el comentario.",
-  "CommunityPage.shareToCommunity": "Compartir en la Comunidad",
+  "CommunityPage.shareToCommunity": "Compartir",
   "CommunityPage.shareSuccessTitle": "¡Éxito!",
   "CommunityPage.shareDreamSuccess": "Tu sueño ha sido compartido con la comunidad.",
   "CommunityPage.shareTarotSuccess": "Tu lectura de tarot ha sido compartida.",
