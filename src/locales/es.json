@@ -1,8 +1,8 @@
 
 {
-  "App.title": "AstroVibes",
+  "App.title": "AstroMística",
   "App.description": "Tu fuente diaria de horóscopos e insights astrológicos.",
-  "Header.title": "AstroVibes",
+  "Header.title": "AstroMística",
   "Header.changeLanguage": "Idioma",
   "Header.horoscopes": "Horóscopos",
   "Header.compatibility": "Compat.",
@@ -12,7 +12,7 @@
   "Header.profile": "Perfil",
   "Header.settings": "Ajustes",
   "Header.about": "Acerca de",
-  "Footer.copyright": "© {year} AstroVibes. Todos los derechos reservados.",
+  "Footer.copyright": "© {year} AstroMística. Todos los derechos reservados.",
   "Footer.poweredBy": "Impulsado por Energía Cósmica y Next.js",
   "TopBar.horoscopeTitle": "Horóscopo",
   "TopBar.settingsAriaLabel": "Configuración",
@@ -41,14 +41,14 @@
   "PromotionCard.tarotNebulaAlt": "Icono de TAROT Nebula",
   "PromotionCard.freeBadge": "GRATIS",
   "PromotionCard.dailyCard": "Tu carta diaria te espera",
-  "Page.welcomeTitle": "Bienvenido a AstroVibes",
+  "Page.welcomeTitle": "Bienvenido a AstroMística",
   "Page.welcomeSubtitle": "Tu portal al cosmos. Explora tu camino astrológico y descubre secretos celestiales.",
   "HomePage.dailyHoroscopeTitle": "Horóscopo de Hoy",
   "HomePage.dailyHoroscopeSubtitle": "Tus perspectivas astrológicas diarias. Selecciona tu signo abajo.",
   "HomePage.personalizedForecastsTitle": "Pronósticos Cósmicos Personalizados",
   "HomePage.personalizedForecastsSubtitleUser": "Tu panel celestial para las energías de hoy, {userName}.",
   "HomePage.personalizedForecastsSubtitleGuest": "Desbloquea tus perspectivas personales iniciando sesión.",
-  "HomePage.welcomeGuestTitle": "¡Bienvenido/a a AstroVibes!",
+  "HomePage.welcomeGuestTitle": "¡Bienvenido/a a AstroMística!",
   "HomePage.guestPrompt": "Inicia sesión o completa tu perfil para obtener pronósticos cósmicos personalizados.",
   "HomePage.userForecastTitle": "Pronóstico Cósmico de {userName}",
   "HomePage.comingSoon": "Próximamente",
@@ -258,44 +258,18 @@
   "ChineseHoroscopePage.descriptions.Rooster": "Observador, trabajador, ingenioso, valiente y talentoso.",
   "ChineseHoroscopePage.descriptions.Dog": "Leal, honesto, amable, bondadoso, cauteloso y prudente.",
   "ChineseHoroscopePage.descriptions.Pig": "Diligente, compasivo, generoso y de trato fácil.",
-  "ChineseHoroscopeDetail": {
-    "Rat": {
-      "interpretation": "Las Ratas son conocidas por su encanto e inteligencia. Son oportunistas naturales con una increíble capacidad para adaptarse a nuevas situaciones. Su curiosidad no tiene límites y siempre están buscando formas de mejorar su vida y la de quienes los rodean. Aunque pueden ser un poco tacañas, son extremadamente leales a sus amigos y familiares. Su mente rápida y su naturaleza sociable las convierten en excelentes estrategas y solucionadoras de problemas."
-    },
-    "Ox": {
-      "interpretation": "El Buey simboliza la fuerza, la diligencia y la fiabilidad. Son trabajadores incansables que creen en el poder de la paciencia y la perseverancia. Su enfoque metódico de la vida les permite construir bases sólidas y duraderas. Aunque pueden ser tercos y reacios al cambio, su lealtad y su sentido del deber son inquebrantables. Un Buey es un amigo y un socio en quien siempre puedes confiar."
-    },
-    "Tiger": {
-      "interpretation": "El Tigre es el epítome del coraje, el carisma y la confianza. Son líderes naturales con una energía magnética que atrae a los demás. Viven la vida con pasión e intensidad, y no temen tomar riesgos para alcanzar sus metas. Su naturaleza impredecible los hace emocionantes, pero también pueden ser impulsivos y temperamentales. Un Tigre siempre defenderá lo que cree justo y protegerá ferozmente a sus seres queridos."
-    },
-    "Rabbit": {
-      "interpretation": "El Conejo es un símbolo de paz, elegancia y sensibilidad. Son almas gentiles que anhelan un entorno armonioso y evitan el conflicto a toda costa. Su naturaleza diplomática y su buen gusto los convierten en excelentes anfitriones y amigos. Aunque puedan parecer tímidos, son extremadamente vigilantes y astutos, capaces de sortear el peligro con gracia. Su mayor fortaleza es su capacidad para crear belleza y tranquilidad a su alrededor."
-    },
-    "Dragon": {
-      "interpretation": "El Dragón es el signo más poderoso y auspicioso del zodiaco chino. Son visionarios carismáticos, llenos de energía, ambición y un deseo innato de liderar. Su confianza en sí mismos es inmensa y no temen a los desafíos. A veces pueden parecer arrogantes, pero su corazón es generoso y siempre están dispuestos a ayudar a los demás. Un Dragón está destinado a dejar una huella en el mundo."
-    },
-    "Snake": {
-      "interpretation": "La Serpiente es sabia, enigmática y profundamente intuitiva. Poseen una mente aguda y una calma que esconde una gran fuerza interior. Son excelentes estrategas que prefieren trabajar en silencio, analizando las situaciones desde todos los ángulos antes de actuar. Aunque pueden ser reservados y desconfiados, son extremadamente leales y posesivos con las personas que aman. Su sabiduría y su encanto magnético son sus mayores dones."
-    },
-    "Horse": {
-      "interpretation": "El Caballo es un espíritu libre, lleno de energía, optimismo y un amor insaciable por la aventura. Son extremadamente sociables y les encanta estar en el centro de la acción. Su independencia es su bien más preciado, y odian sentirse atados o restringidos. Aunque su naturaleza impulsiva puede llevarlos a tomar decisiones precipitadas, su entusiasmo es contagioso y su capacidad para recuperarse de los contratiempos es admirable."
-    },
-    "Goat": {
-      "interpretation": "La Cabra es el artista del zodiaco chino, un alma amable, creativa y compasiva. Son soñadores que valoran la belleza, la paz y la armonía por encima de todo. Su naturaleza sensible los hace muy empáticos, pero también propensos a la melancolía y la indecisión. Necesitan un entorno estable y de apoyo para que su creatividad florezca. Una Cabra es un amigo leal y un compañero comprensivo."
-    },
-    "Monkey": {
-      "interpretation": "El Mono es el genio travieso del zodiaco. Son increíblemente inteligentes, ingeniosos y curiosos, con una capacidad inigualable para resolver problemas complejos de formas creativas. Su sentido del humor y su amor por la diversión los convierten en el alma de cualquier reunión social. El desafío para el Mono es canalizar su energía mental para no aburrirse o volverse demasiado manipulador. Su mayor activo es su capacidad para innovar y adaptarse a cualquier situación."
-    },
-    "Rooster": {
-      "interpretation": "El Gallo es el perfeccionista del zodiaco, observador, trabajador y con un gran sentido del deber. Son extremadamente organizados y tienen un ojo agudo para los detalles, lo que los convierte en excelentes planificadores. Su honestidad es directa y a veces brutal, ya que creen en decir la verdad para mejorar las cosas. Aunque pueden parecer arrogantes, son profundamente leales y siempre están dispuestos a trabajar duro por el bien de su familia y comunidad."
-    },
-    "Dog": {
-      "interpretation": "El Perro es el guardián leal y honesto del zodiaco. Su sentido de la justicia y su lealtad son absolutos. Son amigos y compañeros en los que se puede confiar ciegamente, siempre listos para defender al débil y luchar por lo que es correcto. Su naturaleza a veces puede ser pesimista o ansiosa, ya que tienden a preocuparse por los demás. Un Perro es el compañero más fiel que se puede desear."
-    },
-    "Pig": {
-      "interpretation": "El Cerdo es un símbolo de generosidad, honestidad y buena fortuna. Son almas de buen corazón que disfrutan de los placeres sencillos de la vida y trabajan duro para proveer a sus seres queridos. Su naturaleza confiada y su falta de pretensiones los hacen queridos por todos. Aunque a veces pueden ser un poco ingenuos, su corazón es puro y su optimismo es inquebrantable. Un Cerdo en tu vida es una fuente constante de alegría y apoyo incondicional."
-    }
-  },
+  "ChineseHoroscopeDetail.Rat.interpretation": "Las Ratas son conocidas por su encanto e inteligencia. Son oportunistas naturales con una increíble capacidad para adaptarse a nuevas situaciones. Su curiosidad no tiene límites y siempre están buscando formas de mejorar su vida y la de quienes los rodean. Aunque pueden ser un poco tacañas, son extremadamente leales a sus amigos y familiares. Su mente rápida y su naturaleza sociable las convierten en excelentes estrategas y solucionadoras de problemas.",
+  "ChineseHoroscopeDetail.Ox.interpretation": "El Buey simboliza la fuerza, la diligencia y la fiabilidad. Son trabajadores incansables que creen en el poder de la paciencia y la perseverancia. Su enfoque metódico de la vida les permite construir bases sólidas y duraderas. Aunque pueden ser tercos y reacios al cambio, su lealtad y su sentido del deber son inquebrantables. Un Buey es un amigo y un socio en quien siempre puedes confiar.",
+  "ChineseHoroscopeDetail.Tiger.interpretation": "El Tigre es el epítome del coraje, el carisma y la confianza. Son líderes naturales con una energía magnética que atrae a los demás. Viven la vida con pasión e intensidad, y no temen tomar riesgos para alcanzar sus metas. Su naturaleza impredecible los hace emocionantes, pero también pueden ser impulsivos y temperamentales. Un Tigre siempre defenderá lo que cree justo y protegerá ferozmente a sus seres queridos.",
+  "ChineseHoroscopeDetail.Rabbit.interpretation": "El Conejo es un símbolo de paz, elegancia y sensibilidad. Son almas gentiles que anhelan un entorno armonioso y evitan el conflicto a toda costa. Su naturaleza diplomática y su buen gusto los convierten en excelentes anfitriones y amigos. Aunque puedan parecer tímidos, son extremadamente vigilantes y astutos, capaces de sortear el peligro con gracia. Su mayor fortaleza es su capacidad para crear belleza y tranquilidad a su alrededor.",
+  "ChineseHoroscopeDetail.Dragon.interpretation": "El Dragón es el signo más poderoso y auspicioso del zodiaco chino. Son visionarios carismáticos, llenos de energía, ambición y un deseo innato de liderar. Su confianza en sí mismos es inmensa y no temen a los desafíos. A veces pueden parecer arrogantes, pero su corazón es generoso y siempre están dispuestos a ayudar a los demás. Un Dragón está destinado a dejar una huella en el mundo.",
+  "ChineseHoroscopeDetail.Snake.interpretation": "La Serpiente es sabia, enigmática y profundamente intuitiva. Poseen una mente aguda y una calma que esconde una gran fuerza interior. Son excelentes estrategas que prefieren trabajar en silencio, analizando las situaciones desde todos los ángulos antes de actuar. Aunque pueden ser reservados y desconfiados, son extremadamente leales y posesivos con las personas que aman. Su sabiduría y su encanto magnético son sus mayores dones.",
+  "ChineseHoroscopeDetail.Horse.interpretation": "El Caballo es un espíritu libre, lleno de energía, optimismo y un amor insaciable por la aventura. Son extremadamente sociables y les encanta estar en el centro de la acción. Su independencia es su bien más preciado, y odian sentirse atados o restringidos. Aunque su naturaleza impulsiva puede llevarlos a tomar decisiones precipitadas, su entusiasmo es contagioso y su capacidad para recuperarse de los contratiempos es admirable.",
+  "ChineseHoroscopeDetail.Goat.interpretation": "La Cabra es el artista del zodiaco chino, un alma amable, creativa y compasiva. Son soñadores que valoran la belleza, la paz y la armonía por encima de todo. Su naturaleza sensible los hace muy empáticos, pero también propensos a la melancolía y la indecisión. Necesitan un entorno estable y de apoyo para que su creatividad florezca. Una Cabra es un amigo leal y un compañero comprensivo.",
+  "ChineseHoroscopeDetail.Monkey.interpretation": "El Mono es el genio travieso del zodiaco. Son increíblemente inteligentes, ingeniosos y curiosos, con una capacidad inigualable para resolver problemas complejos de formas creativas. Su sentido del humor y su amor por la diversión los convierten en el alma de cualquier reunión social. El desafío para el Mono es canalizar su energía mental para no aburrirse o volverse demasiado manipulador. Su mayor activo es su capacidad para innovar y adaptarse a cualquier situación.",
+  "ChineseHoroscopeDetail.Rooster.interpretation": "El Gallo es el perfeccionista del zodiaco, observador, trabajador y con un gran sentido del deber. Son extremadamente organizados y tienen un ojo agudo para los detalles, lo que los convierte en excelentes planificadores. Su honestidad es directa y a veces brutal, ya que creen en decir la verdad para mejorar las cosas. Aunque pueden parecer arrogantes, son profundamente leales y siempre están dispuestos a trabajar duro por el bien de su familia y comunidad.",
+  "ChineseHoroscopeDetail.Dog.interpretation": "El Perro es el guardián leal y honesto del zodiaco. Su sentido de la justicia y su lealtad son absolutos. Son amigos y compañeros en los que se puede confiar ciegamente, siempre listos para defender al débil y luchar por lo que es correcto. Su naturaleza a veces puede ser pesimista o ansiosa, ya que tienden a preocuparse por los demás. Un Perro es el compañero más fiel que se puede desear.",
+  "ChineseHoroscopeDetail.Pig.interpretation": "El Cerdo es un símbolo de generosidad, honestidad y buena fortuna. Son almas de buen corazón que disfrutan de los placeres sencillos de la vida y trabajan duro para proveer a sus seres queridos. Su naturaleza confiada y su falta de pretensiones los hacen queridos por todos. Aunque a veces pueden ser un poco ingenuos, su corazón es puro y su optimismo es inquebrantable. Un Cerdo en tu vida es una fuente constante de alegría y apoyo incondicional.",
   "Rat": "Rata",
   "Ox": "Buey",
   "Tiger": "Tigre",
@@ -530,7 +504,7 @@
   "GalacticTone.Solar.interpretation": "El Tono Solar es el pulso de la intención, la energía que realiza y materializa. Con tu integridad confirmada, ahora es el momento de actuar con una intención clara y enfocada. Es como el rayo de sol que atraviesa las nubes para tocar un punto específico en la Tierra. Este tono te da la fuerza para dar los pasos decisivos que llevarán tu propósito a la manifestación. Hoy, la pregunta es: '¿Cómo logro mi propósito?'. No se trata de cualquier acción, sino de la acción precisa y deliberada que te acerca a tu meta. Identifica el siguiente paso clave y ejecútalo con toda tu voluntad y convicción.",
   "GalacticTone.Planetary.interpretation": "El Tono Planetario es el de la manifestación y la perfección. Aquí es donde tus intenciones y acciones se hacen visibles en el mundo físico. Es el momento de la cosecha, de ver el resultado tangible de tu trabajo. Pero no se trata solo de producir, sino de perfeccionar. Este tono te invita a observar lo que has creado y a hacer los ajustes finales para que se alinee perfectamente con tu visión original. Hoy, la pregunta es: '¿Cómo perfecciono lo que hago?'. Observa tu creación, ya sea un proyecto, una relación o un cambio interno, y pule los detalles. Es el momento de manifestar la excelencia.",
   "GalacticTone.Spectral.interpretation": "El Tono Espectral trae la energía de la liberación y la disolución. Después de manifestar (Tono 10), este tono te pide que sueltes todo lo que no es esencial, todo el exceso de equipaje emocional, mental o físico que has acumulado en el proceso. Es una energía de catarsis, de limpieza profunda. Como una serpiente que muda su piel, debes liberarte de las viejas estructuras y creencias para poder seguir creciendo. Hoy, la pregunta es: '¿Cómo libero y dejo ir?'. Identifica lo que te pesa, lo que te limita, y haz un acto consciente de soltarlo, creando espacio y ligereza para el siguiente ciclo.",
-  "GalacticTone.Crystal.interpretation": "El Tono Cristal es el de la cooperación y la comunidad. Una vez que te has liberado de lo innecesario, estás listo para compartir tu sabiduría y tus logros con los demás. Este tono representa la 'mesa redonda', donde todos los puntos de vista son válidos y la colaboración crea una estructura más compleja y stable que la que podrías crear solo. Es la energía de la sinergia, de universalizar tu propósito para que beneficie al colectivo. Hoy, la pregunta es: '¿Cómo puedo dedicarme a la cooperación?'. Busca formas de compartir lo que has aprendido, de colaborar con otros y de entender cómo tu viaje personal encaja en el tejido de la comunidad.",
+  "GalacticTone.Crystal.interpretation": "El Tono Cristal es el de la cooperación y la comunidad. Una vez que te has liberado de lo innecesario, estás listo para compartir tu sabiduría y tus logros con los demás. Este tono representa la 'mesa redonda', donde todos los puntos de vista son válidos y la colaboración crea una estructura más compleja y estable que la que podrías crear solo. Es la energía de la sinergia, de universalizar tu propósito para que beneficie al colectivo. Hoy, la pregunta es: '¿Cómo puedo dedicarme a la cooperación?'. Busca formas de compartir lo que has aprendido, de colaborar con otros y de entender cómo tu viaje personal encaja en el tejido de la comunidad.",
   "GalacticTone.Cosmic.interpretation": "El Tono Cósmico es el vuelo final, el que trasciende el ciclo actual y se prepara para el siguiente. Representa la presencia pura y la capacidad de perdurar en el tiempo. Habiendo completado el viaje de 12 pasos, ahora puedes tomar tu lugar en el cosmos, presente y expandido. Es un día para celebrar tu viaje, para integrar todo lo que has aprendido y para expandir tu alegría y tu amor sin límites. Hoy, la pregunta es: '¿Cómo expando mi alegría y mi amor?'. Vive en la magia del momento presente, sabiendo que has completado un ciclo y estás listo para el siguiente. Es la energía del regreso a casa y el despegue simultáneo.",
   "MoonPhase.new": "Luna Nueva",
   "MoonPhase.waxingCrescent": "Luna Creciente",
@@ -590,7 +564,7 @@
   "CosmicEnergy.levelUpDescription": "¡Has alcanzado el Nivel {level}!",
   "CosmicEnergy.stardust": "Polvo Estelar",
   "Stardust.explanationTitle": "¿Qué es el Polvo Estelar? 💫",
-  "Stardust.explanationContent": "El Polvo Estelar es la moneda especial dentro de AstroVibes. Puedes usarlo para desbloquear funciones premium, como enviar mensajes en los Chats con Astrólogos.\n\nPuedes ganar Polvo Estelar al:\n- Subir de nivel tu Energía Cósmica.\n- Reclamar recompensas especiales (como valorar la app).\n- Viendo anuncios.\n- Comprando paquetes de Polvo Estelar (próximamente).",
+  "Stardust.explanationContent": "El Polvo Estelar es la moneda especial dentro de AstroMística. Puedes usarlo para desbloquear funciones premium, como enviar mensajes en los Chats con Astrólogos.\n\nPuedes ganar Polvo Estelar al:\n- Subir de nivel tu Energía Cósmica.\n- Reclamar recompensas especiales (como valorar la app).\n- Viendo anuncios.\n- Comprando paquetes de Polvo Estelar (próximamente).",
   "Stardust.showExplanationButton": "¿Qué es el Polvo Estelar?",
   "Stardust.hideExplanationButton": "Ocultar Explicación",
   "CosmicEnergy.explanationTitle": "¿Qué es la Energía Cósmica? ✨",
@@ -696,28 +670,28 @@
   "Language.en": "English",
   "Language.de": "Deutsch",
   "Language.fr": "Français",
-  "Share.crystalBallTitle": "Una Revelación de la Bola de Cristal de AstroVibes",
+  "Share.crystalBallTitle": "Una Revelación de la Bola de Cristal de AstroMística",
   "Share.copiedTitle": "¡Copiado!",
   "Share.copiedLinkMessage": "La revelación ha sido copiada a tu portapapeles.",
   "Share.errorTitle": "Error al Compartir",
   "Share.errorMessageClipboard": "No se pudo copiar. Por favor, intenta compartir manualmente.",
   "Share.buttonLabelRevelationLinkContent": "Compartir Esta Revelación",
-  "Share.personalizedHoroscopeTitle": "Mi Horóscopo Personalizado de AstroVibes para {signName}",
-  "Share.horoscopeTitle": "Horóscopo para {signName} de AstroVibes",
+  "Share.personalizedHoroscopeTitle": "Mi Horóscopo Personalizado de AstroMística para {signName}",
+  "Share.horoscopeTitle": "Horóscopo para {signName} de AstroMística",
   "Share.personalizedHoroscopePrefix": "Para {userName} ({signName}):",
-  "Share.downloadAppPrompt": "¡Descubre AstroVibes para más perspectivas!",
+  "Share.downloadAppPrompt": "¡Descubre AstroMística para más perspectivas!",
   "Share.appStoreLinkPlaceholder": "https://apps.apple.com/app/tu-app-id-aqui",
   "Share.googlePlayLinkPlaceholder": "https://play.google.com/store/apps/details?id=tu.paquete.nombre.aqui",
   "Share.viewOnline": "Ver en línea:",
   "Share.successTitle": "¡Éxito!",
   "Share.horoscopeSharedSuccess": "Horóscopo compartido exitosamente.",
   "Share.errorMessage": "No se pudo compartir el contenido. Por favor, inténtalo de nuevo.",
-  "Share.lunarPhaseTitle": "Fase Lunar Actual de AstroVibes",
-  "Share.lunarPhaseText": "Ahora mismo, la luna es una {phaseName} en {signName} ({illumination}% iluminada). ¡Échale un vistazo en AstroVibes!",
+  "Share.lunarPhaseTitle": "Fase Lunar Actual de AstroMística",
+  "Share.lunarPhaseText": "Ahora mismo, la luna es una {phaseName} en {signName} ({illumination}% iluminada). ¡Échale un vistazo en AstroMística!",
   "Share.buttonLabelLunar": "Compartir Fase Actual",
   "Error.genericTitle": "Error",
   "Data.notAvailable": "N/D",
-  "OnboardingPage.title": "¡Bienvenido/a a AstroVibes!",
+  "OnboardingPage.title": "¡Bienvenido/a a AstroMística!",
   "OnboardingPage.subtitleStep": "Paso {currentStep} de {totalSteps}: Vamos a conocerte",
   "OnboardingPage.loadingOnboarding": "Cargando onboarding...",
   "OnboardingPage.step1Title": "Tu Nombre",
@@ -792,15 +766,15 @@
   "OnboardingPage.stepComingSoonTitle": "Próximamente...",
   "OnboardingPage.dataUsageNote": "Tu información nos ayuda a personalizar tu experiencia astrológica. Respetamos tu privacidad.",
   "Auth.loginTitle": "Iniciar Sesión",
-  "Auth.loginSubtitle": "Accede a tu cuenta de AstroVibes.",
+  "Auth.loginSubtitle": "Accede a tu cuenta de AstroMística.",
   "Auth.signupTitle": "Registrarse",
-  "Auth.signupSubtitle": "Crea tu cuenta de AstroVibes.",
+  "Auth.signupSubtitle": "Crea tu cuenta de AstroMística.",
   "Auth.loginFormTitle": "Inicia sesión en tu cuenta",
   "Auth.loginFormTitleNow": "Ingresa tus credenciales",
   "Auth.loginFormDescription": "Inicia sesión con tu cuenta de Google o usa correo electrónico y contraseña.",
   "Auth.loginFormDescriptionFirebase": "Inicia sesión con tu correo electrónico y contraseña.",
   "Auth.signupFormTitle": "Crea tu cuenta",
-  "Auth.signupFormDescription": "Rellena los detalles para unirte a AstroVibes.",
+  "Auth.signupFormDescription": "Rellena los detalles para unirte a AstroMística.",
   "Auth.usernameLabel": "Nombre de usuario",
   "Auth.usernamePlaceholder": "Ingresa tu nombre de usuario",
   "Auth.emailLabel": "Correo Electrónico",
@@ -1030,8 +1004,6 @@
   "Toast.alreadyRated": "Ya has reclamado esta recompensa.",
   "Toast.dailyReactionStardust": "¡+{amount} 💫 por tu primera reacción del día!",
   "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!",
-  "Toast.dailyStardustClaimed": "¡Bono diario reclamado!",
-  "Toast.dailyStardustDescription": "Has recibido tu +1 Polvo Estelar diario.",
   "DailyTip": {
     "title": "Consejo del Día",
     "subtitle": "Una dosis de sabiduría cósmica para tu jornada.",
@@ -1047,3 +1019,5 @@
   "Toast.stardustSpent": "Polvo Estelar Gastado",
   "Toast.stardustSpentDescription": "Se han usado {cost} de Polvo Estelar para esta lectura."
 }
+
+    
