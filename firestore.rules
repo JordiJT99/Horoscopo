@@ -1,57 +1,52 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Regla por defecto: denegar todo para forzar reglas explícitas.
-    match /{document=**} {
-      allow read, write: if false;
-    }
-
-    // Horóscopos: Lectura pública, escritura solo desde el backend con API key o Admin SDK.
+    // Reglas para Horóscopos Genéricos
     match /horoscopes/{period}/{dateKey}/{locale} {
       allow read: if true;
-      // Permitir escritura desde el servidor backend (usando Firebase Admin SDK)
-      // Las escrituras desde el frontend web/móvil están bloqueadas automáticamente
-      // ya que no tendrán los privilegios de Admin SDK
-      allow write: if true;
+      allow write: if request.auth != null; // Solo usuarios autenticados pueden escribir
     }
     
+    // Reglas para Horóscopos Personalizados
     match /horoscopes/personalized/{date}/{locale}/{sign}/{userId} {
-        // Permitir lectura pública y escritura con cualquier userId válido
-        allow read: if true;
-        allow write: if userId != null && userId != "";
-    }
-
-    // Perfiles de usuario: Solo el propio usuario puede leer y escribir su perfil.
-    match /userProfiles/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    
-    // Publicaciones de la comunidad: Lectura pública, escritura con validación de contenido
+
+    // Reglas para Perfiles de Usuario
+    match /userProfiles/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // --- NUEVAS REGLAS PARA LA COMUNIDAD ---
     match /community-posts/{postId} {
+      // Cualquiera puede leer las publicaciones
       allow read: if true;
-      allow create: if request.resource.data.content != null && 
-                      request.resource.data.content != "" &&
-                      request.resource.data.authorName != null &&
-                      request.resource.data.authorName != "";
-      allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
-    }
 
-    // Comentarios de la comunidad: Lectura pública, escritura con validación
-    match /community-posts/{postId}/comments/{commentId} {
-      allow read: if true;
-      allow create: if request.resource.data.content != null && 
-                      request.resource.data.content != "" &&
-                      request.resource.data.authorName != null &&
-                      request.resource.data.authorName != "";
-      allow update, delete: if false; // Nadie puede editar o borrar comentarios desde el cliente.
-    }
+      // Solo usuarios autenticados pueden crear publicaciones
+      allow create: if request.auth != null;
 
-    // Tokens para notificaciones: Solo el usuario puede gestionar su propio token.
+      // Solo el autor puede actualizar o borrar su publicación
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+
+      // --- REGLAS PARA COMENTARIOS (SUBCOLECCIÓN) ---
+      match /comments/{commentId} {
+        // Cualquiera puede leer los comentarios
+        allow read: if true;
+
+        // Solo usuarios autenticados pueden crear, actualizar o borrar sus propios comentarios
+        allow create: if request.auth != null;
+        allow update, delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+      }
+    }
+    
+    // Reglas para tokens de notificación (FCM)
     match /fcmTokens/{token} {
-      allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
-      allow read: if false; // Nadie debería poder leer la lista de tokens.
+        // Un usuario solo puede crear un documento con su propio ID
+        allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+        // Un usuario solo puede leer, actualizar o borrar su propio token
+        allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
     }
   }
 }
