@@ -37,10 +37,9 @@ export default async function AstroVibesHomePageWrapper({ params: paramsPromise,
   }
 
   const periodParam = searchParams?.period;
-  let activePeriodForTitles: HoroscopePeriod = 'today';
-  if (periodParam === 'tomorrow') {
-    activePeriodForTitles = 'tomorrow';
-  }
+  // The logic to determine the period is now primarily handled within AstroVibesHomePageContent
+  // The page component just indicates the default active tab.
+  const activeHoroscopePeriod = periodParam === 'tomorrow' ? 'tomorrow' : 'today';
   
   return (
     <>
@@ -50,9 +49,7 @@ export default async function AstroVibesHomePageWrapper({ params: paramsPromise,
       <AstroVibesHomePageContent 
         dictionary={dictionary} 
         locale={params.locale}
-        displayPeriod="daily" // For 'today' and 'tomorrow', we always display daily data
-        // targetDate is not needed for today/tomorrow as flow defaults to current day
-        activeHoroscopePeriodForTitles={activePeriodForTitles}
+        initialActivePeriod={activeHoroscopePeriod}
       />
       
       {/* Banner inferior para mayor monetización */}

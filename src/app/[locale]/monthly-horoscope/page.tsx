@@ -18,10 +18,9 @@ export async function generateStaticParams() {
 
 interface MonthlyHoroscopePageProps {
   params: Promise<{ locale: Locale }>;
-  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function MonthlyHoroscopePageWrapper({ params: paramsPromise, searchParams }: MonthlyHoroscopePageProps) {
+export default async function MonthlyHoroscopePageWrapper({ params: paramsPromise }: MonthlyHoroscopePageProps) {
   const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
@@ -38,10 +37,7 @@ export default async function MonthlyHoroscopePageWrapper({ params: paramsPromis
     <AstroVibesHomePageContent
       dictionary={dictionary}
       locale={params.locale}
-      displayPeriod="monthly"
-      // targetDate is not needed for monthly as flow defaults to current month
-      activeHoroscopePeriodForTitles="monthly"
-      // searchParams are implicitly available in AstroVibesHomePageContent via useSearchParams if needed
+      initialActivePeriod="monthly"
     />
   );
 }

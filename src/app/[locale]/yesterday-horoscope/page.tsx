@@ -19,10 +19,9 @@ export async function generateStaticParams() {
 
 interface YesterdayHoroscopePageProps {
   params: Promise<{ locale: Locale }>;
-  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function YesterdayHoroscopePageWrapper({ params: paramsPromise, searchParams }: YesterdayHoroscopePageProps) {
+export default async function YesterdayHoroscopePageWrapper({ params: paramsPromise }: YesterdayHoroscopePageProps) {
   const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
@@ -35,17 +34,11 @@ export default async function YesterdayHoroscopePageWrapper({ params: paramsProm
     );
   }
 
-  const yesterdayDate = subDays(new Date(), 1);
-  const targetDateStr = format(yesterdayDate, 'yyyy-MM-dd');
-
   return (
     <AstroVibesHomePageContent
       dictionary={dictionary}
       locale={params.locale}
-      displayPeriod="daily"
-      targetDate={targetDateStr}
-      activeHoroscopePeriodForTitles="yesterday"
-      // searchParams are implicitly available in AstroVibesHomePageContent via useSearchParams if needed
+      initialActivePeriod="yesterday"
     />
   );
 }
