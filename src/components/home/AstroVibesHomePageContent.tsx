@@ -189,64 +189,55 @@ export default function AstroVibesHomePageContent({
 
   useEffect(() => {
     const signFromUrl = searchParams.get('sign') as ZodiacSignName | null;
+    const personalizedFromUrl = searchParams.get('personalized') === 'true';
+
     let determinedInitialSign = "Capricorn" as ZodiacSignName;
     let initiallyPersonalized = false;
 
     if (user?.uid && !authLoading) {
-      console.log('🔍 Loading onboarding data for user:', user.uid);
-      const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
-      console.log('📱 Stored data found:', !!storedData);
-      
-      if (storedData) {
-        try {
-            const parsedData = JSON.parse(storedData) as OnboardingFormData;
-            console.log('✅ Parsed onboarding data:', Object.keys(parsedData));
-            
-            if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') {
-                parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
+        const storedData = localStorage.getItem(`onboardingData_${user.uid}`);
+        if (storedData) {
+            try {
+                const parsedData = JSON.parse(storedData) as OnboardingFormData;
+                if (parsedData.dateOfBirth && typeof parsedData.dateOfBirth === 'string') {
+                    parsedData.dateOfBirth = new Date(parsedData.dateOfBirth);
+                }
+                setOnboardingData(parsedData);
+                const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
+                setUserSunSign(sunSign);
+                if (sunSign) {
+                    determinedInitialSign = sunSign.name;
+                    if (!signFromUrl || personalizedFromUrl) {
+                        initiallyPersonalized = true;
+                    }
+                }
+            } catch (e) {
+                console.error("❌ Failed to parse onboarding data:", e);
+                setOnboardingData(null);
+                setUserSunSign(null);
             }
-            setOnboardingData(parsedData);
-            const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
-            setUserSunSign(sunSign);
-            console.log('🌟 User sun sign set to:', sunSign?.name);
-            
-            if (sunSign) {
-              determinedInitialSign = sunSign.name;
-              if (!signFromUrl) { 
-                initiallyPersonalized = true;
-                console.log('🔮 Setting initially personalized to true');
-              }
-            }
-        } catch (e) {
-            console.error("❌ Failed to parse onboarding data:", e);
+        } else {
             setOnboardingData(null);
             setUserSunSign(null);
         }
-      } else {
-         console.log('❌ No stored onboarding data found');
-         setOnboardingData(null);
-         setUserSunSign(null);
-      }
     } else if (!user && !authLoading) {
-        console.log('👤 No user logged in');
         setOnboardingData(null);
         setUserSunSign(null);
     }
-
+    
     if (signFromUrl && ZODIAC_SIGNS.find(s => s.name === signFromUrl)) {
-      determinedInitialSign = signFromUrl;
-      initiallyPersonalized = false; // Explicit URL selection is generic
-    } else if (!signFromUrl && userSunSign) {
-        // Default to user's sign and personalized view if no sign in URL and user has sun sign
-        determinedInitialSign = userSunSign.name;
-        initiallyPersonalized = true; 
+        determinedInitialSign = signFromUrl;
+        if(userSunSign && signFromUrl === userSunSign.name && personalizedFromUrl) {
+            initiallyPersonalized = true;
+        } else {
+            initiallyPersonalized = false;
+        }
     }
     
     setSelectedDisplaySignName(determinedInitialSign);
     setIsPersonalizedRequestActive(initiallyPersonalized);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, authLoading, searchParams]); 
+  }, [user, authLoading, searchParams, userSunSign]);
 
   // Eliminar restricción premium - permitir acceso a horóscopo de mañana para todos
   useEffect(() => {
@@ -432,10 +423,8 @@ export default function AstroVibesHomePageContent({
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
     let currentSignParam = searchParams.get('sign');
     if (isPersonalizedRequestActive && userSunSign) {
-      // If personalized is active, we're viewing the user's own sign, so maintain that.
       currentSignParam = userSunSign.name;
     } else {
-      // If not personalized, or no userSunSign, use the currently displayed sign.
       currentSignParam = selectedDisplaySignName;
     }
 
@@ -444,6 +433,10 @@ export default function AstroVibesHomePageContent({
     
     if (currentSignParam) {
         queryParams.set('sign', currentSignParam);
+    }
+    
+    if (isPersonalizedRequestActive) {
+        queryParams.set('personalized', 'true');
     }
 
     if (tab === 'yesterday') {
@@ -467,6 +460,12 @@ export default function AstroVibesHomePageContent({
 
     const currentQueryParams = new URLSearchParams(searchParams.toString());
     currentQueryParams.set('sign', sign.name);
+    
+    if (isItAUserProfileClick) {
+      currentQueryParams.set('personalized', 'true');
+    } else {
+      currentQueryParams.delete('personalized');
+    }
 
     let basePath = pathname.split('?')[0];
      if (basePath === `/${locale}/yesterday-horoscope` || basePath === `/${locale}/weekly-horoscope` || basePath === `/${locale}/monthly-horoscope` ) {
