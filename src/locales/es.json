@@ -97,8 +97,8 @@
   "Earth": "Tierra",
   "Air": "Aire",
   "Water": "Agua",
-  "Masculine": "Masculine",
-  "Feminine": "Feminine",
+  "Masculine": "Masculino",
+  "Feminine": "Femenino",
   "Cardinal": "Cardinal",
   "Fixed": "Fijo",
   "Mutable": "Mutable",
@@ -267,6 +267,9 @@
     },
     "Tiger": {
       "interpretation": "El Tigre es el epítome del coraje, el carisma y la confianza. Son líderes naturales con una energía magnética que atrae a los demás. Viven la vida con pasión e intensidad, y no temen tomar riesgos para alcanzar sus metas. Su naturaleza impredecible los hace emocionantes, pero también pueden ser impulsivos y temperamentales. Un Tigre siempre defenderá lo que cree justo y protegerá ferozmente a sus seres queridos."
+    },
+    "Rabbit": {
+      "interpretation": "El Conejo es un símbolo de paz, elegancia y sensibilidad. Son almas gentiles que anhelan un entorno armonioso y evitan el conflicto a toda costa. Su naturaleza diplomática y su buen gusto los convierten en excelentes anfitriones y amigos. Aunque puedan parecer tímidos, son extremadamente vigilantes y astutos, capaces de sortear el peligro con gracia. Su mayor fortaleza es su capacidad para crear belleza y tranquilidad a su alrededor."
     }
   },
   "Rat": "Rata",
@@ -563,7 +566,7 @@
   "CosmicEnergy.levelUpDescription": "¡Has alcanzado el Nivel {level}!",
   "CosmicEnergy.stardust": "Polvo Estelar",
   "Stardust.explanationTitle": "¿Qué es el Polvo Estelar? 💫",
-  "Stardust.explanationContent": "El Polvo Estelar es la moneda especial dentro de AstroVibes. Puedes usarlo para desbloquear funciones premium, como enviar mensajes en los Chats Psíquicos.\n\nPuedes ganar Polvo Estelar al:\n- Subir de nivel tu Energía Cósmica.\n- Reclamar recompensas especiales (como valorar la app).\n- Viendo anuncios.\n- Comprando paquetes de Polvo Estelar (próximamente).",
+  "Stardust.explanationContent": "El Polvo Estelar es la moneda especial dentro de AstroVibes. Puedes usarlo para desbloquear funciones premium, como enviar mensajes en los Chats con Astrólogos.\n\nPuedes ganar Polvo Estelar al:\n- Subir de nivel tu Energía Cósmica.\n- Reclamar recompensas especiales (como valorar la app).\n- Viendo anuncios.\n- Comprando paquetes de Polvo Estelar (próximamente).",
   "Stardust.showExplanationButton": "¿Qué es el Polvo Estelar?",
   "Stardust.hideExplanationButton": "Ocultar Explicación",
   "CosmicEnergy.explanationTitle": "¿Qué es la Energía Cósmica? ✨",
@@ -772,6 +775,8 @@
   "Auth.loginFormTitleNow": "Ingresa tus credenciales",
   "Auth.loginFormDescription": "Inicia sesión con tu cuenta de Google o usa correo electrónico y contraseña.",
   "Auth.loginFormDescriptionFirebase": "Inicia sesión con tu correo electrónico y contraseña.",
+  "Auth.signupFormTitle": "Crea tu cuenta",
+  "Auth.signupFormDescription": "Rellena los detalles para unirte a AstroVibes.",
   "Auth.usernameLabel": "Nombre de usuario",
   "Auth.usernamePlaceholder": "Ingresa tu nombre de usuario",
   "Auth.emailLabel": "Correo Electrónico",
