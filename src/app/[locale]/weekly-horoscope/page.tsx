@@ -18,10 +18,9 @@ export async function generateStaticParams() {
 
 interface WeeklyHoroscopePageProps {
   params: Promise<{ locale: Locale }>;
-  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function WeeklyHoroscopePageWrapper({ params: paramsPromise, searchParams }: WeeklyHoroscopePageProps) {
+export default async function WeeklyHoroscopePageWrapper({ params: paramsPromise }: WeeklyHoroscopePageProps) {
   const params = await paramsPromise;
   const dictionary = await getDictionary(params.locale);
 
@@ -38,10 +37,7 @@ export default async function WeeklyHoroscopePageWrapper({ params: paramsPromise
     <AstroVibesHomePageContent
       dictionary={dictionary}
       locale={params.locale}
-      displayPeriod="weekly"
-      // targetDate is not needed for weekly as flow defaults to current week
-      activeHoroscopePeriodForTitles="weekly"
-      // searchParams are implicitly available in AstroVibesHomePageContent via useSearchParams if needed
+      initialActivePeriod="weekly"
     />
   );
 }
