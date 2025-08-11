@@ -276,6 +276,12 @@
     },
     "Snake": {
       "interpretation": "La Serpiente es sabia, enigmática y profundamente intuitiva. Poseen una mente aguda y una calma que esconde una gran fuerza interior. Son excelentes estrategas que prefieren trabajar en silencio, analizando las situaciones desde todos los ángulos antes de actuar. Aunque pueden ser reservados y desconfiados, son extremadamente leales y posesivos con las personas que aman. Su sabiduría y su encanto magnético son sus mayores dones."
+    },
+    "Horse": {
+      "interpretation": "El Caballo es un espíritu libre, lleno de energía, optimismo y un amor insaciable por la aventura. Son extremadamente sociables y les encanta estar en el centro de la acción. Su independencia es su bien más preciado, y odian sentirse atados o restringidos. Aunque su naturaleza impulsiva puede llevarlos a tomar decisiones precipitadas, su entusiasmo es contagioso y su capacidad para recuperarse de los contratiempos es admirable."
+    },
+    "Goat": {
+      "interpretation": "La Cabra es el artista del zodiaco chino, un alma amable, creativa y compasiva. Son soñadores que valoran la belleza, la paz y la armonía por encima de todo. Su naturaleza sensible los hace muy empáticos, pero también propensos a la melancolía y la indecisión. Necesitan un entorno estable y de apoyo para que su creatividad florezca. Una Cabra es un amigo leal y un compañero comprensivo."
     }
   },
   "Rat": "Rata",
@@ -304,19 +310,19 @@
     },
     "informationWeCollect": {
       "title": "2. Información que Recopilamos",
-      "content": "**Datos Personales:** Recopilamos la información que usted nos proporciona voluntariamente, como nombre, correo electrónico y datos de nacimiento (fecha, hora, lugar) para crear lecturas astrológicas personalizadas.\n\n**Contenido Generado por el Usuario:** Recopilamos la información que usted publica en las funciones de la comunidad, incluyendo comentarios y reacciones.\n\n**Datos de Uso:** Recopilamos automáticamente información sobre sus interacciones con la aplicación, como el uso de funciones e informes de fallos, para mejorar nuestros servicios."
+      "content": "**Datos Personales:** Recopilamos la información que usted nos proporciona voluntariamente, como nombre, correo electrónico y datos de nacimiento (fecha, hora, lugar), para crear lecturas astrológicas personalizadas.\n\n**Contenido Generado por el Usuario:** Recopilamos la información que usted publica en las funciones de la comunidad, incluyendo comentarios y reacciones.\n\n**Datos de Uso:** Recopilamos automáticamente información sobre sus interacciones con la aplicación, como el uso de funciones e informes de fallos, para mejorar nuestros servicios."
     },
     "howWeUseInformation": {
       "title": "3. Cómo Usamos Su Información",
-      "content": "Su información se utiliza para:\n- Personalizar y gestionar su cuenta.\n- Proporcionar informes astrológicos precisos (horóscopos, cartas natales).\n- Habilitar las funciones de la comunidad.\n- Analizar el uso para mejorar nuestra aplicación.\n- Servir publicidad relevante a través de servicios de terceros como Google AdSense."
+      "content": "Su información se utiliza para:\n- Personalizar y gestionar su cuenta.\n- Proporcionar informes astrológicos precisos (horóscopos, cartas natales).\n- Habilitar las funciones de la comunidad.\n- Analizar el uso para mejorar nuestra aplicación.\n- Servir publicidad relevante a través de servicios de terceros como Google AdMob."
     },
     "dataSharing": {
       "title": "4. Compartir Datos con Terceros",
-      "content": "Compartimos su información con proveedores externos que nos ayudan a proporcionar y mejorar nuestros servicios, tales como:\n- **Firebase (Google):** Para autenticación, gestión de base de datos y análisis.\n- **Google AdSense:** Para servir anuncios personalizados.\n\nEstas partes están obligadas a proteger sus datos de acuerdo con sus propias políticas de privacidad. No vendemos su información personal."
+      "content": "Compartimos su información con proveedores externos que nos ayudan a proporcionar y mejorar nuestros servicios, tales como:\n- **Firebase (Google):** Para autenticación, gestión de base de datos y análisis.\n- **Google AdMob:** Para servir anuncios personalizados.\n\nEstas partes están obligadas a proteger sus datos de acuerdo con sus propias políticas de privacidad. No vendemos su información personal."
     },
     "advertising": {
-      "title": "5. Publicidad",
-      "content": "Usamos Google AdMob para mostrar anuncios. AdMob puede recopilar y usar datos para personalizar los anuncios que ve. Puede obtener más información sobre las prácticas de Google en su política de privacidad. Su consentimiento para anuncios personalizados se puede gestionar en la configuración de la aplicación."
+      "title": "5. Publicidad y AdMob",
+      "content": "Utilizamos Google AdMob para mostrar anuncios en la aplicación. AdMob es un servicio de publicidad proporcionado por Google. AdMob puede usar identificadores de dispositivo para mostrar anuncios personalizados. Nosotros no compartimos su información personal identificable como nombre o email directamente con AdMob para este propósito. Usted puede gestionar sus preferencias de anuncios en los ajustes de su dispositivo móvil."
     },
     "dataSecurity": {
       "title": "6. Seguridad de los Datos",
@@ -1012,6 +1018,8 @@
   "Toast.alreadyRated": "Ya has reclamado esta recompensa.",
   "Toast.dailyReactionStardust": "¡+{amount} 💫 por tu primera reacción del día!",
   "Toast.dailyCommentStardust": "¡+{amount} 💫 por tu primer comentario del día!",
+  "Toast.dailyStardustClaimed": "¡Bono diario reclamado!",
+  "Toast.dailyStardustDescription": "Has recibido tu +1 Polvo Estelar diario.",
   "DailyTip": {
     "title": "Consejo del Día",
     "subtitle": "Una dosis de sabiduría cósmica para tu jornada.",
@@ -1025,9 +1033,5 @@
   "Toast.notEnoughStardustTitle": "Polvo Estelar Insuficiente",
   "Toast.notEnoughStardustDescription": "Necesitas {cost} de Polvo Estelar para usar esto de nuevo hoy. Puedes conseguir más en la sección 'Más'.",
   "Toast.stardustSpent": "Polvo Estelar Gastado",
-  "Toast.stardustSpentDescription": "Se han usado {cost} de Polvo Estelar para esta lectura.",
-  "Toast.dailyStardustClaimed": "¡Bono diario reclamado!",
-  "Toast.dailyStardustDescription": "Has recibido tu +1 Polvo Estelar diario."
+  "Toast.stardustSpentDescription": "Se han usado {cost} de Polvo Estelar para esta lectura."
 }
-
-    
