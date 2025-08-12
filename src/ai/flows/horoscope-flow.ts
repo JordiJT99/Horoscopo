@@ -110,6 +110,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
   input: { schema: PromptInputSchema },
   output: { schema: HoroscopeDetailSchema },
+  model: 'googleai/gemini-2.0-flash',
   prompt: `Eres un astrólogo experto, empático y perspicaz. Tu tarea es generar un horóscopo DIARIO y completo para el signo zodiacal {{sign}}.
 
 **INSTRUCCIONES CRÍTICAS:**
@@ -144,6 +145,7 @@ const weeklyHoroscopePrompt = ai.definePrompt({
   name: 'weeklyHoroscopePrompt',
   input: { schema: PromptInputSchema }, 
   output: { schema: HoroscopeDetailSchema },
+  model: 'googleai/gemini-2.0-flash',
   prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas de la semana influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo SEMANAL PERSONALIZADO para ESTA SEMANA para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
@@ -173,6 +175,7 @@ const monthlyHoroscopePrompt = ai.definePrompt({
   name: 'monthlyHoroscopePrompt',
   input: { schema: PromptInputSchema }, 
   output: { schema: HoroscopeDetailSchema },
+  model: 'googleai/gemini-2.0-flash',
   prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas del mes influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo MENSUAL PERSONALIZADO para ESTE MES para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
