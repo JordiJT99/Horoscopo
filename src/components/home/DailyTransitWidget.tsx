@@ -34,7 +34,6 @@ export default function DailyTransitWidget({ dictionary }: DailyTransitWidgetPro
   }
 
   const { titleKey, descriptionKey, icon: Icon } = transit;
-  // Corrección: Acceder directamente a la clave completa en el diccionario
   const translatedTitle = dictionary[titleKey] || titleKey;
   const translatedDescription = dictionary[descriptionKey] || descriptionKey;
 
