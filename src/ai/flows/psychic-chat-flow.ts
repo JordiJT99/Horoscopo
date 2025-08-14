@@ -92,7 +92,7 @@ The reading is focused on: "${input.topic}". Keep this in mind, but let the conv
     const history = allMessages.slice(-HISTORY_LIMIT);
 
     const psychicResponse = await ai.generate({
-      model: 'googleai/gemini-2.0-flash',
+      model: 'googleai/gemini-1.5-flash',
       prompt: prompt, // The newest message from the user.
       system: systemPrompt,
       history: history, // The rest of the conversation history (now capped).

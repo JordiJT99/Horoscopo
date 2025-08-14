@@ -28,7 +28,7 @@ const getDailyTipPrompt = ai.definePrompt({
   name: 'dailyTipPrompt',
   input: {schema: DailyTipInputSchema},
   output: {schema: DailyTipOutputSchema},
-  model: 'googleai/gemini-2.0-flash',
+  model: 'googleai/gemini-1.5-flash',
   prompt: `You are a wise and empathetic cosmic guide. Your purpose is to provide a short, positive, inspiring, and actionable tip for the day.
 Respond ONLY in the {{locale}} language.
 

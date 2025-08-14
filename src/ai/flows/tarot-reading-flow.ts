@@ -31,7 +31,7 @@ const tarotReadingPrompt = ai.definePrompt({
   name: 'tarotReadingPrompt',
   input: {schema: TarotReadingInputSchema},
   output: {schema: TarotReadingOutputSchema.omit({ imagePlaceholderUrl: true })},
-  model: 'googleai/gemini-2.0-flash',
+  model: 'googleai/gemini-1.5-flash',
   prompt: `You are a wise and insightful Tarot reader. The user will ask you a question.
 
 Your task is to perform these steps:

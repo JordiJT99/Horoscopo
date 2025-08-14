@@ -25,7 +25,7 @@ const crystalBallPrompt = ai.definePrompt({
   name: 'crystalBallRevelationPrompt',
   input: {schema: CrystalBallRevelationInputSchema},
   output: {schema: CrystalBallRevelationOutputSchema},
-  model: 'googleai/gemini-2.0-flash',
+  model: 'googleai/gemini-1.5-flash',
   prompt: `You are a wise and empathetic cosmic guide, speaking through a Crystal Ball. Your purpose is to provide the user with a gentle, positive, and actionable theme for their day.
 Respond in the {{locale}} language.
 
