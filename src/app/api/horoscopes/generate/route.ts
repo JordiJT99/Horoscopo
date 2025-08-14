@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { HoroscopeBatchGenerator } from '@/lib/horoscope-batch-generator';
+import { validateModel, getAllowedModel } from '@/ai/model-config';
 
 export async function POST(request: NextRequest) {
   try {
+    // VALIDACIÓN CRÍTICA: Verificar modelo autorizado antes de procesar
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 API GENERATE: Verificado modelo autorizado: ${authorizedModel}`);
+    
     const { date, days, locales, type = 'daily' } = await request.json();
     
     console.log('🔧 API: Solicitud de generación recibida', { date, days, locales, type });

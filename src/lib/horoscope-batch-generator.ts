@@ -3,6 +3,7 @@ import { getHoroscopeFlow } from '@/ai/flows/horoscope-flow';
 import { ALL_SIGN_NAMES } from './constants';
 import { format, addDays, getISOWeek, getYear } from 'date-fns';
 import type { ZodiacSignName, Locale, HoroscopeDetail } from '@/types';
+import { validateModel, getAllowedModel } from '@/ai/model-config';
 
 export class HoroscopeBatchGenerator {
   
@@ -13,6 +14,11 @@ export class HoroscopeBatchGenerator {
     date: Date,
     locales: Locale[] = ['es', 'en', 'de', 'fr']
   ): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 CRON JOB: Usando modelo autorizado: ${authorizedModel}`);
+    
     const dateKey = format(date, 'yyyy-MM-dd');
     
     console.log(`🚀 Iniciando generación masiva para ${dateKey}`);
@@ -72,6 +78,11 @@ export class HoroscopeBatchGenerator {
     dateString: string, // YYYY-MM-DD
     locales: Locale[] = ['es', 'en', 'de', 'fr']
   ): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 API HOROSCOPES: Usando modelo autorizado: ${authorizedModel}`);
+    
     const date = new Date(dateString + 'T00:00:00.000Z');
     await this.generateDailyHoroscopesForDate(date, locales);
   }
@@ -83,6 +94,11 @@ export class HoroscopeBatchGenerator {
     days: number = 7,
     locales: Locale[] = ['es', 'en', 'de', 'fr']
   ): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 BATCH GENERATION: Usando modelo autorizado: ${authorizedModel}`);
+    
     const today = new Date();
     
     for (let i = 0; i < days; i++) {
@@ -95,6 +111,11 @@ export class HoroscopeBatchGenerator {
    * Pre-genera horóscopos para mañana (útil para cron jobs)
    */
   static async generateTomorrowHoroscopes(): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 CRON TOMORROW: Usando modelo autorizado: ${authorizedModel}`);
+    
     const tomorrow = addDays(new Date(), 1);
     await this.generateDailyHoroscopesForDate(tomorrow);
   }
@@ -106,6 +127,11 @@ export class HoroscopeBatchGenerator {
     date: Date,
     locales: Locale[] = ['es', 'en', 'de', 'fr']
   ): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 WEEKLY GENERATION: Usando modelo autorizado: ${authorizedModel}`);
+    
     const weekKey = `${getYear(date)}-${getISOWeek(date).toString().padStart(2, '0')}`;
     
     console.log(`🚀 Iniciando generación semanal para ${weekKey}`);
@@ -154,6 +180,11 @@ export class HoroscopeBatchGenerator {
     date: Date,
     locales: Locale[] = ['es', 'en', 'de', 'fr']
   ): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 MONTHLY GENERATION: Usando modelo autorizado: ${authorizedModel}`);
+    
     const monthKey = format(date, 'yyyy-MM');
     
     console.log(`🚀 Iniciando generación mensual para ${monthKey}`);
@@ -202,6 +233,11 @@ export class HoroscopeBatchGenerator {
     date: Date,
     locales: Locale[] = ['es', 'en', 'de', 'fr']
   ): Promise<void> {
+    // VALIDACIÓN CRÍTICA: Asegurar que solo usamos Gemini 2.0 Flash
+    const authorizedModel = getAllowedModel();
+    validateModel(authorizedModel);
+    console.log(`🔒 COMPLETE GENERATION: Usando modelo autorizado: ${authorizedModel}`);
+    
     console.log(`🌟 Iniciando generación completa para ${format(date, 'yyyy-MM-dd')}`);
     
     await Promise.all([
