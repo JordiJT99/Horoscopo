@@ -2,10 +2,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import type { ZodiacSignName } from '@/types';
+import type { ZodiacSignName, HoroscopeFlowInput } from '@/types';
 import type { Dictionary, Locale } from '@/types';
 import { ZODIAC_SIGNS } from '@/lib/constants';
-import { getHoroscopeFlow, type HoroscopeFlowInput, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
+import { getHoroscopeFlow, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
+import { validateModel } from '@/ai/model-config';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
@@ -33,6 +34,10 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
       setHoroscopeData(null); 
 
       try {
+        // Validar modelo antes de generar
+        validateModel('googleai/gemini-2.0-flash-exp');
+        console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en HoroscopeSection`);
+
         const input: HoroscopeFlowInput = {
           sign: selectedSign,
           locale: locale,

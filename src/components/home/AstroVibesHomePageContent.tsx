@@ -6,9 +6,10 @@ import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import type { Locale, Dictionary } from '@/types';
 import { useAuth } from '@/context/AuthContext';
-import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData, UserAstrologyProfile } from '@/types';
+import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData, UserAstrologyProfile, HoroscopeFlowInput } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon, getMoonSign, getAscendantSign } from '@/lib/constants';
-import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
+import { getHoroscopeFlow } from '@/ai/flows/horoscope-flow';
+import { validateModel } from '@/ai/model-config';
 import { useHoroscopeFromDB } from '@/hooks/use-horoscope-from-db';
 import { usePersonalizedHoroscope } from '@/hooks/use-personalized-horoscope';
 import { motion, type PanInfo } from 'framer-motion';
@@ -275,6 +276,10 @@ export default function AstroVibesHomePageContent({
           
           if (displayPeriod === 'weekly' || displayPeriod === 'monthly') {
             try {
+              // Validar modelo antes de generar
+              validateModel('googleai/gemini-2.0-flash-exp');
+              console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en AstroVibesHomePageContent`);
+
               const input: HoroscopeFlowInput = {
                 sign: selectedDisplaySignName,
                 locale,
