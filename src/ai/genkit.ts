@@ -2,6 +2,7 @@
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 import {config} from 'dotenv';
+import { getAllowedModel, validateModel } from './model-config';
 
 // Cargar variables de entorno desde .env de forma incondicional para Genkit
 config();
@@ -18,7 +19,11 @@ if (!process.env.GOOGLE_API_KEY) {
   );
 }
 
+// Verificar que solo usamos el modelo permitido
+const AUTHORIZED_MODEL = getAllowedModel();
+validateModel(AUTHORIZED_MODEL);
+
 export const ai = genkit({
   plugins: [googleAiPlugin],
-  model: 'googleai/gemini-1.5-flash', // Modelo estable y económico
+  model: AUTHORIZED_MODEL, // EXCLUSIVAMENTE Gemini 2.0 Flash mediante configuración centralizada
 });

@@ -45,7 +45,7 @@ const dreamInterpretationPrompt = ai.definePrompt({
   name: 'dreamInterpretationPrompt',
   input: {schema: DreamInterpretationInputSchema},
   output: {schema: DreamInterpretationOutputSchema},
-  model: 'googleai/gemini-1.5-flash',
+  model: 'googleai/gemini-2.0-flash-exp',
   prompt: `You are an expert dream interpreter with a deep understanding of symbolism and psychology.
 The user will describe a dream they had in several structured parts. Respond in the {{locale}} language.
 

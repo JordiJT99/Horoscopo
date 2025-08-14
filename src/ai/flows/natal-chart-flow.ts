@@ -77,7 +77,7 @@ const natalChartPrompt = ai.definePrompt({
     schema: NatalChartOutputSchema.omit({ planetPositions: true, aspectsDetails: true }),
     format: 'json', // Ensure JSON output
   },
-  model: 'googleai/gemini-1.5-flash', // Modelo estable y económico
+  model: 'googleai/gemini-2.0-flash-exp', // EXCLUSIVAMENTE Gemini 2.0 Flash
   prompt: `Eres un astrólogo experto, sabio y elocuente. Tu tarea es proporcionar explicaciones claras, personalizadas y MUY EXTENSAS para los componentes de una carta natal.
 
 Datos de nacimiento del usuario:

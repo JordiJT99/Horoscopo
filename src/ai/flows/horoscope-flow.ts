@@ -17,6 +17,7 @@ import { ALL_SIGN_NAMES } from '@/lib/constants';
 import { format, subDays } from 'date-fns';
 import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
+import { getAllowedModel } from '@/ai/model-config';
 
 // Helper to create a Zod enum from the ZodiacSignName type values
 const zodSignEnum = z.enum(ALL_SIGN_NAMES as [string, ...string[]]);
@@ -110,7 +111,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
   input: { schema: PromptInputSchema },
   output: { schema: HoroscopeDetailSchema },
-  model: 'googleai/gemini-1.5-flash',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `Eres un astrólogo experto, empático y perspicaz. Tu tarea es generar un horóscopo DIARIO y completo para el signo zodiacal {{sign}}.
 
 **INSTRUCCIONES CRÍTICAS:**
@@ -145,7 +146,7 @@ const weeklyHoroscopePrompt = ai.definePrompt({
   name: 'weeklyHoroscopePrompt',
   input: { schema: PromptInputSchema }, 
   output: { schema: HoroscopeDetailSchema },
-  model: 'googleai/gemini-1.5-flash',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas de la semana influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo SEMANAL PERSONALIZADO para ESTA SEMANA para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
@@ -175,7 +176,7 @@ const monthlyHoroscopePrompt = ai.definePrompt({
   name: 'monthlyHoroscopePrompt',
   input: { schema: PromptInputSchema }, 
   output: { schema: HoroscopeDetailSchema },
-  model: 'googleai/gemini-1.5-flash',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas del mes influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo MENSUAL PERSONALIZADO para ESTE MES para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
