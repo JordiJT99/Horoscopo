@@ -14,7 +14,7 @@ const PROHIBITED_MODELS = [
   'googleai/gemini-1.5-pro',
   'googleai/gemini-2.5-pro',
   'googleai/gemini-2.5-pro-exp',
-  'googleai/gemini-2.5-flash.lite',
+  'googleai/gemini-2.5-flash-lite',
   'googleai/gemini-2.0-pro',
   'googleai/gemini-1.5-flash',
   'googleai/gemini-2.0-flash-exp',
