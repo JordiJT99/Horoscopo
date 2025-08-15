@@ -107,7 +107,7 @@ export default function PsychicMatchForm({ dictionary, locale }: PsychicMatchFor
     try {
         // Validate model before psychic matching
         console.log('PsychicMatchForm: Validating model before psychic match generation');
-        await validateModel('googleai/gemini-2.0-flash-exp');
+        await validateModel('googleai/gemini-2.0-flash');
 
         const result = await findMyPsychic(formattedAnswers, locale, dictionary);
         toast({

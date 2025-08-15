@@ -95,7 +95,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     try {
       // Validate model before dream interpretation
       console.log('DreamReadingClient: Validating model before dream interpretation generation');
-      await validateModel('googleai/gemini-2.0-flash-exp');
+      await validateModel('googleai/gemini-2.0-flash');
 
       const input: DreamInterpretationInput = { dreamData: formData, locale };
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);

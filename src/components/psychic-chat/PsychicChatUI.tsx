@@ -206,7 +206,7 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     try {
       // Validate model before psychic chat generation
       console.log('PsychicChatUI: Validating model before psychic chat generation');
-      await validateModel('googleai/gemini-2.0-flash-exp');
+      await validateModel('googleai/gemini-2.0-flash');
 
       const aiResponse = await psychicChat(
         flowMessages,

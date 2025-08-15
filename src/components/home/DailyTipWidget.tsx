@@ -26,7 +26,7 @@ export default function DailyTipWidget({ dictionary, locale }: DailyTipWidgetPro
     try {
       // Validate model before daily tip generation
       console.log('DailyTipWidget: Validating model before daily tip generation');
-      await validateModel('googleai/gemini-2.0-flash-exp');
+      await validateModel('googleai/gemini-2.0-flash');
 
       const result = await getDailyTip({ locale });
       setTip(result.tip);

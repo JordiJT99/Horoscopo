@@ -277,7 +277,7 @@ export default function AstroVibesHomePageContent({
           if (displayPeriod === 'weekly' || displayPeriod === 'monthly') {
             try {
               // Validar modelo antes de generar
-              validateModel('googleai/gemini-2.0-flash-exp');
+              validateModel('googleai/gemini-2.0-flash');
               console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en AstroVibesHomePageContent`);
 
               const input: HoroscopeFlowInput = {

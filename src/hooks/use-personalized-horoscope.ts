@@ -70,7 +70,7 @@ export function usePersonalizedHoroscope({
       console.log(`🤖 Generando nuevo horóscopo personalizado para ${userId} - ${sign}`);
 
       // 2. Validar que se usa el modelo correcto antes de generar
-      validateModel('googleai/gemini-2.0-flash-exp');
+      validateModel('googleai/gemini-2.0-flash');
       console.log(`✓ Validación de modelo Gemini 2.0 Flash completada para horóscopo personalizado`);
 
       // 3. Si no existe, generar uno nuevo con personalización

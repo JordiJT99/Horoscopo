@@ -64,7 +64,7 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
     try {
       // Validate model before crystal ball revelation
       console.log('CrystalBallClientContent: Validating model before crystal ball revelation generation');
-      await validateModel('googleai/gemini-2.0-flash-exp');
+      await validateModel('googleai/gemini-2.0-flash');
 
       const input: CrystalBallRevelationInput = { 
         locale,

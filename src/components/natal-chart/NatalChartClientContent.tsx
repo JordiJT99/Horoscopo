@@ -131,7 +131,7 @@ export default function NatalChartClientContent({
       try {
         // Validate model before natal chart generation
         console.log('NatalChartClientContent: Validating model before natal chart generation');
-        await validateModel('googleai/gemini-2.0-flash-exp');
+        await validateModel('googleai/gemini-2.0-flash');
 
         const flowInput = {
           detailLevel,
