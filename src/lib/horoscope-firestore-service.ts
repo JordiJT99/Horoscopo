@@ -674,4 +674,142 @@ export class HoroscopeFirestoreService {
       throw error;
     }
   }
+
+  /**
+   * ⚡ NUEVA FUNCIONALIDAD ON-DEMAND
+   * Carga o genera un horóscopo específico para un signo y fecha
+   * Solo genera el horóscopo solicitado, no todos los signos
+   */
+  static async loadOrGenerateHoroscopeForSign(
+    sign: ZodiacSignName,
+    date: string,
+    locale: Locale = 'es',
+    period: HoroscopePeriod = 'daily'
+  ): Promise<HoroscopeDetail | null> {
+    const { getHoroscopeFlow } = await import('@/ai/flows/horoscope-flow');
+    const { validateModel, getAllowedModel } = await import('@/ai/model-config');
+    
+    try {
+      console.log(`🎯 CONSULTA ON-DEMAND: ${sign} - ${date} (${locale}) - ${period}`);
+      
+      // 1. Intentar cargar desde cache/BD primero
+      let existingHoroscope: HoroscopeDetail | null = null;
+      
+      if (period === 'daily') {
+        existingHoroscope = await this.loadHoroscopeForSign(sign, date, locale);
+      } else if (period === 'weekly') {
+        const weekKey = this.getWeekKey(new Date(date));
+        existingHoroscope = await this.loadWeeklyHoroscopeForSign(sign, weekKey, locale);
+      } else if (period === 'monthly') {
+        const monthKey = this.getMonthKey(new Date(date));
+        existingHoroscope = await this.loadMonthlyHoroscopeForSign(sign, monthKey, locale);
+      }
+      
+      // 2. Si existe, retornarlo inmediatamente
+      if (existingHoroscope) {
+        console.log(`✅ CACHE HIT: Horóscopo ${period} para ${sign} ya existe`);
+        return existingHoroscope;
+      }
+      
+      // 3. Si no existe, generarlo ON-DEMAND
+      console.log(`🤖 GENERANDO ON-DEMAND: ${period} para ${sign} - ${date} (${locale})`);
+      
+      // Validar modelo antes de generar
+      const authorizedModel = getAllowedModel();
+      validateModel(authorizedModel);
+      console.log(`🔒 Modelo validado: ${authorizedModel}`);
+      
+      // Generar solo el horóscopo específico
+      const result = await getHoroscopeFlow({
+        sign,
+        locale,
+        targetDate: date
+      }, period);
+      
+      const horoscopeData = result[period];
+      
+      if (!horoscopeData) {
+        console.error(`❌ No se pudo generar horóscopo ${period} para ${sign}`);
+        return null;
+      }
+      
+      // 4. Guardar en BD para futuras consultas
+      await this.saveIndividualHoroscope(sign, date, horoscopeData, locale, period);
+      
+      console.log(`✅ GENERADO Y GUARDADO: ${period} para ${sign} - ${date}`);
+      return horoscopeData;
+      
+    } catch (error) {
+      console.error(`❌ Error en loadOrGenerateHoroscopeForSign para ${sign}:`, error);
+      return null;
+    }
+  }
+  
+  /**
+   * Guarda un horóscopo individual (no todos los signos a la vez)
+   */
+  private static async saveIndividualHoroscope(
+    sign: ZodiacSignName,
+    date: string,
+    horoscope: HoroscopeDetail,
+    locale: Locale = 'es',
+    period: HoroscopePeriod = 'daily'
+  ): Promise<void> {
+    try {
+      this.validateFirestore();
+      
+      let docPath: string;
+      let docRef;
+      
+      if (period === 'daily') {
+        docPath = `horoscopes/daily/${date}/${locale}`;
+      } else if (period === 'weekly') {
+        const weekKey = this.getWeekKey(new Date(date));
+        docPath = `horoscopes/weekly/${weekKey}/${locale}`;
+      } else if (period === 'monthly') {
+        const monthKey = this.getMonthKey(new Date(date));
+        docPath = `horoscopes/monthly/${monthKey}/${locale}`;
+      } else {
+        throw new Error(`Período no soportado: ${period}`);
+      }
+      
+      docRef = doc(db!, docPath);
+      
+      // Usar merge: true para solo actualizar el signo específico
+      await setDoc(docRef, {
+        [sign.toLowerCase()]: {
+          main: horoscope.main,
+          love: horoscope.love,
+          money: horoscope.money,
+          health: horoscope.health,
+          generatedAt: new Date(),
+        }
+      }, { merge: true });
+      
+      console.log(`📝 Guardado horóscopo individual: ${sign} en ${docPath}`);
+      
+    } catch (error) {
+      console.error('❌ Error guardando horóscopo individual:', error);
+      throw error;
+    }
+  }
+
+  // Funciones auxiliares para claves de tiempo (si no existen)
+  private static getWeekKey(date: Date): string {
+    const year = date.getFullYear();
+    const week = this.getWeekNumber(date);
+    return `${year}-W${week.toString().padStart(2, '0')}`;
+  }
+  
+  private static getMonthKey(date: Date): string {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    return `${year}-${month.toString().padStart(2, '0')}`;
+  }
+  
+  private static getWeekNumber(date: Date): number {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  }
 }

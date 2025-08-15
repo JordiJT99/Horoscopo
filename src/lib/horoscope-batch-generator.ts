@@ -40,11 +40,12 @@ export class HoroscopeBatchGenerator {
         for (const sign of ALL_SIGN_NAMES) {
           try {
             console.log(`  🔮 Generando ${sign}...`);
+            // OPTIMIZACIÓN: Solo generar horóscopo diario para batch diario
             const result = await getHoroscopeFlow({
               sign,
               locale,
               targetDate: dateKey
-            });
+            }, 'daily');
             
             allHoroscopes[sign] = result.daily;
             
@@ -145,11 +146,12 @@ export class HoroscopeBatchGenerator {
         for (const sign of ALL_SIGN_NAMES) {
           try {
             console.log(`  🔮 Generando ${sign} semanal...`);
+            // OPTIMIZACIÓN: Solo generar horóscopo semanal para batch semanal
             const result = await getHoroscopeFlow({
               sign,
               locale,
               targetDate: format(date, 'yyyy-MM-dd')
-            });
+            }, 'weekly');
             
             allHoroscopes[sign] = result.weekly;
             
@@ -198,11 +200,12 @@ export class HoroscopeBatchGenerator {
         for (const sign of ALL_SIGN_NAMES) {
           try {
             console.log(`  🔮 Generando ${sign} mensual...`);
+            // OPTIMIZACIÓN: Solo generar horóscopo mensual para batch mensual
             const result = await getHoroscopeFlow({
               sign,
               locale,
               targetDate: format(date, 'yyyy-MM-dd')
-            });
+            }, 'monthly');
             
             allHoroscopes[sign] = result.monthly;
             

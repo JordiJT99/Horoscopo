@@ -2,11 +2,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import type { ZodiacSignName, HoroscopeFlowInput } from '@/types';
+import type { ZodiacSignName, HoroscopeDetail } from '@/types';
 import type { Dictionary, Locale } from '@/types';
 import { ZODIAC_SIGNS } from '@/lib/constants';
-import { getHoroscopeFlow, type HoroscopeFlowOutput } from '@/ai/flows/horoscope-flow';
-import { validateModel } from '@/ai/model-config';
+import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
+import { getDailyHoroscopeOnDemand, getHoroscopeOnDemand } from '@/lib/horoscope-on-demand';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ZodiacSignIcon from '@/components/shared/ZodiacSignIcon';
@@ -21,7 +21,7 @@ interface HoroscopeSectionProps {
 
 const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps) => {
   const [selectedSign, setSelectedSign] = useState<ZodiacSignName>(ZODIAC_SIGNS[0].name);
-  const [horoscopeData, setHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
+  const [horoscopeData, setHoroscopeData] = useState<HoroscopeDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,18 +34,23 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
       setHoroscopeData(null); 
 
       try {
-        // Validar modelo antes de generar
-        validateModel('googleai/gemini-2.0-flash');
-        console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en HoroscopeSection`);
-
-        const input: HoroscopeFlowInput = {
+        console.log(`🎯 CONSULTA ON-DEMAND: ${selectedSign} - ${period} (${locale})`);
+        
+        // Usar el nuevo sistema on-demand optimizado
+        const result = await getHoroscopeOnDemand({
           sign: selectedSign,
-          locale: locale,
-        };
-        const result = await getHoroscopeFlow(input);
-        setHoroscopeData(result);
+          locale,
+          period
+        });
+        
+        if (result) {
+          setHoroscopeData(result);
+          console.log(`✅ Horóscopo ${period} cargado para ${selectedSign}`);
+        } else {
+          throw new Error(`No se pudo cargar horóscopo ${period} para ${selectedSign}`);
+        }
       } catch (err) {
-        console.error("Error fetching horoscope from Genkit flow:", err);
+        console.error(`❌ Error fetching horoscope on-demand:`, err);
         setError(dictionary['HoroscopeSection.error'] || "Could not load horoscope data.");
       } finally {
         setIsLoading(false);
@@ -62,7 +67,6 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
   const translatedSignName = dictionary[selectedSign] || selectedSign;
 
   let cardTitleKey = 'HoroscopeSection.title'; // Default
-  let periodContentKey: 'daily' | 'weekly' | 'monthly' = period;
   let periodTitleKey = `HoroscopeSection.${period}ForecastTitle`;
   
   if (period === 'daily') {
@@ -76,7 +80,8 @@ const HoroscopeSection = ({ dictionary, locale, period }: HoroscopeSectionProps)
     periodTitleKey = 'HoroscopeSection.monthlyOverviewTitle';
   }
 
-  const currentHoroscope = horoscopeData ? horoscopeData[periodContentKey] : null;
+  // Ahora horoscopeData es directamente el HoroscopeDetail del período solicitado
+  const currentHoroscope = horoscopeData;
 
   return (
     <Card className="w-full shadow-xl">

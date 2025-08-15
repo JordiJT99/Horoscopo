@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
+import { getDailyHoroscopeOnDemand } from '@/lib/horoscope-on-demand';
 import { validateModel } from '@/ai/model-config';
 import type { 
   HoroscopeDetail, 
@@ -73,7 +74,7 @@ export function usePersonalizedHoroscope({
       validateModel('googleai/gemini-2.0-flash');
       console.log(`✓ Validación de modelo Gemini 2.0 Flash completada para horóscopo personalizado`);
 
-      // 3. Si no existe, generar uno nuevo con personalización
+      // 3. Si no existe, generar uno nuevo con personalización - SOLO DIARIO para evitar consumo masivo
       const input: HoroscopeFlowInput = {
         sign: sign,
         locale: locale,
@@ -81,7 +82,9 @@ export function usePersonalizedHoroscope({
         onboardingData: personalizationData
       };
 
-      const result = await getHoroscopeFlow(input);
+      // OPTIMIZACIÓN CRÍTICA: Solo generar horóscopo diario para personalizados
+      console.log(`⚡ OPTIMIZACIÓN: Generando solo horóscopo DIARIO personalizado (no los 3 tipos)`);
+      const result = await getHoroscopeFlow(input, 'daily');
 
       if (result && result.daily) {
         // 4. Guardar el horóscopo personalizado en Firestore

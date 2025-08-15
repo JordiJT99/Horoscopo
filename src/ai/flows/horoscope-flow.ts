@@ -54,6 +54,7 @@ const HoroscopeFlowInputSchemaInternal = z.object({
   locale: z.string().describe('The locale (e.g., "en", "es") for the horoscope language.'),
   targetDate: z.string().optional().describe('Target date for the daily horoscope in YYYY-MM-DD format. If not provided, defaults to today. For weekly/monthly, this is ignored and current period is used.'),
   onboardingData: HoroscopePersonalizationDataSchema,
+  horoscopeType: z.enum(['daily', 'weekly', 'monthly', 'all']).optional().default('all').describe('Which type of horoscope to generate. "all" generates all three types.'),
 });
 type HoroscopeFlowInputInternal = z.infer<typeof HoroscopeFlowInputSchemaInternal>;
 
@@ -209,7 +210,7 @@ const horoscopeFlowInternal = ai.defineFlow(
     outputSchema: HoroscopeFlowOutputSchema,
   },
   async (input): Promise<HoroscopeFlowOutput> => {
-    const { sign, locale, targetDate, onboardingData } = input;
+    const { sign, locale, targetDate, onboardingData, horoscopeType = 'all' } = input;
     const isPersonalizedRequest = !!onboardingData?.name;
     const today = new Date();
     const dateObj = targetDate ? new Date(targetDate) : today;
@@ -240,17 +241,36 @@ const horoscopeFlowInternal = ai.defineFlow(
     };
     
     try {
-      // Usar Promise.all para generar los horóscopos en paralelo
-      const [dailyResult, weeklyResult, monthlyResult] = await Promise.all([
-        dailyHoroscopePrompt(promptPayload),
-        weeklyHoroscopePrompt(promptPayload),
-        monthlyHoroscopePrompt(promptPayload)
-      ]);
+      // OPTIMIZACIÓN: Generar solo el tipo solicitado para reducir consumo masivo de tokens
+      let dailyResult, weeklyResult, monthlyResult;
+      
+      if (horoscopeType === 'all') {
+        // Generar todos los tipos (comportamiento anterior)
+        console.log(`🚨 ADVERTENCIA: Generando los 3 tipos de horóscopo (consumo alto de tokens)`);
+        [dailyResult, weeklyResult, monthlyResult] = await Promise.all([
+          dailyHoroscopePrompt(promptPayload),
+          weeklyHoroscopePrompt(promptPayload),
+          monthlyHoroscopePrompt(promptPayload)
+        ]);
+      } else {
+        // Generar solo el tipo solicitado (optimizado)
+        console.log(`⚡ OPTIMIZADO: Generando solo horóscopo ${horoscopeType}`);
+        
+        if (horoscopeType === 'daily' || horoscopeType === 'all') {
+          dailyResult = await dailyHoroscopePrompt(promptPayload);
+        }
+        if (horoscopeType === 'weekly') {
+          weeklyResult = await weeklyHoroscopePrompt(promptPayload);
+        }
+        if (horoscopeType === 'monthly') {
+          monthlyResult = await monthlyHoroscopePrompt(promptPayload);
+        }
+      }
 
       const finalOutput: HoroscopeFlowOutput = {
-        daily: dailyResult.output || getRandomMockHoroscope('daily'),
-        weekly: weeklyResult.output || getRandomMockHoroscope('weekly'),
-        monthly: monthlyResult.output || getRandomMockHoroscope('monthly')
+        daily: dailyResult?.output || getRandomMockHoroscope('daily'),
+        weekly: weeklyResult?.output || getRandomMockHoroscope('weekly'),
+        monthly: monthlyResult?.output || getRandomMockHoroscope('monthly')
       };
 
       return finalOutput;
@@ -268,12 +288,16 @@ const horoscopeFlowInternal = ai.defineFlow(
 );
 
 
-export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise<HoroscopeFlowOutput> {
+export async function getHoroscopeFlow(
+  input: PublicHoroscopeFlowInput, 
+  horoscopeType: 'daily' | 'weekly' | 'monthly' | 'all' = 'all'
+): Promise<HoroscopeFlowOutput> {
   const internalInput: HoroscopeFlowInputInternal = {
     sign: input.sign,
     locale: input.locale,
     targetDate: input.targetDate,
     onboardingData: input.onboardingData,
+    horoscopeType: horoscopeType,
   };
   return horoscopeFlowInternal(internalInput);
 }
