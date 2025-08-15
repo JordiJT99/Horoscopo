@@ -6,7 +6,7 @@
  */
 
 // ÚNICO MODELO PERMITIDO EN TODA LA APLICACIÓN
-export const ALLOWED_MODEL = 'googleai/gemini-2.0-flash-exp' as const;
+export const ALLOWED_MODEL = 'googleai/gemini-1.0-pro' as const;
 
 // Lista de modelos PROHIBIDOS (para verificaciones de seguridad)
 const PROHIBITED_MODELS = [
