@@ -9,6 +9,7 @@
  */
 
 import { ai } from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import { z } from 'genkit';
 import { ALL_TAROT_CARDS } from '@/lib/constants';
 
@@ -57,7 +58,7 @@ const tarotSpreadPrompt = ai.definePrompt({
   name: 'tarotSpreadPrompt',
   input: { schema: TarotSpreadInputSchema },
   output: { schema: z.object({ reading: z.string() }) }, // AI only generates the text
-  model: 'googleai/gemini-2.0-flash-exp',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `You are an expert Tarot reader, skilled at synthesizing the meaning of multiple cards into a cohesive narrative.
 The user has drawn two cards from the Tarot. Your task is to provide a thoughtful and insightful reading that explains how these two cards interact and what their combined message is for the user. Respond in the {{locale}} language.
 

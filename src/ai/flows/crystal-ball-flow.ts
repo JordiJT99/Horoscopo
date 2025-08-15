@@ -8,6 +8,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import {z} from 'genkit';
 
 const CrystalBallRevelationInputSchema = z.object({
@@ -25,7 +26,7 @@ const crystalBallPrompt = ai.definePrompt({
   name: 'crystalBallRevelationPrompt',
   input: {schema: CrystalBallRevelationInputSchema},
   output: {schema: CrystalBallRevelationOutputSchema},
-  model: 'googleai/gemini-2.0-flash-exp',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `You are a wise and empathetic cosmic guide, speaking through a Crystal Ball. Your purpose is to provide the user with a gentle, positive, and actionable theme for their day.
 Respond in the {{locale}} language.
 

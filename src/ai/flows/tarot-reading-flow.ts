@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import {z} from 'genkit';
 import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 
@@ -31,7 +32,7 @@ const tarotReadingPrompt = ai.definePrompt({
   name: 'tarotReadingPrompt',
   input: {schema: TarotReadingInputSchema},
   output: {schema: TarotReadingOutputSchema.omit({ imagePlaceholderUrl: true })},
-  model: 'googleai/gemini-2.0-flash-exp',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `You are a wise and insightful Tarot reader. The user will ask you a question.
 
 Your task is to perform these steps:

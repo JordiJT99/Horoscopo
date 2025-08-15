@@ -4,6 +4,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import {z} from 'genkit';
 import { psychics, type Psychic } from '@/lib/psychics';
 import type { Dictionary } from '@/types';
@@ -47,7 +48,7 @@ const psychicMatchPrompt = ai.definePrompt({
     name: 'psychicMatchPrompt',
     input: { schema: PsychicMatchInputSchema.extend({ psychicSummaries: z.string() }) },
     output: { schema: PsychicMatchOutputSchema },
-    model: 'googleai/gemini-2.0-flash-exp',
+    model: getAllowedModel(), // Usar configuración centralizada
     prompt: `Eres un experto casamentero de psíquicos. Tu tarea es analizar las respuestas de un usuario y asignarle el psíquico más adecuado de la siguiente lista.
 
 **Psíquicos Disponibles y sus Especialidades:**

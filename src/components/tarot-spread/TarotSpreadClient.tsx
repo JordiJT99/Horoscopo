@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { tarotSpreadFlow } from '@/ai/flows/tarot-spread-flow';
+import { validateModel } from '@/ai/model-config';
 import type { TarotSpreadInput, TarotSpreadOutput } from '@/types';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -85,6 +86,10 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
     const performReading = async (isFirstUse: boolean) => {
       setIsLoading(true);
       try {
+        // Validar modelo antes de generar
+        validateModel('googleai/gemini-2.0-flash-exp');
+        console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en TarotSpread`);
+
         const input: TarotSpreadInput = {
           card1Name: selectedCards[0].name,
           card1Reversed: selectedCards[0].isReversed,

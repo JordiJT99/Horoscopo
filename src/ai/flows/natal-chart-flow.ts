@@ -8,6 +8,7 @@
  * - NatalChartOutput - The return type for the natalChartFlow function.
  */
 import { ai } from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import { z } from 'genkit';
 import type { ZodiacSignName } from '@/types'; // Import ZodiacSignName
 import { getSignFromDegree } from '@/lib/constants'; // Import the helper
@@ -77,7 +78,7 @@ const natalChartPrompt = ai.definePrompt({
     schema: NatalChartOutputSchema.omit({ planetPositions: true, aspectsDetails: true }),
     format: 'json', // Ensure JSON output
   },
-  model: 'googleai/gemini-2.0-flash-exp', // EXCLUSIVAMENTE Gemini 2.0 Flash
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `Eres un astrólogo experto, sabio y elocuente. Tu tarea es proporcionar explicaciones claras, personalizadas y MUY EXTENSAS para los componentes de una carta natal.
 
 Datos de nacimiento del usuario:

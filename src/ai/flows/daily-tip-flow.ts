@@ -8,6 +8,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import {z} from 'genkit';
 import { format } from 'date-fns';
 
@@ -28,7 +29,7 @@ const getDailyTipPrompt = ai.definePrompt({
   name: 'dailyTipPrompt',
   input: {schema: DailyTipInputSchema},
   output: {schema: DailyTipOutputSchema},
-  model: 'googleai/gemini-2.0-flash-exp',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `You are a wise and empathetic cosmic guide. Your purpose is to provide a short, positive, inspiring, and actionable tip for the day.
 Respond ONLY in the {{locale}} language.
 

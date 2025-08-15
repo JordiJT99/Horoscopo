@@ -5,6 +5,7 @@
 import type { Dictionary, Locale } from '@/types'; // Import Locale
 import React, { useState, useEffect } from 'react';
 import { natalChartFlow, type NatalChartOutput } from '@/ai/flows/natal-chart-flow';
+import { validateModel } from '@/ai/model-config';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import NatalChartWheel from './NatalChartWheel';
@@ -128,6 +129,10 @@ export default function NatalChartClientContent({
       setIsLoading(true);
       
       try {
+        // Validate model before natal chart generation
+        console.log('NatalChartClientContent: Validating model before natal chart generation');
+        await validateModel('googleai/gemini-2.0-flash-exp');
+
         const flowInput = {
           detailLevel,
           locale: locale,

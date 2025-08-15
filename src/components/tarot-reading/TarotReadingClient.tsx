@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Wand, Sparkles, Share2, RotateCcw, MessageCircle } from 'lucide-react'; 
 import { tarotReadingFlow, type TarotReadingInput, type TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
+import { validateModel } from '@/ai/model-config';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -56,6 +57,10 @@ export default function TarotReadingClient({ dictionary, locale }: TarotReadingC
   const performReading = async (isFirstUse: boolean) => {
     setIsLoading(true);
     try {
+      // Validar modelo antes de generar
+      validateModel('googleai/gemini-2.0-flash-exp');
+      console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en TarotReading`);
+
       const input: TarotReadingInput = { question, locale };
       const result: TarotReadingOutput = await tarotReadingFlow(input);
       setReading(result);

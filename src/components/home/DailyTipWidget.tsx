@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Lightbulb } from 'lucide-react';
 import { getDailyTip } from '@/ai/flows/daily-tip-flow';
+import { validateModel } from '@/ai/model-config';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,6 +24,10 @@ export default function DailyTipWidget({ dictionary, locale }: DailyTipWidgetPro
   const handleGetTip = async () => {
     setIsLoading(true);
     try {
+      // Validate model before daily tip generation
+      console.log('DailyTipWidget: Validating model before daily tip generation');
+      await validateModel('googleai/gemini-2.0-flash-exp');
+
       const result = await getDailyTip({ locale });
       setTip(result.tip);
     } catch (error) {

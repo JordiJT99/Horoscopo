@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, MessageCircle } from 'lucide-react';
 import { tarotPersonalityFlow, type TarotPersonalityInput, type TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
+import { validateModel } from '@/ai/model-config';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
@@ -66,6 +67,10 @@ export default function TarotPersonalityTestClientPage({ dictionary, locale }: T
   const performReading = async (isFirstUse: boolean) => {
     setIsLoading(true);
     try {
+        // Validar modelo antes de generar
+        validateModel('googleai/gemini-2.0-flash-exp');
+        console.log(`✓ Validación de modelo Gemini 2.0 Flash completada en TarotPersonality`);
+
         const input: TarotPersonalityInput = {
             locale,
             userName: onboardingData?.name || user?.displayName || undefined,

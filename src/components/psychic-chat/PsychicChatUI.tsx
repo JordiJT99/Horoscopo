@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import type { Psychic } from '@/lib/psychics';
 import type { Dictionary, Locale } from '@/types';
 import { psychicChat } from '@/ai/flows/psychic-chat-flow';
+import { validateModel } from '@/ai/model-config';
 import type { ChatMessage } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
@@ -203,6 +204,10 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
     }));
 
     try {
+      // Validate model before psychic chat generation
+      console.log('PsychicChatUI: Validating model before psychic chat generation');
+      await validateModel('googleai/gemini-2.0-flash-exp');
+
       const aiResponse = await psychicChat(
         flowMessages,
         locale,

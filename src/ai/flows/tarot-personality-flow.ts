@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import {z} from 'genkit';
 import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 
@@ -44,7 +45,7 @@ const dailyTarotPrompt = ai.definePrompt({
   name: 'dailyTarotPrompt',
   input: {schema: DailyTarotPromptInputSchema},
   output: {schema: DailyTarotPromptOutputSchema},
-  model: 'googleai/gemini-2.0-flash-exp',
+  model: getAllowedModel(), // Usar configuración centralizada
   prompt: `You are an insightful and empathetic Tarot reader. Your task is to provide a one-card daily reading for the user based on a pre-selected card.
 
 **Card Drawn:** {{cardName}}

@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Share2, Sparkles } from 'lucide-react';
 import { getCrystalBallRevelation, type CrystalBallRevelationInput, type CrystalBallRevelationOutput } from '@/ai/flows/crystal-ball-flow';
+import { validateModel } from '@/ai/model-config';
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
@@ -61,6 +62,10 @@ export default function CrystalBallClientContent({ dictionary, locale }: Crystal
     setIsLoading(true);
     setRevelation(null);
     try {
+      // Validate model before crystal ball revelation
+      console.log('CrystalBallClientContent: Validating model before crystal ball revelation generation');
+      await validateModel('googleai/gemini-2.0-flash-exp');
+
       const input: CrystalBallRevelationInput = { 
         locale,
         userName: onboardingData?.name || user?.displayName || undefined,

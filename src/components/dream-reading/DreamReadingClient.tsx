@@ -14,6 +14,7 @@ import { Slider } from '@/components/ui/slider';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Brain, Share2, RotateCcw, Sparkles, Smile, User, MapPin, Hash, PackageSearch, ChevronLeft, ChevronRight, Feather, Home, Users, Drama, BookHeart, BarChart3, MessageCircle } from 'lucide-react';
 import { dreamInterpretationFlow, type DreamInterpretationInput, type DreamInterpretationOutput, type DreamWizardData } from '@/ai/flows/dream-interpretation-flow';
+import { validateModel } from '@/ai/model-config';
 import type { StoredDream, ZodiacSignName, NewPostData } from '@/types';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
@@ -92,6 +93,10 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
     setError(null);
     setInterpretationResult(null);
     try {
+      // Validate model before dream interpretation
+      console.log('DreamReadingClient: Validating model before dream interpretation generation');
+      await validateModel('googleai/gemini-2.0-flash-exp');
+
       const input: DreamInterpretationInput = { dreamData: formData, locale };
       const result: DreamInterpretationOutput = await dreamInterpretationFlow(input);
       setInterpretationResult(result);

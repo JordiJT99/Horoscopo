@@ -7,6 +7,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getAllowedModel } from '@/ai/model-config';
 import {z} from 'genkit';
 import type { Locale } from '@/types';
 import { psychics } from '@/lib/psychics';
@@ -92,7 +93,7 @@ The reading is focused on: "${input.topic}". Keep this in mind, but let the conv
     const history = allMessages.slice(-HISTORY_LIMIT);
 
     const psychicResponse = await ai.generate({
-      model: 'googleai/gemini-2.0-flash-exp',
+      model: getAllowedModel(), // Usar configuración centralizada
       prompt: prompt, // The newest message from the user.
       system: systemPrompt,
       history: history, // The rest of the conversation history (now capped).
