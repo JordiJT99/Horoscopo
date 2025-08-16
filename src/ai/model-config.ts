@@ -45,6 +45,12 @@ export function validateModel(model: string): void {
  * @returns El identificador del modelo autorizado
  */
 export function getAllowedModel(): typeof ALLOWED_MODEL {
+  // 🔍 LOGGING DETALLADO: Registrar cada solicitud de modelo
+  const timestamp = new Date().toISOString();
+  const caller = new Error().stack?.split('\n')[2]?.trim() || 'unknown';
+  
+  console.log(`🎯 MODELO SOLICITADO: ${ALLOWED_MODEL} | ${timestamp} | Llamado desde: ${caller}`);
+  
   return ALLOWED_MODEL;
 }
 

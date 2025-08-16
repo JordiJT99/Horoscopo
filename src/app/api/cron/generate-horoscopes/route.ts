@@ -6,6 +6,18 @@ import { initializeCronEnvironment } from '@/ai/cron-config';
 // Esta ruta está diseñada para ser llamada por Vercel Cron o cron jobs externos
 export async function GET() {
   try {
+    // 🚫 CRON JOB TEMPORALMENTE DESHABILITADO PARA DEPURACIÓN
+    console.log('🚫 CRON JOB DESHABILITADO: Evitando consumo automático de tokens');
+    
+    return NextResponse.json({ 
+      success: false,
+      message: 'Cron job temporalmente deshabilitado para depuración de consumo de tokens',
+      timestamp: new Date().toISOString(),
+      disabled: true
+    });
+    
+    /* CÓDIGO ORIGINAL COMENTADO PARA DEPURACIÓN:
+    
     // INICIALIZACIÓN COMPLETA DEL ENTORNO CRON
     initializeCronEnvironment();
     
@@ -27,17 +39,19 @@ export async function GET() {
       timestamp: new Date().toISOString()
     });
     
+    */
+    
   } catch (error) {
-    console.error('❌ Error en cron job:', error);
+    console.error('❌ Error en verificación de cron job:', error);
     
     return NextResponse.json(
       { 
         success: false,
-        error: 'Failed to generate horoscopes',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Cron job disabled for debugging',
+        details: 'Temporarily disabled to investigate token consumption',
         timestamp: new Date().toISOString()
       }, 
-      { status: 500 }
+      { status: 503 }
     );
   }
 }
