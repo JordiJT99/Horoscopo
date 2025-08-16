@@ -19,6 +19,16 @@ import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
 import { getAllowedModel } from '@/ai/model-config';
 
+// 🛡️ VALIDACIÓN CRÍTICA: Verificar modelo antes de cualquier operación
+function validateSecureModel() {
+  const model = getAllowedModel();
+  if (model !== 'googleai/gemini-2.0-flash') {
+    throw new Error(`🚨 SECURITY BREACH: Modelo no autorizado detectado: ${model}`);
+  }
+  console.log(`🔒 MODELO VALIDADO: ${model}`);
+  return model;
+}
+
 // Helper to create a Zod enum from the ZodiacSignName type values
 const zodSignEnum = z.enum(ALL_SIGN_NAMES as [string, ...string[]]);
 
@@ -112,7 +122,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
   input: { schema: PromptInputSchema },
   output: { schema: HoroscopeDetailSchema },
-  model: getAllowedModel(), // Usar configuración centralizada
+  model: validateSecureModel(), // 🛡️ VALIDACIÓN CRÍTICA ANTES DE USAR IA
   prompt: `Eres un astrólogo experto, empático y perspicaz. Tu tarea es generar un horóscopo DIARIO y completo para el signo zodiacal {{sign}}.
 
 **INSTRUCCIONES CRÍTICAS:**
