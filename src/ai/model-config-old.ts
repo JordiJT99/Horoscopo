@@ -8,26 +8,21 @@
 // ÚNICO MODELO PERMITIDO EN TODA LA APLICACIÓN
 export const ALLOWED_MODEL = 'googleai/gemini-2.0-flash' as const;
 
-// 🚨 DETECCIÓN DE PROCESO DE BUILD
+// 🚨 MODO EMERGENCIA: BLOQUEAR TODAS LAS LLAMADAS A IA
+// Cambiar a true para permitir llamadas a IA, false para bloquear completamente
+// EXCEPCIÓN: Permitir durante builds para evitar errores de deploy
 const isBuildProcess = () => {
-  try {
-    // Detectar si estamos en un proceso de build
-    return (
-      process.env.NEXT_PHASE === 'phase-production-build' ||
-      process.env.CI === 'true' ||
-      process.env.VERCEL === '1' ||
-      process.argv.some(arg => arg.includes('build')) ||
-      (process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV) ||
-      typeof window === 'undefined' && process.env.NODE_ENV !== 'development'
-    );
-  } catch (error) {
-    // Si hay error detectando el entorno, asumir que NO es build (más seguro)
-    return false;
-  }
+  // Detectar si estamos en un proceso de build
+  return (
+    process.env.NEXT_PHASE === 'phase-production-build' ||
+    process.env.CI === 'true' ||
+    process.env.VERCEL === '1' ||
+    process.argv.includes('build') ||
+    process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV
+  );
 };
 
-// 🚨 MODO EMERGENCIA: BLOQUEAR TODAS LAS LLAMADAS A IA EXCEPTO EN BUILDS
-export const AI_CALLS_ENABLED = isBuildProcess();
+export const AI_CALLS_ENABLED = isBuildProcess() ? true : false; // PERMITIR SOLO EN BUILDS, BLOQUEAR EN RUNTIME
 
 // Lista de modelos PROHIBIDOS (para verificaciones de seguridad)
 const PROHIBITED_MODELS = [
@@ -66,29 +61,33 @@ export function validateModel(model: string): void {
  * @returns El identificador del modelo autorizado
  */
 export function getAllowedModel(): typeof ALLOWED_MODEL {
-  const timestamp = new Date().toISOString();
-  const stack = new Error().stack;
-  const caller = stack?.split('\n')[2]?.trim() || 'unknown';
-  const isBuild = isBuildProcess();
-  
-  // 🚫 MODO EMERGENCIA: BLOQUEAR EN RUNTIME, PERMITIR EN BUILDS
-  if (!AI_CALLS_ENABLED && !isBuild) {
-    console.error('🚨🚨🚨 LLAMADA A IA BLOQUEADA EN MODO EMERGENCIA (RUNTIME) 🚨🚨🚨');
+  // � MODO EMERGENCIA: BLOQUEAR TODAS LAS LLAMADAS A IA
+  if (!AI_CALLS_ENABLED) {
+    const timestamp = new Date().toISOString();
+    const stack = new Error().stack;
+    const caller = stack?.split('\n')[2]?.trim() || 'unknown';
+    
+    console.error('🚨🚨🚨 LLAMADA A IA BLOQUEADA EN MODO EMERGENCIA 🚨🚨🚨');
     console.error(`📅 Timestamp: ${timestamp}`);
     console.error(`📍 Caller: ${caller}`);
     console.error(`📚 Stack trace:`);
     console.error(stack);
-    console.error('🚨🚨🚨 ESTA LLAMADA HABRÍA CONSUMIDO TOKENS EN PRODUCCIÓN 🚨🚨🚨');
+    console.error('🚨🚨🚨 ESTA LLAMADA HABRÍA CONSUMIDO TOKENS 🚨🚨🚨');
     
-    throw new Error(`🚨 MODO EMERGENCIA: Todas las llamadas a IA están bloqueadas en runtime. Caller: ${caller}`);
+    throw new Error(`🚨 MODO EMERGENCIA: Todas las llamadas a IA están bloqueadas. Caller: ${caller}`);
   }
   
-  // 🔍 LOGGING DETALLADO: Registrar cada solicitud de modelo
-  const buildStatus = isBuild ? '🔨 BUILD TIME' : '🌐 RUNTIME';
-  console.log(`${buildStatus} - TOKEN USAGE ALERT - MODELO SOLICITADO: ${ALLOWED_MODEL}`);
+  // �🔍 LOGGING DETALLADO: Registrar cada solicitud de modelo
+  const timestamp = new Date().toISOString();
+  const stack = new Error().stack;
+  const caller = stack?.split('\n')[2]?.trim() || 'unknown';
+  const fullStack = stack?.split('\n').slice(1, 6).join(' -> ') || 'unknown';
+  
+  console.log(`🚨 TOKEN USAGE ALERT - MODELO SOLICITADO: ${ALLOWED_MODEL}`);
   console.log(`📅 Timestamp: ${timestamp}`);
   console.log(`📍 Caller: ${caller}`);
-  console.log(`⚠️  ESTO ${isBuild ? 'PUEDE' : 'VA A'} CONSUMIR TOKENS`);
+  console.log(`📚 Full Stack: ${fullStack}`);
+  console.log(`⚠️  ESTO CONSUMIRÁ TOKENS - INVESTIGAR SI ES NECESARIO`);
   console.log('========================================');
   
   return ALLOWED_MODEL;
