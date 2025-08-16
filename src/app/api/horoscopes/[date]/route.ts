@@ -81,7 +81,12 @@ export async function GET(
       );
 
       if (!horoscope) {
-        console.log(`🔄 Generando horóscopo automáticamente para ${sign} - ${date} (${locale})`);
+        // 🚫 GENERACIÓN AUTOMÁTICA DESHABILITADA PARA DEPURACIÓN
+        console.log(`� Generación automática deshabilitada. Usando mock para ${sign} - ${date} (${locale})`);
+        horoscope = createMockHoroscope(sign as any, date, locale);
+        
+        /* CÓDIGO ORIGINAL COMENTADO PARA DEPURACIÓN:
+        console.log(`�🔄 Generando horóscopo automáticamente para ${sign} - ${date} (${locale})`);
         try {
           await HoroscopeBatchGenerator.generateDailyHoroscopes(date, [locale]);
           horoscope = await HoroscopeFirestoreService.loadHoroscopeForSign(
@@ -95,6 +100,7 @@ export async function GET(
           console.log('🔄 Usando horóscopo mock como fallback');
           horoscope = createMockHoroscope(sign as any, date, locale);
         }
+        */
       }
 
       if (!horoscope) {
@@ -116,6 +122,19 @@ export async function GET(
       );
 
       if (!horoscopes) {
+        // 🚫 GENERACIÓN AUTOMÁTICA DESHABILITADA PARA DEPURACIÓN
+        console.log(`🚫 Generación automática deshabilitada. No se generarán horóscopos para ${date} (${locale})`);
+        return NextResponse.json(
+          { 
+            error: 'Horóscopos no encontrados', 
+            message: 'Generación automática deshabilitada para depuración',
+            date,
+            locale 
+          },
+          { status: 404 }
+        );
+        
+        /* CÓDIGO ORIGINAL COMENTADO PARA DEPURACIÓN:
         console.log(`🔄 Generando todos los horóscopos automáticamente para ${date} (${locale})`);
         try {
           await HoroscopeBatchGenerator.generateDailyHoroscopes(date, [locale]);
@@ -130,6 +149,7 @@ export async function GET(
             { status: 500 }
           );
         }
+        */
       }
 
       if (!horoscopes) {

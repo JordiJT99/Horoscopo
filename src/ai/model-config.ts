@@ -10,7 +10,7 @@ export const ALLOWED_MODEL = 'googleai/gemini-2.0-flash' as const;
 
 // 🚨 MODO EMERGENCIA: BLOQUEAR TODAS LAS LLAMADAS A IA
 // Cambiar a true para permitir llamadas a IA, false para bloquear completamente
-export const AI_CALLS_ENABLED = false;
+export const AI_CALLS_ENABLED = false; // MODO EMERGENCIA REACTIVADO PARA PREVENIR CONSUMO
 
 // Lista de modelos PROHIBIDOS (para verificaciones de seguridad)
 const PROHIBITED_MODELS = [
