@@ -8,6 +8,10 @@
 // ÚNICO MODELO PERMITIDO EN TODA LA APLICACIÓN
 export const ALLOWED_MODEL = 'googleai/gemini-2.0-flash' as const;
 
+// 🚨 MODO EMERGENCIA: BLOQUEAR TODAS LAS LLAMADAS A IA
+// Cambiar a true para permitir llamadas a IA, false para bloquear completamente
+export const AI_CALLS_ENABLED = false;
+
 // Lista de modelos PROHIBIDOS (para verificaciones de seguridad)
 const PROHIBITED_MODELS = [
   'googleai/gemini-1.0-pro',
@@ -45,11 +49,34 @@ export function validateModel(model: string): void {
  * @returns El identificador del modelo autorizado
  */
 export function getAllowedModel(): typeof ALLOWED_MODEL {
-  // 🔍 LOGGING DETALLADO: Registrar cada solicitud de modelo
-  const timestamp = new Date().toISOString();
-  const caller = new Error().stack?.split('\n')[2]?.trim() || 'unknown';
+  // � MODO EMERGENCIA: BLOQUEAR TODAS LAS LLAMADAS A IA
+  if (!AI_CALLS_ENABLED) {
+    const timestamp = new Date().toISOString();
+    const stack = new Error().stack;
+    const caller = stack?.split('\n')[2]?.trim() || 'unknown';
+    
+    console.error('🚨🚨🚨 LLAMADA A IA BLOQUEADA EN MODO EMERGENCIA 🚨🚨🚨');
+    console.error(`📅 Timestamp: ${timestamp}`);
+    console.error(`📍 Caller: ${caller}`);
+    console.error(`📚 Stack trace:`);
+    console.error(stack);
+    console.error('🚨🚨🚨 ESTA LLAMADA HABRÍA CONSUMIDO TOKENS 🚨🚨🚨');
+    
+    throw new Error(`🚨 MODO EMERGENCIA: Todas las llamadas a IA están bloqueadas. Caller: ${caller}`);
+  }
   
-  console.log(`🎯 MODELO SOLICITADO: ${ALLOWED_MODEL} | ${timestamp} | Llamado desde: ${caller}`);
+  // �🔍 LOGGING DETALLADO: Registrar cada solicitud de modelo
+  const timestamp = new Date().toISOString();
+  const stack = new Error().stack;
+  const caller = stack?.split('\n')[2]?.trim() || 'unknown';
+  const fullStack = stack?.split('\n').slice(1, 6).join(' -> ') || 'unknown';
+  
+  console.log(`🚨 TOKEN USAGE ALERT - MODELO SOLICITADO: ${ALLOWED_MODEL}`);
+  console.log(`📅 Timestamp: ${timestamp}`);
+  console.log(`📍 Caller: ${caller}`);
+  console.log(`📚 Full Stack: ${fullStack}`);
+  console.log(`⚠️  ESTO CONSUMIRÁ TOKENS - INVESTIGAR SI ES NECESARIO`);
+  console.log('========================================');
   
   return ALLOWED_MODEL;
 }
