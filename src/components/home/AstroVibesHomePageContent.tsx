@@ -332,39 +332,15 @@ export default function AstroVibesHomePageContent({
     setSelectedDisplaySignName(sign.name);
     setIsPersonalizedRequestActive(isItAUserProfileClick); 
 
-    const currentQueryParams = new URLSearchParams(searchParams.toString());
+    const currentQueryParams = new URLSearchParams();
     currentQueryParams.set('sign', sign.name);
     
     if (isItAUserProfileClick) {
       currentQueryParams.set('personalized', 'true');
-    } else {
-      currentQueryParams.delete('personalized');
     }
-
-    let basePath = pathname.split('?')[0];
-
-    // FIX: Mantener la ruta base actual si es una de las páginas de horóscopo específicas
-    const horoscopePaths = [
-      `/${locale}/yesterday-horoscope`,
-      `/${locale}/weekly-horoscope`,
-      `/${locale}/monthly-horoscope`,
-    ];
-
-    if (horoscopePaths.includes(basePath)) {
-        // Mantener la ruta base actual (p.ej. /es/weekly-horoscope)
-    } else if (basePath === `/${locale}` && searchParams.get('period') === 'tomorrow') {
-        // Caso especial para la pestaña de mañana
-        currentQueryParams.set('period', 'tomorrow');
-    } else {
-      // Por defecto, ir a la página principal (que maneja "hoy")
-      basePath = `/${locale}`;
-      // Asegurarse de quitar el parámetro 'period' si no es 'tomorrow'
-      if(currentQueryParams.get('period') && currentQueryParams.get('period') !== 'tomorrow') {
-        currentQueryParams.delete('period');
-      }
-    }
-
-    const newPath = `${basePath}?${currentQueryParams.toString()}`;
+    
+    // Al cambiar de signo, siempre redirigir a la página principal (horóscopo de hoy)
+    const newPath = `/${locale}?${currentQueryParams.toString()}`;
     router.push(newPath, { scroll: false });
   };
   
