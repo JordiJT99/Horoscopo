@@ -237,47 +237,48 @@ export default function AstroVibesHomePageContent({
   }, [user, authLoading, searchParams, userSunSign]);
 
   // Main effect for fetching all horoscope data (daily, weekly, monthly)
-  useEffect(() => {
-    const fetchFullHoroscope = async () => {
-      // Set loading state immediately to show skeletons
-      setIsHoroscopeLoading(true);
-      setFullHoroscopeData(null);
-      setCurrentDisplayHoroscope(null);
+  const fetchFullHoroscope = useCallback(async () => {
+    // Set loading state immediately to show skeletons
+    setIsHoroscopeLoading(true);
+    setFullHoroscopeData(null);
+    setCurrentDisplayHoroscope(null);
 
-      const isPersonalized = shouldUsePersonalized;
-      const input: HoroscopeFlowInput = {
-        sign: selectedDisplaySignName,
-        locale,
-        targetDate: targetDate, // Use the date relevant to the current view
-        onboardingData: isPersonalized ? personalizationData : undefined,
-        userId: isPersonalized ? getAnonymousUserId() : undefined,
-      };
-
-      try {
-        const result = await getHoroscopeFlow(input);
-        setFullHoroscopeData(result);
-        
-        // Award energy points only once per data fetch
-        if (user?.uid) {
-            addEnergyPoints('read_daily_horoscope', 5);
-        }
-
-      } catch (err) {
-        console.error("Error fetching horoscope data from flow:", err);
-        setFullHoroscopeData(null);
-        if (dictionary && Object.keys(dictionary).length > 0) {
-          toast({
-            title: dictionary['Error.genericTitle'] || "Error",
-            description: dictionary['HoroscopeSection.error'] || "Could not load horoscope data. Please try again later.",
-            variant: "destructive",
-          });
-        }
-      } finally {
-        setIsHoroscopeLoading(false);
-      }
+    const isPersonalized = shouldUsePersonalized;
+    const input: HoroscopeFlowInput = {
+      sign: selectedDisplaySignName,
+      locale,
+      targetDate: targetDate, // Use the date relevant to the current view
+      onboardingData: isPersonalized ? personalizationData : undefined,
+      userId: isPersonalized ? getAnonymousUserId() : undefined,
     };
+
+    try {
+      const result = await getHoroscopeFlow(input);
+      setFullHoroscopeData(result);
+      
+      if (user?.uid) {
+          addEnergyPoints('read_daily_horoscope', 5);
+      }
+
+    } catch (err) {
+      console.error("Error fetching horoscope data from flow:", err);
+      setFullHoroscopeData(null);
+      if (dictionary && Object.keys(dictionary).length > 0) {
+        toast({
+          title: dictionary['Error.genericTitle'] || "Error",
+          description: dictionary['HoroscopeSection.error'] || "Could not load horoscope data. Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setIsHoroscopeLoading(false);
+    }
+  }, [selectedDisplaySignName, locale, targetDate, shouldUsePersonalized, JSON.stringify(personalizationData), getAnonymousUserId, dictionary, toast, addEnergyPoints, user?.uid]);
+
+
+  useEffect(() => {
     fetchFullHoroscope();
-  }, [selectedDisplaySignName, locale, targetDate, shouldUsePersonalized, personalizationData, getAnonymousUserId, dictionary, toast, addEnergyPoints, user?.uid]);
+  }, [fetchFullHoroscope]);
 
 
   // Effect to update the displayed horoscope when full data or period changes
@@ -323,6 +324,11 @@ export default function AstroVibesHomePageContent({
   };
 
   const handleSignSelectedFromScroll = (sign: ZodiacSign, isItAUserProfileClick: boolean = false) => {
+    // Limpiar datos y activar estado de carga ANTES de hacer nada más.
+    setIsHoroscopeLoading(true);
+    setFullHoroscopeData(null);
+    setCurrentDisplayHoroscope(null);
+
     setSelectedDisplaySignName(sign.name);
     setIsPersonalizedRequestActive(isItAUserProfileClick); 
 
@@ -336,16 +342,28 @@ export default function AstroVibesHomePageContent({
     }
 
     let basePath = pathname.split('?')[0];
-     if (basePath === `/${locale}/yesterday-horoscope` || basePath === `/${locale}/weekly-horoscope` || basePath === `/${locale}/monthly-horoscope` ) {
-      // Keep current base path
-    } else if (initialActivePeriod === 'tomorrow' && basePath === `/${locale}`) {
-         currentQueryParams.set('period', 'tomorrow');
+
+    // FIX: Mantener la ruta base actual si es una de las páginas de horóscopo específicas
+    const horoscopePaths = [
+      `/${locale}/yesterday-horoscope`,
+      `/${locale}/weekly-horoscope`,
+      `/${locale}/monthly-horoscope`,
+    ];
+
+    if (horoscopePaths.includes(basePath)) {
+        // Mantener la ruta base actual (p.ej. /es/weekly-horoscope)
+    } else if (basePath === `/${locale}` && searchParams.get('period') === 'tomorrow') {
+        // Caso especial para la pestaña de mañana
+        currentQueryParams.set('period', 'tomorrow');
     } else {
+      // Por defecto, ir a la página principal (que maneja "hoy")
       basePath = `/${locale}`;
-      if(currentQueryParams.get('period') === 'tomorrow' && initialActivePeriod !== 'tomorrow'){
-          currentQueryParams.delete('period');
+      // Asegurarse de quitar el parámetro 'period' si no es 'tomorrow'
+      if(currentQueryParams.get('period') && currentQueryParams.get('period') !== 'tomorrow') {
+        currentQueryParams.delete('period');
       }
     }
+
     const newPath = `${basePath}?${currentQueryParams.toString()}`;
     router.push(newPath, { scroll: false });
   };
@@ -649,4 +667,3 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
-
