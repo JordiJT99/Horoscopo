@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
 import type { 
@@ -38,7 +38,7 @@ export function usePersonalizedHoroscope({
 
   const targetDate = date || new Date().toISOString().split('T')[0];
 
-  const fetchPersonalizedHoroscope = async () => {
+  const fetchPersonalizedHoroscope = useCallback(async () => {
     if (!userId || !enabled) {
       setHoroscope(null);
       setLoading(false);
@@ -50,50 +50,17 @@ export function usePersonalizedHoroscope({
 
     try {
       console.log(`🔮 Iniciando carga de horóscopo personalizado para ${userId} - ${sign} - ${targetDate}`);
-
-      // 1. Primero intentar cargar desde Firestore
-      const existingHoroscope = await HoroscopeFirestoreService.loadPersonalizedHoroscope(
-        userId,
-        sign,
-        targetDate,
-        locale
-      );
-
-      if (existingHoroscope) {
-        console.log(`✅ Horóscopo personalizado encontrado en BD para ${userId} - ${sign}`);
-        setHoroscope(existingHoroscope);
-        setLoading(false);
-        return;
-      }
-
-      console.log(`🤖 Generando nuevo horóscopo personalizado para ${userId} - ${sign}`);
-
-      // 2. Si no existe, generar uno nuevo con personalización
+      
       const input: HoroscopeFlowInput = {
         sign: sign,
         locale: locale,
         targetDate: targetDate,
-        onboardingData: personalizationData
-      };
+        onboardingData: personalizationData,
+        userId: userId,
+      } as any;
 
       const result = await getHoroscopeFlow(input);
-
-      if (result && result.daily) {
-        // 3. Guardar el horóscopo personalizado en Firestore
-        await HoroscopeFirestoreService.savePersonalizedHoroscope(
-          userId,
-          sign,
-          targetDate,
-          result.daily,
-          personalizationData,
-          locale
-        );
-
-        console.log(`✅ Horóscopo personalizado generado y guardado para ${userId} - ${sign}`);
-        setHoroscope(result.daily);
-      } else {
-        throw new Error('No se pudo generar el horóscopo personalizado');
-      }
+      setHoroscope(result.daily);
 
     } catch (err) {
       console.error('❌ Error en usePersonalizedHoroscope:', err);
@@ -102,11 +69,11 @@ export function usePersonalizedHoroscope({
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId, sign, locale, targetDate, enabled, JSON.stringify(personalizationData)]);
 
   useEffect(() => {
     fetchPersonalizedHoroscope();
-  }, [userId, sign, locale, targetDate, enabled, JSON.stringify(personalizationData)]);
+  }, [fetchPersonalizedHoroscope]);
 
   const refresh = async () => {
     await fetchPersonalizedHoroscope();

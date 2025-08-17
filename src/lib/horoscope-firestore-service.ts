@@ -6,7 +6,6 @@ import {
   getDoc, 
   getDocs,
   query,
-  where,
   writeBatch,
   orderBy,
   limit,
@@ -60,8 +59,9 @@ export class HoroscopeFirestoreService {
         }
       }
       
-      await setDoc(docRef, firestoreData);
-      console.log(`✅ Horóscopos de ${period} guardados para ${key} (${locale})`);
+      // Corregido: Usar { merge: true } para añadir o actualizar sin sobreescribir el documento completo.
+      await setDoc(docRef, firestoreData, { merge: true });
+      console.log(`✅ Horóscopos de ${period} guardados/actualizados para ${key} (${locale})`);
     } catch (error) {
       console.error(`❌ Error guardando horóscopos de ${period}:`, error);
       throw error;
@@ -207,7 +207,6 @@ export class HoroscopeFirestoreService {
   static async savePersonalizedHoroscope(
     userId: string,
     sign: ZodiacSignName,
-    period: HoroscopePeriod,
     dateKey: string,
     horoscope: HoroscopeDetail,
     personalizationData: HoroscopePersonalizationData,
@@ -215,17 +214,20 @@ export class HoroscopeFirestoreService {
   ): Promise<void> {
     try {
       this.validateFirestore();
-      const docRef = doc(db!, 'horoscopes', 'personalized', userId, period, dateKey, locale, sign);
-      const data: PersonalizedHoroscopeData = {
-        ...horoscope,
-        generatedAt: new Date(),
-        sign: sign,
-        userId: userId,
-        personalizationData: personalizationData,
-        period: period,
+      const docRef = doc(db!, 'horoscopes', 'personalized', userId, 'daily', dateKey);
+      const data: PersonalizedHoroscopeDocument = {
+        [sign]: {
+          ...horoscope,
+          generatedAt: new Date(),
+          sign: sign,
+          userId: userId,
+          personalizationData: personalizationData,
+          period: 'daily',
+        }
       };
-      await setDoc(docRef, data);
-      console.log(`💾 Horóscopo personalizado guardado: ${userId}/${period}/${dateKey}/${sign}`);
+      
+      await setDoc(docRef, data, { merge: true });
+      console.log(`💾 Horóscopo personalizado guardado: ${userId}/daily/${dateKey}/${sign}`);
     } catch (error) {
       console.error('❌ Error guardando horóscopo personalizado:', error);
       throw error;
@@ -235,30 +237,55 @@ export class HoroscopeFirestoreService {
   static async loadPersonalizedHoroscope(
     userId: string,
     sign: ZodiacSignName,
-    period: HoroscopePeriod,
     dateKey: string,
     locale: Locale = 'es'
   ): Promise<HoroscopeDetail | null> {
     try {
       this.validateFirestore();
-      const docRef = doc(db!, 'horoscopes', 'personalized', userId, period, dateKey, locale, sign);
+      const docRef = doc(db!, 'horoscopes', 'personalized', userId, 'daily', dateKey);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
-        console.log(`📅 No hay horóscopo personalizado para ${userId}/${period}/${dateKey}/${sign}`);
+        console.log(`📅 No hay horóscopo personalizado para ${userId}/daily/${dateKey}`);
         return null;
       }
-      const data = docSnap.data() as PersonalizedHoroscopeData;
-      console.log(`✅ Horóscopo personalizado cargado desde BD para ${userId}/${period}/${dateKey}/${sign}`);
+      const data = docSnap.data() as PersonalizedHoroscopeDocument;
+      const signData = data[sign];
+
+      if (!signData) {
+        console.log(`📅 No hay horóscopo para el signo ${sign} en ${userId}/daily/${dateKey}`);
+        return null;
+      }
+      
+      console.log(`✅ Horóscopo personalizado cargado desde BD para ${userId}/daily/${dateKey}/${sign}`);
       return {
-        main: data.main,
-        love: data.love,
-        money: data.money,
-        health: data.health
+        main: signData.main,
+        love: signData.love,
+        money: signData.money,
+        health: signData.health
       };
     } catch (error) {
       console.error('❌ Error cargando horóscopo personalizado:', error);
       throw error;
+    }
+  }
+  
+  static async personalizedHoroscopeExists(
+    userId: string,
+    sign: ZodiacSignName,
+    dateKey: string,
+    locale: Locale = 'es'
+  ): Promise<boolean> {
+     try {
+      this.validateFirestore();
+      const docRef = doc(db!, 'horoscopes', 'personalized', userId, 'daily', dateKey);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) return false;
+      const data = docSnap.data() as PersonalizedHoroscopeDocument;
+      return !!data[sign];
+    } catch (error) {
+      console.error('❌ Error verificando existencia de horóscopo personalizado:', error);
+      return false;
     }
   }
 

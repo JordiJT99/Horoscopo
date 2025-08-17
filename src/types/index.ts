@@ -64,6 +64,7 @@ export interface HoroscopeFlowInput {
   locale: string;
   targetDate?: string; 
   onboardingData?: HoroscopePersonalizationData;
+  userId?: string;
 }
 
 export interface HoroscopeFlowOutput {
@@ -416,11 +417,7 @@ export interface DailyHoroscopeDocument {
   [key: string]: FirestoreHoroscopeData; // key = sign name en minúscula
 }
 
-export interface PersonalizedHoroscopeData {
-  main: string;
-  love: string;
-  money: string;
-  health: string;
+export interface PersonalizedHoroscopeData extends HoroscopeDetail {
   generatedAt: Date;
   sign: ZodiacSignName;
   userId: string;
@@ -429,10 +426,9 @@ export interface PersonalizedHoroscopeData {
 }
 
 export interface PersonalizedHoroscopeDocument {
-  [period: string]: {
-      [dateKey: string]: HoroscopeDetail
-  };
+  [sign: string]: PersonalizedHoroscopeData;
 }
+
 
 export interface HoroscopeGenerationJob {
   id: string;
