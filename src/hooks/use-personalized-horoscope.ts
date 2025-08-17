@@ -51,16 +51,26 @@ export function usePersonalizedHoroscope({
     try {
       console.log(`🔮 Iniciando carga de horóscopo personalizado para ${userId} - ${sign} - ${targetDate}`);
       
-      const input: HoroscopeFlowInput = {
-        sign: sign,
-        locale: locale,
-        targetDate: targetDate,
-        onboardingData: personalizationData,
-        userId: userId,
-      } as any;
+      // Intenta cargar desde Firestore primero
+      const dbHoroscope = await HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, targetDate, locale);
 
-      const result = await getHoroscopeFlow(input);
-      setHoroscope(result.daily);
+      if (dbHoroscope) {
+        console.log(`✅ Horóscopo personalizado cargado desde BD para ${userId}/${targetDate}/${sign}`);
+        setHoroscope(dbHoroscope);
+      } else {
+        console.log(`🤖 Generando nuevo horóscopo personalizado para ${userId}/${targetDate}/${sign}`);
+        const input: HoroscopeFlowInput = {
+          sign: sign,
+          locale: locale,
+          targetDate: targetDate,
+          onboardingData: personalizationData,
+          userId: userId,
+        } as any;
+
+        const result = await getHoroscopeFlow(input);
+        setHoroscope(result.daily);
+        // La lógica de guardado ya está dentro de getHoroscopeFlow
+      }
 
     } catch (err) {
       console.error('❌ Error en usePersonalizedHoroscope:', err);
