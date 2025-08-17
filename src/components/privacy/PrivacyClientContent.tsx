@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { Shield, Trash2, Mail, FileText, Eye, Database, Globe, Users, Lock, AlertTriangle } from 'lucide-react';
+import LoadingSpinner from '../shared/LoadingSpinner';
 
 interface PrivacyClientContentProps {
     dictionary: Dictionary;
@@ -29,25 +30,30 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      // Simular envío - aquí implementarías la lógica real
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast({
-        title: privacyDict.toast?.requestSentTitle || "Request Sent",
-        description: privacyDict.toast?.requestSentDescription || "Your deletion request has been received. We will contact you within 30 days.",
-      });
-      
-      setFormData({ email: '', reason: '', additionalInfo: '' });
-    } catch (error) {
-      toast({
-        title: privacyDict.toast?.errorTitle || "Error",
-        description: privacyDict.toast?.errorDescription || "Could not send request. Please try again.",
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    const subject = encodeURIComponent(privacyDict.deleteRequest?.emailSubject || "Solicitud de Eliminación de Datos de Cuenta - AstroMística");
+    const body = encodeURIComponent(
+        `${privacyDict.deleteRequest?.emailBodyHeader || 'Un usuario ha solicitado la eliminación de su cuenta con los siguientes detalles:'}\n\n` +
+        `Email: ${formData.email}\n` +
+        `Motivo: ${formData.reason}\n\n` +
+        `Información Adicional:\n${formData.additionalInfo || (privacyDict.deleteRequest?.noAdditionalInfo || 'No se proporcionó información adicional.')}`
+    );
+
+    // Create and open the mailto link
+    const mailtoLink = `mailto:jordi.jordi.jordi9@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Using window.open to attempt to trigger the email client
+    window.open(mailtoLink, '_self');
+
+    // Simulate a short delay to allow the mail client to open
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    toast({
+        title: privacyDict.toast?.requestSentTitle || "Abriendo cliente de correo...",
+        description: privacyDict.toast?.requestSentDescription || "Por favor, envía el correo electrónico generado para completar tu solicitud.",
+    });
+
+    setFormData({ email: '', reason: '', additionalInfo: '' });
+    setIsSubmitting(false);
   };
 
   return (
@@ -121,7 +127,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
                 value={formData.reason}
                 onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
                 required
-                className="w-full p-2 bg-black/30 border border-primary/50 rounded-md"
+                className="w-full p-2 bg-black/30 border border-primary/50 rounded-md text-base h-10"
               >
                 <option value="">{privacyDict.deleteRequest?.reasonSelect || "Select a reason"}</option>
                 <option value="no_longer_using">{privacyDict.deleteRequest?.reasonOptions?.no_longer_using || "No longer using the app"}</option>
@@ -154,7 +160,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
               className="w-full bg-red-600 hover:bg-red-700"
             >
               {isSubmitting ? (
-                <>{privacyDict.deleteRequest?.submittingButton || "Sending request..."}</>
+                <><LoadingSpinner className="h-4 w-4 mr-2" />{privacyDict.deleteRequest?.submittingButton || "Sending request..."}</>
               ) : (
                 <><Trash2 className="w-4 h-4 mr-2" />{privacyDict.deleteRequest?.submitButton || "Request Data Deletion"}</>
               )}
