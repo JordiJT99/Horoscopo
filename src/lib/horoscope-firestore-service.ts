@@ -206,14 +206,15 @@ export class HoroscopeFirestoreService {
   static async savePersonalizedHoroscope(
     userId: string,
     sign: ZodiacSignName,
-    dateKey: string,
+    period: HoroscopePeriod,
+    periodKey: string,
     horoscope: HoroscopeDetail,
     personalizationData: HoroscopePersonalizationData,
     locale: Locale = 'es'
   ): Promise<void> {
     try {
       this.validateFirestore();
-      const docPath = `horoscopes/personalized/${dateKey}/${locale}/${sign}/${userId}`;
+      const docPath = `horoscopes/personalized/${periodKey}/${locale}/${sign}/${userId}`;
       const docRef = doc(db!, docPath);
       const data: PersonalizedHoroscopeData = {
           ...horoscope,
@@ -221,7 +222,7 @@ export class HoroscopeFirestoreService {
           sign: sign,
           userId: userId,
           personalizationData: personalizationData,
-          period: 'daily', // Hardcoded for now as only daily is personalized
+          period: period,
       };
       
       await setDoc(docRef, data);
@@ -235,12 +236,13 @@ export class HoroscopeFirestoreService {
   static async loadPersonalizedHoroscope(
     userId: string,
     sign: ZodiacSignName,
-    dateKey: string,
+    period: HoroscopePeriod,
+    periodKey: string,
     locale: Locale = 'es'
   ): Promise<HoroscopeDetail | null> {
     try {
       this.validateFirestore();
-      const docPath = `horoscopes/personalized/${dateKey}/${locale}/${sign}/${userId}`;
+      const docPath = `horoscopes/personalized/${periodKey}/${locale}/${sign}/${userId}`;
       const docRef = doc(db!, docPath);
       const docSnap = await getDoc(docRef);
 
