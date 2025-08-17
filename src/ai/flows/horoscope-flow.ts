@@ -263,9 +263,9 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
   try {
     const loadPromises = isPersonalized
       ? [
-          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, dateKey, locale),
-          // Personalized weekly/monthly logic can be added here if needed in the future
-          // For now, we will generate them with AI if daily is missing
+          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, 'daily', dateKey, locale),
+          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, 'weekly', weekKey, locale),
+          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, 'monthly', monthKey, locale),
         ]
       : [
           HoroscopeFirestoreService.loadHoroscopeForSign(sign, dateKey, locale),
@@ -273,18 +273,11 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
           HoroscopeFirestoreService.loadMonthlyHoroscopeForSign(sign, monthKey, locale),
         ];
 
-    // For personalized, we only check the daily for now to trigger generation.
-    const results = await Promise.all(loadPromises);
-    const dailyFromDB = results[0];
-    const weeklyFromDB = isPersonalized ? null : results[1];
-    const monthlyFromDB = isPersonalized ? null : results[2];
+    const [dailyFromDB, weeklyFromDB, monthlyFromDB] = await Promise.all(loadPromises);
     
-    if (dailyFromDB && (isPersonalized || (weeklyFromDB && monthlyFromDB))) {
-      console.log(`✅ Horóscopos cargados desde Firestore para ${sign}`);
-      // If we have personalized daily, we still need to generate weekly/monthly
-      const weekly = weeklyFromDB || (await weeklyHoroscopePrompt({ sign, locale, isPersonalized })).output || getRandomMockHoroscope('weekly');
-      const monthly = monthlyFromDB || (await monthlyHoroscopePrompt({ sign, locale, isPersonalized })).output || getRandomMockHoroscope('monthly');
-      return { daily: dailyFromDB, weekly, monthly };
+    if (dailyFromDB && weeklyFromDB && monthlyFromDB) {
+      console.log(`✅ Horóscopos cargados desde Firestore para ${sign} - ${dateKey}, ${weekKey}, ${monthKey}`);
+      return { daily: dailyFromDB, weekly: weeklyFromDB, monthly: monthlyFromDB };
     }
 
     console.log(`🤖 Faltan datos en Firestore. Generando nuevos horóscopos con IA para ${sign}.`);
@@ -292,26 +285,36 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
 
     const savePromises = [];
     if (!dailyFromDB) {
+      const data = { [sign]: aiGenerated.daily } as any;
       const promise = isPersonalized
-        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, dateKey, aiGenerated.daily, onboardingData, locale)
-        : HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, { [sign]: aiGenerated.daily } as any, locale);
+        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, 'daily', dateKey, data[sign], onboardingData, locale)
+        : HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, data, locale);
       savePromises.push(promise);
     }
-    // We assume that if daily is missing, weekly/monthly for general might be missing too.
-    if (!isPersonalized) {
-      if(!weeklyFromDB) {
-        savePromises.push(HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, { [sign]: aiGenerated.weekly } as any, locale));
-      }
-      if(!monthlyFromDB) {
-        savePromises.push(HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, { [sign]: aiGenerated.monthly } as any, locale));
-      }
+    if (!weeklyFromDB) {
+      const data = { [sign]: aiGenerated.weekly } as any;
+      const promise = isPersonalized
+        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, 'weekly', weekKey, data[sign], onboardingData, locale)
+        : HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, data, locale);
+      savePromises.push(promise);
+    }
+    if (!monthlyFromDB) {
+      const data = { [sign]: aiGenerated.monthly } as any;
+      const promise = isPersonalized
+        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, 'monthly', monthKey, data[sign], onboardingData, locale)
+        : HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, data, locale);
+      savePromises.push(promise);
     }
     
     await Promise.all(savePromises).catch(error => {
         console.error("❌ Error guardando horóscopos generados en Firestore:", error);
     });
     
-    return aiGenerated;
+    return {
+        daily: dailyFromDB || aiGenerated.daily,
+        weekly: weeklyFromDB || aiGenerated.weekly,
+        monthly: monthlyFromDB || aiGenerated.monthly,
+    };
     
   } catch (error) {
     console.error('❌ Error en getHoroscopeFlow:', error);
