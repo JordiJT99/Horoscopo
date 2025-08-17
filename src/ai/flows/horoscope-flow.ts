@@ -12,9 +12,9 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import type { ZodiacSignName, HoroscopeFlowInput as PublicHoroscopeFlowInput, HoroscopePersonalizationData } from '@/types';
+import type { ZodiacSignName, HoroscopeFlowInput as PublicHoroscopeFlowInput, HoroscopePersonalizationData, Locale } from '@/types';
 import { ALL_SIGN_NAMES } from '@/lib/constants';
-import { format, subDays } from 'date-fns';
+import { format, subDays, getISOWeek, getYear } from 'date-fns';
 import { getRandomMockHoroscope } from '@/lib/mock-horoscopes';
 import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
 
@@ -110,6 +110,7 @@ const dailyHoroscopePrompt = ai.definePrompt({
   name: 'dailyHoroscopePrompt',
   input: { schema: PromptInputSchema },
   output: { schema: HoroscopeDetailSchema },
+  model: 'googleai/gemini-2.0-flash',
   prompt: `Eres un astrólogo experto, empático y perspicaz. Tu tarea es generar un horóscopo DIARIO y completo para el signo zodiacal {{sign}}.
 
 **INSTRUCCIONES CRÍTICAS:**
@@ -144,6 +145,7 @@ const weeklyHoroscopePrompt = ai.definePrompt({
   name: 'weeklyHoroscopePrompt',
   input: { schema: PromptInputSchema }, 
   output: { schema: HoroscopeDetailSchema },
+  model: 'googleai/gemini-2.0-flash',
   prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas de la semana influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo SEMANAL PERSONALIZADO para ESTA SEMANA para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
@@ -173,6 +175,7 @@ const monthlyHoroscopePrompt = ai.definePrompt({
   name: 'monthlyHoroscopePrompt',
   input: { schema: PromptInputSchema }, 
   output: { schema: HoroscopeDetailSchema },
+  model: 'googleai/gemini-2.0-flash',
   prompt: `Eres un astrólogo sabio, empático y perspicaz que revela cómo las energías cósmicas del mes influirán en la vida del usuario.
 {{#if isPersonalized}}
 Genera ÚNICAMENTE el horóscopo MENSUAL PERSONALIZADO para ESTE MES para {{userName}} (signo {{sign}}) en el idioma {{locale}}.
@@ -198,78 +201,110 @@ Ahora genera el horóscopo MENSUAL DETALLADO para {{sign}} en {{locale}} para es
 `,
 });
 
-const horoscopeFlowInternal = ai.defineFlow(
-  {
-    name: 'horoscopeFlowInternal',
-    inputSchema: HoroscopeFlowInputSchemaInternal,
-    outputSchema: HoroscopeFlowOutputSchema,
-  },
-  async (input): Promise<HoroscopeFlowOutput> => {
-    const { sign, locale, targetDate, onboardingData } = input;
-    const isPersonalizedRequest = !!onboardingData?.name;
-    const today = new Date();
-    const dateObj = targetDate ? new Date(targetDate) : today;
-    const dateStr = format(dateObj, 'yyyy-MM-dd');
-    
-    let dateDescriptor = `para la fecha ${dateStr}`;
-    const todayStr = format(today, 'yyyy-MM-dd');
-    const yesterdayStr = format(subDays(today, 1), 'yyyy-MM-dd');
 
-    if (dateStr === todayStr) {
+async function generateHoroscopesWithAI(
+    sign: ZodiacSignName,
+    locale: Locale,
+    targetDate: string,
+    onboardingData?: HoroscopePersonalizationData
+): Promise<HoroscopeFlowOutput> {
+    const isPersonalizedRequest = !!onboardingData?.name;
+    const dateObj = new Date(targetDate);
+    
+    let dateDescriptor = `para la fecha ${targetDate}`;
+    const todayStr = format(new Date(), 'yyyy-MM-dd');
+    const yesterdayStr = format(subDays(new Date(), 1), 'yyyy-MM-dd');
+
+    if (targetDate === todayStr) {
         dateDescriptor = "HOY";
-    } else if (dateStr === yesterdayStr) {
+    } else if (targetDate === yesterdayStr) {
         dateDescriptor = "AYER";
     }
 
-    const theme = getDeterministicTheme(dateStr, sign, dailyThemes);
+    const theme = getDeterministicTheme(targetDate, sign, dailyThemes);
 
     const promptPayload: PromptInput = {
-      sign,
-      locale,
-      dateDescriptor,
-      isPersonalized: isPersonalizedRequest,
-      userName: onboardingData?.name,
-      userGender: onboardingData?.gender,
-      userRelationshipStatus: onboardingData?.relationshipStatus,
-      userEmploymentStatus: onboardingData?.employmentStatus,
-      astrologicalTheme: theme,
+        sign,
+        locale,
+        dateDescriptor,
+        isPersonalized: isPersonalizedRequest,
+        userName: onboardingData?.name,
+        userGender: onboardingData?.gender,
+        userRelationshipStatus: onboardingData?.relationshipStatus,
+        userEmploymentStatus: onboardingData?.employmentStatus,
+        astrologicalTheme: theme,
     };
     
     try {
-      // Usar Promise.all para generar los horóscopos en paralelo
-      const [dailyResult, weeklyResult, monthlyResult] = await Promise.all([
-        dailyHoroscopePrompt(promptPayload),
-        weeklyHoroscopePrompt(promptPayload),
-        monthlyHoroscopePrompt(promptPayload)
-      ]);
+        const [dailyResult, weeklyResult, monthlyResult] = await Promise.all([
+            dailyHoroscopePrompt(promptPayload),
+            weeklyHoroscopePrompt(promptPayload),
+            monthlyHoroscopePrompt(promptPayload)
+        ]);
 
-      const finalOutput: HoroscopeFlowOutput = {
-        daily: dailyResult.output || getRandomMockHoroscope('daily'),
-        weekly: weeklyResult.output || getRandomMockHoroscope('weekly'),
-        monthly: monthlyResult.output || getRandomMockHoroscope('monthly')
-      };
-
-      return finalOutput;
-
+        return {
+            daily: dailyResult.output || getRandomMockHoroscope('daily'),
+            weekly: weeklyResult.output || getRandomMockHoroscope('weekly'),
+            monthly: monthlyResult.output || getRandomMockHoroscope('monthly')
+        };
     } catch (err: any) {
-      console.error(`Error en horoscopeFlowInternal para ${sign} (${locale}):`, err);
-      // Fallback a mocks en caso de error en la API
-      return {
-        daily: getRandomMockHoroscope('daily'),
-        weekly: getRandomMockHoroscope('weekly'),
-        monthly: getRandomMockHoroscope('monthly'),
-      };
+        console.error(`Error en la generación de IA para ${sign} (${locale}):`, err);
+        return {
+            daily: getRandomMockHoroscope('daily'),
+            weekly: getRandomMockHoroscope('weekly'),
+            monthly: getRandomMockHoroscope('monthly'),
+        };
     }
-  }
-);
+}
 
 
 export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise<HoroscopeFlowOutput> {
-  const internalInput: HoroscopeFlowInputInternal = {
-    sign: input.sign,
-    locale: input.locale,
-    targetDate: input.targetDate,
-    onboardingData: input.onboardingData,
-  };
-  return horoscopeFlowInternal(internalInput);
+  const { sign, locale = 'es', targetDate: targetDateStr, onboardingData } = input;
+  
+  const today = new Date();
+  const dateObj = targetDateStr ? new Date(targetDateStr) : today;
+  const dateKey = format(dateObj, 'yyyy-MM-dd');
+  const weekKey = `${getYear(dateObj)}-${getISOWeek(dateObj).toString().padStart(2, '0')}`;
+  const monthKey = format(dateObj, 'yyyy-MM');
+
+  try {
+    const [dailyFromDB, weeklyFromDB, monthlyFromDB] = await Promise.all([
+        HoroscopeFirestoreService.loadHoroscopeForSign(sign, dateKey, locale),
+        HoroscopeFirestoreService.loadWeeklyHoroscopeForSign(sign, weekKey, locale),
+        HoroscopeFirestoreService.loadMonthlyHoroscopeForSign(sign, monthKey, locale),
+    ]);
+    
+    // Si todos los horóscopos para el periodo están en la BD, se devuelven.
+    if (dailyFromDB && weeklyFromDB && monthlyFromDB) {
+      console.log(`✅ Horóscopos cargados desde Firestore para ${sign} - ${dateKey}`);
+      return { daily: dailyFromDB, weekly: weeklyFromDB, monthly: monthlyFromDB };
+    }
+
+    // Si falta alguno, se generan todos de nuevo para asegurar consistencia
+    console.log(`🤖 Generando horóscopos con IA para ${sign} - ${dateKey}`);
+    const aiGenerated = await generateHoroscopesWithAI(sign, locale, dateKey, onboardingData);
+
+    // Guardar en background el que falte o todos si es una nueva generación
+    // Esto es una simplificación, una implementación más robusta solo guardaría los que faltan.
+    if (!dailyFromDB) {
+        HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, { [sign]: aiGenerated.daily } as any, locale).catch(console.error);
+    }
+    if (!weeklyFromDB) {
+        HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, { [sign]: aiGenerated.weekly } as any, locale).catch(console.error);
+    }
+    if (!monthlyFromDB) {
+        HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, { [sign]: aiGenerated.monthly } as any, locale).catch(console.error);
+    }
+    
+    return aiGenerated;
+    
+  } catch (error) {
+    console.error('❌ Error en getHoroscopeFlow:', error);
+    return {
+        daily: getRandomMockHoroscope('daily'),
+        weekly: getRandomMockHoroscope('weekly'),
+        monthly: getRandomMockHoroscope('monthly'),
+    };
+  }
 }
+
