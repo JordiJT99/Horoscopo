@@ -1,4 +1,5 @@
 
+
 'use server';
 /**
  * @fileOverview A Genkit flow to generate horoscopes with caching and mock fallbacks.
@@ -45,16 +46,6 @@ const HoroscopePersonalizationDataSchema = z.object({
   relationshipStatus: z.string().optional().describe('The relationship status of the user.'),
   employmentStatus: z.string().optional().describe('The employment status of the user.'),
 }).optional();
-
-
-// Input schema for the flow itself (internal, matches public but with Zod enum)
-const HoroscopeFlowInputSchemaInternal = z.object({
-  sign: zodSignEnum.describe('The zodiac sign for which to generate the horoscope.'),
-  locale: z.string().describe('The locale (e.g., "en", "es") for the horoscope language.'),
-  targetDate: z.string().optional().describe('Target date for the daily horoscope in YYYY-MM-DD format. If not provided, defaults to today. For weekly/monthly, this is ignored and current period is used.'),
-  onboardingData: HoroscopePersonalizationDataSchema,
-});
-type HoroscopeFlowInputInternal = z.infer<typeof HoroscopeFlowInputSchemaInternal>;
 
 
 // New PromptInputSchema that includes specific fields for personalization
@@ -236,6 +227,7 @@ async function generateHoroscopesWithAI(
     };
     
     try {
+        console.log("🤖 Realizando llamadas a la API de IA para generar horóscopos...");
         const [dailyResult, weeklyResult, monthlyResult] = await Promise.all([
             dailyHoroscopePrompt(promptPayload),
             weeklyHoroscopePrompt(promptPayload),
@@ -248,7 +240,7 @@ async function generateHoroscopesWithAI(
             monthly: monthlyResult.output || getRandomMockHoroscope('monthly')
         };
     } catch (err: any) {
-        console.error(`Error en la generación de IA para ${sign} (${locale}):`, err);
+        console.error(`❌ Error en la generación de IA para ${sign} (${locale}):`, err);
         return {
             daily: getRandomMockHoroscope('daily'),
             weekly: getRandomMockHoroscope('weekly'),
@@ -274,27 +266,28 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
         HoroscopeFirestoreService.loadMonthlyHoroscopeForSign(sign, monthKey, locale),
     ]);
     
-    // Si todos los horóscopos para el periodo están en la BD, se devuelven.
     if (dailyFromDB && weeklyFromDB && monthlyFromDB) {
-      console.log(`✅ Horóscopos cargados desde Firestore para ${sign} - ${dateKey}`);
+      console.log(`✅ Horóscopos cargados desde Firestore para ${sign} - ${dateKey}, ${weekKey}, ${monthKey}`);
       return { daily: dailyFromDB, weekly: weeklyFromDB, monthly: monthlyFromDB };
     }
 
-    // Si falta alguno, se generan todos de nuevo para asegurar consistencia
-    console.log(`🤖 Generando horóscopos con IA para ${sign} - ${dateKey}`);
+    console.log(`🤖 Faltan datos en Firestore. Generando nuevos horóscopos con IA para ${sign}.`);
     const aiGenerated = await generateHoroscopesWithAI(sign, locale, dateKey, onboardingData);
 
-    // Guardar en background el que falte o todos si es una nueva generación
-    // Esto es una simplificación, una implementación más robusta solo guardaría los que faltan.
+    const savePromises = [];
     if (!dailyFromDB) {
-        HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, { [sign]: aiGenerated.daily } as any, locale).catch(console.error);
+        savePromises.push(HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, { [sign]: aiGenerated.daily } as any, locale));
     }
     if (!weeklyFromDB) {
-        HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, { [sign]: aiGenerated.weekly } as any, locale).catch(console.error);
+        savePromises.push(HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, { [sign]: aiGenerated.weekly } as any, locale));
     }
     if (!monthlyFromDB) {
-        HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, { [sign]: aiGenerated.monthly } as any, locale).catch(console.error);
+        savePromises.push(HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, { [sign]: aiGenerated.monthly } as any, locale));
     }
+    
+    await Promise.all(savePromises).catch(error => {
+        console.error("❌ Error guardando horóscopos generados en Firestore:", error);
+    });
     
     return aiGenerated;
     
@@ -307,4 +300,3 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
     };
   }
 }
-
