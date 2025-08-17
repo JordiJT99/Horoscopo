@@ -4,6 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { getCapacitorInfo, capacitorFetch } from '@/lib/capacitor-utils';
+import type { EmailComposerPlugin, SendOptions } from '@capacitor-community/email-composer';
 
 interface CapacitorState {
   isCapacitor: boolean;
@@ -27,7 +28,6 @@ export const useCapacitor = () => {
       try {
         const info = getCapacitorInfo();
         
-        // Test write permissions
         let hasWritePermissions = true;
         try {
           if (typeof window !== 'undefined') {
@@ -71,39 +71,48 @@ export const useCapacitor = () => {
   };
 
   const showToast = async (message: string) => {
-    if (state.isCapacitor && window.Capacitor) {
+    if (state.isCapacitor && (window as any).Capacitor?.Plugins?.Toast) {
       try {
-        // Intentar usar Toast plugin si está disponible
-        if ((window as any).CapacitorToast) {
-          await (window as any).CapacitorToast.show({
-            text: message,
-            duration: 'short',
-            position: 'bottom'
-          });
-        } else {
-          console.log(`📱 Capacitor Toast: ${message}`);
-        }
+        await (window as any).Capacitor.Plugins.Toast.show({
+          text: message,
+          duration: 'short',
+          position: 'bottom'
+        });
       } catch (error) {
-        console.log('📄 Toast plugin not available, using fallback');
+        console.warn('Toast plugin not available, using console log fallback.');
         console.log(`📱 Toast: ${message}`);
       }
     } else {
-      // Fallback para web
       console.log(`💬 Toast: ${message}`);
     }
   };
 
   const openUrl = async (url: string) => {
-    if (state.isCapacitor && window.Capacitor) {
-      try {
-        // Intentar usar Browser plugin si está disponible
-        if ((window as any).CapacitorBrowser) {
-          await (window as any).CapacitorBrowser.open({ url });
-        } else {
-          window.open(url, '_system');
+    if (state.isCapacitor && url.startsWith('mailto:')) {
+      const emailComposer = (window as any).Capacitor?.Plugins?.EmailComposer as EmailComposerPlugin | undefined;
+      if (emailComposer) {
+        try {
+          const params = new URLSearchParams(url.split('?')[1]);
+          const options: SendOptions = {
+            to: [url.substring(7).split('?')[0]],
+            subject: params.get('subject') || '',
+            body: params.get('body') || '',
+            isHtml: false
+          };
+          await emailComposer.open(options);
+        } catch (error) {
+           console.error('❌ Error opening email client via Capacitor:', error);
+           window.open(url, '_system'); // Fallback to system open
         }
+      } else {
+         console.warn('EmailComposer plugin not found, trying system open.');
+         window.open(url, '_system');
+      }
+    } else if (state.isCapacitor && (window as any).Capacitor?.Plugins?.Browser) {
+      try {
+        await (window as any).Capacitor.Plugins.Browser.open({ url });
       } catch (error) {
-        console.error('❌ Error opening URL in Capacitor:', error);
+        console.error('❌ Error opening URL in Capacitor Browser:', error);
         window.open(url, '_blank');
       }
     } else {
@@ -118,3 +127,14 @@ export const useCapacitor = () => {
     openUrl
   };
 };
+
+// Declaraciones globales para TypeScript
+declare global {
+  interface Window {
+    Capacitor?: any;
+    CapacitorHttp?: any;
+    CapacitorCookies?: any;
+    CapacitorToast?: any;
+    CapacitorBrowser?: any;
+  }
+}
