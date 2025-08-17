@@ -9,7 +9,6 @@ import { useAuth } from '@/context/AuthContext';
 import type { OnboardingFormData, ZodiacSign, HoroscopeDetail, ZodiacSignName, HoroscopeFlowOutput, HoroscopePersonalizationData, UserAstrologyProfile } from '@/types';
 import { getSunSignFromDate, ZODIAC_SIGNS, WorkIcon, getMoonSign, getAscendantSign } from '@/lib/constants';
 import { getHoroscopeFlow, type HoroscopeFlowInput } from '@/ai/flows/horoscope-flow';
-import { useHoroscopeFromDB } from '@/hooks/use-horoscope-from-db';
 import { usePersonalizedHoroscope } from '@/hooks/use-personalized-horoscope';
 import { motion, type PanInfo } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
@@ -32,6 +31,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import AdBanner from '@/components/shared/AdBanner';
 import React from 'react';
+import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
 
 
 interface AstroVibesPageContentProps {
@@ -87,41 +87,27 @@ export default function AstroVibesHomePageContent({
     return ZODIAC_SIGNS.find(s => s.name === selectedDisplaySignName) || ZODIAC_SIGNS.find(s => s.name === "Capricorn")!;
   }, [selectedDisplaySignName]);
 
-  const { displayPeriod, targetDate } = useMemo(() => {
+  const { displayPeriod, targetDate, weekKey, monthKey } = useMemo(() => {
     const now = new Date();
     switch (initialActivePeriod) {
-      case 'yesterday': return { displayPeriod: 'daily' as const, targetDate: format(subDays(now, 1), 'yyyy-MM-dd') };
-      case 'tomorrow': return { displayPeriod: 'daily' as const, targetDate: format(addDays(now, 1), 'yyyy-MM-dd') };
-      case 'weekly': return { displayPeriod: 'weekly' as const, targetDate: format(now, 'yyyy-MM-dd') };
-      case 'monthly': return { displayPeriod: 'monthly' as const, targetDate: format(now, 'yyyy-MM-dd') };
+      case 'yesterday': return { displayPeriod: 'daily' as const, targetDate: format(subDays(now, 1), 'yyyy-MM-dd'), weekKey: '', monthKey: '' };
+      case 'tomorrow': return { displayPeriod: 'daily' as const, targetDate: format(addDays(now, 1), 'yyyy-MM-dd'), weekKey: '', monthKey: '' };
+      case 'weekly': return { displayPeriod: 'weekly' as const, targetDate: format(now, 'yyyy-MM-dd'), weekKey: `${format(now, 'yyyy')}-${format(now, 'ww')}`, monthKey: '' };
+      case 'monthly': return { displayPeriod: 'monthly' as const, targetDate: format(now, 'yyyy-MM-dd'), weekKey: '', monthKey: format(now, 'yyyy-MM') };
       case 'today':
       default:
-        return { displayPeriod: 'daily' as const, targetDate: format(now, 'yyyy-MM-dd') };
+        return { displayPeriod: 'daily' as const, targetDate: format(now, 'yyyy-MM-dd'), weekKey: '', monthKey: '' };
     }
   }, [initialActivePeriod]);
-
-  // Hook para cargar horóscopos desde la base de datos (activará generación automática)
-  const { 
-    horoscope: dailyHoroscopeFromDB, 
-    loading: dailyDBLoading, 
-    error: dailyDBError 
-  } = useHoroscopeFromDB({
-    sign: selectedDisplaySignName,
-    locale,
-    date: targetDate
-  });
 
   // Hook para cargar horóscopos personalizados (solo cuando el usuario está viendo su propio signo)
   const shouldUsePersonalized = useMemo(() => {
     const hasUser = !!(user?.uid);
-    const isPersonalizedActive = isPersonalizedRequestActive;
     const hasUserSunSign = !!userSunSign;
     const isViewingOwnSign = selectedDisplaySignName === userSunSign?.name;
     const hasOnboardingData = !!onboardingData;
     
-    const result = hasUser && isPersonalizedActive && hasUserSunSign && isViewingOwnSign && hasOnboardingData;
-    
-    return result;
+    return hasUser && isPersonalizedRequestActive && hasUserSunSign && isViewingOwnSign && hasOnboardingData;
   }, [user?.uid, isPersonalizedRequestActive, userSunSign, selectedDisplaySignName, onboardingData]);
 
   const personalizationData = useMemo(() => {
@@ -133,41 +119,7 @@ export default function AstroVibesHomePageContent({
       employmentStatus: onboardingData.employmentStatus,
     };
   }, [onboardingData]);
-
-  // Generar o recuperar userId para usuarios anónimos
-  const getAnonymousUserId = useCallback(() => {
-    if (user?.uid) return user.uid;
-    
-    const storageKey = 'anonymous_user_id';
-    let anonymousId = '';
-    
-    if (typeof window !== 'undefined') {
-      anonymousId = localStorage.getItem(storageKey) || '';
-      if (!anonymousId) {
-        anonymousId = `anon_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        localStorage.setItem(storageKey, anonymousId);
-      }
-    } else {
-      // Fallback para SSR
-      anonymousId = `anon_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    }
-    
-    return anonymousId;
-  }, [user?.uid]);
-
-  const { 
-    horoscope: personalizedHoroscope, 
-    loading: personalizedLoading, 
-    error: personalizedError 
-  } = usePersonalizedHoroscope({
-    userId: getAnonymousUserId(),
-    sign: selectedDisplaySignName,
-    locale,
-    date: targetDate,
-    personalizationData: personalizationData,
-    enabled: shouldUsePersonalized && displayPeriod === 'daily' // Solo para horóscopos diarios
-  });
-
+  
   const [fullHoroscopeData, setFullHoroscopeData] = useState<HoroscopeFlowOutput | null>(null);
   const [currentDisplayHoroscope, setCurrentDisplayHoroscope] = useState<HoroscopeDetail | null>(null);
   const [isHoroscopeLoading, setIsHoroscopeLoading] = useState(true);
@@ -203,8 +155,8 @@ export default function AstroVibesHomePageContent({
                 const sunSign = parsedData.dateOfBirth ? getSunSignFromDate(parsedData.dateOfBirth) : null;
                 setUserSunSign(sunSign);
                 if (sunSign) {
-                    determinedInitialSign = sunSign.name;
                     if (!signFromUrl || personalizedFromUrl) {
+                        determinedInitialSign = sunSign.name;
                         initiallyPersonalized = true;
                     }
                 }
@@ -234,32 +186,27 @@ export default function AstroVibesHomePageContent({
     setSelectedDisplaySignName(determinedInitialSign);
     setIsPersonalizedRequestActive(initiallyPersonalized);
 
-  }, [user, authLoading, searchParams, userSunSign]);
+  }, [user, authLoading, searchParams]);
 
   // Main effect for fetching all horoscope data (daily, weekly, monthly)
   const fetchFullHoroscope = useCallback(async () => {
-    // Set loading state immediately to show skeletons
     setIsHoroscopeLoading(true);
     setFullHoroscopeData(null);
     setCurrentDisplayHoroscope(null);
 
-    const isPersonalized = shouldUsePersonalized;
-    const input: HoroscopeFlowInput = {
-      sign: selectedDisplaySignName,
-      locale,
-      targetDate: targetDate, // Use the date relevant to the current view
-      onboardingData: isPersonalized ? personalizationData : undefined,
-      userId: isPersonalized ? getAnonymousUserId() : undefined,
-    };
-
     try {
-      const result = await getHoroscopeFlow(input);
-      setFullHoroscopeData(result);
-      
-      if (user?.uid) {
-          addEnergyPoints('read_daily_horoscope', 5);
-      }
+      const result = await getHoroscopeFlow({
+        sign: selectedDisplaySignName,
+        locale,
+        targetDate: targetDate,
+        onboardingData: shouldUsePersonalized ? personalizationData : undefined,
+        userId: shouldUsePersonalized ? user!.uid : undefined,
+      });
 
+      setFullHoroscopeData(result);
+      if (user?.uid) {
+        addEnergyPoints('read_daily_horoscope', 5);
+      }
     } catch (err) {
       console.error("Error fetching horoscope data from flow:", err);
       setFullHoroscopeData(null);
@@ -273,7 +220,7 @@ export default function AstroVibesHomePageContent({
     } finally {
       setIsHoroscopeLoading(false);
     }
-  }, [selectedDisplaySignName, locale, targetDate, shouldUsePersonalized, JSON.stringify(personalizationData), getAnonymousUserId, dictionary, toast, addEnergyPoints, user?.uid]);
+  }, [selectedDisplaySignName, locale, targetDate, shouldUsePersonalized, user?.uid, JSON.stringify(personalizationData), dictionary, toast, addEnergyPoints]);
 
 
   useEffect(() => {
@@ -290,32 +237,23 @@ export default function AstroVibesHomePageContent({
 
 
   const handleSubHeaderTabSelect = (tab: HoroscopePeriod) => {
-    let currentSignParam = searchParams.get('sign');
-    if (isPersonalizedRequestActive && userSunSign) {
-      currentSignParam = userSunSign.name;
-    } else {
-      currentSignParam = selectedDisplaySignName;
+    let currentSignParam = isPersonalizedRequestActive && userSunSign ? userSunSign.name : selectedDisplaySignName;
+
+    const queryParams = new URLSearchParams();
+    queryParams.set('sign', currentSignParam);
+    if (isPersonalizedRequestActive) {
+      queryParams.set('personalized', 'true');
     }
 
     let newPath = '';
-    const queryParams = new URLSearchParams();
-    
-    if (currentSignParam) {
-        queryParams.set('sign', currentSignParam);
-    }
-    
-    if (isPersonalizedRequestActive) {
-        queryParams.set('personalized', 'true');
-    }
-
     if (tab === 'yesterday') {
       newPath = `/${locale}/yesterday-horoscope`;
     } else if (tab === 'weekly') {
       newPath = `/${locale}/weekly-horoscope`;
     } else if (tab === 'monthly') {
       newPath = `/${locale}/monthly-horoscope`;
-    } else { 
-      newPath = `/${locale}`; 
+    } else {
+      newPath = `/${locale}/`;
       if (tab === 'tomorrow') {
         queryParams.set('period', 'tomorrow');
       }
@@ -324,23 +262,20 @@ export default function AstroVibesHomePageContent({
   };
 
   const handleSignSelectedFromScroll = (sign: ZodiacSign, isItAUserProfileClick: boolean = false) => {
-    // Limpiar datos y activar estado de carga ANTES de hacer nada más.
     setIsHoroscopeLoading(true);
     setFullHoroscopeData(null);
     setCurrentDisplayHoroscope(null);
 
     setSelectedDisplaySignName(sign.name);
-    setIsPersonalizedRequestActive(isItAUserProfileClick); 
+    setIsPersonalizedRequestActive(isItAUserProfileClick);
 
-    const currentQueryParams = new URLSearchParams();
-    currentQueryParams.set('sign', sign.name);
-    
+    const queryParams = new URLSearchParams();
+    queryParams.set('sign', sign.name);
     if (isItAUserProfileClick) {
-      currentQueryParams.set('personalized', 'true');
+      queryParams.set('personalized', 'true');
     }
-    
-    // Al cambiar de signo, siempre redirigir a la página principal (horóscopo de hoy)
-    const newPath = `/${locale}?${currentQueryParams.toString()}`;
+
+    const newPath = `/${locale}/?${queryParams.toString()}`;
     router.push(newPath, { scroll: false });
   };
   
@@ -534,7 +469,7 @@ export default function AstroVibesHomePageContent({
               dictionary={dictionary}
               locale={locale}
               selectedSign={selectedDisplaySign}
-              isPersonalized={isPersonalizedRequestActive && !!user}
+              isPersonalized={shouldUsePersonalized}
               userProfile={userAstrologyProfile}
             />
           </motion.div>
@@ -575,7 +510,7 @@ export default function AstroVibesHomePageContent({
               )}>
                 <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6 mr-1.5 sm:mr-2 text-muted-foreground" />
                 {dictionary[pageTitleKey] || "Horoscope Details"}
-                 {isPersonalizedRequestActive && userSunSign?.name === selectedDisplaySignName && onboardingData?.name && (
+                 {shouldUsePersonalized && onboardingData?.name && (
                   <span className={cn("text-base sm:text-lg text-primary ml-1.5")}>({onboardingData.name})</span>
                 )}
               </h2>
@@ -643,3 +578,4 @@ export default function AstroVibesHomePageContent({
     </div>
   );
 }
+
