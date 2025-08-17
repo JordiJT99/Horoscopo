@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { Shield, Trash2, Mail, FileText, Eye, Database, Globe, Users, Lock, AlertTriangle } from 'lucide-react';
 import LoadingSpinner from '../shared/LoadingSpinner';
+import { useCapacitor } from '@/hooks/use-capacitor';
 
 interface PrivacyClientContentProps {
     dictionary: Dictionary;
@@ -23,6 +24,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
     reason: '',
     additionalInfo: ''
   });
+  const { openUrl } = useCapacitor();
   
   const privacyDict = dictionary.PrivacyPolicy || {};
 
@@ -38,14 +40,13 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
         `Información Adicional:\n${formData.additionalInfo || (privacyDict.deleteRequest?.noAdditionalInfo || 'No se proporcionó información adicional.')}`
     );
 
-    // Create and open the mailto link
     const mailtoLink = `mailto:jordi.jordi.jordi9@gmail.com?subject=${subject}&body=${body}`;
     
-    // Using window.open to attempt to trigger the email client
-    window.open(mailtoLink, '_self');
+    // Usar la función openUrl del hook para compatibilidad con Capacitor
+    await openUrl(mailtoLink);
 
     // Simulate a short delay to allow the mail client to open
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     toast({
         title: privacyDict.toast?.requestSentTitle || "Abriendo cliente de correo...",
