@@ -251,20 +251,29 @@ async function generateHoroscopesWithAI(
 
 
 export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise<HoroscopeFlowOutput> {
-  const { sign, locale = 'es', targetDate: targetDateStr, onboardingData } = input;
+  const { sign, locale = 'es', targetDate: targetDateStr, onboardingData, userId } = input as any;
   
   const today = new Date();
   const dateObj = targetDateStr ? new Date(targetDateStr) : today;
   const dateKey = format(dateObj, 'yyyy-MM-dd');
   const weekKey = `${getYear(dateObj)}-${getISOWeek(dateObj).toString().padStart(2, '0')}`;
   const monthKey = format(dateObj, 'yyyy-MM');
+  const isPersonalized = !!(userId && onboardingData);
 
   try {
-    const [dailyFromDB, weeklyFromDB, monthlyFromDB] = await Promise.all([
-        HoroscopeFirestoreService.loadHoroscopeForSign(sign, dateKey, locale),
-        HoroscopeFirestoreService.loadWeeklyHoroscopeForSign(sign, weekKey, locale),
-        HoroscopeFirestoreService.loadMonthlyHoroscopeForSign(sign, monthKey, locale),
-    ]);
+    const loadPromises = isPersonalized
+      ? [
+          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, 'daily', dateKey, locale),
+          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, 'weekly', weekKey, locale),
+          HoroscopeFirestoreService.loadPersonalizedHoroscope(userId, sign, 'monthly', monthKey, locale),
+        ]
+      : [
+          HoroscopeFirestoreService.loadHoroscopeForSign(sign, dateKey, locale),
+          HoroscopeFirestoreService.loadWeeklyHoroscopeForSign(sign, weekKey, locale),
+          HoroscopeFirestoreService.loadMonthlyHoroscopeForSign(sign, monthKey, locale),
+        ];
+
+    const [dailyFromDB, weeklyFromDB, monthlyFromDB] = await Promise.all(loadPromises);
     
     if (dailyFromDB && weeklyFromDB && monthlyFromDB) {
       console.log(`✅ Horóscopos cargados desde Firestore para ${sign} - ${dateKey}, ${weekKey}, ${monthKey}`);
@@ -276,13 +285,25 @@ export async function getHoroscopeFlow(input: PublicHoroscopeFlowInput): Promise
 
     const savePromises = [];
     if (!dailyFromDB) {
-        savePromises.push(HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, { [sign]: aiGenerated.daily } as any, locale));
+      const data = { [sign]: aiGenerated.daily } as any;
+      const promise = isPersonalized
+        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, 'daily', dateKey, data[sign], onboardingData, locale)
+        : HoroscopeFirestoreService.saveDailyHoroscopes(dateKey, data, locale);
+      savePromises.push(promise);
     }
     if (!weeklyFromDB) {
-        savePromises.push(HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, { [sign]: aiGenerated.weekly } as any, locale));
+      const data = { [sign]: aiGenerated.weekly } as any;
+      const promise = isPersonalized
+        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, 'weekly', weekKey, data[sign], onboardingData, locale)
+        : HoroscopeFirestoreService.saveWeeklyHoroscopes(weekKey, data, locale);
+      savePromises.push(promise);
     }
     if (!monthlyFromDB) {
-        savePromises.push(HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, { [sign]: aiGenerated.monthly } as any, locale));
+      const data = { [sign]: aiGenerated.monthly } as any;
+      const promise = isPersonalized
+        ? HoroscopeFirestoreService.savePersonalizedHoroscope(userId, sign, 'monthly', monthKey, data[sign], onboardingData, locale)
+        : HoroscopeFirestoreService.saveMonthlyHoroscopes(monthKey, data, locale);
+      savePromises.push(promise);
     }
     
     await Promise.all(savePromises).catch(error => {

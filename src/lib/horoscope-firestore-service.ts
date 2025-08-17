@@ -207,14 +207,15 @@ export class HoroscopeFirestoreService {
   static async savePersonalizedHoroscope(
     userId: string,
     sign: ZodiacSignName,
-    dateKey: string,
+    period: HoroscopePeriod,
+    key: string,
     horoscope: HoroscopeDetail,
     personalizationData: HoroscopePersonalizationData,
     locale: Locale = 'es'
   ): Promise<void> {
     try {
       this.validateFirestore();
-      const docRef = doc(db!, 'horoscopes', 'personalized', userId, 'daily', dateKey);
+      const docRef = doc(db!, 'horoscopes', 'personalized', userId, period, key);
       const data: PersonalizedHoroscopeDocument = {
         [sign]: {
           ...horoscope,
@@ -222,12 +223,12 @@ export class HoroscopeFirestoreService {
           sign: sign,
           userId: userId,
           personalizationData: personalizationData,
-          period: 'daily',
+          period: period,
         }
       };
       
       await setDoc(docRef, data, { merge: true });
-      console.log(`💾 Horóscopo personalizado guardado: ${userId}/daily/${dateKey}/${sign}`);
+      console.log(`💾 Horóscopo personalizado guardado: ${userId}/${period}/${key}/${sign}`);
     } catch (error) {
       console.error('❌ Error guardando horóscopo personalizado:', error);
       throw error;
@@ -237,27 +238,28 @@ export class HoroscopeFirestoreService {
   static async loadPersonalizedHoroscope(
     userId: string,
     sign: ZodiacSignName,
-    dateKey: string,
+    period: HoroscopePeriod,
+    key: string,
     locale: Locale = 'es'
   ): Promise<HoroscopeDetail | null> {
     try {
       this.validateFirestore();
-      const docRef = doc(db!, 'horoscopes', 'personalized', userId, 'daily', dateKey);
+      const docRef = doc(db!, 'horoscopes', 'personalized', userId, period, key);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
-        console.log(`📅 No hay horóscopo personalizado para ${userId}/daily/${dateKey}`);
+        console.log(`📅 No hay horóscopo personalizado para ${userId}/${period}/${key}`);
         return null;
       }
       const data = docSnap.data() as PersonalizedHoroscopeDocument;
       const signData = data[sign];
 
       if (!signData) {
-        console.log(`📅 No hay horóscopo para el signo ${sign} en ${userId}/daily/${dateKey}`);
+        console.log(`📅 No hay horóscopo para el signo ${sign} en ${userId}/${period}/${key}`);
         return null;
       }
       
-      console.log(`✅ Horóscopo personalizado cargado desde BD para ${userId}/daily/${dateKey}/${sign}`);
+      console.log(`✅ Horóscopo personalizado cargado desde BD para ${userId}/${period}/${key}/${sign}`);
       return {
         main: signData.main,
         love: signData.love,
