@@ -401,6 +401,8 @@ export interface AchievementData {
 // FIRESTORE HOROSCOPE TYPES
 // ==========================================
 
+export type HoroscopePeriod = 'daily' | 'weekly' | 'monthly';
+
 export interface FirestoreHoroscopeData {
   main: string;
   love: string;
@@ -423,13 +425,14 @@ export interface PersonalizedHoroscopeData {
   sign: ZodiacSignName;
   userId: string;
   personalizationData: HoroscopePersonalizationData;
+  period: HoroscopePeriod;
 }
 
 export interface PersonalizedHoroscopeDocument {
-  [userId: string]: PersonalizedHoroscopeData;
+  [period: string]: {
+      [dateKey: string]: HoroscopeDetail
+  };
 }
-
-export type HoroscopePeriod = 'daily' | 'weekly' | 'monthly';
 
 export interface HoroscopeGenerationJob {
   id: string;
