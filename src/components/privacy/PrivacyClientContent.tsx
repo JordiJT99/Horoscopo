@@ -109,7 +109,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary" />
                 <span className="text-sm font-mono bg-black/30 px-2 py-1 rounded">
-                  astromistica.horoscopes@gmail.com
+                  jordi.jordi.jordi9@gmail.com
                 </span>
               </div>
             </div>
@@ -118,13 +118,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
             </p>
           </div>
           
-          <Button 
-            onClick={handleContactEmail}
-            className="w-full bg-red-600 hover:bg-red-700"
-          >
-            <Mail className="w-4 h-4 mr-2" />
-            {privacyDict.deleteRequest?.contactButton || "Contact Us for Data Deletion"}
-          </Button>
+        
         </CardContent>
       </Card>
 
