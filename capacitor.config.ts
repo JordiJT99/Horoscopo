@@ -51,6 +51,10 @@ const config: CapacitorConfig = {
     AdMob: {
       appId: 'ca-app-pub-1601092077557933~8388042665',
       testMode: true  // Producción: false para anuncios reales
+    },
+    GooglePlayBilling: {
+      connectOnStart: true,
+      enablePendingPurchases: true
     }
   }
 };
