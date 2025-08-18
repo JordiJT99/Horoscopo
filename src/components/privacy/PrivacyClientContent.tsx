@@ -24,37 +24,26 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
     reason: '',
     additionalInfo: ''
   });
-  const { openUrl } = useCapacitor();
+  const { openUrl, isCapacitor } = useCapacitor();
   
   const privacyDict = dictionary.PrivacyPolicy || {};
 
-  const handleDeleteRequest = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const subject = encodeURIComponent(privacyDict.deleteRequest?.emailSubject || "Solicitud de Eliminación de Datos de Cuenta - AstroMística");
-    const body = encodeURIComponent(
-        `${privacyDict.deleteRequest?.emailBodyHeader || 'Un usuario ha solicitado la eliminación de su cuenta con los siguientes detalles:'}\n\n` +
-        `Email: ${formData.email}\n` +
-        `Motivo: ${formData.reason}\n\n` +
-        `Información Adicional:\n${formData.additionalInfo || (privacyDict.deleteRequest?.noAdditionalInfo || 'No se proporcionó información adicional.')}`
-    );
-
-    const mailtoLink = `mailto:jordi.jordi.jordi9@gmail.com?subject=${subject}&body=${body}`;
+  const handleContactEmail = () => {
+    const email = 'jordi.jordi.jordi9@gmail.com';
+    const subject = encodeURIComponent(privacyDict.deleteRequest?.emailSubject || "Solicitud de Eliminación de Datos - AstroMística");
     
-    // Usar la función openUrl del hook para compatibilidad con Capacitor
-    await openUrl(mailtoLink);
-
-    // Simulate a short delay to allow the mail client to open
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    toast({
-        title: privacyDict.toast?.requestSentTitle || "Abriendo cliente de correo...",
-        description: privacyDict.toast?.requestSentDescription || "Por favor, envía el correo electrónico generado para completar tu solicitud.",
-    });
-
-    setFormData({ email: '', reason: '', additionalInfo: '' });
-    setIsSubmitting(false);
+    if (isCapacitor) {
+      // En móvil: mostrar instrucciones claras
+      toast({
+        title: privacyDict.deleteRequest?.contactTitle || "Contacto para Eliminación de Datos",
+        description: `${privacyDict.deleteRequest?.contactInstructions || "Envía un correo a:"} ${email}`,
+        duration: 5000,
+      });
+    } else {
+      // En web: abrir cliente de correo
+      const mailtoLink = `mailto:${email}?subject=${subject}`;
+      window.open(mailtoLink, '_blank');
+    }
   };
 
   return (
@@ -106,67 +95,36 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
             {privacyDict.deleteRequest?.description || "Request the complete deletion of your account and all associated data."}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleDeleteRequest} className="space-y-4">
-            <div>
-              <Label htmlFor="email">{privacyDict.deleteRequest?.emailLabel || "Account Email"}</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="your-email@example.com"
-                required
-                className="bg-black/30 border-primary/50"
-              />
+        <CardContent className="space-y-4">
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <p className="text-red-400 text-sm" dangerouslySetInnerHTML={{ __html: privacyDict.deleteRequest?.warning || "<strong>Warning:</strong> This action will permanently delete your account and all associated data. This process cannot be undone. We will process your request within 30 days."}} />
+          </div>
+          
+          <div className="bg-card/50 border border-primary/30 rounded-lg p-4 space-y-3">
+            <h4 className="text-primary font-medium">Contact Information</h4>
+            <p className="text-sm text-card-foreground/80">
+              To request data deletion, please contact us at:
+            </p>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-primary" />
+                <span className="text-sm font-mono bg-black/30 px-2 py-1 rounded">
+                  astromistica.horoscopes@gmail.com
+                </span>
+              </div>
             </div>
-            
-            <div>
-              <Label htmlFor="reason">{privacyDict.deleteRequest?.reasonLabel || "Reason for Deletion"}</Label>
-              <select
-                id="reason"
-                value={formData.reason}
-                onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                required
-                className="w-full p-2 bg-black/30 border border-primary/50 rounded-md text-base h-10"
-              >
-                <option value="">{privacyDict.deleteRequest?.reasonSelect || "Select a reason"}</option>
-                <option value="no_longer_using">{privacyDict.deleteRequest?.reasonOptions?.no_longer_using || "No longer using the app"}</option>
-                <option value="privacy_concerns">{privacyDict.deleteRequest?.reasonOptions?.privacy_concerns || "Privacy concerns"}</option>
-                <option value="found_alternative">{privacyDict.deleteRequest?.reasonOptions?.found_alternative || "Found an alternative"}</option>
-                <option value="technical_issues">{privacyDict.deleteRequest?.reasonOptions?.technical_issues || "Technical issues"}</option>
-                <option value="other">{privacyDict.deleteRequest?.reasonOptions?.other || "Other"}</option>
-              </select>
-            </div>
-            
-            <div>
-              <Label htmlFor="additionalInfo">{privacyDict.deleteRequest?.additionalInfoLabel || "Additional Info (Optional)"}</Label>
-              <Textarea
-                id="additionalInfo"
-                value={formData.additionalInfo}
-                onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
-                placeholder={privacyDict.deleteRequest?.additionalInfoPlaceholder || "Provide more details if you wish..."}
-                className="bg-black/30 border-primary/50"
-                rows={4}
-              />
-            </div>
-            
-            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-              <p className="text-red-400 text-sm" dangerouslySetInnerHTML={{ __html: privacyDict.deleteRequest?.warning || "<strong>Warning:</strong> This action will permanently delete your account and all associated data. This process cannot be undone. We will process your request within 30 days."}} />
-            </div>
-            
-            <Button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="w-full bg-red-600 hover:bg-red-700"
-            >
-              {isSubmitting ? (
-                <><LoadingSpinner className="h-4 w-4 mr-2" />{privacyDict.deleteRequest?.submittingButton || "Sending request..."}</>
-              ) : (
-                <><Trash2 className="w-4 h-4 mr-2" />{privacyDict.deleteRequest?.submitButton || "Request Data Deletion"}</>
-              )}
-            </Button>
-          </form>
+            <p className="text-xs text-card-foreground/60">
+              Include your account email and reason for deletion in your message.
+            </p>
+          </div>
+          
+          <Button 
+            onClick={handleContactEmail}
+            className="w-full bg-red-600 hover:bg-red-700"
+          >
+            <Mail className="w-4 h-4 mr-2" />
+            {privacyDict.deleteRequest?.contactButton || "Contact Us for Data Deletion"}
+          </Button>
         </CardContent>
       </Card>
 
