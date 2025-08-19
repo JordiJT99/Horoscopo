@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect, useCallback } from 'react';
 import { GooglePlayBilling, type Product, type Subscription, type Purchase } from '@/plugins/billing';
 import { useCapacitor } from './use-capacitor';
@@ -86,8 +87,9 @@ export function useBilling(): UseBillingReturn {
   const loadActiveSubscriptions = useCallback(async () => {
     try {
       const result = await GooglePlayBilling.getActiveSubscriptions();
-      setActiveSubscriptions(result.subscriptions);
-      setHasActiveSubscription(result.subscriptions.length > 0);
+      const subs = (result as any).activeSubscriptions || [];
+      setActiveSubscriptions(subs);
+      setHasActiveSubscription(subs.length > 0);
     } catch (error) {
       console.error('Error loading active subscriptions:', error);
     }
