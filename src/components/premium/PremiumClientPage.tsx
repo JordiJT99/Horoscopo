@@ -1,4 +1,3 @@
-
 'use client';
 
 import type { Dictionary, Locale } from '@/types';
@@ -6,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
 import { useBilling, SUBSCRIPTION_IDS, PRODUCT_IDS } from '@/hooks/use-billing';
-import { Award, Sparkles, Star, Calendar, MessageCircle, BarChart3, Gem, Crown, Zap, Shield } from 'lucide-react';
+import { useCapacitor } from '@/hooks/use-capacitor';
+import { Award, Sparkles, Star, Calendar, MessageCircle, BarChart3, Gem, Crown, Zap, Shield, Smartphone } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
@@ -16,7 +16,8 @@ interface PremiumClientPageProps {
 }
 
 export default function PremiumClientPage({ dictionary, locale }: PremiumClientPageProps) {
-  const { togglePremium } = useCosmicEnergy();
+  const cosmicEnergy = useCosmicEnergy();
+  const { isCapacitor } = useCapacitor();
   const { toast } = useToast();
   const { 
     isInitialized, 
@@ -28,19 +29,13 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
     products
   } = useBilling();
 
-  const handleTogglePremium = () => {
-    togglePremium();
-    toast({
-      title: 'Premium Status Changed (Dev)',
-      description: `Premium features are now available for all users.`,
-    });
-  };
-
   const handleSubscribe = async (subscriptionId: string) => {
     const success = await purchaseSubscription(subscriptionId);
     if (success) {
-      // Actualizar el estado premium
-      togglePremium();
+      toast({
+        title: 'Suscripción Exitosa',
+        description: 'Tu suscripción se ha activado correctamente',
+      });
     }
   };
 
@@ -57,188 +52,250 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
   // Buscar suscripciones específicas
   const monthlyPremium = subscriptions.find(sub => sub.subscriptionId === SUBSCRIPTION_IDS.PREMIUM_MONTHLY);
   const yearlyPremium = subscriptions.find(sub => sub.subscriptionId === SUBSCRIPTION_IDS.PREMIUM_YEARLY);
-  const monthlyVip = subscriptions.find(sub => sub.subscriptionId === SUBSCRIPTION_IDS.VIP_MONTHLY);
-  const yearlyVip = subscriptions.find(sub => sub.subscriptionId === SUBSCRIPTION_IDS.VIP_YEARLY);
 
-  // Buscar productos específicos
-  const removeAds = products.find(prod => prod.productId === PRODUCT_IDS.REMOVE_ADS);
+  // Si no es Capacitor (web), mostrar mensaje informativo
+  if (!isCapacitor) {
+    return (
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        <div className="text-center space-y-4">
+          <div className="flex justify-center">
+            <Smartphone className="h-16 w-16 text-cosmic-purple" />
+          </div>
+          <h1 className="text-3xl font-bold text-white">Suscripciones Premium</h1>
+          <p className="text-cosmic-gray max-w-2xl mx-auto">
+            Las suscripciones premium están disponibles exclusivamente en nuestra aplicación móvil. 
+            Descarga AstroMística desde Google Play Store para acceder a todas las funciones premium.
+          </p>
+        </div>
 
-  return (
-    <div className="max-w-6xl mx-auto space-y-8">
-      {/* Estado de suscripción */}
-      {hasActiveSubscription && (
-        <Card className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-yellow-500/50">
-          <CardContent className="flex items-center gap-3 p-6">
-            <Crown className="h-8 w-8 text-yellow-500" />
-            <div>
-              <h3 className="font-semibold text-yellow-500">Estado Premium Activo</h3>
-              <p className="text-sm text-muted-foreground">Tienes acceso a todas las funciones premium</p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Características Premium */}
-        <div className="space-y-6">
-          <Card className="bg-card/70 backdrop-blur-sm border-primary/30 shadow-xl">
+        {/* Mostrar planes de suscripción (solo informativos) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* Plan Mensual */}
+          <Card className="bg-gradient-to-br from-cosmic-purple/20 to-cosmic-pink/20 border-cosmic-purple/30">
             <CardHeader>
-              <CardTitle className="text-2xl font-headline text-primary">
-                {dictionary['PremiumPage.featuresTitle'] || 'Características Premium'}
-              </CardTitle>
-              <CardDescription className="text-lg">
-                {dictionary['PremiumPage.featuresDesc'] || 'Desbloquea todo el poder cósmico'}
+              <div className="flex items-center space-x-2">
+                <Crown className="h-6 w-6 text-cosmic-purple" />
+                <CardTitle className="text-white">Premium Mensual</CardTitle>
+              </div>
+              <CardDescription className="text-cosmic-gray">
+                Acceso completo por 1 mes
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Shield className="h-6 w-6 text-cyan-400 mt-1" />
-                <div>
-                  <h4 className="font-semibold">Sin Anuncios</h4>
-                  <p className="text-sm text-muted-foreground">Experiencia sin interrupciones publicitarias</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Gem className="h-6 w-6 text-cyan-400 mt-1" />
-                <div>
-                  <h4 className="font-semibold">200 Stardust Diario</h4>
-                  <p className="text-sm text-muted-foreground">Doble bonificación diaria para funciones especiales</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Sparkles className="h-6 w-6 text-cyan-400 mt-1" />
-                <div>
-                  <h4 className="font-semibold">Carta Natal Completa</h4>
-                  <p className="text-sm text-muted-foreground">Acceso completo a tu blueprint astrológico</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Calendar className="h-6 w-6 text-cyan-400 mt-1" />
-                <div>
-                  <h4 className="font-semibold">Horóscopos del Futuro</h4>
-                  <p className="text-sm text-muted-foreground">Ve las energías de los próximos días</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <MessageCircle className="h-6 w-6 text-cyan-400 mt-1" />
-                <div>
-                  <h4 className="font-semibold">Chat Psíquico Ilimitado</h4>
-                  <p className="text-sm text-muted-foreground">Conversaciones sin límite con psíquicos IA</p>
-                </div>
-              </div>
+              <div className="text-3xl font-bold text-cosmic-purple">€4,99</div>
+              <ul className="space-y-2 text-sm text-cosmic-gray">
+                <li className="flex items-center space-x-2">
+                  <Star className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Horóscopos del futuro (mañana/semana)</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircle className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Carta natal completa</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Sparkles className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Experiencia sin anuncios</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Gem className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Bonificación doble de Stardust</span>
+                </li>
+              </ul>
+              <Button 
+                className="w-full bg-cosmic-purple hover:bg-cosmic-purple/80"
+                disabled
+              >
+                Disponible en la App Móvil
+              </Button>
             </CardContent>
           </Card>
-        </div>
 
-        {/* Planes de Suscripción */}
-        <div className="space-y-6">
-          {/* Suscripciones Premium */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Premium Mensual */}
-            {monthlyPremium && (
-              <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/30">
-                <CardHeader className="text-center">
-                  <Crown className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-                  <CardTitle className="text-lg">Premium Mensual</CardTitle>
-                  <CardDescription className="text-2xl font-bold text-purple-400">
-                    {monthlyPremium.price}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    className="w-full bg-purple-600 hover:bg-purple-700" 
-                    onClick={() => handleSubscribe(SUBSCRIPTION_IDS.PREMIUM_MONTHLY)}
-                    disabled={isLoading || !isInitialized}
-                  >
-                    {isLoading ? <LoadingSpinner className="h-4 w-4 mr-2" /> : null}
-                    Suscribirse
-                  </Button>
-                  <p className="text-xs text-center mt-2 text-muted-foreground">
-                    Se renueva automáticamente
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Premium Anual */}
-            {yearlyPremium && (
-              <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/30 relative">
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full">
-                    AHORRA 30%
-                  </span>
-                </div>
-                <CardHeader className="text-center pt-6">
-                  <Crown className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-                  <CardTitle className="text-lg">Premium Anual</CardTitle>
-                  <CardDescription className="text-2xl font-bold text-purple-400">
-                    {yearlyPremium.price}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    className="w-full bg-purple-600 hover:bg-purple-700" 
-                    onClick={() => handleSubscribe(SUBSCRIPTION_IDS.PREMIUM_YEARLY)}
-                    disabled={isLoading || !isInitialized}
-                  >
-                    {isLoading ? <LoadingSpinner className="h-4 w-4 mr-2" /> : null}
-                    Suscribirse
-                  </Button>
-                  <p className="text-xs text-center mt-2 text-muted-foreground">
-                    Facturado anualmente
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Compras Únicas */}
-          <Card className="bg-card/70 backdrop-blur-sm border-green-500/30">
+          {/* Plan Anual */}
+          <Card className="bg-gradient-to-br from-cosmic-yellow/20 to-cosmic-orange/20 border-cosmic-yellow/30 relative">
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+              <div className="bg-cosmic-yellow text-cosmic-dark px-3 py-1 rounded-full text-xs font-bold">
+                MEJOR VALOR
+              </div>
+            </div>
             <CardHeader>
-              <CardTitle className="text-lg text-green-400 flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                Compras Únicas
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {removeAds && (
-                <div className="flex items-center justify-between p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-                  <div>
-                    <h4 className="font-semibold text-green-400">Eliminar Anuncios para Siempre</h4>
-                    <p className="text-sm text-muted-foreground">Pago único, sin suscripciones</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-green-400">{removeAds.price}</p>
-                    <Button 
-                      size="sm" 
-                      className="bg-green-600 hover:bg-green-700"
-                      onClick={() => handlePurchaseProduct(PRODUCT_IDS.REMOVE_ADS)}
-                      disabled={isLoading || !isInitialized}
-                    >
-                      {isLoading ? <LoadingSpinner className="h-4 w-4 mr-1" /> : null}
-                      Comprar
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Información adicional */}
-          <Card className="bg-card/50 border-blue-500/30">
-            <CardContent className="p-6">
-              <div className="text-center space-y-2">
-                <h4 className="font-semibold text-blue-400">💫 Garantía de Satisfacción</h4>
-                <p className="text-sm text-muted-foreground">
-                  Puedes cancelar tu suscripción en cualquier momento desde Google Play Store
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Las suscripciones se gestionan a través de Google Play Billing
-                </p>
+              <div className="flex items-center space-x-2">
+                <Crown className="h-6 w-6 text-cosmic-yellow" />
+                <CardTitle className="text-white">Premium Anual</CardTitle>
               </div>
+              <CardDescription className="text-cosmic-gray">
+                Acceso completo por 1 año (58% de descuento)
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-1">
+                <div className="text-3xl font-bold text-cosmic-yellow">€49,99</div>
+                <div className="text-sm text-cosmic-gray line-through">€119,88</div>
+                <div className="text-sm text-cosmic-green">¡Ahorras €69,89!</div>
+              </div>
+              <ul className="space-y-2 text-sm text-cosmic-gray">
+                <li className="flex items-center space-x-2">
+                  <Star className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Horóscopos del futuro (mañana/semana)</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircle className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Carta natal completa</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Sparkles className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Experiencia sin anuncios</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Gem className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Bonificación doble de Stardust</span>
+                </li>
+              </ul>
+              <Button 
+                className="w-full bg-cosmic-yellow text-cosmic-dark hover:bg-cosmic-yellow/80"
+                disabled
+              >
+                Disponible en la App Móvil
+              </Button>
             </CardContent>
           </Card>
         </div>
+
+        {/* Call to action para descargar la app */}
+        <div className="text-center space-y-4 bg-gradient-to-r from-cosmic-purple/20 to-cosmic-pink/20 rounded-lg p-8">
+          <h3 className="text-xl font-bold text-white">¿Listo para desbloquear el poder completo de AstroMística?</h3>
+          <p className="text-cosmic-gray">
+            Descarga nuestra aplicación móvil y accede a todas las funciones premium
+          </p>
+          <Button 
+            className="bg-cosmic-purple hover:bg-cosmic-purple/80"
+            onClick={() => window.open('https://play.google.com/store/apps/details?id=com.astromistica.horoscopo', '_blank')}
+          >
+            <Smartphone className="mr-2 h-4 w-4" />
+            Descargar en Google Play
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Para dispositivos móviles con Capacitor
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="text-center space-y-4">
+        <h1 className="text-3xl font-bold text-white">Suscripciones Premium</h1>
+        <p className="text-cosmic-gray max-w-2xl mx-auto">
+          Desbloquea el poder completo de AstroMística con acceso a horóscopos del futuro, 
+          carta natal completa y experiencia sin anuncios.
+        </p>
+        
+        {hasActiveSubscription && (
+          <div className="bg-cosmic-green/20 border border-cosmic-green/30 rounded-lg p-4">
+            <div className="flex items-center space-x-2 text-cosmic-green">
+              <Shield className="h-5 w-5" />
+              <span className="font-semibold">¡Ya tienes una suscripción activa!</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Mostrar suscripciones reales desde Google Play */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {monthlyPremium && (
+          <Card className="bg-gradient-to-br from-cosmic-purple/20 to-cosmic-pink/20 border-cosmic-purple/30">
+            <CardHeader>
+              <div className="flex items-center space-x-2">
+                <Crown className="h-6 w-6 text-cosmic-purple" />
+                <CardTitle className="text-white">{monthlyPremium.title}</CardTitle>
+              </div>
+              <CardDescription className="text-cosmic-gray">
+                {monthlyPremium.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-3xl font-bold text-cosmic-purple">{monthlyPremium.price}</div>
+              <ul className="space-y-2 text-sm text-cosmic-gray">
+                <li className="flex items-center space-x-2">
+                  <Star className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Horóscopos del futuro (mañana/semana)</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircle className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Carta natal completa</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Sparkles className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Experiencia sin anuncios</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Gem className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Bonificación doble de Stardust</span>
+                </li>
+              </ul>
+              <Button 
+                className="w-full bg-cosmic-purple hover:bg-cosmic-purple/80"
+                onClick={() => handleSubscribe(monthlyPremium.subscriptionId)}
+                disabled={hasActiveSubscription || isLoading}
+              >
+                {hasActiveSubscription ? 'Ya Suscrito' : 'Suscribirse'}
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {yearlyPremium && (
+          <Card className="bg-gradient-to-br from-cosmic-yellow/20 to-cosmic-orange/20 border-cosmic-yellow/30 relative">
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+              <div className="bg-cosmic-yellow text-cosmic-dark px-3 py-1 rounded-full text-xs font-bold">
+                MEJOR VALOR
+              </div>
+            </div>
+            <CardHeader>
+              <div className="flex items-center space-x-2">
+                <Crown className="h-6 w-6 text-cosmic-yellow" />
+                <CardTitle className="text-white">{yearlyPremium.title}</CardTitle>
+              </div>
+              <CardDescription className="text-cosmic-gray">
+                {yearlyPremium.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-3xl font-bold text-cosmic-yellow">{yearlyPremium.price}</div>
+              <ul className="space-y-2 text-sm text-cosmic-gray">
+                <li className="flex items-center space-x-2">
+                  <Star className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Horóscopos del futuro (mañana/semana)</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircle className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Carta natal completa</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Sparkles className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Experiencia sin anuncios</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Gem className="h-4 w-4 text-cosmic-yellow" />
+                  <span>Bonificación doble de Stardust</span>
+                </li>
+              </ul>
+              <Button 
+                className="w-full bg-cosmic-yellow text-cosmic-dark hover:bg-cosmic-yellow/80"
+                onClick={() => handleSubscribe(yearlyPremium.subscriptionId)}
+                disabled={hasActiveSubscription || isLoading}
+              >
+                {hasActiveSubscription ? 'Ya Suscrito' : 'Suscribirse'}
+              </Button>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

@@ -51,8 +51,22 @@ export function useBilling(): UseBillingReturn {
   const { verifySubscription, verifyPurchase, premiumStatus } = usePremiumSync();
 
   const initialize = async () => {
+    // Solo intentar conectar en plataformas móviles
     if (!isCapacitor) {
-      console.log('Billing not available on web platform');
+      console.log('Billing not available on web platform - using mock data');
+      setIsInitialized(true);
+      // En web, simular suscripciones para mostrar la interfaz
+      const mockSubscriptions = Object.values(SUBSCRIPTION_IDS).map(id => ({
+        subscriptionId: id,
+        title: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? 'Suscripción Premium Mensual' : 'Suscripción Premium Anual',
+        description: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? 'Acceso completo por 1 mes' : 'Acceso completo por 1 año',
+        price: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? '€4,99' : '€49,99',
+        priceAmountMicros: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? 4990000 : 49990000,
+        priceCurrencyCode: 'EUR',
+        billingPeriod: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? 'P1M' : 'P1Y',
+        freeTrialPeriod: 'P7D'
+      }));
+      setSubscriptions(mockSubscriptions);
       return;
     }
 
@@ -113,6 +127,15 @@ export function useBilling(): UseBillingReturn {
   };
 
   const purchaseProduct = async (productId: string): Promise<boolean> => {
+    if (!isCapacitor) {
+      toast({
+        title: 'Función no disponible',
+        description: 'Las compras solo están disponibles en la aplicación móvil',
+        variant: 'destructive',
+      });
+      return false;
+    }
+
     if (!isInitialized) {
       toast({
         title: 'Error',
@@ -171,6 +194,15 @@ export function useBilling(): UseBillingReturn {
   };
 
   const purchaseSubscription = async (subscriptionId: string): Promise<boolean> => {
+    if (!isCapacitor) {
+      toast({
+        title: 'Función no disponible',
+        description: 'Las suscripciones solo están disponibles en la aplicación móvil. Descarga la app desde Google Play Store.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+
     if (!isInitialized) {
       toast({
         title: 'Error',
