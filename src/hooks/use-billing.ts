@@ -53,38 +53,43 @@ export function useBilling(): UseBillingReturn {
   const { verifySubscription, verifyPurchase, premiumStatus } = usePremiumSync();
 
   const loadProducts = useCallback(async (productIds: string[]) => {
-    // La comprobación de 'isInitialized' se hará antes de llamar a esta función
+    if (!isInitialized) {
+      console.log('[BILLING] Billing not initialized, skipping loadProducts');
+      return;
+    }
     try {
       const result = await GooglePlayBilling.getProducts({ productIds });
       setProducts(result.products);
     } catch (error) {
       console.error('Error loading products:', error);
     }
-  }, []);
+  }, [isInitialized]);
 
   const loadSubscriptions = useCallback(async (subscriptionIds: string[]) => {
-    console.log('[BILLING] loadSubscriptions called with:', subscriptionIds);
+    if (!isInitialized) {
+      console.log('[BILLING] Billing not initialized, skipping loadSubscriptions');
+      return;
+    }
     try {
-      console.log('[BILLING] Calling GooglePlayBilling.getSubscriptions...');
       const result = await GooglePlayBilling.getSubscriptions({ subscriptionIds });
-      console.log('[BILLING] getSubscriptions result:', result);
       setSubscriptions(result.subscriptions);
-      console.log('[BILLING] Subscriptions set:', result.subscriptions);
     } catch (error) {
       console.error('[BILLING] Error loading subscriptions:', error);
     }
-  }, []);
+  }, [isInitialized]);
   
   const loadPurchases = useCallback(async () => {
+    if (!isInitialized) return;
     try {
       const result = await GooglePlayBilling.getPurchases();
       setPurchases(result.purchases);
     } catch (error) {
       console.error('Error loading purchases:', error);
     }
-  }, []);
+  }, [isInitialized]);
 
   const loadActiveSubscriptions = useCallback(async () => {
+    if (!isInitialized) return;
     try {
       const result = await GooglePlayBilling.getActiveSubscriptions();
       const subs = (result as any).activeSubscriptions || [];
@@ -93,7 +98,7 @@ export function useBilling(): UseBillingReturn {
     } catch (error) {
       console.error('Error loading active subscriptions:', error);
     }
-  }, []);
+  }, [isInitialized]);
 
 
   const initialize = useCallback(async () => {
@@ -102,7 +107,6 @@ export function useBilling(): UseBillingReturn {
     
     if (!isCapacitor) {
       console.log('Billing not available on web platform - using mock data');
-      setIsInitialized(true);
       const mockSubscriptions = Object.values(SUBSCRIPTION_IDS).map(id => ({
         subscriptionId: id,
         title: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? 'Suscripción Premium Mensual' : 'Suscripción Premium Anual',
@@ -114,6 +118,7 @@ export function useBilling(): UseBillingReturn {
         freeTrialPeriod: 'P7D'
       }));
       setSubscriptions(mockSubscriptions);
+      setIsInitialized(true); // Set initialized for web mock
       return;
     }
 
@@ -126,14 +131,6 @@ export function useBilling(): UseBillingReturn {
       if (result.success) {
         setIsInitialized(true);
         console.log('Google Play Billing initialized successfully');
-        
-        console.log('[BILLING] Cargando productos y suscripciones...');
-        await Promise.all([
-          loadProducts(Object.values(PRODUCT_IDS)),
-          loadSubscriptions(Object.values(SUBSCRIPTION_IDS)),
-          loadPurchases(),
-          loadActiveSubscriptions()
-        ]);
       } else {
         console.error('Failed to initialize billing:', result.message);
         toast({
@@ -152,7 +149,21 @@ export function useBilling(): UseBillingReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [isCapacitor, loadProducts, loadSubscriptions, loadPurchases, loadActiveSubscriptions]);
+  }, [isCapacitor]);
+
+  // useEffect to load data once initialization is complete.
+  useEffect(() => {
+    if (isInitialized && isCapacitor) {
+      console.log('[BILLING] Initialized. Loading products and subscriptions...');
+      Promise.all([
+        loadProducts(Object.values(PRODUCT_IDS)),
+        loadSubscriptions(Object.values(SUBSCRIPTION_IDS)),
+        loadPurchases(),
+        loadActiveSubscriptions()
+      ]);
+    }
+  }, [isInitialized, isCapacitor, loadProducts, loadSubscriptions, loadPurchases, loadActiveSubscriptions]);
+
 
   const purchaseProduct = async (productId: string): Promise<boolean> => {
     if (!isCapacitor) {
