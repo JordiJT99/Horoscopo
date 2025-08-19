@@ -23,12 +23,12 @@ interface UseBillingReturn {
   disconnect: () => Promise<void>;
 }
 
-// IDs de productos y suscripciones de tu app
+// IDs de productos y suscripciones de tu app (deben coincidir exactamente con Google Play Console)
 export const SUBSCRIPTION_IDS = {
-  PREMIUM_MONTHLY: 'astromistica_premium_monthly',
-  PREMIUM_YEARLY: 'astromistica_premium_yearly',
-  VIP_MONTHLY: 'astromistica_vip_monthly',
-  VIP_YEARLY: 'astromistica_vip_yearly',
+  PREMIUM_MONTHLY: 'astromistica-premium-monthly',
+  PREMIUM_YEARLY: 'astromistica-premium-yearly',
+  VIP_MONTHLY: 'astromistica-vip-monthly',
+  VIP_YEARLY: 'astromistica-vip-yearly',
 } as const;
 
 export const PRODUCT_IDS = {
