@@ -1,6 +1,6 @@
 // src/app/api/billing/verify-purchase/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { googlePlayAPI } from './google-play-api';
+import { googlePlayAPI } from '@/app/api/billing/google-play-api';
 import { adminAuth, adminDb } from '@/lib/firebase-admin';
 
 interface VerifyPurchaseRequest {
