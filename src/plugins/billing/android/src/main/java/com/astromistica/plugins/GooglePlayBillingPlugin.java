@@ -23,6 +23,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CapacitorPlugin(name = "GooglePlayBilling")
 public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedListener {
@@ -207,25 +208,12 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
         });
     }
 
-    @PluginMethod
-    public void purchaseProduct(PluginCall call) {
-        if (!isServiceConnected) {
-            call.reject("Billing service not connected");
-            return;
-        }
-
-        String productId = call.getString("productId");
-        if (productId == null) {
-            call.reject("Product ID is required");
-            return;
-        }
-
-        // Primero obtenemos los detalles del producto
+    private void launchBillingFlow(PluginCall call, String productId, String productType) {
         List<QueryProductDetailsParams.Product> productList = new ArrayList<>();
         productList.add(
             QueryProductDetailsParams.Product.newBuilder()
                 .setProductId(productId)
-                .setProductType(BillingClient.ProductType.INAPP)
+                .setProductType(productType)
                 .build()
         );
 
@@ -234,15 +222,21 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
             .build();
 
         billingClient.queryProductDetailsAsync(params, (billingResult, productDetailsList) -> {
-            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && !productDetailsList.isEmpty()) {
+            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && productDetailsList != null && !productDetailsList.isEmpty()) {
                 ProductDetails productDetails = productDetailsList.get(0);
                 
-                BillingFlowParams.ProductDetailsParams productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
-                    .setProductDetails(productDetails)
-                    .build();
+                ArrayList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList = new ArrayList<>();
+                BillingFlowParams.ProductDetailsParams.Builder builder = BillingFlowParams.ProductDetailsParams.newBuilder()
+                        .setProductDetails(productDetails);
 
-                List<BillingFlowParams.ProductDetailsParams> productDetailsParamsList = new ArrayList<>();
-                productDetailsParamsList.add(productDetailsParams);
+                if (productType.equals(BillingClient.ProductType.SUBS) && productDetails.getSubscriptionOfferDetails() != null && !productDetails.getSubscriptionOfferDetails().isEmpty()) {
+                    // Para suscripciones, se necesita un offer token.
+                    // Se usa la primera oferta disponible por simplicidad.
+                    String offerToken = productDetails.getSubscriptionOfferDetails().get(0).getOfferToken();
+                    builder.setOfferToken(offerToken);
+                }
+                
+                productDetailsParamsList.add(builder.build());
 
                 BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
                     .setProductDetailsParamsList(productDetailsParamsList)
@@ -252,7 +246,6 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
                 BillingResult result = billingClient.launchBillingFlow(activity, billingFlowParams);
                 
                 if (result.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                    // El resultado se manejará en onPurchasesUpdated
                     JSObject ret = new JSObject();
                     ret.put("success", true);
                     ret.put("message", "Purchase flow started");
@@ -261,9 +254,23 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
                     call.reject("Failed to start purchase flow: " + result.getDebugMessage());
                 }
             } else {
-                call.reject("Product not found or failed to get product details");
+                call.reject("Product not found or failed to get details: " + billingResult.getDebugMessage());
             }
         });
+    }
+
+    @PluginMethod
+    public void purchaseProduct(PluginCall call) {
+        if (!isServiceConnected) {
+            call.reject("Billing service not connected");
+            return;
+        }
+        String productId = call.getString("productId");
+        if (productId == null) {
+            call.reject("Product ID is required");
+            return;
+        }
+        launchBillingFlow(call, productId, BillingClient.ProductType.INAPP);
     }
 
     @PluginMethod
@@ -272,64 +279,12 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
             call.reject("Billing service not connected");
             return;
         }
-
         String subscriptionId = call.getString("subscriptionId");
         if (subscriptionId == null) {
             call.reject("Subscription ID is required");
             return;
         }
-
-        // Primero obtenemos los detalles de la suscripción
-        List<QueryProductDetailsParams.Product> productList = new ArrayList<>();
-        productList.add(
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(subscriptionId)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build()
-        );
-
-        QueryProductDetailsParams params = QueryProductDetailsParams.newBuilder()
-            .setProductList(productList)
-            .build();
-
-        billingClient.queryProductDetailsAsync(params, (billingResult, productDetailsList) -> {
-            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && !productDetailsList.isEmpty()) {
-                ProductDetails productDetails = productDetailsList.get(0);
-                
-                if (productDetails.getSubscriptionOfferDetails() != null && !productDetails.getSubscriptionOfferDetails().isEmpty()) {
-                    ProductDetails.SubscriptionOfferDetails offerDetails = productDetails.getSubscriptionOfferDetails().get(0);
-                    
-                    BillingFlowParams.ProductDetailsParams productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
-                        .setProductDetails(productDetails)
-                        .setOfferToken(offerDetails.getOfferToken())
-                        .build();
-
-                    List<BillingFlowParams.ProductDetailsParams> productDetailsParamsList = new ArrayList<>();
-                    productDetailsParamsList.add(productDetailsParams);
-
-                    BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
-                        .setProductDetailsParamsList(productDetailsParamsList)
-                        .build();
-
-                    Activity activity = getActivity();
-                    BillingResult result = billingClient.launchBillingFlow(activity, billingFlowParams);
-                    
-                    if (result.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                        // El resultado se manejará en onPurchasesUpdated
-                        JSObject ret = new JSObject();
-                        ret.put("success", true);
-                        ret.put("message", "Subscription flow started");
-                        call.resolve(ret);
-                    } else {
-                        call.reject("Failed to start subscription flow: " + result.getDebugMessage());
-                    }
-                } else {
-                    call.reject("No subscription offers available");
-                }
-            } else {
-                call.reject("Subscription not found or failed to get subscription details");
-            }
-        });
+        launchBillingFlow(call, subscriptionId, BillingClient.ProductType.SUBS);
     }
 
     @PluginMethod
@@ -431,6 +386,8 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
                 purchaseObj.put("purchaseState", purchase.getPurchaseState());
                 purchaseObj.put("purchaseToken", purchase.getPurchaseToken());
                 purchaseObj.put("isAcknowledged", purchase.isAcknowledged());
+                 purchaseObj.put("originalJson", purchase.getOriginalJson());
+                purchaseObj.put("signature", purchase.getSignature());
                 if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
                     purchaseObj.put("isAutoRenewing", purchase.isAutoRenewing());
                 }
@@ -440,7 +397,7 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
             data.put("success", true);
         } else {
             data.put("success", false);
-            data.put("error", billingResult.getDebugMessage());
+            data.put("message", billingResult.getDebugMessage());
             data.put("responseCode", billingResult.getResponseCode());
         }
         
