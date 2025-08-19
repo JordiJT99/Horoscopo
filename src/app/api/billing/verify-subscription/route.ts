@@ -149,6 +149,27 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
+    // En desarrollo, si no hay Firebase Admin configurado, simular verificación exitosa
+    if (!adminAuth) {
+      console.log('🔧 Development mode: Simulating subscription verification for userId:', userId);
+      return NextResponse.json({
+        success: true,
+        isValid: true,
+        hasActiveSubscription: false, // Cambiar a true si quieres simular suscripción activa
+        subscriptions: [], // Array vacío por ahora
+        subscription: {
+          subscriptionId: subscriptionId || 'astromistica-premium-monthly',
+          isActive: false, // Cambiar a true si quieres simular suscripción activa
+          autoRenewing: false,
+          expiryTimeMillis: Date.now() + (30 * 24 * 60 * 60 * 1000), // 30 días
+          startTimeMillis: Date.now(),
+          orderId: `dev_order_${Date.now()}`,
+          purchaseToken: `dev_token_${Date.now()}`
+        },
+        message: 'Subscription verified (development mode - no active subscription)'
+      });
+    }
+
     // Verificar autenticación
     const authHeader = request.headers.get('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -169,6 +190,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Obtener los datos del usuario desde Firestore
+    if (!adminDb) {
+      return NextResponse.json({
+        success: false,
+        error: 'Database not available'
+      }, { status: 500 });
+    }
+    
     const userDoc = await adminDb.collection('users').doc(userId).get();
     
     if (!userDoc.exists) {
@@ -201,14 +229,16 @@ export async function GET(request: NextRequest) {
       );
 
       // Actualizar el estado en Firestore
-      await adminDb.collection('users').doc(userId).update({
-        'subscription.isActive': verificationResult.isActive,
-        'subscription.expiryTime': verificationResult.expiryTime,
-        'subscription.autoRenewing': verificationResult.autoRenewing,
-        'subscription.lastVerified': Date.now(),
-        isPremium: verificationResult.isActive,
-        lastSubscriptionCheck: Date.now(),
-      });
+      if (adminDb) {
+        await adminDb.collection('users').doc(userId).update({
+          'subscription.isActive': verificationResult.isActive,
+          'subscription.expiryTime': verificationResult.expiryTime,
+          'subscription.autoRenewing': verificationResult.autoRenewing,
+          'subscription.lastVerified': Date.now(),
+          isPremium: verificationResult.isActive,
+          lastSubscriptionCheck: Date.now(),
+        });
+      }
 
       return NextResponse.json({
         success: true,

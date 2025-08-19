@@ -183,6 +183,18 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
+    // En desarrollo, si no hay Firebase Admin configurado, simular verificación exitosa
+    if (!adminAuth) {
+      console.log('🔧 Development mode: Simulating purchase verification for userId:', userId);
+      return NextResponse.json({
+        success: true,
+        purchases: [], // Array vacío - no hay compras simuladas
+        hasRemovedAds: false, // Usuario no tiene anuncios removidos
+        stardust: 100, // Stardust base para desarrollo
+        message: 'Purchases verified (development mode - no purchases)'
+      });
+    }
+
     // Verificar autenticación
     const authHeader = request.headers.get('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -203,7 +215,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Obtener los datos del usuario desde Firestore
-    const userDoc = await adminDb.collection('users').doc(userId).get();
+    const userDoc = await adminDb!.collection('users').doc(userId).get();
     
     if (!userDoc.exists) {
       return NextResponse.json({

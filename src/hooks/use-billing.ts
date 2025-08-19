@@ -51,6 +51,9 @@ export function useBilling(): UseBillingReturn {
   const { verifySubscription, verifyPurchase, premiumStatus } = usePremiumSync();
 
   const initialize = async () => {
+    console.log('[BILLING] Iniciando inicialización...');
+    console.log('[BILLING] isCapacitor:', isCapacitor);
+    
     // Solo intentar conectar en plataformas móviles
     if (!isCapacitor) {
       console.log('Billing not available on web platform - using mock data');
@@ -72,11 +75,15 @@ export function useBilling(): UseBillingReturn {
 
     setIsLoading(true);
     try {
+      console.log('[BILLING] Intentando conectar con Google Play Billing...');
       const result = await GooglePlayBilling.initialize();
+      console.log('[BILLING] Resultado de inicialización:', result);
+      
       if (result.success) {
         setIsInitialized(true);
         console.log('Google Play Billing initialized successfully');
         
+        console.log('[BILLING] Cargando suscripciones con IDs:', Object.values(SUBSCRIPTION_IDS));
         // Cargar productos y suscripciones automáticamente
         await Promise.all([
           loadProducts(Object.values(PRODUCT_IDS)),
@@ -116,13 +123,22 @@ export function useBilling(): UseBillingReturn {
   };
 
   const loadSubscriptions = async (subscriptionIds: string[]) => {
-    if (!isInitialized) return;
+    console.log('[BILLING] loadSubscriptions called with:', subscriptionIds);
+    console.log('[BILLING] isInitialized:', isInitialized);
+    
+    if (!isInitialized) {
+      console.log('[BILLING] Billing not initialized, skipping loadSubscriptions');
+      return;
+    }
     
     try {
+      console.log('[BILLING] Calling GooglePlayBilling.getSubscriptions...');
       const result = await GooglePlayBilling.getSubscriptions({ subscriptionIds });
+      console.log('[BILLING] getSubscriptions result:', result);
       setSubscriptions(result.subscriptions);
+      console.log('[BILLING] Subscriptions set:', result.subscriptions);
     } catch (error) {
-      console.error('Error loading subscriptions:', error);
+      console.error('[BILLING] Error loading subscriptions:', error);
     }
   };
 

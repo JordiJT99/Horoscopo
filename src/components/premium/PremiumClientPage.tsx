@@ -29,6 +29,16 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
     products
   } = useBilling();
 
+  // Debug logs
+  console.log('[PREMIUM] Component state:', {
+    isCapacitor,
+    isInitialized,
+    isLoading,
+    subscriptionsCount: subscriptions.length,
+    subscriptions,
+    hasActiveSubscription
+  });
+
   const handleSubscribe = async (subscriptionId: string) => {
     const success = await purchaseSubscription(subscriptionId);
     if (success) {
@@ -208,6 +218,17 @@ export default function PremiumClientPage({ dictionary, locale }: PremiumClientP
 
       {/* Mostrar suscripciones reales desde Google Play */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {subscriptions.length === 0 && isInitialized && !isLoading && (
+          <div className="col-span-full text-center p-8 bg-red-500/20 border border-red-500/30 rounded-lg">
+            <h3 className="text-red-400 font-bold mb-2">No se encontraron suscripciones</h3>
+            <p className="text-red-300 text-sm">
+              No se pudieron cargar las suscripciones desde Google Play Console.
+              <br />
+              IDs buscados: {Object.values(SUBSCRIPTION_IDS).join(', ')}
+            </p>
+          </div>
+        )}
+        
         {monthlyPremium && (
           <Card className="bg-gradient-to-br from-cosmic-purple/20 to-cosmic-pink/20 border-cosmic-purple/30">
             <CardHeader>
