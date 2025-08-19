@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useCallback } from 'react';
 import { GooglePlayBilling, type Product, type Subscription, type Purchase } from '@/plugins/billing';
 import { useCapacitor } from './use-capacitor';
 import { usePremiumSync } from './use-premium-sync';
@@ -25,10 +26,10 @@ interface UseBillingReturn {
 
 // IDs de productos y suscripciones de tu app (deben coincidir exactamente con Google Play Console)
 export const SUBSCRIPTION_IDS = {
-  PREMIUM_MONTHLY: 'astromistica-premium-monthly',
-  PREMIUM_YEARLY: 'astromistica-premium-yearly',
-  VIP_MONTHLY: 'astromistica-vip-monthly',
-  VIP_YEARLY: 'astromistica-vip-yearly',
+  PREMIUM_MONTHLY: 'astromistica_premium_monthly',
+  PREMIUM_YEARLY: 'astromistica_premium_yearly',
+  VIP_MONTHLY: 'astromistica_vip_monthly',
+  VIP_YEARLY: 'astromistica_vip_yearly',
 } as const;
 
 export const PRODUCT_IDS = {
@@ -50,15 +51,56 @@ export function useBilling(): UseBillingReturn {
   const { isCapacitor } = useCapacitor();
   const { verifySubscription, verifyPurchase, premiumStatus } = usePremiumSync();
 
-  const initialize = async () => {
+  const loadProducts = useCallback(async (productIds: string[]) => {
+    // La comprobación de 'isInitialized' se hará antes de llamar a esta función
+    try {
+      const result = await GooglePlayBilling.getProducts({ productIds });
+      setProducts(result.products);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    }
+  }, []);
+
+  const loadSubscriptions = useCallback(async (subscriptionIds: string[]) => {
+    console.log('[BILLING] loadSubscriptions called with:', subscriptionIds);
+    try {
+      console.log('[BILLING] Calling GooglePlayBilling.getSubscriptions...');
+      const result = await GooglePlayBilling.getSubscriptions({ subscriptionIds });
+      console.log('[BILLING] getSubscriptions result:', result);
+      setSubscriptions(result.subscriptions);
+      console.log('[BILLING] Subscriptions set:', result.subscriptions);
+    } catch (error) {
+      console.error('[BILLING] Error loading subscriptions:', error);
+    }
+  }, []);
+  
+  const loadPurchases = useCallback(async () => {
+    try {
+      const result = await GooglePlayBilling.getPurchases();
+      setPurchases(result.purchases);
+    } catch (error) {
+      console.error('Error loading purchases:', error);
+    }
+  }, []);
+
+  const loadActiveSubscriptions = useCallback(async () => {
+    try {
+      const result = await GooglePlayBilling.getActiveSubscriptions();
+      setActiveSubscriptions(result.subscriptions);
+      setHasActiveSubscription(result.subscriptions.length > 0);
+    } catch (error) {
+      console.error('Error loading active subscriptions:', error);
+    }
+  }, []);
+
+
+  const initialize = useCallback(async () => {
     console.log('[BILLING] Iniciando inicialización...');
     console.log('[BILLING] isCapacitor:', isCapacitor);
     
-    // Solo intentar conectar en plataformas móviles
     if (!isCapacitor) {
       console.log('Billing not available on web platform - using mock data');
       setIsInitialized(true);
-      // En web, simular suscripciones para mostrar la interfaz
       const mockSubscriptions = Object.values(SUBSCRIPTION_IDS).map(id => ({
         subscriptionId: id,
         title: id === SUBSCRIPTION_IDS.PREMIUM_MONTHLY ? 'Suscripción Premium Mensual' : 'Suscripción Premium Anual',
@@ -83,8 +125,7 @@ export function useBilling(): UseBillingReturn {
         setIsInitialized(true);
         console.log('Google Play Billing initialized successfully');
         
-        console.log('[BILLING] Cargando suscripciones con IDs:', Object.values(SUBSCRIPTION_IDS));
-        // Cargar productos y suscripciones automáticamente
+        console.log('[BILLING] Cargando productos y suscripciones...');
         await Promise.all([
           loadProducts(Object.values(PRODUCT_IDS)),
           loadSubscriptions(Object.values(SUBSCRIPTION_IDS)),
@@ -109,38 +150,7 @@ export function useBilling(): UseBillingReturn {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const loadProducts = async (productIds: string[]) => {
-    if (!isInitialized) return;
-    
-    try {
-      const result = await GooglePlayBilling.getProducts({ productIds });
-      setProducts(result.products);
-    } catch (error) {
-      console.error('Error loading products:', error);
-    }
-  };
-
-  const loadSubscriptions = async (subscriptionIds: string[]) => {
-    console.log('[BILLING] loadSubscriptions called with:', subscriptionIds);
-    console.log('[BILLING] isInitialized:', isInitialized);
-    
-    if (!isInitialized) {
-      console.log('[BILLING] Billing not initialized, skipping loadSubscriptions');
-      return;
-    }
-    
-    try {
-      console.log('[BILLING] Calling GooglePlayBilling.getSubscriptions...');
-      const result = await GooglePlayBilling.getSubscriptions({ subscriptionIds });
-      console.log('[BILLING] getSubscriptions result:', result);
-      setSubscriptions(result.subscriptions);
-      console.log('[BILLING] Subscriptions set:', result.subscriptions);
-    } catch (error) {
-      console.error('[BILLING] Error loading subscriptions:', error);
-    }
-  };
+  }, [isCapacitor, loadProducts, loadSubscriptions, loadPurchases, loadActiveSubscriptions]);
 
   const purchaseProduct = async (productId: string): Promise<boolean> => {
     if (!isCapacitor) {
@@ -166,7 +176,6 @@ export function useBilling(): UseBillingReturn {
       const result = await GooglePlayBilling.purchaseProduct({ productId });
       
       if (result.success && result.purchase) {
-        // Verificar la compra con el servidor
         const verified = await verifyPurchase({
           purchaseToken: result.purchase.purchaseToken,
           productId: result.purchase.productId,
@@ -175,7 +184,6 @@ export function useBilling(): UseBillingReturn {
         });
 
         if (verified) {
-          // Recargar compras locales
           await loadPurchases();
           return true;
         } else {
@@ -233,7 +241,6 @@ export function useBilling(): UseBillingReturn {
       const result = await GooglePlayBilling.purchaseSubscription({ subscriptionId });
       
       if (result.success && result.purchase) {
-        // Verificar la suscripción con el servidor
         const verified = await verifySubscription({
           purchaseToken: result.purchase.purchaseToken,
           subscriptionId: result.purchase.productId,
@@ -242,7 +249,6 @@ export function useBilling(): UseBillingReturn {
         });
 
         if (verified) {
-          // Recargar suscripciones locales
           await loadActiveSubscriptions();
           return true;
         } else {
@@ -276,29 +282,6 @@ export function useBilling(): UseBillingReturn {
     }
   };
 
-  const loadPurchases = async () => {
-    if (!isInitialized) return;
-    
-    try {
-      const result = await GooglePlayBilling.getPurchases();
-      setPurchases(result.purchases);
-    } catch (error) {
-      console.error('Error loading purchases:', error);
-    }
-  };
-
-  const loadActiveSubscriptions = async () => {
-    if (!isInitialized) return;
-    
-    try {
-      const result = await GooglePlayBilling.getActiveSubscriptions();
-      setActiveSubscriptions(result.subscriptions);
-      setHasActiveSubscription(result.subscriptions.length > 0);
-    } catch (error) {
-      console.error('Error loading active subscriptions:', error);
-    }
-  };
-
   const checkActiveSubscription = async (subscriptionId?: string): Promise<boolean> => {
     if (!isInitialized) return false;
     
@@ -326,14 +309,12 @@ export function useBilling(): UseBillingReturn {
     }
   };
 
-  // Auto-inicializar cuando está en capacitor
   useEffect(() => {
     if (isCapacitor && !isInitialized && !isLoading) {
       initialize();
     }
-  }, [isCapacitor, isInitialized, isLoading]);
+  }, [isCapacitor, isInitialized, isLoading, initialize]);
 
-  // Sincronizar el estado de suscripción con el servidor
   useEffect(() => {
     if (premiumStatus) {
       setHasActiveSubscription(premiumStatus.isActive);
