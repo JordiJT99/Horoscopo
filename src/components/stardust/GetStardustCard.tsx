@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import type { Dictionary } from '@/types';
@@ -12,7 +11,8 @@ import { ShoppingBag, Star, Clapperboard, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdMob } from '@/hooks/use-admob-ads';
 import { StardustIcon } from '@/components/shared/StardustIcon';
-
+import { useBilling, PRODUCT_IDS } from '@/hooks/use-billing'; // Importar useBilling y PRODUCT_IDS
+import LoadingSpinner from '../shared/LoadingSpinner';
 
 const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const { addStardust, claimRateReward, hasRatedApp } = useCosmicEnergy();
@@ -21,6 +21,8 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
     const [showExplanation, setShowExplanation] = useState(false);
     const { showRewardedAd } = useAdMob();
 
+    // Usar el hook useBilling para obtener productos y la función de compra
+    const { products, purchaseProduct, isLoading: isBillingLoading } = useBilling();
 
     const handleRateApp = async () => {
         const { success, amount } = await claimRateReward();
@@ -59,12 +61,12 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
             setIsAdPlaying(false);
         }
     };
+    
+    // Filtrar los productos para obtener solo los paquetes de stardust
+    const stardustPacks = products
+      .filter(p => p.productId.startsWith('stardust_pack_'))
+      .sort((a, b) => a.priceAmountMicros - b.priceAmountMicros);
 
-    const stardustPacks = [
-        { amount: 100, price: "$0.99", popular: false, icon: '💎' },
-        { amount: 550, price: "$4.99", popular: true, icon: '✨' },
-        { amount: 1200, price: "$9.99", popular: false, icon: '🌟' }
-    ];
 
     return (
         <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
@@ -108,24 +110,33 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                             <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '1')}</p>
                          </div>
                     </div>
-                    <span>{isAdPlaying ? '...' : '▶️'}</span>
+                    <span>{isAdPlaying ? <LoadingSpinner className="h-4 w-4" /> : '▶️'}</span>
                 </Button>
 
                 <div className="pt-4">
                     <h4 className="text-center font-semibold mb-3">{dictionary['ProfilePage.buyStardustTitle'] || "Buy Stardust"}</h4>
                     <div className="grid grid-cols-1 gap-2">
+                        {isBillingLoading && <LoadingSpinner />}
                         {stardustPacks.map(pack => (
-                             <Button key={pack.amount} variant="outline" className="w-full justify-between h-auto py-3 px-4 disabled:opacity-60" disabled>
+                             <Button 
+                                key={pack.productId} 
+                                variant="outline" 
+                                className="w-full justify-between h-auto py-3 px-4"
+                                onClick={() => purchaseProduct(pack.productId)}
+                                disabled={isBillingLoading}
+                              >
                                 <div className="flex items-center gap-2">
-                                    <span className="text-lg">{pack.icon}</span>
-                                    <p className="font-semibold">{pack.amount.toLocaleString()} <StardustIcon className="w-4 h-4 inline-block -mt-0.5" /></p>
+                                    <span className="text-lg">✨</span>
+                                    <p className="font-semibold">{pack.title}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="font-bold">{pack.price}</p>
-                                    <p className="text-xs font-normal text-muted-foreground">{dictionary['MorePage.comingSoon']}</p>
                                 </div>
                             </Button>
                         ))}
+                         {products.length === 0 && !isBillingLoading && (
+                          <p className="text-xs text-center text-muted-foreground">No products found. Please check your Google Play Console setup.</p>
+                        )}
                     </div>
                 </div>
 
