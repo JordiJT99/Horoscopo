@@ -121,15 +121,15 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                              <Button 
                                 key={pack.productId} 
                                 variant="outline" 
-                                className="w-full justify-between h-auto py-3 px-4"
+                                className="w-full justify-between h-auto py-3 px-4 text-left"
                                 onClick={() => purchaseProduct(pack.productId)}
                                 disabled={isBillingLoading}
                               >
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-3 flex-1 min-w-0">
                                     <span className="text-lg">✨</span>
-                                    <p className="font-semibold">{pack.title}</p>
+                                    <p className="font-semibold flex-1 truncate">{pack.title}</p>
                                 </div>
-                                <div className="text-right">
+                                <div className="text-right pl-2">
                                     <p className="font-bold">{pack.price}</p>
                                 </div>
                             </Button>
