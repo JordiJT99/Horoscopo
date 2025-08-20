@@ -3,7 +3,7 @@
 'use client'; // This component now needs client-side logic for localStorage
 
 import type { Locale } from '@/lib/dictionaries';
-import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
+import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,9 +15,10 @@ import {
 } from 'lucide-react';
 import { MayanAstrologyIcon } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
+import LanguageSelector from '@/components/shared/LanguageSelector';
 
 
 // Helper component for feature cards
@@ -85,7 +86,6 @@ const AccountItem = ({ href, icon: Icon, title, locale, isPlaceholder }: { href:
 
 export default function MorePage() {
   const pathname = usePathname();
-  const router = useRouter();
   const currentLocale = pathname.split('/')[1] as Locale;
   const [dictionary, setDictionary] = useState<any | null>(null);
 
@@ -93,11 +93,6 @@ export default function MorePage() {
     getDictionary(currentLocale).then(setDictionary);
   }, [currentLocale]);
 
-  const handleLanguageChange = (newLocale: Locale) => {
-    localStorage.setItem('userLocale', newLocale);
-    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
-    router.replace(newPath);
-  };
   
   if (!dictionary) {
     return (
@@ -146,13 +141,6 @@ export default function MorePage() {
   
   const legalItems = [
     { href: "/privacy", icon: Cookie, titleKey: "PrivacyPolicy.title", isPlaceholder: false },
-  ];
-
-  const availableLocales = [
-    { code: 'es' as Locale, name: dictionary['Language.es'] || 'Español' },
-    { code: 'en' as Locale, name: dictionary['Language.en'] || 'English' },
-    { code: 'de' as Locale, name: dictionary['Language.de'] || 'Deutsch' },
-    { code: 'fr' as Locale, name: dictionary['Language.fr'] || 'Français' },
   ];
 
 
@@ -245,23 +233,7 @@ export default function MorePage() {
               isPlaceholder={item.isPlaceholder}
             />
           ))}
-          <Card className="bg-card/90 p-3 sm:p-4 rounded-xl shadow-md">
-            <div className="flex items-center gap-2 sm:gap-3 mb-2">
-              <Languages className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-              <span className="text-sm sm:text-base font-body text-foreground">{dictionary['Header.changeLanguage'] || "Idioma"}</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {availableLocales.map(lang => (
-                <Button
-                  key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
-                  className={`w-full ${currentLocale === lang.code ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-muted text-muted-foreground hover:bg-muted/80'} text-xs sm:text-sm font-medium py-2 px-3 rounded-md text-center transition-colors`}
-                >
-                  {lang.name}
-                </Button>
-              ))}
-            </div>
-          </Card>
+          <LanguageSelector currentLocale={currentLocale} dictionary={dictionary} />
         </div>
       </div>
 

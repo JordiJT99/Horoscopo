@@ -5,7 +5,7 @@ import type { TarotReadingOutput } from '@/ai/flows/tarot-reading-flow';
 import type { TarotPersonalityOutput } from '@/ai/flows/tarot-personality-flow';
 
 
-export type Locale = 'en' | 'es' | 'de' | 'fr';
+export type Locale = 'en' | 'es' | 'de' | 'fr' | 'pt' | 'it' | 'ru' | 'zh' | 'ja' | 'ko' | 'ar' | 'hi' | 'th' | 'vi' | 'tr' | 'pl' | 'nl' | 'sv' | 'no' | 'da' | 'fi' | 'cs' | 'hu' | 'ro' | 'uk' | 'el' | 'he' | 'fa' | 'ur' | 'id' | 'sw' | 'ta' | 'te' | 'mr' | 'gu' | 'kn';
 
 export type Dictionary = Record<string, any>;
 
