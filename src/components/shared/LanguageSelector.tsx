@@ -80,8 +80,10 @@ export default function LanguageSelector({ currentLocale, dictionary, variant = 
     
     localStorage.setItem('userLocale', newLocale);
     
-    // Usar router.push en lugar de replace para evitar problemas de navegación
-    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    // Construir nueva ruta correctamente - solo reemplazar el primer segmento de idioma
+    const pathSegments = pathname.split('/');
+    pathSegments[1] = newLocale; // El idioma siempre está en la posición 1 después del slash inicial
+    const newPath = pathSegments.join('/');
     
     setIsOpen(false);
     router.push(newPath);

@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
 
-let locales = ['es', 'en', 'de', 'fr'];
+let locales = [
+  'es', 'en', 'de', 'fr', 'pt', 'it', 'ru', 'zh', 'ja', 'ko', 'hi', 'th', 'vi', 'tr', 'pl', 
+  'nl', 'sv', 'no', 'da', 'fi', 'cs', 'hu', 'ro', 'uk', 'el', 'he', 'fa', 'ur', 'id', 'sw', 
+  'ta', 'te', 'mr', 'gu', 'kn'
+];
 const defaultLocale = 'es';
 
 function getLocale(request: NextRequest): string {
