@@ -31,14 +31,4 @@ export const getDictionary = async (locale: Locale): Promise<Dictionary> => {
   }
 };
 
-  try {
-    // Await the dynamic import
-    return await loadDictionary();
-  } catch (error) {
-    console.error(`Failed to load dictionary for locale "${targetLocale}":`, error);
-    // In case of an error (e.g., file not found), return an empty object to prevent the app from crashing.
-    return {};
-  }
-};
-
 export const getSupportedLocales = (): Locale[] => Object.keys(dictionaries) as Locale[];
