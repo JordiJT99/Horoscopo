@@ -7,7 +7,7 @@
   "Header.compatibility": "cf",
   "Header.tarot": "Tarot>>",
   "Header.crystalBall": "Oracle",
-  "Header.more": "Further",
+  "Header.more": "More",
   "Header.profile": "Profile",
   "Header.settings": "Settings",
   "Header.about": "About",
@@ -19,7 +19,7 @@
   "BottomNav.horoscopes": "Horoscopes",
   "BottomNav.community": "Community",
   "BottomNav.chat": "Astrologists",
-  "BottomNav.more": "Further",
+  "BottomNav.more": "More",
   "BottomNav.natalChart": "Natal Chart",
   "SignSelector.addFriend": "Add",
   "SelectedSign.moreDetails": "More details",
@@ -243,7 +243,7 @@
   "ChineseHoroscopePage.compatibilityReportTitle": "Compatibility between <<< ph_0 >>> and <<< ph_1 >>>",
   "ChineseHoroscopePage.enterBirthYear": "Enter your year of birth",
   "ChineseHoroscopePage.invalidYear": "Please enter a valid year (eg 1990).",
-  "ChineseHoroscopePage.signInfoTitle": "Sign information",
+  "ChineseHoroscopePage.signInfoTitle": "Zodiac Sign Information",
   "ChineseHoroscopePage.checkingCompatibility": "Verifying compatibility ...",
   "ChineseHoroscopeDetail.traitsTitle": "Traits of <<< ph_0 >>>",
   "ChineseHoroscopePage.descriptions.Rat": "Inventive, ingenious, charming and persuasive.",
@@ -358,8 +358,7 @@
       "requestSentDescription": "Your elimination application has been received. We will get in touch with you within 30 days.",
       "errorTitle": "Mistake",
       "errorDescription": "The application could not be sent. Please try again."
-    }
-  },
+    } },
   "MayanHoroscopePage.title": "Mayan horoscope",
   "MayanHoroscopePage.subtitle": "Discover the old perspectives of Mayan astrology.",
   "MayanHoroscopePage.discoverKinButton": "Discover your Kin",
@@ -860,8 +859,7 @@
     },
     "housesDetails": {
       "noPlacementsFound": "No significant houses were found."
-    }
-  },
+    } },
   "birthForm": {
     "dateLabel": "Birthdate",
     "timeLabel": "Birth time",

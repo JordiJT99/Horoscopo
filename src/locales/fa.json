@@ -23,8 +23,7 @@
   "BottomNav.natalChart": "نمودار ناتال",
   "SignSelector.addFriend": "اضافه کردن",
   "SelectedSign.moreDetails": "جزئیات بیشتر",
-  "SelectedSign.scrollToDetails": "به جزئیات {signName} بروید",
-  "SelectedSign.moreDetailsAria": "جزئیات بیشتر برای {signName}",
+  "SelectedSign.scrollToDetails": "به جزئیات {signName}",
   "FeatureCards.compatibilityReading": "خواندن سازگاری",
   "FeatureCards.palmReading": "خواندن دست",
   "FeatureCards.crystalBall": "توپ کریستال",
@@ -46,11 +45,7 @@
   "HomePage.dailyHoroscopeTitle": "فال امروز",
   "HomePage.dailyHoroscopeSubtitle": "دیدگاه های نجومی روزانه شما. ثبت نام خود را انتخاب کنید.",
   "HomePage.personalizedForecastsTitle": "پیش بینی های کیهانی سفارشی",
-  "HomePage.personalizedForecastsSubtitleUser": "پانل آسمانی شما برای انرژی های امروز ، {userName}.",
-  "HomePage.personalizedForecastsSubtitleGuest": "دیدگاه های شخصی خود را شروع کنید.",
-  "HomePage.welcomeGuestTitle": "از اخترشناسی خوش آمدید!",
-  "HomePage.guestPrompt": "برای به دست آوردن پیش بینی های کیهانی سفارشی ، مشخصات خود را وارد یا تکمیل کنید.",
-  "HomePage.userForecastTitle": "پیش بینی کیهانی {userName}",
+  "HomePage.personalizedForecastsSubtitleUser": "پانل آسمانی شما برای انرژی های امروز ، {userName}",
   "HomePage.comingSoon": "به زودی",
   "HomePage.yesterdayTab": "دیروز",
   "HomePage.todayTab": "امروز",
@@ -73,7 +68,6 @@
   "HomePage.horoscopeTitleWeekly": "فال هفتگی",
   "HomePage.horoscopeTitleMonthly": "فال ماهانه",
   "HomePage.horoscopeLoveTitleMonth": "فال عشق - {date}",
-  "HomePage.horoscopeMainTitlePeriod": "چشم انداز اصلی - {date}",
   "HomePage.shareHoroscope": "فال سهم",
   "HomePage.welcomeUser": "خوشامد",
   "HomePage.completeProfilePrompt": "لطفاً مشخصات خود را برای دیدن جزئیات زودیاک شخصی خود تکمیل کنید.",
@@ -122,10 +116,8 @@
   "UserZodiacCard.modality": "حالت",
   "UserZodiacCard.completeProfile": "نمایه خود را کامل کنید",
   "UserZodiacCard.discoverButton": "کشف کردن",
-  "HoroscopeSection.title": "{signName} foroscopo",
-  "HoroscopeSection.dailyTitleTemplate": "{signName} Diary Foroscopo",
-  "HoroscopeSection.weeklyTitleTemplate": "{signName} زباله هفتگی",
-  "HoroscopeSection.monthlyTitleTemplate": "فال ماهانه {signName}",
+  "HoroscopeSection.title": "{signName} Diary Foroscopo",
+  "HoroscopeSection.weeklyTitleTemplate": "{signName}",
   "HoroscopeSection.description": "علامت خود را انتخاب کنید تا پیش بینی اخترشناسی خود را ببینید.",
   "HoroscopeSection.selectSignPlaceholder": "Select Sign",
   "HoroscopeSection.loading": "بارگیری دیدگاه های کیهانی شما ...",
@@ -175,7 +167,6 @@
   "LunarAscendantSection.currentLunarPhaseTitle": "مرحله قمری فعلی",
   "LunarAscendantSection.loadingLunar": "پیگیری ماه ...",
   "LunarAscendantSection.nextFullMoon": "ماه کامل بعدی: {date}",
-  "LunarAscendantSection.nextNewMoon": "ماه جدید: {date}",
   "LunarAscendantSection.errorLunar": "داده های قمری قابل بارگیری نیست.",
   "LunarAscendantSection.calculateAscendantTitle": "علامت صعودی خود را محاسبه کنید",
   "LunarAscendantSection.birthDateLabel": "تولد",
@@ -243,7 +234,7 @@
   "ChineseHoroscopePage.compatibilityReportTitle": "سازگاری بین {animal1} و {animal2}",
   "ChineseHoroscopePage.enterBirthYear": "سال تولد خود را وارد کنید",
   "ChineseHoroscopePage.invalidYear": "لطفاً یک سال معتبر وارد کنید (به عنوان مثال 1990).",
-  "ChineseHoroscopePage.signInfoTitle": "اطلاعات امضاء",
+  "ChineseHoroscopePage.signInfoTitle": "اطلاعات برج",
   "ChineseHoroscopePage.checkingCompatibility": "تأیید سازگاری ...",
   "ChineseHoroscopeDetail.traitsTitle": "صفات {signName}",
   "ChineseHoroscopePage.descriptions.Rat": "مبتکر ، مبتکرانه ، جذاب و اقناعی.",
@@ -349,7 +340,7 @@
       },
       "additionalInfoLabel": "اطلاعات اضافی (اختیاری)",
       "additionalInfoPlaceholder": "در صورت تمایل جزئیات بیشتری را ارائه دهید ...",
-      "warning": "ZZZPH000ZZADOVELITUE: </strong> این عمل به طور دائم حساب خود و تمام داده های مرتبط را از بین می برد. این روند نمی تواند خنثی شود. ما درخواست شما را ظرف 30 روز پردازش خواهیم کرد. <strong>",
+      "warning": "PH000ZZADOVELITUE: </strong> این عمل به طور دائم حساب خود و تمام داده های مرتبط را از بین می برد. این روند نمی تواند خنثی شود. ما درخواست شما را ظرف 30 روز پردازش خواهیم کرد. <strong>",
       "submitButton": "درخواست حذف داده ها",
       "submittingButton": "ارسال درخواست ..."
     },
@@ -358,8 +349,7 @@
       "requestSentDescription": "درخواست حذف شما دریافت شده است. ما ظرف 30 روز با شما در تماس خواهیم بود.",
       "errorTitle": "اشتباه",
       "errorDescription": "برنامه قابل ارسال نیست. لطفا دوباره امتحان کنید"
-    }
-  },
+    } },
   "MayanHoroscopePage.title": "فال",
   "MayanHoroscopePage.subtitle": "دیدگاه های قدیمی طالع بینی مایان را کشف کنید.",
   "MayanHoroscopePage.discoverKinButton": "خویشاوندان خود را کشف کنید",
@@ -678,7 +668,6 @@
   "Share.errorMessageClipboard": "نمی توان کپی کرد. لطفا سعی کنید به صورت دستی به اشتراک بگذارید.",
   "Share.buttonLabelRevelationLinkContent": "این مکاشفه را به اشتراک بگذارید",
   "Share.personalizedHoroscopeTitle": "فال اخترشناسی شخصی من برای {signName}",
-  "Share.horoscopeTitle": "فال برای {signName}ZZZZZZZZZZZZZ",
   "Share.personalizedHoroscopePrefix": "برای {userName} ({signName}):",
   "Share.downloadAppPrompt": "برای دیدگاه های بیشتر اخترشناسی را کشف کنید!",
   "Share.appStoreLinkPlaceholder": "https://apps.apple.com/app/tu-app-id-qui",
@@ -693,7 +682,7 @@
   "Error.genericTitle": "اشتباه",
   "Data.notAvailable": "<< n/d",
   "OnboardingPage.title": "از اخترشناسی خوش آمدید!",
-  "OnboardingPage.subtitleStep": "{currentStep}zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzندتشی {totalSteps}",
+  "OnboardingPage.subtitleStep": "{currentStep} de {totalSteps}",
   "OnboardingPage.loadingOnboarding": "بارگیری در هواپیما ...",
   "OnboardingPage.step1Title": "نام شما",
   "OnboardingPage.step1Description": "چگونه باید با شما تماس بگیریم؟ این نام عمومی شما در برنامه خواهد بود.",
@@ -860,8 +849,7 @@
     },
     "housesDetails": {
       "noPlacementsFound": "هیچ خانه مهمی پیدا نشد."
-    }
-  },
+    } },
   "birthForm": {
     "dateLabel": "تولد",
     "timeLabel": "زمان تولد",
@@ -1000,9 +988,9 @@
   "ProfilePage.watchAdDescription": "+{amount} 💫 برای زمان خود!",
   "ProfilePage.buyStardustTitle": "گرد و غبار ستاره بخرید",
   "Toast.rateSuccessTitle": "ممنون",
-  "Toast.rateSuccessDescription": "شما با {amount}zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzs پاداش داده شده است.",
+  "Toast.rateSuccessDescription": "شما با {amount}s پاداش داده شده است.",
   "Toast.adWatchedTitle": "آگهی تمام شده",
-  "Toast.adWatchedDescription": "شما برنده {amount}zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzندتسا برنده شده اید.",
+  "Toast.adWatchedDescription": "شما برنده {amount}ندتسا برنده شده اید.",
   "Toast.alreadyRated": "شما قبلاً این پاداش را ادعا کرده اید.",
   "Toast.dailyReactionStardust": "+{amount} 💫 برای اولین واکنش روز شما!",
   "Toast.dailyCommentStardust": "+{amount} 💫 برای اولین نظر خود در روز!",
@@ -1020,9 +1008,9 @@
   "Toast.adRequiredDescription": "دیدن یک تبلیغ کوتاه برای اولین بار از روز.",
   "Toast.watchingAd": "دیدن تبلیغات ...",
   "Toast.notEnoughStardustTitle": "پودر ستاره ای کافی",
-  "Toast.notEnoughStardustDescription": "You need {cost}ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ AND STARTING DUST TO USE THIS NEW TODAY. در بخش \"بیشتر\" اطلاعات بیشتری کسب کنید.",
+  "Toast.notEnoughStardustDescription": "You need {cost} AND STARTING DUST TO USE THIS NEW TODAY. در بخش \"بیشتر\" اطلاعات بیشتری کسب کنید.",
   "Toast.stardustSpent": "صحبت از گرد و غبار ستاره ای",
-  "Toast.stardustSpentDescription": "{cost}zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzo برای این خواندن.",
+  "Toast.stardustSpentDescription": "{cost}o برای این خواندن.",
   "Toast.notificationsEnabledTitle": "اعلان های فعال شده",
   "Toast.notificationsEnabledDesc": "اکنون به روزرسانی های اخترشناسی دریافت خواهید کرد!",
   "Toast.notificationsDeniedTitle": "مجوز رد شد",

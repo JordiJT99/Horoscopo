@@ -358,8 +358,7 @@
       "requestSentDescription": "您的淘汰申请已收到。我们将在30天内与您联系。",
       "errorTitle": "错误",
       "errorDescription": "该应用程序无法发送。请重试。"
-    }
-  },
+    } },
   "MayanHoroscopePage.title": "玛雅星座",
   "MayanHoroscopePage.subtitle": "发现玛雅占星术的旧观点。",
   "MayanHoroscopePage.discoverKinButton": "发现你的亲戚",
@@ -678,7 +677,7 @@
   "Share.errorMessageClipboard": "它无法复制。请尝试手动分享。",
   "Share.buttonLabelRevelationLinkContent": "分享这个启示",
   "Share.personalizedHoroscopeTitle": "我个性化的{signName}的星座标志 {signName}",
-  "Share.horoscopeTitle": "{signName}zzzzzzzzzzzzzz的星座 {signName}",
+  "Share.horoscopeTitle": "{signName}的星座 {signName}",
   "Share.personalizedHoroscopePrefix": "对于{userName}（{signName}）： {userName} {signName}",
   "Share.downloadAppPrompt": "发现Astromistics以获取更多观点！",
   "Share.appStoreLinkPlaceholder": "https://apps.apple.com/app/tu-app-id-qui",
@@ -693,7 +692,7 @@
   "Error.genericTitle": "错误",
   "Data.notAvailable": "N/D。",
   "OnboardingPage.title": "欢迎Astromistics！",
-  "OnboardingPage.subtitleStep": "zzzph000 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzSPERI所以知道 {currentStep} {totalSteps}",
+  "OnboardingPage.subtitleStep": "第 {currentStep} {totalSteps}",
   "OnboardingPage.loadingOnboarding": "加载入职...",
   "OnboardingPage.step1Title": "你的名字",
   "OnboardingPage.step1Description": "我们应该怎么打电话给你？这将是您在应用程序中的公开名称。",
@@ -860,8 +859,7 @@
     },
     "housesDetails": {
       "noPlacementsFound": "找不到重要的房屋。"
-    }
-  },
+    } },
   "birthForm": {
     "dateLabel": "出生日期",
     "timeLabel": "出生时间",

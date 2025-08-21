@@ -5,7 +5,7 @@
   "Header.changeLanguage": "Idioma",
   "Header.horoscopes": "Horóscopos",
   "Header.compatibility": "Compat.",
-  "Header.tarot": "Tarot",
+  "Header.tarot": "טארוט",
   "Header.crystalBall": "Oráculo",
   "Header.more": "Más",
   "Header.profile": "Perfil",
@@ -243,7 +243,7 @@
   "ChineseHoroscopePage.compatibilityReportTitle": "Compatibilidad entre {animal1} y {animal2}",
   "ChineseHoroscopePage.enterBirthYear": "Ingresa tu año de nacimiento",
   "ChineseHoroscopePage.invalidYear": "Por favor, ingresa un año válido (ej. 1990).",
-  "ChineseHoroscopePage.signInfoTitle": "Información del Signo",
+  "ChineseHoroscopePage.signInfoTitle": "מידע על המזל",
   "ChineseHoroscopePage.checkingCompatibility": "Verificando compatibilidad...",
   "ChineseHoroscopeDetail.traitsTitle": "Rasgos de {signName}",
   "ChineseHoroscopePage.descriptions.Rat": "Inventivo, ingenioso, encantador y persuasivo.",
@@ -358,8 +358,7 @@
       "requestSentDescription": "Su solicitud de eliminación ha sido recibida. Nos pondremos en contacto con usted dentro de 30 días.",
       "errorTitle": "Error",
       "errorDescription": "No se pudo enviar la solicitud. Por favor, inténtelo de nuevo."
-    }
-  },
+    } },
   "MayanHoroscopePage.title": "Horóscopo Maya",
   "MayanHoroscopePage.subtitle": "Descubre las antiguas perspectivas de la astrología maya.",
   "MayanHoroscopePage.discoverKinButton": "Descubre tu Kin",
@@ -860,8 +859,7 @@
     },
     "housesDetails": {
       "noPlacementsFound": "No se encontraron emplazamientos de casas significativos."
-    }
-  },
+    } },
   "birthForm": {
     "dateLabel": "Fecha de Nacimiento",
     "timeLabel": "Hora de Nacimiento",
