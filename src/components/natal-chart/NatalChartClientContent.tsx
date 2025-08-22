@@ -215,17 +215,35 @@ export default function NatalChartClientContent({
         )}
       </div>
       
-      <div className="flex justify-center mb-6 space-x-2 sm:space-x-4 flex-wrap">
-         <Button variant={activeTab === 'details' ? 'default' : 'ghost'} onClick={() => setActiveTab('details')}>
+      <div className="flex justify-center mb-6 gap-4">
+        <Button
+          variant="ghost"
+          onClick={() => setActiveTab('details')}
+          className={`px-6 py-2 text-lg font-semibold transition-colors ${
+            activeTab === 'details'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-foreground/60 hover:text-foreground/90'
+          }`}
+        >
           {dictionary.NatalChartPage?.detailsTab || 'Details'}
         </Button>
-        <Button variant={activeTab === 'aspects' ? 'default' : 'ghost'} onClick={() => setActiveTab('aspects')}>
+        <Button
+          variant="ghost"
+          onClick={() => setActiveTab('aspects')}
+          className={`px-6 py-2 text-lg font-semibold transition-colors ${
+            activeTab === 'aspects'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-foreground/60 hover:text-foreground/90'
+          }`}
+        >
           {dictionary.NatalChartPage?.aspectsTab || 'Aspects'}
         </Button>
-        <Button variant={activeTab === 'houses' ? 'default' : 'ghost'} onClick={() => setActiveTab('houses')}>
-          {dictionary.NatalChartPage?.housesTab || 'Houses'}
-        </Button>
-      </div>
+        <Button
+          variant="ghost"
+          onClick={() => setActiveTab('houses')}
+          className={`px-6 py-2 text-lg font-semibold transition-colors ${
+            activeTab === 'houses' ? 'text-primary border-b-2 border-primary' : 'text-foreground/60 hover:text-foreground/90'
+          }`}>          {dictionary.NatalChartPage?.housesTab || 'Houses'}        </Button>      </div>
 
       {activeTab === 'aspects' && explanations?.aspectsDetails && (
         <NatalChartAspectsView aspectsDetails={explanations.aspectsDetails} dictionary={dictionary} />
