@@ -13,6 +13,7 @@ import { usePersonalizedHoroscope } from '@/hooks/use-personalized-horoscope';
 import { motion, type PanInfo } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { format, subDays, addDays } from 'date-fns';
 
 import SignSelectorHorizontalScroll from '@/components/shared/SignSelectorHorizontalScroll';
@@ -25,11 +26,12 @@ import DailyTransitWidget from './DailyTransitWidget';
 import DailyTipWidget from './DailyTipWidget';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Share2, Heart, CircleDollarSign, Activity } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { usePremium } from '@/hooks/use-premium';
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import AdBanner from '@/components/shared/AdBanner';
+import PremiumLockScreen from '@/components/premium/PremiumLockScreen';
 import React from 'react';
 import { HoroscopeFirestoreService } from '@/lib/horoscope-firestore-service';
 
@@ -43,6 +45,11 @@ interface AstroVibesPageContentProps {
 const orderedTabs: HoroscopePeriod[] = ['yesterday', 'today', 'tomorrow', 'weekly', 'monthly'];
 const SWIPE_CONFIDENCE_THRESHOLD = 8000;
 const SWIPE_OFFSET_THRESHOLD = 50;
+
+function getAvailableTabs(isPremium: boolean): HoroscopePeriod[] {
+  // Mostrar todas las pestañas, pero "mañana" mostrará pantalla de bloqueo si no es premium
+  return orderedTabs;
+}
 
 function getDeterministicRandom(seedString: string, min: number, max: number): number {
   let hash = 0;
@@ -68,7 +75,7 @@ export default function AstroVibesHomePageContent({
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const { addEnergyPoints } = useCosmicEnergy();
-  const isPremium = true; 
+  const { isPremium, premiumFeatures, checkDailyLogin, togglePremiumForTesting } = usePremium(); 
 
   const [onboardingData, setOnboardingData] = useState<OnboardingFormData | null>(null);
   const [userSunSign, setUserSunSign] = useState<ZodiacSign | null>(null);
@@ -99,6 +106,13 @@ export default function AstroVibesHomePageContent({
         return { displayPeriod: 'daily' as const, targetDate: format(now, 'yyyy-MM-dd'), weekKey: '', monthKey: '' };
     }
   }, [initialActivePeriod]);
+
+  // Verificar login diario para usuarios premium
+  useEffect(() => {
+    if (user && isPremium) {
+      checkDailyLogin();
+    }
+  }, [user, isPremium, checkDailyLogin]);
 
   // Hook para cargar horóscopos personalizados (solo cuando el usuario está viendo su propio signo)
   const shouldUsePersonalized = useMemo(() => {
@@ -354,10 +368,11 @@ export default function AstroVibesHomePageContent({
 
 
   const paginate = (newDirection: number) => {
-    const currentIndex = orderedTabs.indexOf(initialActivePeriod);
+    const availableTabs = getAvailableTabs(isPremium);
+    const currentIndex = availableTabs.indexOf(initialActivePeriod);
     const nextIndex = currentIndex + newDirection;
-    if (nextIndex >= 0 && nextIndex < orderedTabs.length) {
-      handleSubHeaderTabSelect(orderedTabs[nextIndex]);
+    if (nextIndex >= 0 && nextIndex < availableTabs.length) {
+      handleSubHeaderTabSelect(availableTabs[nextIndex]);
     }
   };
 
@@ -450,29 +465,38 @@ export default function AstroVibesHomePageContent({
           dictionary={dictionary}
           activeTab={initialActivePeriod}
           onTabChange={handleSubHeaderTabSelect}
+          availableTabs={getAvailableTabs(isPremium)}
         />
 
-        <motion.div
-            key={motionDivKey}
-            drag={isMobile ? "x" : false}
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragEnd={isMobile ? handleDragEnd : undefined}
-            className="w-full cursor-grab active:cursor-grabbing"
-        >
+        {/* Verificar si se debe mostrar pantalla de bloqueo premium para horóscopo de mañana */}
+        {initialActivePeriod === 'tomorrow' && !premiumFeatures.tomorrowHoroscope ? (
+          <PremiumLockScreen 
+            dictionary={dictionary} 
+            locale={locale} 
+            featureTitle={dictionary['HomePage.tomorrowTab'] || "Tomorrow's Horoscope"} 
+          />
+        ) : (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+              key={motionDivKey}
+              drag={isMobile ? "x" : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={isMobile ? handleDragEnd : undefined}
+              className="w-full cursor-grab active:cursor-grabbing"
           >
-            <SelectedSignDisplay
-              dictionary={dictionary}
-              locale={locale}
-              selectedSign={selectedDisplaySign}
-              isPersonalized={shouldUsePersonalized}
-              userProfile={userAstrologyProfile}
-            />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <SelectedSignDisplay
+                dictionary={dictionary}
+                locale={locale}
+                selectedSign={selectedDisplaySign}
+                isPersonalized={shouldUsePersonalized}
+                userProfile={userAstrologyProfile}
+              />
+            </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -517,7 +541,7 @@ export default function AstroVibesHomePageContent({
             </div>
             
             {currentDisplayHoroscope && !isHoroscopeLoading && (
-              <div className="flex justify-center mt-1 mb-4">
+              <div className="flex justify-center gap-2 mt-1 mb-4">
                 <Button
                     variant="outline"
                     size="default"
@@ -526,6 +550,16 @@ export default function AstroVibesHomePageContent({
                     aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
                 >
                     <Share2 className="h-5 w-5 mr-2" /> {dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}
+                </Button>
+                
+                {/* Botón temporal para pruebas de Premium */}
+                <Button
+                    variant={isPremium ? "default" : "secondary"}
+                    size="default"
+                    onClick={togglePremiumForTesting}
+                    className="text-xs font-bold"
+                >
+                    {isPremium ? "👑 PREMIUM" : "🔒 FREE"}
                 </Button>
               </div>
             )}
@@ -556,7 +590,7 @@ export default function AstroVibesHomePageContent({
                         {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
                       </p>
                     </div>
-                    {!isPremium && index === 0 && <AdBanner dictionary={dictionary} />}
+                    {!premiumFeatures.noAds && index === 0 && <AdBanner dictionary={dictionary} />}
                   </React.Fragment>
                 ))
               ) : (
@@ -574,6 +608,7 @@ export default function AstroVibesHomePageContent({
             <PromotionCard dictionary={dictionary} locale={locale} />
           </motion.div>
         </motion.div>
+        )} {/* Cierre de la condición premium */}
       </main>
     </div>
   );

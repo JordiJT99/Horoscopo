@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { usePremium } from '@/hooks/use-premium';
 import { Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -15,14 +16,14 @@ interface SubHeaderTabsProps {
   dictionary: Dictionary;
   activeTab: HoroscopePeriod;
   onTabChange: (tab: HoroscopePeriod) => void;
+  availableTabs?: HoroscopePeriod[]; // Permitir filtrar las pestañas disponibles
 }
 
-const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProps) => {
-  const { } = useCosmicEnergy();
-  const isPremium = true; // All users have premium access now
+const SubHeaderTabs = ({ dictionary, activeTab, onTabChange, availableTabs }: SubHeaderTabsProps) => {
+  const { isPremium } = usePremium();
   const { toast } = useToast();
   
-  const tabs: { id: HoroscopePeriod; labelKey: string }[] = [
+  const allTabs: { id: HoroscopePeriod; labelKey: string }[] = [
     { id: 'yesterday', labelKey: 'HomePage.yesterdayTab' },
     { id: 'today', labelKey: 'HomePage.todayTab' },
     { id: 'tomorrow', labelKey: 'HomePage.tomorrowTab' },
@@ -30,8 +31,14 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
     { id: 'monthly', labelKey: 'HomePage.monthlyTab' },
   ];
 
+  // Usar las pestañas disponibles pasadas como prop, o filtrar por premium
+  const tabs = availableTabs ? 
+    allTabs.filter(tab => availableTabs.includes(tab.id)) :
+    allTabs.filter(tab => tab.id !== 'tomorrow' || isPremium);
+
   const handleTabClick = (tab: HoroscopePeriod) => {
-    // Eliminar restricción premium - permitir acceso a todos los tabs
+    // Permitir navegación a todas las pestañas
+    // El bloqueo premium se manejará en el contenido, no en la navegación
     onTabChange(tab);
   };
 
@@ -44,7 +51,6 @@ const SubHeaderTabs = ({ dictionary, activeTab, onTabChange }: SubHeaderTabsProp
         <div className="flex justify-between items-center overflow-x-auto whitespace-nowrap no-scrollbar py-2" role="tablist">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
-            // Eliminar lógica de bloqueo premium
             
             return (
               <Button

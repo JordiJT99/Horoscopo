@@ -318,7 +318,8 @@ export type GameActionId =
   | 'use_dream_reading'
   | 'add_community_comment'
   | 'react_to_post'
-  | 'daily_stardust';
+  | 'daily_stardust'
+  | 'daily_login_premium';
 
 export interface CosmicEnergyState {
   points: number;

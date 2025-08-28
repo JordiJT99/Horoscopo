@@ -356,6 +356,30 @@ export const useCosmicEnergy = () => {
         return true;
     }, [user]);
 
+    const awardPremiumDailyBonus = useCallback(async (): Promise<boolean> => {
+        if (!user?.uid || !store) return false;
+        
+        const currentState = store.getState();
+        const today = new Date().toISOString().split('T')[0];
+        const lastGainedDate = currentState.lastGained['daily_login_premium'];
+        
+        // Si ya se otorgó hoy, no hacer nada
+        if (lastGainedDate === today) {
+            return false;
+        }
+        
+        // Otorgar 2 polvos estelares por login diario premium
+        const premiumBonusAmount = 2;
+        
+        await store.setState({
+            stardust: (currentState.stardust || 0) + premiumBonusAmount,
+            lastGained: { ...currentState.lastGained, 'daily_login_premium': today },
+        });
+        
+        console.log(`✨ Premium daily bonus awarded: ${premiumBonusAmount} stardust`);
+        return true;
+    }, [user]);
+
     const pointsForCurrentLevel = LEVEL_THRESHOLDS[state.level - 1] ?? 0;
     const pointsForNextLevel = LEVEL_THRESHOLDS[state.level] ?? LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length-1];
     const progress = pointsForNextLevel === pointsForCurrentLevel ? 100 : Math.max(0, Math.min(100, ((state.points - pointsForCurrentLevel) / (pointsForNextLevel - pointsForCurrentLevel)) * 100));
@@ -375,6 +399,7 @@ export const useCosmicEnergy = () => {
         claimRateReward,
         checkAndAwardDailyStardust,
         awardStardustForAction,
+        awardPremiumDailyBonus,
         isLoading: authIsLoading || state.isLoading,
     };
 };
