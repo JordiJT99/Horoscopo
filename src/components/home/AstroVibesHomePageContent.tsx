@@ -436,7 +436,11 @@ export default function AstroVibesHomePageContent({
     return (
       <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-var(--top-bar-height,56px)-var(--bottom-nav-height,64px))]">
         <LoadingSpinner className="h-12 w-12 text-primary" />
-        {dictionary && Object.keys(dictionary).length > 0 && <p className="mt-4 font-body text-muted-foreground">{dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}</p>}
+        {dictionary && Object.keys(dictionary).length > 0 && (
+          <p className="mt-4 font-body text-muted-foreground">
+            {dictionary['HomePage.loadingDashboard'] || "Loading Cosmic Dashboard..."}
+          </p>
+        )}
       </div>
     );
   }
@@ -498,117 +502,118 @@ export default function AstroVibesHomePageContent({
               />
             </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <FeatureLinkCards dictionary={dictionary} locale={locale} />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <FeatureLinkCards dictionary={dictionary} locale={locale} />
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <HoroscopeCategoriesSummary
-              dictionary={dictionary}
-              titleKey={summaryTitleKey}
-              subtitleKey="HoroscopeSummary.relations"
-              categories={summaryCategories}
-              isLoading={isHoroscopeLoading}
-              horoscopeDetail={currentDisplayHoroscope}
-            />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <HoroscopeCategoriesSummary
+                dictionary={dictionary}
+                titleKey={summaryTitleKey}
+                subtitleKey="HoroscopeSummary.relations"
+                categories={summaryCategories}
+                isLoading={isHoroscopeLoading}
+                horoscopeDetail={currentDisplayHoroscope}
+              />
+            </motion.div>
 
-          <motion.div
-            id="horoscope-details-section"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-3 sm:space-y-4"
-          >
-            <div className={cn("mb-2 sm:mb-3 px-1")}>
-              <h2 className={cn(
-                "font-semibold font-headline text-foreground flex items-center text-xl sm:text-2xl"
-              )}>
-                <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6 mr-1.5 sm:mr-2 text-muted-foreground" />
-                {dictionary[pageTitleKey] || "Horoscope Details"}
-                 {shouldUsePersonalized && onboardingData?.name && (
-                  <span className={cn("text-base sm:text-lg text-primary ml-1.5")}>({onboardingData.name})</span>
-                )}
-              </h2>
-            </div>
-            
-            {currentDisplayHoroscope && !isHoroscopeLoading && (
-              <div className="flex justify-center gap-2 mt-1 mb-4">
-                <Button
-                    variant="outline"
-                    size="default"
-                    onClick={handleShareHoroscope}
-                    className="text-primary hover:text-primary border-primary/50 hover:bg-primary/10"
-                    aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
-                >
-                    <Share2 className="h-5 w-5 mr-2" /> {dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}
-                </Button>
-                
-                {/* Botón temporal para pruebas de Premium */}
-                <Button
-                    variant={isPremium ? "default" : "secondary"}
-                    size="default"
-                    onClick={togglePremiumForTesting}
-                    className="text-xs font-bold"
-                >
-                    {isPremium ? "👑 PREMIUM" : "🔒 FREE"}
-                </Button>
+            <motion.div
+              id="horoscope-details-section"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="space-y-3 sm:space-y-4"
+            >
+              <div className={cn("mb-2 sm:mb-3 px-1")}>
+                <h2 className={cn(
+                  "font-semibold font-headline text-foreground flex items-center text-xl sm:text-2xl"
+                )}>
+                  <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6 mr-1.5 sm:mr-2 text-muted-foreground" />
+                  {dictionary[pageTitleKey] || "Horoscope Details"}
+                   {shouldUsePersonalized && onboardingData?.name && (
+                    <span className={cn("text-base sm:text-lg text-primary ml-1.5")}>({onboardingData.name})</span>
+                  )}
+                </h2>
               </div>
-            )}
-
-            <div className="space-y-3 sm:space-y-4">
-              {isHoroscopeLoading ? (
-                Array.from({ length: 3 }).map((_, index) => (
-                  <div key={`skeleton-cat-${index}`} className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4">
-                    <h3 className="font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl">
-                      <LoadingSpinner className="h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" />
-                      {dictionary['HoroscopeSection.loading'] || "Loading..."}
-                    </h3>
-                    <div className="space-y-1.5">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-5/6" />
-                    </div>
-                  </div>
-                ))
-              ) : currentDisplayHoroscope ? (
-                detailedHoroscopeCategories.map((cat, index) => (
-                  <React.Fragment key={`${cat.id}-${motionDivKey}-detail`}>
-                    <div className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4")}>
-                      <h3 className={cn("font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl")}>
-                        <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2")} />
-                        {dictionary[cat.titleKey]}
-                      </h3>
-                      <p className="font-body text-sm text-foreground/80 leading-relaxed">
-                        {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
-                      </p>
-                    </div>
-                    {!premiumFeatures.noAds && index === 0 && <AdBanner dictionary={dictionary} />}
-                  </React.Fragment>
-                ))
-              ) : (
-                <div className="sm:col-span-2 text-center py-10">
-                  <p className="font-body text-muted-foreground">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
+              
+              {currentDisplayHoroscope && !isHoroscopeLoading && (
+                <div className="flex justify-center gap-2 mt-1 mb-4">
+                  <Button
+                      variant="outline"
+                      size="default"
+                      onClick={handleShareHoroscope}
+                      className="text-primary hover:text-primary border-primary/50 hover:bg-primary/10"
+                      aria-label={dictionary['HomePage.shareHoroscopeAria'] || "Share this horoscope"}
+                  >
+                      <Share2 className="h-5 w-5 mr-2" /> {dictionary['HomePage.shareHoroscope'] || "Share Horoscope"}
+                  </Button>
+                  
+                  {/* Botón temporal para pruebas de Premium */}
+                  <Button
+                      variant={isPremium ? "default" : "secondary"}
+                      size="default"
+                      onClick={togglePremiumForTesting}
+                      className="text-xs font-bold"
+                  >
+                      {isPremium ? "👑 PREMIUM" : "🔒 FREE"}
+                  </Button>
                 </div>
               )}
-            </div>
+
+              <div className="space-y-3 sm:space-y-4">
+                {isHoroscopeLoading ? (
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <div key={`skeleton-cat-${index}`} className="bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4">
+                      <h3 className="font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl">
+                        <LoadingSpinner className="h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2" />
+                        {dictionary['HoroscopeSection.loading'] || "Loading..."}
+                      </h3>
+                      <div className="space-y-1.5">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-5/6" />
+                      </div>
+                    </div>
+                  ))
+                ) : currentDisplayHoroscope ? (
+                  detailedHoroscopeCategories.map((cat, index) => (
+                    <React.Fragment key={`${cat.id}-${motionDivKey}-detail`}>
+                      <div className={cn("bg-card/70 backdrop-blur-sm border-border/30 rounded-xl shadow-lg p-3 sm:p-4")}>
+                        <h3 className={cn("font-semibold font-headline text-primary mb-1.5 sm:mb-2 flex items-center text-lg sm:text-xl")}>
+                          <cat.icon className={cn("h-5 w-5 sm:h-6 sm:h-6 mr-1.5 sm:mr-2")} />
+                          {dictionary[cat.titleKey]}
+                        </h3>
+                        <p className="font-body text-sm text-foreground/80 leading-relaxed">
+                          {cat.content || (dictionary['HoroscopeSection.noData'] || "No data available.")}
+                        </p>
+                      </div>
+                      {!premiumFeatures.noAds && index === 0 && <AdBanner dictionary={dictionary} />}
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <div className="sm:col-span-2 text-center py-10">
+                    <p className="font-body text-muted-foreground">{dictionary['HoroscopeSection.noData'] || "No data available."}</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <PromotionCard dictionary={dictionary} locale={locale} />
+            </motion.div>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <PromotionCard dictionary={dictionary} locale={locale} />
-          </motion.div>
-        </motion.div>
-        )} {/* Cierre de la condición premium */}
+        )}
       </main>
     </div>
   );

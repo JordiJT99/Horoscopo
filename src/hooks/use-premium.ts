@@ -23,12 +23,15 @@ export function usePremium(): UsePremiumReturn {
   const [isPremium, setIsPremium] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Por ahora, vamos a implementar premium features como FALSE por defecto
-  // para poder probar el sistema de restricciones
+  // Lógica premium: usuarios logueados = premium
   useEffect(() => {
-    // TODO: Aquí deberías verificar el estado premium real del usuario
-    // Por ahora, todos los usuarios son NO premium para probar las restricciones
-    setIsPremium(false);
+    if (user) {
+      // Usuario logueado = Premium
+      setIsPremium(true);
+    } else {
+      // Usuario no logueado = No premium
+      setIsPremium(false);
+    }
     setLoading(false);
   }, [user]);
 
