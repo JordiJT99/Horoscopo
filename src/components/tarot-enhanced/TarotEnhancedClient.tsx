@@ -29,6 +29,7 @@ import SectionTitle from "@/components/shared/SectionTitle";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { usePremium } from "@/hooks/use-premium";
 import { useCosmicEnergy } from "@/hooks/use-cosmic-energy";
+import { useAdMob } from "@/hooks/use-admob-ads";
 import { tarotSpreadFlow } from "@/ai/flows/tarot-spread-flow";
 import { pastPresentFutureFlow } from "@/ai/flows/past-present-future-flow";
 import { multiCardFlow } from "@/ai/flows/multi-card-flow";
@@ -99,6 +100,7 @@ export default function TarotEnhancedClient({ dictionary, locale }: TarotEnhance
 
   const { isPremium } = usePremium();
   const { addEnergyPoints } = useCosmicEnergy();
+  const { showRewardedAd } = useAdMob();
 
   const cardBackPath = "/custom_assets/tarot-card-back.png";
 
@@ -263,6 +265,17 @@ export default function TarotEnhancedClient({ dictionary, locale }: TarotEnhance
         setIsLoading(false);
         setShowPremiumDialog(true);
         return;
+      }
+
+      // If user is not premium, require watching a rewarded ad before revealing the reading
+      if (!isPremium) {
+        try {
+          await showRewardedAd();
+        } catch (adErr) {
+          console.error('Rewarded ad failed or aborted', adErr);
+          setIsLoading(false);
+          return; // don't proceed to generate the reading if ad wasn't successfully shown
+        }
       }
 
       if (configuration.readingType === "past_present_future" && selectedCards.length === 3) {
