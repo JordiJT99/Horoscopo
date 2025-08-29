@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from 'react';
 import type { Dictionary, Locale } from '@/types';
 import { ALL_TAROT_CARDS, getTarotCardImagePath } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
+import { usePremium } from '@/hooks/use-premium';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { tarotSpreadFlow } from '@/ai/flows/tarot-spread-flow';
@@ -47,7 +48,7 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
   const { user } = useAuth();
   const { stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
   const { showRewardedAd, showInterstitial } = useAdMob();
-  const isPremium = true; // All users have premium access now
+  const { isPremium } = usePremium();
 
   const [shuffledCards, setShuffledCards] = useState<string[]>([]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
@@ -204,35 +205,33 @@ export default function TarotSpreadClient({ dictionary, locale }: TarotSpreadCli
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
-              <CardHeader className="text-center">
-                <CardTitle className="font-headline text-2xl text-primary">{dictionary['TarotSpreadPage.readingTitle'] || "Your Tarot Spread Reading"}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-center gap-4 sm:gap-8">
-                  {[reading.card1, reading.card2].map((card, i) => (
-                    <div key={i} className="flex flex-col items-center gap-2">
-                       <motion.div
-                          className="w-[100px] h-[175px] sm:w-[140px] sm:h-[245px] rounded-lg shadow-lg border-2 border-primary/50"
-                          initial={{ rotate: card.isReversed ? 180 : 0 }}
-                       >
-                         <Image src={card.imagePlaceholderUrl} alt={card.cardName} width={140} height={245} className="w-full h-full rounded-md object-cover" />
-                       </motion.div>
-                       <p className="font-semibold text-center text-sm">{card.cardName} {card.isReversed && `(${dictionary['Tarot.reversed'] || 'Reversed'})`}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-4 bg-background/30 rounded-lg">
-                  <p className="whitespace-pre-line text-card-foreground leading-relaxed">{reading.reading}</p>
-                </div>
-                <div className="text-center">
-                   <Button onClick={handleReset} variant="outline" size="lg">
-                     <RotateCcw className="mr-2 h-5 w-5" />
-                     {dictionary['TarotSpreadPage.drawAgainButton'] || "Draw Again"}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Show only images and labels (no colored card background) */}
+            <div className="space-y-6">
+              <div className="flex justify-center gap-4 sm:gap-8">
+                {[reading.card1, reading.card2].map((card, i) => (
+                  <div key={i} className="flex flex-col items-center gap-2">
+                    <motion.div
+                      className="w-[100px] h-[175px] sm:w-[140px] sm:h-[245px]"
+                      initial={{ rotate: card.isReversed ? 180 : 0 }}
+                    >
+                      <Image src={card.imagePlaceholderUrl} alt={card.cardName} width={140} height={245} className="w-full h-full object-cover" />
+                    </motion.div>
+                    <p className="font-semibold text-center text-sm">{card.cardName} {card.isReversed && `(${dictionary['Tarot.reversed'] || 'Reversed'})`}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="p-4">
+                <p className="whitespace-pre-line leading-relaxed">{reading.reading}</p>
+              </div>
+
+              <div className="text-center">
+                <Button onClick={handleReset} variant="outline" size="lg">
+                  <RotateCcw className="mr-2 h-5 w-5" />
+                  {dictionary['TarotSpreadPage.drawAgainButton'] || "Draw Again"}
+                </Button>
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
       )}

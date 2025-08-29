@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { StardustIcon } from '@/components/shared/StardustIcon';
 import { Skeleton } from '../ui/skeleton';
+import { usePremium } from '@/hooks/use-premium';
 
 interface CosmicEnergyBarProps {
   dictionary: Dictionary;
@@ -23,7 +24,7 @@ interface CosmicEnergyBarProps {
 export default function CosmicEnergyBar({ dictionary }: CosmicEnergyBarProps) {
   const { level, points, pointsForNextLevel, progress, addDebugPoints, subtractDebugPoints, stardust, addStardust, subtractStardust, lastGained, isLoading } = useCosmicEnergy();
   const { toast } = useToast();
-  const isPremium = true; 
+  const { isPremium } = usePremium();
 
   const handleAddPoints = () => {
     const { pointsAdded, leveledUp, newLevel } = addDebugPoints(100);

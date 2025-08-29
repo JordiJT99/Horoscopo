@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useCosmicEnergy } from './use-cosmic-energy';
+import { usePremiumSync } from './use-premium-sync';
 
 export interface PremiumFeatures {
   natalChart: boolean;
@@ -23,17 +24,21 @@ export function usePremium(): UsePremiumReturn {
   const [isPremium, setIsPremium] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Lógica premium: usuarios logueados = premium
+  // Use server-verified premium status when available
+  const { premiumStatus, isLoading: syncLoading } = usePremiumSync();
+
+  // Lógica premium: prefer server-verified premium status; fallback to false when unknown
   useEffect(() => {
-    if (user) {
-      // Usuario logueado = Premium
-      setIsPremium(true);
+    if (premiumStatus && typeof premiumStatus.isPremium !== 'undefined') {
+      setIsPremium(!!premiumStatus.isPremium);
+    } else if (user) {
+      // If there's a logged user but no premiumStatus yet, keep false until verification
+      setIsPremium(false);
     } else {
-      // Usuario no logueado = No premium
       setIsPremium(false);
     }
-    setLoading(false);
-  }, [user]);
+    setLoading(syncLoading ? true : false);
+  }, [user, premiumStatus, syncLoading]);
 
   const premiumFeatures: PremiumFeatures = {
     natalChart: isPremium,

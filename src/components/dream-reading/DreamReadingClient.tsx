@@ -23,6 +23,7 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { getSunSignFromDate } from '@/lib/constants';
 import { useCosmicEnergy } from '@/hooks/use-cosmic-energy';
+import { usePremium } from '@/hooks/use-premium';
 
 
 const TOTAL_STEPS = 6;
@@ -67,7 +68,7 @@ export default function DreamReadingClient({ dictionary, locale }: DreamReadingC
   const { toast } = useToast();
   const { user } = useAuth();
   const { level: userLevel, stardust, spendStardust, lastGained, addEnergyPoints } = useCosmicEnergy();
-  const isPremium = true; // All users have premium access now
+  const { isPremium } = usePremium();
 
   const [viewMode, setViewMode] = useState<ViewMode>('wizard');
   const [currentStep, setCurrentStep] = useState(1);

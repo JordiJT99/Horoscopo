@@ -105,7 +105,7 @@ export default function MorePage() {
   const allFeatures = [
     { href: "/tarot-reading", icon: TarotIcon, titleKey: "TarotReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/tarot-personality-test", icon: Sparkles, titleKey: "TarotPersonalityPage.title", newBadge: false, isPlaceholder: false },
-    { href: "/tarot-spread", icon: Layers, titleKey: "TarotSpreadPage.title", newBadge: true, isPlaceholder: false },
+    { href: "/tarot-enhanced", icon: Layers, titleKey: "TarotEnhanced.pageTitle", newBadge: true, isPlaceholder: false },
     { href: "/crystal-ball", icon: CrystalBallIcon, titleKey: "CrystalBallPage.title", newBadge: false, isPlaceholder: false },
     { href: "/dream-reading", icon: DreamIcon, titleKey: "DreamReadingPage.title", newBadge: false, isPlaceholder: false },
     { href: "/compatibility", icon: Users, titleKey: "CompatibilityPage.title", newBadge: false, isPlaceholder: false },

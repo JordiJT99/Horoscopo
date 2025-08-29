@@ -41,6 +41,7 @@ const TopBar = ({ dictionary, currentLocale }: TopBarProps) => {
     '/get-stardust': dictionary['GetStardustPage.title'] || 'Stardust',
     '/tarot-reading': dictionary['TarotReadingPage.title'] || 'Tarot Reading',
     '/tarot-spread': dictionary['TarotSpreadPage.title'] || 'Tarot Spread',
+    '/tarot-enhanced': dictionary['TarotEnhanced.pageTitle'] || 'Tarot Mejorado',
     '/tarot-personality-test': dictionary['TarotDailyReading.title'] || 'Daily Tarot',
     '/crystal-ball': dictionary['CrystalBallPage.title'] || 'Crystal Ball',
     '/dream-reading': dictionary['DreamReadingPage.title'] || 'Dream Reading',

@@ -1,11 +1,15 @@
+/**
+ * @fileOverview Página del Sistema de Tarot Mejorado
+ * Página completa que integra la experiencia mejorada de tarot con interfaz similar a tarot-spread
+ */
 
 // THIS IS NOW A SERVER COMPONENT
 import type { Dictionary } from '@/lib/dictionaries';
 import type { Locale } from '@/types';
 import { getDictionary, getSupportedLocales } from '@/lib/dictionaries';
 import SectionTitle from '@/components/shared/SectionTitle';
-import { Wand } from 'lucide-react';
-import TarotReadingClient from '@/components/tarot-reading/TarotReadingClient'; // Import the new client component
+import { Sparkles } from 'lucide-react';
+import TarotEnhancedClient from '@/components/tarot-enhanced/TarotEnhancedClient';
 import AdMobBanner from '@/components/shared/AdMobBanner';
 import { BannerAdPosition } from '@capacitor-community/admob';
 
@@ -17,11 +21,11 @@ export async function generateStaticParams() {
   }));
 }
 
-interface TarotReadingPageProps {
+interface TarotEnhancedPageProps {
   params: Promise<{ locale: Locale }>; // Params are now Promise in Next.js 15
 }
 
-export default async function TarotReadingPage({ params }: TarotReadingPageProps) {
+export default async function TarotEnhancedPage({ params }: TarotEnhancedPageProps) {
   const { locale } = await params;
   const dictionary = await getDictionary(locale);
 
@@ -31,17 +35,16 @@ export default async function TarotReadingPage({ params }: TarotReadingPageProps
       <AdMobBanner position={BannerAdPosition.TOP_CENTER} />
       
       <SectionTitle
-        title={dictionary['TarotReadingPage.title'] || "Tarot Reading"}
-        subtitle={dictionary['TarotReadingPage.subtitle'] || "Ask a question and draw a card for guidance."}
-        icon={Wand}
-        className="mb-12"
+        title={dictionary?.TarotEnhanced?.pageTitle || "Tirada del Tarot"}
+        subtitle={dictionary?.TarotEnhanced?.pageDescription || "Descubre tu Pasado, Presente y Futuro"}
+        icon={Sparkles}
+        className="mb-8"
       />
       
-      <TarotReadingClient dictionary={dictionary} locale={params.locale} />
+      <TarotEnhancedClient dictionary={dictionary} locale={locale} />
       
-      {/* Banner inferior para más monetización */}
+      {/* Banner inferior */}
       <AdMobBanner position={BannerAdPosition.BOTTOM_CENTER} />
     </main>
   );
 }
-
