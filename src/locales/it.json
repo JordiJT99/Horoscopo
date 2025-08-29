@@ -268,7 +268,7 @@
   "ChineseHoroscopeDetail.Goat.interpretation": "La capra è l'artista dello zodiaco cinese, un'anima gentile, creativa e compassionevole. Sono sognatori che apprezzano soprattutto bellezza, pace e armonia. La loro natura sensibile li rende molto empatici, ma anche soggetti a malinconia e indecisione. Hanno bisogno di un ambiente stabile e di supporto affinché la loro creatività fiorisca. Una capra è un amico leale e un partner completo.",
   "ChineseHoroscopeDetail.Monkey.interpretation": "La scimmia è il genio cattivo dello zodiaco. Sono incredibilmente intelligenti, ingegnosi e curiosi, con una capacità senza pari di risolvere problemi complessi in forme creative. Il loro senso dell'umorismo e il loro amore per il divertimento rendono loro l'anima di qualsiasi incontro sociale. La sfida per la scimmia è quella di incanalare la sua energia mentale per non annoiarsi o diventare troppo manipolativo. La sua più grande risorsa è la sua capacità di innovare e adattarsi a qualsiasi situazione.",
   "ChineseHoroscopeDetail.Rooster.interpretation": "Il gallo è il perfezionista dello zodiaco, dell'osservatore, del lavoratore e con un grande senso del dovere. Sono estremamente organizzati e hanno un occhio acuto per i dettagli, il che li rende eccellenti pianificatori. La sua onestà è diretta e talvolta brutale, poiché credono nel dire la verità per migliorare le cose. Sebbene possano sembrare arroganti, sono profondamente leali e sono sempre disposti a lavorare sodo per il bene della loro famiglia e comunità.",
-  "ChineseHoroscopeDetail.Dog.interpretation": "Il cane è la guardia leale e onesta dello zodiaco. Il suo senso di giustizia e la sua lealtà sono assoluti. Sono amici e colleghi a cui si può fidarsi ciecamente, sempre pronti a difendere i deboli e combattere per ciò che è corretto. La sua natura a volte può essere pessimista o ansiosa, poiché tendono a preoccuparsi degli altri. Un cane è il partner più fedele che può essere desiderato.",
+  "ChineseHoroscopeDetail.Dog.interpretation": "Il cane è la guardia leale e onesta dello zodiaco. Il suo senso di giustizia e la sua lealtà sono assoluti. Sono amici e colleghi a cui si può fidare ciecamente, sempre pronti a difendere i deboli e combattere per ciò che è corretto. La sua natura a volte può essere pessimista o ansiosa, poiché tendono a preoccuparsi degli altri. Un cane è il partner più fedele che può essere desiderato.",
   "ChineseHoroscopeDetail.Pig.interpretation": "Il maiale è un simbolo di generosità, onestà e buona fortuna. Sono anime di buon cuore che godono dei semplici piaceri della vita e lavorano duramente per fornire i loro cari. La loro natura sicura di sé e la mancanza di pretese li rendono amati da tutti. Sebbene a volte possano essere un po 'ingenui, il suo cuore è puro e il suo ottimismo è incrollabile. Un maiale nella tua vita è una fonte costante di gioia e supporto incondizionato.",
   "Rat": "Ratto",
   "Ox": "Bue",
@@ -1066,5 +1066,56 @@
   "StoreProducts.zodiacJournal.title": "Diario zodiacale",
   "StoreProducts.zodiacJournal.description": "Un bellissimo giornale per registrare le tue riflessioni astrologiche, le letture dei tarocchi e i viaggi personali.",
   "StoreProducts.incenseHolder.title": "Titolare del loto",
-  "StoreProducts.incenseHolder.description": "Un elegante detentore di incenso per creare uno spazio sacro per i rituali, la meditazione o semplicemente per rilassarsi."
-}
+  "StoreProducts.incenseHolder.description": "Un elegante porta incenso per creare uno spazio sacro per rituali, meditazione o semplicemente per rilassarsi.",
+  "TarotEnhanced": {
+      "pageTitle": "Tarot Enhanced",
+      "pageSubtitle": "Deep tarot readings and guided interpretations.",
+      "categories": {
+        "majorArcana": "Major Arcana",
+        "minorArcana": "Minor Arcana"
+      },
+      "systemTitle": "Tarot System",
+      "modes": {
+        "standard": "Standard",
+        "standardDesc": "Quick, clear reading for daily life.",
+        "enhanced": "Enhanced",
+        "enhancedDesc": "Includes deeper interpretation and a guided breathing.",
+        "readingTitle": "Reading state"
+      },
+      "steps": {
+        "prepare": "Prepare",
+        "shuffle": "Shuffle cards",
+        "select": "Select cards",
+        "interpret": "View interpretation"
+      },
+      "features": {
+        "breathingExercise": "Guided breathing",
+        "shuffleAnimation": "Shuffle animation",
+        "tapToReveal": "Tap to reveal"
+      },
+      "shuffling": {
+        "shuffleButton": "Shuffle",
+        "shuffling": "Shuffling..."
+      },
+      "breathing": {
+        "start": "Start breathing",
+        "breatheIn": "Breathe in",
+        "breatheOut": "Breathe out",
+        "done": "Done"
+      },
+      "selection": {
+        "selectCard": "Select card",
+        "selectedCount": "Selected: {count}"
+      },
+      "reading": {
+        "viewInterpretation": "View interpretation",
+        "readingComplete": "Your reading is complete"
+      },
+      "premiumRequiredTitle": "Premium required",
+      "premiumRequiredDesc": "This feature requires a premium subscription.",
+      "history": {
+        "noHistory": "No previous readings",
+        "viewAll": "View all"
+      }
+    }
+  }

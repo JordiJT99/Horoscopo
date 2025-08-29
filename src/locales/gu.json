@@ -1065,5 +1065,61 @@
   "StoreProducts.zodiacJournal.title": "રાશિ",
   "StoreProducts.zodiacJournal.description": "તમારા જ્યોતિષીય પ્રતિબિંબ, ટેરોટ રીડિંગ્સ અને વ્યક્તિગત ટ્રિપ્સને રેકોર્ડ કરવા માટે એક સુંદર અખબાર.",
   "StoreProducts.incenseHolder.title": "ધૂપ ધારક",
-  "StoreProducts.incenseHolder.description": "તમારી ધાર્મિક વિધિઓ, ધ્યાન અથવા ફક્ત આરામ કરવા માટે પવિત્ર જગ્યા બનાવવા માટે એક ભવ્ય ધૂપ ધારક."
+  "StoreProducts.incenseHolder.description": "તમારી ધાર્મિક વિધિઓ, ધ્યાન અથવા ફક્ત આરામ કરવા માટે પવિત્ર જગ્યા બનાવવા માટે એક ભવ્ય ધૂપ ધારક.",
+  "TarotEnhanced": {
+    "pageTitle": "વધારેલ ટારોટ",
+    "pageSubtitle": "ગહન ટારોટ રીડિંગ્સ અને માર્ગદર્શનવાળી વ્યાખ્યાઓ.",
+    "categories": {
+      "majorArcana": "મેઝર અર્કાના",
+      "minorArcana": "માઇનર અર્કાના"
+    },
+    "systemTitle": "ટારોટ સિસ્ટમ",
+    "modes": {
+      "standard": "સ્ટાન્ડર્ડ",
+      "standardDesc": "દૈનિક માટે ઝડપી અને સ્પષ્ટ રીડિંગ.",
+      "enhanced": "વધારેલું",
+      "enhancedDesc": "વધારે ઊંડો અર્થ અને માર્ગદર્શનવાળી શ્વાસાવલિ સાથે.",
+      "readingTitle": "રીડિંગ સ્થિતિ"
+    },
+    "steps": {
+      "prepare": "તૈયાર કરો",
+      "shuffle": "કાર્ડ શફલ કરો",
+      "select": "કાર્ડ પસંદ કરો",
+      "interpret": "વ્યાખ્યા જુઓ"
+    },
+    "features": {
+      "breathingExercise": "માર્ગદર્શિત શ્વાસ",
+      "shuffleAnimation": "શફલ એનિમેશન",
+      "tapToReveal": "ખુલાસા માટે ટૅપ કરો"
+    },
+    "shuffling": {
+      "shuffleButton": "શફલ",
+      "shuffling": "શફલ કરી રહ્યું છે..."
+    },
+    "breathing": {
+      "start": "શ્વાસ શરૂ કરો",
+      "breatheIn": "બંધ લેવો",
+      "breatheOut": "શ્વાસ છોડો",
+      "done": "પૂર્ણ"
+    },
+    "selection": {
+      "selectCard": "કાર્ડ પસંદ કરો",
+      "selectedCount": "પસંદ થયેલ: {count}"
+    },
+    "reading": {
+      "viewInterpretation": "વ્યાખ્યા જુઓ",
+      "readingComplete": "તમારી રીડિંગ પૂર્ણ છે"
+    },
+    "premiumRequiredTitle": "પ્રીમિયમ જરૂરી",
+    "premiumRequiredDesc": "આ ફીચર માટે પ્રીમિયમ સભ્યતા જરૂરી છે.",
+    "history": {
+      "noHistory": "કોઈ અગાઉની રીડિંગ નથી",
+      "viewAll": "ઈતિહાસ જુઓ"
+    }
+  },
+  "TarotSpreadPage": {
+    "yourReading": "તમારી રીડિંગ",
+    "interpretation": "વ્યાખ્યા",
+    "reversed": "ઉલટાવેલો"
+  }
 }

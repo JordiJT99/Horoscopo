@@ -1066,5 +1066,56 @@
   "StoreProducts.zodiacJournal.title": "Buku harian zodiak",
   "StoreProducts.zodiacJournal.description": "Sebuah koran yang indah untuk merekam refleksi astrologi Anda, pembacaan tarot, dan perjalanan pribadi.",
   "StoreProducts.incenseHolder.title": "Pemegang Loto Incense",
-  "StoreProducts.incenseHolder.description": "Pemegang dupa yang elegan untuk menciptakan ruang sakral untuk ritual, meditasi, atau hanya untuk bersantai."
-}
+  "StoreProducts.incenseHolder.description": "Pemegang dupa yang elegan untuk menciptakan ruang sakral untuk ritual, meditasi, atau hanya untuk bersantai.",
+  "TarotEnhanced": {
+      "pageTitle": "Tarot Enhanced",
+      "pageSubtitle": "Deep tarot readings and guided interpretations.",
+      "categories": {
+        "majorArcana": "Major Arcana",
+        "minorArcana": "Minor Arcana"
+      },
+      "systemTitle": "Tarot System",
+      "modes": {
+        "standard": "Standard",
+        "standardDesc": "Quick, clear reading for daily life.",
+        "enhanced": "Enhanced",
+        "enhancedDesc": "Includes deeper interpretation and a guided breathing.",
+        "readingTitle": "Reading state"
+      },
+      "steps": {
+        "prepare": "Prepare",
+        "shuffle": "Shuffle cards",
+        "select": "Select cards",
+        "interpret": "View interpretation"
+      },
+      "features": {
+        "breathingExercise": "Guided breathing",
+        "shuffleAnimation": "Shuffle animation",
+        "tapToReveal": "Tap to reveal"
+      },
+      "shuffling": {
+        "shuffleButton": "Shuffle",
+        "shuffling": "Shuffling..."
+      },
+      "breathing": {
+        "start": "Start breathing",
+        "breatheIn": "Breathe in",
+        "breatheOut": "Breathe out",
+        "done": "Done"
+      },
+      "selection": {
+        "selectCard": "Select card",
+        "selectedCount": "Selected: {count}"
+      },
+      "reading": {
+        "viewInterpretation": "View interpretation",
+        "readingComplete": "Your reading is complete"
+      },
+      "premiumRequiredTitle": "Premium required",
+      "premiumRequiredDesc": "This feature requires a premium subscription.",
+      "history": {
+        "noHistory": "No previous readings",
+        "viewAll": "View all"
+      }
+    }
+  }

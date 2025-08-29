@@ -1066,5 +1066,61 @@
   "StoreProducts.zodiacJournal.title": "Journal du zodiaque",
   "StoreProducts.zodiacJournal.description": "Un beau journal pour enregistrer vos réflexions astrologiques, vos lectures de tarot et vos voyages personnels.",
   "StoreProducts.incenseHolder.title": "Porte-encens LOTO",
-  "StoreProducts.incenseHolder.description": "Un élégant support d'encens pour créer un espace sacré pour vos rituels, votre méditation ou simplement pour vous détendre."
+  "StoreProducts.incenseHolder.description": "Un élégant support d'encens pour créer un espace sacré pour vos rituels, votre méditation ou simplement pour vous détendre.",
+  "TarotEnhanced": {
+    "pageTitle": "Tarot amélioré",
+    "pageSubtitle": "Lectures de tarot approfondies et interprétations guidées.",
+    "categories": {
+      "majorArcana": "Arcanes majeurs",
+      "minorArcana": "Arcanes mineurs"
+    },
+    "systemTitle": "Système de Tarot",
+    "modes": {
+      "standard": "Standard",
+      "standardDesc": "Lecture rapide et claire pour le quotidien.",
+      "enhanced": "Amélioré",
+      "enhancedDesc": "Comprend une interprétation plus profonde et une respiration guidée.",
+      "readingTitle": "État de lecture"
+    },
+    "steps": {
+      "prepare": "Préparez-vous",
+      "shuffle": "Mélanger les cartes",
+      "select": "Sélectionner les cartes",
+      "interpret": "Voir l'interprétation"
+    },
+    "features": {
+      "breathingExercise": "Respiration guidée",
+      "shuffleAnimation": "Animation de mélange",
+      "tapToReveal": "Appuyez pour révéler"
+    },
+    "shuffling": {
+      "shuffleButton": "Mélanger",
+      "shuffling": "Mélange..."
+    },
+    "breathing": {
+      "start": "Commencer la respiration",
+      "breatheIn": "Inspirez",
+      "breatheOut": "Expirez",
+      "done": "Terminé"
+    },
+    "selection": {
+      "selectCard": "Sélectionner une carte",
+      "selectedCount": "Sélectionnés : {count}"
+    },
+    "reading": {
+      "viewInterpretation": "Voir l'interprétation",
+      "readingComplete": "Votre lecture est terminée"
+    },
+    "premiumRequiredTitle": "Premium requis",
+    "premiumRequiredDesc": "Cette fonctionnalité nécessite un abonnement premium.",
+    "history": {
+      "noHistory": "Aucune lecture antérieure",
+      "viewAll": "Afficher l'historique"
+    }
+  },
+  "TarotSpreadPage": {
+    "yourReading": "Votre lecture",
+    "interpretation": "Interprétation",
+    "reversed": "Renversé"
+  }
 }

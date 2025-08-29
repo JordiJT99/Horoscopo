@@ -1066,5 +1066,60 @@
   "StoreProducts.zodiacJournal.title": "Horoskooppipäiväkirja",
   "StoreProducts.zodiacJournal.description": "Kaunis sanomalehti, joka tallentaa astrologiset pohdinnat, tarot -lukemat ja henkilökohtaiset matkat.",
   "StoreProducts.incenseHolder.title": "Loto -suitsukkeen haltija",
-  "StoreProducts.incenseHolder.description": "Tyylikäs suitsukkeen haltija, joka luo pyhän tilan rituaaleihisi, meditaatiollesi tai yksinkertaisesti rentoutua."
+  "StoreProducts.incenseHolder.description": "Tyylikäs suitsukkeen haltija, joka luo pyhän tilan rituaaleihisi, meditaatiollesi tai yksinkertaisesti rentoutua.",
+  "TarotEnhanced": {
+    "pageSubtitle": "Syvälliset tarot-lukemat ja ohjatut tulkinnat.",
+    "categories": {
+      "majorArcana": "Suuret arkanat",
+      "minorArcana": "Pienet arkanat"
+    },
+    "systemTitle": "Tarot-järjestelmä",
+    "modes": {
+      "standard": "Perus",
+      "standardDesc": "Nopea, selkeä luenta arkeen.",
+      "enhanced": "Laajennettu",
+      "enhancedDesc": "Sisältää syvällisemmän tulkinnan ja ohjatun hengityksen.",
+      "readingTitle": "Lukematilanne"
+    },
+    "steps": {
+      "prepare": "Valmistaudu",
+      "shuffle": "Sekoita kortit",
+      "select": "Valitse kortit",
+      "interpret": "Katso tulkinta"
+    },
+    "features": {
+      "breathingExercise": "Ohjattu hengitys",
+      "shuffleAnimation": "Sekoitusanimaatio",
+      "tapToReveal": "Napauta paljastaaksesi"
+    },
+    "shuffling": {
+      "shuffleButton": "Sekoita",
+      "shuffling": "Sekoitetaan..."
+    },
+    "breathing": {
+      "start": "Aloita hengitys",
+      "breatheIn": "Hengitä sisään",
+      "breatheOut": "Hengitä ulos",
+      "done": "Valmis"
+    },
+    "selection": {
+      "selectCard": "Valitse kortti",
+      "selectedCount": "Valitut: {count}"
+    },
+    "reading": {
+      "viewInterpretation": "Katso tulkinta",
+      "readingComplete": "Lukemasi on valmis"
+    },
+    "premiumRequiredTitle": "Premium vaaditaan",
+    "premiumRequiredDesc": "Tämä ominaisuus vaatii premium-tilauksen.",
+    "history": {
+      "noHistory": "Ei aiempia lukemia",
+      "viewAll": "Näytä historia"
+    }
+  },
+  "TarotSpreadPage": {
+    "yourReading": "Sinun lukemasi",
+    "interpretation": "Tulkinta",
+    "reversed": "Käännetty"
+  }
 }
