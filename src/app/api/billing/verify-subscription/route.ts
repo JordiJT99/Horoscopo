@@ -200,10 +200,18 @@ export async function GET(request: NextRequest) {
     const userDoc = await adminDb.collection('users').doc(userId).get();
     
     if (!userDoc.exists) {
+      console.log(`User document not found for ${userId} - returning default non-premium response.`);
+      // Return a safe default so clients don't treat a missing user as a fatal error.
       return NextResponse.json({
-        success: false,
-        error: 'User not found',
-      }, { status: 404 });
+        success: true,
+        isActive: false,
+        isPremium: false,
+        expiryTime: 0,
+        autoRenewing: false,
+        premiumType: 'none',
+        lastVerified: 0,
+        message: 'User document not found - treated as non-premium',
+      });
     }
 
     const userData = userDoc.data();

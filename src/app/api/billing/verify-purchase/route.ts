@@ -218,10 +218,14 @@ export async function GET(request: NextRequest) {
     const userDoc = await adminDb!.collection('users').doc(userId).get();
     
     if (!userDoc.exists) {
+      console.log(`User document not found for ${userId} - returning default non-premium response.`);
       return NextResponse.json({
-        success: false,
-        error: 'User not found',
-      }, { status: 404 });
+        success: true,
+        purchases: [],
+        hasRemovedAds: false,
+        stardust: 0,
+        message: 'User document not found - treated as non-premium',
+      });
     }
 
     const userData = userDoc.data();
