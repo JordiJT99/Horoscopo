@@ -116,6 +116,13 @@ export function usePremiumSync(): UsePremiumSyncReturn {
           });
         }
 
+        // After a successful verification, refresh local state from server
+        try {
+          await syncAllData();
+        } catch (e) {
+          console.error('Error syncing after verifySubscription:', e);
+        }
+
         return result.isActive;
       } else {
         toast({
@@ -179,7 +186,11 @@ export function usePremiumSync(): UsePremiumSyncReturn {
         });
 
         // Recargar el estado de compras
-        await checkPurchases();
+        try {
+          await syncAllData();
+        } catch (e) {
+          console.error('Error syncing after verifyPurchase:', e);
+        }
         return true;
       } else {
         toast({

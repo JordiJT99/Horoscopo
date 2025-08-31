@@ -16,6 +16,14 @@ export async function POST(request: NextRequest) {
     const body: VerifySubscriptionRequest = await request.json();
     const { purchaseToken, subscriptionId, originalJson, signature, userId } = body;
 
+    console.log('[verify-subscription] POST received', {
+      userId,
+      subscriptionId,
+      hasPurchaseToken: !!purchaseToken,
+      hasOriginalJson: !!originalJson,
+      hasSignature: !!signature,
+    });
+
     // Validar que tenemos todos los datos necesarios
     if (!purchaseToken || !subscriptionId || !originalJson || !signature) {
       return NextResponse.json({
@@ -27,6 +35,14 @@ export async function POST(request: NextRequest) {
     // Verificar la autenticación del usuario si se proporciona
     let userUid: string | null = null;
     if (userId) {
+      // Ensure Firebase Admin is available before attempting to verify tokens
+      if (!adminAuth) {
+        console.error('[verify-subscription] Firebase Admin SDK not configured - cannot verify idToken for userId:', userId);
+        return NextResponse.json({
+          success: false,
+          error: 'Server misconfigured: Firebase Admin not available',
+        }, { status: 500 });
+      }
       try {
         const authHeader = request.headers.get('authorization');
         if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -142,6 +158,8 @@ export async function GET(request: NextRequest) {
     const userId = searchParams.get('userId');
     const subscriptionId = searchParams.get('subscriptionId');
 
+  console.log('[verify-subscription] GET received', { userId, subscriptionId });
+
     if (!userId) {
       return NextResponse.json({
         success: false,
@@ -149,25 +167,13 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // En desarrollo, si no hay Firebase Admin configurado, simular verificación exitosa
+    // If Firebase Admin is not configured, return a clear error (no silent simulation)
     if (!adminAuth) {
-      console.log('🔧 Development mode: Simulating subscription verification for userId:', userId);
+      console.error('[verify-subscription] Firebase Admin SDK not configured - GET cannot proceed for userId:', userId);
       return NextResponse.json({
-        success: true,
-        isValid: true,
-        hasActiveSubscription: false, // Cambiar a true si quieres simular suscripción activa
-        subscriptions: [], // Array vacío por ahora
-        subscription: {
-          subscriptionId: subscriptionId || 'astromistica-premium-monthly',
-          isActive: false, // Cambiar a true si quieres simular suscripción activa
-          autoRenewing: false,
-          expiryTimeMillis: Date.now() + (30 * 24 * 60 * 60 * 1000), // 30 días
-          startTimeMillis: Date.now(),
-          orderId: `dev_order_${Date.now()}`,
-          purchaseToken: `dev_token_${Date.now()}`
-        },
-        message: 'Subscription verified (development mode - no active subscription)'
-      });
+        success: false,
+        error: 'Server misconfigured: Firebase Admin not available',
+      }, { status: 500 });
     }
 
     // Verificar autenticación
