@@ -15,9 +15,15 @@ function toNumberSafe(n: any): number {
   const num = typeof n === 'string' ? Number(n) : (typeof n === 'number' ? n : 0);
   return Number.isFinite(num) ? num : 0;
 }
-
 function computeIsActive(expiryTimeMs?: number): boolean {
   return typeof expiryTimeMs === 'number' && expiryTimeMs > Date.now();
+}
+function getBearerToken(headers: Headers): string | null {
+  const h = headers.get('authorization') ?? headers.get('Authorization');
+  if (!h) return null;
+  const [scheme, token] = h.split(' ');
+  if (!/^Bearer$/i.test(scheme) || !token) return null;
+  return token;
 }
 
 export async function POST(request: NextRequest) {
@@ -25,60 +31,43 @@ export async function POST(request: NextRequest) {
     const body: VerifySubscriptionRequest = await request.json();
     const { purchaseToken, subscriptionId, originalJson, signature, userId } = body;
 
-    // Validación básica
     if (!purchaseToken || !subscriptionId || !originalJson || !signature) {
       return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Verificar autenticación del usuario (si se proporciona userId)
+    // Auth opcional, pero si viene userId lo validamos SIEMPRE
     let userUid: string | null = null;
     if (userId) {
+      const token = getBearerToken(request.headers);
+      if (!token) {
+        return NextResponse.json({ success: false, error: 'Authorization header required' }, { status: 401 });
+      }
       try {
-        const authHeader = request.headers.get('authorization');
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-          const idToken = authHeader.substring(7);
-          const decodedToken = await adminAuth.verifyIdToken(idToken);
-          userUid = decodedToken.uid;
-
-          if (userUid !== userId) {
-            return NextResponse.json({ success: false, error: 'User authentication mismatch' }, { status: 403 });
-          }
-        } else {
-          return NextResponse.json({ success: false, error: 'Authorization header required' }, { status: 401 });
+        const decoded = await adminAuth.verifyIdToken(token);
+        userUid = decoded.uid;
+        if (userUid !== userId) {
+          return NextResponse.json({ success: false, error: 'User authentication mismatch' }, { status: 403 });
         }
-      } catch (authError) {
-        console.error('Auth verification failed:', authError);
+      } catch (e) {
+        console.error('verifyIdToken failed (POST):', e);
         return NextResponse.json({ success: false, error: 'Invalid authentication' }, { status: 401 });
       }
     }
 
-    // TODO: Validar la firma 'signature' con la clave pública de Google Play (opcional pero recomendado)
-
-    // Verificar suscripción con la Google Play Developer API (vía tu wrapper)
     const verificationResult = await googlePlayAPI.verifySubscription(subscriptionId, purchaseToken);
 
-    // Normalizar campos esperados (tolerante a wrappers en "modo dev")
     const expiryTimeRaw =
       (verificationResult as any).expiryTime ??
-      (verificationResult as any).expiryTimeMillis ??
-      0;
+      (verificationResult as any).expiryTimeMillis ?? 0;
 
     const expiryTime = toNumberSafe(expiryTimeRaw);
-    const autoRenewing = !!(verificationResult as any).autoRenewing;
-    const acknowledged =
-      (verificationResult as any).details?.acknowledgementState ??
-      (verificationResult as any).acknowledgementState;
-
-    // Si el wrapper trae isActive inconsistente, lo corregimos por expiryTime
     let isActive =
       typeof (verificationResult as any).isActive === 'boolean'
         ? (verificationResult as any).isActive
         : computeIsActive(expiryTime);
 
-    // Si expiry está en el futuro, consideramos activa aunque el stub diga false
-    if (!isActive && computeIsActive(expiryTime)) {
-      isActive = true;
-    }
+    // Corrige stubs que devuelven false con expiry futuro
+    if (!isActive && computeIsActive(expiryTime)) isActive = true;
 
     if (!(verificationResult as any).isValid || expiryTime <= 0) {
       return NextResponse.json({
@@ -88,32 +77,27 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const autoRenewing = !!(verificationResult as any).autoRenewing;
     const orderId = (verificationResult as any).orderId ?? null;
+    const ackState =
+      (verificationResult as any).details?.acknowledgementState ??
+      (verificationResult as any).acknowledgementState ?? 1;
 
-    // Marcar posible modo dev para depuración
-    const devMode =
-      typeof orderId === 'string' && orderId.startsWith('dev_') ||
-      typeof purchaseToken === 'string' && purchaseToken.startsWith('dev_') ||
-      /development mode/i.test(String((verificationResult as any).message ?? ''));
-
-    // Datos a persistir
     const subscriptionData = {
       subscriptionId,
       purchaseToken,
       isActive,
-      expiryTime,               // en ms
+      expiryTime, // ms
       autoRenewing,
       orderId,
-      acknowledgementState: typeof acknowledged === 'number' ? acknowledged : 1,
+      acknowledgementState: ackState,
       lastVerified: Date.now(),
       originalJson,
       signature,
     };
 
-    // Persistencia en Firestore (solo si el usuario está autenticado)
     if (userUid && adminDb) {
       try {
-        // Upsert con merge para evitar fallar si el doc no existe aún
         await adminDb.collection('users').doc(userUid).set(
           {
             subscription: subscriptionData,
@@ -123,8 +107,6 @@ export async function POST(request: NextRequest) {
           },
           { merge: true }
         );
-
-        // Historial de verificaciones
         await adminDb.collection('subscription_verifications').add({
           userId: userUid,
           subscriptionId,
@@ -132,29 +114,19 @@ export async function POST(request: NextRequest) {
           verificationResult,
           timestamp: Date.now(),
           isActive,
-          devMode,
         });
-
-        console.log(`Subscription verified and updated for user ${userUid}`);
       } catch (dbError) {
-        console.error('Error updating user subscription data:', dbError);
-        // No tiramos el endpoint si falla la BD; el cliente puede reintentar
+        console.error('Firestore write failed:', dbError);
+        // No rompemos la respuesta por esto
       }
     }
 
-    // Acknowledge si hace falta (solo si Play reporta 0)
-    try {
-      const ackState =
-        (verificationResult as any).details?.acknowledgementState ??
-        (verificationResult as any).acknowledgementState;
-
-      if (ackState === 0) {
+    if (ackState === 0) {
+      try {
         await googlePlayAPI.acknowledgeSubscription(subscriptionId, purchaseToken);
-        console.log('Subscription acknowledged successfully');
+      } catch (ackErr) {
+        console.error('Acknowledge failed:', ackErr); // ignorable (409 si ya estaba)
       }
-    } catch (ackError) {
-      // 409 si ya estaba acknowledged; lo ignoramos
-      console.error('Failed to acknowledge subscription:', ackError);
     }
 
     return NextResponse.json({
@@ -163,16 +135,15 @@ export async function POST(request: NextRequest) {
       expiryTime,
       autoRenewing,
       orderId,
-      devMode,
       subscriptionData,
     });
+
   } catch (error) {
-    console.error('Error in verify-subscription API:', error);
+    console.error('Error in verify-subscription API (POST):', error);
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }
 
-// Método GET para verificar el estado actual de una suscripción
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -181,35 +152,34 @@ export async function GET(request: NextRequest) {
     if (!userId) {
       return NextResponse.json({ success: false, error: 'User ID is required' }, { status: 400 });
     }
-
     if (!adminAuth) {
-      console.error('Firebase Admin SDK not configured - cannot verify subscription for userId:', userId);
-      return NextResponse.json({
-        success: false,
-        error: 'Server misconfigured: Firebase Admin not available',
-      }, { status: 500 });
+      console.error('Firebase Admin SDK not configured');
+      return NextResponse.json({ success: false, error: 'Server misconfigured: Firebase Admin not available' }, { status: 500 });
     }
-
-    // Verificar autenticación
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ success: false, error: 'Authorization header required' }, { status: 401 });
-    }
-
-    const idToken = authHeader.substring(7);
-    const decodedToken = await adminAuth.verifyIdToken(idToken);
-    if (decodedToken.uid !== userId) {
-      return NextResponse.json({ success: false, error: 'User authentication mismatch' }, { status: 403 });
-    }
-
     if (!adminDb) {
       return NextResponse.json({ success: false, error: 'Database not available' }, { status: 500 });
     }
 
-    const userDoc = await adminDb.collection('users').doc(userId).get();
+    // Auth SIEMPRE en GET
+    const token = getBearerToken(request.headers);
+    if (!token) {
+      return NextResponse.json({ success: false, error: 'Authorization header required' }, { status: 401 });
+    }
 
+    let uid: string;
+    try {
+      const decoded = await adminAuth.verifyIdToken(token);
+      uid = decoded.uid;
+    } catch (e) {
+      console.error('verifyIdToken failed (GET):', e);
+      return NextResponse.json({ success: false, error: 'Invalid authentication' }, { status: 401 });
+    }
+    if (uid !== userId) {
+      return NextResponse.json({ success: false, error: 'User authentication mismatch' }, { status: 403 });
+    }
+
+    const userDoc = await adminDb.collection('users').doc(userId).get();
     if (!userDoc.exists) {
-      console.log(`User document not found for ${userId} - returning default non-premium response.`);
       return NextResponse.json({
         success: true,
         isActive: false,
@@ -232,25 +202,18 @@ export async function GET(request: NextRequest) {
     const storedExpiry = toNumberSafe(subscription.expiryTime);
     const localActive = computeIsActive(storedExpiry);
 
-    // Revalidar cada 24h
+    // Revalidar cada 24h si hay token
     const timeSinceLastCheck = Date.now() - toNumberSafe(userData.lastSubscriptionCheck);
     const shouldRevalidate = timeSinceLastCheck > 24 * 60 * 60 * 1000 && !!subscription.purchaseToken;
 
     if (shouldRevalidate) {
       try {
         const result = await googlePlayAPI.verifySubscription(subscription.subscriptionId, subscription.purchaseToken);
-
-        // Normalizar
-        const expiry =
-          toNumberSafe((result as any).expiryTime ?? (result as any).expiryTimeMillis ?? 0);
+        const expiry = toNumberSafe((result as any).expiryTime ?? (result as any).expiryTimeMillis ?? 0);
         const isActiveRemote =
-          typeof (result as any).isActive === 'boolean'
-            ? (result as any).isActive
-            : computeIsActive(expiry);
-
+          typeof (result as any).isActive === 'boolean' ? (result as any).isActive : computeIsActive(expiry);
         const autoRenewing = !!(result as any).autoRenewing;
 
-        // Persistir
         await adminDb.collection('users').doc(userId).set(
           {
             subscription: {
@@ -263,8 +226,7 @@ export async function GET(request: NextRequest) {
               acknowledgementState:
                 (result as any).details?.acknowledgementState ??
                 (result as any).acknowledgementState ??
-                subscription.acknowledgementState ??
-                1,
+                subscription.acknowledgementState ?? 1,
             },
             isPremium: isActiveRemote,
             lastSubscriptionCheck: Date.now(),
@@ -282,7 +244,7 @@ export async function GET(request: NextRequest) {
         });
       } catch (revalErr) {
         console.error('Revalidation failed:', revalErr);
-        // En caso de error remoto, devolvemos el estado local calculado
+        // Devolvemos estado local si Play falla
         return NextResponse.json({
           success: true,
           isActive: localActive,
@@ -295,7 +257,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Sin revalidar: devolver cálculo local (más consistente si ya expiró)
+    // Sin revalidación: responde con cálculo local
     return NextResponse.json({
       success: true,
       isActive: localActive,
@@ -305,8 +267,9 @@ export async function GET(request: NextRequest) {
       premiumType: userData?.premiumType || 'premium',
       lastVerified: toNumberSafe(subscription.lastVerified),
     });
+
   } catch (error) {
-    console.error('Error in GET verify-subscription API:', error);
+    console.error('Error in verify-subscription API (GET):', error);
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }
