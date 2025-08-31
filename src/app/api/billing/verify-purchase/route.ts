@@ -183,16 +183,13 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // En desarrollo, si no hay Firebase Admin configurado, simular verificación exitosa
+    // Require Firebase Admin to return real purchase data
     if (!adminAuth) {
-      console.log('🔧 Development mode: Simulating purchase verification for userId:', userId);
+      console.error('Firebase Admin SDK not configured - cannot fetch purchases for userId:', userId);
       return NextResponse.json({
-        success: true,
-        purchases: [], // Array vacío - no hay compras simuladas
-        hasRemovedAds: false, // Usuario no tiene anuncios removidos
-        stardust: 100, // Stardust base para desarrollo
-        message: 'Purchases verified (development mode - no purchases)'
-      });
+        success: false,
+        error: 'Server misconfigured: Firebase Admin not available',
+      }, { status: 500 });
     }
 
     // Verificar autenticación
