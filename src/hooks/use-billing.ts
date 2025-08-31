@@ -189,6 +189,7 @@ export function useBilling(): UseBillingReturn {
       const result = await GooglePlayBilling.purchaseProduct({ productId });
       
       if (result.success && result.purchase) {
+  console.log('[BILLING] purchaseProduct result.purchase:', result.purchase);
         const verified = await verifyPurchase({
           purchaseToken: result.purchase.purchaseToken,
           productId: result.purchase.productId,
@@ -254,6 +255,7 @@ export function useBilling(): UseBillingReturn {
       const result = await GooglePlayBilling.purchaseSubscription({ subscriptionId });
       
       if (result.success && result.purchase) {
+  console.log('[BILLING] purchaseSubscription result.purchase:', result.purchase);
         const verified = await verifySubscription({
           purchaseToken: result.purchase.purchaseToken,
           subscriptionId: result.purchase.productId,

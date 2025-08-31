@@ -91,6 +91,7 @@ export function usePremiumSync(): UsePremiumSyncReturn {
       });
 
       const result = await response.json();
+  console.log('[PREMIUM SYNC] verifySubscription response:', result);
 
       if (result.success) {
         setPremiumStatus({
@@ -169,6 +170,7 @@ export function usePremiumSync(): UsePremiumSyncReturn {
       });
 
       const result = await response.json();
+  console.log('[PREMIUM SYNC] verifyPurchase response:', result);
 
       if (result.success && result.isValid) {
         toast({
