@@ -16,6 +16,14 @@ export async function POST(request: NextRequest) {
     const body: VerifyPurchaseRequest = await request.json();
     const { purchaseToken, productId, originalJson, signature, userId } = body;
 
+    console.log('[verify-purchase] POST received', {
+      userId,
+      productId,
+      hasPurchaseToken: !!purchaseToken,
+      hasOriginalJson: !!originalJson,
+      hasSignature: !!signature,
+    });
+
     // Validar que tenemos todos los datos necesarios
     if (!purchaseToken || !productId || !originalJson || !signature) {
       return NextResponse.json({
@@ -27,6 +35,14 @@ export async function POST(request: NextRequest) {
     // Verificar la autenticación del usuario si se proporciona
     let userUid: string | null = null;
     if (userId) {
+      // Ensure Firebase Admin is available before attempting to verify tokens
+      if (!adminAuth) {
+        console.error('[verify-purchase] Firebase Admin SDK not configured - cannot verify idToken for userId:', userId);
+        return NextResponse.json({
+          success: false,
+          error: 'Server misconfigured: Firebase Admin not available',
+        }, { status: 500 });
+      }
       try {
         const authHeader = request.headers.get('authorization');
         if (authHeader && authHeader.startsWith('Bearer ')) {
