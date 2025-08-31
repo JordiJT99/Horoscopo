@@ -7,7 +7,20 @@ import { resolve } from 'path';
 let app: admin.app.App | null = null;
 
 if (admin.apps.length === 0) {
-  const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+  let serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+  // Fallback: if env var is not set, try plain file in repo root
+  if (!serviceAccountPath) {
+    const fallbackPath = resolve(process.cwd(), 'firebase-service-account.json');
+    try {
+      // quick existence check
+      readFileSync(fallbackPath, 'utf8');
+      serviceAccountPath = fallbackPath;
+      console.log('FIREBASE_SERVICE_ACCOUNT_KEY not set, falling back to', fallbackPath);
+    } catch (err) {
+      // keep serviceAccountPath undefined and let subsequent logic warn
+    }
+  }
+
   if (serviceAccountPath) {
     try {
       // Si el valor parece ser un path a un archivo (comienza con ./ o /)
