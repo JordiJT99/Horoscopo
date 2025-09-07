@@ -5,6 +5,7 @@ import { GooglePlayBilling, type Product, type Subscription, type Purchase } fro
 import { useCapacitor } from './use-capacitor';
 import { usePremiumSync } from './use-premium-sync';
 import { toast } from './use-toast';
+import { Capacitor } from '@capacitor/core';
 
 interface UseBillingReturn {
   isInitialized: boolean;
@@ -253,55 +254,72 @@ export function useBilling(): UseBillingReturn {
     setIsLoading(true);
     try {
       console.log('[BILLING] Starting purchaseSubscription for:', subscriptionId);
+      
+      // Obtener compras existentes antes del flujo
+      const existingPurchases = await GooglePlayBilling.getActiveSubscriptions();
+      const existingTokens = new Set(
+        (existingPurchases.subscriptions || []).map((p: any) => p.purchaseToken)
+      );
+      
+      console.log('[BILLING] Existing purchases before flow:', existingTokens.size);
+      
+      // Iniciar el flujo de compra
       const result = await GooglePlayBilling.purchaseSubscription({ subscriptionId });
       
       console.log('[BILLING] purchaseSubscription result:', {
         success: result.success,
         hasPurchase: !!result.purchase,
         message: result.message,
-        purchase: result.purchase
       });
       
-      if (result.success && result.purchase) {
-        console.log('[BILLING] purchaseSubscription result.purchase:', result.purchase);
-        console.log('[BILLING] About to call verifySubscription with data:', {
-          purchaseToken: result.purchase.purchaseToken,
-          subscriptionId: result.purchase.productId,
-          hasOriginalJson: !!result.purchase.originalJson,
-          hasSignature: !!result.purchase.signature,
-        });
-        
-        const verified = await verifySubscription({
-          purchaseToken: result.purchase.purchaseToken,
-          subscriptionId: result.purchase.productId,
-          originalJson: result.purchase.originalJson,
-          signature: result.purchase.signature,
-        });
-
-        console.log('[BILLING] verifySubscription returned:', verified);
-
-        if (verified) {
-          await loadActiveSubscriptions();
-          return true;
-        } else {
-          toast({
-            title: 'Error de Verificación',
-            description: 'La suscripción no pudo ser verificada en el servidor',
-            variant: 'destructive',
-          });
-          return false;
-        }
-      } else {
-        console.log('[BILLING] Purchase failed or no purchase object:', result);
-        if (result.message !== 'Purchase canceled by user') {
+      if (!result.success) {
+        console.log('[BILLING] Purchase flow failed to start:', result.message);
+        if (result.message && !result.message.includes('canceled') && !result.message.includes('cancelled')) {
           toast({
             title: 'Error en la Suscripción',
-            description: result.message || 'No se pudo activar la suscripción',
+            description: result.message || 'No se pudo iniciar el proceso de suscripción',
             variant: 'destructive',
           });
         }
         return false;
       }
+
+      // Si el resultado inmediato incluye una compra, procesarla
+      if (result.purchase) {
+        console.log('[BILLING] Immediate purchase received:', result.purchase);
+        return await processPurchase(result.purchase, 'subscription');
+      }
+
+      // Si no hay compra inmediata, esperar y buscar nuevas compras
+      console.log('[BILLING] No immediate purchase, waiting for completion...');
+      
+      // Esperar un poco para que el usuario complete la compra
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Verificar si hay nuevas compras
+      for (let attempt = 0; attempt < 10; attempt++) {
+        console.log(`[BILLING] Checking for new purchases (attempt ${attempt + 1}/10)...`);
+        
+        const currentPurchases = await GooglePlayBilling.getActiveSubscriptions();
+        const currentTokens = (currentPurchases.subscriptions || []).map((p: any) => p.purchaseToken);
+        
+        // Buscar compras nuevas
+        const newPurchases = (currentPurchases.subscriptions || []).filter((p: any) => 
+          !existingTokens.has(p.purchaseToken) && p.productId === subscriptionId
+        );
+        
+        if (newPurchases.length > 0) {
+          console.log('[BILLING] Found new purchase:', newPurchases[0]);
+          return await processPurchase(newPurchases[0], 'subscription');
+        }
+        
+        // Esperar antes del siguiente intento
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      
+      console.log('[BILLING] No new purchases found after timeout');
+      return false;
+      
     } catch (error) {
       console.error('Error purchasing subscription:', error);
       toast({
@@ -312,6 +330,58 @@ export function useBilling(): UseBillingReturn {
       return false;
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Función auxiliar para procesar una compra
+  const processPurchase = async (purchase: any, type: 'subscription' | 'product'): Promise<boolean> => {
+    console.log(`[BILLING] Processing ${type}:`, purchase);
+    
+    try {
+      if (type === 'subscription') {
+        const verified = await verifySubscription({
+          purchaseToken: purchase.purchaseToken,
+          subscriptionId: purchase.productId,
+          originalJson: purchase.originalJson,
+          signature: purchase.signature,
+        });
+
+        console.log('[BILLING] Subscription verification result:', verified);
+
+        if (verified) {
+          await loadActiveSubscriptions();
+          toast({
+            title: 'Suscripción Activada',
+            description: '¡Tu suscripción premium ha sido activada exitosamente!',
+            variant: 'default',
+          });
+          return true;
+        } else {
+          toast({
+            title: 'Error de Verificación',
+            description: 'La suscripción no pudo ser verificada en el servidor',
+            variant: 'destructive',
+          });
+          return false;
+        }
+      } else {
+        const verified = await verifyPurchase({
+          purchaseToken: purchase.purchaseToken,
+          productId: purchase.productId,
+          originalJson: purchase.originalJson,
+          signature: purchase.signature,
+        });
+
+        if (verified) {
+          await loadPurchases();
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } catch (error) {
+      console.error(`[BILLING] Error processing ${type}:`, error);
+      return false;
     }
   };
 
