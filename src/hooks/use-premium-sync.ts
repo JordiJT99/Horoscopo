@@ -68,7 +68,17 @@ export function usePremiumSync(): UsePremiumSyncReturn {
     originalJson: string;
     signature: string;
   }): Promise<boolean> => {
+    console.log('[PREMIUM SYNC] verifySubscription called with:', {
+      hasUser: !!user,
+      userId: user?.uid,
+      subscriptionId: purchaseData.subscriptionId,
+      hasPurchaseToken: !!purchaseData.purchaseToken,
+      hasOriginalJson: !!purchaseData.originalJson,
+      hasSignature: !!purchaseData.signature,
+    });
+
     if (!user) {
+      console.error('[PREMIUM SYNC] No user authenticated - cannot verify subscription');
       toast({
         title: 'Error',
         description: 'Usuario no autenticado',
@@ -79,19 +89,28 @@ export function usePremiumSync(): UsePremiumSyncReturn {
 
     setIsVerifying(true);
     try {
+      console.log('[PREMIUM SYNC] Getting auth headers...');
       const headers = await getAuthHeaders();
+      console.log('[PREMIUM SYNC] Auth headers obtained successfully');
+      
+      const payload = {
+        ...purchaseData,
+        userId: user.uid,
+      };
+      
+      console.log('[PREMIUM SYNC] About to POST to /api/billing/verify-subscription with payload:', payload);
       
       const response = await fetch('/api/billing/verify-subscription', {
         method: 'POST',
         headers,
-        body: JSON.stringify({
-          ...purchaseData,
-          userId: user.uid,
-        }),
+        body: JSON.stringify(payload),
       });
 
+      console.log('[PREMIUM SYNC] Response status:', response.status);
+      console.log('[PREMIUM SYNC] Response headers:', Object.fromEntries(response.headers.entries()));
+
       const result = await response.json();
-  console.log('[PREMIUM SYNC] verifySubscription response:', result);
+      console.log('[PREMIUM SYNC] verifySubscription response:', result);
 
       if (result.success) {
         setPremiumStatus({
@@ -117,14 +136,18 @@ export function usePremiumSync(): UsePremiumSyncReturn {
         }
 
         // After a successful verification, refresh local state from server
-        try {
-          await syncAllData();
-        } catch (e) {
-          console.error('Error syncing after verifySubscription:', e);
-        }
+        setTimeout(() => {
+          try {
+            checkPremiumStatus();
+            checkPurchases();
+          } catch (e) {
+            console.error('Error syncing after verifySubscription:', e);
+          }
+        }, 100);
 
         return result.isActive;
       } else {
+        console.error('[PREMIUM SYNC] Verification failed:', result);
         toast({
           title: 'Error de Verificación',
           description: result.error || 'No se pudo verificar la suscripción',

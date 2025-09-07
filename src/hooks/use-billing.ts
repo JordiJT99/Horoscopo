@@ -252,16 +252,33 @@ export function useBilling(): UseBillingReturn {
 
     setIsLoading(true);
     try {
+      console.log('[BILLING] Starting purchaseSubscription for:', subscriptionId);
       const result = await GooglePlayBilling.purchaseSubscription({ subscriptionId });
       
+      console.log('[BILLING] purchaseSubscription result:', {
+        success: result.success,
+        hasPurchase: !!result.purchase,
+        message: result.message,
+        purchase: result.purchase
+      });
+      
       if (result.success && result.purchase) {
-  console.log('[BILLING] purchaseSubscription result.purchase:', result.purchase);
+        console.log('[BILLING] purchaseSubscription result.purchase:', result.purchase);
+        console.log('[BILLING] About to call verifySubscription with data:', {
+          purchaseToken: result.purchase.purchaseToken,
+          subscriptionId: result.purchase.productId,
+          hasOriginalJson: !!result.purchase.originalJson,
+          hasSignature: !!result.purchase.signature,
+        });
+        
         const verified = await verifySubscription({
           purchaseToken: result.purchase.purchaseToken,
           subscriptionId: result.purchase.productId,
           originalJson: result.purchase.originalJson,
           signature: result.purchase.signature,
         });
+
+        console.log('[BILLING] verifySubscription returned:', verified);
 
         if (verified) {
           await loadActiveSubscriptions();
@@ -275,6 +292,7 @@ export function useBilling(): UseBillingReturn {
           return false;
         }
       } else {
+        console.log('[BILLING] Purchase failed or no purchase object:', result);
         if (result.message !== 'Purchase canceled by user') {
           toast({
             title: 'Error en la Suscripción',
