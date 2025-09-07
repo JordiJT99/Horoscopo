@@ -1,7 +1,9 @@
 // src/lib/google-play-api.ts
 import { google } from 'googleapis';
+import path from 'path';
+import fs from 'fs';
 
-const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIALS || path.join(process.cwd(), 'firebase-service-account.json');
 const PACKAGE_NAME = 'com.astromistica.horoscopo';
 
 interface SubscriptionPurchase {
@@ -50,13 +52,35 @@ interface ProductPurchase {
 class GooglePlayAPI {
   private auth: any;
   private androidpublisher: any;
+  private isInitialized: boolean = false;
+  private initPromise: Promise<void> | null = null;
 
   constructor() {
-    this.initializeAuth();
+    // Don't call async initialization in constructor
   }
 
-  private async initializeAuth() {
+  private async initializeAuth(): Promise<void> {
+    if (this.isInitialized) {
+      return;
+    }
+
+    if (this.initPromise) {
+      return this.initPromise;
+    }
+
+    this.initPromise = this._doInitialize();
+    return this.initPromise;
+  }
+
+  private async _doInitialize(): Promise<void> {
     try {
+      console.log('[GooglePlayAPI] Initializing with credentials:', GOOGLE_APPLICATION_CREDENTIALS);
+      
+      // Verificar que el archivo de credenciales existe
+      if (!fs.existsSync(GOOGLE_APPLICATION_CREDENTIALS)) {
+        throw new Error(`Service account file not found: ${GOOGLE_APPLICATION_CREDENTIALS}`);
+      }
+
       // Configurar autenticación con service account
       this.auth = new google.auth.GoogleAuth({
         keyFile: GOOGLE_APPLICATION_CREDENTIALS,
@@ -68,10 +92,19 @@ class GooglePlayAPI {
         auth: this.auth,
       });
 
-      console.log('Google Play API initialized successfully');
+      this.isInitialized = true;
+      console.log('[GooglePlayAPI] Initialized successfully');
     } catch (error) {
-      console.error('Failed to initialize Google Play API:', error);
+      console.error('[GooglePlayAPI] Failed to initialize:', error);
+      this.isInitialized = false;
+      this.initPromise = null;
       throw error;
+    }
+  }
+
+  private async ensureInitialized(): Promise<void> {
+    if (!this.isInitialized) {
+      await this.initializeAuth();
     }
   }
 
@@ -90,6 +123,10 @@ class GooglePlayAPI {
     error?: string;
   }> {
     try {
+      await this.ensureInitialized();
+
+      console.log('[GooglePlayAPI] Verifying subscription:', { subscriptionId, purchaseToken: purchaseToken.substring(0, 20) + '...' });
+
       const response = await this.androidpublisher.purchases.subscriptions.get({
         packageName: PACKAGE_NAME,
         subscriptionId: subscriptionId,
@@ -101,6 +138,13 @@ class GooglePlayAPI {
       const expiryTime = parseInt(subscription.expiryTimeMillis);
       const isActive = expiryTime > now && subscription.paymentState === 1;
 
+      console.log('[GooglePlayAPI] Subscription verification result:', {
+        isActive,
+        expiryTime: new Date(expiryTime),
+        autoRenewing: subscription.autoRenewing,
+        paymentState: subscription.paymentState
+      });
+
       return {
         isValid: true,
         isActive,
@@ -109,7 +153,7 @@ class GooglePlayAPI {
         details: subscription,
       };
     } catch (error: any) {
-      console.error('Error verifying subscription:', error);
+      console.error('[GooglePlayAPI] Error verifying subscription:', error);
       
       if (error.code === 410) {
         // Suscripción no encontrada o expirada
@@ -147,6 +191,10 @@ class GooglePlayAPI {
     error?: string;
   }> {
     try {
+      await this.ensureInitialized();
+
+      console.log('[GooglePlayAPI] Verifying product purchase:', { productId, purchaseToken: purchaseToken.substring(0, 20) + '...' });
+
       const response = await this.androidpublisher.purchases.products.get({
         packageName: PACKAGE_NAME,
         productId: productId,
