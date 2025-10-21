@@ -121,19 +121,28 @@ export async function POST(request: NextRequest) {
         };
 
         // Lógica específica por producto
+        console.log('[verify-purchase] Processing product benefits for:', productId);
+        console.log('[verify-purchase] Current stardust:', userData.stardust || 0);
+        
         switch (productId) {
           case 'remove_ads_forever':
             updates.hasRemovedAds = true;
+            console.log('[verify-purchase] Granting ad removal');
             break;
           case 'stardust_pack_small':
             updates.stardust = (userData.stardust || 0) + 100;
+            console.log('[verify-purchase] Adding 100 stardust, new total:', updates.stardust);
             break;
           case 'stardust_pack_medium':
             updates.stardust = (userData.stardust || 0) + 250;
+            console.log('[verify-purchase] Adding 250 stardust, new total:', updates.stardust);
             break;
           case 'stardust_pack_large':
             updates.stardust = (userData.stardust || 0) + 500;
+            console.log('[verify-purchase] Adding 500 stardust, new total:', updates.stardust);
             break;
+          default:
+            console.log('[verify-purchase] Unknown product ID, no benefits granted');
         }
 
         // Actualizar el documento del usuario

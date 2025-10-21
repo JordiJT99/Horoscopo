@@ -167,7 +167,10 @@ export function useBilling(): UseBillingReturn {
 
 
   const purchaseProduct = async (productId: string): Promise<boolean> => {
+    console.log('[BILLING] purchaseProduct called with productId:', productId);
+    
     if (!isCapacitor) {
+      console.log('[BILLING] Not on Capacitor platform');
       toast({
         title: 'Función no disponible',
         description: 'Las compras solo están disponibles en la aplicación móvil',
@@ -177,6 +180,7 @@ export function useBilling(): UseBillingReturn {
     }
 
     if (!isInitialized) {
+      console.log('[BILLING] Billing not initialized');
       toast({
         title: 'Error',
         description: 'Sistema de pagos no inicializado',
@@ -187,10 +191,24 @@ export function useBilling(): UseBillingReturn {
 
     setIsLoading(true);
     try {
+      console.log('[BILLING] Calling GooglePlayBilling.purchaseProduct...');
       const result = await GooglePlayBilling.purchaseProduct({ productId });
       
+      console.log('[BILLING] purchaseProduct result:', {
+        success: result.success,
+        hasPurchase: !!result.purchase,
+        message: result.message
+      });
+      
       if (result.success && result.purchase) {
-  console.log('[BILLING] purchaseProduct result.purchase:', result.purchase);
+        console.log('[BILLING] Purchase received:', {
+          purchaseToken: result.purchase.purchaseToken?.substring(0, 20) + '...',
+          productId: result.purchase.productId,
+          hasOriginalJson: !!result.purchase.originalJson,
+          hasSignature: !!result.purchase.signature
+        });
+        
+        console.log('[BILLING] Verifying purchase with server...');
         const verified = await verifyPurchase({
           purchaseToken: result.purchase.purchaseToken,
           productId: result.purchase.productId,
@@ -198,10 +216,18 @@ export function useBilling(): UseBillingReturn {
           signature: result.purchase.signature,
         });
 
+        console.log('[BILLING] Verification result:', verified);
+
         if (verified) {
+          console.log('[BILLING] Purchase verified successfully, reloading purchases...');
           await loadPurchases();
+          toast({
+            title: 'Compra Exitosa',
+            description: 'Tu compra ha sido procesada correctamente',
+          });
           return true;
         } else {
+          console.error('[BILLING] Purchase verification failed');
           toast({
             title: 'Error de Verificación',
             description: 'La compra no pudo ser verificada en el servidor',
@@ -210,7 +236,8 @@ export function useBilling(): UseBillingReturn {
           return false;
         }
       } else {
-        if (result.message !== 'Purchase canceled by user') {
+        console.log('[BILLING] Purchase flow did not succeed or no purchase returned');
+        if (result.message && !result.message.includes('canceled') && !result.message.includes('cancelled')) {
           toast({
             title: 'Error en la Compra',
             description: result.message || 'No se pudo completar la compra',
@@ -220,7 +247,7 @@ export function useBilling(): UseBillingReturn {
         return false;
       }
     } catch (error) {
-      console.error('Error purchasing product:', error);
+      console.error('[BILLING] Error purchasing product:', error);
       toast({
         title: 'Error en la Compra',
         description: 'Ocurrió un error durante la compra',
