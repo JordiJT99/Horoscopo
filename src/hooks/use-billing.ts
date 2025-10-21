@@ -221,6 +221,14 @@ export function useBilling(): UseBillingReturn {
             purchaseTime: new Date(newPurchase.purchaseTime).toISOString()
           });
           
+          console.log('[BILLING] Full purchase object:', newPurchase);
+          console.log('[BILLING] Purchase fields check:', {
+            hasPurchaseToken: !!newPurchase.purchaseToken,
+            hasProductId: !!newPurchase.productId,
+            hasOriginalJson: !!newPurchase.originalJson,
+            hasSignature: !!newPurchase.signature,
+          });
+          
           console.log('[BILLING] Verifying purchase with server...');
           const verified = await verifyPurchase({
             purchaseToken: newPurchase.purchaseToken,
@@ -232,8 +240,29 @@ export function useBilling(): UseBillingReturn {
           console.log('[BILLING] Verification result:', verified);
 
           if (verified) {
-            console.log('[BILLING] Purchase verified successfully, reloading purchases...');
+            console.log('[BILLING] Purchase verified successfully');
+            
+            // Consumir el producto para permitir futuras compras
+            try {
+              console.log('[BILLING] Consuming purchase...');
+              const consumeResult = await GooglePlayBilling.consumePurchase({ 
+                purchaseToken: newPurchase.purchaseToken 
+              });
+              console.log('[BILLING] Consume result:', consumeResult);
+              
+              if (consumeResult.success) {
+                console.log('[BILLING] Purchase consumed successfully');
+              } else {
+                console.warn('[BILLING] Failed to consume purchase:', consumeResult.message);
+              }
+            } catch (consumeError) {
+              console.error('[BILLING] Error consuming purchase:', consumeError);
+              // No bloquear si falla el consumo, la compra ya está verificada
+            }
+            
+            console.log('[BILLING] Reloading purchases...');
             await loadPurchases();
+            
             toast({
               title: 'Compra Exitosa',
               description: 'Tu compra ha sido procesada correctamente',
