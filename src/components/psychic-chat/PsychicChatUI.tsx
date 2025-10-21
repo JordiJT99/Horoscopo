@@ -231,19 +231,39 @@ export default function PsychicChatUI({ psychic, dictionary, locale }: PsychicCh
       const reward = await showRewardedAd();
       if (reward) {
         const adRewardStardust = 1; // Los anuncios siempre dan 1 polvo estelar
-        const adRewardMinutes = Math.floor(adRewardStardust / MINUTE_COST); // Calcular minutos equivalentes
+        const adRewardSeconds = Math.floor((adRewardStardust / MINUTE_COST) * 60); // Convertir a segundos
+        
+        console.log('[PsychicChat] Ad reward received:', { 
+          adRewardStardust, 
+          adRewardSeconds,
+          currentChatTime: chatTimeRemaining 
+        });
+        
         await addStardust(adRewardStardust); 
-        setChatTimeRemaining(prev => prev + (adRewardMinutes * 60));
+        setChatTimeRemaining(prev => {
+          const newTime = prev + adRewardSeconds;
+          console.log('[PsychicChat] Updating chat time:', { prev, adRewardSeconds, newTime });
+          return newTime;
+        });
+        
+        const adRewardMinutes = Math.floor(adRewardSeconds / 60);
         toast({
-          title: "¡Recompensa Obtenida!",
-          description: `Has ganado ${adRewardStardust} de Polvo Estelar y ${adRewardMinutes} minuto(s) de chat.`,
+          title: dictionary['Toast.rewardObtainedTitle'] || "¡Recompensa Obtenida!",
+          description: dictionary['Toast.rewardObtainedDescription']?.replace('{stardust}', adRewardStardust.toString()).replace('{minutes}', adRewardMinutes.toString()) || `Has ganado ${adRewardStardust} de Polvo Estelar y ${adRewardMinutes} minuto(s) de chat.`,
+        });
+      } else {
+        console.warn('[PsychicChat] Ad completed but no reward received');
+        toast({
+          title: dictionary['Toast.errorTitle'] || "Error",
+          description: dictionary['Toast.adNoRewardDescription'] || "No se recibió recompensa del anuncio.",
+          variant: "destructive"
         });
       }
     } catch(err) {
-      console.error("Error showing rewarded ad:", err);
+      console.error("[PsychicChat] Error showing rewarded ad:", err);
       toast({
-        title: "Error",
-        description: "No se pudo mostrar el anuncio. Inténtalo de nuevo más tarde.",
+        title: dictionary['Toast.errorTitle'] || "Error",
+        description: dictionary['Toast.adErrorDescription'] || "No se pudo mostrar el anuncio. Inténtalo de nuevo más tarde.",
         variant: "destructive"
       })
     } finally {

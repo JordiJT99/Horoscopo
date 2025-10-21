@@ -1,4 +1,4 @@
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem, InterstitialAdPlugin } from '@capacitor-community/admob';
+import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, RewardAdOptions, AdMobRewardItem } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 
 // ⚡ MODO DE PRODUCCIÓN ACTIVADO ⚡
@@ -154,12 +154,25 @@ export class AdMobService {
         isTesting: false
       };
 
+      console.log('[AdMob] Preparing rewarded ad with options:', options);
       await AdMob.prepareRewardVideoAd(options);
+      
+      console.log('[AdMob] Showing rewarded ad...');
       const result = await AdMob.showRewardVideoAd();
-      console.log('Rewarded ad completed (PRODUCTION mode):', result);
+      
+      console.log('[AdMob] Rewarded ad completed (PRODUCTION mode):', JSON.stringify(result));
+      console.log('[AdMob] Reward details - type:', result?.type, 'amount:', result?.amount);
+      
+      // Verify that we actually got a reward
+      if (!result || !result.type || result.amount === undefined) {
+        console.warn('[AdMob] Rewarded ad completed but reward data is missing:', result);
+        // Return a default reward to ensure the user gets credited
+        return { type: 'stardust', amount: 1 };
+      }
+      
       return result;
     } catch (error) {
-      console.error('Failed to show rewarded ad:', error);
+      console.error('[AdMob] Failed to show rewarded ad:', error);
       throw error;
     }
   }
