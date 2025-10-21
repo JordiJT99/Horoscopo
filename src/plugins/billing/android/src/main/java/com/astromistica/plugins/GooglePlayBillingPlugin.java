@@ -311,6 +311,8 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
                     purchaseObj.put("purchaseState", purchase.getPurchaseState());
                     purchaseObj.put("purchaseToken", purchase.getPurchaseToken());
                     purchaseObj.put("isAcknowledged", purchase.isAcknowledged());
+                    purchaseObj.put("originalJson", purchase.getOriginalJson());
+                    purchaseObj.put("signature", purchase.getSignature());
                     purchaseArray.put(purchaseObj);
                 }
                 ret.put("purchases", purchaseArray);
@@ -347,6 +349,8 @@ public class GooglePlayBillingPlugin extends Plugin implements PurchasesUpdatedL
                         subscriptionObj.put("purchaseToken", purchase.getPurchaseToken());
                         subscriptionObj.put("isAcknowledged", purchase.isAcknowledged());
                         subscriptionObj.put("isAutoRenewing", purchase.isAutoRenewing());
+                        subscriptionObj.put("originalJson", purchase.getOriginalJson());
+                        subscriptionObj.put("signature", purchase.getSignature());
                         subscriptionArray.put(subscriptionObj);
                     }
                 }
