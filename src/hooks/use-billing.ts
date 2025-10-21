@@ -200,8 +200,67 @@ export function useBilling(): UseBillingReturn {
         message: result.message
       });
       
+      // Si la compra se inició pero no tenemos el objeto purchase aún
+      if (result.success && !result.purchase) {
+        console.log('[BILLING] Purchase flow started, waiting for completion...');
+        
+        // Esperar y consultar las compras para detectar la nueva compra
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Esperar 2 segundos
+        
+        console.log('[BILLING] Checking for new purchases...');
+        const purchasesResult = await GooglePlayBilling.getPurchases();
+        console.log('[BILLING] Found purchases:', purchasesResult.purchases.length);
+        
+        // Buscar la compra del producto que acabamos de intentar comprar
+        const newPurchase = purchasesResult.purchases.find(p => p.productId === productId);
+        
+        if (newPurchase) {
+          console.log('[BILLING] New purchase found:', {
+            purchaseToken: newPurchase.purchaseToken?.substring(0, 20) + '...',
+            productId: newPurchase.productId,
+            purchaseTime: new Date(newPurchase.purchaseTime).toISOString()
+          });
+          
+          console.log('[BILLING] Verifying purchase with server...');
+          const verified = await verifyPurchase({
+            purchaseToken: newPurchase.purchaseToken,
+            productId: newPurchase.productId,
+            originalJson: newPurchase.originalJson,
+            signature: newPurchase.signature,
+          });
+
+          console.log('[BILLING] Verification result:', verified);
+
+          if (verified) {
+            console.log('[BILLING] Purchase verified successfully, reloading purchases...');
+            await loadPurchases();
+            toast({
+              title: 'Compra Exitosa',
+              description: 'Tu compra ha sido procesada correctamente',
+            });
+            setIsLoading(false);
+            return true;
+          } else {
+            console.error('[BILLING] Purchase verification failed');
+            toast({
+              title: 'Error de Verificación',
+              description: 'La compra no pudo ser verificada en el servidor',
+              variant: 'destructive',
+            });
+            setIsLoading(false);
+            return false;
+          }
+        } else {
+          console.log('[BILLING] No new purchase found for productId:', productId);
+          // El usuario pudo haber cancelado la compra
+          setIsLoading(false);
+          return false;
+        }
+      }
+      
+      // Si ya tenemos el purchase en la respuesta (caso original)
       if (result.success && result.purchase) {
-        console.log('[BILLING] Purchase received:', {
+        console.log('[BILLING] Purchase received immediately:', {
           purchaseToken: result.purchase.purchaseToken?.substring(0, 20) + '...',
           productId: result.purchase.productId,
           hasOriginalJson: !!result.purchase.originalJson,
@@ -236,7 +295,7 @@ export function useBilling(): UseBillingReturn {
           return false;
         }
       } else {
-        console.log('[BILLING] Purchase flow did not succeed or no purchase returned');
+        console.log('[BILLING] Purchase flow did not succeed');
         if (result.message && !result.message.includes('canceled') && !result.message.includes('cancelled')) {
           toast({
             title: 'Error en la Compra',
