@@ -12,33 +12,59 @@ function initializeFirebaseAdmin() {
     return admin.app();
   }
 
+  // Opción 1: Variable de entorno con JSON completo
   let serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
   
-  // Fallback: if env var is not set, try plain file in repo root
+  // Opción 2: Archivo local (para desarrollo)
   if (!serviceAccountPath) {
     const fallbackPath = resolve(process.cwd(), 'firebase-service-account.json');        
     try {
-      // quick existence check
       readFileSync(fallbackPath, 'utf8');
       serviceAccountPath = fallbackPath;
       console.log('[Firebase Admin] FIREBASE_SERVICE_ACCOUNT_KEY not set, falling back to', fallbackPath);
     } catch (err) {
-      console.warn('[Firebase Admin] No service account found at', fallbackPath);
-      // keep serviceAccountPath undefined and let subsequent logic warn
+      // Archivo no encontrado, intentar credenciales por defecto
+      console.log('[Firebase Admin] No service account file found, trying default credentials');
     }
   }
 
+  // Opción 3: Credenciales por defecto (funciona en Firebase Hosting y Google Cloud)
+  if (!serviceAccountPath) {
+    try {
+      console.log('[Firebase Admin] Initializing with default credentials (Firebase Hosting / Google Cloud)');
+      app = admin.initializeApp({
+        credential: admin.credential.applicationDefault(),
+      });
+      
+      console.log('[Firebase Admin] Firebase Admin SDK initialized successfully with default credentials');
+      return app;
+    } catch (error: any) {
+      console.error('[Firebase Admin] Failed to initialize with default credentials:', error.message);
+      
+      // Si falla con credenciales por defecto, intentar sin credenciales (solo para entorno de desarrollo)
+      try {
+        console.log('[Firebase Admin] Attempting initialization without explicit credentials');
+        app = admin.initializeApp();
+        console.log('[Firebase Admin] Firebase Admin SDK initialized successfully without explicit credentials');
+        return app;
+      } catch (finalError: any) {
+        console.error('[Firebase Admin] All initialization methods failed:', finalError.message);
+        app = null;
+        return null;
+      }
+    }
+  }
+
+  // Si tenemos serviceAccountPath, usarlo
   if (serviceAccountPath) {
     try {
       let serviceAccount;
       
-      // Si el valor parece ser un path a un archivo (comienza con ./ o /)
       if (serviceAccountPath.startsWith('./') || serviceAccountPath.startsWith('/') || serviceAccountPath.includes('firebase-service-account.json')) {   
         const absolutePath = resolve(process.cwd(), serviceAccountPath);
         console.log('[Firebase Admin] Loading service account from file:', absolutePath);
         serviceAccount = JSON.parse(readFileSync(absolutePath, 'utf8'));
       } else {
-        // Si no, asumimos que es el JSON directo (para compatibilidad)
         console.log('[Firebase Admin] Loading service account from environment variable');
         serviceAccount = JSON.parse(serviceAccountPath);
       }
@@ -63,11 +89,9 @@ function initializeFirebaseAdmin() {
       app = null;
       return null;
     }
-  } else {
-    console.warn("[Firebase Admin] FIREBASE_SERVICE_ACCOUNT_KEY is not set. Firebase Admin features will be disabled.");
-    app = null;
-    return null;
   }
+  
+  return null;
 }
 
 // Initialize on import

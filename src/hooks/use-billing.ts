@@ -204,15 +204,31 @@ export function useBilling(): UseBillingReturn {
       if (result.success && !result.purchase) {
         console.log('[BILLING] Purchase flow started, waiting for completion...');
         
-        // Esperar y consultar las compras para detectar la nueva compra
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Esperar 2 segundos
+        // Hacer polling durante 3 minutos (180 segundos)
+        const maxAttempts = 36; // 36 intentos x 5 segundos = 180 segundos (3 minutos)
+        const pollInterval = 5000; // 5 segundos entre intentos
+        let attempts = 0;
+        let newPurchase = null;
         
-        console.log('[BILLING] Checking for new purchases...');
-        const purchasesResult = await GooglePlayBilling.getPurchases();
-        console.log('[BILLING] Found purchases:', purchasesResult.purchases.length);
-        
-        // Buscar la compra del producto que acabamos de intentar comprar
-        const newPurchase = purchasesResult.purchases.find(p => p.productId === productId);
+        while (attempts < maxAttempts && !newPurchase) {
+          attempts++;
+          console.log(`[BILLING] Polling attempt ${attempts}/${maxAttempts}...`);
+          
+          // Esperar antes de consultar
+          await new Promise(resolve => setTimeout(resolve, pollInterval));
+          
+          // Consultar las compras
+          const purchasesResult = await GooglePlayBilling.getPurchases();
+          console.log('[BILLING] Found purchases:', purchasesResult.purchases.length);
+          
+          // Buscar la compra del producto que acabamos de intentar comprar
+          newPurchase = purchasesResult.purchases.find(p => p.productId === productId);
+          
+          if (newPurchase) {
+            console.log(`[BILLING] Purchase found after ${attempts} attempts!`);
+            break;
+          }
+        }
         
         if (newPurchase) {
           console.log('[BILLING] New purchase found:', {
@@ -280,8 +296,13 @@ export function useBilling(): UseBillingReturn {
             return false;
           }
         } else {
-          console.log('[BILLING] No new purchase found for productId:', productId);
-          // El usuario pudo haber cancelado la compra
+          console.log(`[BILLING] No purchase found after ${attempts} attempts (${attempts * 5} seconds)`);
+          console.log('[BILLING] Purchase may have been cancelled or there was an error');
+          toast({
+            title: 'Compra No Completada',
+            description: 'La compra no se completó. Si el cargo se realizó, se reembolsará automáticamente.',
+            variant: 'destructive',
+          });
           setIsLoading(false);
           return false;
         }
