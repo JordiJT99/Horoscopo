@@ -1,7 +1,7 @@
 // src/app/api/billing/verify-subscription/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { googlePlayAPI } from '@/app/api/billing/google-play-api';
-import { adminAuth, adminDb } from '@/lib/firebase-admin';
+import { getAdminAuth, getAdminDb } from '@/lib/firebase-admin';
 
 interface VerifySubscriptionRequest {
   purchaseToken: string;
@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     let userUid: string | null = null;
     if (userId) {
       // Ensure Firebase Admin is available before attempting to verify tokens
+      const adminAuth = getAdminAuth();
       if (!adminAuth) {
         console.error('[verify-subscription] Firebase Admin SDK not configured - cannot verify idToken for userId:', userId);
         return NextResponse.json({
@@ -98,6 +99,15 @@ export async function POST(request: NextRequest) {
     // Si tenemos un usuario autenticado, actualizar su estado premium en Firestore
     if (userUid) {
       try {
+        const adminDb = getAdminDb();
+        if (!adminDb) {
+          console.error('[verify-subscription] Firebase Admin DB not available');
+          return NextResponse.json({
+            success: false,
+            error: 'Server misconfigured: Firebase Database not available',
+          }, { status: 500 });
+        }
+        
         // Actualizar el documento del usuario
         await adminDb.collection('users').doc(userUid).update({
           subscription: subscriptionData,
@@ -168,7 +178,10 @@ export async function GET(request: NextRequest) {
     }
 
     // If Firebase Admin is not configured, return a clear error (no silent simulation)
-    if (!adminAuth) {
+    const adminAuth = getAdminAuth();
+    const adminDb = getAdminDb();
+    
+    if (!adminAuth || !adminDb) {
       console.error('[verify-subscription] Firebase Admin SDK not configured - GET cannot proceed for userId:', userId);
       return NextResponse.json({
         success: false,
@@ -196,13 +209,6 @@ export async function GET(request: NextRequest) {
     }
 
     // Obtener los datos del usuario desde Firestore
-    if (!adminDb) {
-      return NextResponse.json({
-        success: false,
-        error: 'Database not available'
-      }, { status: 500 });
-    }
-    
     const userDoc = await adminDb.collection('users').doc(userId).get();
     
     if (!userDoc.exists) {

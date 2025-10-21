@@ -78,6 +78,29 @@ try {
   app = null;
 }
 
+// Lazy getters to ensure Firebase is initialized when accessed
+export function getAdminAuth() {
+  if (!app) {
+    app = initializeFirebaseAdmin();
+  }
+  return app?.auth() || null;
+}
+
+export function getAdminDb() {
+  if (!app) {
+    app = initializeFirebaseAdmin();
+  }
+  return app?.firestore() || null;
+}
+
+export function getAdminMessaging() {
+  if (!app) {
+    app = initializeFirebaseAdmin();
+  }
+  return app?.messaging() || null;
+}
+
+// Export legacy direct access (will be undefined if init failed)
 export const adminAuth = app?.auth();
 export const adminDb = app?.firestore();
 export const adminMessaging = app?.messaging();

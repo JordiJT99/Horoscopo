@@ -1,7 +1,7 @@
 // src/app/api/billing/verify-purchase/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { googlePlayAPI } from '@/app/api/billing/google-play-api';
-import { adminAuth, adminDb } from '@/lib/firebase-admin';
+import { getAdminAuth, getAdminDb } from '@/lib/firebase-admin';
 
 interface VerifyPurchaseRequest {
   purchaseToken: string;
@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     let userUid: string | null = null;
     if (userId) {
       // Ensure Firebase Admin is available before attempting to verify tokens
+      const adminAuth = getAdminAuth();
       if (!adminAuth) {
         console.error('[verify-purchase] Firebase Admin SDK not configured - cannot verify idToken for userId:', userId);
         return NextResponse.json({
@@ -96,6 +97,15 @@ export async function POST(request: NextRequest) {
     // Si tenemos un usuario autenticado, actualizar su estado en Firestore
     if (userUid) {
       try {
+        const adminDb = getAdminDb();
+        if (!adminDb) {
+          console.error('[verify-purchase] Firebase Admin DB not available');
+          return NextResponse.json({
+            success: false,
+            error: 'Server misconfigured: Firebase Database not available',
+          }, { status: 500 });
+        }
+        
         // Obtener datos actuales del usuario
         const userDoc = await adminDb.collection('users').doc(userUid).get();
         const userData = userDoc.data() || {};
@@ -209,7 +219,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Require Firebase Admin to return real purchase data
-    if (!adminAuth) {
+    const adminAuth = getAdminAuth();
+    const adminDb = getAdminDb();
+    
+    if (!adminAuth || !adminDb) {
       console.error('Firebase Admin SDK not configured - cannot fetch purchases for userId:', userId);
       return NextResponse.json({
         success: false,
@@ -237,7 +250,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Obtener los datos del usuario desde Firestore
-    const userDoc = await adminDb!.collection('users').doc(userId).get();
+    const userDoc = await adminDb.collection('users').doc(userId).get();
     
     if (!userDoc.exists) {
       console.log(`User document not found for ${userId} - returning default non-premium response.`);
