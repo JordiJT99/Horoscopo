@@ -32,7 +32,7 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                 description: (dictionary['Toast.rateSuccessDescription'] || "You've been awarded {amount} Stardust for your feedback.").replace('{amount}', amount.toString())
             });
         } else {
-             toast({
+            toast({
                 title: dictionary['Toast.alreadyRated'] || "Already Rewarded",
                 description: "You have already claimed this reward."
             });
@@ -51,8 +51,8 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                     description: (dictionary['Toast.adWatchedDescription'] || "You've earned {amount} Stardust.").replace('{amount}', adReward.toString())
                 });
             }
-        } catch(err) {
-             toast({
+        } catch (err) {
+            toast({
                 title: dictionary['Error.genericTitle'] || "Error",
                 description: "Failed to load ad. Please try again later.",
                 variant: 'destructive',
@@ -61,11 +61,11 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
             setIsAdPlaying(false);
         }
     };
-    
+
     // Filtrar los productos para obtener solo los paquetes de stardust
     const stardustPacks = products
-      .filter(p => p.productId.startsWith('stardust_pack_'))
-      .sort((a, b) => a.priceAmountMicros - b.priceAmountMicros);
+        .filter(p => p.productId.startsWith('stardust_pack_'))
+        .sort((a, b) => a.priceAmountMicros - b.priceAmountMicros);
 
 
     return (
@@ -77,14 +77,14 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                 </CardTitle>
                 <Button variant="link" size="sm" className="p-0 h-auto text-muted-foreground hover:text-primary mt-1 justify-start" onClick={() => setShowExplanation(!showExplanation)}>
                     <HelpCircle className="w-4 h-4 mr-1.5" />
-                    {showExplanation 
+                    {showExplanation
                         ? (dictionary['Stardust.hideExplanationButton'] || "Hide Explanation")
                         : (dictionary['Stardust.showExplanationButton'] || "What is Stardust?")
                     }
                 </Button>
             </CardHeader>
             <CardContent className="p-6 pt-0 space-y-4">
-                 {showExplanation && (
+                {showExplanation && (
                     <Card className="mb-4 p-4 bg-background/50 border-primary/20">
                         <CardTitle className="text-md font-semibold mb-2 flex items-center gap-1.5"><StardustIcon className="w-5 h-5" />{dictionary['Stardust.explanationTitle'] || "What is Stardust? 💫"}</CardTitle>
                         <p className="text-sm text-card-foreground/80 whitespace-pre-line">
@@ -94,21 +94,21 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                 )}
                 <Button onClick={handleRateApp} disabled={hasRatedApp} className="w-full justify-between h-auto py-3 px-4">
                     <div className="flex items-center gap-3">
-                         <Star className="h-5 w-5"/>
-                         <div className="text-left">
+                        <Star className="h-5 w-5" />
+                        <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.rateAppButton'] || "Rate the App"}</p>
                             <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.rateAppDescription'] || "+{amount} 💫 for your feedback!").replace('{amount}', '4')}</p>
-                         </div>
+                        </div>
                     </div>
                     <span>{hasRatedApp ? '✅' : '▶️'}</span>
                 </Button>
-                 <Button onClick={handleWatchAd} disabled={isAdPlaying} className="w-full justify-between h-auto py-3 px-4">
+                <Button onClick={handleWatchAd} disabled={isAdPlaying} className="w-full justify-between h-auto py-3 px-4">
                     <div className="flex items-center gap-3">
-                         <Clapperboard className="h-5 w-5"/>
-                         <div className="text-left">
+                        <Clapperboard className="h-5 w-5" />
+                        <div className="text-left">
                             <p className="font-semibold">{dictionary['ProfilePage.watchAdButton'] || "Watch an Ad"}</p>
                             <p className="text-xs font-normal opacity-80">{(dictionary['ProfilePage.watchAdDescription'] || "+{amount} 💫 for your time!").replace('{amount}', '1')}</p>
-                         </div>
+                        </div>
                     </div>
                     <span>{isAdPlaying ? <LoadingSpinner className="h-4 w-4" /> : '▶️'}</span>
                 </Button>
@@ -118,13 +118,13 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                     <div className="grid grid-cols-1 gap-2">
                         {isBillingLoading && <LoadingSpinner />}
                         {stardustPacks.map(pack => (
-                             <Button 
-                                key={pack.productId} 
-                                variant="outline" 
+                            <Button
+                                key={pack.productId}
+                                variant="outline"
                                 className="w-full justify-between h-auto py-3 px-4 text-left"
                                 onClick={() => purchaseProduct(pack.productId)}
                                 disabled={isBillingLoading}
-                              >
+                            >
                                 <div className="flex items-center gap-3 flex-1 min-w-0">
                                     <span className="text-lg">✨</span>
                                     <p className="font-semibold flex-1 truncate">{pack.title}</p>
@@ -134,8 +134,8 @@ const GetStardustCard = ({ dictionary }: { dictionary: Dictionary }) => {
                                 </div>
                             </Button>
                         ))}
-                         {products.length === 0 && !isBillingLoading && (
-                          <p className="text-xs text-center text-muted-foreground">No products found. Please check your Google Play Console setup.</p>
+                        {products.length === 0 && !isBillingLoading && (
+                            <p className="text-xs text-center text-muted-foreground">✨ Los paquetes de Polvo Estelar estarán disponibles próximamente. ¡Mientras tanto, gana Polvo Estelar viendo anuncios o valorando la app!</p>
                         )}
                     </div>
                 </div>

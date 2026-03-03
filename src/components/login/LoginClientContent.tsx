@@ -54,7 +54,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
           // Error is handled by AuthContext's toast
         }
       } else {
-         toast({ title: dictionary['Auth.errorEmailPasswordRequired'] || "Email and password are required.", variant: "destructive" });
+        toast({ title: dictionary['Auth.errorEmailPasswordRequired'] || "Email and password are required.", variant: "destructive" });
       }
     }
     setIsSubmitting(false);
@@ -82,7 +82,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
           <CardTitle className="font-headline text-xl md:text-2xl text-primary text-center">
             {isSignupMode ? (dictionary['Auth.signupFormTitle'] || "Create Your Account") : (dictionary['Auth.loginFormTitleNow'] || "Enter Your Credentials")}
           </CardTitle>
-           <CardDescription className="text-center font-body text-sm md:text-base text-card-foreground/80">
+          <CardDescription className="text-center font-body text-sm md:text-base text-card-foreground/80">
             {isSignupMode ? (dictionary['Auth.signupFormDescription'] || "Fill in the details to join AstroVibes.") : (dictionary['Auth.loginFormDescriptionFirebase'] || "Login with your email and password.")}
           </CardDescription>
         </CardHeader>
@@ -130,6 +130,7 @@ export default function LoginClientContent({ dictionary, locale }: LoginClientCo
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={isSignupMode ? 6 : undefined}
+                maxLength={32}
                 className="font-body text-base py-2.5"
               />
             </div>

@@ -65,7 +65,7 @@ export default function AchievementsCard() {
         const achievementsArray = Object.entries(ACHIEVEMENTS).map(([id, achievement]) => {
           const isUnlocked = progress.achievements?.includes(id) || false;
           const progressDetails = AchievementChecker.getAchievementProgress(id, progress);
-          
+
           return {
             ...achievement,
             isUnlocked,
@@ -210,9 +210,9 @@ export default function AchievementsCard() {
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Progreso general</span>
-            <span>{Math.round((unlockedCount / totalCount) * 100)}%</span>
+            <span>{totalCount > 0 ? Math.round((unlockedCount / totalCount) * 100) : 0}%</span>
           </div>
-          <Progress value={(unlockedCount / totalCount) * 100} className="h-2" />
+          <Progress value={totalCount > 0 ? (unlockedCount / totalCount) * 100 : 0} className="h-2" />
         </div>
       </CardHeader>
       <CardContent>
@@ -227,7 +227,7 @@ export default function AchievementsCard() {
               Recompensas por Nivel
             </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="achievements" className="mt-4">
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {achievementsWithProgress.map((achievement) => (
@@ -235,16 +235,16 @@ export default function AchievementsCard() {
                   key={achievement.id}
                   className={cn(
                     "flex items-center gap-3 p-3 rounded-lg border transition-all",
-                    achievement.isUnlocked 
-                      ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200" 
+                    achievement.isUnlocked
+                      ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200"
                       : "bg-gray-50 border-gray-200"
                   )}
                 >
                   {/* Icono del logro */}
                   <div className={cn(
                     "w-12 h-12 rounded-lg flex items-center justify-center text-2xl",
-                    achievement.isUnlocked 
-                      ? "bg-green-100" 
+                    achievement.isUnlocked
+                      ? "bg-green-100"
                       : "bg-gray-100"
                   )}>
                     {achievement.isUnlocked ? (
@@ -273,7 +273,7 @@ export default function AchievementsCard() {
                         {getTypeDisplayName(achievement.type)}
                       </Badge>
                     </div>
-                    
+
                     <p className={cn(
                       "text-xs mb-2",
                       achievement.isUnlocked ? "text-gray-600" : "text-gray-400"
@@ -325,22 +325,22 @@ export default function AchievementsCard() {
               {levelRewards.map((reward) => {
                 const isUnlocked = currentLevel >= reward.level;
                 const IconComponent = reward.icon;
-                
+
                 return (
                   <div
                     key={`${reward.level}-${reward.key}`}
                     className={cn(
                       "flex items-center gap-3 p-3 rounded-lg border transition-all",
-                      isUnlocked 
-                        ? "bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200" 
+                      isUnlocked
+                        ? "bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200"
                         : "bg-gray-50 border-gray-200"
                     )}
                   >
                     {/* Icono de la recompensa */}
                     <div className={cn(
                       "w-12 h-12 rounded-lg flex items-center justify-center",
-                      isUnlocked 
-                        ? "bg-blue-100 text-blue-600" 
+                      isUnlocked
+                        ? "bg-blue-100 text-blue-600"
                         : "bg-gray-100 text-gray-400"
                     )}>
                       {isUnlocked ? (
@@ -366,7 +366,7 @@ export default function AchievementsCard() {
                           Nivel {reward.level}
                         </Badge>
                       </div>
-                      
+
                       <p className={cn(
                         "text-xs mb-2",
                         isUnlocked ? "text-gray-600" : "text-gray-400"

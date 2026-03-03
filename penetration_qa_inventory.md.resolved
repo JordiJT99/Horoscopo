@@ -1,0 +1,149 @@
+# Inventario Completo de Hallazgos — Penetration QA de astromistica.org
+
+**Fecha:** 2026-03-03  
+**Resolución:** 390x844px (Emulación Pixel 8 / iPhone 15)  
+**User-Agent:** `Mozilla/5.0 (Linux; Android 13; Chrome/116.0.0.0 Mobile Safari/537.36)`
+
+---
+
+## 1. Lista Completa de URLs Visitadas
+
+| # | URL | Sección | Estado |
+|:--|:----|:--------|:-------|
+| 1 | `https://astromistica.org/es/` | Home / Horóscopos | ✅ OK |
+| 2 | `https://astromistica.org/es/horoscopes/` | Selector de Signos | ✅ OK |
+| 3 | `https://astromistica.org/es/zodiac/aries/` | Aries (detalle) | ⚠️ Sin descripción |
+| 4 | `https://astromistica.org/es/zodiac/taurus/` | Tauro (detalle) | ⚠️ Sin descripción |
+| 5 | `https://astromistica.org/es/zodiac/gemini/` | Géminis (detalle) | ⚠️ Sin descripción |
+| 6 | `https://astromistica.org/es/zodiac/cancer/` | Cáncer (detalle) | ⚠️ Sin descripción |
+| 7 | `https://astromistica.org/es/zodiac/leo/` | Leo (detalle) | ⚠️ Sin descripción |
+| 8 | `https://astromistica.org/es/zodiac/virgo/` | Virgo (detalle) | ⚠️ Sin descripción |
+| 9 | `https://astromistica.org/es/zodiac/libra/` | Libra (detalle) | ⚠️ Sin predicción |
+| 10 | `https://astromistica.org/es/zodiac/scorpio/` | Escorpio (detalle) | ⚠️ Sin descripción |
+| 11 | `https://astromistica.org/es/zodiac/sagittarius/` | Sagitario (detalle) | ⚠️ Sin descripción |
+| 12 | `https://astromistica.org/es/zodiac/capricorn/` | Capricornio (detalle) | ⚠️ Sin descripción |
+| 13 | `https://astromistica.org/es/zodiac/aquarius/` | Acuario (detalle) | ⚠️ Sin descripción |
+| 14 | `https://astromistica.org/es/zodiac/pisces/` | Piscis (detalle) | ⚠️ Cargando infinito |
+| 15 | `https://astromistica.org/es/natalchart/` | Carta Natal | 🔒 Premium Gate |
+| 16 | `https://astromistica.org/es/community/` | Comunidad | ✅ OK |
+| 17 | `https://astromistica.org/es/psychic-chat/` | Astrólogos | ✅ OK |
+| 18 | `https://astromistica.org/es/more/` | Menú Más | ✅ OK |
+| 19 | `https://astromistica.org/es/privacy/` | Política de Privacidad | ⚠️ Renderizado roto |
+| 20 | `https://astromistica.org/es/get-stardust/` | Obtener Polvo Estelar | 🔴 Error técnico |
+| 21 | `https://astromistica.org/es/login/` | Iniciar Sesión | ✅ OK |
+| 22 | `https://astromistica.org/es/register/` | Registro | ✅ OK |
+| 23 | `https://astromistica.org/es/birth-chart/` | (URL alternativa) | 🔴 404 Not Found |
+
+> **Páginas Legales Ausentes:** No se encontró **Aviso Legal**, **Términos de Servicio**, ni **Política de Cookies**. Solo existe "Política de Privacidad".
+
+---
+
+## 2. Log de Errores de Texto (Ortografía, Renderizado, Idioma)
+
+| # | Ubicación | Tipo | Descripción |
+|:--|:----------|:-----|:------------|
+| 1 | `/es/privacy/` | Renderizado | Los caracteres `\n\n`, `\n-` y `**` (Markdown) se muestran como texto plano en vez de ser interpretados. |
+| 2 | `/es/privacy/` | Idioma | El título de la página dice **"Privacy Policy"** en inglés, pero el contenido está en español. |
+| 3 | `/es/privacy/` | Idioma | La sección de contacto al final está en inglés: "Contact Information". |
+| 4 | `/es/zodiac/*/` | Contenido | Todos los 12 signos muestran **"Description not available"** o texto vacío en sus secciones de predicción. |
+| 5 | `/es/get-stardust/` | Técnico | Se muestra el mensaje de error crudo: **"No products found. Please check your Google Play Console setup."** |
+| 6 | `/es/get-stardust/` | Cálculo | La barra de progreso muestra **"NaN%"** (Not a Number). |
+
+---
+
+## 3. Log de UI — Elementos Sub-44px (Touch Targets)
+
+| # | Elemento | Ubicación | Tamaño Detectado | Estándar |
+|:--|:---------|:----------|:-----------------|:---------|
+| 1 | Botón "Iniciar Sesión" | `/es/login/` | Altura: **40px** (`h-10`) | ❌ < 44px |
+| 2 | Botón "Regístrate" | `/es/register/` | Altura: **40px** (`h-10`) | ❌ < 44px |
+| 3 | Tabs AYER/HOY/MAÑANA/SEMANA/MES | `/es/horoscopes/` | Altura: **~36px** | ❌ < 44px |
+| 4 | Iconos de signos zodiacales (strip) | `/es/horoscopes/` | ~40x40px | ❌ < 44px |
+| 5 | Botones navbar inferior | Todas las páginas | Altura: **48px** | ✅ OK |
+| 6 | Botones "Chat Now" | `/es/psychic-chat/` | ~40px alto | ❌ < 44px |
+
+---
+
+## 4. Log de Formularios — Resultados de Inyección
+
+| Test | Input | Campo | Resultado | Veredicto |
+|:-----|:------|:------|:----------|:----------|
+| **TEST 1** — Envío vacío | (ninguno) | Email + Password | Validación nativa HTML5: "Completa este campo" | ✅ PASS |
+| **TEST 2** — Email malformado | `test+123@domain.co.uk` / `TestPass123` | Login | Firebase Auth rechazó con `auth/invalid-credential` | ✅ PASS |
+| **TEST 3** — XSS en Email | `<u>test</u>` / `password` | Login | Navegador bloqueó: "falta @ en el email" | ✅ PASS |
+| **TEST 4** — Script Injection | `<script>alert(1)</script>@test.com` / [test](file:///c:/Users/Jordi/Horoscopo/Horoscopo/test-security.js#67-90) | Login | Sanitizado por validación HTML5 | ✅ PASS |
+| **TEST 5** — XSS + Pass corto | User: `<img src=x onerror=alert(1)>` / Pass: `a` | Registro | Rechazado: contraseña < 6 caracteres | ✅ PASS |
+| **TEST 6** — Pass de 200 chars | User: `NormalUser` / Pass: `AAA...` (200 chars) | Registro | **¡Registro Exitoso!** Sin límite de longitud | ⚠️ ADVERTENCIA |
+| **TEST 7** — Back button | N/A | Navegación | Navbar inferior persistente, sin crash | ✅ PASS |
+
+### Evidencia Visual de Inyección:
+
+````carousel
+![TEST 1: Validación de campo vacío](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/test1_empty_submission_1772494109266.png)
+<!-- slide -->
+![TEST 2: Email malformado rechazado](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/test2_malformed_email_1772494123282.png)
+<!-- slide -->
+![TEST 6: Registro exitoso con password de 200 caracteres](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/test6_long_password_1772494206372.png)
+<!-- slide -->
+![TEST 7: Onboarding post-registro, navbar persistente](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/test7_back_button_persistence_1772494214088.png)
+````
+
+---
+
+## 5. Log de Consola y Red
+
+### Errores de Consola JavaScript
+```
+[Error]    404 (Not Found): /custom_assets/logo_192.png
+[Security] Blocked cross-origin frame: pagead2.googlesyndication.com
+[Warning]  Firebase Messaging disabled: NEXT_PUBLIC_FIREBASE_VAPID_KEY not set
+[Warning]  enableIndexedDbPersistence() deprecated → use FirestoreSettings.cache
+[Info]     AdMob not supported on this platform
+```
+
+### Errores de Red (HTTP)
+| Recurso | Código | Nota |
+|:--------|:-------|:-----|
+| `/custom_assets/logo_192.png` | 404 | Icono PWA faltante |
+| `pagead2.googlesyndication.com/*` | 400 | AdSense mal configurado |
+| `/custom_assets/nebula-background.png` | 304/Fail | Intermitente |
+| `/manifest.json` | 304/Fail | Intermitente |
+| `/es/birth-chart/` | 404 | URL alternativa no existe |
+
+---
+
+## 6. Evidencia Visual Adicional
+
+````carousel
+![Home - Signos zodiacales en 390px](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/.system_generated/click_feedback/click_feedback_1772493467598.png)
+<!-- slide -->
+![Virgo - Más detalles + Compatibilidad](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/.system_generated/click_feedback/click_feedback_1772493726969.png)
+<!-- slide -->
+![Carta Natal - Premium Gate](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/carta_natal_premium_gate_1772493913203.png)
+<!-- slide -->
+![Astrólogos - Perfiles con Chat Now](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/.system_generated/click_feedback/click_feedback_1772493931605.png)
+````
+
+---
+
+## 7. Grabaciones de Sesión
+
+| Fase | Grabación |
+|:-----|:----------|
+| Phase 1: 12 Signos Zodiacales | ![Phase 1](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/phase1_zodiac_signs_1772493429243.webp) |
+| Phase 2: Legal + Secciones | ![Phase 2](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/phase2_legal_pages_1772493812763.webp) |
+| Phase 3: Inyección de Formularios | ![Phase 3](file:///C:/Users/Jordi/.gemini/antigravity/brain/77835239-80a1-44cc-8024-a2fe48d265c6/phase3_form_injection_1772494070984.webp) |
+
+---
+
+## Resumen de Severidad
+
+| Severidad | Hallazgos |
+|:----------|:----------|
+| 🔴 **Crítico** | Contenido vacío en los 12 signos zodiacales. Error crudo expuesto en Stardust. Páginas legales ausentes (Aviso Legal, Cookies). |
+| ⚠️ **Alto** | Política de Privacidad con Markdown sin renderizar. NaN% en barra de progreso. Password sin límite superior (200+ chars aceptado). |
+| 🟡 **Medio** | Touch targets < 44px en botones principales. Título de Privacidad en inglés. 404 en `logo_192.png`. |
+| ✅ **Bajo** | AdSense 400 errors (expected in emulation). Firebase Messaging disabled (config only). |
+
+---
+*Inventario generado por Hacker de QA / Penetration Tester de UI — Antigravity AI*

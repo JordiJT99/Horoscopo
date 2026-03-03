@@ -12,14 +12,21 @@ const nextjsServer = next({
 
 const nextjsHandle = nextjsServer.getRequestHandler();
 
+// Prepare once at cold start (global scope), not on every request
+const prepared = nextjsServer.prepare();
+
 exports.nextjsFunc = onRequest(
   {
-    region: 'us-central1', // or your preferred region
-    memory: '1GiB',
+    region: 'us-central1',
+    memory: '2GiB',
+    cpu: 1,
     timeoutSeconds: 300,
+    minInstances: 0,
+    maxInstances: 10,
+    concurrency: 80,
   },
   async (req, res) => {
-    await nextjsServer.prepare();
+    await prepared;
     return nextjsHandle(req, res);
   }
 );

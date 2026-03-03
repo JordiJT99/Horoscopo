@@ -1,10 +1,10 @@
 
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
   compress: true,
-  
+
   serverExternalPackages: ['@genkit-ai/core', '@genkit-ai/ai', '@genkit-ai/flow', 'googleapis'],
   typescript: {
     ignoreBuildErrors: true,
@@ -23,19 +23,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  
+
   webpack: (config) => {
     // Excluir dependencias pesadas del bundle
     config.externals.push({
       handlebars: 'commonjs handlebars',
     });
-    
+
     // Dependencias que no se necesitan en el browser
     config.externals.push(
       '@opentelemetry/exporter-jaeger',
       '@opentelemetry/exporter-zipkin',
       '@genkit-ai/core',
-      '@genkit-ai/ai', 
+      '@genkit-ai/ai',
       '@genkit-ai/flow',
       'firebase-admin',
       'firebase-functions'

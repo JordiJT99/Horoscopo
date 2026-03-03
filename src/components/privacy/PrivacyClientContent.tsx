@@ -14,7 +14,7 @@ import LoadingSpinner from '../shared/LoadingSpinner';
 import { useCapacitor } from '@/hooks/use-capacitor';
 
 interface PrivacyClientContentProps {
-    dictionary: Dictionary;
+  dictionary: Dictionary;
 }
 
 export default function PrivacyClientContent({ dictionary }: PrivacyClientContentProps) {
@@ -25,13 +25,13 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
     additionalInfo: ''
   });
   const { openUrl, isCapacitor } = useCapacitor();
-  
+
   const privacyDict = dictionary.PrivacyPolicy || {};
 
   const handleContactEmail = () => {
     const email = 'jordi.jordi.jordi9@gmail.com';
     const subject = encodeURIComponent(privacyDict.deleteRequest?.emailSubject || "Solicitud de Eliminación de Datos - AstroMística");
-    
+
     if (isCapacitor) {
       // En móvil: mostrar instrucciones claras
       toast({
@@ -48,7 +48,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      
+
       <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-primary">
@@ -57,10 +57,10 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-card-foreground/80">{privacyDict.informationWeCollect?.content || "We collect info to provide and improve our services."}</p>
+          <p className="text-sm text-card-foreground/80 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: (privacyDict.informationWeCollect?.content || "Recopilamos información para ofrecer y mejorar nuestros servicios.").replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />') }} />
         </CardContent>
       </Card>
-      
+
       <Card className="bg-card/70 backdrop-blur-sm border-white/10 shadow-xl">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-primary">
@@ -69,7 +69,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
           </CardTitle>
         </CardHeader>
         <CardContent>
-            <p className="text-sm text-card-foreground/80">{privacyDict.howWeUseInformation?.content || "Your information is used to personalize your experience and improve the app."}</p>
+          <p className="text-sm text-card-foreground/80 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: (privacyDict.howWeUseInformation?.content || "Tu información se utiliza para personalizar tu experiencia y mejorar la aplicación.").replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />') }} />
         </CardContent>
       </Card>
 
@@ -81,7 +81,7 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-           <p className="text-sm text-card-foreground/80">{privacyDict.advertising?.content || "We use AdMob to show ads, which may collect data to personalize them."}</p>
+          <p className="text-sm text-card-foreground/80 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: (privacyDict.advertising?.content || "Utilizamos AdMob para mostrar anuncios, que pueden recopilar datos para personalizarlos.").replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />') }} />
         </CardContent>
       </Card>
 
@@ -97,13 +97,13 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-            <p className="text-red-400 text-sm" dangerouslySetInnerHTML={{ __html: privacyDict.deleteRequest?.warning || "<strong>Warning:</strong> This action will permanently delete your account and all associated data. This process cannot be undone. We will process your request within 30 days."}} />
+            <p className="text-red-400 text-sm" dangerouslySetInnerHTML={{ __html: privacyDict.deleteRequest?.warning || "<strong>Warning:</strong> This action will permanently delete your account and all associated data. This process cannot be undone. We will process your request within 30 days." }} />
           </div>
-          
+
           <div className="bg-card/50 border border-primary/30 rounded-lg p-4 space-y-3">
-            <h4 className="text-primary font-medium">Contact Information</h4>
+            <h4 className="text-primary font-medium">{privacyDict.deleteRequest?.contactTitle || "Información de Contacto"}</h4>
             <p className="text-sm text-card-foreground/80">
-              To request data deletion, please contact us at:
+              {privacyDict.deleteRequest?.contactInstructions || "Para solicitar la eliminación de datos, contáctanos en:"}
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -114,11 +114,11 @@ export default function PrivacyClientContent({ dictionary }: PrivacyClientConten
               </div>
             </div>
             <p className="text-xs text-card-foreground/60">
-              Include your account email and reason for deletion in your message.
+              {privacyDict.deleteRequest?.contactNote || "Incluye el email de tu cuenta y el motivo de eliminación en tu mensaje."}
             </p>
           </div>
-          
-        
+
+
         </CardContent>
       </Card>
 

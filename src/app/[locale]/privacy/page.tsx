@@ -20,7 +20,7 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
   return (
     <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
       <SectionTitle
-        title={dictionary.PrivacyPolicy?.title || 'Privacy Policy'}
+        title={dictionary.PrivacyPolicy?.title || 'Política de Privacidad'}
         subtitle={dictionary.PrivacyPolicy?.subtitle || 'Your privacy is important to us.'}
         icon={Shield}
         className="mb-8"

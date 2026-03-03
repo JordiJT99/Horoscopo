@@ -134,6 +134,38 @@
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary) / 0.8);
   }
+
+  /* ===== QA Fix: Minimum touch target sizes (44x44px) ===== */
+  button,
+  [role="button"],
+  [role="tab"],
+  a[href],
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Exceptions: icon-only buttons and link buttons that are inline */
+  button[class*="variant-link"],
+  a:not([class*="btn"]):not(nav a) {
+    min-height: auto;
+    min-width: auto;
+  }
+
+  /* ===== QA Fix: Keyboard viewport occlusion prevention ===== */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    scroll-margin-bottom: 300px;
+  }
+
+  /* Use dvh for main content to account for mobile virtual keyboard */
+  @supports (height: 100dvh) {
+    html {
+      height: 100dvh;
+    }
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {
